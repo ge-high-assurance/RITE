@@ -1,7 +1,7 @@
 
 # RITE: **R**ACK **I**ntegrated Cer**T**ification **E**nvironment
 
-![rite_logo](images/logo_2.PNG)
+![rite_logo](https://user-images.githubusercontent.com/66636651/223227669-b9ce7bf7-ae01-4974-9e29-2c3ceb0c64b6.png)
 
 RITE is a research-grade [Eclipse](https://www.eclipse.org/ide/)-based IDE that seamlessly connects with [RACK (Rapid Assurance Curation Kit)](https://github.com/ge-high-assurance/RACK), a research-grade database which uses a structured semantic data model tuned to the domain of the DARPA ARCOS (Automated Rapid Certification Of Software) program. 
 RITE provides an interactive GUI that allows for easy ingestion of data into RACK, [SADL (Semantic Application Design Language)](https://github.com/SemanticApplicationDesignLanguage/sadl) model development, test data development, ingestion package creation, ontology analysis, querying using nodegroups, etc.
@@ -10,9 +10,9 @@ Besides supporting basic data modeling and curation features, RITE also provides
 
 
 ## Latest Release and Feature List
-The first release of RITE will be out soon! 
+RITE [v0.5.0](https://github.com/ge-high-assurance/RACK/releases/tag/v12.0) is now out! 
 
-The planned features of the upcoming release are:
+The features of [v0.5.0](https://github.com/ge-high-assurance/RACK/releases/tag/v12.0) are:
 1. Creating Manifest-Based Ingestion Packages for RACK
 2. Ingesting a Well-Formed Ingestion Package into RACK
 3. Viewing Information about the Ontology and Nodegroups Stored on RACK
@@ -23,7 +23,7 @@ The planned features of the upcoming release are:
 
 
 ## Getting Started with RITE
-A detailed tutorial for getting started with RITE will be available here soon! Come back again in a few days!
+A detailed tutorial for getting started with RITE can be found [here](https://github.com/ge-high-assurance/RITE/wiki).
 
 
 <hr>
