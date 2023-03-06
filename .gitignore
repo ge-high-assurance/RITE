@@ -1,0 +1,39 @@
+### Eclipse ###
+*.bak
+*.swp
+*.tmp
+*~.nib
+.classpath
+.loadpath
+.metadata
+.project
+.recommenders
+.settings/
+bin/
+local.properties
+tmp/
+
+### Maven ###
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+buildNumber.properties
+dependency-reduced-pom.xml
+pom.xml.next
+pom.xml.releaseBackup
+pom.xml.tag
+pom.xml.versionsBackup
+release.properties
+target/
+
+### Unwanted files ###
+*.class
+*.jar
+*.log
+*.tar.gz
+*.zip
+.AppleDouble
+.DS_Store
+.LSOverride
+hs_err_pid*
+tools/rack/rack.plugin/lib/
+gsnArtifacts/

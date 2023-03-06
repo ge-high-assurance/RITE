@@ -1,0 +1,46 @@
+# Runs whenever a release is published on GitHub
+
+name: RITE Release Workflow
+
+on:
+  release:
+    types: [ published ]
+
+# Builds RITE source with Java and Maven
+# Caches Maven dependencies
+# Uploads RITE zips to release page
+
+jobs:
+  release:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        distribution: [ temurin ]
+        java-version: [ 11 ]
+        os: [ ubuntu-22.04 ]
+
+    steps:
+    - name: Check out RITE source
+      uses: actions/checkout@v3.3.0
+
+    - name: Set up Java and Maven
+      uses: actions/setup-java@v3.10.0
+      with:
+        cache: maven
+        distribution: ${{ matrix.distribution }}
+        java-version: ${{ matrix.java-version }}
+
+    - name: Build RITE source
+      run: mvn -B -f tools/rack/pom.xml package -Dtycho.localArtifacts=ignore
+
+    - name: Rename RITE zips
+      run: |
+        cd tools/rack/rack.product/target/products
+        mv *-linux.gtk.x86_64.zip RITE-linux.gtk.x86_64-${{ github.event.release.tag_name }}.zip
+        mv *-macosx.cocoa.x86_64.zip RITE-macosx.cocoa.x86_64-${{ github.event.release.tag_name }}.zip
+        mv *-win32.win32.x86_64.zip RITE-win32.win32.x86_64-${{ github.event.release.tag_name }}.zip
+
+    - name: Upload RITE zips to release page
+      uses: softprops/action-gh-release@v0.1.15
+      with:
+        files: tools/rack/rack.product/target/products/*.zip

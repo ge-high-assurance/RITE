@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.web.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="829.0" prefWidth="1169.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="com.ge.research.rack.RibViewHandler">
+   <children>
+      <WebView fx:id="ribView" layoutY="-2.0" prefHeight="845.0" prefWidth="1169.0" HBox.hgrow="ALWAYS" />
+   </children>
+</AnchorPane>

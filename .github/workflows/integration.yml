@@ -1,0 +1,34 @@
+# Runs whenever a pull request is created, modified, or reopened
+
+name: RITE Integration Workflow
+
+on:
+  pull_request:
+    types: [ opened, reopened, synchronize ]
+  workflow_dispatch:
+
+# Builds RITE source with Java and Maven
+# Caches Maven dependencies
+
+jobs:
+  integration:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        distribution: [ temurin ]
+        java-version: [ 11 ]
+        os: [ ubuntu-22.04 ]
+
+    steps:
+    - name: Check out RITE source
+      uses: actions/checkout@v3.3.0
+
+    - name: Set up Java and Maven
+      uses: actions/setup-java@v3.10.0
+      with:
+        cache: maven
+        distribution: ${{ matrix.distribution }}
+        java-version: ${{ matrix.java-version }}
+
+    - name: Build RITE source
+      run: mvn -B package -f tools/rack/pom.xml -Dtycho.localArtifacts=ignore

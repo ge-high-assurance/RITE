@@ -1,0 +1,56 @@
+# Runs whenever the main branch is changed (except for tags)
+
+name: RITE Main Workflow
+
+on:
+  push:
+    branches: [ main, march-release-v3 ]
+    tags-ignore: [ '*' ]
+  workflow_dispatch:
+
+# Builds RITE source with Java and Maven
+# Caches Maven dependencies
+
+jobs:
+  main:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        distribution: [ temurin ]
+        java-version: [ 11 ]
+        os: [ ubuntu-22.04 ]
+
+    steps:
+    - name: Check out RITE source
+      uses: actions/checkout@v3.3.0
+
+    - name: Set up Java and Maven
+      uses: actions/setup-java@v3.10.0
+      with:
+        cache: maven
+        distribution: ${{ matrix.distribution }}
+        java-version: ${{ matrix.java-version }}
+
+    - name: Build RITE source
+      run: mvn -B package -f tools/rack/pom.xml -Dtycho.localArtifacts=ignore
+
+    - name: Upload RITE linux product to artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: RITE-linux.gtk.x86_64.zip
+        path: tools/rack/rack.product/target/products/RITE-linux.gtk.x86_64.zip
+        retention-days: 1
+
+    - name: Upload RITE macosx product to artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: RITE-macosx.cocoa.x86_64.zip
+        path: tools/rack/rack.product/target/products/RITE-macosx.cocoa.x86_64.zip
+        retention-days: 1
+
+    - name: Upload RITE win32 product to artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: RITE-win32.win32.x86_64.zip
+        path: tools/rack/rack.product/target/products/RITE-win32.win32.x86_64.zip
+        retention-days: 1

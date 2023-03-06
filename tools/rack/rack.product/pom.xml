@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.ge.research.rack</groupId>
+    <artifactId>rack</artifactId>
+    <version>0.5.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>rack.product</artifactId>
+  <packaging>eclipse-repository</packaging>
+
+  <build>
+    <plugins>
+      <!-- Skip deploy, https://issues.apache.org/jira/browse/MINSTALL-151 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      <!-- Skip install, https://issues.apache.org/jira/browse/MINSTALL-151 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      <!-- Build products and their zip archives -->
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-p2-director-plugin</artifactId>
+        <configuration>
+          <profile>RITE</profile>
+          <formats>
+            <linux>zip</linux>
+            <macosx>zip</macosx>
+          </formats>
+          <products>
+            <product>
+              <id>RITE</id>
+              <rootFolder>RITE</rootFolder>
+            </product>
+          </products>
+        </configuration>
+        <executions>
+          <execution>
+            <id>default-materialize-products</id>
+            <goals>
+              <goal>materialize-products</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>default-archive-products</id>
+            <goals>
+              <goal>archive-products</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- Don't build repository zip archive -->
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-p2-repository-plugin</artifactId>
+        <configuration>
+          <createArtifactRepository>false</createArtifactRepository>
+          <includeAllDependencies>true</includeAllDependencies>
+          <skipArchive>true</skipArchive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
