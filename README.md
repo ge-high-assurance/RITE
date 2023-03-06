@@ -10,9 +10,9 @@ Besides supporting basic data modeling and curation features, RITE also provides
 
 
 ## Latest Release and Feature List
-RITE [v0.5.0](https://github.com/ge-high-assurance/RACK/releases/tag/v12.0) is now out! 
+RITE [v0.5.0](https://github.com/ge-high-assurance/RITE/releases/tag/v0.5.0) is now out! 
 
-The features of [v0.5.0](https://github.com/ge-high-assurance/RACK/releases/tag/v12.0) are:
+The features of [v0.5.0](https://github.com/ge-high-assurance/RITE/releases/tag/v0.5.0) are:
 1. Creating Manifest-Based Ingestion Packages for RACK
 2. Ingesting a Well-Formed Ingestion Package into RACK
 3. Viewing Information about the Ontology and Nodegroups Stored on RACK
