@@ -13,13 +13,13 @@ Besides supporting basic data modeling and curation features, RITE also provides
 RITE [v0.5.0](https://github.com/ge-high-assurance/RITE/releases/tag/v0.5.0) is now out! 
 
 The features of [v0.5.0](https://github.com/ge-high-assurance/RITE/releases/tag/v0.5.0) are:
-1. Creating Manifest-Based Ingestion Packages for RACK
-2. Ingesting a Well-Formed Ingestion Package into RACK
-3. Viewing Information about the Ontology and Nodegroups Stored on RACK
-4. Quickly Creating Instance Data for the Ontology Currently Loaded on RACK
-5. Executing Nodegroups Currently Loaded on RACK and Viewing Results
-6. Generating Ingestion Nodegroups for the Ontology Currently Loaded on RACK
-7. SADL Model Development 
+1. [Creating Manifest-Based Ingestion Packages for RACK](https://github.com/ge-high-assurance/RITE/wiki/RITE-Tutorial#2-creating-a-manifest-based-ingestion-package-for-rack)
+2. [Ingesting a Well-Formed Ingestion Package into RACK](https://github.com/ge-high-assurance/RITE/wiki/RITE-Tutorial#3-ingesting-a-well-formed-ingestion-package-into-rack)
+3. [Viewing Information about the Ontology and Nodegroups Stored on RACK](https://github.com/ge-high-assurance/RITE/wiki/RITE-Tutorial#4-viewing-information-about-the-ontology-and-nodegroups-stored-on-rack)
+4. [Quickly Creating Instance Data for the Ontology Currently Loaded on RACK](https://github.com/ge-high-assurance/RITE/wiki/RITE-Tutorial#5-quickly-creating-instance-data-for-the-ontology-currently-loaded-on-rack)
+5. [Executing Nodegroups Currently Loaded on RACK and Viewing Results](https://github.com/ge-high-assurance/RITE/wiki/RITE-Tutorial#6-executing-nodegroups-currently-loaded-on-rack-and-viewing-results)
+6. [Generating Ingestion Nodegroups for the Ontology Currently Loaded on RACK](https://github.com/ge-high-assurance/RITE/wiki/RITE-Tutorial#7-generating-ingestion-nodegroups-for-the-ontology-currently-loaded-on-rack)
+7. [SADL Model Development](https://github.com/ge-high-assurance/RITE/wiki/RITE-Tutorial#8-sadl-model-development-in-rite)
 
 
 ## Getting Started with RITE
