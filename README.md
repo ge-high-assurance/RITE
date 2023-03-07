@@ -23,7 +23,7 @@ The features of [v0.5.0](https://github.com/ge-high-assurance/RITE/releases/tag/
 
 
 ## Getting Started with RITE
-A detailed tutorial for getting started with RITE can be found [here](https://github.com/ge-high-assurance/RITE/wiki).
+A detailed tutorial for getting started with RITE can be found [here](https://github.com/ge-high-assurance/RITE/wiki/RITE-Tutorial).
 
 
 <hr>
