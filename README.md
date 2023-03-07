@@ -14,7 +14,7 @@ RITE [v0.5.0](https://github.com/ge-high-assurance/RITE/releases/tag/v0.5.0) is 
 
 The features of [v0.5.0](https://github.com/ge-high-assurance/RITE/releases/tag/v0.5.0) are:
 1. [Creating Manifest-Based Ingestion Packages for RACK](https://github.com/ge-high-assurance/RITE/wiki/RITE-Tutorial#2-creating-a-manifest-based-ingestion-package-for-rack)
-2. [Ingesting a Well-Formed Ingestion Package into RACK](https://github.com/ge-high-assurance/RITE/wiki/RITE-Tutorial#3-ingesting-a-well-formed-ingestion-package-into-rack)
+2. [Ingesting Well-Formed Ingestion Packages into RACK](https://github.com/ge-high-assurance/RITE/wiki/RITE-Tutorial#3-ingesting-a-well-formed-ingestion-package-into-rack)
 3. [Viewing Information about the Ontology and Nodegroups Stored on RACK](https://github.com/ge-high-assurance/RITE/wiki/RITE-Tutorial#4-viewing-information-about-the-ontology-and-nodegroups-stored-on-rack)
 4. [Quickly Creating Instance Data for the Ontology Currently Loaded on RACK](https://github.com/ge-high-assurance/RITE/wiki/RITE-Tutorial#5-quickly-creating-instance-data-for-the-ontology-currently-loaded-on-rack)
 5. [Executing Nodegroups Currently Loaded on RACK and Viewing Results](https://github.com/ge-high-assurance/RITE/wiki/RITE-Tutorial#6-executing-nodegroups-currently-loaded-on-rack-and-viewing-results)
