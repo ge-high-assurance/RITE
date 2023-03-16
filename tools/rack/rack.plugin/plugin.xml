@@ -83,10 +83,6 @@
     <!-- UI Handlers -->
     <extension point="org.eclipse.ui.handlers">
 
-        <handler class="com.ge.research.rack.LoadNodeGroupsHandler"
-            commandId="rackplugin.commands.loadNodeGroupsCommand">
-        </handler>
-
         <handler class="com.ge.research.rack.ClearAllHandler"
             commandId="rackplugin.commands.clearAll">
         </handler>
