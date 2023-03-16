@@ -92,11 +92,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
 
     private static boolean startRun() {
         synchronized (lock) {
-            if (!isRunning) {
-                isRunning = true;
-                return true;
-            }
-            return false;
+            return isRunning ? false : (isRunning = true);
         }
     }
 
@@ -133,6 +129,8 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
 
         if (paths.isEmpty() || paths.get().length != 1) {
             RackConsole.getConsole().error(NO_SELECTED_PROJECT);
+            endRun();
+            return null;
         }
 
         final Optional<File> selected_project =
@@ -142,12 +140,10 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
                         .findAny();
 
         if (selected_project.isEmpty()) {
+        	
             RackConsole.getConsole().error(NO_SELECTED_PROJECT);
-            return null;
-        }
-
-        if (selected_project.isEmpty()) {
             endRun();
+            
         } else {
             // End run is called in the async callback
             scheduleUploadNodegroupFile(selected_project.get().toPath(), () -> endRun());
@@ -211,6 +207,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
                     zipPath = ingestionPackageFilepath;
 
                 } else {
+                	
                     final String packageName =
                             String.format(
                                     PACKAGE_NAME_FORMAT.format(new Date()),
