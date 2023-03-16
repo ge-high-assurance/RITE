@@ -59,6 +59,8 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
+import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreePath;
@@ -70,7 +72,10 @@ public class IngestInstanceDataHandler extends AbstractHandler {
     private static String manifestPath = "";
     private static SparqlConnection override;
 
-    private void uploadModelFromYAML(String yamlPath) throws Exception {
+    private void uploadModelFromYAML(String yamlPath, IProgressMonitor monitor) throws Exception {
+    	if(monitor.isCanceled()) {
+    		return;
+    	}
         File file = new File(yamlPath);
         if (!file.exists()) {
             return;
@@ -106,6 +111,9 @@ public class IngestInstanceDataHandler extends AbstractHandler {
         ArrayList<String> steps = (ArrayList<String>) oList;
 
         for (String owl : steps) {
+        	if(monitor.isCanceled()) {
+        		return;
+        	}
             String owlPath = Paths.get(dir + "/" + owl).normalize().toString();
             File owlFile = new File(owlPath);
             if (!owlFile.exists()) {
@@ -123,8 +131,11 @@ public class IngestInstanceDataHandler extends AbstractHandler {
         }
     }
 
-    private void uploadDataFromYAML(String yamlPath) throws Exception {
-
+    private void uploadDataFromYAML(String yamlPath, IProgressMonitor monitor) throws Exception {
+    	
+    	if(monitor.isCanceled()) {
+    		return;
+    	}
         File file = new File(yamlPath);
         if (!file.exists()) {
             return;
@@ -176,6 +187,9 @@ public class IngestInstanceDataHandler extends AbstractHandler {
         ArrayList<Map<String, Object>> steps = (ArrayList<Map<String, Object>>) oList;
 
         for (Map<String, Object> step : steps) {
+        	if(monitor.isCanceled()) {
+        		return;
+        	}
             boolean bUriIngestion = false;
             String ingestionId = "";
             if (step.containsKey("csv")) {
@@ -271,8 +285,11 @@ public class IngestInstanceDataHandler extends AbstractHandler {
         }
     }
 
-    private void uploadNodegroupsFromYAML(String ngPath) throws Exception {
-
+    private void uploadNodegroupsFromYAML(String ngPath, IProgressMonitor monitor) throws Exception {
+    	
+    	if(monitor.isCanceled()) {
+    		return;
+    	}
         File dir = new File(ngPath);
         if (!dir.exists()) {
             return;
@@ -319,12 +336,15 @@ public class IngestInstanceDataHandler extends AbstractHandler {
             return;
         }
 
-        uploadNodegroupsFromCSV(ngPath, tabData);
+        uploadNodegroupsFromCSV(ngPath, tabData, monitor);
     }
 
-    private void uploadNodegroupsFromCSV(String ngPath, ArrayList<ArrayList<String>> tabData)
+    private void uploadNodegroupsFromCSV(String ngPath, ArrayList<ArrayList<String>> tabData, IProgressMonitor monitor)
             throws Exception {
         for (ArrayList<String> entry : tabData) {
+        	if(monitor.isCanceled()) {
+        		return;
+        	}
             String nodegroupId = entry.get(0);
             File ngJson = new File(ngPath + "/" + nodegroupId + ".json");
             if (!ngJson.exists()) {
@@ -351,8 +371,11 @@ public class IngestInstanceDataHandler extends AbstractHandler {
         }
     }
 
-    private void uploadDataFromManifestYAML(String yamlPath) throws Exception {
-
+    private void uploadDataFromManifestYAML(String yamlPath, IProgressMonitor monitor) throws Exception {
+    	
+    	if(monitor.isCanceled()) {
+    		return;
+    	}
         File file = new File(yamlPath);
         if (!file.exists()) {
             return;
@@ -403,7 +426,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                     continue;
                 }
                 uploadDataFromYAML(
-                        Paths.get(Paths.get(dir) + "/" + importDataYaml).normalize().toString());
+                        Paths.get(Paths.get(dir) + "/" + importDataYaml).normalize().toString(), monitor);
                 continue;
             }
 
@@ -414,7 +437,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                 }
 
                 uploadModelFromYAML(
-                        Paths.get(Paths.get(dir) + "/" + owlModel).normalize().toString());
+                        Paths.get(Paths.get(dir) + "/" + owlModel).normalize().toString(), monitor);
                 continue;
             }
 
@@ -425,7 +448,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                 }
 
                 uploadDataFromManifestYAML(
-                        Paths.get(Paths.get(dir) + "/" + subManifest).normalize().toString());
+                        Paths.get(Paths.get(dir) + "/" + subManifest).normalize().toString(), monitor);
                 continue;
             }
 
@@ -436,7 +459,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                 }
 
                 uploadNodegroupsFromYAML(
-                        Paths.get(Paths.get(dir) + "/" + ngEntry).normalize().toString());
+                        Paths.get(Paths.get(dir) + "/" + ngEntry).normalize().toString(), monitor);
                 continue;
             }
         }
@@ -486,14 +509,16 @@ public class IngestInstanceDataHandler extends AbstractHandler {
     private IStatus ingestInstanceData(IProgressMonitor monitor) {
 
         // get csv files and extract nodegroup ids
-
+    	if(monitor.isCanceled()) {
+    		return Status.CANCEL_STATUS;
+    	}
         File ingestionYaml = new File(manifestPath);
         if (!ingestionYaml.exists()) {
             RackConsole.getConsole().println("No manifest.yaml found, nothing to ingest");
             return Status.CANCEL_STATUS;
         }
         try {
-            uploadDataFromManifestYAML(manifestPath);
+            uploadDataFromManifestYAML(manifestPath, monitor);
             monitor.worked(100);
         } catch (Exception e) {
             RackConsole.getConsole().error("Ingestion failed using manifest yaml");
@@ -578,7 +603,32 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                         return ingestInstanceData(monitor);
                     }
                 };
+        job.addJobChangeListener(
+                new IJobChangeListener() {
+                    @Override
+                    public void done(IJobChangeEvent event) {
+                         job.cancel();
+                    }
 
+                    @Override
+                    public void awake(IJobChangeEvent event) {}
+
+                    @Override
+                    public void aboutToRun(IJobChangeEvent event) {
+                         
+                    }
+
+                    @Override
+                    public void sleeping(IJobChangeEvent event) {}
+
+                    @Override
+                    public void running(IJobChangeEvent event) {
+                          job.getState();  
+                    }
+
+                    @Override
+                    public void scheduled(IJobChangeEvent event) {}
+                });
         job.schedule();
         return null;
     }
