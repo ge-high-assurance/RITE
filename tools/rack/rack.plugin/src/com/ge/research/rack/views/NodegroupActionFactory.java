@@ -46,6 +46,7 @@ import java.util.Arrays;
 import org.apache.commons.io.*;
 import org.eclipse.jface.action.Action;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
@@ -158,51 +159,19 @@ public class NodegroupActionFactory {
     }
 
     public static Action getQueryNodegroupAction(INodegroupView view) {
-        return new Action() {
-            public void run() {
+        
+    	return new Action() {
+            public void runWithEvent(Event event) {
                 // nodegroups
                 ArrayList<String> selection = view.getSelectedNodegroups();
                 if (selection.size() == 0) {
                     return;
                 }
-
-                String queryNodegroup = selection.get(0);
-                try {
-                    NodeGroupExecutionClient client = ConnectionUtil.getNGEClient();
-                    SparqlConnection conn = ConnectionUtil.getSparqlConnection();
-                    // define an endpoint graph, and build a connection that uses it for model and
-                    // data
-                    // run a query from the store by id
-                    com.ge.research.semtk.resultSet.Table results =
-                            client.execDispatchSelectByIdToTable(queryNodegroup, conn, null, null);
-                    QueryResultsView.results = results;
-                    // System.out.println("Cell 0 0: " + results.getCellAsString(0, 0));
-                    String csv_string = results.toCSVString();
-                    String dir = /*ProjectUtils.getOverlayProjectPath();*/
-                            RackPreferencePage.getInstanceDataFolder();
-                    ProjectUtils.validateInstanceDataFolder();
-                    String queryResultsDir = dir + "/" + Core.QUERY_RESULTS_FOLDER + "/";
-                    File file = new File(queryResultsDir);
-                    if (!file.exists() || !file.isDirectory()) {
-                        RackConsole.getConsole()
-                                .println("No QueryResults folder found, creating one");
-                        file.mkdirs();
-                    }
-                    CSVUtil.writeToCSV(
-                            csv_string, queryResultsDir + queryNodegroup + "_queryresults.csv");
-                    System.out.println("Results for queried nodegroup: ");
-                    System.out.println(csv_string);
-
-                    Display.getDefault()
-                            .asyncExec(
-                                    () -> {
-                                        ViewUtils.showView(QueryResultsView.ID);
-                                    });
-
-                } catch (Exception e) {
-                    RackConsole.getConsole().error("Unable to show query result view");
-                }
-            }
+                   String queryNodegroup = selection.get(0);
+                SelectDataGraphsDialog dialog = new SelectDataGraphsDialog(event.widget.getDisplay().getActiveShell(), queryNodegroup);
+                dialog.run();
+                
+                           }
         };
     }
 }
