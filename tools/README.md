@@ -1,6 +1,6 @@
-# RACK IDE - Libraries
+# RITE - Libraries
 
-There are two ways to add a library to the RACK IDE.
+There are two ways to add a library to RITE.
 
 ## Get the Library from an Eclipse P2 Repository
 
