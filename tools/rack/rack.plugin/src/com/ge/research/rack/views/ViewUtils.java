@@ -35,40 +35,59 @@ import com.ge.research.rack.utils.RackConsole;
 import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.jface.resource.ResourceLocator;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
 public class ViewUtils {
-    public static Image getIcon(String name) {
-        return ResourceLocator.imageDescriptorFromBundle("rack.plugin", "icons/" + name)
-                .get()
-                .createImage();
-    }
+	public static Image getIcon(String name) {
+		return ResourceLocator.imageDescriptorFromBundle("rack.plugin", "icons/" + name).get().createImage();
+	}
 
-    public static Pair<IWorkbenchPage, IViewPart> getPageAndViewByViewId(String viewId) {
-        IWorkbenchWindow[] windows = PlatformUI.getWorkbench().getWorkbenchWindows();
-        for (int i = 0; i < windows.length; i++) {
-            IWorkbenchPage[] pages = windows[i].getPages();
-            for (int j = 0; j < pages.length; j++) {
-                IViewPart view = pages[j].findView(viewId);
-                if (view != null) {
-                    return Pair.of(pages[j], view);
-                }
-            }
-        }
-        return null;
-    }
+	public static Pair<IWorkbenchPage, IViewPart> getPageAndViewByViewId(String viewId) {
+		IWorkbenchWindow[] windows = PlatformUI.getWorkbench().getWorkbenchWindows();
+		for (int i = 0; i < windows.length; i++) {
+			IWorkbenchPage[] pages = windows[i].getPages();
+			for (int j = 0; j < pages.length; j++) {
+				IViewPart view = pages[j].findView(viewId);
+				if (view != null) {
+					return Pair.of(pages[j], view);
+				}
+			}
+		}
+		return null;
+	}
 
-    public static void showView(String viewId) {
-        IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-        IViewPart view = window.getActivePage().findView(viewId);
-        window.getActivePage().hideView(view);
-        try {
-            window.getActivePage().showView(viewId);
-        } catch (Exception e) {
-            RackConsole.getConsole().error("Unable to show view : " + viewId);
-        }
-    }
+	public static void showView(String viewId) {
+		try {
+			IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+			IViewPart view = window.getActivePage().findView(viewId);
+			window.getActivePage().hideView(view);
+			window.getActivePage().showView(viewId);
+		} catch (Exception e) {
+			RackConsole.getConsole().error("Unable to show view : " + viewId);
+		}
+	}
+
+	public static void showProgressView() {
+		Display.getDefault().asyncExec(new Thread(() -> {
+			IWorkbenchWindow[] windows = PlatformUI.getWorkbench().getWorkbenchWindows();
+			if (windows.length > 0) {
+				IWorkbenchWindow window = windows[0];
+				IWorkbenchPage[] pages = window.getPages();
+				if (pages.length > 0) {
+					IWorkbenchPage page = pages[0];
+					try {
+						page.showView(org.eclipse.ui.progress.IProgressConstants.PROGRESS_VIEW_ID);
+					} catch (PartInitException e) {
+						// TODO Auto-generated catch block
+						RackConsole.getConsole().error("Unable to show progress view");
+					}
+				}
+			}
+		}));
+	}
 }

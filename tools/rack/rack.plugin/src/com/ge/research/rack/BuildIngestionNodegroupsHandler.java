@@ -37,6 +37,8 @@ import com.ge.research.rack.utils.OntologyUtil;
 import com.ge.research.rack.utils.ProjectUtils;
 import com.ge.research.rack.utils.RackConsole;
 import com.ge.research.rack.views.RackPreferencePage;
+import com.ge.research.rack.views.ViewUtils;
+
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.Charset;
@@ -135,6 +137,7 @@ public class BuildIngestionNodegroupsHandler extends AbstractHandler {
 			}
 		}
 		return Status.OK_STATUS;
+		
 	}
 
 	@Override
@@ -154,6 +157,7 @@ public class BuildIngestionNodegroupsHandler extends AbstractHandler {
 			monitor.beginTask("start task", 100);
 
 			try {
+				ViewUtils.showProgressView();
 				return buildNodegroups(monitor);
 			} catch (Exception e) {
 				RackConsole.getConsole().error("Cannot build nodegroups");
@@ -161,8 +165,6 @@ public class BuildIngestionNodegroupsHandler extends AbstractHandler {
 			}
 		});
 
-		IProgressService service = (IProgressService) PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-				.getService(IProgressService.class);
 		job.addJobChangeListener(new IJobChangeListener() {
 			@Override
 			public void done(IJobChangeEvent event) {
