@@ -35,6 +35,7 @@ import com.ge.research.rack.utils.ConnectionUtil;
 import com.ge.research.rack.utils.ProjectUtils;
 import com.ge.research.rack.utils.RackConsole;
 import com.ge.research.rack.views.RackPreferencePage;
+import com.ge.research.rack.views.ViewUtils;
 import com.ge.research.semtk.api.nodeGroupExecution.client.NodeGroupExecutionClient;
 import com.ge.research.semtk.load.utility.SparqlGraphJson;
 import com.ge.research.semtk.nodeGroupStore.client.NodeGroupStoreRestClient;
@@ -600,6 +601,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                 new Job("Ingesting data into RACK") {
                     @Override
                     protected IStatus run(IProgressMonitor monitor) {
+                    	ViewUtils.showProgressView();
                         return ingestInstanceData(monitor);
                     }
                 };
