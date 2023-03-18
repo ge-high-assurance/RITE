@@ -151,8 +151,8 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
         makeActions();
         hookContextMenu();
 
-        final TableColumn col1 = new TableColumn(table, SWT.LEFT);
-        col1.setText("      Nodegroup ID"); // Accommodate select all button buffer
+        final TableColumn col1 = new TableColumn(table, SWT.CENTER);
+        col1.setText("Nodegroup ID"); // Accommodate select all button buffer
         table.showColumn(col1);
 
         Stream.of("Comments", "Creation Data", "Creator")
@@ -217,6 +217,7 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
         manager.add(queryNodegroupAction);
         manager.add(deleteNodegroupAction);
         manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+       
     }
 
     private void makeActions() {
@@ -224,8 +225,9 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
         viewCsvIngestionTemplatesAction.setText(VIEW_CSV_ACTION);
 
         queryNodegroupAction = NodegroupActionFactory.getQueryNodegroupAction(this);
+        
         queryNodegroupAction.setText(QUERY_NODEGROUP_ACTION);
-
+        
         deleteNodegroupAction = new DeleteSelectedNodeGroupsAction();
         deleteNodegroupAction.setText(DELETE_NODEGROUP_ACTION);
     }

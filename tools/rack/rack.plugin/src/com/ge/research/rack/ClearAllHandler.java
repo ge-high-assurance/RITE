@@ -33,6 +33,7 @@ package com.ge.research.rack;
 
 import com.ge.research.rack.utils.ConnectionUtil;
 import com.ge.research.rack.utils.RackConsole;
+import com.ge.research.rack.views.ViewUtils;
 import com.ge.research.semtk.nodeGroupStore.client.NodeGroupStoreRestClient;
 import com.ge.research.semtk.resultSet.Table;
 import com.ge.research.semtk.resultSet.TableResultSet;
@@ -46,6 +47,8 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.*;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.console.IConsoleConstants;
 import org.eclipse.ui.console.IConsoleView;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -120,7 +123,7 @@ public class ClearAllHandler extends AbstractHandler {
                         @Override
                         protected IStatus run(IProgressMonitor monitor) {
                             // Set total number of work units
-
+                        	ViewUtils.showProgressView();
                             monitor.beginTask("start task", 100);
                             try {
 
