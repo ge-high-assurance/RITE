@@ -137,6 +137,7 @@ public class BuildIngestionNodegroupsHandler extends AbstractHandler {
 			}
 		}
 		return Status.OK_STATUS;
+		
 	}
 
 	@Override
@@ -164,8 +165,6 @@ public class BuildIngestionNodegroupsHandler extends AbstractHandler {
 			}
 		});
 
-		IProgressService service = (IProgressService) PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-				.getService(IProgressService.class);
 		job.addJobChangeListener(new IJobChangeListener() {
 			@Override
 			public void done(IJobChangeEvent event) {
