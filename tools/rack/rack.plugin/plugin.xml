@@ -159,8 +159,7 @@
             class="com.ge.research.rack.BuildIngestionNodegroupsHandler"
             commandId="rackplugin.commands.buildIngestionNodegroups">
         </handler>
-        <handler
-            class="com.ge.research.rack.RegenerateManifest"
+        <handler class="com.ge.research.rack.RegenerateManifest"
             commandId="rackplugin.commands.regenerateManifest">
         </handler>
         <handler class="com.ge.research.rack.SetProjectTypeHandler"
