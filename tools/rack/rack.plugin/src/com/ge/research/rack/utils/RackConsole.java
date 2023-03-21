@@ -32,7 +32,10 @@
 package com.ge.research.rack.utils;
 
 import com.ge.research.rack.views.ViewUtils;
+<<<<<<< HEAD
 import org.eclipse.swt.graphics.Color;
+=======
+>>>>>>> pin rack console by default
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
@@ -70,7 +73,6 @@ public class RackConsole extends MessageConsole {
     public void print(String message) {
         Color black = new Color(0, 0, 0, 255);
         stream.setColor(black);
-        stream.setColor(black);
         stream.print("\nINFO: " + message);
         // System.out.print(message);
         // logger.info(message);
@@ -78,7 +80,6 @@ public class RackConsole extends MessageConsole {
 
     public void println(String message) {
         Color black = new Color(0, 0, 0, 255);
-        stream.setColor(black);
         stream.setColor(black);
         stream.print("INFO: " + message + "\n");
         // logger.info(message);
@@ -96,7 +97,6 @@ public class RackConsole extends MessageConsole {
     public void error(String message) {
         Color red = new Color(255, 0, 0, 255);
         streamErr.setColor(red);
-        streamErr.setColor(red);
         streamErr.print("\nERROR: " + message);
         // logger.error(message);
         // System.err.println("ERROR: " + message);
@@ -105,15 +105,13 @@ public class RackConsole extends MessageConsole {
     public void error(final String message, final Exception exception) {
         Color red = new Color(255, 0, 0, 255);
         streamErr.setColor(red);
-        streamErr.setColor(red);
         streamErr.print("\nERROR: " + message + "\n" + exception.getStackTrace() + "\n");
-
         //// System.err.println("ERROR: " + message + "\n" + exception.getStackTrace());
         // logger.error(message + "\n" + exception.getStackTrace());
     }
 
     public void warning(String message) {
-        stream.print("\nWARNING: " + message);
+        stream.print("WARNING: " + message + "\n");
         // logger.warn(message);
         // System.out.println("WARNING: " + message);
     }
