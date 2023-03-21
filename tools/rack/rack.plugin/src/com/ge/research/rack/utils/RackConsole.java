@@ -31,6 +31,7 @@
  */
 package com.ge.research.rack.utils;
 
+import com.ge.research.rack.views.ViewUtils;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
@@ -48,46 +49,49 @@ public class RackConsole extends MessageConsole {
     public static RackConsole getConsole() {
         if (setup == false) {
             ConsolePlugin plugin = ConsolePlugin.getDefault();
-            IConsoleManager conMan = plugin.getConsoleManager();
+            IConsoleManager consoleManager = plugin.getConsoleManager();
             console = new RackConsole();
+            console.activate();
             stream = console.newMessageStream();
-            conMan.addConsoles(new IConsole[] {console});
+            consoleManager.addConsoles(new IConsole[] {console});
+            ViewUtils.pinConsole(console);
             setup = true;
         }
         return console;
     }
 
     private RackConsole() {
-        super("Rack Console", null, false);
+        super("Rack Console", null, true);
     }
 
     public void print(String message) {
-        // stream.print(message);
+        stream.print(message);
         // System.out.print(message);
-        logger.info(message);
+        // logger.info(message);
     }
 
     public void println(String message) {
-        // stream.print("INFO: " + message + "\n");
-        logger.info(message);
+        stream.print("INFO: " + message + "\n");
+        // logger.info(message);
         // System.out.println("INFO: " + message);
     }
 
     public void error(String message) {
-        // stream.print("ERROR: " + message + "\n");
-        logger.error(message);
+        stream.print("ERROR: " + message + "\n");
+        // logger.error(message);
         // System.err.println("ERROR: " + message);
     }
 
     public void error(final String message, final Exception exception) {
-        // stream.print("ERROR: " + message + "\n" + exception.getStackTrace() + "\n");
-        // System.err.println("ERROR: " + message + "\n" + exception.getStackTrace());
-        logger.error(message + "\n" + exception.getStackTrace());
+
+        stream.print("ERROR: " + message + "\n" + exception.getStackTrace() + "\n");
+        //// System.err.println("ERROR: " + message + "\n" + exception.getStackTrace());
+        // logger.error(message + "\n" + exception.getStackTrace());
     }
 
     public void warning(String message) {
-        // stream.print("WARNING: " + message + "\n");
-        logger.warn(message);
+        stream.print("WARNING: " + message + "\n");
+        // logger.warn(message);
         // System.out.println("WARNING: " + message);
     }
 }
