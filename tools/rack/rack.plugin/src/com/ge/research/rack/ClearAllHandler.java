@@ -70,7 +70,7 @@ public class ClearAllHandler extends AbstractHandler {
             RackConsole.getConsole().printOK();
 
         } catch (Exception e) {
-        	RackConsole.getConsole().printFAIL();
+            RackConsole.getConsole().printFAIL();
             RackConsole.getConsole()
                     .error("Clearing ontologies failed, check connection parameters and retry");
         }
@@ -96,9 +96,9 @@ public class ClearAllHandler extends AbstractHandler {
                 RackConsole.getConsole().printOK();
                 // boolean isCore = (Core.defaultNodegroups.contains(id)) ? true : false;
                 // NodegroupUtil.removeFromYaml(id, isCore);
-               
+
             } catch (Exception e) {
-            	RackConsole.getConsole().printFAIL();
+                RackConsole.getConsole().printFAIL();
                 String message = "Deletion of nodegroup" + id + " failed";
                 RackConsole.getConsole().error(message);
             }
@@ -149,6 +149,8 @@ public class ClearAllHandler extends AbstractHandler {
                             if (event.getResult() == Status.CANCEL_STATUS) {
                                 return;
                             }
+                            
+                            RackConsole.getConsole().print("Ontologies and Nodegroups are cleared from RACK");
                             HandlerUtils.loadNodegroups();
                             HandlerUtils.showNodegroupTable();
                             HandlerUtils.showOntologyTree();

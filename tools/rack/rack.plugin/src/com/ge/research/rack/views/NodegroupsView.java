@@ -390,11 +390,12 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
         @Override
         protected IStatus run(IProgressMonitor monitor) {
             try {
-
+                RackConsole.getConsole().print("Deleting nodegroup: " + nodegroupId + " ... ");
                 NodegroupUtil.client.deleteStoredNodeGroup(nodegroupId);
+                RackConsole.getConsole().printOK();
 
             } catch (final Exception e) {
-
+                RackConsole.getConsole().printFAIL();
                 RackConsole.getConsole()
                         .error(String.format(NODEGROUP_DELETE_ERROR, nodegroupId), e);
 
