@@ -78,7 +78,6 @@ public class SelectDataGraphsDialog extends Dialog {
     @Override
     protected void configureShell(Shell shell) {
         super.configureShell(shell);
-
         shell.setText("Select Data Graphs: " + nodegroupId);
         shell.setFont(font);
     }
@@ -146,6 +145,7 @@ public class SelectDataGraphsDialog extends Dialog {
                                             dataGraphs.get(0), dataGraphs);
                             RackConsole.getConsole()
                                     .print("Querying nodegroup: " + nodegroupId + " ... ");
+
                             // run a query from the store by id
                             com.ge.research.semtk.resultSet.Table results =
                                     client.execDispatchSelectByIdToTable(

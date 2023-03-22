@@ -33,9 +33,13 @@ package com.ge.research.rack.utils;
 
 import com.ge.research.rack.views.ViewUtils;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.eclipse.swt.graphics.Color;
 =======
 >>>>>>> pin rack console by default
+=======
+import org.eclipse.swt.graphics.Color;
+>>>>>>> making progress messages more uniform
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
@@ -85,6 +89,14 @@ public class RackConsole extends MessageConsole {
         // logger.info(message);
         // System.out.println("INFO: " + message);
     }
+    
+    public void printOK() {
+    	stream.print("OK");
+    }
+    
+    public void printFAIL() {
+    	stream.print("FAIL");
+    }
 
     public void printOK() {
         stream.print("OK");
@@ -104,14 +116,14 @@ public class RackConsole extends MessageConsole {
 
     public void error(final String message, final Exception exception) {
         Color red = new Color(255, 0, 0, 255);
-        streamErr.setColor(red);
-        streamErr.print("\nERROR: " + message + "\n" + exception.getStackTrace() + "\n");
+        stream.setColor(red);
+        stream.print("\nERROR: " + message + "\n" + exception.getStackTrace() + "\n");
         //// System.err.println("ERROR: " + message + "\n" + exception.getStackTrace());
         // logger.error(message + "\n" + exception.getStackTrace());
     }
 
     public void warning(String message) {
-        stream.print("WARNING: " + message + "\n");
+        stream.print("\nWARNING: " + message);
         // logger.warn(message);
         // System.out.println("WARNING: " + message);
     }

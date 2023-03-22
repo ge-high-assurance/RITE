@@ -209,8 +209,6 @@
                     label="Regenerate manifest file" mnemonic="R">
                 </command>
                 <command commandId="rackplugin.commands.ingestInstanceData"
-                    id="rackplugin.menus.ingestInstanceData"
-                    label="Ingest using Manifest file" mnemonic="I">
                     id="rackplugin.menus.ingestInstanceData" label="Manifest Import"
                     mnemonic="S">
                 </command>

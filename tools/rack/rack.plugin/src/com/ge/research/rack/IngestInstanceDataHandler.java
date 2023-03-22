@@ -135,7 +135,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
     private int uploadDataFromYAML(String yamlPath, IProgressMonitor monitor) throws Exception {
 
         if (monitor.isCanceled()) {
-            return 1;
+            return -1;
         }
         File file = new File(yamlPath);
         if (!file.exists()) {
@@ -395,7 +395,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
             throws Exception {
 
         if (monitor.isCanceled()) {
-            return 0;
+            return -1;
         }
         File file = new File(yamlPath);
         if (!file.exists()) {
