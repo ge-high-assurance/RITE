@@ -66,17 +66,15 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeSelection;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 public class IngestInstanceDataHandler extends AbstractHandler {
     private static String manifestPath = "";
-    private static SparqlConnection override;
 
     private void uploadModelFromYAML(String yamlPath, IProgressMonitor monitor) throws Exception {
-    	if(monitor.isCanceled()) {
-    		return;
-    	}
+        if (monitor.isCanceled()) {
+            return;
+        }
         File file = new File(yamlPath);
         if (!file.exists()) {
             return;
@@ -112,9 +110,9 @@ public class IngestInstanceDataHandler extends AbstractHandler {
         ArrayList<String> steps = (ArrayList<String>) oList;
 
         for (String owl : steps) {
-        	if(monitor.isCanceled()) {
-        		return;
-        	}
+            if (monitor.isCanceled()) {
+                return;
+            }
             String owlPath = Paths.get(dir + "/" + owl).normalize().toString();
             File owlFile = new File(owlPath);
             if (!owlFile.exists()) {
@@ -133,10 +131,10 @@ public class IngestInstanceDataHandler extends AbstractHandler {
     }
 
     private void uploadDataFromYAML(String yamlPath, IProgressMonitor monitor) throws Exception {
-    	
-    	if(monitor.isCanceled()) {
-    		return;
-    	}
+
+        if (monitor.isCanceled()) {
+            return;
+        }
         File file = new File(yamlPath);
         if (!file.exists()) {
             return;
@@ -188,9 +186,9 @@ public class IngestInstanceDataHandler extends AbstractHandler {
         ArrayList<Map<String, Object>> steps = (ArrayList<Map<String, Object>>) oList;
 
         for (Map<String, Object> step : steps) {
-        	if(monitor.isCanceled()) {
-        		return;
-        	}
+            if (monitor.isCanceled()) {
+                return;
+            }
             boolean bUriIngestion = false;
             String ingestionId = "";
             if (step.containsKey("csv")) {
@@ -286,11 +284,12 @@ public class IngestInstanceDataHandler extends AbstractHandler {
         }
     }
 
-    private void uploadNodegroupsFromYAML(String ngPath, IProgressMonitor monitor) throws Exception {
-    	
-    	if(monitor.isCanceled()) {
-    		return;
-    	}
+    private void uploadNodegroupsFromYAML(String ngPath, IProgressMonitor monitor)
+            throws Exception {
+
+        if (monitor.isCanceled()) {
+            return;
+        }
         File dir = new File(ngPath);
         if (!dir.exists()) {
             return;
@@ -340,12 +339,13 @@ public class IngestInstanceDataHandler extends AbstractHandler {
         uploadNodegroupsFromCSV(ngPath, tabData, monitor);
     }
 
-    private void uploadNodegroupsFromCSV(String ngPath, ArrayList<ArrayList<String>> tabData, IProgressMonitor monitor)
+    private void uploadNodegroupsFromCSV(
+            String ngPath, ArrayList<ArrayList<String>> tabData, IProgressMonitor monitor)
             throws Exception {
         for (ArrayList<String> entry : tabData) {
-        	if(monitor.isCanceled()) {
-        		return;
-        	}
+            if (monitor.isCanceled()) {
+                return;
+            }
             String nodegroupId = entry.get(0);
             File ngJson = new File(ngPath + "/" + nodegroupId + ".json");
             if (!ngJson.exists()) {
@@ -359,24 +359,26 @@ public class IngestInstanceDataHandler extends AbstractHandler {
             SparqlConnection conn = ConnectionUtil.getSparqlConnection();
             json.setSparqlConn(conn);
             try {
-                RackConsole.getConsole().println("Uploading nodegroup: " + nodegroupId + ".json");
+                RackConsole.getConsole().print("Uploading nodegroup: " + nodegroupId + ".json ... ");
 
                 ngClient.executeStoreNodeGroup(
                         nodegroupId, entry.get(1), entry.get(2), json.getJson());
-                RackConsole.getConsole().println("Success!");
+                RackConsole.getConsole().printOK();
 
             } catch (Exception e) {
+            	RackConsole.getConsole().printFAIL();
                 RackConsole.getConsole()
                         .error("Upload of nodegroup: " + nodegroupId + ".json " + "failed");
             }
         }
     }
 
-    private void uploadDataFromManifestYAML(String yamlPath, IProgressMonitor monitor) throws Exception {
-    	
-    	if(monitor.isCanceled()) {
-    		return;
-    	}
+    private void uploadDataFromManifestYAML(String yamlPath, IProgressMonitor monitor)
+            throws Exception {
+
+        if (monitor.isCanceled()) {
+            return;
+        }
         File file = new File(yamlPath);
         if (!file.exists()) {
             return;
@@ -427,7 +429,8 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                     continue;
                 }
                 uploadDataFromYAML(
-                        Paths.get(Paths.get(dir) + "/" + importDataYaml).normalize().toString(), monitor);
+                        Paths.get(Paths.get(dir) + "/" + importDataYaml).normalize().toString(),
+                        monitor);
                 continue;
             }
 
@@ -449,11 +452,15 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                 }
 
                 uploadDataFromManifestYAML(
-                        Paths.get(Paths.get(dir) + "/" + subManifest).normalize().toString(), monitor);
+                        Paths.get(Paths.get(dir) + "/" + subManifest).normalize().toString(),
+                        monitor);
                 continue;
             }
 
             if (step.containsKey("nodegroups")) {
+            	if(monitor.isCanceled()) {
+            		return;
+            	}
                 String ngEntry = (String) step.get("nodegroups");
                 if (ngEntry == null) {
                     continue;
@@ -466,56 +473,15 @@ public class IngestInstanceDataHandler extends AbstractHandler {
         }
     }
 
-    private ArrayList<String> getImportYamlPathsFromIngestionYAML(File ingestionYaml) {
-        ArrayList<String> paths = new ArrayList<>();
-        if (!ingestionYaml.exists()) {
-            return paths;
-        }
-
-        String yamlPath = ingestionYaml.getAbsolutePath();
-        Object oYaml = null;
-        try {
-            oYaml = ProjectUtils.readYaml(yamlPath);
-        } catch (Exception e) {
-            RackConsole.getConsole().error("Unable to read data-ingestion.yaml");
-        }
-        if (oYaml == null || !(oYaml instanceof Map)) {
-            RackConsole.getConsole().error("Ill formed  data-ingestion.yaml, please check");
-            return paths;
-        }
-
-        HashMap<String, Object> yamlMap = (HashMap) oYaml;
-
-        if (!yamlMap.containsKey("steps")) {
-            RackConsole.getConsole()
-                    .warning("data-ingestion.yaml contains no ingestion step, done");
-            return paths;
-        }
-
-        Object oList = yamlMap.get("steps");
-        if (!(oList instanceof ArrayList)) {
-            RackConsole.getConsole()
-                    .error("data-ingestion.yaml must consist of a list of steps, please check");
-            return paths;
-        }
-
-        ArrayList<String> oPaths = (ArrayList<String>) yamlMap.get("steps");
-
-        for (String path : oPaths) {
-            paths.add(RackPreferencePage.getInstanceDataFolder() + "/InstanceData/" + path);
-        }
-        return paths;
-    }
-
     private IStatus ingestInstanceData(IProgressMonitor monitor) {
 
         // get csv files and extract nodegroup ids
-    	if(monitor.isCanceled()) {
-    		return Status.CANCEL_STATUS;
-    	}
+        if (monitor.isCanceled()) {
+            return Status.CANCEL_STATUS;
+        }
         File ingestionYaml = new File(manifestPath);
         if (!ingestionYaml.exists()) {
-            RackConsole.getConsole().println("No manifest.yaml found, nothing to ingest");
+            RackConsole.getConsole().warning("No manifest.yaml found, nothing to ingest");
             return Status.CANCEL_STATUS;
         }
         try {
@@ -556,7 +522,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                 }
             }
             String sCSV = tab.toCSVString();
-            RackConsole.getConsole().println("Uploading " + ingestionId + "...");
+            RackConsole.getConsole().print("Uploading " + ingestionId + "... ");
 
             if (bUriIngestion == false) {
                 client.dispatchIngestFromCsvStringsByIdSync(
@@ -571,22 +537,19 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                         sCSV,
                         ConnectionUtil.getSparqlConnection(dataGraph, dataGraphs));
             }
-            RackConsole.getConsole().println("Success");
+            RackConsole.getConsole().printOK();
 
         } catch (Exception e) {
-
+        	RackConsole.getConsole().printFAIL();
             RackConsole.getConsole()
                     .error("Upload of " + ingestionId + " failed, " + "CSV: " + path);
-            e.printStackTrace();
+            return;
         }
     }
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
 
-        override = ConnectionUtil.getSparqlConnection();
-
-        IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
         ISelection selection = HandlerUtil.getCurrentSelection(event);
         TreePath[] paths = ((TreeSelection) selection).getPaths();
         if (paths.length == 1) {
@@ -601,7 +564,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                 new Job("Ingesting data into RACK") {
                     @Override
                     protected IStatus run(IProgressMonitor monitor) {
-                    	ViewUtils.showProgressView();
+                        ViewUtils.showProgressView();
                         return ingestInstanceData(monitor);
                     }
                 };
@@ -609,23 +572,21 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                 new IJobChangeListener() {
                     @Override
                     public void done(IJobChangeEvent event) {
-                         job.cancel();
+                        job.cancel();
                     }
 
                     @Override
                     public void awake(IJobChangeEvent event) {}
 
                     @Override
-                    public void aboutToRun(IJobChangeEvent event) {
-                         
-                    }
+                    public void aboutToRun(IJobChangeEvent event) {}
 
                     @Override
                     public void sleeping(IJobChangeEvent event) {}
 
                     @Override
                     public void running(IJobChangeEvent event) {
-                          job.getState();  
+                        job.getState();
                     }
 
                     @Override

@@ -27,8 +27,7 @@
         </command>
 
         <command categoryId="rackplugin.commands"
-            id="rackplugin.commands.ingestInstanceData"
-            name="Ingest using Manifest File">
+            id="rackplugin.commands.ingestInstanceData" name="Manifest Import">
         </command>
         <!-- <command categoryId="rackplugin.commands" id="rackplugin.commands.gsnCommand"
             name="Load Assurance Case"> </command> -->
@@ -82,10 +81,6 @@
 
     <!-- UI Handlers -->
     <extension point="org.eclipse.ui.handlers">
-
-        <handler class="com.ge.research.rack.LoadNodeGroupsHandler"
-            commandId="rackplugin.commands.loadNodeGroupsCommand">
-        </handler>
 
         <handler class="com.ge.research.rack.ClearAllHandler"
             commandId="rackplugin.commands.clearAll">
@@ -208,8 +203,8 @@
                 </command>
 
                 <command commandId="rackplugin.commands.ingestInstanceData"
-                    id="rackplugin.menus.ingestInstanceData"
-                    label="Ingest using Manifest file" mnemonic="S">
+                    id="rackplugin.menus.ingestInstanceData" label="Manifest Import"
+                    mnemonic="S">
                 </command>
                 <command commandId="rackplugin.commands.clearAll"
                     id="rackplugin.menus.clearAll" label="Clear RACK" mnemonic="S">
@@ -260,7 +255,7 @@
 
     <!-- UI Views (Navbar > Window > Show View > Other) -->
     <extension point="org.eclipse.ui.views">
-        <category id="rackplugin" name="Rack Plugin Views">
+        <category id="rackplugin" name="RACK views">
         </category>
         <view category="rackplugin"
             class="com.ge.research.rack.views.OntologyTreeView"
@@ -328,7 +323,7 @@
         <menuContribution
             locationURI="popup:org.eclipse.ui.popup.any">
             <command commandId="rackplugin.commands.ingestInstanceData"
-                name="Ingest using Manifest file">
+                name="Manifest Import">
                 <enabledWhen>
                     <test args="null" forcePluginActivation="true"
                         property="com.ge.research.rack.isManifestSelected" value="true">
