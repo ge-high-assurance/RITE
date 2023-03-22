@@ -45,6 +45,7 @@ public class RackConsole extends MessageConsole {
     private static boolean setup = false;
     private static RackConsole console;
     private static MessageConsoleStream stream;
+    private static MessageConsoleStream streamErr;
     private static final Logger logger = LoggerFactory.getLogger(RackConsole.class);
 
     public static RackConsole getConsole() {
@@ -54,6 +55,7 @@ public class RackConsole extends MessageConsole {
             console = new RackConsole();
             console.activate();
             stream = console.newMessageStream();
+            streamErr = console.newMessageStream();
             consoleManager.addConsoles(new IConsole[] {console});
             ViewUtils.pinConsole(console);
             setup = true;
@@ -68,6 +70,7 @@ public class RackConsole extends MessageConsole {
     public void print(String message) {
         Color black = new Color(0, 0, 0, 255);
         stream.setColor(black);
+        stream.setColor(black);
         stream.print("\nINFO: " + message);
         // System.out.print(message);
         // logger.info(message);
@@ -76,33 +79,35 @@ public class RackConsole extends MessageConsole {
     public void println(String message) {
         Color black = new Color(0, 0, 0, 255);
         stream.setColor(black);
+        stream.setColor(black);
         stream.print("INFO: " + message + "\n");
         // logger.info(message);
         // System.out.println("INFO: " + message);
     }
-    
+
     public void printOK() {
-    	stream.print("OK");
+        stream.print("OK");
     }
-    
+
     public void printFAIL() {
-    	stream.print("FAIL");
+        stream.print("FAIL");
     }
 
     public void error(String message) {
         Color red = new Color(255, 0, 0, 255);
-        stream.setColor(red);
-        stream.setColor(red);
-        stream.print("\n ERROR: " + message);
+        streamErr.setColor(red);
+        streamErr.setColor(red);
+        streamErr.print("\nERROR: " + message);
         // logger.error(message);
         // System.err.println("ERROR: " + message);
     }
 
     public void error(final String message, final Exception exception) {
         Color red = new Color(255, 0, 0, 255);
-        stream.setColor(red);
-        stream.print("\nERROR: " + message + "\n" + exception.getStackTrace() + "\n");
- 
+        streamErr.setColor(red);
+        streamErr.setColor(red);
+        streamErr.print("\nERROR: " + message + "\n" + exception.getStackTrace() + "\n");
+
         //// System.err.println("ERROR: " + message + "\n" + exception.getStackTrace());
         // logger.error(message + "\n" + exception.getStackTrace());
     }
