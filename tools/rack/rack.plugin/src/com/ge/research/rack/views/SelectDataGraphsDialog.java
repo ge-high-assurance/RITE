@@ -78,15 +78,7 @@ public class SelectDataGraphsDialog extends Dialog {
     @Override
     protected void configureShell(Shell shell) {
         super.configureShell(shell);
-        /* Display display = shell.getDisplay();
-        Monitor primary = display.getPrimaryMonitor();
-        Rectangle bounds = primary.getBounds();
-        Rectangle rect = shell.getBounds();
 
-        int x = bounds.x + (bounds.width - rect.width) / 2;
-        int y = bounds.y + (bounds.height - rect.height) / 2;
-
-        shell.setLocation(x, y); */
         shell.setText("Select Data Graphs: " + nodegroupId);
         shell.setFont(font);
     }
@@ -152,24 +144,22 @@ public class SelectDataGraphsDialog extends Dialog {
                             SparqlConnection conn =
                                     ConnectionUtil.getSparqlConnection(
                                             dataGraphs.get(0), dataGraphs);
-                            // define an endpoint graph, and build a connection that uses it for
-                            // model and
-                            // data
+                            RackConsole.getConsole()
+                                    .print("Querying nodegroup: " + nodegroupId + " ... ");
                             // run a query from the store by id
                             com.ge.research.semtk.resultSet.Table results =
                                     client.execDispatchSelectByIdToTable(
                                             nodegroupId, conn, null, null);
+                            RackConsole.getConsole().printOK();
                             QueryResultsView.results = results;
-                            // System.out.println("Cell 0 0: " + results.getCellAsString(0, 0));
                             String csv_string = results.toCSVString();
-                            String dir = /*ProjectUtils.getOverlayProjectPath();*/
-                                    RackPreferencePage.getInstanceDataFolder();
+                            String dir = RackPreferencePage.getInstanceDataFolder();
                             ProjectUtils.validateInstanceDataFolder();
                             String queryResultsDir = dir + "/" + Core.QUERY_RESULTS_FOLDER + "/";
                             File file = new File(queryResultsDir);
                             if (!file.exists() || !file.isDirectory()) {
                                 RackConsole.getConsole()
-                                        .println("No QueryResults folder found, creating one");
+                                        .print("No QueryResults folder found, creating one");
                                 file.mkdirs();
                             }
                             CSVUtil.writeToCSV(
@@ -185,6 +175,7 @@ public class SelectDataGraphsDialog extends Dialog {
                                             });
 
                         } catch (Exception e) {
+                            RackConsole.getConsole().printFAIL();
                             RackConsole.getConsole().error("Unable to show query result view");
                         }
 

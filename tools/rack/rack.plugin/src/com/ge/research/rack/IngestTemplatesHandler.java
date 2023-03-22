@@ -158,7 +158,7 @@ public class IngestTemplatesHandler extends AbstractHandler {
                         json.getJson());
                 RackConsole.getConsole().printOK();
             } catch (Exception e2) {
-            	RackConsole.getConsole().printFAIL();
+                RackConsole.getConsole().printFAIL();
                 RackConsole.getConsole().error("Overwrite of nodegroup: " + ingestId + " failed");
             }
         }
