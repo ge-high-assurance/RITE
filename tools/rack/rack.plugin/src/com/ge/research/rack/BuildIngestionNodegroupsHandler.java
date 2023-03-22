@@ -116,11 +116,7 @@ public class BuildIngestionNodegroupsHandler extends AbstractHandler {
                 String ingestionTemplate =
                         IngestionTemplateUtil.getNodegroupIngestionTemplate(className);
                 if (ingestionTemplate == null) {
-<<<<<<< HEAD
                     RackConsole.getConsole().printFAIL();
-=======
-                	RackConsole.getConsole().printFAIL();
->>>>>>> making progress messages more uniform
                     RackConsole.getConsole()
                             .error(
                                     "Ingestion template undefined for :"
@@ -139,11 +135,7 @@ public class BuildIngestionNodegroupsHandler extends AbstractHandler {
                 monitor.worked((int) (100 / classList.size()) + 1);
                 RackConsole.getConsole().printOK();
             } catch (Exception e) {
-<<<<<<< HEAD
-                RackConsole.getConsole().printFAIL();
-=======
             	RackConsole.getConsole().printFAIL();
->>>>>>> making progress messages more uniform
                 RackConsole.getConsole()
                         .error(
                                 "Could not build ingestion nodegroup template for nodegroup: "
@@ -151,14 +143,10 @@ public class BuildIngestionNodegroupsHandler extends AbstractHandler {
                 return Status.CANCEL_STATUS;
             }
         }
-<<<<<<< HEAD
-
         RackConsole.getConsole()
                 .print(
                         "Nodegroups generated successfully and placed in nodegroups folder within "
                                 + RackPreferencePage.getInstanceDataFolder());
-=======
->>>>>>> making progress messages more uniform
         return Status.OK_STATUS;
     }
 

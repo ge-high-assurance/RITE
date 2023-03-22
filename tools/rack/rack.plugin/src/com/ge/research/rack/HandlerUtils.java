@@ -129,7 +129,7 @@ public class HandlerUtils {
             NodegroupUtil.getAllNodegroups();
             RackConsole.getConsole().printOK();
         } catch (Exception e) {
-        	RackConsole.getConsole().printFAIL();
+            RackConsole.getConsole().printFAIL();
             RackConsole.getConsole().error("Cannot fetch nodegroups");
         }
     }
