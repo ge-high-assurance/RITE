@@ -32,6 +32,7 @@
 package com.ge.research.rack.utils;
 
 import com.ge.research.rack.views.ViewUtils;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
@@ -65,32 +66,49 @@ public class RackConsole extends MessageConsole {
     }
 
     public void print(String message) {
-        stream.print(message);
+        Color black = new Color(0, 0, 0, 255);
+        stream.setColor(black);
+        stream.print("\nINFO: " + message);
         // System.out.print(message);
         // logger.info(message);
     }
 
     public void println(String message) {
+        Color black = new Color(0, 0, 0, 255);
+        stream.setColor(black);
         stream.print("INFO: " + message + "\n");
         // logger.info(message);
         // System.out.println("INFO: " + message);
     }
+    
+    public void printOK() {
+    	stream.print("OK");
+    }
+    
+    public void printFAIL() {
+    	stream.print("FAIL");
+    }
 
     public void error(String message) {
-        stream.print("ERROR: " + message + "\n");
+        Color red = new Color(255, 0, 0, 255);
+        stream.setColor(red);
+        stream.setColor(red);
+        stream.print("\n ERROR: " + message);
         // logger.error(message);
         // System.err.println("ERROR: " + message);
     }
 
     public void error(final String message, final Exception exception) {
-
-        stream.print("ERROR: " + message + "\n" + exception.getStackTrace() + "\n");
+        Color red = new Color(255, 0, 0, 255);
+        stream.setColor(red);
+        stream.print("\nERROR: " + message + "\n" + exception.getStackTrace() + "\n");
+ 
         //// System.err.println("ERROR: " + message + "\n" + exception.getStackTrace());
         // logger.error(message + "\n" + exception.getStackTrace());
     }
 
     public void warning(String message) {
-        stream.print("WARNING: " + message + "\n");
+        stream.print("\nWARNING: " + message);
         // logger.warn(message);
         // System.out.println("WARNING: " + message);
     }

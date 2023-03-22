@@ -124,10 +124,12 @@ public class HandlerUtils {
     public static void loadNodegroups() {
         try {
             OntologyUtil.getoInfo();
-            RackConsole.getConsole().println("Fetching all nodegroups....");
+            RackConsole.getConsole().print("Fetching all nodegroups from RACK... ");
             NodegroupUtil.init();
             NodegroupUtil.getAllNodegroups();
+            RackConsole.getConsole().printOK();
         } catch (Exception e) {
+        	RackConsole.getConsole().printFAIL();
             RackConsole.getConsole().error("Cannot fetch nodegroups");
         }
     }

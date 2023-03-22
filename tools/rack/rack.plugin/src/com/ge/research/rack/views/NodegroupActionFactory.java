@@ -32,20 +32,16 @@
 package com.ge.research.rack.views;
 
 import com.ge.research.rack.utils.CSVUtil;
-import com.ge.research.rack.utils.ConnectionUtil;
 import com.ge.research.rack.utils.Core;
 import com.ge.research.rack.utils.IngestionTemplateUtil;
 import com.ge.research.rack.utils.ProjectUtils;
 import com.ge.research.rack.utils.RackConsole;
-import com.ge.research.semtk.api.nodeGroupExecution.client.NodeGroupExecutionClient;
-import com.ge.research.semtk.sparqlX.SparqlConnection;
 import java.io.File;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.apache.commons.io.*;
 import org.eclipse.jface.action.Action;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -159,19 +155,20 @@ public class NodegroupActionFactory {
     }
 
     public static Action getQueryNodegroupAction(INodegroupView view) {
-        
-    	return new Action() {
+
+        return new Action() {
             public void runWithEvent(Event event) {
                 // nodegroups
                 ArrayList<String> selection = view.getSelectedNodegroups();
                 if (selection.size() == 0) {
                     return;
                 }
-                   String queryNodegroup = selection.get(0);
-                SelectDataGraphsDialog dialog = new SelectDataGraphsDialog(event.widget.getDisplay().getActiveShell(), queryNodegroup);
+                String queryNodegroup = selection.get(0);
+                SelectDataGraphsDialog dialog =
+                        new SelectDataGraphsDialog(
+                                event.widget.getDisplay().getActiveShell(), queryNodegroup);
                 dialog.run();
-                
-                           }
+            }
         };
     }
 }
