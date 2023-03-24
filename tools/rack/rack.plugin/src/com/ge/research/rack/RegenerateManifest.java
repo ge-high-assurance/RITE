@@ -56,11 +56,15 @@ public class RegenerateManifest extends AbstractHandler {
 	}
 
 	// Generate the list of all relative paths to manifests used by this project
-	static List<String> getManifests(IProject project, Set<String> modelGraphs, Set<String> dataGraphs) throws ExecutionException {
+	List<String> getManifests(IProject project, Set<String> modelGraphs, Set<String> dataGraphs) throws ExecutionException {
 		final List<String> manifests = new ArrayList<>();
 		try {
 			final IProject[] referencedProjects = project.getReferencedProjects();
 			for (IProject referencedProject : referencedProjects) {
+				
+				// Update the manifest first if it hasn't been updated yet
+				regenerateProjectManifest(referencedProject);
+				
 				IFile manifestFile = referencedProject.getFile("manifest.yaml");
 				if (manifestFile.exists()) {
 					manifests.add(manifestFile.getFullPath().makeRelativeTo(project.getFullPath()).toString());
