@@ -160,6 +160,10 @@
             class="com.ge.research.rack.BuildIngestionNodegroupsHandler"
             commandId="rackplugin.commands.buildIngestionNodegroups">
         </handler>
+        <handler
+            class="com.ge.research.rack.RegenerateManifest"
+            commandId="rackplugin.commands.regenerateManifest">
+        </handler>
         <handler class="com.ge.research.rack.SetProjectTypeHandler"
             commandId="rackplugin.commands.setProjectTypeCommand">
         </handler>
@@ -202,10 +206,13 @@
                     id="rackplugin.menus.buildIngestionNodegroups"
                     label="Generate All Ingestion Nodegroups" mnemonic="S">
                 </command>
-
+                <command commandId="rackplugin.commands.regenerateManifest"
+                    id="rackplugin.menus.regenerateManifest"
+                    label="Regenerate manifest file" mnemonic="R">
+                </command>
                 <command commandId="rackplugin.commands.ingestInstanceData"
                     id="rackplugin.menus.ingestInstanceData"
-                    label="Ingest using Manifest file" mnemonic="S">
+                    label="Ingest using Manifest file" mnemonic="I">
                 </command>
                 <command commandId="rackplugin.commands.clearAll"
                     id="rackplugin.menus.clearAll" label="Clear RACK" mnemonic="S">
