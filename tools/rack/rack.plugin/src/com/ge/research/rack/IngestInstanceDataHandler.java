@@ -63,23 +63,22 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobGroup;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeSelection;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 public class IngestInstanceDataHandler extends AbstractHandler {
     private static String manifestPath = "";
-    private static SparqlConnection override;
 
-    private void uploadModelFromYAML(String yamlPath, IProgressMonitor monitor) throws Exception {
-    	if(monitor.isCanceled()) {
-    		return;
-    	}
+    private int uploadModelFromYAML(String yamlPath, IProgressMonitor monitor) throws Exception {
+        if (monitor.isCanceled()) {
+            return -1;
+        }
         File file = new File(yamlPath);
         if (!file.exists()) {
-            return;
+            return 0;
         }
         String dir = file.getParent();
         Object oYaml = null;
@@ -91,7 +90,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
         }
         if (oYaml == null || !(oYaml instanceof Map)) {
             RackConsole.getConsole().error("Ill formed " + dir + "/import.yaml, please check");
-            return;
+            return -1;
         }
 
         HashMap<String, Object> yamlMap = (HashMap) oYaml;
@@ -99,27 +98,27 @@ public class IngestInstanceDataHandler extends AbstractHandler {
         if (!yamlMap.containsKey("files")) {
             RackConsole.getConsole()
                     .warning(dir + "/import.yaml contains no owl files to upload, done");
-            return;
+            return -1;
         }
         Object oList = yamlMap.get("files");
 
         if (!(oList instanceof List)) {
             RackConsole.getConsole()
                     .error("owl files in" + dir + "/import.yaml is ill formed, please check");
-            return;
+            return -1;
         }
 
         ArrayList<String> steps = (ArrayList<String>) oList;
 
         for (String owl : steps) {
-        	if(monitor.isCanceled()) {
-        		return;
-        	}
+            if (monitor.isCanceled()) {
+                return -1;
+            }
             String owlPath = Paths.get(dir + "/" + owl).normalize().toString();
             File owlFile = new File(owlPath);
             if (!owlFile.exists()) {
                 RackConsole.getConsole().error("Cannot find owl file: " + owlPath);
-                continue;
+                return -1;
             }
             try {
                 SparqlQueryClient qAuthClient = ConnectionUtil.getOntologyUploadClient();
@@ -128,18 +127,20 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                 RackConsole.getConsole()
                         .error(
                                 "Ontology processing/upload failed, make sure you are connected to Sparql and have configured the correct Core and Overlay Projects");
+                return -1;
             }
         }
+        return 0;
     }
 
-    private void uploadDataFromYAML(String yamlPath, IProgressMonitor monitor) throws Exception {
-    	
-    	if(monitor.isCanceled()) {
-    		return;
-    	}
+    private int uploadDataFromYAML(String yamlPath, IProgressMonitor monitor) throws Exception {
+
+        if (monitor.isCanceled()) {
+            return -1;
+        }
         File file = new File(yamlPath);
         if (!file.exists()) {
-            return;
+            return 0;
         }
         String dir = file.getParent();
         Object oYaml = null;
@@ -147,24 +148,25 @@ public class IngestInstanceDataHandler extends AbstractHandler {
             oYaml = ProjectUtils.readYaml(yamlPath);
         } catch (Exception e) {
             RackConsole.getConsole().error("Unable to read " + dir + "/import.yaml");
+            return -1;
         }
         if (oYaml == null || !(oYaml instanceof Map)) {
             RackConsole.getConsole().error("Ill formed " + dir + "/import.yaml, please check");
-            return;
+            return -1;
         }
 
         HashMap<String, Object> yamlMap = (HashMap) oYaml;
 
         if (!yamlMap.containsKey("ingestion-steps")) {
             RackConsole.getConsole().warning(dir + "/import.yaml contains no ingestion step, done");
-            return;
+            return -1;
         }
 
         Object oList = yamlMap.get("ingestion-steps");
         if (!(oList instanceof List)) {
             RackConsole.getConsole()
                     .error("ingestion-steps in" + dir + "/import.yaml is ill formed, please check");
-            return;
+            return -1;
         }
 
         String dataGraph = "";
@@ -188,9 +190,9 @@ public class IngestInstanceDataHandler extends AbstractHandler {
         ArrayList<Map<String, Object>> steps = (ArrayList<Map<String, Object>>) oList;
 
         for (Map<String, Object> step : steps) {
-        	if(monitor.isCanceled()) {
-        		return;
-        	}
+            if (monitor.isCanceled()) {
+                return -1;
+            }
             boolean bUriIngestion = false;
             String ingestionId = "";
             if (step.containsKey("csv")) {
@@ -213,8 +215,8 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                                     "Cannot ingest data for nodegroup: "
                                             + ingestionId
                                             + ", csv file missing");
-
-                    continue;
+                    return -1;
+                    // continue;
                 }
 
                 ArrayList<String> colsList = new ArrayList<>();
@@ -246,20 +248,24 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                     String message =
                             "Problem occured when reading lines for :" + dir + "/" + csvFileName;
                     RackConsole.getConsole().error(message);
-                    return;
+                    return -1;
                 }
 
                 if (colsList.size() == 0 || tabData.size() == 0) {
-                    return;
+                    return 0;
                 }
-                uploadInstanceDataCSV(
-                        ingestionId,
-                        colsList,
-                        tabData,
-                        bUriIngestion,
-                        csvFile.getAbsolutePath(),
-                        dataGraph,
-                        dataGraphs);
+                int status =
+                        uploadInstanceDataCSV(
+                                ingestionId,
+                                colsList,
+                                tabData,
+                                bUriIngestion,
+                                csvFile.getAbsolutePath(),
+                                dataGraph,
+                                dataGraphs);
+                if (status < 0) {
+                    return -1;
+                }
             }
 
             if (step.containsKey("owl")) {
@@ -281,19 +287,27 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                     RackConsole.getConsole()
                             .error(
                                     "Ontology processing/upload failed, make sure you are connected to Sparql and have configured the correct Core and Overlay Projects");
+                    return -1;
                 }
             }
         }
+        
+        if(!monitor.isCanceled()) {
+        RackConsole.getConsole().print("Manifest ingestion completed successfully");
+        }
+        else {
+        	RackConsole.getConsole().print("Manifest ingestion stopped");
+        }
+        return 0;
     }
 
-    private void uploadNodegroupsFromYAML(String ngPath, IProgressMonitor monitor) throws Exception {
-    	
-    	if(monitor.isCanceled()) {
-    		return;
-    	}
+    private int uploadNodegroupsFromYAML(String ngPath, IProgressMonitor monitor) throws Exception {
+        if (monitor.isCanceled()) {
+            return -1;
+        }
         File dir = new File(ngPath);
         if (!dir.exists()) {
-            return;
+            return 0;
         }
         File csvNgStore = new File(ngPath + "/store_data.csv");
         if (!csvNgStore.exists()) {
@@ -330,22 +344,25 @@ public class IngestInstanceDataHandler extends AbstractHandler {
             String message =
                     "Problem occured when reading lines for :" + dir + "/" + csvNgStore.getName();
             RackConsole.getConsole().error(message);
-            return;
+            return -1;
         }
 
         if (colsList.size() == 0 || tabData.size() == 0) {
-            return;
+            return 0;
         }
 
-        uploadNodegroupsFromCSV(ngPath, tabData, monitor);
+        int status = uploadNodegroupsFromCSV(ngPath, tabData, monitor);
+
+        return status;
     }
 
-    private void uploadNodegroupsFromCSV(String ngPath, ArrayList<ArrayList<String>> tabData, IProgressMonitor monitor)
+    private int uploadNodegroupsFromCSV(
+            String ngPath, ArrayList<ArrayList<String>> tabData, IProgressMonitor monitor)
             throws Exception {
         for (ArrayList<String> entry : tabData) {
-        	if(monitor.isCanceled()) {
-        		return;
-        	}
+            if (monitor.isCanceled()) {
+                return -1;
+            }
             String nodegroupId = entry.get(0);
             File ngJson = new File(ngPath + "/" + nodegroupId + ".json");
             if (!ngJson.exists()) {
@@ -359,27 +376,32 @@ public class IngestInstanceDataHandler extends AbstractHandler {
             SparqlConnection conn = ConnectionUtil.getSparqlConnection();
             json.setSparqlConn(conn);
             try {
-                RackConsole.getConsole().println("Uploading nodegroup: " + nodegroupId + ".json");
+                RackConsole.getConsole()
+                        .print("Uploading nodegroup: " + nodegroupId + ".json ... ");
 
                 ngClient.executeStoreNodeGroup(
                         nodegroupId, entry.get(1), entry.get(2), json.getJson());
-                RackConsole.getConsole().println("Success!");
+                RackConsole.getConsole().printOK();
 
             } catch (Exception e) {
+                RackConsole.getConsole().printFAIL();
                 RackConsole.getConsole()
                         .error("Upload of nodegroup: " + nodegroupId + ".json " + "failed");
+                return -1;
             }
         }
+        return 0;
     }
 
-    private void uploadDataFromManifestYAML(String yamlPath, IProgressMonitor monitor) throws Exception {
-    	
-    	if(monitor.isCanceled()) {
-    		return;
-    	}
+    private int uploadDataFromManifestYAML(String yamlPath, IProgressMonitor monitor)
+            throws Exception {
+
+        if (monitor.isCanceled()) {
+            return -1;
+        }
         File file = new File(yamlPath);
         if (!file.exists()) {
-            return;
+            return 0;
         }
         String dir = file.getParent();
         Object oYaml = null;
@@ -396,7 +418,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                                     + "/"
                                     + file.getName()
                                     + ", please check");
-            return;
+            return -1;
         }
 
         HashMap<String, Object> yamlMap = (HashMap) oYaml;
@@ -404,7 +426,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
         if (!yamlMap.containsKey("steps")) {
             RackConsole.getConsole()
                     .warning(dir + "/" + file.getName() + " contains no ingestion step, done");
-            return;
+            return -1;
         }
 
         Object oList = yamlMap.get("steps");
@@ -416,7 +438,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                                     + "/"
                                     + file.getName()
                                     + " is ill formed, please check");
-            return;
+            return -1;
         }
         ArrayList<Map<String, Object>> steps = (ArrayList<Map<String, Object>>) oList;
 
@@ -426,8 +448,15 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                 if (importDataYaml == null) {
                     continue;
                 }
-                uploadDataFromYAML(
-                        Paths.get(Paths.get(dir) + "/" + importDataYaml).normalize().toString(), monitor);
+                int status =
+                        uploadDataFromYAML(
+                                Paths.get(Paths.get(dir) + "/" + importDataYaml)
+                                        .normalize()
+                                        .toString(),
+                                monitor);
+                if (status < 0) {
+                    return -1;
+                }
                 continue;
             }
 
@@ -437,8 +466,13 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                     continue;
                 }
 
-                uploadModelFromYAML(
-                        Paths.get(Paths.get(dir) + "/" + owlModel).normalize().toString(), monitor);
+                int status =
+                        uploadModelFromYAML(
+                                Paths.get(Paths.get(dir) + "/" + owlModel).normalize().toString(),
+                                monitor);
+                if (status < 0) {
+                    return -1;
+                }
                 continue;
             }
 
@@ -448,74 +482,49 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                     continue;
                 }
 
-                uploadDataFromManifestYAML(
-                        Paths.get(Paths.get(dir) + "/" + subManifest).normalize().toString(), monitor);
+                int status =
+                        uploadDataFromManifestYAML(
+                                Paths.get(Paths.get(dir) + "/" + subManifest)
+                                        .normalize()
+                                        .toString(),
+                                monitor);
+                if (status < 0) {
+                    return -1;
+                }
                 continue;
             }
 
             if (step.containsKey("nodegroups")) {
+                if (monitor.isCanceled()) {
+                    return -1;
+                }
                 String ngEntry = (String) step.get("nodegroups");
                 if (ngEntry == null) {
                     continue;
                 }
 
-                uploadNodegroupsFromYAML(
-                        Paths.get(Paths.get(dir) + "/" + ngEntry).normalize().toString(), monitor);
+                int status =
+                        uploadNodegroupsFromYAML(
+                                Paths.get(Paths.get(dir) + "/" + ngEntry).normalize().toString(),
+                                monitor);
+                if (status < 0) {
+                    return -1;
+                }
                 continue;
             }
         }
-    }
-
-    private ArrayList<String> getImportYamlPathsFromIngestionYAML(File ingestionYaml) {
-        ArrayList<String> paths = new ArrayList<>();
-        if (!ingestionYaml.exists()) {
-            return paths;
-        }
-
-        String yamlPath = ingestionYaml.getAbsolutePath();
-        Object oYaml = null;
-        try {
-            oYaml = ProjectUtils.readYaml(yamlPath);
-        } catch (Exception e) {
-            RackConsole.getConsole().error("Unable to read data-ingestion.yaml");
-        }
-        if (oYaml == null || !(oYaml instanceof Map)) {
-            RackConsole.getConsole().error("Ill formed  data-ingestion.yaml, please check");
-            return paths;
-        }
-
-        HashMap<String, Object> yamlMap = (HashMap) oYaml;
-
-        if (!yamlMap.containsKey("steps")) {
-            RackConsole.getConsole()
-                    .warning("data-ingestion.yaml contains no ingestion step, done");
-            return paths;
-        }
-
-        Object oList = yamlMap.get("steps");
-        if (!(oList instanceof ArrayList)) {
-            RackConsole.getConsole()
-                    .error("data-ingestion.yaml must consist of a list of steps, please check");
-            return paths;
-        }
-
-        ArrayList<String> oPaths = (ArrayList<String>) yamlMap.get("steps");
-
-        for (String path : oPaths) {
-            paths.add(RackPreferencePage.getInstanceDataFolder() + "/InstanceData/" + path);
-        }
-        return paths;
+        return 0;
     }
 
     private IStatus ingestInstanceData(IProgressMonitor monitor) {
 
         // get csv files and extract nodegroup ids
-    	if(monitor.isCanceled()) {
-    		return Status.CANCEL_STATUS;
-    	}
+        if (monitor.isCanceled()) {
+            return Status.CANCEL_STATUS;
+        }
         File ingestionYaml = new File(manifestPath);
         if (!ingestionYaml.exists()) {
-            RackConsole.getConsole().println("No manifest.yaml found, nothing to ingest");
+            RackConsole.getConsole().warning("No manifest.yaml found, nothing to ingest");
             return Status.CANCEL_STATUS;
         }
         try {
@@ -537,7 +546,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
         return true;
     }
 
-    private void uploadInstanceDataCSV(
+    private int uploadInstanceDataCSV(
             String ingestionId,
             ArrayList<String> header,
             ArrayList<ArrayList<String>> body,
@@ -556,7 +565,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                 }
             }
             String sCSV = tab.toCSVString();
-            RackConsole.getConsole().println("Uploading " + ingestionId + "...");
+            RackConsole.getConsole().print("Uploading " + ingestionId + "... ");
 
             if (bUriIngestion == false) {
                 client.dispatchIngestFromCsvStringsByIdSync(
@@ -571,22 +580,20 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                         sCSV,
                         ConnectionUtil.getSparqlConnection(dataGraph, dataGraphs));
             }
-            RackConsole.getConsole().println("Success");
+            RackConsole.getConsole().printOK();
 
         } catch (Exception e) {
-
+            RackConsole.getConsole().printFAIL();
             RackConsole.getConsole()
                     .error("Upload of " + ingestionId + " failed, " + "CSV: " + path);
-            e.printStackTrace();
+            return -1;
         }
+        return 0;
     }
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
 
-        override = ConnectionUtil.getSparqlConnection();
-
-        IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
         ISelection selection = HandlerUtil.getCurrentSelection(event);
         TreePath[] paths = ((TreeSelection) selection).getPaths();
         if (paths.length == 1) {
@@ -596,12 +603,11 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                 manifestPath = file.getRawLocation().toFile().getAbsolutePath();
             }
         }
-
         Job job =
                 new Job("Ingesting data into RACK") {
                     @Override
                     protected IStatus run(IProgressMonitor monitor) {
-                    	ViewUtils.showProgressView();
+                        ViewUtils.showProgressView();
                         return ingestInstanceData(monitor);
                     }
                 };
@@ -609,23 +615,21 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                 new IJobChangeListener() {
                     @Override
                     public void done(IJobChangeEvent event) {
-                         job.cancel();
+                        job.cancel();
                     }
 
                     @Override
                     public void awake(IJobChangeEvent event) {}
 
                     @Override
-                    public void aboutToRun(IJobChangeEvent event) {
-                         
-                    }
+                    public void aboutToRun(IJobChangeEvent event) {}
 
                     @Override
                     public void sleeping(IJobChangeEvent event) {}
 
                     @Override
                     public void running(IJobChangeEvent event) {
-                          job.getState();  
+                        job.getState();
                     }
 
                     @Override

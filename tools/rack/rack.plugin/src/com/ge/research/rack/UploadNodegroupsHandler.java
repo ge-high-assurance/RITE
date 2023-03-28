@@ -90,7 +90,7 @@ public class UploadNodegroupsHandler extends AbstractHandler {
             isRunning = false;
         }
     }
-    
+
     /**
      * Recursively searches for all json files in a provided base directory
      *
@@ -115,12 +115,11 @@ public class UploadNodegroupsHandler extends AbstractHandler {
                 .map(f -> f.getAbsolutePath())
                 .collect(Collectors.toList());
     }
-    
-    private void showNodegroupsView() {
-    	try {
 
-            final IWorkbenchWindow window = 
-            		PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+    private void showNodegroupsView() {
+        try {
+
+            final IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 
             final IViewPart view = window.getActivePage().findView(NODEGROUPS_ID);
             window.getActivePage().hideView(view);
@@ -144,7 +143,7 @@ public class UploadNodegroupsHandler extends AbstractHandler {
         if (!startRun()) {
             return null;
         }
-    	
+
         final Optional<TreePath[]> paths =
                 Optional.ofNullable(event)
                         .map(HandlerUtil::getCurrentSelection)
@@ -167,19 +166,22 @@ public class UploadNodegroupsHandler extends AbstractHandler {
                         .collect(Collectors.toSet());
 
         if (selected_file_resources.isEmpty()) {
-        	
+
             RackConsole.getConsole().error(NO_NODEGROUP_FILES);
             endRun();
-            
+
         } else {
-        	
-	    	new NodegroupsUploadJob(selected_file_resources, () -> {
-	        	// End the run once all nodegroup files have been uploaded
-	        	endRun();
-	            showNodegroupsView();
-	        }).schedule();
+
+            new NodegroupsUploadJob(
+                            selected_file_resources,
+                            () -> {
+                                // End the run once all nodegroup files have been uploaded
+                                endRun();
+                                showNodegroupsView();
+                            })
+                    .schedule();
         }
-        
+
         return null;
     }
 
@@ -189,16 +191,14 @@ public class UploadNodegroupsHandler extends AbstractHandler {
         private final Set<String> nodegroupFilepaths;
 
         public NodegroupsUploadJob(
-        		final Set<String> nodegroupFilepaths, 
-        		final Runnable asyncCallback) {
+                final Set<String> nodegroupFilepaths, final Runnable asyncCallback) {
 
             super(String.format(UPLOAD_NAME, nodegroupFilepaths));
             this.nodegroupFilepaths = nodegroupFilepaths;
 
             this.addJobChangeListener(
-            		
                     new JobChangeAdapter() {
-                    	
+
                         @Override
                         public void done(IJobChangeEvent event) {
                             if (event.getResult() != Status.OK_STATUS) {
@@ -219,22 +219,25 @@ public class UploadNodegroupsHandler extends AbstractHandler {
         @Override
         protected IStatus run(IProgressMonitor monitor) {
             try {
-            	
-            	final String taskName = String.format(UPLOAD_NAME, "");
-            	
-            	monitor.beginTask(taskName, nodegroupFilepaths.size());
-            	
-            	nodegroupFilepaths.stream().forEach(nodegroupFilepath -> {
 
-	                final String nodegroupId =
-	                        RackQueryUtils.getQueryIdFromFilePath(nodegroupFilepath);
-	
-	                RackQueryUtils.uploadQueryNodegroupToRackStore(nodegroupId, nodegroupFilepath);
-	                
-	                monitor.worked(1);
-            	});
-            	
-            	monitor.done();
+                final String taskName = String.format(UPLOAD_NAME, "");
+
+                monitor.beginTask(taskName, nodegroupFilepaths.size());
+
+                nodegroupFilepaths.stream()
+                        .forEach(
+                                nodegroupFilepath -> {
+                                    final String nodegroupId =
+                                            RackQueryUtils.getQueryIdFromFilePath(
+                                                    nodegroupFilepath);
+
+                                    RackQueryUtils.uploadQueryNodegroupToRackStore(
+                                            nodegroupId, nodegroupFilepath);
+
+                                    monitor.worked(1);
+                                });
+
+                monitor.done();
 
             } catch (final Exception e) {
                 return Status.CANCEL_STATUS;

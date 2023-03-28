@@ -38,9 +38,7 @@ import com.ge.research.rack.utils.ProjectUtils;
 import com.ge.research.rack.utils.RackConsole;
 import com.ge.research.rack.views.RackPreferencePage;
 import com.ge.research.rack.views.ViewUtils;
-
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import org.apache.commons.io.FileUtils;
@@ -53,153 +51,160 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.jobs.JobGroup;
-import org.eclipse.jface.dialogs.ProgressMonitorDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.progress.IProgressService;
-import org.eclipse.ui.progress.IWorkbenchSiteProgressService;
 import org.eclipse.ui.progress.WorkbenchJob;
 
 public class BuildIngestionNodegroupsHandler extends AbstractHandler {
 
-	public static void bookkeepNodegroups() {
-		ProjectUtils.refreshProjects();
+    public static void bookkeepNodegroups() {
+        ProjectUtils.refreshProjects();
 
-		ArrayList<String> classList = OntologyUtil.getClassNames();
-		if (classList == null) {
-			RackConsole.getConsole()
-					.error("No classes found on RACK, please check connection parameters or upload ontologies to RACK");
-			return;
-		}
-		// Iterate over class names and generate their json nodegroup template
-		for (String className : classList) {
-			try {
+        ArrayList<String> classList = OntologyUtil.getClassNames();
+        if (classList == null) {
+            RackConsole.getConsole()
+                    .error(
+                            "No classes found on RACK, please check connection parameters or upload ontologies to RACK");
+            return;
+        }
+        // Iterate over class names and generate their json nodegroup template
+        for (String className : classList) {
+            try {
 
-				String ingestionNodegroupId = IngestionTemplateUtil.getIngestionNodegroupId(className);
-				String csvTemplate = IngestionTemplateUtil.getNodegroupCSVTemplate(className);
-				IngestionTemplateUtil.csvTemplates.put(ingestionNodegroupId, csvTemplate);
-			} catch (Exception e) {
-				RackConsole.getConsole().error("Could not build ingestion nodegroup template for nodegroup: "
-						+ OntologyUtil.getLocalClassName(className));
-				return;
-			}
-		}
-	}
+                String ingestionNodegroupId =
+                        IngestionTemplateUtil.getIngestionNodegroupId(className);
+                String csvTemplate = IngestionTemplateUtil.getNodegroupCSVTemplate(className);
+                IngestionTemplateUtil.csvTemplates.put(ingestionNodegroupId, csvTemplate);
+            } catch (Exception e) {
+                RackConsole.getConsole()
+                        .error(
+                                "Could not build ingestion nodegroup template for nodegroup: "
+                                        + OntologyUtil.getLocalClassName(className));
+                return;
+            }
+        }
+    }
 
-	public static IStatus buildNodegroups(IProgressMonitor monitor) {
+    public static IStatus buildNodegroups(IProgressMonitor monitor) {
 
-		if (!ProjectUtils.validateInstanceDataFolder()) {
-			return Status.CANCEL_STATUS;
-		}
+        if (!ProjectUtils.validateInstanceDataFolder()) {
+            return Status.CANCEL_STATUS;
+        }
 
-		String path = /* ProjectUtils.getOverlayProjectPath(); */
-				RackPreferencePage.getInstanceDataFolder();
+        String path = /* ProjectUtils.getOverlayProjectPath(); */
+                RackPreferencePage.getInstanceDataFolder();
 
-		String ingestionNodegroupPath = RackPreferencePage.getInstanceDataFolder();
+        String ingestionNodegroupPath = RackPreferencePage.getInstanceDataFolder();
 
-		ProjectUtils.createNodegroupFolder(ingestionNodegroupPath);
-		ProjectUtils.refreshProjects();
+        ProjectUtils.createNodegroupFolder(ingestionNodegroupPath);
+        ProjectUtils.refreshProjects();
 
-		ArrayList<String> classList = OntologyUtil.getClassNames();
+        ArrayList<String> classList = OntologyUtil.getClassNames();
 
-		if (classList == null) {
-			RackConsole.getConsole()
-					.error("No classes found on RACK, please check connection parameters or upload ontologies to RACK");
-			return Status.CANCEL_STATUS;
-		}
+        if (classList == null) {
+            RackConsole.getConsole()
+                    .error(
+                            "No classes found on RACK, please check connection parameters or upload ontologies to RACK");
+            return Status.CANCEL_STATUS;
+        }
 
-		// Iterate over class names and generate their json nodegroup template
-		for (String className : classList) {
-			try {
-				String ingestionNodegroupId = IngestionTemplateUtil.getIngestionNodegroupId(className);
-				RackConsole.getConsole().println("Generating nodegroup: " + ingestionNodegroupId + ".json");
-				String ingestionTemplate = IngestionTemplateUtil.getNodegroupIngestionTemplate(className);
-				if (ingestionTemplate == null) {
-					RackConsole.getConsole()
-							.error("Ingestion template undefined for :" + OntologyUtil.getLocalClassName(className));
-					continue;
-				}
+        // Iterate over class names and generate their json nodegroup template
+        for (String className : classList) {
+            try {
+                String ingestionNodegroupId =
+                        IngestionTemplateUtil.getIngestionNodegroupId(className);
+                RackConsole.getConsole()
+                        .print("Generating nodegroup: " + ingestionNodegroupId + ".json ... ");
+                String ingestionTemplate =
+                        IngestionTemplateUtil.getNodegroupIngestionTemplate(className);
+                if (ingestionTemplate == null) {
+                    RackConsole.getConsole().printFAIL();
+                    RackConsole.getConsole()
+                            .error(
+                                    "Ingestion template undefined for :"
+                                            + OntologyUtil.getLocalClassName(className));
+                    continue;
+                }
 
-				File file = new File(
-						/* RackPreferencePage.getOverlayOntProj() */
-						RackPreferencePage.getInstanceDataFolder() + Core.NODEGROUP_DATA_FOLDER + ingestionNodegroupId
-								+ ".json");
-				FileUtils.write(file, ingestionTemplate, Charset.defaultCharset());
-				monitor.worked((int) (100 / classList.size()) + 1);
-				RackConsole.getConsole().print("OK\n");
-			} catch (Exception e) {
-				RackConsole.getConsole().error("Could not build ingestion nodegroup template for nodegroup: "
-						+ OntologyUtil.getLocalClassName(className));
-				return Status.CANCEL_STATUS;
-			}
-		}
-		return Status.OK_STATUS;
-		
-	}
+                File file =
+                        new File(
+                                /* RackPreferencePage.getOverlayOntProj() */
+                                RackPreferencePage.getInstanceDataFolder()
+                                        + Core.NODEGROUP_DATA_FOLDER
+                                        + ingestionNodegroupId
+                                        + ".json");
+                FileUtils.write(file, ingestionTemplate, Charset.defaultCharset());
+                monitor.worked((int) (100 / classList.size()) + 1);
+                RackConsole.getConsole().printOK();
+            } catch (Exception e) {
+                RackConsole.getConsole().printFAIL();
+                RackConsole.getConsole()
+                        .error(
+                                "Could not build ingestion nodegroup template for nodegroup: "
+                                        + OntologyUtil.getLocalClassName(className));
+                return Status.CANCEL_STATUS;
+            }
+        }
+        
+        RackConsole.getConsole().print("Nodegroups generated successfully and placed in nodegroups folder within " + RackPreferencePage.getInstanceDataFolder());
+        return Status.OK_STATUS;
+    }
 
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
+    @Override
+    public Object execute(ExecutionEvent event) throws ExecutionException {
 
-		/*
-		 * Job job = new Job("Generating nodegroups in the project nodegroups folder") {
-		 * 
-		 * @Override protected IStatus run(IProgressMonitor monitor) { // Set total
-		 * number of work units monitor.beginTask("start task", 100); try { return
-		 * buildNodegroups(monitor); } catch (Exception e) {
-		 * RackConsole.getConsole().error("Cannot build nodegroups"); this.cancel();
-		 * return Status.CANCEL_STATUS; } } };
-		 * 
-		 */
-		Job job = WorkbenchJob.create("Generating nodegroups in the project nodegroups folder", monitor -> {
-			monitor.beginTask("start task", 100);
+        /*
+         * Job job = new Job("Generating nodegroups in the project nodegroups folder") {
+         *
+         * @Override protected IStatus run(IProgressMonitor monitor) { // Set total
+         * number of work units monitor.beginTask("start task", 100); try { return
+         * buildNodegroups(monitor); } catch (Exception e) {
+         * RackConsole.getConsole().error("Cannot build nodegroups"); this.cancel();
+         * return Status.CANCEL_STATUS; } } };
+         *
+         */
+        Job job =
+                WorkbenchJob.create(
+                        "Generating nodegroups in the project nodegroups folder",
+                        monitor -> {
+                            monitor.beginTask("start task", 100);
 
-			try {
-				ViewUtils.showProgressView();
-				return buildNodegroups(monitor);
-			} catch (Exception e) {
-				RackConsole.getConsole().error("Cannot build nodegroups");
-				return Status.CANCEL_STATUS;
-			}
-		});
+                            try {
+                                ViewUtils.showProgressView();
+                                return buildNodegroups(monitor);
+                            } catch (Exception e) {
+                                RackConsole.getConsole().error("Cannot build nodegroups");
+                                return Status.CANCEL_STATUS;
+                            }
+                        });
 
-		job.addJobChangeListener(new IJobChangeListener() {
-			@Override
-			public void done(IJobChangeEvent event) {
-				if (event.getResult() == Status.CANCEL_STATUS) {
-					return;
-				}
-				HandlerUtils.loadNodegroups();
-				HandlerUtils.showNodegroupTable();
-			}
+        job.addJobChangeListener(
+                new IJobChangeListener() {
+                    @Override
+                    public void done(IJobChangeEvent event) {
+                        if (event.getResult() == Status.CANCEL_STATUS) {
+                            return;
+                        }
+                        HandlerUtils.loadNodegroups();
+                        HandlerUtils.showNodegroupTable();
+                    }
 
-			@Override
-			public void awake(IJobChangeEvent event) {
-			}
+                    @Override
+                    public void awake(IJobChangeEvent event) {}
 
-			@Override
-			public void aboutToRun(IJobChangeEvent event) {
+                    @Override
+                    public void aboutToRun(IJobChangeEvent event) {}
 
-			}
+                    @Override
+                    public void sleeping(IJobChangeEvent event) {}
 
-			@Override
-			public void sleeping(IJobChangeEvent event) {
-			}
+                    @Override
+                    public void running(IJobChangeEvent event) {}
 
-			@Override
-			public void running(IJobChangeEvent event) {
+                    @Override
+                    public void scheduled(IJobChangeEvent event) {}
+                });
 
-			}
+        job.schedule();
 
-			@Override
-			public void scheduled(IJobChangeEvent event) {
-			}
-		});
-
-		job.schedule();
-
-		return null;
-	}
+        return null;
+    }
 }

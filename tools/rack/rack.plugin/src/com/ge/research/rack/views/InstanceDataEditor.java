@@ -44,7 +44,6 @@ import java.util.List;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.TableViewer;
@@ -58,7 +57,6 @@ import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.ViewPart;
@@ -392,17 +390,6 @@ public class InstanceDataEditor extends ViewPart {
         table.pack();
     }
 
-    private void contributeToActionBars() {
-        IActionBars bars = getViewSite().getActionBars();
-        fillLocalPullDown(bars.getMenuManager());
-        fillLocalToolBar(bars.getToolBarManager());
-    }
-
-    private void fillLocalPullDown(IMenuManager manager) {
-        manager.add(action1);
-        manager.add(new Separator());
-    }
-
     private void fillContextMenu(IMenuManager manager) {
         manager.add(action1);
         manager.add(action2);
@@ -410,13 +397,6 @@ public class InstanceDataEditor extends ViewPart {
         manager.add(action4);
         // Other plug-ins can contribute there actions here
         manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-    }
-
-    private void fillLocalToolBar(IToolBarManager manager) {
-        manager.add(action1);
-        manager.add(action2);
-        manager.add(action3);
-        manager.add(action4);
     }
 
     private void makeActions() {
@@ -455,7 +435,8 @@ public class InstanceDataEditor extends ViewPart {
                             for (ArrayList<String> row : csv) {
                                 tab.addRow(row);
                             }
-
+                            RackConsole.getConsole().print("INGESTING ... ");
+                            RackConsole.getConsole().printOK();
                             String sCSV = tab.toCSVString();
                             if (bUri == false) {
                                 client.dispatchIngestFromCsvStringsByIdSync(
@@ -467,9 +448,8 @@ public class InstanceDataEditor extends ViewPart {
                                         sCSV,
                                         override);
                             }
-                            RackConsole.getConsole().println("INGESTING:....");
-                            RackConsole.getConsole().println(sCSV);
                         } catch (Exception e) {
+                            RackConsole.getConsole().printFAIL();
                             String ingestText = bUri ? "class" : "nodegroup";
                             RackConsole.getConsole()
                                     .error(
@@ -504,10 +484,12 @@ public class InstanceDataEditor extends ViewPart {
                             }
                             writer.writeAll(csvOut);
                             writer.close();
+                            RackConsole.getConsole()
+                                    .print("CSV saved to " + InstanceDataEditor.filePath);
                         } catch (Exception e) {
                             RackConsole.getConsole()
                                     .error(
-                                            "Unable to save csv file: "
+                                            "Unable to save CSV file: "
                                                     + InstanceDataEditor.filePath);
                         }
                     }
@@ -520,7 +502,6 @@ public class InstanceDataEditor extends ViewPart {
                 new Action() {
                     public void run() {
                         int selectedRow = table.getSelectionIndex();
-                        System.out.println("Selected row: " + selectedRow);
                         // if selected row is invalid, do nothing
                         if (selectedRow < 0) {
                             return;

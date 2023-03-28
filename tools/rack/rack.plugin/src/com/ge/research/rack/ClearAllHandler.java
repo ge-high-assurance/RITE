@@ -47,8 +47,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.*;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.console.IConsoleConstants;
 import org.eclipse.ui.console.IConsoleView;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -57,7 +55,7 @@ public class ClearAllHandler extends AbstractHandler {
 
     public static void clearRackModel() {
 
-        RackConsole.getConsole().print("Clearing all Ontologies...");
+        RackConsole.getConsole().print("Clearing all Ontologies... ");
         try {
             ConnectionUtil.getOntologyUploadClient().clearAll();
             ConnectionUtil.getDataGraphClient().clearAll();
@@ -69,9 +67,10 @@ public class ClearAllHandler extends AbstractHandler {
                 String dataGraph = entry.get(0);
                 ConnectionUtil.getDataGraphClient(dataGraph).clearAll();
             }
-            RackConsole.getConsole().print("OK\n");
+            RackConsole.getConsole().printOK();
 
         } catch (Exception e) {
+            RackConsole.getConsole().printFAIL();
             RackConsole.getConsole()
                     .error("Clearing ontologies failed, check connection parameters and retry");
         }
@@ -90,15 +89,16 @@ public class ClearAllHandler extends AbstractHandler {
                 return;
             }
             String id = row.get(0);
-            RackConsole.getConsole().println("Deleting nodegroup: " + id + "...");
+            RackConsole.getConsole().print("Deleting nodegroup: " + id + "... ");
             try {
                 ngClient.deleteStoredNodeGroup(id);
                 monitor.worked((int) (100 / rows.size()) + 1);
-                RackConsole.getConsole().print(" OK\n");
+                RackConsole.getConsole().printOK();
                 // boolean isCore = (Core.defaultNodegroups.contains(id)) ? true : false;
                 // NodegroupUtil.removeFromYaml(id, isCore);
 
             } catch (Exception e) {
+                RackConsole.getConsole().printFAIL();
                 String message = "Deletion of nodegroup" + id + " failed";
                 RackConsole.getConsole().error(message);
             }
@@ -123,7 +123,7 @@ public class ClearAllHandler extends AbstractHandler {
                         @Override
                         protected IStatus run(IProgressMonitor monitor) {
                             // Set total number of work units
-                        	ViewUtils.showProgressView();
+                            ViewUtils.showProgressView();
                             monitor.beginTask("start task", 100);
                             try {
 
@@ -149,6 +149,8 @@ public class ClearAllHandler extends AbstractHandler {
                             if (event.getResult() == Status.CANCEL_STATUS) {
                                 return;
                             }
+                            
+                            RackConsole.getConsole().print("Ontologies and Nodegroups are cleared from RACK");
                             HandlerUtils.loadNodegroups();
                             HandlerUtils.showNodegroupTable();
                             HandlerUtils.showOntologyTree();

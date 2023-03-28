@@ -49,17 +49,24 @@ import org.eclipse.jface.action.*;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.*;
 import org.eclipse.ui.part.*;
 
@@ -76,6 +83,8 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
     private static final String VIEW_CSV_ACTION = "View CSV Ingestion Templates";
     private static final String QUERY_NODEGROUP_ACTION = "Query Nodegroup(s)";
     private static final String DELETE_NODEGROUP_ACTION = "Delete Nodegroup(s)";
+
+    private static final String SEARCH_NODEGROUPS_TEXT = "Search nodegroups";
 
     @Inject IWorkbench workbench;
 
@@ -111,12 +120,63 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
         final Display display = Display.getCurrent();
 
         final Composite composite = new Composite(parent, SWT.NONE);
-        composite.setLayout(new FillLayout());
+        GridLayout layout = new GridLayout();
+        layout.numColumns = 1;
+        layout.verticalSpacing = 10;
+        composite.setLayout(layout);
+
         composite.setSize(1130 / 2, 600);
 
         if (!ConnectionUtil.ping()) {
             return;
         }
+
+        Composite searchBarComposite = new Composite(composite, SWT.NONE);
+        GridLayout layout2 = new GridLayout();
+        layout2.numColumns = 2;
+        layout.horizontalSpacing = 10;
+        searchBarComposite.setLayout(layout2);
+
+        Label searchLabel = new Label(searchBarComposite, SWT.None);
+        searchLabel.setText("Search");
+        Text searchBar = new Text(searchBarComposite, SWT.None);
+        searchBar.setText(SEARCH_NODEGROUPS_TEXT);
+
+        searchBar.addListener(
+                SWT.MouseDown,
+                new Listener() {
+
+                    @Override
+                    public void handleEvent(Event event) {
+                        if (searchBar.getText().equals(SEARCH_NODEGROUPS_TEXT)) {
+                            searchBar.setText("");
+                        }
+                    }
+                });
+
+        searchBar.addListener(
+                SWT.KeyUp,
+                new Listener() {
+
+                    @Override
+                    public void handleEvent(Event event) {
+                        String searchText = searchBar.getText();
+                        filterNodegroups(searchText);
+                    }
+                });
+
+        searchBar.addListener(
+                SWT.FocusOut,
+                new Listener() {
+
+                    @Override
+                    public void handleEvent(Event arg0) {
+                        if (searchBar.getText().isEmpty()) {
+                            searchBar.setText(SEARCH_NODEGROUPS_TEXT);
+                            filterNodegroups("");
+                        }
+                    }
+                });
 
         /* Select All Button not supported in SWT table - float workaround */
         final Composite floatContainer = new Composite(composite, SWT.BORDER);
@@ -128,6 +188,7 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
         tableFloatPosition.bottom = new FormAttachment(100);
 
         table = new Table(floatContainer, SWT.CHECK | SWT.H_SCROLL | SWT.V_SCROLL);
+        table.removeAll();
         table.setSize(1130, 600);
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
@@ -176,7 +237,6 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
 
         try {
             RefreshHandler.refreshNodegroups();
-            table.removeAll();
             NodegroupUtil.nodegroups.getResults().getRows().stream()
                     .sorted((row1, row2) -> row1.get(0).compareTo(row2.get(0)))
                     .forEach(
@@ -189,9 +249,43 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
                                 }
                             });
 
-            table.setEnabled(0 != table.getItemCount());
+            table.setEnabled(table.getItemCount() > 0);
             Arrays.stream(table.getColumns()).forEach(TableColumn::pack);
             table.pack();
+
+        } catch (final Exception e) {
+            RackConsole.getConsole().warning(UPDATE_NODEGROUP_LIST_ERROR);
+        }
+    }
+
+    private void filterNodegroups(String searchTerm) {
+
+        try {
+            table.removeAll();
+            NodegroupUtil.nodegroups.getResults().getRows().stream()
+                    .sorted((row1, row2) -> row1.get(0).compareTo(row2.get(0)))
+                    .forEach(
+                            row -> {
+                                row.remove(4); // Remove application data "semTK"
+                                boolean bMatch = false;
+                                for (int j = 0; j < row.size(); j++) {
+                                    if (row.get(j).contains(searchTerm)) {
+                                        bMatch = true;
+                                        break;
+                                    }
+                                }
+                                if (bMatch || searchTerm.isEmpty()) {
+                                    final TableItem item = new TableItem(table, SWT.NONE);
+                                    item.setData(row);
+                                    for (int j = 0; j < row.size(); j++) {
+                                        item.setText(j, row.get(j));
+                                    }
+                                }
+                            });
+
+            table.setEnabled(table.getItemCount() > 0);
+            // Arrays.stream(table.getColumns()).forEach(TableColumn::pack);
+            // table.pack();
 
         } catch (final Exception e) {
             RackConsole.getConsole().warning(UPDATE_NODEGROUP_LIST_ERROR);
@@ -217,7 +311,6 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
         manager.add(queryNodegroupAction);
         manager.add(deleteNodegroupAction);
         manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-       
     }
 
     private void makeActions() {
@@ -225,9 +318,9 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
         viewCsvIngestionTemplatesAction.setText(VIEW_CSV_ACTION);
 
         queryNodegroupAction = NodegroupActionFactory.getQueryNodegroupAction(this);
-        
+
         queryNodegroupAction.setText(QUERY_NODEGROUP_ACTION);
-        
+
         deleteNodegroupAction = new DeleteSelectedNodeGroupsAction();
         deleteNodegroupAction.setText(DELETE_NODEGROUP_ACTION);
     }
@@ -300,11 +393,12 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
         @Override
         protected IStatus run(IProgressMonitor monitor) {
             try {
-
+                RackConsole.getConsole().print("Deleting nodegroup: " + nodegroupId + " ... ");
                 NodegroupUtil.client.deleteStoredNodeGroup(nodegroupId);
+                RackConsole.getConsole().printOK();
 
             } catch (final Exception e) {
-
+                RackConsole.getConsole().printFAIL();
                 RackConsole.getConsole()
                         .error(String.format(NODEGROUP_DELETE_ERROR, nodegroupId), e);
 

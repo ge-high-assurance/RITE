@@ -86,7 +86,7 @@ public class IngestTemplatesHandler extends AbstractHandler {
 
                 RackConsole.getConsole()
                         .print(
-                                "\nIngesting template for "
+                                "Ingesting template for "
                                         + localClassName
                                         + " by id: "
                                         + ingestionId
@@ -98,7 +98,7 @@ public class IngestTemplatesHandler extends AbstractHandler {
                 NodeGroupStoreRestClient ngClient = ConnectionUtil.getNGSClient();
                 ngClient.executeStoreNodeGroup(
                         ingestionId, comment, System.getProperty("user.name"), json.getJson());
-                RackConsole.getConsole().print(" OK\n");
+                RackConsole.getConsole().printOK();
                 monitor.worked(1);
             } catch (Exception e) {
                 if (json == null) {
@@ -148,7 +148,7 @@ public class IngestTemplatesHandler extends AbstractHandler {
         NodeGroupStoreRestClient ngClient = ConnectionUtil.getNGSClient();
         if (RackSettingPanel.isOverwrite) {
             RackConsole.getConsole()
-                    .println("Nodegroup " + ingestId + " exists on RACK, attempting overwrite");
+                    .print("Nodegroup " + ingestId + " exists on RACK, attempting overwrite ...");
             try {
                 ngClient.deleteStoredNodeGroup(ingestId);
                 ngClient.executeStoreNodeGroup(
@@ -156,7 +156,9 @@ public class IngestTemplatesHandler extends AbstractHandler {
                         Core.NODEGROUP_INGEST_COMMENT,
                         System.getProperty("user.name"),
                         json.getJson());
+                RackConsole.getConsole().printOK();
             } catch (Exception e2) {
+                RackConsole.getConsole().printFAIL();
                 RackConsole.getConsole().error("Overwrite of nodegroup: " + ingestId + " failed");
             }
         }

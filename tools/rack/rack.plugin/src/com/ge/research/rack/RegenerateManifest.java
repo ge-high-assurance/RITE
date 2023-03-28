@@ -1,3 +1,34 @@
+/*
+ * BSD 3-Clause License
+ * 
+ * Copyright (c) 2023, General Electric Company and Galois, Inc.
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 
+ * 3. Neither the name of the copyright holder nor the names of its
+ *    contributors may be used to endorse or promote products derived from
+ *    this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 package com.ge.research.rack;
 
 import java.io.ByteArrayInputStream;
@@ -12,7 +43,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -29,197 +59,212 @@ import org.yaml.snakeyaml.Yaml;
 
 public class RegenerateManifest extends AbstractHandler {
 
-	static final String DEFAULT_MODEL_GRAPH = "http://rack001/model";
-	static final String DEFAULT_DATA_GRAPH = "http://rack001/data";
-	static final String MANIFEST_YAML_NAME = "manifest.yaml";
-	static final String DATA_YAML_NAME = "data.yaml";
-	static final String MODEL_YAML_NAME = "model.yaml";
-	static final String NODEGROUPS_NAME = "store_data.csv";
+    static final String DEFAULT_MODEL_GRAPH = "http://rack001/model";
+    static final String DEFAULT_DATA_GRAPH = "http://rack001/data";
+    static final String MANIFEST_YAML_NAME = "manifest.yaml";
+    static final String DATA_YAML_NAME = "data.yaml";
+    static final String MODEL_YAML_NAME = "model.yaml";
+    static final String NODEGROUPS_NAME = "store_data.csv";
 
-	final Set<IProject> visitedProjects = new HashSet<>();
-	
-	// Open a YAML file and deserialize it as a Java object
-	static Object openYamlResource(IResource resource) throws CoreException {
-		final IFile file = resource.getProject().getFile(resource.getProjectRelativePath());
-		final Yaml yaml = new Yaml();
-		return yaml.load(file.getContents());
-	}
-	
-	static void extendFootprintSet(Object object, Set<String> set) {
-		if (object instanceof Collection) {
-			for (Object entry : (Collection<?>) object) {
-				if (entry instanceof String) {
-					set.add((String)entry);
-				}
-			}
-		}
-	}
+    final Set<IProject> visitedProjects = new HashSet<>();
 
-	// Generate the list of all relative paths to manifests used by this project
-	List<String> getManifests(IProject project, Set<String> modelGraphs, Set<String> dataGraphs) throws ExecutionException {
-		final List<String> manifests = new ArrayList<>();
-		try {
-			final IProject[] referencedProjects = project.getReferencedProjects();
-			for (IProject referencedProject : referencedProjects) {
-				
-				// Update the manifest first if it hasn't been updated yet
-				regenerateProjectManifest(referencedProject);
-				
-				IFile manifestFile = referencedProject.getFile("manifest.yaml");
-				if (manifestFile.exists()) {
-					manifests.add(manifestFile.getFullPath().makeRelativeTo(project.getFullPath()).toString());
-					
-					Object manifestObj = openYamlResource(manifestFile);
-					if (manifestObj instanceof Map) {
-						final Map<?,?> manifest = (Map<?,?>)manifestObj;
-						final Object footprintObj = manifest.get("footprint");
-						if (footprintObj instanceof Map) {
-							final Map<?,?> footprint = (Map<?,?>)footprintObj;
-							extendFootprintSet(footprint.get("model-graphs"), modelGraphs);
-							extendFootprintSet(footprint.get("data-graphs"), dataGraphs);
-						}
-					}
-				}
-			}
-		} catch (CoreException e) {
-			throw new ExecutionException("Failed to check subproject manifest.yaml", e);
-		}
-		return manifests;
-	}
+    // Open a YAML file and deserialize it as a Java object
+    static Object openYamlResource(IResource resource) throws CoreException {
+        final IFile file = resource.getProject().getFile(resource.getProjectRelativePath());
+        final Yaml yaml = new Yaml();
+        return yaml.load(file.getContents());
+    }
 
-	// Replace the manifest.yaml for project using the Java object content.
-	static void writeManifest(IProject project, Object content) throws ExecutionException {
-		// Write YAML to disk
-		final IFile manifestFile = project.getFile(MANIFEST_YAML_NAME);
-		try {
-			// Generate prettier, human readable YAML
-			final DumperOptions options = new DumperOptions();
-			options.setDefaultFlowStyle(FlowStyle.BLOCK);
+    static void extendFootprintSet(Object object, Set<String> set) {
+        if (object instanceof Collection) {
+            for (Object entry : (Collection<?>) object) {
+                if (entry instanceof String) {
+                    set.add((String) entry);
+                }
+            }
+        }
+    }
 
-			final Yaml yaml = new Yaml(options);
-			final CharArrayWriter writer = new CharArrayWriter();
-			yaml.dump(content, writer);
+    // Generate the list of all relative paths to manifests used by this project
+    List<String> getManifests(IProject project, Set<String> modelGraphs, Set<String> dataGraphs)
+            throws ExecutionException {
+        final List<String> manifests = new ArrayList<>();
+        try {
+            final IProject[] referencedProjects = project.getReferencedProjects();
+            for (IProject referencedProject : referencedProjects) {
 
-			final InputStream source = new ByteArrayInputStream(writer.toString().getBytes());
-			final boolean force = false;
-			final boolean keep_history = true;
-			manifestFile.setContents(source, force, keep_history, null);
-		} catch (CoreException e) {
-			throw new ExecutionException("Failed writing final manifest.yaml output", e);
-		}
-	}
+                // Update the manifest first if it hasn't been updated yet
+                regenerateProjectManifest(referencedProject);
 
-	void regenerateProjectManifest(IProject project) throws ExecutionException {
+                IFile manifestFile = referencedProject.getFile("manifest.yaml");
+                if (manifestFile.exists()) {
+                    manifests.add(
+                            manifestFile
+                                    .getFullPath()
+                                    .makeRelativeTo(project.getFullPath())
+                                    .toString());
 
-		if (!project.isOpen() || !visitedProjects.add(project)) {
-			return;
-		}
+                    Object manifestObj = openYamlResource(manifestFile);
+                    if (manifestObj instanceof Map) {
+                        final Map<?, ?> manifest = (Map<?, ?>) manifestObj;
+                        final Object footprintObj = manifest.get("footprint");
+                        if (footprintObj instanceof Map) {
+                            final Map<?, ?> footprint = (Map<?, ?>) footprintObj;
+                            extendFootprintSet(footprint.get("model-graphs"), modelGraphs);
+                            extendFootprintSet(footprint.get("data-graphs"), dataGraphs);
+                        }
+                    }
+                }
+            }
+        } catch (CoreException e) {
+            throw new ExecutionException("Failed to check subproject manifest.yaml", e);
+        }
+        return manifests;
+    }
 
-		final Set<String> modelGraphs = new TreeSet<>();
-		final Set<String> dataGraphs = new TreeSet<>();
-		final List<String> models = new ArrayList<>();
-		final List<String> datas = new ArrayList<>();		
-		final List<String> manifests = getManifests(project, modelGraphs, dataGraphs);
-		final List<String> nodegroups = new ArrayList<>();
+    // Replace the manifest.yaml for project using the Java object content.
+    static void writeManifest(IProject project, Object content) throws ExecutionException {
+        // Write YAML to disk
+        final IFile manifestFile = project.getFile(MANIFEST_YAML_NAME);
+        try {
+            // Generate prettier, human readable YAML
+            final DumperOptions options = new DumperOptions();
+            options.setDefaultFlowStyle(FlowStyle.BLOCK);
 
-		final IResourceProxyVisitor visitor = (IResourceProxy proxy) -> {
-			final String name = proxy.getName();
+            final Yaml yaml = new Yaml(options);
+            final CharArrayWriter writer = new CharArrayWriter();
+            yaml.dump(content, writer);
 
-			// Handle data sets
-			if (name.equals("data.yaml")) {
-				datas.add(proxy.requestFullPath().makeRelativeTo(project.getFullPath()).toString());
+            final InputStream source = new ByteArrayInputStream(writer.toString().getBytes());
+            final boolean force = false;
+            final boolean keep_history = true;
+            manifestFile.setContents(source, force, keep_history, null);
+        } catch (CoreException e) {
+            throw new ExecutionException("Failed writing final manifest.yaml output", e);
+        }
+    }
 
-				Object dataYaml = openYamlResource(proxy.requestResource());
-				if (dataYaml instanceof Map) {
-					Map<?, ?> map = (Map<?, ?>) dataYaml;
-					Object dataGraph = map.get("data-graph");
+    void regenerateProjectManifest(IProject project) throws ExecutionException {
 
-					if (dataGraph == null) {
-						dataGraphs.add(DEFAULT_DATA_GRAPH);
-					} else if (dataGraph instanceof String) {
-						dataGraphs.add((String) dataGraph);
-					}
-				}
+        if (!project.isOpen() || !visitedProjects.add(project)) {
+            return;
+        }
 
-				// Handle model sets
-			} else if (name.equals(MODEL_YAML_NAME)) {
-				models.add(proxy.requestFullPath().makeRelativeTo(project.getFullPath()).toString());
+        final Set<String> modelGraphs = new TreeSet<>();
+        final Set<String> dataGraphs = new TreeSet<>();
+        final List<String> models = new ArrayList<>();
+        final List<String> datas = new ArrayList<>();
+        final List<String> manifests = getManifests(project, modelGraphs, dataGraphs);
+        final List<String> nodegroups = new ArrayList<>();
 
-				Object modelYaml = openYamlResource(proxy.requestResource());
-				if (modelYaml instanceof Map) {
-					Map<?, ?> map = (Map<?, ?>) modelYaml;
-					Object modelGraph = map.get("model-graph");
-					if (modelGraph == null) {
-						modelGraphs.add(DEFAULT_MODEL_GRAPH);
-					} else if (modelGraph instanceof String) {
-						modelGraphs.add((String) modelGraph);
-					}
-				}
+        final IResourceProxyVisitor visitor =
+                (IResourceProxy proxy) -> {
+                    final String name = proxy.getName();
 
-				// Handle Nodegroups
-			} else if (name.equals(NODEGROUPS_NAME)) {
-				nodegroups.add(proxy.requestFullPath().makeRelativeTo(project.getFullPath()).removeLastSegments(1).toString());
-			}
+                    // Handle data sets
+                    if (name.equals("data.yaml")) {
+                        datas.add(
+                                proxy.requestFullPath()
+                                        .makeRelativeTo(project.getFullPath())
+                                        .toString());
 
-			// True means to continue into any children of a directory
-			return true;
-		};
+                        Object dataYaml = openYamlResource(proxy.requestResource());
+                        if (dataYaml instanceof Map) {
+                            Map<?, ?> map = (Map<?, ?>) dataYaml;
+                            Object dataGraph = map.get("data-graph");
 
-		try {
-			// Recursively walk all the project resources using visitor as defined above
-			project.accept(visitor, 0);
-		} catch (CoreException e) {
-			throw new ExecutionException("Failed traversing project resources", e);
-		}
+                            if (dataGraph == null) {
+                                dataGraphs.add(DEFAULT_DATA_GRAPH);
+                            } else if (dataGraph instanceof String) {
+                                dataGraphs.add((String) dataGraph);
+                            }
+                        }
 
-		// Top-level contents of the generated manifest.yaml
-		// LinkedHashMap used to ensure output ordering matches generated ordering
-		final Map<String, Object> content = new LinkedHashMap<>();
+                        // Handle model sets
+                    } else if (name.equals(MODEL_YAML_NAME)) {
+                        models.add(
+                                proxy.requestFullPath()
+                                        .makeRelativeTo(project.getFullPath())
+                                        .toString());
 
-		// name:
-		content.put("name", project.getName());
+                        Object modelYaml = openYamlResource(proxy.requestResource());
+                        if (modelYaml instanceof Map) {
+                            Map<?, ?> map = (Map<?, ?>) modelYaml;
+                            Object modelGraph = map.get("model-graph");
+                            if (modelGraph == null) {
+                                modelGraphs.add(DEFAULT_MODEL_GRAPH);
+                            } else if (modelGraph instanceof String) {
+                                modelGraphs.add((String) modelGraph);
+                            }
+                        }
 
-		// footprint:
-		final Map<String, Object> footprint = new LinkedHashMap<>();
-		content.put("footprint", footprint);
-		footprint.put("model-graphs", modelGraphs.toArray());
-		footprint.put("data-graphs", dataGraphs.toArray());
+                        // Handle Nodegroups
+                    } else if (name.equals(NODEGROUPS_NAME)) {
+                        nodegroups.add(
+                                proxy.requestFullPath()
+                                        .makeRelativeTo(project.getFullPath())
+                                        .removeLastSegments(1)
+                                        .toString());
+                    }
 
-		// steps:
-		final List<Map<String, String>> steps = new ArrayList<>();
-		content.put("steps", steps);
+                    // True means to continue into any children of a directory
+                    return true;
+                };
 
-		// all manifest entries first
-		for (String path : manifests) {
-			steps.add(Collections.singletonMap("manifest", path));
-		}
+        try {
+            // Recursively walk all the project resources using visitor as defined above
+            project.accept(visitor, 0);
+        } catch (CoreException e) {
+            throw new ExecutionException("Failed traversing project resources", e);
+        }
 
-		// all model entries second
-		for (String path : models) {
-			steps.add(Collections.singletonMap("model", path));
-		}
+        // Top-level contents of the generated manifest.yaml
+        // LinkedHashMap used to ensure output ordering matches generated ordering
+        final Map<String, Object> content = new LinkedHashMap<>();
 
-		// all nodegroup entries third
-		for (String path : nodegroups) {
-			steps.add(Collections.singletonMap("nodegroups", path));
-		}
+        // name:
+        content.put("name", project.getName());
 
-		// all data entries fourth; most importantly after models
-		for (String path : datas) {
-			steps.add(Collections.singletonMap("data", path));
-		}
+        // footprint:
+        final Map<String, Object> footprint = new LinkedHashMap<>();
+        content.put("footprint", footprint);
+        footprint.put("model-graphs", modelGraphs.toArray());
+        footprint.put("data-graphs", dataGraphs.toArray());
 
-		writeManifest(project, content);
-	}
-	
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		// Ensure all the projects are visited at least once.
-		// Duplicate visits due to references will be skipped.
-		for (IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
-			regenerateProjectManifest(project);
-		}
-		return null;
-	}
+        // steps:
+        final List<Map<String, String>> steps = new ArrayList<>();
+        content.put("steps", steps);
 
+        // all manifest entries first
+        for (String path : manifests) {
+            steps.add(Collections.singletonMap("manifest", path));
+        }
+
+        // all model entries second
+        for (String path : models) {
+            steps.add(Collections.singletonMap("model", path));
+        }
+
+        // all nodegroup entries third
+        for (String path : nodegroups) {
+            steps.add(Collections.singletonMap("nodegroups", path));
+        }
+
+        // all data entries fourth; most importantly after models
+        for (String path : datas) {
+            steps.add(Collections.singletonMap("data", path));
+        }
+
+        writeManifest(project, content);
+    }
+
+    @Override
+    public Object execute(ExecutionEvent event) throws ExecutionException {
+        // Ensure all the projects are visited at least once.
+        // Duplicate visits due to references will be skipped.
+        for (IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
+            regenerateProjectManifest(project);
+        }
+        return null;
+    }
 }

@@ -31,35 +31,6 @@
  */
 package com.ge.research.rack.views;
 
-import java.io.File;
-import java.util.ArrayList;
-
-import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.window.ApplicationWindow;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Monitor;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
-
 import com.ge.research.rack.utils.CSVUtil;
 import com.ge.research.rack.utils.ConnectionUtil;
 import com.ge.research.rack.utils.Core;
@@ -68,12 +39,35 @@ import com.ge.research.rack.utils.RackConsole;
 import com.ge.research.semtk.api.nodeGroupExecution.client.NodeGroupExecutionClient;
 import com.ge.research.semtk.resultSet.TableResultSet;
 import com.ge.research.semtk.sparqlX.SparqlConnection;
+import java.io.File;
+import java.util.ArrayList;
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 
 /** Author: Paul Meng */
 public class SelectDataGraphsDialog extends Dialog {
     private Font font, boldFont;
-    public  static String nodegroupId = "";
+    public static String nodegroupId = "";
     private static Table table;
+
     public SelectDataGraphsDialog(Shell parent, String nodegroup) {
         super(parent);
         nodegroupId = nodegroup;
@@ -84,19 +78,11 @@ public class SelectDataGraphsDialog extends Dialog {
     @Override
     protected void configureShell(Shell shell) {
         super.configureShell(shell);
-       /* Display display = shell.getDisplay();
-        Monitor primary = display.getPrimaryMonitor();
-        Rectangle bounds = primary.getBounds();
-        Rectangle rect = shell.getBounds();
 
-        int x = bounds.x + (bounds.width - rect.width) / 2;
-        int y = bounds.y + (bounds.height - rect.height) / 2;
-       
-        shell.setLocation(x, y); */
         shell.setText("Select Data Graphs: " + nodegroupId);
         shell.setFont(font);
     }
-    
+
     public void run() {
         setBlockOnOpen(true);
         open();
@@ -106,7 +92,6 @@ public class SelectDataGraphsDialog extends Dialog {
         shell.setActive();
     }
 
-    
     @Override
     protected Control createDialogArea(Composite parent) {
         Composite mainComposite = new Composite(parent, SWT.NONE);
@@ -145,58 +130,61 @@ public class SelectDataGraphsDialog extends Dialog {
                 new SelectionAdapter() {
                     @Override
                     public void widgetSelected(SelectionEvent event) {
-                        
-                    	 try {
-                    		 TableItem [] items= table.getItems();
-                    		 ArrayList<String> dataGraphs = new ArrayList<>();
-                    		 for(TableItem item : items) {
-                    			if(item.getChecked()) {
-                    			 dataGraphs.add(item.getText(0));
-                    			}
-                    		 }
-                    		 
-                             NodeGroupExecutionClient client = ConnectionUtil.getNGEClient();
-                             SparqlConnection conn = ConnectionUtil.getSparqlConnection(dataGraphs.get(0), dataGraphs);
-                             // define an endpoint graph, and build a connection that uses it for model and
-                             // data
-                             // run a query from the store by id
-                             com.ge.research.semtk.resultSet.Table results =
-                                     client.execDispatchSelectByIdToTable(nodegroupId, conn, null, null);
-                             QueryResultsView.results = results;
-                             // System.out.println("Cell 0 0: " + results.getCellAsString(0, 0));
-                             String csv_string = results.toCSVString();
-                             String dir = /*ProjectUtils.getOverlayProjectPath();*/
-                                     RackPreferencePage.getInstanceDataFolder();
-                             ProjectUtils.validateInstanceDataFolder();
-                             String queryResultsDir = dir + "/" + Core.QUERY_RESULTS_FOLDER + "/";
-                             File file = new File(queryResultsDir);
-                             if (!file.exists() || !file.isDirectory()) {
-                                 RackConsole.getConsole()
-                                         .println("No QueryResults folder found, creating one");
-                                 file.mkdirs();
-                             }
-                             CSVUtil.writeToCSV(
-                                     csv_string, queryResultsDir + nodegroupId + "_queryresults.csv");
-                             System.out.println("Results for queried nodegroup: ");
-                             System.out.println(csv_string);
 
-                             Display.getDefault()
-                                     .asyncExec(
-                                             () -> {
-                                                 ViewUtils.showView(QueryResultsView.ID);
-                                             });
+                        try {
+                            TableItem[] items = table.getItems();
+                            ArrayList<String> dataGraphs = new ArrayList<>();
+                            for (TableItem item : items) {
+                                if (item.getChecked()) {
+                                    dataGraphs.add(item.getText(0));
+                                }
+                            }
 
-                         } catch (Exception e) {
-                             RackConsole.getConsole().error("Unable to show query result view");
-                         }
+                            NodeGroupExecutionClient client = ConnectionUtil.getNGEClient();
+                            SparqlConnection conn =
+                                    ConnectionUtil.getSparqlConnection(
+                                            dataGraphs.get(0), dataGraphs);
+                            RackConsole.getConsole()
+                                    .print("Querying nodegroup: " + nodegroupId + " ... ");
+                            // run a query from the store by id
+                            com.ge.research.semtk.resultSet.Table results =
+                                    client.execDispatchSelectByIdToTable(
+                                            nodegroupId, conn, null, null);
+                            RackConsole.getConsole().printOK();
+                            QueryResultsView.results = results;
+                            String csv_string = results.toCSVString();
+                            String dir = RackPreferencePage.getInstanceDataFolder();
+                            ProjectUtils.validateInstanceDataFolder();
+                            String queryResultsDir = dir + "/" + Core.QUERY_RESULTS_FOLDER + "/";
+                            File file = new File(queryResultsDir);
+                            if (!file.exists() || !file.isDirectory()) {
+                                RackConsole.getConsole()
+                                        .print("No QueryResults folder found, creating one");
+                                file.mkdirs();
+                            }
+                            CSVUtil.writeToCSV(
+                                    csv_string,
+                                    queryResultsDir + nodegroupId + "_queryresults.csv");
+                            System.out.println("Results for queried nodegroup: ");
+                            System.out.println(csv_string);
 
+                            Display.getDefault()
+                                    .asyncExec(
+                                            () -> {
+                                                ViewUtils.showView(QueryResultsView.ID);
+                                            });
+
+                        } catch (Exception e) {
+                            RackConsole.getConsole().printFAIL();
+                            RackConsole.getConsole().error("Unable to show query result view");
+                        }
 
                         mainComposite.getShell().close();
                     }
                 });
         return mainComposite;
     }
-    
+
     private void renderNumTriples(Composite parent) {
 
         try {
@@ -216,10 +204,9 @@ public class SelectDataGraphsDialog extends Dialog {
                 TableItem item = new TableItem(table, SWT.CENTER | SWT.CHECK);
                 ArrayList<String> entry = graphInfo.getResults().getRow(i);
                 item.setText(0, entry.get(0));
-                if(entry.get(0).contains(RackPreferencePage.getDefaultDataGraph())) {
-                	item.setChecked(true);
+                if (entry.get(0).contains(RackPreferencePage.getDefaultDataGraph())) {
+                    item.setChecked(true);
                 }
-               
             }
 
             parent.addDisposeListener(
@@ -236,5 +223,4 @@ public class SelectDataGraphsDialog extends Dialog {
             RackConsole.getConsole().error("Unable to fetch data graphs on RACK");
         }
     }
-
 }
