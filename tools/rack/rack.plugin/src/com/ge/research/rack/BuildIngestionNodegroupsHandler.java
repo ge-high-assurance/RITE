@@ -135,7 +135,7 @@ public class BuildIngestionNodegroupsHandler extends AbstractHandler {
                 monitor.worked((int) (100 / classList.size()) + 1);
                 RackConsole.getConsole().printOK();
             } catch (Exception e) {
-            	RackConsole.getConsole().printFAIL();
+                RackConsole.getConsole().printFAIL();
                 RackConsole.getConsole()
                         .error(
                                 "Could not build ingestion nodegroup template for nodegroup: "
@@ -143,10 +143,8 @@ public class BuildIngestionNodegroupsHandler extends AbstractHandler {
                 return Status.CANCEL_STATUS;
             }
         }
-        RackConsole.getConsole()
-                .print(
-                        "Nodegroups generated successfully and placed in nodegroups folder within "
-                                + RackPreferencePage.getInstanceDataFolder());
+        
+        RackConsole.getConsole().print("Nodegroups generated successfully and placed in nodegroups folder within " + RackPreferencePage.getInstanceDataFolder());
         return Status.OK_STATUS;
     }
 

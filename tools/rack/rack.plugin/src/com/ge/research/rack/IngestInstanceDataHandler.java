@@ -291,6 +291,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                 }
             }
         }
+        
         if(!monitor.isCanceled()) {
         RackConsole.getConsole().print("Manifest ingestion completed successfully");
         }

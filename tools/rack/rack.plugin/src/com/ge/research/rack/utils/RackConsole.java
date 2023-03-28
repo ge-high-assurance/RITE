@@ -32,14 +32,7 @@
 package com.ge.research.rack.utils;
 
 import com.ge.research.rack.views.ViewUtils;
-<<<<<<< HEAD
-<<<<<<< HEAD
 import org.eclipse.swt.graphics.Color;
-=======
->>>>>>> pin rack console by default
-=======
-import org.eclipse.swt.graphics.Color;
->>>>>>> making progress messages more uniform
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
@@ -90,14 +83,6 @@ public class RackConsole extends MessageConsole {
         stream.print("INFO: " + message + "\n");
         // logger.info(message);
         // System.out.println("INFO: " + message);
-    }
-
-    public void printOK() {
-        stream.print("OK");
-    }
-
-    public void printFAIL() {
-        stream.print("FAIL");
     }
 
     public void printOK() {
