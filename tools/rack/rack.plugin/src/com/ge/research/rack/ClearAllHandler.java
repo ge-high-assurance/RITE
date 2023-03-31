@@ -149,8 +149,9 @@ public class ClearAllHandler extends AbstractHandler {
                             if (event.getResult() == Status.CANCEL_STATUS) {
                                 return;
                             }
-                            
-                            RackConsole.getConsole().print("Ontologies and Nodegroups are cleared from RACK");
+
+                            RackConsole.getConsole()
+                                    .print("Ontologies and Nodegroups are cleared from RACK");
                             HandlerUtils.loadNodegroups();
                             HandlerUtils.showNodegroupTable();
                             HandlerUtils.showOntologyTree();

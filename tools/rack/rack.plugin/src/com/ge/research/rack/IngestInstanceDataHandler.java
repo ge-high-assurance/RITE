@@ -63,7 +63,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.jobs.JobGroup;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeSelection;
@@ -291,12 +290,11 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                 }
             }
         }
-        
-        if(!monitor.isCanceled()) {
-        RackConsole.getConsole().print("Manifest ingestion completed successfully");
-        }
-        else {
-        	RackConsole.getConsole().print("Manifest ingestion stopped");
+
+        if (!monitor.isCanceled()) {
+            RackConsole.getConsole().print("Manifest ingestion completed successfully");
+        } else {
+            RackConsole.getConsole().print("Manifest ingestion stopped");
         }
         return 0;
     }
@@ -364,10 +362,11 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                 return -1;
             }
             String nodegroupId = entry.get(0);
-            File ngJson = new File(ngPath + "/" + nodegroupId + ".json");
+            String jsonFile = entry.get(3);
+            File ngJson = new File(ngPath + "/" + jsonFile);
             if (!ngJson.exists()) {
                 RackConsole.getConsole()
-                        .error("json file for " + nodegroupId + "missing in folder: " + ngPath);
+                        .error("json file for " + jsonFile + "missing in folder: " + ngPath);
                 continue;
             }
             String jsonstr = FileUtils.readFileToString(ngJson, Charset.defaultCharset());
