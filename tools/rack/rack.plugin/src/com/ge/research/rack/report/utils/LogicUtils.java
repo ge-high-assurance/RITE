@@ -1,39 +1,10 @@
-/*
- * BSD 3-Clause License
- * 
- * Copyright (c) 2023, General Electric Company and Galois, Inc.
- * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- * 
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
- * 
- * 3. Neither the name of the copyright holder nor the names of its
- *    contributors may be used to endorse or promote products derived from
- *    this software without specific prior written permission.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+/** */
 package com.ge.research.rack.report.utils;
 
 import com.ge.research.rack.report.structures.PsacNode;
 import com.ge.research.rack.report.structures.Requirement;
 import com.ge.research.rack.report.structures.ReviewLog;
+import com.ge.research.rack.report.structures.SwComponent;
 import com.ge.research.rack.report.structures.Test;
 import java.util.ArrayList;
 import java.util.List;
@@ -129,6 +100,24 @@ public class LogicUtils {
         }
 
         return relevant;
+    }
+
+    /**
+     * Given a key and a list of swComponent objects, returns the swComponent object whose id = key,
+     *
+     * @param swCompList
+     * @param key
+     * @return
+     */
+    public static SwComponent findSwCompObjById(List<SwComponent> swCompList, String key) {
+
+        for (SwComponent swComp : swCompList) {
+            if (swComp.getId().equals(key)) {
+                return swComp;
+            }
+        }
+
+        return null; // if nothing is found in the loop
     }
 
     /**
@@ -288,6 +277,39 @@ public class LogicUtils {
         packet.add(numFailed);
         packet.add(numNoTest);
         return packet;
+    }
+
+    /**
+     * Takes a list of swComponents and checks the number that have a sbDD trace and number that
+     * don't
+     *
+     * @param swCompList
+     * @return
+     */
+    public static int getSwCompSubDDTraceStats(List<SwComponent> swCompList) {
+
+        int numSwCompWithSubDDTrace = 0;
+
+        for (SwComponent swComp : swCompList) {
+            if (swComp.getWasImpactedBy().size() < 1) { // no trace
+                // do nothing
+            } else { // some trace
+                Boolean hasSubDDTrace = false;
+                for (Requirement req : swComp.getWasImpactedBy()) {
+                    if (req.getType().equalsIgnoreCase("SubDD_Req")) {
+                        hasSubDDTrace = true;
+                        break;
+                    }
+                }
+                if (hasSubDDTrace) {
+                    numSwCompWithSubDDTrace = numSwCompWithSubDDTrace + 1;
+                } else {
+                    // nothing
+                }
+            }
+        }
+
+        return numSwCompWithSubDDTrace;
     }
 
     /**

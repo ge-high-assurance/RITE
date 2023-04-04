@@ -1,34 +1,4 @@
-/*
- * BSD 3-Clause License
- * 
- * Copyright (c) 2023, General Electric Company and Galois, Inc.
- * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- * 
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
- * 
- * 3. Neither the name of the copyright holder nor the names of its
- *    contributors may be used to endorse or promote products derived from
- *    this software without specific prior written permission.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+/** */
 package com.ge.research.rack.report.boeingPsac;
 
 import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
@@ -38,6 +8,7 @@ import com.ge.research.rack.report.structures.PsacNode;
 import com.ge.research.rack.report.structures.Requirement;
 import com.ge.research.rack.report.structures.ReviewLog;
 import com.ge.research.rack.report.structures.SparqlConnectionInfo;
+import com.ge.research.rack.report.structures.SwComponent;
 import com.ge.research.rack.report.structures.Test;
 import com.ge.research.rack.report.utils.LogicUtils;
 import com.ge.research.rack.report.utils.PsacNodeUtils;
@@ -45,7 +16,9 @@ import com.ge.research.rack.report.utils.RackQueryUtils;
 import com.ge.research.rack.utils.CSVUtil;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.apache.commons.io.FileUtils;
 
 /**
@@ -102,6 +75,12 @@ public class PsacDataProcessorBoeing {
     // all review logs SBVT
     private List<String[]> allREVLOGS;
 
+    // all swcomponents
+    private List<String[]> allSWCOMPS;
+
+    // all sources (DOCUMENT) traced to entities
+    private List<String[]> allSOURCETRACE;
+
     // ----------------------------------------------------------------------
 
     // class variables to store data as Objects
@@ -124,6 +103,8 @@ public class PsacDataProcessorBoeing {
 
     private List<ReviewLog> allRevLogObjs = new ArrayList<ReviewLog>();
 
+    private List<SwComponent> allSwCompObjs = new ArrayList<SwComponent>();
+
     // ----------------------------------------------------------------------
 
     private PsacNode.Table processTableDummy(PsacNode.Table tabObj, int numNoData) {
@@ -145,6 +126,32 @@ public class PsacDataProcessorBoeing {
         objObj.setPassed(false);
 
         return objObj;
+    }
+
+    private List<String> findSource(String entityId) {
+
+        List<String> sources = new ArrayList<String>();
+
+        for (String[] row : allSOURCETRACE) {
+            if (row.length > 1) {
+                if ((row[0] != null) && (row[1] != null)) {
+                    if (row[1].equals(entityId)) {
+                        System.out.println("Found source for " + entityId);
+                        sources.add(row[0]);
+                    }
+                }
+            }
+        }
+
+        if (sources.size() > 0) {
+            // remove duplicates
+            Set<String> set = new HashSet<>(sources);
+            sources.clear();
+            sources.addAll(set);
+            return sources;
+        }
+
+        return null;
     }
 
     /**
@@ -432,8 +439,51 @@ public class PsacDataProcessorBoeing {
         // ----- Table A5
 
         PsacNode.Table tableA5CompNode = new PsacNode().new Table();
-        // just addding the raw tables for this table
-        tableA5CompNode = PsacNodeUtils.getTableById(psacNode, "A5");
+        tableA5CompNode.setId(PsacNodeUtils.getTableById(psacNode, "A5").getId());
+        tableA5CompNode.setDescription(PsacNodeUtils.getTableById(psacNode, "A5").getDescription());
+
+        // adding the procesed objectives for this table
+        tableA5CompNode
+                .getTabObjectives()
+                .add(
+                        ComplianceTable5.processObjectiveA5_1_2_3_4(
+                                PsacNodeUtils.getObjectiveById(psacNode, "A5", "A5-1")));
+        tableA5CompNode
+                .getTabObjectives()
+                .add(
+                        ComplianceTable5.processObjectiveA5_1_2_3_4(
+                                PsacNodeUtils.getObjectiveById(psacNode, "A5", "A5-2")));
+
+        tableA5CompNode
+                .getTabObjectives()
+                .add(
+                        ComplianceTable5.processObjectiveA5_1_2_3_4(
+                                PsacNodeUtils.getObjectiveById(psacNode, "A5", "A5-3")));
+
+        tableA5CompNode
+                .getTabObjectives()
+                .add(
+                        ComplianceTable5.processObjectiveA5_1_2_3_4(
+                                PsacNodeUtils.getObjectiveById(psacNode, "A5", "A5-4")));
+
+        tableA5CompNode
+                .getTabObjectives()
+                .add(
+                        ComplianceTable5.processObjectiveA5_5(
+                                PsacNodeUtils.getObjectiveById(psacNode, "A5", "A5-5")));
+
+        tableA5CompNode
+                .getTabObjectives()
+                .add(processObjectiveDummy(PsacNodeUtils.getObjectiveById(psacNode, "A5", "A5-6")));
+        tableA5CompNode
+                .getTabObjectives()
+                .add(processObjectiveDummy(PsacNodeUtils.getObjectiveById(psacNode, "A5", "A5-7")));
+        tableA5CompNode
+                .getTabObjectives()
+                .add(processObjectiveDummy(PsacNodeUtils.getObjectiveById(psacNode, "A5", "A5-8")));
+        tableA5CompNode
+                .getTabObjectives()
+                .add(processObjectiveDummy(PsacNodeUtils.getObjectiveById(psacNode, "A5", "A5-9")));
 
         // ----- Table A6
 
@@ -510,7 +560,7 @@ public class PsacDataProcessorBoeing {
         tableA2CompNode = fillTableStatus(tableA2CompNode);
         tableA3CompNode = fillTableStatus(tableA3CompNode);
         tableA4CompNode = fillTableStatus(tableA4CompNode);
-        tableA5CompNode = processTableDummy(tableA5CompNode, 9);
+        tableA5CompNode = fillTableStatus(tableA5CompNode);
         tableA6CompNode = processTableDummy(tableA6CompNode, 5);
         tableA7CompNode = fillTableStatus(tableA7CompNode);
         tableA8CompNode = processTableDummy(tableA8CompNode, 6);
@@ -718,6 +768,26 @@ public class PsacDataProcessorBoeing {
                                         objectiveObj.getObjOutputs().getLogs().add(log);
                                     }
                                 }
+                            }
+                        }
+
+                        // Attach SWCOMPONENTS and relevant logs (none for now, TODO) to A5-1 to
+                        // A5-5
+                        if (objectiveObj.getId().equalsIgnoreCase("A5-1")
+                                || objectiveObj.getId().equalsIgnoreCase("A5-2")
+                                || objectiveObj.getId().equalsIgnoreCase("A5-3")
+                                || objectiveObj.getId().equalsIgnoreCase("A5-4")
+                                || objectiveObj.getId().equalsIgnoreCase("A5-5")) {
+                            for (Requirement req : allSUBDDObjs) {
+                                objectiveObj.getObjOutputs().getRequirements().add(req);
+                                if (req.getLogs() != null) {
+                                    for (ReviewLog log : req.getLogs()) {
+                                        objectiveObj.getObjOutputs().getLogs().add(log);
+                                    }
+                                }
+                            }
+                            for (SwComponent swComp : allSwCompObjs) {
+                                objectiveObj.getObjOutputs().getSwComponents().add(swComp);
                             }
                         }
 
@@ -1340,6 +1410,9 @@ public class PsacDataProcessorBoeing {
                         newSbvtTestObj.setLogs(logList);
                     }
 
+                    // find source if exists
+                    newSbvtTestObj.setSourceDocument(findSource(newSbvtTestObj.getId()));
+
                     allSBVTObjs.add(newSbvtTestObj);
                 }
             }
@@ -1367,6 +1440,9 @@ public class PsacDataProcessorBoeing {
                 newCSIDObj.setDescription(row[csidDescCol]);
                 newCSIDObj.setType("CSID_Req");
 
+                // find source if exists
+                newCSIDObj.setSourceDocument(findSource(newCSIDObj.getId()));
+
                 allCSIDObjs.add(newCSIDObj);
             }
         }
@@ -1392,6 +1468,9 @@ public class PsacDataProcessorBoeing {
                 newPIDSObj.setId(row[pidsIdCol]);
                 newPIDSObj.setDescription(row[pidsDescCol]);
                 newPIDSObj.setType("PIDS_Req");
+
+                // find source if exists
+                newPIDSObj.setSourceDocument(findSource(newPIDSObj.getId()));
 
                 allPIDSObjs.add(newPIDSObj);
             }
@@ -1476,6 +1555,9 @@ public class PsacDataProcessorBoeing {
 
                 newSRSObj.setSatisfies(satisfies);
 
+                // find source if exists
+                newSRSObj.setSourceDocument(findSource(newSRSObj.getId()));
+
                 // add the SRS object to list
                 allSRSObjs.add(newSRSObj);
             }
@@ -1536,6 +1618,9 @@ public class PsacDataProcessorBoeing {
 
                 // add satisfies to derSrs OBJ
                 newDerSRSObj.setSatisfies(satisfies);
+
+                // find source if exists
+                newDerSRSObj.setSourceDocument(findSource(newDerSRSObj.getId()));
 
                 // add the SRS object to list
                 allDerSRSObjs.add(newDerSRSObj);
@@ -1619,8 +1704,93 @@ public class PsacDataProcessorBoeing {
 
                 newSUBDDObj.setSatisfies(satisfies);
 
+                // find source if exists
+                newSUBDDObj.setSourceDocument(findSource(newSUBDDObj.getId()));
+
                 // add the SRS object to list
                 allSUBDDObjs.add(newSUBDDObj);
+            }
+        }
+    }
+
+    /**
+     * Creates all SwComponent objects with trace info Note: This is a bit different than others
+     * since I took the lazy route of using just one query
+     */
+    private void createAllSWCOMPObjsWithTrace() {
+        System.out.println("Creating SWCOMP Objects");
+
+        // get the header line for all Objective-A5-5-query-Boeing-swcomponent-subDD-trace csv file
+        String[] swcomponentToReqCols =
+                CSVUtil.getColumnInfo(
+                        RackQueryUtils.createCsvFilePath(
+                                "Objective-A5-5-query-Boeing-swcomponent-subDD-trace", rackDir));
+
+        int swcompIdCol =
+                CustomStringUtils.getCSVColumnIndex(swcomponentToReqCols, "identifier_swcomponent");
+        int reqCol =
+                CustomStringUtils.getCSVColumnIndex(swcomponentToReqCols, "identifier_requirement");
+
+        int counter = 1;
+
+        for (String[] row : allSWCOMPS) {
+            if (row[swcompIdCol] != null
+                    && (LogicUtils.findSwCompObjById(allSwCompObjs, row[swcompIdCol])
+                            == null)) { // if not null and not already created
+
+                SwComponent newSWCOMPObj = new SwComponent();
+
+                newSWCOMPObj.setId(row[swcompIdCol]);
+
+                // find and add trace (satisfies) info
+                List<Requirement> wasImpactedBy = new ArrayList<Requirement>();
+
+                // -- find Req trace
+
+                for (String[] row2 : allSWCOMPS) {
+                    if ((row2.length > swcompIdCol) && (row2.length > reqCol)) {
+                        //                         System.out.println("Finding wasimpactedby for " +
+                        // row2[swcompIdCol] + "iteration number: " + counter);
+                        counter++;
+
+                        if (row2[swcompIdCol].equals(
+                                row[swcompIdCol])) { // if relevant to the swComp in question
+
+                            // create the req and add to list if not null
+                            // Note : This reqs might be new, so may nit be in the list of all
+                            // SubDDS, so will create fresh
+                            if (row2[reqCol] != null) {
+                                if (row2[reqCol].length() > 0) {
+
+                                    // check if a subdd exists wit the id
+                                    // find the srs and add to list if not null
+                                    Requirement theSubDDObj =
+                                            LogicUtils.findReqObjById(allSUBDDObjs, row2[reqCol]);
+                                    if (theSubDDObj != null) {
+                                        wasImpactedBy.add(theSubDDObj);
+                                    } else {
+                                        // if a subdd does not exist with the id, then create a req
+                                        // obj of type "unknown"
+                                        Requirement newReqObj = new Requirement();
+                                        newReqObj.setId(row2[reqCol]);
+                                        newReqObj.setType("unknown");
+                                        wasImpactedBy.add(newReqObj);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // add satisfies to subdd OBJ
+
+                newSWCOMPObj.setWasImpactedBy(wasImpactedBy);
+
+                // find source if exists
+                newSWCOMPObj.setSourceDocument(findSource(newSWCOMPObj.getId()));
+
+                // add the SRS object to list
+                allSwCompObjs.add(newSWCOMPObj);
             }
         }
     }
@@ -1684,6 +1854,9 @@ public class PsacDataProcessorBoeing {
                 // add satisfies to derSrs OBJ
                 newDerSUBDDObj.setSatisfies(satisfies);
 
+                // find source if exists
+                newDerSUBDDObj.setSourceDocument(findSource(newDerSUBDDObj.getId()));
+
                 // add the SRS object to list
                 allDerSUBDDObjs.add(newDerSUBDDObj);
             }
@@ -1711,6 +1884,8 @@ public class PsacDataProcessorBoeing {
         System.out.println("Num SUBDD Objects : " + allSUBDDObjs.size());
         createAllDerSUBDDObjsWithTrace();
         System.out.println("Num DerSUBDD Objects : " + allDerSUBDDObjs.size());
+        createAllSWCOMPObjsWithTrace();
+        System.out.println("Num SWCOMP Objects : " + allSwCompObjs.size());
         System.out.println("Data objects created from RACK data.\n");
     }
 
@@ -1728,13 +1903,14 @@ public class PsacDataProcessorBoeing {
             File targetDirectory = new File(rackDir + "auto");
             FileUtils.cleanDirectory(targetDirectory);
 
-            // ***************** DO NOT DELETE ***************** TURNED OFF FOR TESTING
-            // Connect to RACK using RACK preferences
-            SparqlConnectionInfo newConnPars = RackQueryUtils.initiateQueryConnection();
-
-            //            // FOR TESTING ONLY : Connect to RACK using hardcoded preferences
+            //            // ***************** DO NOT DELETE ***************** TURNED OFF FOR
+            // TESTING
+            //            // Connect to RACK using RACK preferences
             //            SparqlConnectionInfo newConnPars =
-            // RackQueryUtils.hardcodedQueryConnectionForTesting();
+            // RackQueryUtils.initiateQueryConnection();
+
+            // FOR TESTING ONLY : Connect to RACK using hardcoded preferences
+            SparqlConnectionInfo newConnPars = RackQueryUtils.hardcodedQueryConnectionForTesting();
 
             // Execute each predefined query
             List<String> allQueryIds = PsacQueriesBoeing.All.getAllQueries();
@@ -1834,6 +2010,16 @@ public class PsacDataProcessorBoeing {
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
                                 PsacQueriesBoeing.All.ALL_REVIEW_LOGS.getQId(), rackDir));
+
+        allSWCOMPS =
+                CSVUtil.getRows(
+                        RackQueryUtils.createCsvFilePath(
+                                PsacQueriesBoeing.All.A5_5_SWCOMP_REQ_TRACE.getQId(), rackDir));
+
+        allSOURCETRACE =
+                CSVUtil.getRows(
+                        RackQueryUtils.createCsvFilePath(
+                                PsacQueriesBoeing.All.ALL_SOURCES.getQId(), rackDir));
     }
 
     /**

@@ -262,6 +262,58 @@
                         <AnchorPane />
                      </content>
                        </Tab>
+                  <Tab fx:id="tabSwComp" text="Source Code">
+                     <content>
+                        <GridPane style="-fx-padding: .5em 0em 0em 0em; -fx-background-color: white">
+                           <children>
+                              <VBox GridPane.columnIndex="0">
+                                 <children>
+                                    <HBox>
+                                       <children>
+                                          <TextField fx:id="searchSwComp" HBox.hgrow="ALWAYS" />
+                                          <ComboBox fx:id="comboSwComp" onAction="#comboSwCompAction" />
+                                       </children>
+                                    </HBox>
+                                    <HBox VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <ListView fx:id="swCompList" onMouseClicked="#swCompListSelectionAction" prefHeight="312.0" prefWidth="285.0" HBox.hgrow="ALWAYS">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </ListView>
+                                          <VBox HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <Label fx:id="swCompChildrenLabel">
+                                                   <VBox.margin>
+                                                      <Insets left="4.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <ListView fx:id="swCompChildrenList" prefHeight="295.0" prefWidth="217.0" VBox.vgrow="ALWAYS" />
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <BarChart fx:id="swCompChart" animated="false" barGap="2.0" horizontalGridLinesVisible="false" legendVisible="false" style="-fx-font-size: .8em" titleSide="BOTTOM" verticalGridLinesVisible="false" GridPane.columnIndex="1">
+                                 <xAxis>
+                                    <CategoryAxis side="BOTTOM" />
+                                 </xAxis>
+                                 <yAxis>
+                                    <NumberAxis fx:id="yAxisSwCompChart" animated="false" autoRanging="false" minorTickVisible="false" side="LEFT" />
+                                 </yAxis>
+                              </BarChart>
+                           </children>
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="ALWAYS" percentWidth="70.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints vgrow="ALWAYS" />
+                           </rowConstraints>
+                        </GridPane>
+                     </content>
+                  </Tab>
    
                    </tabs>
                </TabPane>

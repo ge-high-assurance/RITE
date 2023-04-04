@@ -42,7 +42,9 @@ public class ReportButtonHandler extends AbstractHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-        // Launch the AutoGsnMainView
+
+        System.out.println("Report Button Clicked!");
+
         JavaFXAppLaunchManager.reportMainViewLaunch();
 
         return null;

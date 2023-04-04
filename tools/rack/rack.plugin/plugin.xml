@@ -29,8 +29,6 @@
         <command categoryId="rackplugin.commands"
             id="rackplugin.commands.ingestInstanceData" name="Manifest Import">
         </command>
-        <!-- <command categoryId="rackplugin.commands" id="rackplugin.commands.gsnCommand"
-            name="Load Assurance Case"> </command> -->
         <command categoryId="rackplugin.commands"
             id="rackplugin.commands.settingCommand" name="RACK Settings">
         </command>
@@ -234,6 +232,15 @@
                 <command commandId="rackplugin.commands.settingCommand"
                     id="rackplugin.menus.setting" label="RACK Settings" mnemonic="S">
                 </command>
+
+                <separator name="separator3" visible="true">
+                </separator>
+
+                <command commandId="rackplugin.commands.reportsCommand"
+                    id="rackplugin.menus.reports" label="DO-178C Compliance Report"
+                    mnemonic="S" style="push">
+                </command>
+
             </menu>
         </menuContribution>
 
