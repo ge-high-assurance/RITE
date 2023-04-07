@@ -225,27 +225,11 @@ public class ReportTableViewHandlerNew {
 
     @FXML
     private void initialize() {
-        // initialize the header label
         try {
-            String imagePath = "resources/images/headerWithLogoTransparent.png";
-
-            Bundle bundle = Platform.getBundle("rack.plugin");
-            URL imgUrl = FileLocator.find(bundle, new Path(imagePath), null);
-            imgUrl = FileLocator.toFileURL(imgUrl);
-
-            // the imgURL starts with "file:/", so stripping it here
-            String imgUrlStr = imgUrl.toString().substring("file:/".length());
-
-            // System.out.println(imgUrl.toString());
-
-            ImageView icon = new ImageView(new Image(new FileInputStream(new File(imgUrlStr))));
-            icon.setFitHeight(60);
+            final ImageView icon = ReportViewUtils.loadGeIcon();
             icon.setPreserveRatio(true);
-
             headerLabel.setGraphic(icon);
-        } catch (Exception e) {
-            // do nothing for now
-        }
+        } catch (Exception e) {}
 
         // set SINGLE Selection Model for ListView of Goals
         listObjectives.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
