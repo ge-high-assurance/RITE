@@ -28,5 +28,23 @@ JavaFX CSS supports a limited subset of CSS properties - read more about that he
     -fx-bar-fill: grey; /* linear-gradient(from 0px 0px to 4px 0px, repeat, darkgray 30%, grey 50%); */
 }
 
+.transparent-button {
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-padding: 0px;
+    -fx-padding-bottom: 0px;
+    -fx-content-display: bottom;
+    -fx-alignment: bottom;
+}
+
+.bottom-align {
+    -fx-content-display: bottom;
+    -fx-alignment: bottom;
+}
+
+.superscript {
+    -fx-translate-y: -.3em;
+}
+
 
 
