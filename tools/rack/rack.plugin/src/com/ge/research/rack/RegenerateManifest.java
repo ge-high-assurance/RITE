@@ -67,6 +67,8 @@ public class RegenerateManifest extends AbstractHandler {
 	static final String DATA_YAML_NAME = "data.yaml";
 	static final String MODEL_YAML_NAME = "model.yaml";
 	static final String NODEGROUPS_NAME = "store_data.csv";
+	static final String COPY_TO_GRAPH_KEY = "copy-to-graph";
+	static final String PERFORM_ENTITY_RESOLUTION_KEY = "perform-entity-resolution";
 
 	final Set<IProject> visitedProjects = new HashSet<>();
 
@@ -94,7 +96,7 @@ public class RegenerateManifest extends AbstractHandler {
 		// getLocation is used instead of getFullPath for manifests because manifests
 		// link across project boundaries and are access by tooling that is unaware of
 		// the Eclipse workspace structure.
-		
+
 		final List<String> manifests = new ArrayList<>();
 		final IPath projectPath = project.getLocation();
 
@@ -156,6 +158,35 @@ public class RegenerateManifest extends AbstractHandler {
 			return;
 		}
 
+		final IFile manifestResource = project.getFile(MANIFEST_YAML_NAME);
+		if (!manifestResource.exists()) {
+			return;
+		}
+
+		final Object manifestYaml;
+		try {
+			manifestYaml = openYamlResource(manifestResource);
+		} catch (CoreException e) {
+			throw new ExecutionException("Failed to open preexisting manifest.yaml", e);
+		}
+
+		String copyToGraph = null;
+		String performEntityResolution = null;
+
+		if (manifestYaml instanceof Map) {
+			Map<?, ?> map = (Map<?, ?>) manifestYaml;
+
+			final Object copyToGraphObj = map.get(COPY_TO_GRAPH_KEY);
+			if (copyToGraphObj instanceof String) {
+				copyToGraph = (String) copyToGraphObj;
+			}
+
+			final Object performEntityResolutionObj = map.get(PERFORM_ENTITY_RESOLUTION_KEY);
+			if (performEntityResolutionObj instanceof String) {
+				performEntityResolution = (String) performEntityResolutionObj;
+			}
+		}
+
 		final Set<String> modelGraphs = new TreeSet<>();
 		final Set<String> dataGraphs = new TreeSet<>();
 		final List<String> models = new ArrayList<>();
@@ -170,10 +201,10 @@ public class RegenerateManifest extends AbstractHandler {
 			if (name.equals(DATA_YAML_NAME)) {
 				datas.add(proxy.requestFullPath().makeRelativeTo(project.getFullPath()).toString());
 
-				Object dataYaml = openYamlResource(proxy.requestResource());
+				final Object dataYaml = openYamlResource(proxy.requestResource());
 				if (dataYaml instanceof Map) {
-					Map<?, ?> map = (Map<?, ?>) dataYaml;
-					Object dataGraph = map.get("data-graph");
+					final Map<?, ?> map = (Map<?, ?>) dataYaml;
+					final Object dataGraph = map.get("data-graph");
 
 					if (dataGraph == null) {
 						dataGraphs.add(DEFAULT_DATA_GRAPH);
@@ -186,10 +217,10 @@ public class RegenerateManifest extends AbstractHandler {
 			} else if (name.equals(MODEL_YAML_NAME)) {
 				models.add(proxy.requestFullPath().makeRelativeTo(project.getFullPath()).toString());
 
-				Object modelYaml = openYamlResource(proxy.requestResource());
+				final Object modelYaml = openYamlResource(proxy.requestResource());
 				if (modelYaml instanceof Map) {
-					Map<?, ?> map = (Map<?, ?>) modelYaml;
-					Object modelGraph = map.get("model-graph");
+					final Map<?, ?> map = (Map<?, ?>) modelYaml;
+					final Object modelGraph = map.get("model-graph");
 					if (modelGraph == null) {
 						modelGraphs.add(DEFAULT_MODEL_GRAPH);
 					} else if (modelGraph instanceof String) {
@@ -222,8 +253,10 @@ public class RegenerateManifest extends AbstractHandler {
 		content.put("name", project.getName());
 
 		try {
-			String description = project.getDescription().getComment();
-			content.put("description", description);
+			final String description = project.getDescription().getComment();
+			if (!description.isBlank()) {
+				content.put("description", description);
+			}
 		} catch (CoreException e) {
 		}
 
@@ -259,6 +292,14 @@ public class RegenerateManifest extends AbstractHandler {
 		// all data entries fourth; most importantly after models
 		for (String path : datas) {
 			steps.add(Collections.singletonMap("data", path));
+		}
+
+		if (performEntityResolution != null) {
+			content.put(PERFORM_ENTITY_RESOLUTION_KEY, performEntityResolution);
+		}
+
+		if (copyToGraph != null) {
+			content.put(COPY_TO_GRAPH_KEY, copyToGraph);
 		}
 
 		writeManifest(project, content);
