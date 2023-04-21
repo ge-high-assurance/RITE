@@ -63,7 +63,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <!-- For multiple dependencies which use the same version -->
-    <version.javafx>20</version.javafx>
+    <version.javafx>20.0.1</version.javafx>
     <version.rack>${project.version}</version.rack>
     <version.surefire>3.0.0</version.surefire>
     <version.tycho>2.7.5</version.tycho>
