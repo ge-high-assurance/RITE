@@ -38,26 +38,13 @@ import com.ge.research.rack.report.structures.PsacNode;
 import com.ge.research.rack.report.structures.Requirement;
 import com.ge.research.rack.report.structures.ReviewLog;
 import com.ge.research.rack.report.structures.Test;
-
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import javax.imageio.ImageIO;
-
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
-import org.osgi.framework.Bundle;
-
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -70,21 +57,23 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
+import org.osgi.framework.Bundle;
 
 /**
  * @author Saswata Paul
  */
 public class ReportViewUtils {
-	
-	private static final Font VERANDA_FONT = Font.font("Verdana", FontWeight.BOLD, 12);
-	
-	private static final String TOOLTIP_FONT_SIZE_STYLE = "-fx-font-size: 20";
 
-	private static final String RACK_PLUGIN_BUNDLE_NAME = "rack.plugin";
-	
-	private static final String GE_LOGO_IMG_PATH = 
-			"resources/images/GE_AEROSPACE_LOGO_L.png";
-	
+    private static final Font VERANDA_FONT = Font.font("Verdana", FontWeight.BOLD, 12);
+
+    private static final String TOOLTIP_FONT_SIZE_STYLE = "-fx-font-size: 20";
+
+    private static final String RACK_PLUGIN_BUNDLE_NAME = "rack.plugin";
+
+    private static final String GE_LOGO_IMG_PATH = "resources/images/GE_AEROSPACE_LOGO_L.png";
 
     /** Assign a given text tooltip to a given javafx node */
     public static void assignTooltip(Node node, String text) {
@@ -96,38 +85,35 @@ public class ReportViewUtils {
 
     /** Returns javafx color for a given objective object */
     public static Color getObjectiveColor(final PsacNode.Objective objective) {
-        
-    	if (objective.getNoData()) { 
-    		return objective.getMetrics().equals("TBD") ?  Color.GRAY : Color.LIGHTGREY;    		
+
+        if (objective.getNoData()) {
+            return objective.getMetrics().equals("TBD") ? Color.GRAY : Color.LIGHTGREY;
         }
-    	
+
         if (objective.getPartialData()) {
             return Color.ORANGE;
-        } 
-        
-        return objective.getPassed() ?  Color.GREEN : Color.RED;
-        
+        }
+
+        return objective.getPassed() ? Color.GREEN : Color.RED;
     }
 
     /** Returns javafx color for a table object */
     public static Color getTableColor(final PsacNode.Table table) {
-    	
-    	if(table.getNoData()) {
-    		return Color.GRAY; // if no data, then GRAY
-    	}
-    	if (table.getPartialData()) {
+
+        if (table.getNoData()) {
+            return Color.GRAY; // if no data, then GRAY
+        }
+        if (table.getPartialData()) {
             return Color.ORANGE;
-        } 
-    	
-    	return table.getPassed() ? Color.GREEN : Color.RED;   
+        }
+
+        return table.getPassed() ? Color.GREEN : Color.RED;
     }
 
-    /**
-     * Given a table object, returns a list of doubles containing the objective metrics in order
-     */
+    /** Given a table object, returns a list of doubles containing the objective metrics in order */
     public static List<Double> getObjectiveOrder(PsacNode.Table table) {
-        
-    	final List<Double> objStats = new ArrayList<Double>();
+
+        final List<Double> objStats = new ArrayList<Double>();
 
         for (final PsacNode.Objective obj : table.getTabObjectives()) {
             if (obj.getMetrics().contains("%")) { // if there is a numeric value
@@ -148,51 +134,50 @@ public class ReportViewUtils {
      * in the table
      */
     public static List<Integer> getTableArtifactStats(PsacNode.Table table) {
-    	
+
         final Set<String> docIds = new HashSet<String>();
         final Set<String> reqIds = new HashSet<String>();
         final Set<String> hzrdIds = new HashSet<String>();
         final Set<String> tstIds = new HashSet<String>();
         final Set<String> logIds = new HashSet<String>();
         final Set<String> anlsIds = new HashSet<String>();
-        
+
         table.getTabObjectives().stream()
-        		.map(PsacNode.Objective::getObjOutputs)
-        		.forEach(objective -> {
-        			for (final DataItem doc : objective.getDocuments()) {
-                        docIds.add(doc.getId());
-                    }
-                    for (final Requirement req : objective.getRequirements()) {
-                        reqIds.add(req.getId());
-                    }
-                    for (final Hazard hzrd : objective.getHazards()) {
-                        hzrdIds.add(hzrd.getId());
-                    }
-                    for (final Test tst : objective.getTests()) {
-                        tstIds.add(tst.getId());
-                    }
-                    for (final ReviewLog log : objective.getLogs()) {
-                        logIds.add(log.getId());
-                    }
-                    for (final Analysis anls : objective.getAnalyses()) {
-                        anlsIds.add(anls.getId());
-                    }
-        		});
+                .map(PsacNode.Objective::getObjOutputs)
+                .forEach(
+                        objective -> {
+                            for (final DataItem doc : objective.getDocuments()) {
+                                docIds.add(doc.getId());
+                            }
+                            for (final Requirement req : objective.getRequirements()) {
+                                reqIds.add(req.getId());
+                            }
+                            for (final Hazard hzrd : objective.getHazards()) {
+                                hzrdIds.add(hzrd.getId());
+                            }
+                            for (final Test tst : objective.getTests()) {
+                                tstIds.add(tst.getId());
+                            }
+                            for (final ReviewLog log : objective.getLogs()) {
+                                logIds.add(log.getId());
+                            }
+                            for (final Analysis anls : objective.getAnalyses()) {
+                                anlsIds.add(anls.getId());
+                            }
+                        });
 
         return List.of(
-        		docIds.size(), 
-        		reqIds.size(), 
-        		hzrdIds.size(), 
-        		tstIds.size(), 
-        		logIds.size(), 
-        		anlsIds.size());
+                docIds.size(),
+                reqIds.size(),
+                hzrdIds.size(),
+                tstIds.size(),
+                logIds.size(),
+                anlsIds.size());
     }
 
-    /**
-     * Creates a data bar and adds a value label to the top (only for double values)
-     */
+    /** Creates a data bar and adds a value label to the top (only for double values) */
     public static XYChart.Data<String, Double> createDoubleDataBar(String country, double value) {
-        
+
         final Label label = new Label(Double.toString(value));
         label.setTextFill(Color.WHITE);
         label.setFont(VERANDA_FONT);
@@ -202,18 +187,15 @@ public class ReportViewUtils {
 
         final StackPane node = new StackPane();
         node.getChildren().add(group);
-        
-    	final XYChart.Data<String, Double> data = 
-    			new XYChart.Data<String, Double>(country, value);
-    	
+
+        final XYChart.Data<String, Double> data = new XYChart.Data<String, Double>(country, value);
+
         data.setNode(node);
 
         return data;
     }
 
-    /**
-     * Creates a data bar and adds a value label to the top (only for int values)
-     */
+    /** Creates a data bar and adds a value label to the top (only for int values) */
     public static XYChart.Data<String, Integer> createIntDataBar(String country, int value) {
 
         final Label label = new Label(Integer.toString(value));
@@ -222,32 +204,29 @@ public class ReportViewUtils {
 
         final Group group = new Group(label);
         StackPane.setAlignment(group, Pos.TOP_CENTER);
-        
+
         final StackPane node = new StackPane();
         node.getChildren().add(group);
-        
-        final XYChart.Data<String, Integer> data = 
-        		new XYChart.Data<String, Integer>(country, value);
-        
+
+        final XYChart.Data<String, Integer> data =
+                new XYChart.Data<String, Integer>(country, value);
+
         data.setNode(node);
 
         return data;
     }
 
-    
     public static String getSrcLabelText(String src) {
-    	return String.format("Source: %s", null != src ? src : "Not Found");
+        return String.format("Source: %s", null != src ? src : "Not Found");
     }
-    
-    
+
     public static ImageView loadGeIcon() throws IOException, URISyntaxException {
-    	
+
         final Bundle bundle = Platform.getBundle(RACK_PLUGIN_BUNDLE_NAME);
-        
-        final String imgUrl = FileLocator.find(bundle, new Path(GE_LOGO_IMG_PATH), null)
-        		.toURI().getPath();
-        
+
+        final String imgUrl =
+                FileLocator.find(bundle, new Path(GE_LOGO_IMG_PATH), null).toURI().getPath();
+
         return new ImageView(imgUrl);
     }
-    
 }

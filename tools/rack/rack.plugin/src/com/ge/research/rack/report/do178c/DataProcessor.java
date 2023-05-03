@@ -1,8 +1,38 @@
-/** */
-package com.ge.research.rack.report.boeingPsac;
+/*
+ * BSD 3-Clause License
+ * 
+ * Copyright (c) 2023, General Electric Company and Galois, Inc.
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 
+ * 3. Neither the name of the copyright holder nor the names of its
+ *    contributors may be used to endorse or promote products derived from
+ *    this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+package com.ge.research.rack.report.do178c;
 
 import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
-import com.ge.research.rack.report.constants.PsacQueriesBoeing;
+import com.ge.research.rack.report.constants.ReportQueries;
 import com.ge.research.rack.report.structures.DataItem;
 import com.ge.research.rack.report.structures.PsacNode;
 import com.ge.research.rack.report.structures.Requirement;
@@ -24,7 +54,7 @@ import org.apache.commons.io.FileUtils;
 /**
  * @author Saswata Paul
  */
-public class PsacDataProcessorBoeing {
+public class DataProcessor {
 
     // class variables to store required parameters
     String rackDir;
@@ -1913,7 +1943,7 @@ public class PsacDataProcessorBoeing {
             SparqlConnectionInfo newConnPars = RackQueryUtils.hardcodedQueryConnectionForTesting();
 
             // Execute each predefined query
-            List<String> allQueryIds = PsacQueriesBoeing.All.getAllQueries();
+            List<String> allQueryIds = ReportQueries.All.getAllQueries();
             RackQueryUtils.executeMultiQueriesFromStore(allQueryIds, rackDir, newConnPars);
         } catch (Exception e) {
             System.out.println("ERROR: Was unable to successfuly query RACK!!\n");
@@ -1934,12 +1964,12 @@ public class PsacDataProcessorBoeing {
         psacToActivityData =
                 RackQueryUtils.readCSVFile2(
                         RackQueryUtils.createCsvFilePath(
-                                PsacQueriesBoeing.All.GET_PSAC.getQId(), rackDir));
+                                ReportQueries.All.GET_PSAC.getQId(), rackDir));
 
         allDocs =
                 RackQueryUtils.readCSVFile2(
                         RackQueryUtils.createCsvFilePath(
-                                PsacQueriesBoeing.All.A1_1_DOCS.getQId(), rackDir));
+                                ReportQueries.All.A1_1_DOCS.getQId(), rackDir));
 
         /**
          * Notes:
@@ -1955,71 +1985,71 @@ public class PsacDataProcessorBoeing {
         allSRS =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                PsacQueriesBoeing.All.A2_1_SRS.getQId(), rackDir));
+                                ReportQueries.All.A2_1_SRS.getQId(), rackDir));
         allCSID =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                PsacQueriesBoeing.All.A2_1_CSID.getQId(), rackDir));
+                                ReportQueries.All.A2_1_CSID.getQId(), rackDir));
 
         allPIDS =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                PsacQueriesBoeing.All.A2_1_PIDS.getQId(), rackDir));
+                                ReportQueries.All.A2_1_PIDS.getQId(), rackDir));
 
         srsToPIDSorCSID =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                PsacQueriesBoeing.All.A2_1_SRS_TO_PIDS_CSID.getQId(), rackDir));
+                                ReportQueries.All.A2_1_SRS_TO_PIDS_CSID.getQId(), rackDir));
 
         allDerSRS =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                PsacQueriesBoeing.All.A2_2_DERSRS.getQId(), rackDir));
+                                ReportQueries.All.A2_2_DERSRS.getQId(), rackDir));
 
         derSRSTrace =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                PsacQueriesBoeing.All.A2_2_DERSRS_TRACE.getQId(), rackDir));
+                                ReportQueries.All.A2_2_DERSRS_TRACE.getQId(), rackDir));
 
         allSUBDD =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                PsacQueriesBoeing.All.A2_4_SUBDD.getQId(), rackDir));
+                                ReportQueries.All.A2_4_SUBDD.getQId(), rackDir));
 
         subddToSRS =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                PsacQueriesBoeing.All.A2_4_SUBDD_TO_SRS.getQId(), rackDir));
+                                ReportQueries.All.A2_4_SUBDD_TO_SRS.getQId(), rackDir));
 
         allDerSUBDD =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                PsacQueriesBoeing.All.A2_5_DERSUBDD.getQId(), rackDir));
+                                ReportQueries.All.A2_5_DERSUBDD.getQId(), rackDir));
 
         derSUBDDTrace =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                PsacQueriesBoeing.All.A2_5_DERSUBDD_TRACE.getQId(), rackDir));
+                                ReportQueries.All.A2_5_DERSUBDD_TRACE.getQId(), rackDir));
 
         allSBVT =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                PsacQueriesBoeing.All.A7_3_4_SBVT_TEST.getQId(), rackDir));
+                                ReportQueries.All.A7_3_4_SBVT_TEST.getQId(), rackDir));
 
         allREVLOGS =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                PsacQueriesBoeing.All.ALL_REVIEW_LOGS.getQId(), rackDir));
+                                ReportQueries.All.ALL_REVIEW_LOGS.getQId(), rackDir));
 
         allSWCOMPS =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                PsacQueriesBoeing.All.A5_5_SWCOMP_REQ_TRACE.getQId(), rackDir));
+                                ReportQueries.All.A5_5_SWCOMP_REQ_TRACE.getQId(), rackDir));
 
         allSOURCETRACE =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                PsacQueriesBoeing.All.ALL_SOURCES.getQId(), rackDir));
+                                ReportQueries.All.ALL_SOURCES.getQId(), rackDir));
     }
 
     /**

@@ -1,4 +1,34 @@
-/** */
+/*
+ * BSD 3-Clause License
+ * 
+ * Copyright (c) 2023, General Electric Company and Galois, Inc.
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 
+ * 3. Neither the name of the copyright holder nor the names of its
+ *    contributors may be used to endorse or promote products derived from
+ *    this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 package com.ge.research.rack.report.viewHandlers;
 
 import com.ge.research.rack.report.structures.DataItem;
@@ -12,9 +42,6 @@ import com.ge.research.rack.report.utils.LogicUtils;
 import com.ge.research.rack.report.utils.PsacNodeUtils;
 import com.ge.research.rack.report.utils.ReportViewUtils;
 import com.ge.research.rack.report.viewManagers.ReportViewsManager;
-import java.io.File;
-import java.io.FileInputStream;
-import java.net.URL;
 import java.util.List;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -33,14 +60,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
-import org.osgi.framework.Bundle;
 
 /**
  * @author Saswata Paul
@@ -721,7 +742,7 @@ public class ReportObjectiveViewHandlerNew {
                         String onHover =
                                 "(" + req.getType() + ") " + req.getDescription().replace("\"", "");
                         reqLabel.setText(reqText);
-//                        reqLabel.setTooltip(new Tooltip(onHover));
+                        //                        reqLabel.setTooltip(new Tooltip(onHover));
                         reqList.getItems().add(reqLabel);
 
                     } else if (filterKey.equalsIgnoreCase("Trace")
@@ -735,7 +756,7 @@ public class ReportObjectiveViewHandlerNew {
                                             + ") "
                                             + req.getDescription().replace("\"", "");
                             reqLabel.setText(reqText);
-//                            reqLabel.setTooltip(new Tooltip(onHover));
+                            //                            reqLabel.setTooltip(new Tooltip(onHover));
                             reqList.getItems().add(reqLabel);
                         }
                     } else if (filterKey.equalsIgnoreCase("No Trace")
@@ -749,7 +770,7 @@ public class ReportObjectiveViewHandlerNew {
                                             + ") "
                                             + req.getDescription().replace("\"", "");
                             reqLabel.setText(reqText);
-//                            reqLabel.setTooltip(new Tooltip(onHover));
+                            //                            reqLabel.setTooltip(new Tooltip(onHover));
                             reqList.getItems().add(reqLabel);
                         }
                     }
@@ -786,7 +807,7 @@ public class ReportObjectiveViewHandlerNew {
                         String onHover =
                                 "(" + req.getType() + ") " + req.getDescription().replace("\"", "");
                         reqLabel.setText(reqText);
-//                        reqLabel.setTooltip(new Tooltip(onHover));
+                        //                        reqLabel.setTooltip(new Tooltip(onHover));
                         reqList.getItems().add(reqLabel);
 
                     } else if ((filterKey.equalsIgnoreCase("Passed Coverage")
@@ -810,7 +831,8 @@ public class ReportObjectiveViewHandlerNew {
                                                 + ") "
                                                 + req.getDescription().replace("\"", "");
                                 reqLabel.setText(reqText);
-//                                reqLabel.setTooltip(new Tooltip(onHover));
+                                //                                reqLabel.setTooltip(new
+                                // Tooltip(onHover));
                                 reqList.getItems().add(reqLabel);
                             }
                             if (!failFlag && filterKey.equalsIgnoreCase("Passed Coverage")) {
@@ -820,7 +842,8 @@ public class ReportObjectiveViewHandlerNew {
                                                 + ") "
                                                 + req.getDescription().replace("\"", "");
                                 reqLabel.setText(reqText);
-//                                reqLabel.setTooltip(new Tooltip(onHover));
+                                //                                reqLabel.setTooltip(new
+                                // Tooltip(onHover));
                                 reqList.getItems().add(reqLabel);
                             }
                         }
@@ -836,7 +859,7 @@ public class ReportObjectiveViewHandlerNew {
                                             + ") "
                                             + req.getDescription().replace("\"", "");
                             reqLabel.setText(reqText);
-//                            reqLabel.setTooltip(new Tooltip(onHover));
+                            //                            reqLabel.setTooltip(new Tooltip(onHover));
                             reqList.getItems().add(reqLabel);
                         }
                     }
@@ -884,7 +907,7 @@ public class ReportObjectiveViewHandlerNew {
                         String onHover =
                                 "(" + req.getType() + ") " + req.getDescription().replace("\"", "");
                         reqLabel.setText(reqText);
-//                        reqLabel.setTooltip(new Tooltip(onHover));
+                        //                        reqLabel.setTooltip(new Tooltip(onHover));
                         reqList.getItems().add(reqLabel);
 
                     } else if (filterKey.equalsIgnoreCase("Logs")
@@ -902,7 +925,7 @@ public class ReportObjectiveViewHandlerNew {
                                             + ") "
                                             + req.getDescription().replace("\"", "");
                             reqLabel.setText(reqText);
-//                            reqLabel.setTooltip(new Tooltip(onHover));
+                            //                            reqLabel.setTooltip(new Tooltip(onHover));
                             reqList.getItems().add(reqLabel);
                         }
                     } else if (filterKey.equalsIgnoreCase("No Logs")
@@ -917,7 +940,7 @@ public class ReportObjectiveViewHandlerNew {
                                             + ") "
                                             + req.getDescription().replace("\"", "");
                             reqLabel.setText(reqText);
-//                            reqLabel.setTooltip(new Tooltip(onHover));
+                            //                            reqLabel.setTooltip(new Tooltip(onHover));
                             reqList.getItems().add(reqLabel);
                         }
                     }
@@ -1382,7 +1405,8 @@ public class ReportObjectiveViewHandlerNew {
             final ImageView icon = ReportViewUtils.loadGeIcon();
             icon.setPreserveRatio(true);
             headerLabel.setGraphic(icon);
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
 
         // wrap label text
         labelObjInfo.setWrapText(true);
@@ -1472,8 +1496,7 @@ public class ReportObjectiveViewHandlerNew {
                         for (Requirement reqObj :
                                 currentObjObject.getObjOutputs().getRequirements()) {
                             // set children list to the sources, if any exist
-                            if (reqObj.getId().equals(reqId)
-                                    && reqObj.getDescription() != null) {
+                            if (reqObj.getId().equals(reqId) && reqObj.getDescription() != null) {
                                 reqChildrenList.getItems().add(reqObj.getDescription());
                             }
                         }
@@ -1536,7 +1559,6 @@ public class ReportObjectiveViewHandlerNew {
                         }
                     });
 
-            
             // call the function topopulate children
             populateTstChildren(selectedTstLine);
         }
