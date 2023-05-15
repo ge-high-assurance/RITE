@@ -5,6 +5,6 @@ Bundle-Vendor: rack
 Bundle-SymbolicName: rack.test
 Bundle-Version: 0.5.0.qualifier
 Fragment-Host: rack.plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Require-Bundle: org.junit
 Automatic-Module-Name: rack.test

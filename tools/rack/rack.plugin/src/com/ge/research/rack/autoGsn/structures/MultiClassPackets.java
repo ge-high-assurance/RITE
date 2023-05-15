@@ -31,8 +31,9 @@
  */
 package com.ge.research.rack.autoGsn.structures;
 
-import java.util.List;
 import javafx.scene.control.TreeItem;
+
+import java.util.List;
 
 /**
  * @author Saswata Paul

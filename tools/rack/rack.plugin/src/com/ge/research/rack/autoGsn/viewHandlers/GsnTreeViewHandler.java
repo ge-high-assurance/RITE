@@ -35,6 +35,7 @@ import com.ge.research.rack.autoGsn.structures.GsnNode;
 import com.ge.research.rack.autoGsn.structures.MultiClassPackets;
 import com.ge.research.rack.autoGsn.structures.MultiClassPackets.TreeItemAndBoolean;
 import com.ge.research.rack.autoGsn.utils.AutoGsnGuiUtils;
+
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;

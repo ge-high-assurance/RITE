@@ -34,9 +34,11 @@ package com.ge.research.rack.autoGsn.utils;
 import com.ge.research.rack.autoGsn.constants.PrefixedPatternQueries;
 import com.ge.research.rack.autoGsn.constants.QueryTemplates;
 import com.ge.research.rack.report.structures.SparqlConnectionInfo;
+
+import org.json.simple.JSONObject;
+
 import java.io.IOException;
 import java.util.List;
-import org.json.simple.JSONObject;
 
 /**
  * @author Saswata Paul

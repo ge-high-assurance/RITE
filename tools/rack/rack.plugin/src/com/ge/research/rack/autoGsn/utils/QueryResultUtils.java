@@ -35,6 +35,7 @@ import com.ge.research.rack.autoGsn.structures.MultiClassPackets;
 import com.ge.research.rack.autoGsn.structures.MultiClassPackets.GoalIdAndClass;
 import com.ge.research.rack.autoGsn.structures.PatternInfo;
 import com.ge.research.rack.report.utils.RackQueryUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 

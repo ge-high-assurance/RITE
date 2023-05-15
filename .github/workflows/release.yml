@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         distribution: [ temurin ]
-        java-version: [ 11 ]
+        java-version: [ 17 ]
         os: [ ubuntu-22.04 ]
 
     steps:
@@ -31,7 +31,7 @@ jobs:
         java-version: ${{ matrix.java-version }}
 
     - name: Build RITE source
-      run: mvn -B -f tools/rack/pom.xml package -Dtycho.localArtifacts=ignore
+      run: mvn -B package -f tools/rack/pom.xml -Dtycho.localArtifacts=ignore
 
     - name: Rename RITE zips
       run: |

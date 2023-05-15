@@ -37,10 +37,7 @@ import com.ge.research.semtk.api.nodeGroupExecution.client.NodeGroupExecutionCli
 import com.ge.research.semtk.sparqlX.SparqlConnection;
 import com.google.inject.*;
 import com.opencsv.CSVWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.util.*;
-import java.util.List;
+
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -60,6 +57,11 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.ViewPart;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.util.*;
+import java.util.List;
 
 /**
  * This sample class demonstrates how to plug-in a new workbench view. The view shows data obtained

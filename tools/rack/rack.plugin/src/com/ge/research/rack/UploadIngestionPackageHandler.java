@@ -36,22 +36,7 @@ import com.ge.research.rack.utils.RackConsole;
 import com.ge.research.rack.views.RackPreferencePage;
 import com.ge.research.semtk.services.client.RestClientConfig;
 import com.ge.research.semtk.services.client.UtilityClient;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Optional;
-import java.util.stream.Stream;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
+
 import org.apache.commons.io.FilenameUtils;
 import org.apache.jena.ext.com.google.common.base.Strings;
 import org.eclipse.core.commands.AbstractHandler;
@@ -70,6 +55,23 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Optional;
+import java.util.stream.Stream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 public class UploadIngestionPackageHandler extends AbstractHandler {
 
@@ -151,29 +153,29 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
 
             // If the selection is a zip file, upload otherwise zip and upload
             final Path ingestionZipPath;
- 
-            if(selectedProject.get().isFile()) {
-            	
-            	ingestionZipPath = selectedProjectPath;
-            	
+
+            if (selectedProject.get().isFile()) {
+
+                ingestionZipPath = selectedProjectPath;
+
             } else {
-            	
-            	final String newFilepath = promptForSaveFilepath(
-                        selectedProjectPath, HandlerUtil.getActiveShell(event));
-            	
-            	// If the user clicks cancel on prompt
-                if(Strings.isNullOrEmpty(newFilepath)) {
-                	endRun();
-                	return null;
+
+                final String newFilepath =
+                        promptForSaveFilepath(
+                                selectedProjectPath, HandlerUtil.getActiveShell(event));
+
+                // If the user clicks cancel on prompt
+                if (Strings.isNullOrEmpty(newFilepath)) {
+                    endRun();
+                    return null;
                 }
-                
+
                 ingestionZipPath = Paths.get(newFilepath);
-            	
             }
-            
+
             // End run is called in the async callback
-            new IngestionPackageUploadJob(selectedProjectPath, ingestionZipPath, 
-            		() -> endRun()).schedule();
+            new IngestionPackageUploadJob(selectedProjectPath, ingestionZipPath, () -> endRun())
+                    .schedule();
 
         } catch (final Exception e) {
 
@@ -194,8 +196,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
 
         final String defaultZipName =
                 String.format(
-                        PACKAGE_NAME_FORMAT.format(new Date()), 
-                        selectedProjectPath.getFileName());
+                        PACKAGE_NAME_FORMAT.format(new Date()), selectedProjectPath.getFileName());
 
         fileDialog.setFileName(defaultZipName);
 

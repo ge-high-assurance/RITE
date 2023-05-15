@@ -33,6 +33,7 @@ package com.ge.research.rack.autoGsn.structures;
 
 import com.ge.research.rack.autoGsn.constants.GsnCoreElements;
 import com.ge.research.rack.autoGsn.constants.RackCoreElements;
+
 import java.util.List;
 
 /**

@@ -36,6 +36,7 @@ import com.ge.research.rack.autoGsn.constants.RackConstants;
 import com.ge.research.rack.autoGsn.helpers.GsnNode2DotPrinter;
 import com.ge.research.rack.autoGsn.structures.GsnNode;
 import com.ge.research.rack.autoGsn.structures.InstanceData;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

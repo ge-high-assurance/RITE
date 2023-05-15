@@ -40,9 +40,11 @@ import com.ge.research.rack.report.structures.SparqlConnectionInfo;
 import com.ge.research.rack.report.utils.RackQueryUtils;
 import com.ge.research.semtk.edc.client.OntologyInfoClient;
 import com.ge.research.semtk.edc.client.OntologyInfoClientConfig;
+
+import org.json.simple.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.json.simple.JSONObject;
 
 /**
  * @author Saswata Paul

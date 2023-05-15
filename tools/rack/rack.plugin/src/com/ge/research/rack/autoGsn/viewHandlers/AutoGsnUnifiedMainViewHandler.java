@@ -44,8 +44,7 @@ import com.ge.research.rack.report.structures.SparqlConnectionInfo;
 import com.ge.research.rack.report.utils.RackQueryUtils;
 import com.ge.research.rack.report.utils.ReportViewUtils;
 import com.ge.research.rack.views.RackPreferencePage;
-import java.util.ArrayList;
-import java.util.List;
+
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -65,6 +64,9 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Saswata Paul

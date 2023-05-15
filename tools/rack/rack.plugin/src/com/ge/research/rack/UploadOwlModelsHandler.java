@@ -36,16 +36,18 @@ import com.ge.research.rack.utils.ProjectUtils;
 import com.ge.research.rack.utils.RackConsole;
 import com.ge.research.rack.views.OntologyTreeView;
 import com.ge.research.semtk.sparqlX.client.SparqlQueryClient;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class UploadOwlModelsHandler extends AbstractHandler {
 

@@ -33,9 +33,7 @@ package com.ge.research.rack;
 
 import com.ge.research.rack.utils.*;
 import com.ge.research.rack.views.AssuranceCaseTree;
-import java.io.*;
-import java.util.HashMap;
-import java.util.HashSet;
+
 import org.apache.jena.graph.Node;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.ontology.OntModel;
@@ -59,6 +57,10 @@ import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
+
+import java.io.*;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class LoadAssuranceCaseHandler extends AbstractHandler {
 

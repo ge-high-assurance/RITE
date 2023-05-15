@@ -15,7 +15,7 @@
    <launcherArgs>
       <programArgs>--launcher.defaultAction openFile --launcher.appendVmargs --launcher.suppressErrors
       </programArgs>
-      <vmArgs>-Dosgi.requiredJavaVersion=11 -Dosgi.dataAreaRequiresExplicitInit=true -Dosgi.framework.extensions=org.eclipse.fx.osgi -Dorg.eclipse.swt.graphics.Resource.reportNonDisposed=true -Xms256m -Xmx2048m --add-modules=ALL-SYSTEM
+      <vmArgs>-Dosgi.requiredJavaVersion=17 -Dosgi.dataAreaRequiresExplicitInit=true -Dosgi.framework.extensions=org.eclipse.fx.osgi -Dorg.eclipse.swt.graphics.Resource.reportNonDisposed=true -Xms256m -Xmx2048m --add-modules=ALL-SYSTEM
       </vmArgs>
       <vmArgsMac>-Xdock:icon=../Resources/Eclipse.icns -XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>
@@ -58,7 +58,7 @@
       <property name="preferenceCustomization" value="plugin_customization.ini" />
       <property name="osgi.instance.area.default" value="@user.home/workspace-RITE" />
       <property name="osgi.bundles.defaultStartLevel" value="4" />
-      <property name="osgi.requiredJavaVersion" value="11" />
+      <property name="osgi.requiredJavaVersion" value="17" />
       <property name="org.eclipse.update.reconcile" value="false" />
    </configurations>
 

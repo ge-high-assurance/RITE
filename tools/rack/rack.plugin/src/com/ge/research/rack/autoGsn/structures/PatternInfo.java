@@ -31,9 +31,10 @@
  */
 package com.ge.research.rack.autoGsn.structures;
 
+import org.json.simple.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.json.simple.JSONObject;
 
 /**
  * @author Saswata Paul

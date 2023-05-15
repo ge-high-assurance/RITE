@@ -32,6 +32,7 @@
 package com.ge.research.rack.views;
 
 import com.ge.research.rack.utils.RackConsole;
+
 import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.jface.resource.ResourceLocator;
 import org.eclipse.swt.graphics.Image;

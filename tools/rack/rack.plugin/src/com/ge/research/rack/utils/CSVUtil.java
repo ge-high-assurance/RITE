@@ -35,6 +35,9 @@ import com.ge.research.rack.views.RackPreferencePage;
 import com.ge.research.semtk.resultSet.TableResultSet;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
+
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -44,7 +47,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.io.FileUtils;
 
 public class CSVUtil {
 

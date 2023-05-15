@@ -32,14 +32,7 @@
 package com.ge.research.rack.utils;
 
 import com.ge.research.rack.views.RackPreferencePage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.StringWriter;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+
 import org.apache.commons.io.FileUtils;
 import org.eclipse.core.internal.resources.ICoreConstants;
 import org.eclipse.core.internal.resources.Workspace;
@@ -55,6 +48,15 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.yaml.snakeyaml.*;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.StringWriter;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class ProjectUtils {
     public static boolean isOverlaySelected = false;
