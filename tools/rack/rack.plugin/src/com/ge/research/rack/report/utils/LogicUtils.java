@@ -35,9 +35,11 @@ import com.ge.research.rack.report.structures.PsacNode;
 import com.ge.research.rack.report.structures.Requirement;
 import com.ge.research.rack.report.structures.ReviewLog;
 import com.ge.research.rack.report.structures.Test;
+
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Saswata Paul

@@ -34,6 +34,7 @@ package com.ge.research.rack.utils;
 import com.ge.research.semtk.ontologyTools.OntologyClass;
 import com.ge.research.semtk.ontologyTools.OntologyInfo;
 import com.ge.research.semtk.ontologyTools.OntologyProperty;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 

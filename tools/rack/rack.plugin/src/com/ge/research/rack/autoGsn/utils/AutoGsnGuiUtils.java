@@ -37,19 +37,22 @@ import com.ge.research.rack.autoGsn.structures.GsnViewsStore;
 import com.ge.research.rack.autoGsn.structures.InstanceData;
 import com.ge.research.rack.autoGsn.structures.MultiClassPackets.GoalIdAndClass;
 import com.ge.research.rack.autoGsn.viewManagers.AutoGsnViewsManager;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
+import org.osgi.framework.Bundle;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
-import org.osgi.framework.Bundle;
 
 /**
  * backend for Gsn gui

@@ -35,19 +35,22 @@ import com.ge.research.rack.autoGsn.logic.GsnPathInferenceEngine;
 import com.ge.research.rack.autoGsn.structures.GsnViewsStore;
 import com.ge.research.rack.autoGsn.structures.InstanceData;
 import com.ge.research.rack.autoGsn.structures.MultiClassPackets.GoalIdAndClass;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+
 import javafx.application.Application;
 import javafx.application.HostServices;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
+
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Saswata Paul Note: This class manages all the views for the AutoGsn feature. It also

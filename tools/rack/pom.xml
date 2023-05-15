@@ -3,13 +3,13 @@
      xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <!-- Define ourselves -->
+  <!-- Define our GAV coordinates -->
   <groupId>com.ge.research.rack</groupId>
   <artifactId>rack</artifactId>
   <version>0.5.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <!-- Build all modules in one place -->
+  <!-- Build our modules -->
   <modules>
     <module>rack.feature</module>
     <module>rack.plugin</module>
@@ -55,18 +55,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */</copyright.license>
     <!-- Settings of Maven plugins -->
-    <maven.compiler.release>11</maven.compiler.release>
+    <maven.compiler.release>17</maven.compiler.release>
     <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
     <maven.compiler.showWarnings>true</maven.compiler.showWarnings>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <!-- For multiple dependencies which use the same version -->
     <version.javafx>20.0.1</version.javafx>
     <version.rack>${project.version}</version.rack>
     <version.surefire>3.1.0</version.surefire>
-    <version.tycho>2.7.5</version.tycho>
+    <version.tycho>3.0.4</version.tycho>
   </properties>
 
   <!-- Set all dependency versions in one place -->
@@ -256,7 +256,7 @@
         <plugin>
           <groupId>com.diffplug.spotless</groupId>
           <artifactId>spotless-maven-plugin</artifactId>
-          <version>2.33.0</version>
+          <version>2.36.0</version>
           <configuration>
             <java>
               <includes>
@@ -428,7 +428,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>versions-maven-plugin</artifactId>
-          <version>2.14.2</version>
+          <version>2.15.0</version>
         </plugin>
         <plugin>
           <?m2e ignore?>
@@ -531,9 +531,9 @@
             </execution>
           </executions>
         </plugin>
-        <!-- To skip running (and compiling) tests, use: -Dmaven.test.skip
-             To skip tests, but still compile them, use: -DskipTests
-             To run all tests but only fail at end, use: -fae -->
+        <!-- To skip running (and compiling) tests, use: -Dmaven.test.skip -->
+        <!-- To skip tests, but still compile them, use: -DskipTests -->
+        <!-- To run all tests but only fail at end, use: -fae -->
         <plugin>
           <groupId>org.eclipse.tycho</groupId>
           <artifactId>tycho-surefire-plugin</artifactId>
@@ -550,11 +550,6 @@
         <plugin>
           <groupId>org.eclipse.tycho</groupId>
           <artifactId>tycho-versions-plugin</artifactId>
-          <version>${version.tycho}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.eclipse.tycho.extras</groupId>
-          <artifactId>tycho-source-feature-plugin</artifactId>
           <version>${version.tycho}</version>
         </plugin>
       </plugins>

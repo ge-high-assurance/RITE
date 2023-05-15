@@ -36,11 +36,7 @@ import com.ge.research.rack.report.structures.PsacNode;
 import com.ge.research.rack.report.utils.PsacNodeUtils;
 import com.ge.research.rack.report.utils.ReportViewUtils;
 import com.ge.research.rack.report.viewManagers.ReportViewsManager;
-import java.io.File;
-import java.io.FileInputStream;
-import java.net.URL;
-import java.util.Collections;
-import java.util.List;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -56,10 +52,17 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.net.URL;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Saswata Paul

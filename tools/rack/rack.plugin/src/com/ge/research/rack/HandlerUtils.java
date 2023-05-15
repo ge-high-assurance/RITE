@@ -37,9 +37,7 @@ import com.ge.research.rack.utils.RackConsole;
 import com.ge.research.rack.views.NodegroupsView;
 import com.ge.research.rack.views.OntologyTreeView;
 import com.ge.research.rack.views.ViewUtils;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
 import org.apache.commons.lang3.tuple.Pair;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.resources.IFile;
@@ -54,6 +52,10 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class HandlerUtils {
 

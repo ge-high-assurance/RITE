@@ -37,6 +37,7 @@ import com.ge.research.semtk.ontologyTools.*;
 import com.ge.research.semtk.ontologyTools.OntologyClass;
 import com.ge.research.semtk.ontologyTools.OntologyInfo;
 import com.ge.research.semtk.sparqlX.SparqlConnection;
+
 import java.util.*;
 
 public class OntologyUtil {

@@ -36,16 +36,18 @@ import com.ge.research.rack.utils.Core;
 import com.ge.research.rack.utils.IngestionTemplateUtil;
 import com.ge.research.rack.utils.ProjectUtils;
 import com.ge.research.rack.utils.RackConsole;
-import java.io.File;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import org.apache.commons.io.*;
 import org.eclipse.jface.action.Action;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+
+import java.io.File;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class NodegroupActionFactory {
     public static Action getCreateInstanceDataAction(INodegroupView view) {

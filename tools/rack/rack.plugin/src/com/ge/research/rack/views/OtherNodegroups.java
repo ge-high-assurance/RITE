@@ -37,9 +37,7 @@ import com.ge.research.rack.utils.NodegroupUtil;
 import com.ge.research.rack.utils.ProjectUtils;
 import com.ge.research.rack.utils.RackConsole;
 import com.google.inject.*;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Map;
+
 import org.eclipse.jface.action.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.SWT;
@@ -55,6 +53,10 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.*;
 import org.eclipse.ui.part.*;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Map;
 
 /**
  * This sample class demonstrates how to plug-in a new workbench view. The view shows data obtained

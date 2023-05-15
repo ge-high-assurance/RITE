@@ -34,6 +34,7 @@ package com.ge.research.rack.utils;
 import com.ge.research.semtk.load.utility.IngestionNodegroupBuilder;
 import com.ge.research.semtk.load.utility.SparqlGraphJson;
 import com.ge.research.semtk.sparqlX.SparqlConnection;
+
 import java.util.*;
 
 public class IngestionTemplateUtil {

@@ -43,10 +43,12 @@ import com.ge.research.rack.report.utils.LogicUtils;
 import com.ge.research.rack.report.utils.PsacNodeUtils;
 import com.ge.research.rack.report.utils.RackQueryUtils;
 import com.ge.research.rack.utils.CSVUtil;
+
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.io.FileUtils;
 
 /**
  * @author Saswata Paul

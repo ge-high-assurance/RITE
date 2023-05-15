@@ -35,9 +35,7 @@ import com.ge.research.rack.BuildIngestionNodegroupsHandler;
 import com.ge.research.rack.utils.*;
 import com.ge.research.semtk.resultSet.TableResultSet;
 import com.google.inject.*;
-import java.io.InputStream;
-import java.util.*;
-import java.util.ArrayList;
+
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.action.*;
 import org.eclipse.jface.viewers.*;
@@ -59,6 +57,10 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.*;
 import org.eclipse.ui.part.*;
+
+import java.io.InputStream;
+import java.util.*;
+import java.util.ArrayList;
 
 /**
  * This sample class demonstrates how to plug-in a new workbench view. The view shows data obtained

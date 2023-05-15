@@ -35,9 +35,7 @@ import com.ge.research.rack.LoadAssuranceCaseHandler;
 import com.ge.research.rack.utils.*;
 import com.ge.research.rack.utils.TreeNode;
 import com.google.inject.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
+
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.action.*;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -48,6 +46,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.*;
 import org.eclipse.ui.part.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
 /**
  * This sample class demonstrates how to plug-in a new workbench view. The view shows data obtained

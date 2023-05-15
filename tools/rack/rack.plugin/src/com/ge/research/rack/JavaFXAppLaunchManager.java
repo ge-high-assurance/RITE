@@ -35,6 +35,7 @@ import com.ge.research.rack.autoGsn.viewManagers.AutoGsnViewsManager;
 import com.ge.research.rack.autoGsn.viewManagers.GsnTreeViewManager;
 import com.ge.research.rack.report.viewManagers.ReportViewsManager;
 import com.ge.research.rack.views.RibView;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;

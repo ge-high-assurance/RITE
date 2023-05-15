@@ -31,11 +31,12 @@
  */
 package com.ge.research.rack.autoGsn.utils;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 /**
  * @author Saswata Paul

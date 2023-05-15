@@ -37,9 +37,7 @@ import com.ge.research.rack.views.RackSettingPanel;
 import com.ge.research.semtk.load.utility.SparqlGraphJson;
 import com.ge.research.semtk.nodeGroupStore.client.NodeGroupStoreRestClient;
 import com.ge.research.semtk.sparqlX.SparqlConnection;
-import java.io.File;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
+
 import org.apache.commons.io.FileUtils;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -56,6 +54,10 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.console.IConsoleConstants;
 import org.eclipse.ui.console.IConsoleView;
 import org.eclipse.ui.handlers.HandlerUtil;
+
+import java.io.File;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
 
 public class IngestTemplatesHandler extends AbstractHandler {
 

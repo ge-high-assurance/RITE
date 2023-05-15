@@ -32,6 +32,7 @@
 package com.ge.research.rack.autoGsn.utils;
 
 import com.ge.research.rack.autoGsn.structures.PatternInfo;
+
 import java.util.List;
 
 /**

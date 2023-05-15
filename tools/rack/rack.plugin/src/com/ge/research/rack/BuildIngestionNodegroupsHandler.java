@@ -38,9 +38,7 @@ import com.ge.research.rack.utils.ProjectUtils;
 import com.ge.research.rack.utils.RackConsole;
 import com.ge.research.rack.views.RackPreferencePage;
 import com.ge.research.rack.views.ViewUtils;
-import java.io.File;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
+
 import org.apache.commons.io.FileUtils;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -52,6 +50,10 @@ import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.ui.progress.WorkbenchJob;
+
+import java.io.File;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
 
 public class BuildIngestionNodegroupsHandler extends AbstractHandler {
 

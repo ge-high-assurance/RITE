@@ -32,6 +32,7 @@
 package com.ge.research.rack.utils;
 
 import com.ge.research.rack.views.ViewUtils;
+
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;

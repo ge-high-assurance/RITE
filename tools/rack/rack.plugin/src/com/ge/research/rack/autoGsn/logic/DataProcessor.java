@@ -38,6 +38,7 @@ import com.ge.research.rack.autoGsn.structures.InstanceData;
 import com.ge.research.rack.autoGsn.structures.PatternInfo;
 import com.ge.research.rack.autoGsn.utils.ListStratPatUtils;
 import com.ge.research.rack.autoGsn.utils.QueryResultUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 

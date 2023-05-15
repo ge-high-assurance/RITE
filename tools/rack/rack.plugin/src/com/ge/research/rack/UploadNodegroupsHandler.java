@@ -33,12 +33,7 @@ package com.ge.research.rack;
 
 import com.ge.research.rack.report.utils.RackQueryUtils;
 import com.ge.research.rack.utils.RackConsole;
-import java.io.File;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.eclipse.core.commands.AbstractHandler;
@@ -57,6 +52,13 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
+
+import java.io.File;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class UploadNodegroupsHandler extends AbstractHandler {
 
