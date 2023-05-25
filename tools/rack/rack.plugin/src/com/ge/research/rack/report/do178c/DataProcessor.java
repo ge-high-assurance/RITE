@@ -1404,11 +1404,11 @@ public class DataProcessor {
     private void createAllSBVTTestObjs() {
         System.out.println("Creating SBVT_Test Objects");
 
-        // get the header line for all Objective-A7-3-4-query-Boeing-SBVT-Test csv file
+        // get the header line for all Objective-A7-3-4-query-SBVT-Test csv file
         String[] sbvtCols =
                 CSVUtil.getColumnInfo(
                         RackQueryUtils.createCsvFilePath(
-                                "Objective-A7-3-4-query-Boeing-SBVT-Test", rackDir));
+                                "Objective-A7-3-4-query-SBVT-Test", rackDir));
 
         int sbvtIdCol = CustomStringUtils.getCSVColumnIndex(sbvtCols, "identifier_sbvt_test");
         int resultCol =
@@ -1750,11 +1750,11 @@ public class DataProcessor {
     private void createAllSWCOMPObjsWithTrace() {
         System.out.println("Creating SWCOMP Objects");
 
-        // get the header line for all Objective-A5-5-query-Boeing-swcomponent-subDD-trace csv file
+        // get the header line for all Objective-A5-5-query-swcomponent-subDD-trace csv file
         String[] swcomponentToReqCols =
                 CSVUtil.getColumnInfo(
                         RackQueryUtils.createCsvFilePath(
-                                "Objective-A5-5-query-Boeing-swcomponent-subDD-trace", rackDir));
+                                "Objective-A5-5-query-swcomponent-subDD-trace", rackDir));
 
         int swcompIdCol =
                 CustomStringUtils.getCSVColumnIndex(swcomponentToReqCols, "identifier_swcomponent");
@@ -1926,7 +1926,7 @@ public class DataProcessor {
      *
      * @throws Exception
      */
-    private void queryRackForBoeingPsac() {
+    private void queryRackForDO178CPsac() {
 
         try {
             // clean the outputs directory
@@ -1959,7 +1959,7 @@ public class DataProcessor {
     private void fetchData() {
 
         // Query RACK
-        queryRackForBoeingPsac();
+        queryRackForDO178CPsac();
 
         psacToActivityData =
                 RackQueryUtils.readCSVFile2(
@@ -1973,13 +1973,6 @@ public class DataProcessor {
 
         /**
          * Notes:
-         *
-         * <p>1. Using CSVUtils.getRows() instead of RackQueryUtils.readCSVFile2() below because
-         * RackQueryUtils.readCSVFile2() takes a long time when the text content is large thereby
-         * slowing down the demo on actual Boeing data. However, the actual boeing data seems to be
-         * free of the internal comma and newline issues that make it possible to get away with
-         * using just CSVUtils.getRows() 2. This may sacrifice integrity for speed
-         *
          * <p>TODO: Create an alternative that preserves integrity but is also fast
          */
         allSRS =
