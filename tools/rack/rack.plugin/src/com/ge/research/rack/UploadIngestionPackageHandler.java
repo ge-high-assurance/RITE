@@ -33,6 +33,8 @@ package com.ge.research.rack;
 
 import com.ge.research.rack.utils.ConnectionUtil;
 import com.ge.research.rack.utils.RackConsole;
+import com.ge.research.rack.utils.RackManifestIngestionBuilderUtil;
+import com.ge.research.rack.utils.RackManifestIngestionBuilderUtil.IngestionBuilderException;
 import com.ge.research.rack.views.RackPreferencePage;
 import com.ge.research.semtk.services.client.RestClientConfig;
 import com.ge.research.semtk.services.client.UtilityClient;
@@ -268,11 +270,14 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
             try {
                 /* If the selected resource is a folder zip before upload */
                 if (ingestionPackageSource.toFile().isDirectory()) {
+                	//ingestionPackageZipFilepath.toFile().mkdir();
+                	ingestionPackageZipFilepath.toFile().setReadable(true, false);
+                	ingestionPackageZipFilepath.toFile().setWritable(true, false);
                     zipIt(ingestionPackageSource, ingestionPackageZipFilepath);
                 }
 
                 RackConsole.getConsole().println(UPLOAD_STAGED);
-
+                
                 uploadIngestionZip(ingestionPackageZipFilepath);
 
             } catch (final Exception e) {
@@ -283,9 +288,9 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
         }
     }
 
-    private static Path zipIt(final Path folder, final Path zipFilepath) throws IOException {
+    private static Path zipIt(Path folder,  Path zipFilepath) throws IOException, IngestionBuilderException  {
 
-        try (final FileOutputStream fos = new FileOutputStream(zipFilepath.toFile());
+    /*    try (final FileOutputStream fos = new FileOutputStream(zipFilepath.toFile());
                 final ZipOutputStream zipStream = new ZipOutputStream(fos)) {
 
             RackConsole.getConsole()
@@ -311,15 +316,33 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
                             return FileVisitResult.CONTINUE;
                         }
                     });
+            
+            
 
             RackConsole.getConsole()
                     .println(String.format(GENERATED_PROJECT, zipFilepath.toString()));
 
             return zipFilepath;
-        }
+        }*/
+    	 
+    	   zipFilepath.toFile().setReadable(true, false);
+    	   zipFilepath.toFile().setWritable(true, false);
+    	
+    	  try (FileOutputStream fos = new FileOutputStream(zipFilepath.toFile());
+    			 
+                   ZipOutputStream zipStream = new ZipOutputStream(fos)) {
+    		  
+              RackConsole.getConsole()
+                      .println(String.format(GENERATING_PROJECT, zipFilepath.toString()));
+
+              new RackManifestIngestionBuilderUtil().zipManifestResources(folder, zipStream);
+          }
+    	  
+    	  return zipFilepath;
+
     }
 
-    private static void uploadIngestionZip(final Path zipFilepath) throws Exception {
+    private static void uploadIngestionZip(Path zipFilepath) throws Exception {
 
         final UtilityClient semtkUtilityClient =
                 new UtilityClient(

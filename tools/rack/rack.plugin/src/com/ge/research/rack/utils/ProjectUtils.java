@@ -121,6 +121,14 @@ public class ProjectUtils {
         Yaml yaml = new Yaml();
         return yaml.load(inputStream);
     }
+    
+    public static DumperOptions getYamlDumperOptions() {
+        final DumperOptions options = new DumperOptions();
+        options.setIndent(1);
+        options.setPrettyFlow(true);
+        options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+        return options;
+    }
 
     public static void writeYaml(Object object, String path) throws Exception {
         DumperOptions options = new DumperOptions();
