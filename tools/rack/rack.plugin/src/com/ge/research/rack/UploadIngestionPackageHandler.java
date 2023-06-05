@@ -278,7 +278,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
 
                 RackConsole.getConsole().println(UPLOAD_STAGED);
                 
-                uploadIngestionZip(ingestionPackageZipFilepath);
+                uploadIngestionZip(ingestionPackageZipFilepath, monitor);
 
             } catch (final Exception e) {
                 RackConsole.getConsole().error(e.getMessage());
@@ -342,8 +342,12 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
 
     }
 
-    private static void uploadIngestionZip(Path zipFilepath) throws Exception {
-
+    private static void uploadIngestionZip(Path zipFilepath, IProgressMonitor monitor) throws Exception {
+        
+    	if(monitor.isCanceled()) {
+    		return;
+    	}
+    	
         final UtilityClient semtkUtilityClient =
                 new UtilityClient(
                         new RestClientConfig(
@@ -351,7 +355,8 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
                                 ConnectionUtil.getServer(),
                                 ConnectionUtil.getUtilityPort(),
                                 ConnectionUtil.getServiceInfoEndpoint()));
-
+        
+        
         try (final BufferedReader reader =
                 semtkUtilityClient.execLoadIngestionPackage(
                         zipFilepath.toFile(),
@@ -363,6 +368,10 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
 
             String semTkOutputLine;
             while (null != (semTkOutputLine = reader.readLine())) {
+            	if(monitor.isCanceled()) {
+            		reader.close();
+            		return;
+            	}
                 if (semTkOutputLine.contains(ERROR_LINE)) {
                     RackConsole.getConsole().errorEcho(semTkOutputLine);
                 } else {
