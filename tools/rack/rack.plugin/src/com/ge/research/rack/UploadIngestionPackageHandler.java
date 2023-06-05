@@ -364,9 +364,9 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
             String semTkOutputLine;
             while (null != (semTkOutputLine = reader.readLine())) {
                 if (semTkOutputLine.contains(ERROR_LINE)) {
-                    RackConsole.getConsole().error(semTkOutputLine);
+                    RackConsole.getConsole().errorEcho(semTkOutputLine);
                 } else {
-                    RackConsole.getConsole().println(semTkOutputLine);
+                    RackConsole.getConsole().printEcho(semTkOutputLine);
                 }
             }
         }

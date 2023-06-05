@@ -76,6 +76,15 @@ public class RackConsole extends MessageConsole {
         // System.out.print(message);
         // logger.info(message);
     }
+    
+    public void printEcho(String message) {
+        Color black = new Color(0, 0, 0, 255);
+        stream.setColor(black);
+        stream.setColor(black);
+        stream.print("\n" + message);
+        // System.out.print(message);
+        // logger.info(message);
+    }
 
     public void println(String message) {
         Color black = new Color(0, 0, 0, 255);
@@ -99,6 +108,15 @@ public class RackConsole extends MessageConsole {
         streamErr.setColor(red);
         streamErr.setColor(red);
         streamErr.print("\nERROR: " + message);
+        // logger.error(message);
+        // System.err.println("ERROR: " + message);
+    }
+    
+    public void errorEcho(String message) {
+        Color red = new Color(255, 0, 0, 255);
+        streamErr.setColor(red);
+        streamErr.setColor(red);
+        streamErr.print("\n" + message);
         // logger.error(message);
         // System.err.println("ERROR: " + message);
     }
