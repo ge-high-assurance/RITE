@@ -38,6 +38,7 @@ import com.ge.research.rack.autoGsn.utils.OntologyJsonObjUtils;
 import com.ge.research.rack.autoGsn.utils.QueryGenerationUtils;
 import com.ge.research.rack.report.structures.SparqlConnectionInfo;
 import com.ge.research.rack.report.utils.RackQueryUtils;
+import com.ge.research.rack.utils.CSVUtil;
 import com.ge.research.semtk.edc.client.OntologyInfoClient;
 import com.ge.research.semtk.edc.client.OntologyInfoClientConfig;
 
@@ -124,8 +125,7 @@ public class GsnPathInferenceEngine {
                         RackQueryUtils.createCsvFilePath("gsn_get_goal_patterns", outDir));
         // get the raw data fir patterns
         List<String[]> goalPatData =
-                RackQueryUtils.readCSVFile2(
-                        RackQueryUtils.createCsvFilePath("gsn_get_goal_patterns", outDir));
+                CSVUtil.getRows(RackQueryUtils.createCsvFilePath("gsn_get_goal_patterns", outDir));
         int goalIdCol = CustomStringUtils.getCSVColumnIndex(goalPatCols, "identifier");
         int goalDescCol = CustomStringUtils.getCSVColumnIndex(goalPatCols, "description");
         int goalClassCol = CustomStringUtils.getCSVColumnIndex(goalPatCols, "pGoal");
@@ -152,7 +152,7 @@ public class GsnPathInferenceEngine {
                         RackQueryUtils.createCsvFilePath("gsn_get_strategy_patterns", outDir));
         // get the raw data fir patterns
         List<String[]> stratPatData =
-                RackQueryUtils.readCSVFile2(
+                CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath("gsn_get_strategy_patterns", outDir));
         int stratIdCol = CustomStringUtils.getCSVColumnIndex(stratPatCols, "identifier");
         int stratDescCol = CustomStringUtils.getCSVColumnIndex(stratPatCols, "description");
@@ -220,7 +220,7 @@ public class GsnPathInferenceEngine {
                         RackQueryUtils.createCsvFilePath("gsn_get_evidence_patterns", outDir));
         // get the raw data fir patterns
         List<String[]> evdPatData =
-                RackQueryUtils.readCSVFile2(
+                CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath("gsn_get_evidence_patterns", outDir));
         int evdClassIdCol = CustomStringUtils.getCSVColumnIndex(evdPatCols, "classId");
         int evdPassValCol = CustomStringUtils.getCSVColumnIndex(evdPatCols, "passValue");

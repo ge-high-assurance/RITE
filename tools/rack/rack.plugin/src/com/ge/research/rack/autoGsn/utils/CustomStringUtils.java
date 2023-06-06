@@ -302,7 +302,9 @@ public class CustomStringUtils {
     public static String removeCommasAndNewlinesInQuotes(String str) {
         boolean deleteCommas = false;
         String newStr = "";
-
+        if (str == null) {
+            return "";
+        }
         for (int i = 0; i < str.length(); i++) {
             if (str.charAt(i) == '\"') { // found a quote
                 newStr = newStr + str.charAt(i);
@@ -359,7 +361,7 @@ public class CustomStringUtils {
                 return i;
             }
         }
-        return null;
+        return -1;
     }
 
     /**

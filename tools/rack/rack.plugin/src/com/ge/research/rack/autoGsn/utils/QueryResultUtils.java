@@ -35,6 +35,7 @@ import com.ge.research.rack.autoGsn.structures.MultiClassPackets;
 import com.ge.research.rack.autoGsn.structures.MultiClassPackets.GoalIdAndClass;
 import com.ge.research.rack.autoGsn.structures.PatternInfo;
 import com.ge.research.rack.report.utils.RackQueryUtils;
+import com.ge.research.rack.utils.CSVUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,7 +108,7 @@ public class QueryResultUtils {
         int classCol = CustomStringUtils.getCSVColumnIndex(fileHeaders, "identifier_" + className);
 
         // read the file without headers
-        List<String[]> fileData = RackQueryUtils.readCSVFile2(filePath);
+        List<String[]> fileData = CSVUtil.getRows(filePath);
 
         //    	System.out.println(filePath);
 
@@ -225,7 +226,7 @@ public class QueryResultUtils {
                         fileHeaders, "identifier_" + stratPat.getSubGoalClass());
 
         // read the file without headers
-        List<String[]> fileData = RackQueryUtils.readCSVFile2(filePath);
+        List<String[]> fileData = CSVUtil.getRows(filePath);
 
         //    	System.out.println(filePath);
 
@@ -288,7 +289,7 @@ public class QueryResultUtils {
                         fileHeaders, "description_" + stratPat.getGoalClass());
 
         // read the file without headers
-        List<String[]> fileData = RackQueryUtils.readCSVFile2(filePath);
+        List<String[]> fileData = CSVUtil.getRows(filePath);
 
         // read the rows one by one and find description
         for (String[] row : fileData) {

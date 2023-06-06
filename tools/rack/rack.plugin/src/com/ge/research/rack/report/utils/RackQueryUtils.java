@@ -52,7 +52,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -312,7 +311,7 @@ public class RackQueryUtils {
         // to store the csv data as a list of lists
         List<String[]> fileArray = new ArrayList<String[]>();
 
-        try (BufferedReader reader = Files.newBufferedReader(filePath, StandardCharsets.US_ASCII)) {
+        try (BufferedReader reader = Files.newBufferedReader(filePath, Charset.defaultCharset())) {
 
             // read the first line from the csv file
             String csvLine = reader.readLine();
@@ -360,7 +359,7 @@ public class RackQueryUtils {
         // get entire file as a string object
         String fileString =
                 com.ge.research.rack.autoGsn.utils.CustomFileUtils.readFile(
-                        flPth, StandardCharsets.US_ASCII);
+                        flPth, Charset.defaultCharset());
 
         // replace all commas and newlines inside quote
         String cleanString = CustomStringUtils.removeCommasAndNewlinesInQuotes(fileString);
@@ -414,7 +413,7 @@ public class RackQueryUtils {
         // get entire file as a string object
         String fileString =
                 com.ge.research.rack.autoGsn.utils.CustomFileUtils.readFile(
-                        flPth, StandardCharsets.US_ASCII);
+                        flPth, Charset.defaultCharset());
 
         // replace all commmas and newlines inside quote
         String cleanString = CustomStringUtils.removeCommasAndNewlinesInQuotes(fileString);
@@ -461,7 +460,7 @@ public class RackQueryUtils {
         // get entire file as a string object
         String fileString =
                 com.ge.research.rack.autoGsn.utils.CustomFileUtils.readFile(
-                        flPth, StandardCharsets.US_ASCII);
+                        flPth, Charset.defaultCharset());
 
         // replace all commmas and newlines inside quote
         String cleanString = CustomStringUtils.removeCommasAndNewlinesInQuotes(fileString);
@@ -472,6 +471,10 @@ public class RackQueryUtils {
             // read the first line from the csv file
             String csvLine = reader.readLine();
 
+            if (csvLine == null) {
+                String[] arr = {};
+                return arr;
+            }
             // This helps ignore commas within quotes
             String[] row = csvLine.split(",(?=([^\"]|\"[^\"]*\")*$)");
 
