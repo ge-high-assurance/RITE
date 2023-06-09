@@ -62,17 +62,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 import java.util.stream.Stream;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class UploadIngestionPackageHandler extends AbstractHandler {
@@ -270,14 +265,14 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
             try {
                 /* If the selected resource is a folder zip before upload */
                 if (ingestionPackageSource.toFile().isDirectory()) {
-                	//ingestionPackageZipFilepath.toFile().mkdir();
-                	ingestionPackageZipFilepath.toFile().setReadable(true, false);
-                	ingestionPackageZipFilepath.toFile().setWritable(true, false);
+                    // ingestionPackageZipFilepath.toFile().mkdir();
+                    ingestionPackageZipFilepath.toFile().setReadable(true, false);
+                    ingestionPackageZipFilepath.toFile().setWritable(true, false);
                     zipIt(ingestionPackageSource, ingestionPackageZipFilepath);
                 }
 
                 RackConsole.getConsole().println(UPLOAD_STAGED);
-                
+
                 uploadIngestionZip(ingestionPackageZipFilepath, monitor);
 
             } catch (final Exception e) {
@@ -288,9 +283,10 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
         }
     }
 
-    private static Path zipIt(Path folder,  Path zipFilepath) throws IOException, IngestionBuilderException  {
+    private static Path zipIt(Path folder, Path zipFilepath)
+            throws IOException, IngestionBuilderException {
 
-    /*    try (final FileOutputStream fos = new FileOutputStream(zipFilepath.toFile());
+        /*    try (final FileOutputStream fos = new FileOutputStream(zipFilepath.toFile());
                 final ZipOutputStream zipStream = new ZipOutputStream(fos)) {
 
             RackConsole.getConsole()
@@ -316,38 +312,37 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
                             return FileVisitResult.CONTINUE;
                         }
                     });
-            
-            
+
+
 
             RackConsole.getConsole()
                     .println(String.format(GENERATED_PROJECT, zipFilepath.toString()));
 
             return zipFilepath;
         }*/
-    	 
-    	   zipFilepath.toFile().setReadable(true, false);
-    	   zipFilepath.toFile().setWritable(true, false);
-    	
-    	  try (FileOutputStream fos = new FileOutputStream(zipFilepath.toFile());
-    			 
-                   ZipOutputStream zipStream = new ZipOutputStream(fos)) {
-    		  
-              RackConsole.getConsole()
-                      .println(String.format(GENERATING_PROJECT, zipFilepath.toString()));
 
-              new RackManifestIngestionBuilderUtil().zipManifestResources(folder, zipStream);
-          }
-    	  
-    	  return zipFilepath;
+        zipFilepath.toFile().setReadable(true, false);
+        zipFilepath.toFile().setWritable(true, false);
 
+        try (FileOutputStream fos = new FileOutputStream(zipFilepath.toFile());
+                ZipOutputStream zipStream = new ZipOutputStream(fos)) {
+
+            RackConsole.getConsole()
+                    .println(String.format(GENERATING_PROJECT, zipFilepath.toString()));
+
+            new RackManifestIngestionBuilderUtil().zipManifestResources(folder, zipStream);
+        }
+
+        return zipFilepath;
     }
 
-    private static void uploadIngestionZip(Path zipFilepath, IProgressMonitor monitor) throws Exception {
-        
-    	if(monitor.isCanceled()) {
-    		return;
-    	}
-    	
+    private static void uploadIngestionZip(Path zipFilepath, IProgressMonitor monitor)
+            throws Exception {
+
+        if (monitor.isCanceled()) {
+            return;
+        }
+
         final UtilityClient semtkUtilityClient =
                 new UtilityClient(
                         new RestClientConfig(
@@ -355,8 +350,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
                                 ConnectionUtil.getServer(),
                                 ConnectionUtil.getUtilityPort(),
                                 ConnectionUtil.getServiceInfoEndpoint()));
-        
-        
+
         try (final BufferedReader reader =
                 semtkUtilityClient.execLoadIngestionPackage(
                         zipFilepath.toFile(),
@@ -368,10 +362,10 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
 
             String semTkOutputLine;
             while (null != (semTkOutputLine = reader.readLine())) {
-            	if(monitor.isCanceled()) {
-            		reader.close();
-            		return;
-            	}
+                if (monitor.isCanceled()) {
+                    reader.close();
+                    return;
+                }
                 if (semTkOutputLine.contains(ERROR_LINE)) {
                     RackConsole.getConsole().errorEcho(semTkOutputLine);
                 } else {

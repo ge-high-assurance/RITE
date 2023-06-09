@@ -55,277 +55,314 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RackPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
-	// preference keys
-	private static final String PROTOCOL = "protocol";
-	private static final String SERVER = "server";
-	private static final String UTILITY_PORT = "utility_port";
-	private static final String NGE_PORT = "nge_port";
-	private static final String STORE_PORT = "store_port";
-	private static final String QUERY_PORT = "query_port";
-	private static final String ONTOLOGY_PORT = "ontology_port";
-	private static final String CONN_TYPE = "connection_type";
-	private static final String CONN_URL = "connection_url";
-	private static final String DEFAULT_MODEL_GRAPH = "default_model_graph";
-	private static final String DEFAULT_DATA_GRAPH = "default_data_graph";
-	private static final String RACK_USER = "rack_user";
-	private static final String RACK_PASSWORD = "rack_password";
-	private static final String INSTANCE_DATA_FOLDER = "instance_data_folder";
-	private static final String GSN_PROJECT_OVERLAY_SADL = "gsn_project_overlay_sadl"; // initial value must be ""
-	private static final String GSN_PROJECT_PATTERN_SADL = "gsn_project_pattern_sadl"; // initial value must be ""
+public class RackPreferencePage extends FieldEditorPreferencePage
+        implements IWorkbenchPreferencePage {
+    // preference keys
+    private static final String PROTOCOL = "protocol";
+    private static final String SERVER = "server";
+    private static final String UTILITY_PORT = "utility_port";
+    private static final String NGE_PORT = "nge_port";
+    private static final String STORE_PORT = "store_port";
+    private static final String QUERY_PORT = "query_port";
+    private static final String ONTOLOGY_PORT = "ontology_port";
+    private static final String CONN_TYPE = "connection_type";
+    private static final String CONN_URL = "connection_url";
+    private static final String DEFAULT_MODEL_GRAPH = "default_model_graph";
+    private static final String DEFAULT_DATA_GRAPH = "default_data_graph";
+    private static final String RACK_USER = "rack_user";
+    private static final String RACK_PASSWORD = "rack_password";
+    private static final String INSTANCE_DATA_FOLDER = "instance_data_folder";
+    private static final String GSN_PROJECT_OVERLAY_SADL =
+            "gsn_project_overlay_sadl"; // initial value must be ""
+    private static final String GSN_PROJECT_PATTERN_SADL =
+            "gsn_project_pattern_sadl"; // initial value must be ""
 
-	// singleton preference store
-	private static ScopedPreferenceStore preferenceStore = new ScopedPreferenceStore(InstanceScope.INSTANCE,
-			"rack.plugin");
-	// child field editors
-	private List<FieldEditor> fields = new ArrayList<>();
+    // singleton preference store
+    private static ScopedPreferenceStore preferenceStore =
+            new ScopedPreferenceStore(InstanceScope.INSTANCE, "rack.plugin");
+    // child field editors
+    private List<FieldEditor> fields = new ArrayList<>();
 
-	public RackPreferencePage() {
-		super(GRID);
-	}
+    public RackPreferencePage() {
+        super(GRID);
+    }
 
-	@Override
-	public void init(IWorkbench workbench) {
-		setDescription("SemTK Preference");
-		preferenceStore.setDefault(PROTOCOL, "http");
-		preferenceStore.setDefault(SERVER, "localhost");
-		preferenceStore.setDefault(UTILITY_PORT, "12060");
-		preferenceStore.setDefault(NGE_PORT, "12058");
-		preferenceStore.setDefault(STORE_PORT, "12056");
-		preferenceStore.setDefault(QUERY_PORT, "12050");
-		preferenceStore.setDefault(ONTOLOGY_PORT, "12057");
-		preferenceStore.setDefault(CONN_TYPE, "fuseki");
-		preferenceStore.setDefault(CONN_URL, "http://localhost:3030/RACK");
-		preferenceStore.setDefault(DEFAULT_MODEL_GRAPH, "http://rack001/model");
-		preferenceStore.setDefault(DEFAULT_DATA_GRAPH, "http://rack001/data");
-		preferenceStore.setDefault(RACK_USER, "rack");
-		preferenceStore.setDefault(RACK_PASSWORD, "rack");
-		preferenceStore.setDefault(INSTANCE_DATA_FOLDER, "");
-		preferenceStore.setDefault(GSN_PROJECT_OVERLAY_SADL, "");
-		preferenceStore.setDefault(GSN_PROJECT_PATTERN_SADL, "");
+    @Override
+    public void init(IWorkbench workbench) {
+        setDescription("SemTK Preference");
+        preferenceStore.setDefault(PROTOCOL, "http");
+        preferenceStore.setDefault(SERVER, "localhost");
+        preferenceStore.setDefault(UTILITY_PORT, "12060");
+        preferenceStore.setDefault(NGE_PORT, "12058");
+        preferenceStore.setDefault(STORE_PORT, "12056");
+        preferenceStore.setDefault(QUERY_PORT, "12050");
+        preferenceStore.setDefault(ONTOLOGY_PORT, "12057");
+        preferenceStore.setDefault(CONN_TYPE, "fuseki");
+        preferenceStore.setDefault(CONN_URL, "http://localhost:3030/RACK");
+        preferenceStore.setDefault(DEFAULT_MODEL_GRAPH, "http://rack001/model");
+        preferenceStore.setDefault(DEFAULT_DATA_GRAPH, "http://rack001/data");
+        preferenceStore.setDefault(RACK_USER, "rack");
+        preferenceStore.setDefault(RACK_PASSWORD, "rack");
+        preferenceStore.setDefault(INSTANCE_DATA_FOLDER, "");
+        preferenceStore.setDefault(GSN_PROJECT_OVERLAY_SADL, "");
+        preferenceStore.setDefault(GSN_PROJECT_PATTERN_SADL, "");
 
-		setPreferenceStore(preferenceStore);
-	}
+        setPreferenceStore(preferenceStore);
+    }
 
-	public static String getProtocol() {
-		return preferenceStore.getString(PROTOCOL);
-	}
+    public static String getProtocol() {
+        return preferenceStore.getString(PROTOCOL);
+    }
 
-	public static String getServer() {
-		return preferenceStore.getString(SERVER);
-	}
+    public static String getServer() {
+        return preferenceStore.getString(SERVER);
+    }
 
-	public static String getUtilityPort() {
-		return preferenceStore.getString(UTILITY_PORT);
-	}
+    public static String getUtilityPort() {
+        return preferenceStore.getString(UTILITY_PORT);
+    }
 
-	public static String getNGEPort() {
-		return preferenceStore.getString(NGE_PORT);
-	}
+    public static String getNGEPort() {
+        return preferenceStore.getString(NGE_PORT);
+    }
 
-	public static String getStorePort() {
-		return preferenceStore.getString(STORE_PORT);
-	}
+    public static String getStorePort() {
+        return preferenceStore.getString(STORE_PORT);
+    }
 
-	public static String getQueryPort() {
-		return preferenceStore.getString(QUERY_PORT);
-	}
+    public static String getQueryPort() {
+        return preferenceStore.getString(QUERY_PORT);
+    }
 
-	public static String getOntologyPort() {
-		return preferenceStore.getString(ONTOLOGY_PORT);
-	}
+    public static String getOntologyPort() {
+        return preferenceStore.getString(ONTOLOGY_PORT);
+    }
 
-	public static String getConnType() {
-		return preferenceStore.getString(CONN_TYPE);
-	}
+    public static String getConnType() {
+        return preferenceStore.getString(CONN_TYPE);
+    }
 
-	public static String getConnURL() {
-		return preferenceStore.getString(CONN_URL);
-	}
+    public static String getConnURL() {
+        return preferenceStore.getString(CONN_URL);
+    }
 
-	public static String getDefaultModelGraph() {
-		return preferenceStore.getString(DEFAULT_MODEL_GRAPH);
-	}
+    public static String getDefaultModelGraph() {
+        return preferenceStore.getString(DEFAULT_MODEL_GRAPH);
+    }
 
-	public static String getDefaultDataGraph() {
-		return preferenceStore.getString(DEFAULT_DATA_GRAPH);
-	}
+    public static String getDefaultDataGraph() {
+        return preferenceStore.getString(DEFAULT_DATA_GRAPH);
+    }
 
-	public static String getUser() {
-		return preferenceStore.getString(RACK_USER);
-	}
+    public static String getUser() {
+        return preferenceStore.getString(RACK_USER);
+    }
 
-	public static String getPassword() {
-		return preferenceStore.getString(RACK_PASSWORD);
-	}
+    public static String getPassword() {
+        return preferenceStore.getString(RACK_PASSWORD);
+    }
 
-	public static String getInstanceDataFolder() {
-		return preferenceStore.getString(INSTANCE_DATA_FOLDER);
-	}
+    public static String getInstanceDataFolder() {
+        return preferenceStore.getString(INSTANCE_DATA_FOLDER);
+    }
 
-	public static void setInstanceDataFolder(String path) {
-		preferenceStore.setValue(INSTANCE_DATA_FOLDER, path);
-	}
+    public static void setInstanceDataFolder(String path) {
+        preferenceStore.setValue(INSTANCE_DATA_FOLDER, path);
+    }
 
-	/**
-	 * @return the gsnProjectOverlaySadl
-	 */
-	public static String getGsnProjectOverlaySadl() {
-		return preferenceStore.getString(GSN_PROJECT_OVERLAY_SADL);
-	}
+    /**
+     * @return the gsnProjectOverlaySadl
+     */
+    public static String getGsnProjectOverlaySadl() {
+        return preferenceStore.getString(GSN_PROJECT_OVERLAY_SADL);
+    }
 
-	public static void setGsnProjectOverlaySadl(String overlay) {
-		preferenceStore.setValue(GSN_PROJECT_OVERLAY_SADL, overlay);
-	}
+    public static void setGsnProjectOverlaySadl(String overlay) {
+        preferenceStore.setValue(GSN_PROJECT_OVERLAY_SADL, overlay);
+    }
 
-	/**
-	 * @return the gsnProjectPatternSadl
-	 */
-	public static String getGsnProjectPatternSadl() {
-		return preferenceStore.getString(GSN_PROJECT_PATTERN_SADL);
-	}
+    /**
+     * @return the gsnProjectPatternSadl
+     */
+    public static String getGsnProjectPatternSadl() {
+        return preferenceStore.getString(GSN_PROJECT_PATTERN_SADL);
+    }
 
-	public static void setGsnProjectPatternSadl(String pattern) {
-		preferenceStore.setValue(GSN_PROJECT_PATTERN_SADL, pattern);
-	}
+    public static void setGsnProjectPatternSadl(String pattern) {
+        preferenceStore.setValue(GSN_PROJECT_PATTERN_SADL, pattern);
+    }
 
-	/**
-	 * Checks if all GSN preferences are there
-	 *
-	 * @return
-	 */
-	public static Boolean areGSNPreferencesComplete() {
+    /**
+     * Checks if all GSN preferences are there
+     *
+     * @return
+     */
+    public static Boolean areGSNPreferencesComplete() {
 
-		if (getGsnProjectOverlaySadl() == null || getGsnProjectOverlaySadl().equalsIgnoreCase("")
-				|| getGsnProjectPatternSadl() == null || getGsnProjectPatternSadl().equalsIgnoreCase("")) {
-			return false;
-		} else {
-			System.out.println("The GSN preferences: " + getGsnProjectPatternSadl() + " (project pattern), "
-					+ getGsnProjectOverlaySadl() + " (project overlay)");
-		}
+        if (getGsnProjectOverlaySadl() == null
+                || getGsnProjectOverlaySadl().equalsIgnoreCase("")
+                || getGsnProjectPatternSadl() == null
+                || getGsnProjectPatternSadl().equalsIgnoreCase("")) {
+            return false;
+        } else {
+            System.out.println(
+                    "The GSN preferences: "
+                            + getGsnProjectPatternSadl()
+                            + " (project pattern), "
+                            + getGsnProjectOverlaySadl()
+                            + " (project overlay)");
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	@Override
-	protected void createFieldEditors() {
+    @Override
+    protected void createFieldEditors() {
 
-		StringFieldEditor stemDir = new StringFieldEditor(PROTOCOL, "Protocol:", getFieldEditorParent());
-		addField(stemDir);
+        StringFieldEditor stemDir =
+                new StringFieldEditor(PROTOCOL, "Protocol:", getFieldEditorParent());
+        addField(stemDir);
 
-		StringFieldEditor server = new StringFieldEditor(SERVER, "Server:", getFieldEditorParent());
-		addField(server);
+        StringFieldEditor server = new StringFieldEditor(SERVER, "Server:", getFieldEditorParent());
+        addField(server);
 
-		StringFieldEditor utilityPort = new StringFieldEditor(UTILITY_PORT, "Utility Port:", getFieldEditorParent());
-		addField(utilityPort);
+        StringFieldEditor utilityPort =
+                new StringFieldEditor(UTILITY_PORT, "Utility Port:", getFieldEditorParent());
+        addField(utilityPort);
 
-		StringFieldEditor ngePort = new StringFieldEditor(NGE_PORT, "NGE Port:", getFieldEditorParent());
-		addField(ngePort);
+        StringFieldEditor ngePort =
+                new StringFieldEditor(NGE_PORT, "NGE Port:", getFieldEditorParent());
+        addField(ngePort);
 
-		StringFieldEditor storePort = new StringFieldEditor(STORE_PORT, "Store Port:", getFieldEditorParent());
-		addField(storePort);
+        StringFieldEditor storePort =
+                new StringFieldEditor(STORE_PORT, "Store Port:", getFieldEditorParent());
+        addField(storePort);
 
-		StringFieldEditor queryPort = new StringFieldEditor(QUERY_PORT, "Query Port:", getFieldEditorParent());
-		addField(queryPort);
+        StringFieldEditor queryPort =
+                new StringFieldEditor(QUERY_PORT, "Query Port:", getFieldEditorParent());
+        addField(queryPort);
 
-		StringFieldEditor ontologyPort = new StringFieldEditor(ONTOLOGY_PORT, "Ontology Port:", getFieldEditorParent());
-		addField(ontologyPort);
+        StringFieldEditor ontologyPort =
+                new StringFieldEditor(ONTOLOGY_PORT, "Ontology Port:", getFieldEditorParent());
+        addField(ontologyPort);
 
-		StringFieldEditor connType = new StringFieldEditor(CONN_TYPE, "Connection Type:", getFieldEditorParent());
-		addField(connType);
+        StringFieldEditor connType =
+                new StringFieldEditor(CONN_TYPE, "Connection Type:", getFieldEditorParent());
+        addField(connType);
 
-		StringFieldEditor connURL = new StringFieldEditor(CONN_URL, "Connection URL:", getFieldEditorParent());
-		addField(connURL);
+        StringFieldEditor connURL =
+                new StringFieldEditor(CONN_URL, "Connection URL:", getFieldEditorParent());
+        addField(connURL);
 
-		StringFieldEditor defaultModelGraph = new StringFieldEditor(DEFAULT_MODEL_GRAPH, "Default Model Graph:",
-				getFieldEditorParent());
-		addField(defaultModelGraph);
+        StringFieldEditor defaultModelGraph =
+                new StringFieldEditor(
+                        DEFAULT_MODEL_GRAPH, "Default Model Graph:", getFieldEditorParent());
+        addField(defaultModelGraph);
 
-		StringFieldEditor defaultDataGraph = new StringFieldEditor(DEFAULT_DATA_GRAPH, "Default data graph:",
-				getFieldEditorParent());
+        StringFieldEditor defaultDataGraph =
+                new StringFieldEditor(
+                        DEFAULT_DATA_GRAPH, "Default data graph:", getFieldEditorParent());
 
-		addField(defaultDataGraph);
+        addField(defaultDataGraph);
 
-		LabelFieldEditor separator = new LabelFieldEditor("   --- RACK Project Setup ---   ", getFieldEditorParent());
-		addField(separator);
+        LabelFieldEditor separator =
+                new LabelFieldEditor("   --- RACK Project Setup ---   ", getFieldEditorParent());
+        addField(separator);
 
-		DirectoryFieldEditor instanceDataFolder = new DirectoryFieldEditor(INSTANCE_DATA_FOLDER, "RACK Project: ",
-				getFieldEditorParent());
+        DirectoryFieldEditor instanceDataFolder =
+                new DirectoryFieldEditor(
+                        INSTANCE_DATA_FOLDER, "RACK Project: ", getFieldEditorParent());
 
-		addField(instanceDataFolder);
-		LabelFieldEditor separatorCredentials = new LabelFieldEditor("   --- RACK Database Credentials ---   ",
-				getFieldEditorParent());
-		addField(separatorCredentials);
+        addField(instanceDataFolder);
+        LabelFieldEditor separatorCredentials =
+                new LabelFieldEditor(
+                        "   --- RACK Database Credentials ---   ", getFieldEditorParent());
+        addField(separatorCredentials);
 
-		StringFieldEditor rackUser = new StringFieldEditor(RACK_USER, "RACK User:", getFieldEditorParent());
-		addField(rackUser);
+        StringFieldEditor rackUser =
+                new StringFieldEditor(RACK_USER, "RACK User:", getFieldEditorParent());
+        addField(rackUser);
 
-		StringFieldEditor rackPassword = new StringFieldEditor(RACK_PASSWORD, "Password:", getFieldEditorParent());
+        StringFieldEditor rackPassword =
+                new StringFieldEditor(RACK_PASSWORD, "Password:", getFieldEditorParent());
 
-		addField(rackPassword);
+        addField(rackPassword);
 
-		LabelFieldEditor separatorCredentialsGSN = new LabelFieldEditor(
-				"   --- Automatic GSN Inference Settings ---   ", getFieldEditorParent());
-		addField(separatorCredentialsGSN);
-		FileFieldEditor gsnProjectOverlay = new FileFieldEditor(GSN_PROJECT_OVERLAY_SADL,
-				"GSN Project Overlay .sadl Path:", getFieldEditorParent());
-		addField(gsnProjectOverlay);
+        LabelFieldEditor separatorCredentialsGSN =
+                new LabelFieldEditor(
+                        "   --- Automatic GSN Inference Settings ---   ", getFieldEditorParent());
+        addField(separatorCredentialsGSN);
+        FileFieldEditor gsnProjectOverlay =
+                new FileFieldEditor(
+                        GSN_PROJECT_OVERLAY_SADL,
+                        "GSN Project Overlay .sadl Path:",
+                        getFieldEditorParent());
+        addField(gsnProjectOverlay);
 
-		FileFieldEditor gsnProjectPattern = new FileFieldEditor(GSN_PROJECT_PATTERN_SADL,
-				"GSN Project Pattern .sadl Path:", getFieldEditorParent());
-		addField(gsnProjectPattern);
+        FileFieldEditor gsnProjectPattern =
+                new FileFieldEditor(
+                        GSN_PROJECT_PATTERN_SADL,
+                        "GSN Project Pattern .sadl Path:",
+                        getFieldEditorParent());
+        addField(gsnProjectPattern);
+    }
 
-	}
+    @Override
+    protected void addField(FieldEditor editor) {
+        fields.add(editor);
+        super.addField(editor);
+    }
 
-	@Override
-	protected void addField(FieldEditor editor) {
-		fields.add(editor);
-		super.addField(editor);
-	}
+    @Override
+    public boolean performOk() {
+        super.performOk();
+        IProjectDescription description;
+        File projectDir = new File(RackPreferencePage.getInstanceDataFolder());
+        if (!projectDir.exists() || !projectDir.isDirectory()) {
+            RackConsole.getConsole().error("Please set a valid directory for RACK project");
+            return true;
+        }
 
-	@Override
-	public boolean performOk() {
-		super.performOk();
-		IProjectDescription description;
-		File projectDir = new File(RackPreferencePage.getInstanceDataFolder());
-		if (!projectDir.exists() || !projectDir.isDirectory()) {
-			RackConsole.getConsole().error("Please set a valid directory for RACK project");
-			return true;
-		}
+        File projectFile = new File(RackPreferencePage.getInstanceDataFolder() + "/.project");
+        if (!projectFile.exists()) {
+            // create a .project file
+            String text =
+                    "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<projectDescription><name>"
+                            + projectDir.getName()
+                            + "</name></projectDescription>";
+            try {
+                projectFile.createNewFile();
+                FileUtils.write(projectFile, text, Charset.defaultCharset());
 
-		File projectFile = new File(RackPreferencePage.getInstanceDataFolder() + "/.project");
-		if (!projectFile.exists()) {
-			// create a .project file
-			String text = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<projectDescription><name>"
-					+ projectDir.getName() + "</name></projectDescription>";
-			try {
-				projectFile.createNewFile();
-				FileUtils.write(projectFile, text, Charset.defaultCharset());
+            } catch (IOException e) {
+                RackConsole.getConsole()
+                        .error(
+                                "Unable to setup RACK project using the folder at : "
+                                        + RackPreferencePage.getInstanceDataFolder());
+                return true;
+            }
+        }
+        try {
 
-			} catch (IOException e) {
-				RackConsole.getConsole().error("Unable to setup RACK project using the folder at : "
-						+ RackPreferencePage.getInstanceDataFolder());
-				return true;
-			}
-		}
-		try {
+            String absolutePath =
+                    new File(RackPreferencePage.getInstanceDataFolder()).getAbsolutePath();
+            String absoluteProjectFilePath =
+                    Paths.get(Paths.get(absolutePath) + "/.project").normalize().toString();
 
-			String absolutePath = new File(RackPreferencePage.getInstanceDataFolder()).getAbsolutePath();
-			String absoluteProjectFilePath = Paths.get(Paths.get(absolutePath) + "/.project").normalize().toString();
+            Path path = new Path(absoluteProjectFilePath);
+            description = ResourcesPlugin.getWorkspace().loadProjectDescription(path);
+            IProject project =
+                    ResourcesPlugin.getWorkspace().getRoot().getProject(description.getName());
+            if (!project.exists()) {
+                project.create(description, null);
+            }
 
-			Path path = new Path(absoluteProjectFilePath);
-			description = ResourcesPlugin.getWorkspace().loadProjectDescription(path);
-			IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(description.getName());
-			if (!project.exists()) {
-				project.create(description, null);
-			}
+            project.open(null);
+            RackConsole.getConsole().println("RACK project set to: " + absolutePath);
+        } catch (Exception e) {
+            RackConsole.getConsole().error("Unable to import RACK project into RITE");
+        }
 
-			project.open(null);
-			RackConsole.getConsole().println("RACK project set to: " + absolutePath);
-		} catch (Exception e) {
-			RackConsole.getConsole().error("Unable to import RACK project into RITE");
-		}
-
-		return true;
-	}
+        return true;
+    }
 }

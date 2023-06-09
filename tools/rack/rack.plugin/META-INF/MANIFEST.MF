@@ -90,7 +90,7 @@ Bundle-ClassPath: .,
  lib/opencsv.jar,
  lib/sparqlGraphLibrary.jar,
  lib/viz.js-graphviz-java.jar
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: com.ge.research.rack.Activator
 Automatic-Module-Name: rack.plugin

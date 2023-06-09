@@ -121,7 +121,7 @@ public class ProjectUtils {
         Yaml yaml = new Yaml();
         return yaml.load(inputStream);
     }
-    
+
     public static DumperOptions getYamlDumperOptions() {
         final DumperOptions options = new DumperOptions();
         options.setIndent(1);

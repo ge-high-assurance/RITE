@@ -32,14 +32,16 @@
 package com.ge.research.rack.utils;
 
 import com.opencsv.CSVReader;
+
+import org.apache.commons.io.FilenameUtils;
+import org.yaml.snakeyaml.Yaml;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.file.Files;
-import java.nio.file.LinkOption;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -50,14 +52,10 @@ import java.util.TreeSet;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import org.apache.commons.io.FilenameUtils;
-import org.yaml.snakeyaml.Yaml;
-
 /**
  * Flattens a rack project into an ingestion package .zip
  *
- * <p>
- * PORT of the RACK CLI (python) ingestion package creator
+ * <p>PORT of the RACK CLI (python) ingestion package creator
  */
 /*
  * TODO: POJO for Rack Manifest & leveraging Yaml's deserialization to avoid
@@ -66,261 +64,290 @@ import org.yaml.snakeyaml.Yaml;
 @SuppressWarnings("unchecked")
 public class RackManifestIngestionBuilderUtil {
 
-	private static String FILES = "files";
-	private static String INGESTION_STEPS = "ingestion-steps";
+    private static String FILES = "files";
+    private static String INGESTION_STEPS = "ingestion-steps";
 
-	private static String NODEGROUPS_STORE_DATA_FILENAME = "store_data.csv";
-	private static String MANIFEST_YAML_FILENAME = "manifest.yaml";
+    private static String NODEGROUPS_STORE_DATA_FILENAME = "store_data.csv";
+    private static String MANIFEST_YAML_FILENAME = "manifest.yaml";
 
-	private static String INGESTION_STEP_TYPE_OWL = "owl";
-	private static String INGESTION_STEP_TYPE_CSV = "csv";
-	private static Set<String> STEP_TYPES = Set.of(INGESTION_STEP_TYPE_OWL, INGESTION_STEP_TYPE_CSV);
+    private static String INGESTION_STEP_TYPE_OWL = "owl";
+    private static String INGESTION_STEP_TYPE_CSV = "csv";
+    private static Set<String> STEP_TYPES =
+            Set.of(INGESTION_STEP_TYPE_OWL, INGESTION_STEP_TYPE_CSV);
 
-	private static String JSON_FILE = "jsonFile";
+    private static String JSON_FILE = "jsonFile";
 
-	private static String MANIFEST_NAME_KEY = "name";
-	private static String MANIFEST_STEPS_KEY = "steps";
-	private static String MANIFEST_MANIFEST_KEY = "manifest";
-	private static String MANIFEST_MODEL_KEY = "model";
-	private static String MANIFEST_DATA_KEY = "data";
-	private static String MANIFEST_NODEGROUPS_KEY = "nodegroups";
+    private static String MANIFEST_NAME_KEY = "name";
+    private static String MANIFEST_STEPS_KEY = "steps";
+    private static String MANIFEST_MANIFEST_KEY = "manifest";
+    private static String MANIFEST_MODEL_KEY = "model";
+    private static String MANIFEST_DATA_KEY = "data";
+    private static String MANIFEST_NODEGROUPS_KEY = "nodegroups";
 
-	private static String ZIP_ENTRY_ERROR = "Unable to generate ingestion zip file; error creating %s";
+    private static String ZIP_ENTRY_ERROR =
+            "Unable to generate ingestion zip file; error creating %s";
 
-	public static class IngestionBuilderException extends Exception {
+    public static class IngestionBuilderException extends Exception {
 
-		private static long serialVersionUID = 1L;
-		private static String YAML_PARSE_ERROR = "Unable to parse the file at %s to YAML";
+        private static long serialVersionUID = 1L;
+        private static String YAML_PARSE_ERROR = "Unable to parse the file at %s to YAML";
 
-		private IngestionBuilderException(String msg, Exception e) {
-			super(msg, e);
-		}
+        private IngestionBuilderException(String msg, Exception e) {
+            super(msg, e);
+        }
 
-		private static IngestionBuilderException yamlParseException(String yamlFilepath, Exception e) {
+        private static IngestionBuilderException yamlParseException(
+                String yamlFilepath, Exception e) {
 
-			return new IngestionBuilderException(String.format(YAML_PARSE_ERROR, yamlFilepath), e);
-		}
-	}
+            return new IngestionBuilderException(String.format(YAML_PARSE_ERROR, yamlFilepath), e);
+        }
+    }
 
-	private static Object readYaml(String yamlFilePath) throws IngestionBuilderException {
+    private static Object readYaml(String yamlFilePath) throws IngestionBuilderException {
 
-		try {
+        try {
 
-			return ProjectUtils.readYaml(yamlFilePath);
+            return ProjectUtils.readYaml(yamlFilePath);
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 
-			throw IngestionBuilderException.yamlParseException(yamlFilePath, e);
-		}
-	}
+            throw IngestionBuilderException.yamlParseException(yamlFilePath, e);
+        }
+    }
 
-	private static void writeYaml(Path fileName, Object yamlContent, ZipOutputStream zipStream)
-			throws IngestionBuilderException, IOException {
+    private static void writeYaml(Path fileName, Object yamlContent, ZipOutputStream zipStream)
+            throws IngestionBuilderException, IOException {
 
-		// set filename readable
+        // set filename readable
 
-		try (StringWriter writer = new StringWriter()) {
+        try (StringWriter writer = new StringWriter()) {
 
-			new Yaml(ProjectUtils.getYamlDumperOptions()).dump(yamlContent, writer);
-			byte[] yamlAsString = writer.toString().getBytes();
+            new Yaml(ProjectUtils.getYamlDumperOptions()).dump(yamlContent, writer);
+            byte[] yamlAsString = writer.toString().getBytes();
 
-			zipStream.putNextEntry(new ZipEntry(FilenameUtils.separatorsToUnix(fileName.toString())));
-			zipStream.write(yamlAsString, 0, yamlAsString.length);
-			zipStream.closeEntry();
+            zipStream.putNextEntry(
+                    new ZipEntry(FilenameUtils.separatorsToUnix(fileName.toString())));
+            zipStream.write(yamlAsString, 0, yamlAsString.length);
+            zipStream.closeEntry();
 
-		} catch (IOException e) {
+        } catch (IOException e) {
 
-			throw new IngestionBuilderException(String.format(ZIP_ENTRY_ERROR, fileName), e);
-		}
-	}
+            throw new IngestionBuilderException(String.format(ZIP_ENTRY_ERROR, fileName), e);
+        }
+    }
 
-	private int fresh;
-	private List<Object> steps = new ArrayList<Object>();
-	private Set<String> manifests = new TreeSet<String>();
+    private int fresh;
+    private List<Object> steps = new ArrayList<Object>();
+    private Set<String> manifests = new TreeSet<String>();
 
-	private int nextFresh() {
-		int result = this.fresh;
-		this.fresh = result + 1;
-		return result;
-	}
+    private int nextFresh() {
+        int result = this.fresh;
+        this.fresh = result + 1;
+        return result;
+    }
 
-	private Path newDirectory(String name, String kind) {
-		String dirIdx = String.format("%02d", this.nextFresh());
-		Path path = Path.of(name, dirIdx + '_' + kind);
-		path.toFile().mkdir();
-		path.toFile().setWritable(true, false);
-		path.toFile().setReadable(true, false);
-		return path;
-	}
+    private Path newDirectory(String name, String kind) {
+        String dirIdx = String.format("%02d", this.nextFresh());
+        Path path = Path.of(name, dirIdx + '_' + kind);
+        path.toFile().mkdir();
+        path.toFile().setWritable(true, false);
+        path.toFile().setReadable(true, false);
+        return path;
+    }
 
-	private void zipModelYamlResources(Path modelYamlFilepath, Path modelYamlGeneratedPath, ZipOutputStream zipStream)
-			throws IngestionBuilderException, IOException {
+    private void zipModelYamlResources(
+            Path modelYamlFilepath, Path modelYamlGeneratedPath, ZipOutputStream zipStream)
+            throws IngestionBuilderException, IOException {
 
-		modelYamlFilepath.getParent();
+        modelYamlFilepath.getParent();
 
-		Map<String, Object> oModelYamlMap = (Map<String, Object>) readYaml(modelYamlFilepath.toString());
+        Map<String, Object> oModelYamlMap =
+                (Map<String, Object>) readYaml(modelYamlFilepath.toString());
 
-		List<String> loFiles = (List<String>) oModelYamlMap.get(FILES);
+        List<String> loFiles = (List<String>) oModelYamlMap.get(FILES);
+
+        for (int i = 0; i < loFiles.size(); i++) {
+
+            /*
+             * Writes the file to the zipStream and modifies the yaml file to use generated
+             * paths
+             */
+            Path filepath = Path.of(loFiles.get(i).toString());
+            Path fromPath = modelYamlFilepath.getParent().resolve(filepath);
+            Path filename = filepath.getFileName();
+            Path toPath = modelYamlGeneratedPath.getParent().resolve(filename);
+            zipStream.putNextEntry(new ZipEntry(FilenameUtils.separatorsToUnix(toPath.toString())));
+            Files.copy(fromPath, zipStream);
+            zipStream.closeEntry();
+            loFiles.set(i, filename.toString());
+        }
+
+        writeYaml(modelYamlGeneratedPath, oModelYamlMap, zipStream);
+    }
 
-		for (int i = 0; i < loFiles.size(); i++) {
+    private void zipDataYamlResources(
+            Path dataYamlFilepath, Path dataYamlGeneratedPath, ZipOutputStream zipStream)
+            throws IngestionBuilderException, IOException {
 
-			/*
-			 * Writes the file to the zipStream and modifies the yaml file to use generated
-			 * paths
-			 */
-			Path filepath = Path.of(loFiles.get(i).toString());
-			Path fromPath = modelYamlFilepath.getParent().resolve(filepath);
-			Path filename = filepath.getFileName();
-			Path toPath = modelYamlGeneratedPath.getParent().resolve(filename);
-			zipStream.putNextEntry(new ZipEntry(FilenameUtils.separatorsToUnix(toPath.toString())));
-			Files.copy(fromPath, zipStream);
-			zipStream.closeEntry();
-			loFiles.set(i, filename.toString());
-		}
+        Map<String, Object> oDataYamlMap =
+                (Map<String, Object>) readYaml(dataYamlFilepath.toString());
 
-		writeYaml(modelYamlGeneratedPath, oModelYamlMap, zipStream);
-	}
+        List<Map<String, String>> loIngestionSteps =
+                (List<Map<String, String>>) oDataYamlMap.get(INGESTION_STEPS);
 
-	private void zipDataYamlResources(Path dataYamlFilepath, Path dataYamlGeneratedPath, ZipOutputStream zipStream)
-			throws IngestionBuilderException, IOException {
+        for (Map<String, String> ingestionStep : loIngestionSteps) {
 
-		Map<String, Object> oDataYamlMap = (Map<String, Object>) readYaml(dataYamlFilepath.toString());
+            String key =
+                    ingestionStep.keySet().stream()
+                            .filter(k -> STEP_TYPES.contains(k))
+                            .findFirst()
+                            .get();
 
-		List<Map<String, String>> loIngestionSteps = (List<Map<String, String>>) oDataYamlMap.get(INGESTION_STEPS);
+            Path filepath = Path.of(ingestionStep.get(key));
+            Path fromPath = dataYamlFilepath.getParent().resolve(filepath);
+            Path filename = filepath.getFileName();
 
-		for (Map<String, String> ingestionStep : loIngestionSteps) {
+            Path toPath = dataYamlGeneratedPath.getParent().resolve(filename);
+            zipStream.putNextEntry(new ZipEntry(FilenameUtils.separatorsToUnix(toPath.toString())));
+            Files.copy(fromPath, zipStream);
+            zipStream.closeEntry();
+            ingestionStep.put(key, filename.toString());
+        }
 
-			String key = ingestionStep.keySet().stream().filter(k -> STEP_TYPES.contains(k)).findFirst().get();
+        writeYaml(dataYamlGeneratedPath, oDataYamlMap, zipStream);
+    }
 
-			Path filepath = Path.of(ingestionStep.get(key));
-			Path fromPath = dataYamlFilepath.getParent().resolve(filepath);
-			Path filename = filepath.getFileName();
+    private static void zipNodegroups(
+            Path nodegroupsFilepath, Path nodegroupsGeneratedFilepath, ZipOutputStream zipStream)
+            throws FileNotFoundException, IOException {
 
-			Path toPath = dataYamlGeneratedPath.getParent().resolve(filename);
-			zipStream.putNextEntry(new ZipEntry(FilenameUtils.separatorsToUnix(toPath.toString())));
-			Files.copy(fromPath, zipStream);
-			zipStream.closeEntry();
-			ingestionStep.put(key, filename.toString());
-		}
+        Path storeDataFilepath = nodegroupsFilepath.resolve(NODEGROUPS_STORE_DATA_FILENAME);
 
-		writeYaml(dataYamlGeneratedPath, oDataYamlMap, zipStream);
-	}
+        try (FileReader reader = new FileReader(storeDataFilepath.toFile());
+                CSVReader csvReader = new CSVReader(reader)) {
 
-	private static void zipNodegroups(Path nodegroupsFilepath, Path nodegroupsGeneratedFilepath,
-			ZipOutputStream zipStream) throws FileNotFoundException, IOException {
+            csvReader.skip(0);
+            Iterator<String[]> iterator = csvReader.iterator();
 
-		Path storeDataFilepath = nodegroupsFilepath.resolve(NODEGROUPS_STORE_DATA_FILENAME);
+            List<String> headers = List.of(iterator.next());
+            int jsonFileIdx = headers.indexOf(JSON_FILE);
 
-		try (FileReader reader = new FileReader(storeDataFilepath.toFile());
-				CSVReader csvReader = new CSVReader(reader)) {
+            while (iterator.hasNext()) {
+                String[] csvLine = iterator.next();
+                Path filepath = Path.of(List.of(csvLine).get(jsonFileIdx));
+                Path fromPath = nodegroupsFilepath.resolve(filepath);
+                Path toPath = nodegroupsGeneratedFilepath.resolve(filepath);
+                zipStream.putNextEntry(
+                        new ZipEntry(FilenameUtils.separatorsToUnix(toPath.toString())));
+                Files.copy(fromPath, zipStream);
+                zipStream.closeEntry();
+            }
+        }
 
-			csvReader.skip(0);
-			Iterator<String[]> iterator = csvReader.iterator();
+        String toStoreFilename =
+                nodegroupsGeneratedFilepath.resolve(NODEGROUPS_STORE_DATA_FILENAME).toString();
 
-			List<String> headers = List.of(iterator.next());
-			int jsonFileIdx = headers.indexOf(JSON_FILE);
+        zipStream.putNextEntry(new ZipEntry(FilenameUtils.separatorsToUnix(toStoreFilename)));
+        Files.copy(storeDataFilepath, zipStream);
+        zipStream.closeEntry();
+    }
 
-			while (iterator.hasNext()) {
-				String[] csvLine = iterator.next();
-				Path filepath = Path.of(List.of(csvLine).get(jsonFileIdx));
-				Path fromPath = nodegroupsFilepath.resolve(filepath);
-				Path toPath = nodegroupsGeneratedFilepath.resolve(filepath);
-				zipStream.putNextEntry(new ZipEntry(FilenameUtils.separatorsToUnix(toPath.toString())));
-				Files.copy(fromPath, zipStream);
-				zipStream.closeEntry();
-			}
-		}
+    public void zipManifestResources(Path ingestionDir, ZipOutputStream zipStream)
+            throws FileNotFoundException, IngestionBuilderException, IOException {
 
-		String toStoreFilename = nodegroupsGeneratedFilepath.resolve(NODEGROUPS_STORE_DATA_FILENAME).toString();
+        zipManifestResources(ingestionDir.resolve(MANIFEST_YAML_FILENAME), true, zipStream);
+    }
 
-		zipStream.putNextEntry(new ZipEntry(FilenameUtils.separatorsToUnix(toStoreFilename)));
-		Files.copy(storeDataFilepath, zipStream);
-		zipStream.closeEntry();
-	}
+    public void zipManifestResources(
+            Path physicalManifestFile, boolean isTopLevelManifest, ZipOutputStream zipStream)
+            throws IngestionBuilderException, FileNotFoundException, IOException {
 
-	public void zipManifestResources(Path ingestionDir, ZipOutputStream zipStream)
-			throws FileNotFoundException, IngestionBuilderException, IOException {
+        Map<String, Object> oManifestYamlMap =
+                (Map<String, Object>) readYaml(physicalManifestFile.toString());
+        // Handle multiple inclusions of the same manifest to simplify
+        String manifestName = oManifestYamlMap.get(MANIFEST_NAME_KEY).toString();
 
-		zipManifestResources(ingestionDir.resolve(MANIFEST_YAML_FILENAME), true, zipStream);
-	}
+        if (manifests.contains(manifestName)) {
+            return;
+        }
+        manifests.add(manifestName);
 
-	public void zipManifestResources(Path physicalManifestFile, boolean isTopLevelManifest, ZipOutputStream zipStream)
-			throws IngestionBuilderException, FileNotFoundException, IOException {
+        // base used for resolving relative paths found in manifests
+        Path fromBase = physicalManifestFile.getParent();
 
-		Map<String, Object> oManifestYamlMap = (Map<String, Object>) readYaml(physicalManifestFile.toString());
-		// Handle multiple inclusions of the same manifest to simplify
-		String manifestName = oManifestYamlMap.get(MANIFEST_NAME_KEY).toString();
+        String manifestDirectory = null;
 
-		if (manifests.contains(manifestName)) {
-			return;
-		}
-		manifests.add(manifestName);
+        List<Map<String, Object>> oManifestSteps =
+                (List<Map<String, Object>>) oManifestYamlMap.get(MANIFEST_STEPS_KEY);
 
-		// base used for resolving relative paths found in manifests
-		Path fromBase = physicalManifestFile.getParent();
+        for (Map<String, Object> oStepMap : oManifestSteps) {
 
-		String manifestDirectory = null;
+            for (Entry<?, ?> step : ((Map<?, ?>) oStepMap).entrySet()) {
 
-		List<Map<String, Object>> oManifestSteps = (List<Map<String, Object>>) oManifestYamlMap.get(MANIFEST_STEPS_KEY);
+                if (MANIFEST_MANIFEST_KEY.equals(step.getKey())) {
 
-		for (Map<String, Object> oStepMap : oManifestSteps) {
+                    Path resolvedManifestFile = fromBase.resolve(step.getValue().toString());
 
-			for (Entry<?, ?> step : ((Map<?, ?>) oStepMap).entrySet()) {
+                    zipManifestResources(resolvedManifestFile, false, zipStream);
 
-				if (MANIFEST_MANIFEST_KEY.equals(step.getKey())) {
+                } else {
 
-					Path resolvedManifestFile = fromBase.resolve(step.getValue().toString());
+                    if (null == manifestDirectory) {
 
-					zipManifestResources(resolvedManifestFile, false, zipStream);
+                        manifestDirectory = newDirectory("", manifestName).toString();
+                    }
 
-				} else {
+                    if (MANIFEST_MODEL_KEY.equals(step.getKey())) {
 
-					if (null == manifestDirectory) {
+                        Path modelPath = fromBase.resolve(step.getValue().toString());
 
-						manifestDirectory = newDirectory("", manifestName).toString();
-					}
+                        Path generatedDir = newDirectory(manifestDirectory, MANIFEST_MODEL_KEY);
 
-					if (MANIFEST_MODEL_KEY.equals(step.getKey())) {
+                        Path generatedModelPath = generatedDir.resolve(modelPath.getFileName());
 
-						Path modelPath = fromBase.resolve(step.getValue().toString());
+                        zipModelYamlResources(modelPath, generatedModelPath, zipStream);
 
-						Path generatedDir = newDirectory(manifestDirectory, MANIFEST_MODEL_KEY);
+                        this.steps.add(
+                                Map.of(
+                                        MANIFEST_MODEL_KEY,
+                                        generatedModelPath.toString().replace("\\", "/")));
 
-						Path generatedModelPath = generatedDir.resolve(modelPath.getFileName());
+                    } else if (MANIFEST_DATA_KEY.equals(step.getKey())) {
 
-						zipModelYamlResources(modelPath, generatedModelPath, zipStream);
+                        Path dataPath = fromBase.resolve(step.getValue().toString());
 
-						this.steps.add(Map.of(MANIFEST_MODEL_KEY, generatedModelPath.toString().replace("\\", "/")));
+                        Path generatedDir = newDirectory(manifestDirectory, MANIFEST_DATA_KEY);
 
-					} else if (MANIFEST_DATA_KEY.equals(step.getKey())) {
+                        Path generatedModelPath = generatedDir.resolve(dataPath.getFileName());
 
-						Path dataPath = fromBase.resolve(step.getValue().toString());
+                        zipDataYamlResources(dataPath, generatedModelPath, zipStream);
 
-						Path generatedDir = newDirectory(manifestDirectory, MANIFEST_DATA_KEY);
+                        this.steps.add(
+                                Map.of(
+                                        MANIFEST_DATA_KEY,
+                                        generatedModelPath.toString().replace("\\", "/")));
 
-						Path generatedModelPath = generatedDir.resolve(dataPath.getFileName());
+                    } else if (MANIFEST_NODEGROUPS_KEY.equals(step.getKey())) {
 
-						zipDataYamlResources(dataPath, generatedModelPath, zipStream);
+                        Path nodegroupPath = fromBase.resolve(step.getValue().toString());
 
-						this.steps.add(Map.of(MANIFEST_DATA_KEY, generatedModelPath.toString().replace("\\", "/")));
+                        Path generatedDir =
+                                newDirectory(manifestDirectory, MANIFEST_NODEGROUPS_KEY);
 
-					} else if (MANIFEST_NODEGROUPS_KEY.equals(step.getKey())) {
+                        zipNodegroups(nodegroupPath, generatedDir, zipStream);
 
-						Path nodegroupPath = fromBase.resolve(step.getValue().toString());
+                        this.steps.add(
+                                Map.of(
+                                        MANIFEST_NODEGROUPS_KEY,
+                                        generatedDir.toString().replace("\\", "/")));
+                    }
+                }
+            }
+        }
 
-						Path generatedDir = newDirectory(manifestDirectory, MANIFEST_NODEGROUPS_KEY);
-
-						zipNodegroups(nodegroupPath, generatedDir, zipStream);
-
-						this.steps.add(Map.of(MANIFEST_NODEGROUPS_KEY, generatedDir.toString().replace("\\", "/")));
-					}
-				}
-			}
-		}
-
-		if (isTopLevelManifest) {
-			oManifestYamlMap.put(MANIFEST_STEPS_KEY, this.steps);
-			writeYaml(Path.of(MANIFEST_YAML_FILENAME), oManifestYamlMap, zipStream);
-		}
-	}
+        if (isTopLevelManifest) {
+            oManifestYamlMap.put(MANIFEST_STEPS_KEY, this.steps);
+            writeYaml(Path.of(MANIFEST_YAML_FILENAME), oManifestYamlMap, zipStream);
+        }
+    }
 }
