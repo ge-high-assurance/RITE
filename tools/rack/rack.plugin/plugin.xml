@@ -408,31 +408,15 @@
         </menuContribution>
     </extension>
 
-    <!-- 
-    <extension point="org.eclipse.ui.menus">
-        <menuContribution label="uploadIngestionPackage"
-            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=rackplugin.commands.uploadNodegroups">
-            <command
-                commandId="rackplugin.commands.uploadIngestionPackage"
-                label="Upload as Ingestion Package" name="Upload Ingestion Package">
-                <visibleWhen>
-                    <with variable="selection">
-                        <count value="+" />
-                        <iterate ifEmpty="false" operator="and">
-                            <or>
-                                <instanceof
-                                    value="org.eclipse.core.resources.IProject" />
-                                <instanceof value="org.eclipse.core.resources.IFile" />
-                                <instanceof
-                                    value="org.eclipse.core.resources.IFolder" />
-                            </or>
-                        </iterate>
-                    </with>
-                </visibleWhen>
-            </command>
-        </menuContribution>
-    </extension>
-    -->
+    <!-- <extension point="org.eclipse.ui.menus"> <menuContribution label="uploadIngestionPackage"
+        locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=rackplugin.commands.uploadNodegroups">
+        <command commandId="rackplugin.commands.uploadIngestionPackage" label="Upload
+        as Ingestion Package" name="Upload Ingestion Package"> <visibleWhen> <with
+        variable="selection"> <count value="+" /> <iterate ifEmpty="false" operator="and">
+        <or> <instanceof value="org.eclipse.core.resources.IProject" /> <instanceof
+        value="org.eclipse.core.resources.IFile" /> <instanceof value="org.eclipse.core.resources.IFolder"
+        /> </or> </iterate> </with> </visibleWhen> </command> </menuContribution>
+        </extension> -->
 
     <extension point="org.eclipse.core.expressions.definitions">
         <definition id="com.ge.research.rack.eObjectSelected">
