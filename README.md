@@ -17,7 +17,7 @@ Besides supporting basic data modeling and curation features, RITE also provides
 6. [Generating Ingestion Nodegroups for the Ontology Currently Loaded on RACK](https://github.com/ge-high-assurance/RITE/wiki/RITE-Tutorial#7-generating-ingestion-nodegroups-for-the-ontology-currently-loaded-on-rack)
 7. [SADL Model Development](https://github.com/ge-high-assurance/RITE/wiki/RITE-Tutorial#8-sadl-model-development-in-rite)
 8. [Create Modular Ingestion Packages](https://github.com/ge-high-assurance/RITE/wiki/Modular-Ingestion-Package-Creation-using-Regenerate-Manifest)
-9. Automatically perform Assurance case generation in GSN
+9. [Automatically perform Assurance case generation in GSN](https://github.com/ge-high-assurance/RITE/wiki/Assurance-Case-Generation-Capabilities-in-GSN)
 
 ## Getting Started with RITE
 ### A detailed tutorial for getting started with RITE can be found [here](https://github.com/ge-high-assurance/RITE/wiki/RITE-Tutorial).
