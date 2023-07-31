@@ -1,0 +1,62 @@
+ uri "http://sadl.org/GE-GSN-Pattern.sadl" alias gepat.
+ 
+ import "http://sadl.org/GSN-Pattern-core.sadl".
+ 
+ 
+ //-- Goal patterns
+ 
+ subdd-GP is a Goal
+	with isPat true
+	with identifier "subdd-GP"
+	with description "Claim: SubDD Requirement has been verified with an SBVT test" 
+	with pGoal "SubDD_Req".
+	
+ 	
+ sbvt-GP is a Goal
+	with isPat true
+	with identifier "sbvt-GP"
+	with description "Claim: SBVT Test has Passed" 
+	with pGoal "SBVT_Test".
+	
+
+ sbvttr-GP is a Goal
+	with isPat true
+	with identifier "sbvttr-GP"
+	with description "Claim: SBVT test result is: Passed" 
+	with pGoal "SBVT_Result".
+
+
+ //-- strategy patterns
+
+ subdd-tested-SP is a Strategy
+	with isPat true
+ 	with identifier "subdd-tested-SP"
+ 	with description "Argument: All relevant SubDD Requirements have passed SBVT Tests"
+ 	with pGoal "SubDD_Req"
+ 	with pSubGoal "SBVT_Test"
+ 	with pGoalSubGoalConnector "verifies". 	
+ 
+ sbvt-passed-SP is a Strategy
+	with isPat true
+ 	with identifier "sbvt-passed-SP"
+ 	with description "Argument: Result is: Passed"
+ 	with pGoal "SBVT_Test"
+ 	with pSubGoal "SBVT_Result"
+ 	with pGoalSubGoalConnector "confirms".
+
+ sbvttr-passed-SP is a Strategy
+	with isPat true
+ 	with identifier "sbvttr-passed-SP"
+ 	with description "Argument: Confirmed by Test Status"
+ 	with pGoal "SBVT_Result"
+ 	with pSubGoal "TEST_STATUS"
+ 	with pGoalSubGoalConnector "result".
+ 	
+ //-- Evidence patterns 
+ 
+  evidence-sbvttr is a GsnEvidence
+ 	with classId "TEST_STATUS"
+ 	with statusProperty "identifier" 
+ 	with passValue "Passed".
+ 		 	 	
+ 	 	 
