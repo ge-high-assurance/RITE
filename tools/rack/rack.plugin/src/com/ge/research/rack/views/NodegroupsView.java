@@ -43,6 +43,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.*;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FormAttachment;
@@ -118,7 +119,10 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
 
         final Display display = Display.getCurrent();
 
-        final Composite composite = new Composite(parent, SWT.NONE);
+        final ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+        final Composite composite = new Composite(sc, SWT.NONE);
+        sc.setContent(composite);
+        
         GridLayout layout = new GridLayout();
         layout.numColumns = 1;
         layout.verticalSpacing = 10;
