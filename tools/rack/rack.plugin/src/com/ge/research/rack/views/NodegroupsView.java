@@ -94,6 +94,7 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
 
     private Table table;
     private Button selectAllButton;
+    private Composite topComposite;
 
     public String getProjectPath() {
         return "";
@@ -120,6 +121,7 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
         final Display display = Display.getCurrent();
 
         final ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+        this.topComposite = sc;
         final Composite composite = new Composite(sc, SWT.NONE);
         sc.setContent(composite);
         
@@ -192,7 +194,7 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
 
         table = new Table(floatContainer, SWT.CHECK | SWT.H_SCROLL | SWT.V_SCROLL);
         table.removeAll();
-        table.setSize(1130, 600);
+        table.setSize(1130, 60);
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
         table.setHeaderBackground(display.getSystemColor(SWT.COLOR_TITLE_BACKGROUND_GRADIENT));
@@ -255,6 +257,7 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
             table.setEnabled(table.getItemCount() > 0);
             Arrays.stream(table.getColumns()).forEach(TableColumn::pack);
             table.pack();
+            topComposite.pack();
 
         } catch (final Exception e) {
             RackConsole.getConsole().warning(UPDATE_NODEGROUP_LIST_ERROR);
@@ -288,7 +291,8 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
 
             table.setEnabled(table.getItemCount() > 0);
             // Arrays.stream(table.getColumns()).forEach(TableColumn::pack);
-            // table.pack();
+            table.pack();
+            topComposite.pack();
 
         } catch (final Exception e) {
             RackConsole.getConsole().warning(UPDATE_NODEGROUP_LIST_ERROR);
