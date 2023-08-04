@@ -27,6 +27,11 @@
         </command>
 
         <command categoryId="rackplugin.commands"
+            id="rackplugin.commands.zipIngestionPackage"
+            name="Save Ingestion Package as ZIP">
+        </command>
+
+        <command categoryId="rackplugin.commands"
             id="rackplugin.commands.ingestInstanceData" name="Manifest Import">
         </command>
         <!-- <command categoryId="rackplugin.commands" id="rackplugin.commands.gsnCommand"
@@ -137,6 +142,11 @@
                     </iterate>
                 </with>
             </enabledWhen>
+        </handler>
+
+        <handler
+            class="com.ge.research.rack.ZipIngestionPackageHandler"
+            commandId="rackplugin.commands.zipIngestionPackage">
         </handler>
 
         <handler
@@ -412,6 +422,27 @@
             <command
                 commandId="rackplugin.commands.uploadIngestionPackage"
                 label="Upload as Ingestion Package" name="Upload Ingestion Package">
+                <visibleWhen>
+                    <with variable="selection">
+                        <count value="+" />
+                        <iterate ifEmpty="false" operator="and">
+                            <or>
+                                <instanceof
+                                    value="org.eclipse.core.resources.IProject" />
+                                <instanceof value="org.eclipse.core.resources.IFile" />
+                                <instanceof
+                                    value="org.eclipse.core.resources.IFolder" />
+                            </or>
+                        </iterate>
+                    </with>
+                </visibleWhen>
+            </command>
+        </menuContribution>
+        <menuContribution label="zipIngestionPackage"
+            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=rackplugin.commands.uploadNodegroups">
+            <command
+                commandId="rackplugin.commands.zipIngestionPackage"
+                label="Save Ingestion Package as Zip" name="Zip Ingestion Package">
                 <visibleWhen>
                     <with variable="selection">
                         <count value="+" />

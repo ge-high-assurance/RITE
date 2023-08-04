@@ -62,6 +62,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -78,7 +79,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
     private static final String ZIP = "zip";
     private static final String UPLOAD_DEBOUNCED = "Ingestion package already uploading";
     private static final String UPLOAD_STAGED = "Ingestion package upload staged";
-    private static final String UPLOAD_QUEUED = "Ingestion package %s queued for upload";
+    private static final String UPLOAD_QUEUED = "Ingestion package %s queued";
     private static final String UPLOAD_FAILED = "Ingestion package %s upload failed";
 
     private static final String NO_SELECTED_PROJECT =
@@ -114,6 +115,10 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
+    	return execute(event, true, false);
+    }
+    	
+    public Object execute(ExecutionEvent event, boolean upload, boolean keepZip) {
 
         if (!startRun()) {
             RackConsole.getConsole().error(UPLOAD_DEBOUNCED);
@@ -154,8 +159,9 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
             if (selectedProject.get().isFile()) {
 
                 ingestionZipPath = selectedProjectPath;
+                keepZip = true; // Don't delete an existing zip file
 
-            } else {
+            } else if (keepZip) {
 
                 final String newFilepath =
                         promptForSaveFilepath(
@@ -168,10 +174,14 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
                 }
 
                 ingestionZipPath = Paths.get(newFilepath);
+            } else {
+            	// use a temporary file
+            	var t = java.time.LocalTime.now().getNano();
+            	ingestionZipPath = selectedProjectPath.resolve("upload-tmp-" + t + ".zip");
             }
 
             // End run is called in the async callback
-            new IngestionPackageUploadJob(selectedProjectPath, ingestionZipPath, () -> endRun())
+            new IngestionPackageUploadJob(selectedProjectPath, ingestionZipPath, upload, keepZip, () -> endRun())
                     .schedule();
 
         } catch (final Exception e) {
@@ -218,15 +228,21 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
         // below paths are expected to be when a zip resource is selected
         private final Path ingestionPackageSource; // either .zip or folder path
         private final Path ingestionPackageZipFilepath; // .zip path containing ingestion resources
-
+        private final boolean upload;
+        private final boolean keepZip;
+        
         public IngestionPackageUploadJob(
                 final Path ingestionPackageSource,
                 final Path ingestionPackageFilepath,
+                final boolean upload,
+                final boolean keepZip,
                 final Runnable asyncCallback) {
 
             super(String.format(UPLOAD_NAME, ingestionPackageSource));
             this.ingestionPackageSource = ingestionPackageSource;
             this.ingestionPackageZipFilepath = ingestionPackageFilepath;
+            this.upload = upload;
+            this.keepZip = keepZip;
             addChangeListeners(asyncCallback);
         }
 
@@ -271,9 +287,15 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
                     zipIt(ingestionPackageSource, ingestionPackageZipFilepath);
                 }
 
-                RackConsole.getConsole().println(UPLOAD_STAGED);
-
-                uploadIngestionZip(ingestionPackageZipFilepath, monitor);
+                if (upload) {
+                	RackConsole.getConsole().println(UPLOAD_STAGED);
+                    uploadIngestionZip(ingestionPackageZipFilepath, monitor);
+                } else {
+                	
+                }
+                if (!keepZip) {
+                	Files.delete(ingestionPackageZipFilepath);
+                }
 
             } catch (final Exception e) {
                 RackConsole.getConsole().error(e.getMessage());
