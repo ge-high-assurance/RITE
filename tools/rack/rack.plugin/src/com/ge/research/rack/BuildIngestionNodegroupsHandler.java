@@ -91,8 +91,8 @@ public class BuildIngestionNodegroupsHandler extends AbstractHandler {
             return Status.CANCEL_STATUS;
         }
 
-        String path = /* ProjectUtils.getOverlayProjectPath(); */
-                RackPreferencePage.getInstanceDataFolder();
+        //String path = /* ProjectUtils.getOverlayProjectPath(); */
+        //        RackPreferencePage.getInstanceDataFolder();
 
         String ingestionNodegroupPath = RackPreferencePage.getInstanceDataFolder();
 

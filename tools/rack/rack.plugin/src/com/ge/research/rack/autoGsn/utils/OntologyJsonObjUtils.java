@@ -35,7 +35,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -70,12 +69,12 @@ public class OntologyJsonObjUtils {
     public static List<String> getPropertyRangeURIs(
             JSONObject ontInfo, String classId, String propId) {
         // Create a list of strings to store values
-        List rangeUris = new ArrayList<String>();
+        List<String> rangeUris = new ArrayList<String>();
 
         System.out.println("Finding range of " + classId + " | " + propId);
 
         JSONArray classPropertyRangeList = (JSONArray) ontInfo.get("classPropertyRangeList");
-        Iterator classPropertyRangeListIter = classPropertyRangeList.iterator();
+        var classPropertyRangeListIter = classPropertyRangeList.iterator();
 
         // Flag to check if propertyUri has been added as first element
         Boolean addedPropUriFlag = false;
@@ -88,8 +87,8 @@ public class OntologyJsonObjUtils {
             String rowRangeInfo = classPropertyRange.get(2).toString();
 
             String rowClassId = rowClassInfo.split("\\:")[1];
-            String rowClassUri =
-                    getUriPrefix(ontInfo, rowClassInfo.split("\\:")[0]) + "#" + rowClassId;
+            //String rowClassUri =
+            //        getUriPrefix(ontInfo, rowClassInfo.split("\\:")[0]) + "#" + rowClassId;
             String rowPropId = rowPropInfo.split("\\:")[1];
             String rowPropUri =
                     getUriPrefix(ontInfo, rowPropInfo.split("\\:")[0]) + "#" + rowPropId;
@@ -147,7 +146,7 @@ public class OntologyJsonObjUtils {
         System.out.println("Finding URI of class " + classId);
 
         JSONArray subClassSuperClassList = (JSONArray) ontInfo.get("subClassSuperClassList");
-        Iterator subClassSuperClassListIter = subClassSuperClassList.iterator();
+        var subClassSuperClassListIter = subClassSuperClassList.iterator();
 
         while (subClassSuperClassListIter.hasNext()) {
             JSONArray subSuperPair = (JSONArray) subClassSuperClassListIter.next();
@@ -184,7 +183,7 @@ public class OntologyJsonObjUtils {
         System.out.println("Finding Superclass of class " + classId);
 
         JSONArray subClassSuperClassList = (JSONArray) ontInfo.get("subClassSuperClassList");
-        Iterator subClassSuperClassListIter = subClassSuperClassList.iterator();
+        var subClassSuperClassListIter = subClassSuperClassList.iterator();
 
         while (subClassSuperClassListIter.hasNext()) {
             JSONArray subSuperPair = (JSONArray) subClassSuperClassListIter.next();
@@ -220,7 +219,7 @@ public class OntologyJsonObjUtils {
             JSONObject ontInfo, String classAId, String propId, String classBId) {
 
         JSONArray classPropertyRangeList = (JSONArray) ontInfo.get("classPropertyRangeList");
-        Iterator classPropertyRangeListIter = classPropertyRangeList.iterator();
+        var classPropertyRangeListIter = classPropertyRangeList.iterator();
 
         /**
          * Note: Since class can be from overlays, the JSON ontology information can have the Class

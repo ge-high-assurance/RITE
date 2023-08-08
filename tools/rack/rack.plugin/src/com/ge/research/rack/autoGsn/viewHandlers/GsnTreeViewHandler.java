@@ -59,7 +59,7 @@ public class GsnTreeViewHandler {
 
     // -------- FXML GUI variables below --------------
 
-    @FXML private TreeView treeViewGsnCascade;
+    @FXML private TreeView<Label> treeViewGsnCascade;
 
     // --------------------------------
 
@@ -88,31 +88,31 @@ public class GsnTreeViewHandler {
         return nodeLabel;
     }
 
-    /**
-     * For a given GSN node, creates a treeitem and recursively creates treeitems for all supporting
-     * nodes
-     *
-     * @param node
-     * @return
-     */
-    private TreeItem populateTreeViewGsnCascade(GsnNode node, String currentGoalId) {
-        Node nodeImage = AutoGsnGuiUtils.getNodeImage(node);
-
-        TreeItem elementItem = new TreeItem(getNodeTreeLabel(node), nodeImage);
-        // if this is the currentgoal, expand it by default
-        System.out.println(node.getNodeId() + " ------- " + currentGoalId);
-        if (node.getNodeId().equalsIgnoreCase(currentGoalId)) {
-            System.out.println("expanded");
-            elementItem.setExpanded(true);
-        }
-
-        if (node.getSupportedBy() != null) {
-            for (GsnNode child : node.getSupportedBy()) {
-                elementItem.getChildren().add(populateTreeViewGsnCascade(child, currentGoalId));
-            }
-        }
-        return elementItem;
-    }
+//    /**
+//     * For a given GSN node, creates a treeitem and recursively creates treeitems for all supporting
+//     * nodes
+//     *
+//     * @param node
+//     * @return
+//     */
+//    private TreeItem<Label> populateTreeViewGsnCascade(GsnNode node, String currentGoalId) {
+//        Node nodeImage = AutoGsnGuiUtils.getNodeImage(node);
+//
+//        var elementItem = new TreeItem<>(getNodeTreeLabel(node), nodeImage);
+//        // if this is the currentgoal, expand it by default
+//        System.out.println(node.getNodeId() + " ------- " + currentGoalId);
+//        if (node.getNodeId().equalsIgnoreCase(currentGoalId)) {
+//            System.out.println("expanded");
+//            elementItem.setExpanded(true);
+//        }
+//
+//        if (node.getSupportedBy() != null) {
+//            for (GsnNode child : node.getSupportedBy()) {
+//                elementItem.getChildren().add(populateTreeViewGsnCascade(child, currentGoalId));
+//            }
+//        }
+//        return elementItem;
+//    }
 
     /**
      * For a given GSN node, creates a treeitem and recursively creates treeitems for all supporting
@@ -123,11 +123,11 @@ public class GsnTreeViewHandler {
      * @param node
      * @return
      */
-    private TreeItemAndBoolean populateTreeViewGsnCascadeWithExpansion(
+    private TreeItemAndBoolean<Label> populateTreeViewGsnCascadeWithExpansion(
             GsnNode node, String currentGoalId, Boolean expandFlag) {
         Node nodeImage = AutoGsnGuiUtils.getNodeImage(node);
 
-        TreeItem elementItem = new TreeItem(getNodeTreeLabel(node), nodeImage);
+        var elementItem = new TreeItem<>(getNodeTreeLabel(node), nodeImage);
 
         Boolean myExpFlag = false;
 
@@ -145,7 +145,7 @@ public class GsnTreeViewHandler {
             Boolean someChildExpanded = false;
             for (GsnNode child : node.getSupportedBy()) {
 
-                TreeItemAndBoolean childReturned =
+                var childReturned =
                         populateTreeViewGsnCascadeWithExpansion(child, currentGoalId, false);
 
                 // Add the child treeitem
@@ -171,8 +171,8 @@ public class GsnTreeViewHandler {
         }
 
         // create TreeItemAndBoolean to return to parent
-        MultiClassPackets.TreeItemAndBoolean returnPack =
-                new MultiClassPackets().new TreeItemAndBoolean(elementItem, myExpFlag);
+        var returnPack =
+                new MultiClassPackets().new TreeItemAndBoolean<>(elementItem, myExpFlag);
 
         return returnPack;
     }
@@ -191,7 +191,7 @@ public class GsnTreeViewHandler {
 
         // get the GSN tree
         // TreeItem tree = populateTreeViewGsnCascade(rootGsn, currentGoalId);
-        TreeItemAndBoolean treeItemWithFlag =
+        var treeItemWithFlag =
                 populateTreeViewGsnCascadeWithExpansion(rootGsn, currentGoalId, false);
 
         // Assign the tree to the treeview
@@ -204,7 +204,7 @@ public class GsnTreeViewHandler {
      *
      * @param readyTree
      */
-    public void prepareTreeView(TreeView readyTree) {
+    public void prepareTreeView(TreeView<Label> readyTree) {
         // Assign the tree to the treeview
         treeViewGsnCascade.setRoot(readyTree.getRoot());
     }

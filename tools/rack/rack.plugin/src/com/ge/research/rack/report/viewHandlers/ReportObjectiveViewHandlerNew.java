@@ -50,7 +50,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -103,30 +102,30 @@ public class ReportObjectiveViewHandlerNew {
 
     @FXML private Tab tabReq;
     @FXML private ListView<Label> reqList;
-    @FXML private ComboBox comboReq;
+    @FXML private ComboBox<String> comboReq;
     @FXML private TextField searchReq;
-    @FXML private BarChart reqChart;
+    @FXML private BarChart<String,Integer> reqChart;
     @FXML private NumberAxis yAxisReqChart;
     @FXML private Label reqChildrenLabel;
-    @FXML private ListView reqChildrenList;
+    @FXML private ListView<Label> reqChildrenList;
 
     @FXML private Tab tabHzrd;
 
     @FXML private Tab tabTest;
     @FXML private ListView<Label> tstList;
-    @FXML private ComboBox comboTst;
+    @FXML private ComboBox<String> comboTst;
     @FXML private TextField searchTst;
-    @FXML private BarChart tstChart;
+    @FXML private BarChart<String,Integer> tstChart;
     @FXML private NumberAxis yAxisTstChart;
     @FXML private Label tstChildrenLabel;
-    @FXML private ListView tstChildrenList;
+    @FXML private ListView<Label> tstChildrenList;
 
     @FXML private Tab tabAnls;
 
     @FXML private Tab tabRev;
     @FXML private ListView<Label> revList;
-    @FXML private ComboBox comboRev;
-    @FXML private BarChart revChart;
+    @FXML private ComboBox<String> comboRev;
+    @FXML private BarChart<String,Integer> revChart;
     @FXML private NumberAxis yAxisRevChart;
 
     @FXML private Button btnTab;
@@ -270,16 +269,16 @@ public class ReportObjectiveViewHandlerNew {
         yAxisReqChart.setDisable(false);
 
         // to store the highest value for scaling
-        int high = -1;
+        //int high = -1;
 
         // TODO: write logic for other objectives
         if (currentObjId.equals("A2-1") || currentObjId.equals("A2-4")) {
-            XYChart.Series reqStat = new XYChart.Series();
+            var reqStat = new XYChart.Series<String,Integer>();
 
             int numTrace = LogicUtils.getNumReqsWithTrace(reqList);
 
-            Data traceBar = ReportViewUtils.createIntDataBar("Trace", numTrace);
-            Data noTraceBar =
+            var traceBar = ReportViewUtils.createIntDataBar("Trace", numTrace);
+            var noTraceBar =
                     ReportViewUtils.createIntDataBar("No Trace", reqList.size() - numTrace);
 
             reqStat.getData().add(traceBar);
@@ -304,7 +303,7 @@ public class ReportObjectiveViewHandlerNew {
 
         // TODO: write logic for other objectives
         if (currentObjId.equals("A7-3") || currentObjId.equals("A7-4")) {
-            XYChart.Series reqStat = new XYChart.Series();
+            var reqStat = new XYChart.Series<String,Integer>();
 
             List<Integer> testStats = LogicUtils.getRequirementTestStatus(reqList);
 
@@ -312,9 +311,9 @@ public class ReportObjectiveViewHandlerNew {
             int numFailed = testStats.get(1);
             int numNoData = testStats.get(2);
 
-            Data passBar = ReportViewUtils.createIntDataBar("  Passed\nCoverage", numPassed);
-            Data failBar = ReportViewUtils.createIntDataBar("  Failed\nCoverage", numFailed);
-            Data noBar = ReportViewUtils.createIntDataBar("No Test", numNoData);
+            var passBar = ReportViewUtils.createIntDataBar("  Passed\nCoverage", numPassed);
+            var failBar = ReportViewUtils.createIntDataBar("  Failed\nCoverage", numFailed);
+            var noBar = ReportViewUtils.createIntDataBar("No Test", numNoData);
 
             reqStat.getData().add(passBar);
             reqStat.getData().add(failBar);
@@ -352,7 +351,7 @@ public class ReportObjectiveViewHandlerNew {
                 || currentObjId.equals("A4-4")
                 || currentObjId.equals("A4-5")
                 || currentObjId.equals("A4-6")) {
-            XYChart.Series reqStat = new XYChart.Series();
+            var reqStat = new XYChart.Series<String,Integer>();
 
             List<Integer> testStats = LogicUtils.getRequirementLogStatus(reqList);
 
@@ -360,9 +359,9 @@ public class ReportObjectiveViewHandlerNew {
             int numFailed = testStats.get(1);
             int numNoData = testStats.get(2);
 
-            Data passBar = ReportViewUtils.createIntDataBar("Passed", numPassed);
-            Data failBar = ReportViewUtils.createIntDataBar("Failed", numFailed);
-            Data noBar = ReportViewUtils.createIntDataBar("No Log", numNoData);
+            var passBar = ReportViewUtils.createIntDataBar("Passed", numPassed);
+            var failBar = ReportViewUtils.createIntDataBar("Failed", numFailed);
+            var noBar = ReportViewUtils.createIntDataBar("No Log", numNoData);
 
             reqStat.getData().add(passBar);
             reqStat.getData().add(failBar);
@@ -398,11 +397,11 @@ public class ReportObjectiveViewHandlerNew {
         yAxisTstChart.setDisable(false);
 
         // to store the highest value for scaling
-        int high = -1;
+        //int high = -1;
 
         // TODO: write logic for other objectives
         if (currentObjId.equals("A7-3") || currentObjId.equals("A7-4")) {
-            XYChart.Series tstStat = new XYChart.Series();
+            var tstStat = new XYChart.Series<String,Integer>();
 
             int numPassed = 0;
             int numFailed = 0;
@@ -419,8 +418,8 @@ public class ReportObjectiveViewHandlerNew {
                 }
             }
 
-            Data passBar = ReportViewUtils.createIntDataBar("Passed", numPassed);
-            Data failBar = ReportViewUtils.createIntDataBar("Failed", numFailed);
+            var passBar = ReportViewUtils.createIntDataBar("Passed", numPassed);
+            var failBar = ReportViewUtils.createIntDataBar("Failed", numFailed);
 
             tstStat.getData().add(passBar);
             tstStat.getData().add(failBar);
@@ -444,7 +443,7 @@ public class ReportObjectiveViewHandlerNew {
 
         // TODO: write logic for other objectives
         if (currentObjId.equals("A7-1")) {
-            XYChart.Series tstStat = new XYChart.Series();
+            var tstStat = new XYChart.Series<String,Integer>();
 
             List<Integer> testStats = LogicUtils.getTestLogStatus(tstList);
 
@@ -452,9 +451,9 @@ public class ReportObjectiveViewHandlerNew {
             int numFailed = testStats.get(1);
             int numNoData = testStats.get(2);
 
-            Data passBar = ReportViewUtils.createIntDataBar("Passed", numPassed);
-            Data failBar = ReportViewUtils.createIntDataBar("Failed", numFailed);
-            Data noBar = ReportViewUtils.createIntDataBar("No Log", numNoData);
+            var passBar = ReportViewUtils.createIntDataBar("Passed", numPassed);
+            var failBar = ReportViewUtils.createIntDataBar("Failed", numFailed);
+            var noBar = ReportViewUtils.createIntDataBar("No Log", numNoData);
 
             tstStat.getData().add(passBar);
             tstStat.getData().add(failBar);

@@ -47,8 +47,6 @@ import org.apache.commons.io.FileUtils;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.internal.resources.*;
-import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -94,7 +92,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
             return -1;
         }
 
-        HashMap<String, Object> yamlMap = (HashMap) oYaml;
+        HashMap<String, Object> yamlMap = (HashMap<String, Object>) oYaml;
 
         if (!yamlMap.containsKey("files")) {
             RackConsole.getConsole()
@@ -156,7 +154,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
             return -1;
         }
 
-        HashMap<String, Object> yamlMap = (HashMap) oYaml;
+        var yamlMap = (HashMap<String, Object>) oYaml;
 
         if (!yamlMap.containsKey("ingestion-steps")) {
             RackConsole.getConsole().warning(dir + "/import.yaml contains no ingestion step, done");
@@ -182,9 +180,9 @@ public class IngestInstanceDataHandler extends AbstractHandler {
         }
 
         if (yamlMap.containsKey("extra-data-graphs")) {
-            Object oGraphs = yamlMap.get("extra-data-graphs");
+            var oGraphs = yamlMap.get("extra-data-graphs");
             if (oGraphs != null && oGraphs instanceof List) {
-                dataGraphs = ((List) oGraphs);
+                dataGraphs = ((List<String>) oGraphs);
             }
         }
 
@@ -422,7 +420,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
             return -1;
         }
 
-        HashMap<String, Object> yamlMap = (HashMap) oYaml;
+        var yamlMap = (HashMap<String, Object>) oYaml;
 
         if (!yamlMap.containsKey("steps")) {
             RackConsole.getConsole()

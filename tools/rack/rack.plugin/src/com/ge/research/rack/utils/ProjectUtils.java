@@ -220,9 +220,9 @@ public class ProjectUtils {
         return true;
     }
 
-    private HashMap<String, String> nodegroupMapping = new HashMap<>();
+//    private HashMap<String, String> nodegroupMapping = new HashMap<>();
 
-    private String selectedProject = "";
+//    private String selectedProject = "";
 
     public static void createInstanceDataFolder(String projectPath) {}
 

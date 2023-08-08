@@ -39,15 +39,13 @@ import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.console.MessageConsoleStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class RackConsole extends MessageConsole {
     private static boolean setup = false;
     private static RackConsole console;
     private static MessageConsoleStream stream;
     private static MessageConsoleStream streamErr;
-    private static final Logger logger = LoggerFactory.getLogger(RackConsole.class);
+//    private static final Logger logger = LoggerFactory.getLogger(RackConsole.class);
 
     public static RackConsole getConsole() {
         if (setup == false) {

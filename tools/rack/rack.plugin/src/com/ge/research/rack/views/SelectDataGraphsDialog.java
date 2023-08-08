@@ -66,7 +66,8 @@ import java.util.ArrayList;
 
 /** Author: Paul Meng */
 public class SelectDataGraphsDialog extends Dialog {
-    private Font font, boldFont;
+    private Font font;
+    //private Font boldFont;
     public static String nodegroupId = "";
     private static Table table;
 
@@ -74,7 +75,7 @@ public class SelectDataGraphsDialog extends Dialog {
         super(parent);
         nodegroupId = nodegroup;
         font = new Font(null, "Helvetica", 12, SWT.NORMAL);
-        boldFont = new Font(null, "Helvetica", 12, SWT.BOLD);
+        //boldFont = new Font(null, "Helvetica", 12, SWT.BOLD);
     }
 
     @Override

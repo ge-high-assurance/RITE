@@ -88,7 +88,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
             "The selected item is not a valid ingestion package project";
 
     private static final String GENERATING_PROJECT = "Compressing ingestion package: %s";
-    private static final String GENERATED_PROJECT = "Compressed ingestion package: %s";
+    //private static final String GENERATED_PROJECT = "Compressed ingestion package: %s";
 
     private static final SimpleDateFormat PACKAGE_NAME_FORMAT =
             new SimpleDateFormat("'%s-'yyyyMMddHHmmss'.zip'");

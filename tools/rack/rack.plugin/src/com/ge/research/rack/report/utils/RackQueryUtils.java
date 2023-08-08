@@ -368,7 +368,7 @@ public class RackQueryUtils {
         try (BufferedReader reader = new BufferedReader(new StringReader(cleanString))) {
 
             // read the second line from the csv file
-            String columnHeadersLine = reader.readLine();
+            //String columnHeadersLine = reader.readLine();
 
             // read the second line
             String csvLine = reader.readLine();
