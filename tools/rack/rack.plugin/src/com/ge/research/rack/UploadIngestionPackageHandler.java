@@ -38,9 +38,9 @@ import com.ge.research.rack.utils.RackManifestIngestionBuilderUtil.IngestionBuil
 import com.ge.research.rack.views.RackPreferencePage;
 import com.ge.research.semtk.services.client.RestClientConfig;
 import com.ge.research.semtk.services.client.UtilityClient;
+import com.google.common.base.Strings;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.jena.ext.com.google.common.base.Strings;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;

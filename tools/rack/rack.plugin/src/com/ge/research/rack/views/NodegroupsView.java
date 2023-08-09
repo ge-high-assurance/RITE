@@ -122,7 +122,7 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
         final ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
         final Composite composite = new Composite(sc, SWT.NONE);
         sc.setContent(composite);
-        
+
         GridLayout layout = new GridLayout();
         layout.numColumns = 1;
         layout.verticalSpacing = 10;
