@@ -130,6 +130,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
 
         if (eventResourcePaths.length != 1) {
             RackConsole.getConsole().error(NO_SELECTED_PROJECT);
+            RackConsole.getConsole().activate();
             return null;
         }
 
@@ -141,12 +142,14 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
 
         if (selectedProject.isEmpty()) {
             RackConsole.getConsole().error(NO_SELECTED_PROJECT);
+            RackConsole.getConsole().activate();
         }
 
         try {
 
             if (shouldUpload && !startRun()) {
                 RackConsole.getConsole().error(UPLOAD_DEBOUNCED);
+                RackConsole.getConsole().activate();
                 return null;
             }
 
@@ -185,6 +188,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
         } catch (final Exception e) {
 
             RackConsole.getConsole().error(e.getMessage());
+            RackConsole.getConsole().activate();
             endRun();
         }
 
