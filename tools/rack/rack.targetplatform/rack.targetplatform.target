@@ -35,6 +35,7 @@
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="com.google.gson" version="0.0.0"/>
+      <unit id="com.google.guava" version="0.0.0"/>
       <unit id="com.google.inject" version="0.0.0"/>
       <unit id="org.apache.commons.collections" version="0.0.0"/>
       <unit id="org.apache.commons.csv" version="0.0.0"/>
