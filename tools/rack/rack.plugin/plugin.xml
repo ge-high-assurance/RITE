@@ -332,7 +332,7 @@
 
     <extension point="org.eclipse.ui.menus">
         <menuContribution
-            locationURI="popup:org.eclipse.ui.popup.any">
+            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=export">
             <command commandId="rackplugin.commands.ingestInstanceData"
                 name="Manifest Import">
                 <enabledWhen>
