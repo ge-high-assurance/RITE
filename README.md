@@ -1,7 +1,8 @@
 
 # RITE: **R**ACK **I**ntegrated Cer**T**ification **E**nvironment
 
-![rite_logo](https://user-images.githubusercontent.com/66636651/223227669-b9ce7bf7-ae01-4974-9e29-2c3ceb0c64b6.png)
+![rite_logo](https://github.com/ge-high-assurance/RITE/assets/66636651/0a1dd64d-9314-4215-8f64-561ff05b1f4c)
+
 
 RITE is a research-grade [Eclipse](https://www.eclipse.org/ide/)-based IDE that seamlessly connects with [RACK (Rapid Assurance Curation Kit)](https://github.com/ge-high-assurance/RACK), a research-grade database which uses a structured semantic data model tuned to the domain of the DARPA ARCOS (Automated Rapid Certification Of Software) program. 
 RITE provides an interactive GUI that allows for easy ingestion of data into RACK, [SADL (Semantic Application Design Language)](https://github.com/SemanticApplicationDesignLanguage/sadl) model development, test data development, ingestion package creation, ontology analysis, querying using nodegroups, etc.
