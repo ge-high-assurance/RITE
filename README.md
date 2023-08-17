@@ -8,24 +8,21 @@ RITE is a research-grade [Eclipse](https://www.eclipse.org/ide/)-based IDE that 
 RITE provides an interactive GUI that allows for easy ingestion of data into RACK, [SADL (Semantic Application Design Language)](https://github.com/SemanticApplicationDesignLanguage/sadl) model development, test data development, ingestion package creation, ontology analysis, querying using nodegroups, etc.
 Besides supporting basic data modeling and curation features, RITE also provides functionalities and GUI-support for easy generation of assurance artifacts and compliance reports to aid in system certification.   
 
-## Latest Feature List
+## Download the latest release [here](https://github.com/ge-high-assurance/RITE/releases) 
 
-1. [Creating Manifest-Based Ingestion Packages for RACK](https://github.com/ge-high-assurance/RITE/wiki/RITE-Tutorial#2-creating-a-manifest-based-ingestion-package-for-rack)
-2. [Ingesting Well-Formed Ingestion Packages into RACK](https://github.com/ge-high-assurance/RITE/wiki/RITE-Tutorial#3-ingesting-a-well-formed-ingestion-package-into-rack)
-3. [Viewing Information about the Ontology and Nodegroups Stored on RACK](https://github.com/ge-high-assurance/RITE/wiki/RITE-Tutorial#4-viewing-information-about-the-ontology-and-nodegroups-stored-on-rack)
-4. [Quickly Creating Instance Data for the Ontology Currently Loaded on RACK](https://github.com/ge-high-assurance/RITE/wiki/RITE-Tutorial#5-quickly-creating-instance-data-for-the-ontology-currently-loaded-on-rack)
-5. [Executing Nodegroups Currently Loaded on RACK and Viewing Results](https://github.com/ge-high-assurance/RITE/wiki/RITE-Tutorial#6-executing-nodegroups-currently-loaded-on-rack-and-viewing-results)
-6. [Generating Ingestion Nodegroups for the Ontology Currently Loaded on RACK](https://github.com/ge-high-assurance/RITE/wiki/RITE-Tutorial#7-generating-ingestion-nodegroups-for-the-ontology-currently-loaded-on-rack)
-7. [SADL Model Development](https://github.com/ge-high-assurance/RITE/wiki/RITE-Tutorial#8-sadl-model-development-in-rite)
-8. [Create Modular Ingestion Packages](https://github.com/ge-high-assurance/RITE/wiki/Modular-Ingestion-Package-Creation-using-Regenerate-Manifest)
-9. [Automatically perform Assurance case generation in GSN](https://github.com/ge-high-assurance/RITE/wiki/Assurance-Case-Generation-Capabilities-in-GSN)
+## Latest Feature List ([RITE 0.7.0](https://github.com/ge-high-assurance/RITE/releases/tag/v0.7.0))
 
-## Getting Started with RITE
-### A detailed tutorial for getting started with RITE can be found [here](https://github.com/ge-high-assurance/RITE/wiki/RITE-Tutorial).
-### Video walkthrough of RITE ingestion features can be downloaded [here](https://github.com/ge-high-assurance/RITE/wiki/videos/RITE-Ingestion-Features-Walkthrough.mp4) or viewed in parts [here](https://github.com/ge-high-assurance/RITE/wiki/RITE-Ingestion-Features-Video-Walkthrough)
-### Video walkthrough of RITE modular ingestion package creation can be downloaded [here](https://github.com/ge-high-assurance/RITE/wiki/videos/RITE-Regenerate-Manifest.mp4) or viewed in parts [here](https://github.com/ge-high-assurance/RITE/wiki/Modular-Ingestion-Package-Creation-using-Regenerate-Manifest)
-### Video walkthrough of Turnstile ingestion using RITE can be downloaded [here](https://github.com/ge-high-assurance/RITE/wiki/videos/RITE-Ingestion-Turnstile-Example-Wellformed.mp4) and [here](https://github.com/ge-high-assurance/RITE/wiki/videos/RITE-Ingestion-Turnstile-Example-WithErrors.mp4) or viewed in parts [here](https://github.com/ge-high-assurance/RITE/wiki/Ingest-Turnstile-Example-Package-Video-Walkthrough)
+1. [Creating Monolithic Ingestion Packages](https://github.com/ge-high-assurance/RITE/wiki/Monolithic-Ingestion-Packages)
+2. [Creating Modular Ingestion Packages](https://github.com/ge-high-assurance/RITE/wiki/Modular-Ingestion-Packages)
+4. [Uploading Ingestion Packages into RACK](https://github.com/ge-high-assurance/RITE/wiki/RACK-Ingestion)
+4. [Viewing Information about the Ontology and Nodegroups on RACK](https://github.com/ge-high-assurance/RITE/wiki/Ontology-and-Nodegroup-Information)
+5. [Executing Nodegroups Stored on RACK](https://github.com/ge-high-assurance/RITE/wiki/Executing-Nodegroups)
+6. [Creating Instance Data for Testing the Ontology on RACK](https://github.com/ge-high-assurance/RITE/wiki/Creating-Instance-Data)
+7. [Generating Ingestion Nodegroups for the Ontology on RACK](https://github.com/ge-high-assurance/RITE/wiki/Generating-Ingestion-Nodegroups)
+8. [Selectively Clearing Ontology and/or Data Graphs on RACK](https://github.com/ge-high-assurance/RITE/wiki/Clearing-Contents-from-RACK)
+9. [Automatically Generating GSN Assurance Cases using the Evidence on RACK](https://github.com/ge-high-assurance/RITE/wiki/GSN-Assurance-Case-Generation)
 
+A detailed tutorial for using RITE with additional information can be found in the [RITE WIKI](https://github.com/ge-high-assurance/RITE/wiki). Contact the RITE Development Team for more details.
 
 <hr>
 Copyright (c) 2021-2023 General Electric Company, Galois, Inc.
