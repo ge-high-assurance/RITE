@@ -71,15 +71,13 @@ public class RackConsole extends MessageConsole {
     public void print(String message) {
         Color black = new Color(0, 0, 0, 255);
         stream.setColor(black);
-        stream.setColor(black);
-        stream.print("\nINFO: " + message);
+        stream.print("\nINFO:  " + message);
         // System.out.print(message);
         // logger.info(message);
     }
 
     public void printEcho(String message) {
         Color black = new Color(0, 0, 0, 255);
-        stream.setColor(black);
         stream.setColor(black);
         stream.print("\n" + message);
         // System.out.print(message);
@@ -89,8 +87,7 @@ public class RackConsole extends MessageConsole {
     public void println(String message) {
         Color black = new Color(0, 0, 0, 255);
         stream.setColor(black);
-        stream.setColor(black);
-        stream.print("INFO: " + message + "\n");
+        stream.print("INFO:  " + message + "\n");
         // logger.info(message);
         // System.out.println("INFO: " + message);
     }
