@@ -39,6 +39,7 @@ import com.ge.research.rack.utils.RackConsole;
 
 import org.apache.commons.io.*;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -162,8 +163,9 @@ public class NodegroupActionFactory {
             public void runWithEvent(Event event) {
                 // nodegroups
                 ArrayList<String> selection = view.getSelectedNodegroups();
-                if (selection.size() == 0) {
-                    return;
+                if (selection.size() != 1) {
+                	MessageDialog.openError(null, "RITE Error", "Query action is permitted only for exactly one selection");
+                	return;
                 }
                 String queryNodegroup = selection.get(0);
                 SelectDataGraphsDialog dialog =
