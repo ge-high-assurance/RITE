@@ -130,5 +130,7 @@ public class RackConsole extends MessageConsole {
         stream.print("\nWARNING: " + message);
         // logger.warn(message);
         // System.out.println("WARNING: " + message);
+        
     }
+    
 }

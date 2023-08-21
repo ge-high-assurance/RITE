@@ -145,7 +145,7 @@ public class SelectDataGraphsDialog extends Dialog {
                             NodeGroupExecutionClient client = ConnectionUtil.getNGEClient();
                             SparqlConnection conn =
                                     ConnectionUtil.getSparqlConnection(
-                                            dataGraphs.get(0), dataGraphs);
+                                            RackPreferencePage.getDefaultModelGraph(),dataGraphs.get(0), dataGraphs);
                             RackConsole.getConsole()
                                     .print("Querying nodegroup: " + nodegroupId + " ... ");
                             // run a query from the store by id
