@@ -138,11 +138,10 @@ public class ConnectionUtil {
         return new NodeGroupStoreRestClient(ngConfig);
     }
 
-    public static SparqlConnection getSparqlConnection(String dataGraph, List<String> dataGraphs) {
+    public static SparqlConnection getSparqlConnection(String modelGraph, String dataGraph, List<String> dataGraphs) {
 
         String connType = RackPreferencePage.getConnType();
         String connURL = RackPreferencePage.getConnURL();
-        String defaultModelGraph = RackPreferencePage.getDefaultModelGraph();
         String connDataGraph =
                 (dataGraph == null || dataGraph.isEmpty())
                         ? RackPreferencePage.getDefaultDataGraph()
@@ -153,7 +152,7 @@ public class ConnectionUtil {
                     SparqlEndpointInterface.getInstance(
                             connType,
                             connURL,
-                            defaultModelGraph,
+                            modelGraph,
                             RackPreferencePage.getUser(),
                             RackPreferencePage.getPassword()); // Connection
             SparqlEndpointInterface dataSei =
@@ -222,6 +221,30 @@ public class ConnectionUtil {
                             "Unable to connect to Sparql, please check configuration in RACK preference page");
         }
         return conn;
+    }
+
+    public static SparqlQueryClient getOntologyUploadClient(String dataGraph) throws Exception {
+        String protocol = RackPreferencePage.getProtocol();
+        String server = RackPreferencePage.getServer();
+        int port = Integer.parseInt(RackPreferencePage.getQueryPort());
+        String sparqlQueryEndPoint = "/sparqlQueryService/uploadOwl";
+        String connURL = RackPreferencePage.getConnURL();
+        String connType = RackPreferencePage.getConnType();
+        String user = RackPreferencePage.getUser();
+        String password = RackPreferencePage.getPassword();
+        SparqlQueryAuthClientConfig qAuthConfig =
+                new SparqlQueryAuthClientConfig(
+                        protocol,
+                        server,
+                        port,
+                        sparqlQueryEndPoint,
+                        connURL,
+                        connType,
+                        dataGraph,
+                        user,
+                        password);
+
+        return new SparqlQueryClient(qAuthConfig);
     }
 
     public static SparqlQueryClient getOntologyUploadClient() throws Exception {

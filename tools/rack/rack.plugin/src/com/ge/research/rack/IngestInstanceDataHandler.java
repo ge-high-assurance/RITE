@@ -86,6 +86,8 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 	private static String MANIFEST_CANCELED = "Manifest Ingestion Stopped";
 	private static String MANIFEST_FAILED = "Manifest Ingestion Failed";
 	private static String manifestPath = "";
+	private static List<String> dGraphs = new ArrayList<>();
+	private static List<String> mGraphs = new ArrayList<>();
 
 	private static enum IngestionStatus {
 		FAILED, CANCELED, DONE
@@ -138,8 +140,8 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 				return IngestionStatus.FAILED;
 			}
 			try {
-				RackConsole.getConsole().print("Uploading owl file " + owlFile.getName() + "... ");
-				SparqlQueryClient qAuthClient = ConnectionUtil.getOntologyUploadClient();
+				RackConsole.getConsole().print("Uploading owl file " + owlFile.getName() + " to " + mGraphs.get(0) + " ... ");
+				SparqlQueryClient qAuthClient = ConnectionUtil.getOntologyUploadClient(mGraphs.get(0));
 				qAuthClient.uploadOwl(owlFile);
 				RackConsole.getConsole().printOK();
 			} catch (Exception e) {
@@ -194,7 +196,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 			if (oDataGraph instanceof String && !((String) oDataGraph).isEmpty()) {
 				dataGraph = (String) oDataGraph;
 			} else {
-				dataGraph = RackPreferencePage.getDefaultDataGraph();
+				dataGraph = dGraphs.get(0);
 			}
 		}
 
@@ -288,7 +290,8 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 					continue;
 				}
 				try {
-					SparqlQueryClient qAuthClient = ConnectionUtil.getOntologyUploadClient();
+					RackConsole.getConsole().print("Uploading owl file " + owlFile + " to " + dataGraph + " ... ");
+					SparqlQueryClient qAuthClient = ConnectionUtil.getOntologyUploadClient(dataGraph);
 					qAuthClient.uploadOwl(owl);
 				} catch (Exception e) {
 					RackConsole.getConsole().error(
@@ -391,6 +394,9 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 
 	private IngestionStatus uploadDataFromManifestYAML(String yamlPath, IProgressMonitor monitor) throws Exception {
 
+		dGraphs.clear();
+		mGraphs.clear();
+		RackConsole.getConsole().clearConsole();
 		if (monitor.isCanceled()) {
 			return IngestionStatus.CANCELED;
 		}
@@ -410,6 +416,33 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 			return IngestionStatus.FAILED;
 		}
 		HashMap<String, Object> yamlMap = (HashMap) oYaml;
+
+		// read footprint
+
+		if (yamlMap.containsKey("footprint")) {
+
+			Object oFootprint = yamlMap.get("footprint");
+			if (oFootprint instanceof Map) {
+				Map oFootprintMap = (Map) oFootprint;
+				if (!oFootprintMap.containsKey("data-graphs")) {
+					dGraphs.add(RackPreferencePage.getDefaultDataGraph());
+				} else {
+					dGraphs = (List<String>) oFootprintMap.get("data-graphs");
+				}
+
+				if (!oFootprintMap.containsKey("model-graphs")) {
+					mGraphs.add(RackPreferencePage.getDefaultModelGraph());
+				} else {
+					mGraphs = (List<String>) oFootprintMap.get("model-graphs");
+				}
+			}
+
+		}
+
+		else {
+			dGraphs.add(RackPreferencePage.getDefaultDataGraph());
+			mGraphs.add(RackPreferencePage.getDefaultModelGraph());
+		}
 
 		if (!yamlMap.containsKey("steps")) {
 			RackConsole.getConsole().warning(dir + "/" + file.getName() + " contains no ingestion step, done");
@@ -542,15 +575,17 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 				}
 			}
 			String sCSV = tab.toCSVString();
-			RackConsole.getConsole().print("Uploading " + ingestionId + "... ");
+			RackConsole.getConsole().print("Uploading CSV at " + path + " as class " + ingestionId + "... ");
 
 			if (bUriIngestion == false) {
 				client.dispatchIngestFromCsvStringsByIdSync(ingestionId, sCSV,
-						ConnectionUtil.getSparqlConnection(dataGraph, dataGraphs));
+						ConnectionUtil.getSparqlConnection(mGraphs.get(0), dataGraph, dataGraphs));
 
 			} else {
 				client.dispatchIngestFromCsvStringsByClassTemplateSync(ingestionId, "identifier", sCSV,
-						ConnectionUtil.getSparqlConnection(dataGraph, dataGraphs));
+						ConnectionUtil.getSparqlConnection(mGraphs.get(0), dataGraph, dataGraphs));
+			
+				
 			}
 			RackConsole.getConsole().printOK();
 
