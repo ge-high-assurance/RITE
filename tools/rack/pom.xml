@@ -13,7 +13,7 @@
   <modules>
     <module>rack.feature</module>
     <module>rack.plugin</module>
-    <module>rack.product</module>
+    <!--  <module>rack.product</module> -->
     <module>rack.targetplatform</module>
     <!-- <module>rack.test</module> -->
     <module>rack.updatesite</module>

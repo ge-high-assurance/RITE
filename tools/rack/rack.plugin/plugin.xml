@@ -219,14 +219,12 @@
                 <separator name="separator2" visible="true">
                 </separator>
 
-                <!-- <command commandId="rackplugin.commands.gsnCommand" id="rackplugin.menus.loadGsn"
-                    label="Show GSN Assurance Case" mnemonic="S"> </command> -->
-
                 <!-- <command commandId="rackplugin.commands.loadQueriesCommand" id="rackplugin.menus.loadQueries"
-                    label="Load Query Nodegroups from Disk" mnemonic="S"> </command> <command
-                    commandId="rackplugin.commands.reportsCommand" id="rackplugin.menus.reports"
-                    label="DO-178C Compliance Report" mnemonic="S" style="push"> </command> -->
-
+                    label="Load Query Nodegroups from Disk" mnemonic="S"> </command> -->
+                    
+                <command commandId="rackplugin.commands.reportsCommand" id="rackplugin.menus.reports"
+                    label="DO-178C Compliance Report" mnemonic="S" style="push"> </command>
+                    
                 <!-- For auto Gsn -->
                 <command commandId="rackplugin.commands.autoGsnCommand"
                     id="rackplugin.menus.autoGsn" label="Automatic GSN Inference"

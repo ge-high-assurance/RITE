@@ -29,24 +29,77 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.ge.research.rack;
-
-import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
+package com.ge.research.rack.do178c.structures;
 
 /**
  * @author Saswata Paul
  */
-public class ReportButtonHandler extends AbstractHandler {
+public class DataItem {
 
-    @Override
-    public Object execute(ExecutionEvent event) throws ExecutionException {
-    	
-    	System.out.println("Here");
-        // Launch the AutoGsnMainView
-        JavaFXAppLaunchManager.reportMainViewLaunch();
+    private String format;
+    private String id;
+    private String description;
+    private String content;
+    private String objectiveId; // the DO178C objective the dataitem is an output of
 
-        return null;
+    /**
+     * @return the format
+     */
+    public String getFormat() {
+        return format;
+    }
+    /**
+     * @param format the format to set
+     */
+    public void setFormat(String format) {
+        this.format = format;
+    }
+    /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
+    }
+    /**
+     * @param id the id to set
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    /**
+     * @return the content
+     */
+    public String getContent() {
+        return content;
+    }
+    /**
+     * @param content the content to set
+     */
+    public void setContent(String content) {
+        this.content = content;
+    }
+    /**
+     * @return the objectiveId
+     */
+    public String getObjectiveId() {
+        return objectiveId;
+    }
+    /**
+     * @param objectiveId the objectiveId to set
+     */
+    public void setObjectiveId(String objectiveId) {
+        this.objectiveId = objectiveId;
     }
 }

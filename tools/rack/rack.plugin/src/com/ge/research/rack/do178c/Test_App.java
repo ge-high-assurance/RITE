@@ -29,24 +29,23 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.ge.research.rack;
+package com.ge.research.rack.do178c;
 
-import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
+import com.ge.research.rack.do178c.oem.DataProcessor;
 
 /**
+ * FOR TESTING THE BACKEND FUNCTIONS DURING DEVELOPMENT
+ *
  * @author Saswata Paul
  */
-public class ReportButtonHandler extends AbstractHandler {
+public class Test_App {
 
-    @Override
-    public Object execute(ExecutionEvent event) throws ExecutionException {
-    	
-    	System.out.println("Here");
-        // Launch the AutoGsnMainView
-        JavaFXAppLaunchManager.reportMainViewLaunch();
-
-        return null;
-    }
+//    public static void main(String[] args) {
+//
+//        String tempDir = "C:\\Users\\212807042\\Desktop\\RACK_tests\\temp_results\\";
+//
+//        DataProcessor obj = new DataProcessor();
+//
+//        obj.getPSACData(tempDir);
+//    }
 }

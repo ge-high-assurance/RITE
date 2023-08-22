@@ -33,7 +33,7 @@ package com.ge.research.rack;
 
 import com.ge.research.rack.autoGsn.viewManagers.AutoGsnViewsManager;
 import com.ge.research.rack.autoGsn.viewManagers.GsnTreeViewManager;
-import com.ge.research.rack.report.viewManagers.ReportViewsManager;
+import com.ge.research.rack.do178c.viewManagers.ReportViewsManager;
 import com.ge.research.rack.views.RibView;
 
 import javafx.application.Application;

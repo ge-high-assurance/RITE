@@ -40,7 +40,7 @@ import com.ge.research.rack.autoGsn.utils.AutoGsnGuiUtils;
 import com.ge.research.rack.autoGsn.utils.GsnNodeUtils;
 import com.ge.research.rack.autoGsn.viewManagers.AutoGsnViewsManager;
 import com.ge.research.rack.autoGsn.viewManagers.GsnTreeViewManager;
-import com.ge.research.rack.report.utils.ReportViewUtils;
+import com.ge.research.rack.do178c.utils.ReportViewUtils;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
