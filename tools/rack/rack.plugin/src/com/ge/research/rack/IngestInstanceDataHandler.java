@@ -72,7 +72,7 @@ import java.util.Map;
 
 public class IngestInstanceDataHandler extends AbstractHandler {
     private static String manifestPath = "";
-
+    private static volatile boolean isRunning = false;
     private int uploadModelFromYAML(String yamlPath, IProgressMonitor monitor) throws Exception {
         if (monitor.isCanceled()) {
             return -1;
@@ -396,8 +396,9 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 
     private int uploadDataFromManifestYAML(String yamlPath, IProgressMonitor monitor)
             throws Exception {
-
-        if (monitor.isCanceled()) {
+    	
+    
+    	if (monitor.isCanceled()) {
             return -1;
         }
         File file = new File(yamlPath);
@@ -419,6 +420,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                                     + "/"
                                     + file.getName()
                                     + ", please check");
+          
             return -1;
         }
 
@@ -427,6 +429,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
         if (!yamlMap.containsKey("steps")) {
             RackConsole.getConsole()
                     .warning(dir + "/" + file.getName() + " contains no ingestion step, done");
+           
             return -1;
         }
 
@@ -523,18 +526,29 @@ public class IngestInstanceDataHandler extends AbstractHandler {
         if (monitor.isCanceled()) {
             return Status.CANCEL_STATUS;
         }
+    	
+       
+        
         File ingestionYaml = new File(manifestPath);
         if (!ingestionYaml.exists()) {
             RackConsole.getConsole().warning("No manifest.yaml found, nothing to ingest");
             return Status.CANCEL_STATUS;
         }
         try {
+        	 if(!isRunning()) {
+         		setRunning(true);
+         	}
+         	else {
+         		RackConsole.getConsole().error("Another manifest imnport in progress");
+         	}
             uploadDataFromManifestYAML(manifestPath, monitor);
             monitor.worked(100);
+           
         } catch (Exception e) {
             RackConsole.getConsole().error("Ingestion failed using manifest yaml");
+           
         }
-
+        setRunning(false);
         return Status.OK_STATUS;
     }
 
@@ -639,4 +653,13 @@ public class IngestInstanceDataHandler extends AbstractHandler {
         job.schedule();
         return null;
     }
+    
+    private static synchronized void setRunning(boolean status) {
+    	isRunning = status;
+    }
+    
+    public static boolean isRunning() {
+    	  return isRunning;
+    }
+    
 }
