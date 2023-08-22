@@ -45,6 +45,7 @@ import org.eclipse.jface.action.*;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FormAttachment;
@@ -58,6 +59,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -131,7 +133,7 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
         layout.verticalSpacing = 10;
         composite.setLayout(layout);
 
-        composite.setSize(1130 / 2, 600);
+//        composite.setSize(1130 / 2, 600);
 
         if (!ConnectionUtil.ping()) {
             return;
@@ -184,8 +186,7 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
                     }
                 });
 
-        /* Select All Button not supported in SWT table - float workaround */
-        final Composite floatContainer = new Composite(composite, SWT.BORDER);
+        final Composite floatContainer = new Composite(composite, SWT.NONE);
         floatContainer.setLayout(new FormLayout());
         final FormData tableFloatPosition = new FormData();
         tableFloatPosition.top = new FormAttachment(0);
@@ -195,7 +196,7 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
 
         table = new Table(floatContainer, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
         table.removeAll();
-        table.setSize(1130, 60);
+//        table.setSize(1130, 60);
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
         table.setHeaderBackground(display.getSystemColor(SWT.COLOR_TITLE_BACKGROUND_GRADIENT));
@@ -218,24 +219,32 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
         makeActions();
         hookContextMenu();
 
-        final TableColumn col1 = new TableColumn(table, SWT.CENTER);
-        col1.setText("Nodegroup ID"); // Accommodate select all button buffer
-        table.showColumn(col1);
+//        final TableColumn col1 = new TableColumn(table, SWT.CENTER);
+//        col1.setText("Nodegroup ID"); // Accommodate select all button buffer
+//        table.showColumn(col1);
 
-        Stream.of("Comments", "Creation Data", "Creator")
+        Stream.of("Nodegroup ID", "Comments", "Creation Data", "Creator")
                 .forEach(
                         header -> {
-                            final TableColumn col = new TableColumn(table, SWT.CENTER | SWT.WRAP);
+                            final TableColumn col = new TableColumn(table, SWT.LEFT);
 
                             col.setText(header);
                             table.showColumn(col);
                         });
 
         refreshNodegroupList();
+//        var listener = new SelectionAdapter() {
+//        	public void widgetSelected(SelectionEvent e) {
+//        		super.widgetSelected(e);
+//        		var sb = (ScrollBar)e.widget;
+//        		System.out.println("SB " + sb.getMinimum() + " " + sb.getMaximum() + " " + sb.getIncrement() + " " + sb.getThumb() + " " + sb.getPageIncrement());
+//        		sb = sb;
+//        	}
+//        };
+//        sc.getHorizontalBar().addSelectionListener(listener);
 
         // Initially show all columns for visibility / view reset
-        Arrays.stream(table.getColumns()).forEach(c -> c.setWidth(150));
-
+//        Arrays.stream(table.getColumns()).forEach(c -> c.setWidth(150));
         composite.pack();
     }
 
@@ -248,8 +257,8 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
                     .forEach(
                             row -> {
                                 final TableItem item = new TableItem(table, SWT.NONE);
-                                item.setData(row);
                                 row.remove(4); // Remove application data "semTK"
+                                item.setData(row);
                                 for (int j = 0; j < row.size(); j++) {
                                     item.setText(j, row.get(j));
                                 }
@@ -257,7 +266,8 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
 
             table.setEnabled(table.getItemCount() > 0);
             Arrays.stream(table.getColumns()).forEach(TableColumn::pack);
-            table.pack();
+//          table.getColumns()[1].setWidth(250);
+//            table.pack();
             topComposite.pack();
 
         } catch (final Exception e) {
