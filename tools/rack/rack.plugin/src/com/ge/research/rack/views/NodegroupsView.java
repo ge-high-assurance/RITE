@@ -48,6 +48,7 @@ import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
@@ -98,6 +99,8 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
     private Table table;
     private Button selectAllButton;
     private Composite topComposite;
+    private Composite composite;
+    private Composite floatContainer;
 
     public String getProjectPath() {
         return "";
@@ -124,16 +127,16 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
         final Display display = Display.getCurrent();
 
         final ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+        sc.setLayout(new FillLayout());
         this.topComposite = sc;
-        final Composite composite = new Composite(sc, SWT.NONE);
+        composite = new Composite(sc, SWT.NONE);
         sc.setContent(composite);
+        sc.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
         GridLayout layout = new GridLayout();
         layout.numColumns = 1;
         layout.verticalSpacing = 10;
         composite.setLayout(layout);
-
-//        composite.setSize(1130 / 2, 600);
 
         if (!ConnectionUtil.ping()) {
             return;
@@ -186,7 +189,7 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
                     }
                 });
 
-        final Composite floatContainer = new Composite(composite, SWT.NONE);
+        floatContainer = new Composite(composite, SWT.NONE);
         floatContainer.setLayout(new FormLayout());
         final FormData tableFloatPosition = new FormData();
         tableFloatPosition.top = new FormAttachment(0);
@@ -196,7 +199,6 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
 
         table = new Table(floatContainer, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
         table.removeAll();
-//        table.setSize(1130, 60);
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
         table.setHeaderBackground(display.getSystemColor(SWT.COLOR_TITLE_BACKGROUND_GRADIENT));
@@ -205,23 +207,9 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
 
         table.setFocus();
         table.setLayoutData(tableFloatPosition);
-//        table.addSelectionListener(new NodegroupSelectionListener());
-
-//        final FormData selectAllButtonPosition = new FormData();
-//        selectAllButtonPosition.left = new FormAttachment(table, 1, SWT.LEFT);
-//        selectAllButtonPosition.top = new FormAttachment(table, 2, SWT.TOP);
-//
-//        selectAllButton = new Button(floatContainer, SWT.CHECK);
-//        selectAllButton.setLayoutData(selectAllButtonPosition);
-//        selectAllButton.moveAbove(table);
-//        selectAllButton.addSelectionListener(new NodegroupSelectAllListener());
 
         makeActions();
         hookContextMenu();
-
-//        final TableColumn col1 = new TableColumn(table, SWT.CENTER);
-//        col1.setText("Nodegroup ID"); // Accommodate select all button buffer
-//        table.showColumn(col1);
 
         Stream.of("Nodegroup ID", "Comments", "Creation Data", "Creator")
                 .forEach(
@@ -233,19 +221,18 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
                         });
 
         refreshNodegroupList();
-//        var listener = new SelectionAdapter() {
-//        	public void widgetSelected(SelectionEvent e) {
-//        		super.widgetSelected(e);
-//        		var sb = (ScrollBar)e.widget;
-//        		System.out.println("SB " + sb.getMinimum() + " " + sb.getMaximum() + " " + sb.getIncrement() + " " + sb.getThumb() + " " + sb.getPageIncrement());
-//        		sb = sb;
-//        	}
-//        };
-//        sc.getHorizontalBar().addSelectionListener(listener);
 
         // Initially show all columns for visibility / view reset
 //        Arrays.stream(table.getColumns()).forEach(c -> c.setWidth(150));
-        composite.pack();
+
+        parent.pack();
+//        var cols = table.getColumns();
+//        String s = "WIDTH " + parent.getSize().x + " " + topComposite.getSize().x + " " + composite.getSize().x + " " + floatContainer.getSize().x + " " + table.getSize().x;
+//        for (var c: cols) s = s + " " + c.getWidth();
+//        var sb = topComposite.getHorizontalBar();
+//        s = s + " SB " + sb.getSelection() + " " + sb.getMinimum() + " " + sb.getMaximum() + " " + sb.getIncrement() + " " + sb.getPageIncrement() + " " + sb.getThumb();
+//        s = s;
+
     }
 
     private void refreshNodegroupList() {
@@ -266,8 +253,10 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
 
             table.setEnabled(table.getItemCount() > 0);
             Arrays.stream(table.getColumns()).forEach(TableColumn::pack);
-//          table.getColumns()[1].setWidth(250);
-//            table.pack();
+
+            table.pack();
+            floatContainer.pack();
+            composite.pack();
             topComposite.pack();
 
         } catch (final Exception e) {
@@ -349,13 +338,6 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
               .filter(d -> !d.isEmpty())
               .map(d -> (String) d.get(0))
               .collect(Collectors.toCollection(ArrayList::new));
-    	
-//        return Arrays.stream(table.getItems())
-//                .filter(ng -> ng.getChecked())
-//                .map(ng -> (List<?>) ng.getData())
-//                .filter(d -> !d.isEmpty())
-//                .map(d -> (String) d.get(0))
-//                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     private class DeleteSelectedNodeGroupsAction extends Action {
@@ -445,33 +427,4 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
         }
     }
 
-//    private class NodegroupSelectAllListener implements SelectionListener {
-//
-//        @Override
-//        public void widgetSelected(final SelectionEvent e) {
-//            if (null == table) {
-//                return;
-//            }
-//            final boolean selectAll = ((Button) e.getSource()).getSelection();
-//            Arrays.stream(table.getItems()).forEach(i -> i.setChecked(selectAll));
-//        }
-//
-//        @Override
-//        public void widgetDefaultSelected(final SelectionEvent e) {}
-//    }
-//
-//    private class NodegroupSelectionListener implements SelectionListener {
-//
-//        @Override
-//        public void widgetSelected(final SelectionEvent e) {
-//            if (null == selectAllButton) {
-//                return;
-//            }
-//            selectAllButton.setSelection(
-//                    Arrays.stream(table.getItems()).allMatch(p -> p.getChecked()));
-//        }
-//
-//        @Override
-//        public void widgetDefaultSelected(final SelectionEvent e) {}
-//    }
 }
