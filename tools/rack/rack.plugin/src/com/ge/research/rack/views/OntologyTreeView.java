@@ -40,6 +40,7 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.action.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Image;
@@ -390,20 +391,17 @@ public class OntologyTreeView extends ViewPart implements INodegroupView {
             if (!hasTriplesCount(graphInfo)) {
                 return;
             }
-            Composite mainComposite = new Composite(parent, SWT.NONE);
+            Composite scComposite = new ScrolledComposite(parent, SWT.H_SCROLL|SWT.V_SCROLL);
+            Composite mainComposite = new Composite(scComposite, SWT.NONE);
             mainComposite.setLayout(new FillLayout());
             Table table = new Table(mainComposite, SWT.NONE);
             table.setHeaderVisible(true);
             table.setLinesVisible(false);
             table.setFocus();
-            table.setSize(500, 500);
             TableColumn dataGraphHeader = new TableColumn(table, SWT.CENTER);
             dataGraphHeader.setText("Data graph");
-            dataGraphHeader.setWidth(300);
-            dataGraphHeader.pack();
             TableColumn numTriples = new TableColumn(table, SWT.CENTER);
             numTriples.setText("# Triples");
-            numTriples.pack();
             int numRows = graphInfo.getTable().getNumRows();
             for (int i = 0; i < numRows; i++) {
                 TableItem item = new TableItem(table, SWT.CENTER);
@@ -422,8 +420,11 @@ public class OntologyTreeView extends ViewPart implements INodegroupView {
                             parent.dispose();
                         }
                     });
+            numTriples.pack();
+            dataGraphHeader.pack();
             table.pack();
             mainComposite.pack();
+            scComposite.pack();
         } catch (Exception e) {
             RackConsole.getConsole().error("Unable to fetch data graphs on RACK");
         }
