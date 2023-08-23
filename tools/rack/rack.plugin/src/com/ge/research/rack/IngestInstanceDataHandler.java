@@ -182,6 +182,12 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 			Object oDataGraph = yamlMap.get("data-graph");
 			if (oDataGraph instanceof String && !((String) oDataGraph).isEmpty()) {
 				dataGraph = (String) oDataGraph;
+				//validate target graph against footprint
+				if(!dGraphs.contains(dataGraph)) {
+					RackConsole.getConsole().error("Specified target graph " + dataGraph + " not declared in footprint");
+					RackConsole.getConsole().error("YAML file: " + yamlPath);
+					return IngestionStatus.FAILED;
+				}
 			} else {
 				dataGraph = dGraphs.get(0);
 			}
