@@ -75,7 +75,7 @@ public class ClearRackDialog extends Dialog {
 	private static Table dataGraphsTable;
 	private static Button deleteAllNodegroupsBtn;
 	private static String DELETE_ALL_NODEGROUPS = "Delete all nodegroups";
-
+	private static String CLEAR_RACK_TITLE = "Clear Ontologies, Datagraphs or Nodegroups from RACK";
 	public ClearRackDialog(Shell parent, String nodegroup) {
 		super(parent);
 		nodegroupId = nodegroup;
@@ -87,7 +87,7 @@ public class ClearRackDialog extends Dialog {
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
 
-		shell.setText("Select Data Graphs: " + nodegroupId);
+		shell.setText(CLEAR_RACK_TITLE);
 		shell.setFont(font);
 	}
 
@@ -308,8 +308,8 @@ public class ClearRackDialog extends Dialog {
 			deleteAllNodegroupsBtn.setText(DELETE_ALL_NODEGROUPS);
 
 			TableColumn modelGraphHeader = new TableColumn(modelGraphsTable, SWT.CENTER);
-			modelGraphHeader.setText("Model graph");
-			modelGraphHeader.setWidth(600);
+			modelGraphHeader.setText("Model graphs");
+			modelGraphHeader.setWidth(300);
 			int numRows = graphInfo.getTable().getNumRows();
 			for (int i = 0; i < numRows; i++) {
 				TableItem item = new TableItem(modelGraphsTable, SWT.CENTER | SWT.CHECK);
@@ -321,10 +321,10 @@ public class ClearRackDialog extends Dialog {
 			}
 
 			TableColumn dataGraphHeader = new TableColumn(dataGraphsTable, SWT.CENTER);
-			dataGraphHeader.setText("Data graph");
-			dataGraphHeader.setWidth(600);
-			int numRows2 = graphInfo.getTable().getNumRows();
-			for (int i = 0; i < numRows2; i++) {
+			dataGraphHeader.setText("Data graphs");
+			dataGraphHeader.setWidth(300);
+			numRows = graphInfo.getTable().getNumRows();
+			for (int i = 0; i < numRows; i++) {
 				TableItem item = new TableItem(dataGraphsTable, SWT.CENTER | SWT.CHECK);
 				ArrayList<String> entry = graphInfo.getResults().getRow(i);
 				item.setText(0, entry.get(0));
@@ -339,7 +339,6 @@ public class ClearRackDialog extends Dialog {
 					parent.dispose();
 				}
 			});
-			modelGraphHeader.pack();
 			modelGraphsTable.pack();
 			dataGraphsTable.pack();
 			graphsComposite.pack();
