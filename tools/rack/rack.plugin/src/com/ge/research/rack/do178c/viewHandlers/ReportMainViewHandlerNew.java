@@ -39,8 +39,6 @@ import com.ge.research.rack.do178c.utils.PsacNodeUtils;
 import com.ge.research.rack.do178c.utils.ReportViewUtils;
 import com.ge.research.rack.do178c.viewManagers.ReportViewsManager;
 
-import java.util.ArrayList;
-import java.util.List;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,6 +55,9 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Saswata Paul

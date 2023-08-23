@@ -44,12 +44,14 @@ import com.ge.research.rack.do178c.utils.LogicUtils;
 import com.ge.research.rack.do178c.utils.PsacNodeUtils;
 import com.ge.research.rack.do178c.utils.RackQueryUtils;
 import com.ge.research.rack.utils.CSVUtil;
+
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import org.apache.commons.io.FileUtils;
 
 /**
  * @author Saswata Paul

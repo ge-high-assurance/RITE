@@ -31,15 +31,16 @@
  */
 package com.ge.research.rack.do178c.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.apache.commons.lang3.StringUtils;
-
 import com.ge.research.rack.do178c.structures.PsacNode;
 import com.ge.research.rack.do178c.structures.Requirement;
 import com.ge.research.rack.do178c.structures.ReviewLog;
 import com.ge.research.rack.do178c.structures.SwComponent;
 import com.ge.research.rack.do178c.structures.Test;
+
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Saswata Paul

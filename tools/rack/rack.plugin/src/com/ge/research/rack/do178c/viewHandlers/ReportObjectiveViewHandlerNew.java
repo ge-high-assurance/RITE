@@ -31,15 +31,13 @@
  */
 package com.ge.research.rack.do178c.viewHandlers;
 
-import java.util.List;
-
 import com.ge.research.rack.do178c.structures.DataItem;
 import com.ge.research.rack.do178c.structures.PsacNode;
+import com.ge.research.rack.do178c.structures.PsacNode.Activity;
 import com.ge.research.rack.do178c.structures.Requirement;
 import com.ge.research.rack.do178c.structures.ReviewLog;
 import com.ge.research.rack.do178c.structures.SwComponent;
 import com.ge.research.rack.do178c.structures.Test;
-import com.ge.research.rack.do178c.structures.PsacNode.Activity;
 import com.ge.research.rack.do178c.utils.LogicUtils;
 import com.ge.research.rack.do178c.utils.PsacNodeUtils;
 import com.ge.research.rack.do178c.utils.ReportViewUtils;
@@ -64,6 +62,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+
+import java.util.List;
 
 /**
  * @author Saswata Paul
@@ -1628,8 +1628,7 @@ public class ReportObjectiveViewHandlerNew {
     private void btnTabAction(ActionEvent event) throws Exception {
         // Set the stage with the other fxml
         FXMLLoader tableViewLoader =
-                ReportViewsManager.setNewFxmlToStage(
-                        "resources/fxml/do178c/DO178CTableView.fxml");
+                ReportViewsManager.setNewFxmlToStage("resources/fxml/do178c/DO178CTableView.fxml");
 
         // initialize variables in the ReportTableView page
         ReportTableViewHandlerNew tableViewLoaderClassObj = tableViewLoader.getController();

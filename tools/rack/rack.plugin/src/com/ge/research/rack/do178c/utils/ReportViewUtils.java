@@ -31,13 +31,14 @@
  */
 package com.ge.research.rack.do178c.utils;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import com.ge.research.rack.do178c.structures.Analysis;
+import com.ge.research.rack.do178c.structures.DataItem;
+import com.ge.research.rack.do178c.structures.Hazard;
+import com.ge.research.rack.do178c.structures.PsacNode;
+import com.ge.research.rack.do178c.structures.Requirement;
+import com.ge.research.rack.do178c.structures.ReviewLog;
+import com.ge.research.rack.do178c.structures.Test;
+
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -50,18 +51,19 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
+
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
 
-import com.ge.research.rack.do178c.structures.Analysis;
-import com.ge.research.rack.do178c.structures.DataItem;
-import com.ge.research.rack.do178c.structures.Hazard;
-import com.ge.research.rack.do178c.structures.PsacNode;
-import com.ge.research.rack.do178c.structures.Requirement;
-import com.ge.research.rack.do178c.structures.ReviewLog;
-import com.ge.research.rack.do178c.structures.Test;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Saswata Paul

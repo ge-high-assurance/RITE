@@ -29,21 +29,6 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.ge.research.rack.do178c;
+package com.ge.research.rack.arp4754.logic;
 
-/**
- * FOR TESTING THE BACKEND FUNCTIONS DURING DEVELOPMENT
- *
- * @author Saswata Paul
- */
-public class Test_App {
-
-    //    public static void main(String[] args) {
-    //
-    //        String tempDir = "C:\\Users\\212807042\\Desktop\\RACK_tests\\temp_results\\";
-    //
-    //        DataProcessor obj = new DataProcessor();
-    //
-    //        obj.getPSACData(tempDir);
-    //    }
-}
+public class ComplianceProcess2 {}

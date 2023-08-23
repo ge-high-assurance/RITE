@@ -31,7 +31,8 @@
  */
 package com.ge.research.rack.do178c.viewManagers;
 
-import java.net.URL;
+import com.ge.research.rack.do178c.structures.PsacNode;
+
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
@@ -40,12 +41,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
 
-import com.ge.research.rack.do178c.structures.PsacNode;
+import java.net.URL;
 
 /**
  * @author Saswata Paul

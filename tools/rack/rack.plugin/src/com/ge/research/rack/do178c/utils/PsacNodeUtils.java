@@ -31,9 +31,9 @@
  */
 package com.ge.research.rack.do178c.utils;
 
-import java.util.List;
-
 import com.ge.research.rack.do178c.structures.PsacNode;
+
+import java.util.List;
 
 /**
  * @author Saswata Paul
