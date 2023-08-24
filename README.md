@@ -19,7 +19,7 @@ Besides supporting basic data modeling and curation features, RITE also provides
 5. [Executing Nodegroups Stored on RACK](https://github.com/ge-high-assurance/RITE/wiki/Executing-Nodegroups)
 6. [Creating Instance Data for Testing the Ontology on RACK](https://github.com/ge-high-assurance/RITE/wiki/Creating-Instance-Data)
 7. [Generating Ingestion Nodegroups for the Ontology on RACK](https://github.com/ge-high-assurance/RITE/wiki/Generating-Ingestion-Nodegroups)
-8. [Selectively Clearing Ontology and/or Data Graphs on RACK](https://github.com/ge-high-assurance/RITE/wiki/Clearing-Contents-from-RACK)
+8. [Selectively Clearing Ontology and/or Data Graphs on RACK](https://github.com/ge-high-assurance/RITE/wiki/Clear-RACK)
 9. [Automatically Generating GSN Assurance Cases using the Evidence on RACK](https://github.com/ge-high-assurance/RITE/wiki/GSN-Assurance-Case-Generation)
 
 A detailed tutorial for using RITE with additional information can be found in the [RITE WIKI](https://github.com/ge-high-assurance/RITE/wiki). Contact the RITE Development Team for more details.
