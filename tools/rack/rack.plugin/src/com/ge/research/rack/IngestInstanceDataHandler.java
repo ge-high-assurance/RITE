@@ -390,7 +390,6 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 
 		dGraphs.clear();
 		mGraphs.clear();
-		RackConsole.getConsole().clearConsole();
 		if (monitor.isCanceled()) {
 			return IngestionStatus.CANCELED;
 		}
@@ -519,12 +518,23 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 		if (monitor.isCanceled()) {
 			return Status.CANCEL_STATUS;
 		}
+		
 		File ingestionYaml = new File(manifestPath);
 		if (!ingestionYaml.exists()) {
 			RackConsole.getConsole().warning("No manifest.yaml found, nothing to ingest");
 			return Status.CANCEL_STATUS;
 		}
 		try {
+			 
+			if(!isRunning()) {
+	         		setRunning(true);
+	         		
+	         		RackConsole.getConsole().clearConsole();
+	         	}
+	         	else {
+	         		RackConsole.getConsole().error("Another manifest imnport in progress");
+	         	}
+			
 			IngestionStatus value = uploadDataFromManifestYAML(manifestPath, monitor);
 			monitor.worked(100);
 
@@ -640,5 +650,12 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 		job.schedule();
 		return null;
 	}
-
+	
+	 private static synchronized void setRunning(boolean status) {
+	    	isRunning = status;
+	    }
+	    
+	    public static boolean isRunning() {
+	    	  return isRunning;
+	    }
 }

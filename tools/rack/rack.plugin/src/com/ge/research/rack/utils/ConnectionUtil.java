@@ -223,29 +223,6 @@ public class ConnectionUtil {
         return conn;
     }
 
-    public static SparqlQueryClient getOntologyUploadClient(String dataGraph) throws Exception {
-        String protocol = RackPreferencePage.getProtocol();
-        String server = RackPreferencePage.getServer();
-        int port = Integer.parseInt(RackPreferencePage.getQueryPort());
-        String sparqlQueryEndPoint = "/sparqlQueryService/uploadOwl";
-        String connURL = RackPreferencePage.getConnURL();
-        String connType = RackPreferencePage.getConnType();
-        String user = RackPreferencePage.getUser();
-        String password = RackPreferencePage.getPassword();
-        SparqlQueryAuthClientConfig qAuthConfig =
-                new SparqlQueryAuthClientConfig(
-                        protocol,
-                        server,
-                        port,
-                        sparqlQueryEndPoint,
-                        connURL,
-                        connType,
-                        dataGraph,
-                        user,
-                        password);
-
-        return new SparqlQueryClient(qAuthConfig);
-    }
 
     public static SparqlQueryClient getOntologyUploadClient() throws Exception {
         String protocol = RackPreferencePage.getProtocol();

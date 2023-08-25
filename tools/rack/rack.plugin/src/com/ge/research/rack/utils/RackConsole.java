@@ -132,5 +132,8 @@ public class RackConsole extends MessageConsole {
         // System.out.println("WARNING: " + message);
         
     }
+    public void clearConsole() {
+    	super.clearConsole();
+    }
     
 }
