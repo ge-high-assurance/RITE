@@ -69,19 +69,7 @@ import java.util.List;
 import java.util.Map;
 
 public class IngestInstanceDataHandler extends AbstractHandler {
-    private static String manifestPath = "";
-    private static volatile boolean isRunning = false;
-    private int uploadModelFromYAML(String yamlPath, IProgressMonitor monitor) throws Exception {
-        if (monitor.isCanceled()) {
-            return -1;
-        }
-        File file = new File(yamlPath);
-        if (!file.exists()) {
-            return 0;
-        }
-        String dir = file.getParent();
-        Object oYaml = null;
-
+	private static volatile boolean isRunning = false;
 	private static String MANIFEST_SUCCESS = "Manifest Ingestion Completed Successfully";
 	private static String MANIFEST_CANCELED = "Manifest Ingestion Stopped";
 	private static String MANIFEST_FAILED = "Manifest Ingestion Failed";
@@ -421,6 +409,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 			RackConsole.getConsole().error("Ill formed manifest at " + dir + "/" + file.getName() + ", please check");
 			return IngestionStatus.FAILED;
 		}
+
 		HashMap<String, Object> yamlMap = (HashMap) oYaml;
 
 		// read footprint
@@ -524,7 +513,6 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 		return IngestionStatus.DONE;
 	}
 
-
 	private IStatus ingestInstanceData(IProgressMonitor monitor) {
 
 		// get csv files and extract nodegroup ids
@@ -627,6 +615,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 			public void done(IJobChangeEvent event) {
 				job.cancel();
 			}
+
 			@Override
 			public void awake(IJobChangeEvent event) {
 			}
@@ -651,12 +640,5 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 		job.schedule();
 		return null;
 	}
-	 private static synchronized void setRunning(boolean status) {
-    	isRunning = status;
-    }
-    
-    public static boolean isRunning() {
-    	  return isRunning;
-    }
 
 }
