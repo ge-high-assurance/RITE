@@ -73,18 +73,29 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 	private static String MANIFEST_SUCCESS = "Manifest Ingestion Completed Successfully";
 	private static String MANIFEST_CANCELED = "Manifest Ingestion Stopped";
 	private static String MANIFEST_FAILED = "Manifest Ingestion Failed";
+	private static String MANIFEST_IN_PROGRESS = "Another Manifest Import is in progress";
 	private static String manifestPath = "";
 	private static List<String> dGraphs = new ArrayList<>();
 	private static List<String> mGraphs = new ArrayList<>();
+	private static List<String> dedupSteps = new ArrayList<>();
 
 	private static enum IngestionStatus {
 		FAILED, CANCELED, DONE
 	};
 
 	private IngestionStatus uploadModelFromYAML(String yamlPath, IProgressMonitor monitor) throws Exception {
+		
 		if (monitor.isCanceled()) {
 			return IngestionStatus.CANCELED;
 		}
+		
+		if(dedupSteps.contains(yamlPath)) {
+			RackConsole.getConsole().print("Skipping previously executed step at: " + yamlPath);
+			return IngestionStatus.DONE;
+		}
+		
+		dedupSteps.add(yamlPath);
+		
 		File file = new File(yamlPath);
 		if (!file.exists()) {
 			return IngestionStatus.FAILED;
@@ -128,7 +139,8 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 				return IngestionStatus.FAILED;
 			}
 			try {
-				RackConsole.getConsole().print("Uploading owl file " + owlFile.getName() + " to " + mGraphs.get(0) + " ... ");
+				RackConsole.getConsole()
+						.print("Uploading owl file " + owlFile.getName() + " to " + mGraphs.get(0) + " ... ");
 				SparqlQueryClient qAuthClient = ConnectionUtil.getOntologyUploadClient(mGraphs.get(0));
 				qAuthClient.uploadOwl(owlFile);
 				RackConsole.getConsole().printOK();
@@ -147,6 +159,14 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 		if (monitor.isCanceled()) {
 			return IngestionStatus.CANCELED;
 		}
+		
+		if(dedupSteps.contains(yamlPath)) {
+			RackConsole.getConsole().print("Skipping previously executed step at: " + yamlPath);
+			return IngestionStatus.DONE;
+		}
+		
+		dedupSteps.add(yamlPath);
+		
 		File file = new File(yamlPath);
 		if (!file.exists()) {
 			return IngestionStatus.FAILED;
@@ -183,9 +203,10 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 			Object oDataGraph = yamlMap.get("data-graph");
 			if (oDataGraph instanceof String && !((String) oDataGraph).isEmpty()) {
 				dataGraph = (String) oDataGraph;
-				//validate target graph against footprint
-				if(!dGraphs.contains(dataGraph)) {
-					RackConsole.getConsole().error("Specified target graph " + dataGraph + " not declared in footprint");
+				// validate target graph against footprint
+				if (!dGraphs.contains(dataGraph)) {
+					RackConsole.getConsole()
+							.error("Specified target graph " + dataGraph + " not declared in footprint");
 					RackConsole.getConsole().error("YAML file: " + yamlPath);
 					return IngestionStatus.FAILED;
 				}
@@ -305,6 +326,14 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 		if (monitor.isCanceled()) {
 			return IngestionStatus.CANCELED;
 		}
+		
+		if(dedupSteps.contains(ngPath)) {
+			RackConsole.getConsole().print("Skipping previously executed step at: " + ngPath);
+			return IngestionStatus.DONE;
+		}
+		
+		dedupSteps.add(ngPath);
+		
 		File dir = new File(ngPath);
 		if (!dir.exists()) {
 			return IngestionStatus.FAILED;
@@ -388,8 +417,14 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 
 	private IngestionStatus uploadDataFromManifestYAML(String yamlPath, IProgressMonitor monitor) throws Exception {
 
-		dGraphs.clear();
-		mGraphs.clear();
+		
+		if(dedupSteps.contains(yamlPath)) {
+			RackConsole.getConsole().print("Skipping previously executed step at: " + yamlPath);
+			return IngestionStatus.DONE;
+		}
+		
+		dedupSteps.add(yamlPath);
+		
 		if (monitor.isCanceled()) {
 			return IngestionStatus.CANCELED;
 		}
@@ -410,33 +445,6 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 		}
 
 		HashMap<String, Object> yamlMap = (HashMap) oYaml;
-
-		// read footprint
-
-		if (yamlMap.containsKey("footprint")) {
-
-			Object oFootprint = yamlMap.get("footprint");
-			if (oFootprint instanceof Map) {
-				Map oFootprintMap = (Map) oFootprint;
-				if (!oFootprintMap.containsKey("data-graphs")) {
-					dGraphs.add(RackPreferencePage.getDefaultDataGraph());
-				} else {
-					dGraphs = (List<String>) oFootprintMap.get("data-graphs");
-				}
-
-				if (!oFootprintMap.containsKey("model-graphs")) {
-					mGraphs.add(RackPreferencePage.getDefaultModelGraph());
-				} else {
-					mGraphs = (List<String>) oFootprintMap.get("model-graphs");
-				}
-			}
-
-		}
-
-		else {
-			dGraphs.add(RackPreferencePage.getDefaultDataGraph());
-			mGraphs.add(RackPreferencePage.getDefaultModelGraph());
-		}
 
 		if (!yamlMap.containsKey("steps")) {
 			RackConsole.getConsole().warning(dir + "/" + file.getName() + " contains no ingestion step, done");
@@ -518,26 +526,62 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 		if (monitor.isCanceled()) {
 			return Status.CANCEL_STATUS;
 		}
-		
+
+		dedupSteps.clear();
+		dGraphs.clear();
+		mGraphs.clear();
+
 		File ingestionYaml = new File(manifestPath);
 		if (!ingestionYaml.exists()) {
 			RackConsole.getConsole().warning("No manifest.yaml found, nothing to ingest");
 			return Status.CANCEL_STATUS;
 		}
+
+		String dir = ingestionYaml.getParent();
+		Object oYaml = null;
 		try {
-			 
-			if(!isRunning()) {
-	         		setRunning(true);
-	         		
-	         		RackConsole.getConsole().clearConsole();
-	         	}
-	         	else {
-	         		RackConsole.getConsole().error("Another manifest imnport in progress");
-	         	}
-			
+			oYaml = ProjectUtils.readYaml(ingestionYaml.getAbsolutePath());
+		} catch (Exception e) {
+			RackConsole.getConsole().error("Unable to read " + dir + "/" + ingestionYaml.getName());
+			return Status.CANCEL_STATUS;
+		}
+		if (oYaml == null || !(oYaml instanceof Map)) {
+			RackConsole.getConsole()
+					.error("Ill formed manifest at " + dir + "/" + ingestionYaml.getName() + ", please check");
+			return Status.CANCEL_STATUS;
+		}
+		// read footprint
+		HashMap<String, Object> yamlMap = (HashMap) oYaml;
+		if (yamlMap.containsKey("footprint")) {
+
+			Object oFootprint = yamlMap.get("footprint");
+			if (oFootprint instanceof Map) {
+				Map oFootprintMap = (Map) oFootprint;
+				if (!oFootprintMap.containsKey("data-graphs")) {
+					dGraphs.add(RackPreferencePage.getDefaultDataGraph());
+				} else {
+					dGraphs = (List<String>) oFootprintMap.get("data-graphs");
+				}
+
+				if (!oFootprintMap.containsKey("model-graphs")) {
+					mGraphs.add(RackPreferencePage.getDefaultModelGraph());
+				} else {
+					mGraphs = (List<String>) oFootprintMap.get("model-graphs");
+				}
+			}
+
+		}
+
+		else {
+			dGraphs.add(RackPreferencePage.getDefaultDataGraph());
+			mGraphs.add(RackPreferencePage.getDefaultModelGraph());
+		}
+
+		try {
+
 			IngestionStatus value = uploadDataFromManifestYAML(manifestPath, monitor);
 			monitor.worked(100);
-
+			setRunning(false);
 			switch (value) {
 			case DONE:
 				RackConsole.getConsole().print(MANIFEST_SUCCESS);
@@ -588,8 +632,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 			} else {
 				client.dispatchIngestFromCsvStringsByClassTemplateSync(ingestionId, "identifier", sCSV,
 						ConnectionUtil.getSparqlConnection(mGraphs.get(0), dataGraph, dataGraphs));
-			
-				
+
 			}
 			RackConsole.getConsole().printOK();
 
@@ -617,6 +660,15 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				ViewUtils.showProgressView();
+			
+				if (!isRunning()) {
+					setRunning(true);
+					RackConsole.getConsole().clearConsole();
+				} else {
+					RackConsole.getConsole().error(MANIFEST_IN_PROGRESS);
+					return Status.CANCEL_STATUS;
+				}
+				
 				return ingestInstanceData(monitor);
 			}
 		};
@@ -650,12 +702,12 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 		job.schedule();
 		return null;
 	}
-	
-	 private static synchronized void setRunning(boolean status) {
-	    	isRunning = status;
-	    }
-	    
-	    public static boolean isRunning() {
-	    	  return isRunning;
-	    }
+
+	private static synchronized void setRunning(boolean status) {
+		isRunning = status;
+	}
+
+	public static synchronized boolean isRunning() {
+		return isRunning;
+	}
 }
