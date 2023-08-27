@@ -56,6 +56,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeSelection;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import java.io.File;
@@ -78,24 +79,25 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 	private static List<String> dGraphs = new ArrayList<>();
 	private static List<String> mGraphs = new ArrayList<>();
 	private static List<String> dedupSteps = new ArrayList<>();
+	private static IngestionStatus status = null;
 
 	private static enum IngestionStatus {
 		FAILED, CANCELED, DONE
 	};
 
 	private IngestionStatus uploadModelFromYAML(String yamlPath, IProgressMonitor monitor) throws Exception {
-		
+
 		if (monitor.isCanceled()) {
 			return IngestionStatus.CANCELED;
 		}
-		
-		if(dedupSteps.contains(yamlPath)) {
+
+		if (dedupSteps.contains(yamlPath)) {
 			RackConsole.getConsole().print("Skipping previously executed step at: " + yamlPath);
 			return IngestionStatus.DONE;
 		}
-		
+
 		dedupSteps.add(yamlPath);
-		
+
 		File file = new File(yamlPath);
 		if (!file.exists()) {
 			return IngestionStatus.FAILED;
@@ -138,17 +140,29 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 				RackConsole.getConsole().error("Cannot find owl file: " + owlPath);
 				return IngestionStatus.FAILED;
 			}
-			try {
-				RackConsole.getConsole()
-						.print("Uploading owl file " + owlFile.getName() + " to " + mGraphs.get(0) + " ... ");
-				SparqlQueryClient qAuthClient = ConnectionUtil.getOntologyUploadClient(mGraphs.get(0));
-				qAuthClient.uploadOwl(owlFile);
-				RackConsole.getConsole().printOK();
-			} catch (Exception e) {
-				RackConsole.getConsole().printFAIL();
-				RackConsole.getConsole().error(
-						"Ontology processing/upload failed, make sure you are connected to Sparql and have configured the correct Core and Overlay Projects");
-				return IngestionStatus.FAILED;
+
+			Display.getDefault().syncExec(() -> {
+				synchronized (RackConsole.getConsole()) {
+					try {
+
+						RackConsole.getConsole()
+								.print("Uploading owl file " + owlFile.getName() + " to " + mGraphs.get(0) + " ... ");
+						SparqlQueryClient qAuthClient = ConnectionUtil.getOntologyUploadClient(mGraphs.get(0));
+						qAuthClient.uploadOwl(owlFile);
+						RackConsole.getConsole().printOK();
+					}
+
+					catch (Exception e) {
+						RackConsole.getConsole().printFAIL();
+						RackConsole.getConsole().error(
+								"Ontology processing/upload failed, make sure you are connected to RACK or RACK-BOX instance");
+						status = IngestionStatus.FAILED;
+					}
+				}
+			});
+
+			if (status != null && status == IngestionStatus.FAILED) {
+				return status;
 			}
 		}
 		return IngestionStatus.DONE;
@@ -159,14 +173,14 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 		if (monitor.isCanceled()) {
 			return IngestionStatus.CANCELED;
 		}
-		
-		if(dedupSteps.contains(yamlPath)) {
+
+		if (dedupSteps.contains(yamlPath)) {
 			RackConsole.getConsole().print("Skipping previously executed step at: " + yamlPath);
 			return IngestionStatus.DONE;
 		}
-		
+
 		dedupSteps.add(yamlPath);
-		
+
 		File file = new File(yamlPath);
 		if (!file.exists()) {
 			return IngestionStatus.FAILED;
@@ -197,7 +211,8 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 			return IngestionStatus.FAILED;
 		}
 
-		String dataGraph = "";
+		String dataGraph = dGraphs.get(0);
+		String modelGraph = mGraphs.get(0);
 		List<String> dataGraphs = new ArrayList<>();
 		if (yamlMap.containsKey("data-graph")) {
 			Object oDataGraph = yamlMap.get("data-graph");
@@ -210,8 +225,20 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 					RackConsole.getConsole().error("YAML file: " + yamlPath);
 					return IngestionStatus.FAILED;
 				}
-			} else {
-				dataGraph = dGraphs.get(0);
+			}
+		}
+
+		if (yamlMap.containsKey("model-graph")) {
+			Object oDataGraph = yamlMap.get("model-graph");
+			if (oDataGraph instanceof String && !((String) oDataGraph).isEmpty()) {
+				modelGraph = (String) oDataGraph;
+				// validate target graph against footprint
+				if (!mGraphs.contains(modelGraph)) {
+					RackConsole.getConsole()
+							.error("Specified target graph " + modelGraph + " not declared in footprint");
+					RackConsole.getConsole().error("YAML file: " + yamlPath);
+					return IngestionStatus.FAILED;
+				}
 			}
 		}
 
@@ -249,6 +276,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 							.error("Cannot ingest data for nodegroup: " + ingestionId + ", csv file missing");
 					return IngestionStatus.FAILED;
 					// continue;
+
 				}
 
 				ArrayList<String> colsList = new ArrayList<>();
@@ -286,7 +314,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 					return IngestionStatus.DONE;
 				}
 				IngestionStatus status = uploadInstanceDataCSV(ingestionId, colsList, tabData, bUriIngestion,
-						csvFile.getAbsolutePath(), dataGraph, dataGraphs);
+						csvFile.getAbsolutePath(), modelGraph, dataGraph, dataGraphs);
 				if (status == IngestionStatus.FAILED || status == IngestionStatus.CANCELED) {
 					return status;
 				}
@@ -304,14 +332,24 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 					RackConsole.getConsole().error("Cannot find owl file: " + owlPath);
 					continue;
 				}
-				try {
-					RackConsole.getConsole().print("Uploading owl file " + owlFile + " to " + dataGraph + " ... ");
-					SparqlQueryClient qAuthClient = ConnectionUtil.getOntologyUploadClient(dataGraph);
-					qAuthClient.uploadOwl(owl);
-				} catch (Exception e) {
-					RackConsole.getConsole().error(
-							"Ontology processing/upload failed, make sure you are connected to Sparql and have configured the correct Core and Overlay Projects");
-					return IngestionStatus.FAILED;
+				final String dGraph = dataGraph;
+				Display.getDefault().syncExec(() -> {
+					synchronized (RackConsole.getConsole()) {
+						try {
+							RackConsole.getConsole().print("Uploading owl file " + owlFile + " to " + dGraph + " ... ");
+							SparqlQueryClient qAuthClient = ConnectionUtil.getOntologyUploadClient(dGraph);
+							qAuthClient.uploadOwl(owl);
+							RackConsole.getConsole().printOK();
+						} catch (Exception e) {
+							RackConsole.getConsole().printFAIL();
+							RackConsole.getConsole().error(
+									"Ontology processing/upload failed, make sure you are connected to RACK or RACK-BOX instance");
+							status = IngestionStatus.FAILED;
+						}
+					}
+				});
+				if (status != null && status == IngestionStatus.FAILED) {
+					return status;
 				}
 			}
 		}
@@ -326,14 +364,14 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 		if (monitor.isCanceled()) {
 			return IngestionStatus.CANCELED;
 		}
-		
-		if(dedupSteps.contains(ngPath)) {
+
+		if (dedupSteps.contains(ngPath)) {
 			RackConsole.getConsole().print("Skipping previously executed step at: " + ngPath);
 			return IngestionStatus.DONE;
 		}
-		
+
 		dedupSteps.add(ngPath);
-		
+
 		File dir = new File(ngPath);
 		if (!dir.exists()) {
 			return IngestionStatus.FAILED;
@@ -388,28 +426,37 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 			if (monitor.isCanceled()) {
 				return IngestionStatus.CANCELED;
 			}
-			String nodegroupId = entry.get(0);
-			String jsonFile = entry.get(3);
+			final String nodegroupId = entry.get(0);
+			final String jsonFile = entry.get(3);
 			File ngJson = new File(ngPath + "/" + jsonFile);
 			if (!ngJson.exists()) {
 				RackConsole.getConsole().error("json file for " + jsonFile + "missing in folder: " + ngPath);
 				continue;
 			}
-			String jsonstr = FileUtils.readFileToString(ngJson, Charset.defaultCharset());
+			final String jsonstr = FileUtils.readFileToString(ngJson, Charset.defaultCharset());
 			SparqlGraphJson json = new SparqlGraphJson(jsonstr);
 			NodeGroupStoreRestClient ngClient = ConnectionUtil.getNGSClient();
 			SparqlConnection conn = ConnectionUtil.getSparqlConnection();
 			json.setSparqlConn(conn);
-			try {
-				RackConsole.getConsole().print("Uploading nodegroup: " + nodegroupId + ".json ... ");
+			final SparqlGraphJson json2 = json;
 
-				ngClient.executeStoreNodeGroup(nodegroupId, entry.get(1), entry.get(2), json.getJson());
-				RackConsole.getConsole().printOK();
+			Display.getDefault().syncExec(() -> {
+				synchronized (RackConsole.getConsole()) {
+					try {
+						RackConsole.getConsole().print("Uploading nodegroup: " + nodegroupId + ".json ... ");
+						ngClient.executeStoreNodeGroup(nodegroupId, entry.get(1), entry.get(2), json2.getJson());
+						RackConsole.getConsole().printOK();
 
-			} catch (Exception e) {
-				RackConsole.getConsole().printFAIL();
-				RackConsole.getConsole().error("Upload of nodegroup: " + nodegroupId + ".json " + "failed");
-				return IngestionStatus.FAILED;
+					} catch (Exception e) {
+						RackConsole.getConsole().printFAIL();
+						RackConsole.getConsole().error("Upload of nodegroup: " + nodegroupId + ".json " + "failed");
+						status = IngestionStatus.FAILED;
+					}
+				}
+			});
+
+			if (status != null && status == IngestionStatus.FAILED) {
+				return status;
 			}
 		}
 		return IngestionStatus.DONE;
@@ -417,14 +464,13 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 
 	private IngestionStatus uploadDataFromManifestYAML(String yamlPath, IProgressMonitor monitor) throws Exception {
 
-		
-		if(dedupSteps.contains(yamlPath)) {
+		if (dedupSteps.contains(yamlPath)) {
 			RackConsole.getConsole().print("Skipping previously executed step at: " + yamlPath);
 			return IngestionStatus.DONE;
 		}
-		
+
 		dedupSteps.add(yamlPath);
-		
+
 		if (monitor.isCanceled()) {
 			return IngestionStatus.CANCELED;
 		}
@@ -611,36 +657,43 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 	}
 
 	private IngestionStatus uploadInstanceDataCSV(String ingestionId, ArrayList<String> header,
-			ArrayList<ArrayList<String>> body, boolean bUriIngestion, String path, String dataGraph,
+			ArrayList<ArrayList<String>> body, boolean bUriIngestion, String path, String modelGraph, String dataGraph,
 			List<String> dataGraphs) {
+		Display.getDefault().syncExec(() -> {
+			synchronized (RackConsole.getConsole()) {
+				try {
+					NodeGroupExecutionClient client = ConnectionUtil.getNGEClient();
+					com.ge.research.semtk.resultSet.Table tab = new com.ge.research.semtk.resultSet.Table(header);
+					for (ArrayList<String> row : body) {
+						if (row.size() > 0 && !isEmpty(row)) {
+							tab.addRow(row);
+						}
+					}
+					String sCSV = tab.toCSVString();
+					RackConsole.getConsole().print("Uploading CSV at " + path + " as class " + ingestionId + "... ");
+					if (bUriIngestion == false) {
+						client.dispatchIngestFromCsvStringsByIdSync(ingestionId, sCSV,
+								ConnectionUtil.getSparqlConnection(modelGraph, dataGraph, dataGraphs));
 
-		try {
-			NodeGroupExecutionClient client = ConnectionUtil.getNGEClient();
-			com.ge.research.semtk.resultSet.Table tab = new com.ge.research.semtk.resultSet.Table(header);
-			for (ArrayList<String> row : body) {
-				if (row.size() > 0 && !isEmpty(row)) {
-					tab.addRow(row);
+					} else {
+						client.dispatchIngestFromCsvStringsByClassTemplateSync(ingestionId, "identifier", sCSV,
+								ConnectionUtil.getSparqlConnection(modelGraph, dataGraph, dataGraphs));
+
+					}
+					RackConsole.getConsole().printOK();
+				} catch (Exception e) {
+
+					RackConsole.getConsole().printFAIL();
+					RackConsole.getConsole().error("Upload of " + ingestionId + " failed, " + "CSV: " + path);
+					status = IngestionStatus.FAILED;
 				}
 			}
-			String sCSV = tab.toCSVString();
-			RackConsole.getConsole().print("Uploading CSV at " + path + " as class " + ingestionId + "... ");
-
-			if (bUriIngestion == false) {
-				client.dispatchIngestFromCsvStringsByIdSync(ingestionId, sCSV,
-						ConnectionUtil.getSparqlConnection(mGraphs.get(0), dataGraph, dataGraphs));
-
-			} else {
-				client.dispatchIngestFromCsvStringsByClassTemplateSync(ingestionId, "identifier", sCSV,
-						ConnectionUtil.getSparqlConnection(mGraphs.get(0), dataGraph, dataGraphs));
-
-			}
-			RackConsole.getConsole().printOK();
-
-		} catch (Exception e) {
-			RackConsole.getConsole().printFAIL();
-			RackConsole.getConsole().error("Upload of " + ingestionId + " failed, " + "CSV: " + path);
-			return IngestionStatus.FAILED;
+		});
+		
+		if(status != null && status == IngestionStatus.FAILED) {
+			return status;
 		}
+
 		return IngestionStatus.DONE;
 	}
 
@@ -660,15 +713,19 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				ViewUtils.showProgressView();
-			
+
 				if (!isRunning()) {
 					setRunning(true);
 					RackConsole.getConsole().clearConsole();
 				} else {
-					RackConsole.getConsole().error(MANIFEST_IN_PROGRESS);
+					Display.getDefault().syncExec(() -> {
+						synchronized (RackConsole.getConsole()) {
+							RackConsole.getConsole().error(MANIFEST_IN_PROGRESS);
+						}
+					});
 					return Status.CANCEL_STATUS;
 				}
-				
+
 				return ingestInstanceData(monitor);
 			}
 		};
