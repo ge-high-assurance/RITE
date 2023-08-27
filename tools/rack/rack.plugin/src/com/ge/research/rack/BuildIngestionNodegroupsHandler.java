@@ -190,6 +190,7 @@ public class BuildIngestionNodegroupsHandler extends AbstractHandler {
                         }
                         HandlerUtils.loadNodegroups();
                         HandlerUtils.showNodegroupTable();
+                        RackConsole.getConsole().print("Done");
                     }
 
                     @Override
