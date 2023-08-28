@@ -27,6 +27,8 @@ public class ConfigReader {
 
 		Configuration projectConfig = new Configuration();
 		
+		System.out.println(configFilePath);
+		
         try {
             File file = new File(configFilePath); // creates a new file instance
             FileReader fr = new FileReader(file); // reads the file
