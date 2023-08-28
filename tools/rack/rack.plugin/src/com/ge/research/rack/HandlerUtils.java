@@ -158,9 +158,34 @@ public class HandlerUtils {
                 }
             }
         } else {
-            // VerdictLogger.warning("Selection is not recognized!");
+            RackConsole.getConsole().warning("Selection is not recognized!");
         }
 
         return paths;
+    }
+    
+    public static IProject getCurrentIProject(ExecutionEvent event) {
+        ISelection selection = HandlerUtil.getCurrentSelection(event);
+
+        if (selection instanceof IStructuredSelection
+                && ((IStructuredSelection) selection).size() > 0) {
+            Object[] selObjs = ((IStructuredSelection) selection).toArray();
+
+            for (Object selObj : selObjs) {
+                if (selObj instanceof IFile) {
+                    IFile selIFile = (IFile) selObj;
+                    return selIFile.getProject();
+                } else if (selObj instanceof IProject) {
+                    IProject selIProject = (IProject) selObj;
+                    return selIProject;
+                } else if (selObj instanceof IFolder) {
+                    IFolder selIFolder = (IFolder) selObj;
+                    return selIFolder.getProject();
+                }
+            }
+        }
+
+        RackConsole.getConsole().warning("Selection is not recognized!");
+        return null;
     }
 }

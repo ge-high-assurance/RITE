@@ -68,7 +68,7 @@ public class RefreshHandler extends AbstractHandler {
         // refresh nodegroups view
         refreshNodegroups();
         HandlerUtils.showNodegroupTable(window);
-
+        RackConsole.getConsole().print("Refresh done");
         return null;
     }
 
