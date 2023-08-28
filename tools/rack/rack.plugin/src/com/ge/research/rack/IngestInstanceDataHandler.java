@@ -228,10 +228,17 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 			}
 		}
 
-		if (yamlMap.containsKey("model-graph")) {
-			Object oDataGraph = yamlMap.get("model-graph");
-			if (oDataGraph instanceof String && !((String) oDataGraph).isEmpty()) {
-				modelGraph = (String) oDataGraph;
+		if (yamlMap.containsKey("model-graphs")) {
+			Object oDataGraph = yamlMap.get("model-graphs");
+			if (oDataGraph instanceof List) {
+				if (((List) oDataGraph).size() > 1) {
+					RackConsole.getConsole().error("We currently support ingesting only using a single model-graph");
+					return IngestionStatus.FAILED;
+				}
+				modelGraph = ((List<String>) oDataGraph).get(0);
+				if (modelGraph.isEmpty()) {
+					modelGraph = mGraphs.get(0);
+				}
 				// validate target graph against footprint
 				if (!mGraphs.contains(modelGraph)) {
 					RackConsole.getConsole()
@@ -689,8 +696,8 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 				}
 			}
 		});
-		
-		if(status != null && status == IngestionStatus.FAILED) {
+
+		if (status != null && status == IngestionStatus.FAILED) {
 			return status;
 		}
 
