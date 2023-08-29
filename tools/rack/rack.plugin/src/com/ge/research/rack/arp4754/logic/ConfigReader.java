@@ -61,6 +61,9 @@ public class ConfigReader {
                 if(config[0].equalsIgnoreCase("DerivedItemRequirement")) {
                 	projectConfig.setDerivedItemReq(config[1]);                	
                 }
+                if(config[0].equalsIgnoreCase("Interface")) {
+                	projectConfig.setIntrface(config[1]);                	
+                }
                 if(config[0].equalsIgnoreCase("InterfaceInput")) {
                 	projectConfig.setIntrfaceInput(config[1]);                	
                 }

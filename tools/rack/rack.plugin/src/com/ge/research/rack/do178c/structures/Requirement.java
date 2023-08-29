@@ -61,7 +61,7 @@ public class Requirement {
     private List<ReviewLog> logs = new ArrayList<ReviewLog>();
 
     private List<String> sourceDocument = new ArrayList<String>();
-
+    
     /**
      * @return the sourceDocument
      */

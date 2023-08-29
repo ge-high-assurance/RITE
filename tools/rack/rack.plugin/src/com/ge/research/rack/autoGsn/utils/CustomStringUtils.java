@@ -39,6 +39,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -356,6 +357,7 @@ public class CustomStringUtils {
      * @return
      */
     public static Integer getCSVColumnIndex(String[] headerLine, String key) {
+    	System.out.println("sdsd" + Arrays.toString(headerLine));
         for (int i = 0; i < headerLine.length; i++) {
             if (headerLine[i].equalsIgnoreCase(key)) {
                 return i;
