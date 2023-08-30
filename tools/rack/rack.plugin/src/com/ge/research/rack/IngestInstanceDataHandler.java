@@ -141,28 +141,19 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 				return IngestionStatus.FAILED;
 			}
 
-			Display.getDefault().syncExec(() -> {
-				synchronized (RackConsole.getConsole()) {
-					try {
+			try {
 
-						RackConsole.getConsole()
-								.print("Uploading owl file " + owlFile.getName() + " to " + mGraphs.get(0) + " ... ");
-						SparqlQueryClient qAuthClient = ConnectionUtil.getOntologyUploadClient(mGraphs.get(0));
-						qAuthClient.uploadOwl(owlFile);
-						RackConsole.getConsole().printOK();
-					}
+				RackConsole.getConsole()
+						.print("Uploading owl file " + owlFile.getName() + " to " + mGraphs.get(0) + " ... ");
+				SparqlQueryClient qAuthClient = ConnectionUtil.getOntologyUploadClient(mGraphs.get(0));
+				qAuthClient.uploadOwl(owlFile);
+				RackConsole.getConsole().printOK();
+			} catch (Exception e) {
+				RackConsole.getConsole().printFAIL();
+				RackConsole.getConsole().error(
+						"Ontology processing/upload failed, make sure you are connected to RACK or RACK-BOX instance");
+				return IngestionStatus.FAILED;
 
-					catch (Exception e) {
-						RackConsole.getConsole().printFAIL();
-						RackConsole.getConsole().error(
-								"Ontology processing/upload failed, make sure you are connected to RACK or RACK-BOX instance");
-						status = IngestionStatus.FAILED;
-					}
-				}
-			});
-
-			if (status != null && status == IngestionStatus.FAILED) {
-				return status;
 			}
 		}
 		return IngestionStatus.DONE;
@@ -340,24 +331,19 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 					continue;
 				}
 				final String dGraph = dataGraph;
-				Display.getDefault().syncExec(() -> {
-					synchronized (RackConsole.getConsole()) {
-						try {
-							RackConsole.getConsole().print("Uploading owl file " + owlFile + " to " + dGraph + " ... ");
-							SparqlQueryClient qAuthClient = ConnectionUtil.getOntologyUploadClient(dGraph);
-							qAuthClient.uploadOwl(owl);
-							RackConsole.getConsole().printOK();
-						} catch (Exception e) {
-							RackConsole.getConsole().printFAIL();
-							RackConsole.getConsole().error(
-									"Ontology processing/upload failed, make sure you are connected to RACK or RACK-BOX instance");
-							status = IngestionStatus.FAILED;
-						}
-					}
-				});
-				if (status != null && status == IngestionStatus.FAILED) {
-					return status;
+
+				try {
+					RackConsole.getConsole().print("Uploading owl file " + owlFile + " to " + dGraph + " ... ");
+					SparqlQueryClient qAuthClient = ConnectionUtil.getOntologyUploadClient(dGraph);
+					qAuthClient.uploadOwl(owl);
+					RackConsole.getConsole().printOK();
+				} catch (Exception e) {
+					RackConsole.getConsole().printFAIL();
+					RackConsole.getConsole().error(
+							"Ontology processing/upload failed, make sure you are connected to RACK or RACK-BOX instance");
+					return IngestionStatus.FAILED;
 				}
+
 			}
 		}
 
@@ -447,24 +433,17 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 			json.setSparqlConn(conn);
 			final SparqlGraphJson json2 = json;
 
-			Display.getDefault().syncExec(() -> {
-				synchronized (RackConsole.getConsole()) {
-					try {
-						RackConsole.getConsole().print("Uploading nodegroup: " + nodegroupId + ".json ... ");
-						ngClient.executeStoreNodeGroup(nodegroupId, entry.get(1), entry.get(2), json2.getJson());
-						RackConsole.getConsole().printOK();
+			try {
+				RackConsole.getConsole().print("Uploading nodegroup: " + nodegroupId + ".json ... ");
+				ngClient.executeStoreNodeGroup(nodegroupId, entry.get(1), entry.get(2), json2.getJson());
+				RackConsole.getConsole().printOK();
 
-					} catch (Exception e) {
-						RackConsole.getConsole().printFAIL();
-						RackConsole.getConsole().error("Upload of nodegroup: " + nodegroupId + ".json " + "failed");
-						status = IngestionStatus.FAILED;
-					}
-				}
-			});
-
-			if (status != null && status == IngestionStatus.FAILED) {
-				return status;
+			} catch (Exception e) {
+				RackConsole.getConsole().printFAIL();
+				RackConsole.getConsole().error("Upload of nodegroup: " + nodegroupId + ".json " + "failed");
+				return IngestionStatus.FAILED;
 			}
+
 		}
 		return IngestionStatus.DONE;
 	}
@@ -623,9 +602,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 				}
 			}
 
-		}
-
-		else {
+		} else {
 			dGraphs.add(RackPreferencePage.getDefaultDataGraph());
 			mGraphs.add(RackPreferencePage.getDefaultModelGraph());
 		}
@@ -644,7 +621,6 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 				break;
 			case CANCELED:
 				RackConsole.getConsole().print(MANIFEST_CANCELED);
-
 			}
 
 		} catch (Exception e) {
@@ -666,39 +642,31 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 	private IngestionStatus uploadInstanceDataCSV(String ingestionId, ArrayList<String> header,
 			ArrayList<ArrayList<String>> body, boolean bUriIngestion, String path, String modelGraph, String dataGraph,
 			List<String> dataGraphs) {
-		Display.getDefault().syncExec(() -> {
-			synchronized (RackConsole.getConsole()) {
-				try {
-					NodeGroupExecutionClient client = ConnectionUtil.getNGEClient();
-					com.ge.research.semtk.resultSet.Table tab = new com.ge.research.semtk.resultSet.Table(header);
-					for (ArrayList<String> row : body) {
-						if (row.size() > 0 && !isEmpty(row)) {
-							tab.addRow(row);
-						}
-					}
-					String sCSV = tab.toCSVString();
-					RackConsole.getConsole().print("Uploading CSV at " + path + " as class " + ingestionId + "... ");
-					if (bUriIngestion == false) {
-						client.dispatchIngestFromCsvStringsByIdSync(ingestionId, sCSV,
-								ConnectionUtil.getSparqlConnection(modelGraph, dataGraph, dataGraphs));
+		try {
 
-					} else {
-						client.dispatchIngestFromCsvStringsByClassTemplateSync(ingestionId, "identifier", sCSV,
-								ConnectionUtil.getSparqlConnection(modelGraph, dataGraph, dataGraphs));
-
-					}
-					RackConsole.getConsole().printOK();
-				} catch (Exception e) {
-
-					RackConsole.getConsole().printFAIL();
-					RackConsole.getConsole().error("Upload of " + ingestionId + " failed, " + "CSV: " + path);
-					status = IngestionStatus.FAILED;
+			NodeGroupExecutionClient client = ConnectionUtil.getNGEClient();
+			com.ge.research.semtk.resultSet.Table tab = new com.ge.research.semtk.resultSet.Table(header);
+			for (ArrayList<String> row : body) {
+				if (row.size() > 0 && !isEmpty(row)) {
+					tab.addRow(row);
 				}
 			}
-		});
+			String sCSV = tab.toCSVString();
+			RackConsole.getConsole().print("Uploading CSV at " + path + " as class " + ingestionId + "... ");
+			if (bUriIngestion == false) {
+				client.dispatchIngestFromCsvStringsByIdSync(ingestionId, sCSV,
+						ConnectionUtil.getSparqlConnection(modelGraph, dataGraph, dataGraphs));
 
-		if (status != null && status == IngestionStatus.FAILED) {
-			return status;
+			} else {
+				client.dispatchIngestFromCsvStringsByClassTemplateSync(ingestionId, "identifier", sCSV,
+						ConnectionUtil.getSparqlConnection(modelGraph, dataGraph, dataGraphs));
+			}
+			RackConsole.getConsole().printOK();
+		} catch (Exception e) {
+
+			RackConsole.getConsole().printFAIL();
+			RackConsole.getConsole().error("Upload of " + ingestionId + " failed, " + "CSV: " + path);
+			return IngestionStatus.FAILED;
 		}
 
 		return IngestionStatus.DONE;
@@ -725,11 +693,8 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 					setRunning(true);
 					RackConsole.getConsole().clearConsole();
 				} else {
-					Display.getDefault().syncExec(() -> {
-						synchronized (RackConsole.getConsole()) {
-							RackConsole.getConsole().error(MANIFEST_IN_PROGRESS);
-						}
-					});
+					RackConsole.getConsole().error(MANIFEST_IN_PROGRESS);
+
 					return Status.CANCEL_STATUS;
 				}
 
