@@ -357,7 +357,6 @@ public class CustomStringUtils {
      * @return
      */
     public static Integer getCSVColumnIndex(String[] headerLine, String key) {
-    	System.out.println("sdsd" + Arrays.toString(headerLine));
         for (int i = 0; i < headerLine.length; i++) {
             if (headerLine[i].equalsIgnoreCase(key)) {
                 return i;

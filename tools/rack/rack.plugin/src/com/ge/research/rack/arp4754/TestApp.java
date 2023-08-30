@@ -14,21 +14,26 @@ import com.ge.research.rack.arp4754.structures.Configuration;
 public class TestApp {
 
     public static void main(String[] args) throws Exception {
-//    	String configFile = "C://Users/212807042/Desktop/RACK_tests/temp_results/arp4754_dev/dummy.config";
-//    	
-//    	Configuration config = ConfigReader.getConfigFromFile(configFile);
-//
-//    	System.out.println("Got config");
-//    	
-//    	System.out.println(config.getSysReq());
-//    	System.out.println(config.getItemReq());
-    	
+    	String configFile = "C://Users/212807042/Desktop/RACK_tests/temp_results/arp4754_dev/dummy.config";
     	String rackDir = "C://Users/212807042/Desktop/RACK_tests/temp_results/arp4754_dev";
-    	String configFile = "dummy.config";
+
     	
-    	DataProcessor processor = new DataProcessor();
+//    	Configuration config = ConfigReader.getConfigFromFile(configFile);
+
+    	Configuration config = ConfigReader.getConfigFromRACK(rackDir);
+
     	
-    	processor.getPlanData(rackDir, configFile);
+    	System.out.println("Got config");
+    	
+    	System.out.println(config.getSysReq());
+    	System.out.println(config.getItemReq());
+    	
+//    	String rackDir = "C://Users/212807042/Desktop/RACK_tests/temp_results/arp4754_dev";
+//    	String configFile = "dummy.config";
+//    	
+//    	DataProcessor processor = new DataProcessor();
+//    	
+//    	processor.getPlanData(rackDir, configFile);
     }
 
 	

@@ -32,7 +32,7 @@
 package com.ge.research.rack.do178c.oem;
 
 import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
-import com.ge.research.rack.do178c.constants.ReportQueries;
+import com.ge.research.rack.do178c.constants.DO178CQueries;
 import com.ge.research.rack.do178c.structures.DataItem;
 import com.ge.research.rack.do178c.structures.PsacNode;
 import com.ge.research.rack.do178c.structures.Requirement;
@@ -1945,7 +1945,7 @@ public class DataProcessor {
             SparqlConnectionInfo newConnPars = RackQueryUtils.hardcodedQueryConnectionForTesting();
 
             // Execute each predefined query
-            List<String> allQueryIds = ReportQueries.All.getAllQueries();
+            List<String> allQueryIds = DO178CQueries.All.getAllQueries();
             RackQueryUtils.executeMultiQueriesFromStore(allQueryIds, rackDir, newConnPars);
         } catch (Exception e) {
             System.out.println("ERROR: Was unable to successfuly query RACK!!\n");
@@ -1966,12 +1966,12 @@ public class DataProcessor {
         psacToActivityData =
                 RackQueryUtils.readCSVFile2(
                         RackQueryUtils.createCsvFilePath(
-                                ReportQueries.All.GET_PSAC.getQId(), rackDir));
+                                DO178CQueries.All.GET_PSAC.getQId(), rackDir));
 
         allDocs =
                 RackQueryUtils.readCSVFile2(
                         RackQueryUtils.createCsvFilePath(
-                                ReportQueries.All.A1_1_DOCS.getQId(), rackDir));
+                                DO178CQueries.All.A1_1_DOCS.getQId(), rackDir));
 
         /**
          * Notes:
@@ -1981,71 +1981,71 @@ public class DataProcessor {
         allSRS =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                ReportQueries.All.A2_1_SRS.getQId(), rackDir));
+                                DO178CQueries.All.A2_1_SRS.getQId(), rackDir));
         allCSID =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                ReportQueries.All.A2_1_CSID.getQId(), rackDir));
+                                DO178CQueries.All.A2_1_CSID.getQId(), rackDir));
 
         allPIDS =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                ReportQueries.All.A2_1_PIDS.getQId(), rackDir));
+                                DO178CQueries.All.A2_1_PIDS.getQId(), rackDir));
 
         srsToPIDSorCSID =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                ReportQueries.All.A2_1_SRS_TO_PIDS_CSID.getQId(), rackDir));
+                                DO178CQueries.All.A2_1_SRS_TO_PIDS_CSID.getQId(), rackDir));
 
         allDerSRS =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                ReportQueries.All.A2_2_DERSRS.getQId(), rackDir));
+                                DO178CQueries.All.A2_2_DERSRS.getQId(), rackDir));
 
         derSRSTrace =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                ReportQueries.All.A2_2_DERSRS_TRACE.getQId(), rackDir));
+                                DO178CQueries.All.A2_2_DERSRS_TRACE.getQId(), rackDir));
 
         allSUBDD =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                ReportQueries.All.A2_4_SUBDD.getQId(), rackDir));
+                                DO178CQueries.All.A2_4_SUBDD.getQId(), rackDir));
 
         subddToSRS =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                ReportQueries.All.A2_4_SUBDD_TO_SRS.getQId(), rackDir));
+                                DO178CQueries.All.A2_4_SUBDD_TO_SRS.getQId(), rackDir));
 
         allDerSUBDD =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                ReportQueries.All.A2_5_DERSUBDD.getQId(), rackDir));
+                                DO178CQueries.All.A2_5_DERSUBDD.getQId(), rackDir));
 
         derSUBDDTrace =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                ReportQueries.All.A2_5_DERSUBDD_TRACE.getQId(), rackDir));
+                                DO178CQueries.All.A2_5_DERSUBDD_TRACE.getQId(), rackDir));
 
         allSBVT =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                ReportQueries.All.A7_3_4_SBVT_TEST.getQId(), rackDir));
+                                DO178CQueries.All.A7_3_4_SBVT_TEST.getQId(), rackDir));
 
         allREVLOGS =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                ReportQueries.All.ALL_REVIEW_LOGS.getQId(), rackDir));
+                                DO178CQueries.All.ALL_REVIEW_LOGS.getQId(), rackDir));
 
         allSWCOMPS =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                ReportQueries.All.A5_5_SWCOMP_REQ_TRACE.getQId(), rackDir));
+                                DO178CQueries.All.A5_5_SWCOMP_REQ_TRACE.getQId(), rackDir));
 
         allSOURCETRACE =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                ReportQueries.All.ALL_SOURCES.getQId(), rackDir));
+                                DO178CQueries.All.ALL_SOURCES.getQId(), rackDir));
     }
 
     /**

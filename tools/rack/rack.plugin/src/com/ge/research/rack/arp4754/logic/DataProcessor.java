@@ -92,7 +92,8 @@ public class DataProcessor {
     private List<String[]> allSystemRequirementWIthSystem;
 
     private List<String[]> allItemRequirementWIthItem;
-    
+
+    private List<String[]> allSystemRequirementWithItemRequirement;
     
     // The Development Assurance Plan data
     private List<String[]> planData;
@@ -377,7 +378,12 @@ public class DataProcessor {
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
                                 DataProcessorUtils.getVarCSVID("allSystemWIthInterface", config) , rackDir));
-
+    	
+    	allSystemRequirementWithItemRequirement =
+                CSVUtil.getRows(
+                        RackQueryUtils.createCsvFilePath(
+                                DataProcessorUtils.getVarCSVID("allSystemRequirementWithItemRequirement", config) , rackDir));
+    		
     }
 
     

@@ -65,7 +65,6 @@ public class CSVUtil {
             RackConsole.getConsole().error("Reading CSV File: " + path);
         }
 
-//        System.out.println(Arrays.toString(columns));
         return columns;
     }
 

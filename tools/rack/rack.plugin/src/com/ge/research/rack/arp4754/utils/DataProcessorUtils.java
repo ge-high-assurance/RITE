@@ -49,7 +49,7 @@ public class DataProcessorUtils {
 			 id = config.getSysReq(); 
 		    break;    
 		  case "allInterfaceWithInputOutput":
-			 id = config.getIntrface() + "_with_io"; 
+			 id = config.getIntrface() + "_with_IO"; 
 		    break;    
 		  case "allItemRequirementWIthItem":
 			 id = config.getItemReq() +"_with_" + config.getItem(); 
@@ -59,7 +59,10 @@ public class DataProcessorUtils {
 		    break;      
 		  case "allSystemWIthInterface":
 			 id = config.getSystem() +"_with_" + config.getIntrface(); 
-		    break;      
+		    break;  
+		  case "allSystemRequirementWithItemRequirement":
+			 id = config.getSysReq() +"_with_" + config.getItemReq(); 
+		    break;    
 		  default:
 		    id = "";
 		    break;

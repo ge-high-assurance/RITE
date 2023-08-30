@@ -38,7 +38,7 @@ import java.util.stream.Stream;
 /**
  * @author Saswata Paul
  */
-public class ReportQueries {
+public class DO178CQueries {
 
     public enum All {
         GET_PSAC("psac_to_activities"),

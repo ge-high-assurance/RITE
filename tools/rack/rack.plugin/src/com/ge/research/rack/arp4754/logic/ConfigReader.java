@@ -6,9 +6,15 @@ package com.ge.research.rack.arp4754.logic;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.List;
 
+import com.ge.research.rack.arp4754.constants.ARP4754Queries;
 import com.ge.research.rack.arp4754.structures.Configuration;
+import com.ge.research.rack.arp4754.utils.DataProcessorUtils;
 import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
+import com.ge.research.rack.do178c.constants.DO178CQueries;
+import com.ge.research.rack.do178c.utils.RackQueryUtils;
+import com.ge.research.rack.utils.CSVUtil;
 
 /**
  * @author Saswata Paul
@@ -94,11 +100,41 @@ public class ConfigReader {
 	 * Gets the config stored in RACK
 	 * @return
 	 */
-	public Configuration getConfigFromRACK() {
+	public static Configuration getConfigFromRACK(String rackDir) {
 
 		Configuration projectConfig = new Configuration();
 		
+		List<String[]> configData  =
+                CSVUtil.getRows(
+                        RackQueryUtils.createCsvFilePath(
+                        		ARP4754Queries.All.GET_CONFIG.getQId(), rackDir));
 		
+		System.out.println(configData.get(0)[0]);
+		
+        String[] configCols =
+                CSVUtil.getColumnInfo(
+                        RackQueryUtils.createCsvFilePath(
+                        		ARP4754Queries.All.GET_CONFIG.getQId(), rackDir));
+        int configIdCol = CustomStringUtils.getCSVColumnIndex(configCols, "Configuration");
+        int derItemReqIdCol = CustomStringUtils.getCSVColumnIndex(configCols, "derivedItemRequirementAlias");
+        int derSysReqIdCol = CustomStringUtils.getCSVColumnIndex(configCols, "derivedSystemRequirementAlias");
+        int interfaceIdCol = CustomStringUtils.getCSVColumnIndex(configCols, "interfaceAlias");
+        int interfaceInputIdCol = CustomStringUtils.getCSVColumnIndex(configCols, "interfaceInputAlias");
+        int interfaceOutputIdCol = CustomStringUtils.getCSVColumnIndex(configCols, "interfaceOutputAlias");
+        int itemIdCol = CustomStringUtils.getCSVColumnIndex(configCols, "itemAlias");
+        int itemReqIdCol = CustomStringUtils.getCSVColumnIndex(configCols, "itemRequirementAlias");
+        int sysReqIdCol = CustomStringUtils.getCSVColumnIndex(configCols, "systemRequirementAlias");
+        int systemIdCol = CustomStringUtils.getCSVColumnIndex(configCols, "systemAlias");
+		
+        projectConfig.setDerivedItemReq(configData.get(0)[derItemReqIdCol]);
+        projectConfig.setDerivedSysReq(configData.get(0)[derSysReqIdCol]);
+        projectConfig.setIntrface(configData.get(0)[interfaceIdCol]);
+        projectConfig.setIntrfaceInput(configData.get(0)[interfaceInputIdCol]);
+        projectConfig.setIntrfaceOutput(configData.get(0)[interfaceOutputIdCol]);
+        projectConfig.setItem(configData.get(0)[itemIdCol]);
+        projectConfig.setItemReq(configData.get(0)[itemReqIdCol]);
+        projectConfig.setSysReq(configData.get(0)[sysReqIdCol]);
+        projectConfig.setSystem(configData.get(0)[systemIdCol]);
 		
 		return projectConfig;
 	}
