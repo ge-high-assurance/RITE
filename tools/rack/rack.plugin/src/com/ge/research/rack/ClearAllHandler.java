@@ -33,6 +33,8 @@ package com.ge.research.rack;
 
 import com.ge.research.rack.utils.ConnectionUtil;
 import com.ge.research.rack.utils.RackConsole;
+import com.ge.research.rack.views.ClearRackDialog;
+import com.ge.research.rack.views.SelectDataGraphsDialog;
 import com.ge.research.rack.views.ViewUtils;
 import com.ge.research.semtk.nodeGroupStore.client.NodeGroupStoreRestClient;
 import com.ge.research.semtk.resultSet.Table;
@@ -47,6 +49,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.*;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.console.IConsoleConstants;
 import org.eclipse.ui.console.IConsoleView;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -109,8 +112,18 @@ public class ClearAllHandler extends AbstractHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-
-        try {
+    	
+    	String queryNodegroup = "";
+       
+    	ClearRackDialog dialog =
+                new ClearRackDialog(
+                        Display.getDefault().getActiveShell(), queryNodegroup);
+        dialog.run();
+    	
+    	
+    	return null;
+    	
+    /*	try {
 
             String consoleViewId = IConsoleConstants.ID_CONSOLE_VIEW;
             IConsoleView consoleView =
@@ -179,6 +192,6 @@ public class ClearAllHandler extends AbstractHandler {
             e.printStackTrace();
         }
 
-        return null;
+        return null; */
     }
 }

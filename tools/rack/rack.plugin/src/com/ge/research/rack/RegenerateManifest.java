@@ -47,6 +47,8 @@ import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.DumperOptions.FlowStyle;
 import org.yaml.snakeyaml.Yaml;
 
+import com.ge.research.rack.utils.RackConsole;
+
 import java.io.ByteArrayInputStream;
 import java.io.CharArrayWriter;
 import java.io.InputStream;
@@ -321,9 +323,9 @@ public class RegenerateManifest extends AbstractHandler {
         // Ensure all the projects are visited at least once.
         // Duplicate visits due to references will be skipped.
         visitedProjects.clear();
-        for (IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
-            regenerateProjectManifest(project);
-        }
+        IProject project = HandlerUtils.getCurrentIProject(event);
+        regenerateProjectManifest(project);
+        RackConsole.getConsole().print("Done");
         return null;
     }
 }
