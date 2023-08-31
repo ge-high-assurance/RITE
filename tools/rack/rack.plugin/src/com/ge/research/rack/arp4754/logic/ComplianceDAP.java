@@ -33,6 +33,5 @@ package com.ge.research.rack.arp4754.logic;
 
 /**
  * @author 212807042
- *
  */
 public class ComplianceDAP {}

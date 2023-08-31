@@ -31,57 +31,49 @@
  */
 package com.ge.research.rack.arp4754.logic;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.ge.research.rack.arp4754.structures.Configuration;
 import com.ge.research.rack.arp4754.structures.Evidence;
 import com.ge.research.rack.arp4754.utils.DataProcessorUtils;
 import com.ge.research.rack.arp4754.utils.EvidenceUtils;
 import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
-import com.ge.research.rack.do178c.structures.Requirement;
 import com.ge.research.rack.do178c.utils.RackQueryUtils;
 import com.ge.research.rack.utils.CSVUtil;
 
-
-
-
-
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author 212807042
- *
  */
 public class DataProcessor {
-	
-	/**
-	 *  Class variables to store the raw data fetched from CSV files
-	 *  
-	 *  NOTE: There should be an associated query for each
-	 */
-	// The configuration
-	private Configuration config = new Configuration ();
-	
-	// All the independent element id data (TODO subset, add for more supporting objectives)
-    private List<String[]> allDerivedItemRequirement;   
 
-    private List<String[]> allDerivedSystemRequirement;   
+    /**
+     * Class variables to store the raw data fetched from CSV files
+     *
+     * <p>NOTE: There should be an associated query for each
+     */
+    // The configuration
+    private Configuration config = new Configuration();
 
-    private List<String[]> allInterface;   
+    // All the independent element id data (TODO subset, add for more supporting objectives)
+    private List<String[]> allDerivedItemRequirement;
 
-    private List<String[]> allInterfaceInput;   
+    private List<String[]> allDerivedSystemRequirement;
 
-    private List<String[]> allInterfaceOutput;   
+    private List<String[]> allInterface;
 
-    private List<String[]> allItem;   
+    private List<String[]> allInterfaceInput;
 
-    private List<String[]> allItemRequirement;   
+    private List<String[]> allInterfaceOutput;
+
+    private List<String[]> allItem;
+
+    private List<String[]> allItemRequirement;
 
     private List<String[]> allSystem;
-    
+
     private List<String[]> allSystemRequirement;
 
-    
     // The connections between the elements (TODO subset, add for more supporting objectives)
     // NOTE: The connections should be just one-level to enable automatic query synthesis in future
     // NOTE: The ordering here is a guide for how they should be created when creating objects
@@ -94,14 +86,14 @@ public class DataProcessor {
     private List<String[]> allItemRequirementWIthItem;
 
     private List<String[]> allSystemRequirementWithItemRequirement;
-    
+
     // The Development Assurance Plan data
     private List<String[]> planData;
-    
+
     // ARP4754 Element Objects
-    
+
     private List<Evidence> derItemReqObjs = new ArrayList<Evidence>();
- 
+
     private List<Evidence> derSysReqObjs = new ArrayList<Evidence>();
 
     private List<Evidence> interfaceObjs = new ArrayList<Evidence>();
@@ -118,19 +110,17 @@ public class DataProcessor {
 
     private List<Evidence> systemObjs = new ArrayList<Evidence>();
 
-    
     /**
      * Uses the config and the data to create objects for each type of evidence
-     * 
-     * NOTE: The order in which the connections are created is important: Depends on which stores which
-     * 
-     * 
+     *
+     * <p>NOTE: The order in which the connections are created is important: Depends on which stores
+     * which
      */
     private void createObjects(String rackDir) {
-    	
-    	//---- Create the element objects
+
+        // ---- Create the element objects
         for (String[] row : allDerivedItemRequirement) {
-        	Evidence newEvidenceObj = new Evidence(); 
+            Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
             newEvidenceObj.setType("Requirement");
             derItemReqObjs.add(newEvidenceObj);
@@ -138,7 +128,7 @@ public class DataProcessor {
         }
 
         for (String[] row : allDerivedSystemRequirement) {
-        	Evidence newEvidenceObj = new Evidence(); 
+            Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
             newEvidenceObj.setType("Requirement");
             derSysReqObjs.add(newEvidenceObj);
@@ -146,271 +136,325 @@ public class DataProcessor {
         }
 
         for (String[] row : allInterface) {
-        	Evidence newEvidenceObj = new Evidence(); 
+            Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
             newEvidenceObj.setType("Interface");
             interfaceObjs.add(newEvidenceObj);
             System.out.println("Created Object for " + row[0]);
         }
-        
+
         for (String[] row : allInterfaceInput) {
-        	Evidence newEvidenceObj = new Evidence(); 
+            Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
             newEvidenceObj.setType("InterfaceInput");
             interfaceInputObjs.add(newEvidenceObj);
             System.out.println("Created Object for " + row[0]);
         }
-        
+
         for (String[] row : allInterfaceOutput) {
-        	Evidence newEvidenceObj = new Evidence(); 
+            Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
             newEvidenceObj.setType("InterfaceOutput");
             interfaceOutputObjs.add(newEvidenceObj);
             System.out.println("Created Object for " + row[0]);
         }
-        
+
         for (String[] row : allItem) {
-        	Evidence newEvidenceObj = new Evidence(); 
+            Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
             newEvidenceObj.setType("Item");
             itemObjs.add(newEvidenceObj);
             System.out.println("Created Object for " + row[0]);
         }
-        
+
         for (String[] row : allItemRequirement) {
-        	Evidence newEvidenceObj = new Evidence(); 
+            Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
             newEvidenceObj.setType("ItemRequirement");
             itemReqObjs.add(newEvidenceObj);
             System.out.println("Created Object for " + row[0]);
         }
-        
+
         for (String[] row : allSystem) {
-        	Evidence newEvidenceObj = new Evidence(); 
+            Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
             newEvidenceObj.setType("System");
             itemObjs.add(newEvidenceObj);
             System.out.println("Created Object for " + row[0]);
         }
-        
+
         for (String[] row : allSystemRequirement) {
-        	Evidence newEvidenceObj = new Evidence(); 
+            Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
             newEvidenceObj.setType("SystemRequirement");
             sysReqObjs.add(newEvidenceObj);
             System.out.println("Created Object for " + row[0]);
         }
-    	
+
         for (String[] row : allSystem) {
-        	Evidence newEvidenceObj = new Evidence(); 
+            Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
             newEvidenceObj.setType("System");
             systemObjs.add(newEvidenceObj);
             System.out.println("Created Object for " + row[0]);
         }
-        
-    	//---- create the connections
-        
+
+        // ---- create the connections
+
         // get the header line for allInterfaceWithInputOutput csv file
         String[] allInterfaceWithInputOutputCols =
                 CSVUtil.getColumnInfo(
                         RackQueryUtils.createCsvFilePath(
-                                DataProcessorUtils.getVarCSVID("allInterfaceWithInputOutput", config) , rackDir));
-        int interfaceIdCol = CustomStringUtils.getCSVColumnIndex(allInterfaceWithInputOutputCols, config.getIntrface()+"_id");
-        int inputIdCol = CustomStringUtils.getCSVColumnIndex(allInterfaceWithInputOutputCols, config.getIntrfaceInput()+"_id");
-        int outputIdCol = CustomStringUtils.getCSVColumnIndex(allInterfaceWithInputOutputCols, config.getIntrfaceOutput()+"_id");
+                                DataProcessorUtils.getVarCSVID(
+                                        "allInterfaceWithInputOutput", config),
+                                rackDir));
+        int interfaceIdCol =
+                CustomStringUtils.getCSVColumnIndex(
+                        allInterfaceWithInputOutputCols, config.getIntrface() + "_id");
+        int inputIdCol =
+                CustomStringUtils.getCSVColumnIndex(
+                        allInterfaceWithInputOutputCols, config.getIntrfaceInput() + "_id");
+        int outputIdCol =
+                CustomStringUtils.getCSVColumnIndex(
+                        allInterfaceWithInputOutputCols, config.getIntrfaceOutput() + "_id");
 
-        for(String[] row : allInterfaceWithInputOutput) {
-        	if((row[interfaceIdCol] != null)) {
+        for (String[] row : allInterfaceWithInputOutput) {
+            if ((row[interfaceIdCol] != null)) {
                 System.out.println(row[interfaceIdCol]);
-        		// find index of the object in the appropriate evidence list
-        		int indx = EvidenceUtils.getEvidenceObjIndxById(interfaceObjs, row[interfaceIdCol]);
-        		// add the data to the object
-        		if((row[inputIdCol] != null)) {
-        			interfaceObjs.get(indx).getHasInputs().add(EvidenceUtils.getEvidenceObjById(interfaceInputObjs, row[inputIdCol]));
-        		}
-        		if((row[outputIdCol] != null)) {
-        			interfaceObjs.get(indx).getHasInputs().add(EvidenceUtils.getEvidenceObjById(interfaceOutputObjs, row[outputIdCol]));
-        		}
-        	}
+                // find index of the object in the appropriate evidence list
+                int indx = EvidenceUtils.getEvidenceObjIndxById(interfaceObjs, row[interfaceIdCol]);
+                // add the data to the object
+                if ((row[inputIdCol] != null)) {
+                    interfaceObjs
+                            .get(indx)
+                            .getHasInputs()
+                            .add(
+                                    EvidenceUtils.getEvidenceObjById(
+                                            interfaceInputObjs, row[inputIdCol]));
+                }
+                if ((row[outputIdCol] != null)) {
+                    interfaceObjs
+                            .get(indx)
+                            .getHasInputs()
+                            .add(
+                                    EvidenceUtils.getEvidenceObjById(
+                                            interfaceOutputObjs, row[outputIdCol]));
+                }
+            }
         }
-        
+
         // get the header line for allSystemWIthInterface csv file
-        System.out.println(RackQueryUtils.createCsvFilePath(
-                DataProcessorUtils.getVarCSVID("allSystemWIthInterface", config) , rackDir));
+        System.out.println(
+                RackQueryUtils.createCsvFilePath(
+                        DataProcessorUtils.getVarCSVID("allSystemWIthInterface", config), rackDir));
         String[] allSystemWIthInterfaceCols =
                 CSVUtil.getColumnInfo(
                         RackQueryUtils.createCsvFilePath(
-                                DataProcessorUtils.getVarCSVID("allSystemWIthInterface", config) , rackDir));
-        int systemIdCol = CustomStringUtils.getCSVColumnIndex(allSystemWIthInterfaceCols, config.getSystem()+"_id");
-        int interfaceIdCol2 = CustomStringUtils.getCSVColumnIndex(allSystemWIthInterfaceCols, config.getIntrface()+"_id");
+                                DataProcessorUtils.getVarCSVID("allSystemWIthInterface", config),
+                                rackDir));
+        int systemIdCol =
+                CustomStringUtils.getCSVColumnIndex(
+                        allSystemWIthInterfaceCols, config.getSystem() + "_id");
+        int interfaceIdCol2 =
+                CustomStringUtils.getCSVColumnIndex(
+                        allSystemWIthInterfaceCols, config.getIntrface() + "_id");
 
-        for(String[] row : allSystemWIthInterface) {
-        	if((row[systemIdCol] != null)) {
-        		// find index of the object in the appropriate evidence list
-        		int indx = EvidenceUtils.getEvidenceObjIndxById(systemObjs, row[systemIdCol]);
-        		// add the data to the object
-        		if((row[interfaceIdCol2] != null)) {
-        			systemObjs.get(indx).getHasInterfaces().add(EvidenceUtils.getEvidenceObjById(interfaceObjs, row[interfaceIdCol2]));
-        		}
-        	}
+        for (String[] row : allSystemWIthInterface) {
+            if ((row[systemIdCol] != null)) {
+                // find index of the object in the appropriate evidence list
+                int indx = EvidenceUtils.getEvidenceObjIndxById(systemObjs, row[systemIdCol]);
+                // add the data to the object
+                if ((row[interfaceIdCol2] != null)) {
+                    systemObjs
+                            .get(indx)
+                            .getHasInterfaces()
+                            .add(
+                                    EvidenceUtils.getEvidenceObjById(
+                                            interfaceObjs, row[interfaceIdCol2]));
+                }
+            }
         }
-        
-        
+
         // get the header line for allSystemRequirementWIthSystem csv file
         String[] allSystemRequirementWIthSystemCols =
                 CSVUtil.getColumnInfo(
                         RackQueryUtils.createCsvFilePath(
-                                DataProcessorUtils.getVarCSVID("allSystemRequirementWIthSystem", config) , rackDir));
+                                DataProcessorUtils.getVarCSVID(
+                                        "allSystemRequirementWIthSystem", config),
+                                rackDir));
         System.out.println("Sssas");
-        int sysReqIdCol = CustomStringUtils.getCSVColumnIndex(allSystemRequirementWIthSystemCols, config.getSysReq()+"_id");
-        int systemIdCol2 = CustomStringUtils.getCSVColumnIndex(allSystemRequirementWIthSystemCols, config.getSystem()+"_id");
+        int sysReqIdCol =
+                CustomStringUtils.getCSVColumnIndex(
+                        allSystemRequirementWIthSystemCols, config.getSysReq() + "_id");
+        int systemIdCol2 =
+                CustomStringUtils.getCSVColumnIndex(
+                        allSystemRequirementWIthSystemCols, config.getSystem() + "_id");
 
-        for(String[] row : allSystemRequirementWIthSystem) {
-        	if((row[sysReqIdCol] != null)) {
-        		// find index of the object in the appropriate evidence list
-        		int indx = EvidenceUtils.getEvidenceObjIndxById(sysReqObjs, row[sysReqIdCol]);
-        		// add the data to the object
-        		if((row[systemIdCol2] != null)) {
-        			sysReqObjs.get(indx).getAllocatedTo().add(EvidenceUtils.getEvidenceObjById(systemObjs, row[systemIdCol2]));
-        		}
-        	}
+        for (String[] row : allSystemRequirementWIthSystem) {
+            if ((row[sysReqIdCol] != null)) {
+                // find index of the object in the appropriate evidence list
+                int indx = EvidenceUtils.getEvidenceObjIndxById(sysReqObjs, row[sysReqIdCol]);
+                // add the data to the object
+                if ((row[systemIdCol2] != null)) {
+                    sysReqObjs
+                            .get(indx)
+                            .getAllocatedTo()
+                            .add(EvidenceUtils.getEvidenceObjById(systemObjs, row[systemIdCol2]));
+                }
+            }
         }
-        
-        
-        
+
         // get the header line for allItemRequirementWIthItem csv file
         String[] allItemRequirementWIthItemCols =
                 CSVUtil.getColumnInfo(
                         RackQueryUtils.createCsvFilePath(
-                                DataProcessorUtils.getVarCSVID("allItemRequirementWIthItem", config) , rackDir));
-        int itemReqIdCol = CustomStringUtils.getCSVColumnIndex(allItemRequirementWIthItemCols, config.getItemReq()+"_id");
-        int itemIdCol = CustomStringUtils.getCSVColumnIndex(allItemRequirementWIthItemCols, config.getItem()+"_id");
+                                DataProcessorUtils.getVarCSVID(
+                                        "allItemRequirementWIthItem", config),
+                                rackDir));
+        int itemReqIdCol =
+                CustomStringUtils.getCSVColumnIndex(
+                        allItemRequirementWIthItemCols, config.getItemReq() + "_id");
+        int itemIdCol =
+                CustomStringUtils.getCSVColumnIndex(
+                        allItemRequirementWIthItemCols, config.getItem() + "_id");
 
-        for(String[] row : allItemRequirementWIthItem) {
-        	if((row[itemReqIdCol] != null)) {
-        		// find index of the object in the appropriate evidence list
-        		int indx = EvidenceUtils.getEvidenceObjIndxById(itemReqObjs, row[itemReqIdCol]);
-        		// add the data to the object
-        		if((row[itemIdCol] != null)) {
-        			itemReqObjs.get(indx).getAllocatedTo().add(EvidenceUtils.getEvidenceObjById(itemObjs, row[itemIdCol]));
-        		}
-        	}
+        for (String[] row : allItemRequirementWIthItem) {
+            if ((row[itemReqIdCol] != null)) {
+                // find index of the object in the appropriate evidence list
+                int indx = EvidenceUtils.getEvidenceObjIndxById(itemReqObjs, row[itemReqIdCol]);
+                // add the data to the object
+                if ((row[itemIdCol] != null)) {
+                    itemReqObjs
+                            .get(indx)
+                            .getAllocatedTo()
+                            .add(EvidenceUtils.getEvidenceObjById(itemObjs, row[itemIdCol]));
+                }
+            }
         }
-        
     }
 
-
-    
-	/**
-	 *  function to use the configReader to read the config and the read the data from the .csv files (TODO subset, add for more supporting objectives)
-	 * @param rackDir
-	 * @param configPath
-	 */
-    private void readCSVs(String rackDir) {
-    	
-    	// TODO: Future: Generate queries and query ids dynamically 
-    	
-    	// Use the string from configurations to create the Query/CSV IDS and use that to read the files
-    	allDerivedItemRequirement = 
-                CSVUtil.getRows(
-                        RackQueryUtils.createCsvFilePath(
-                                DataProcessorUtils.getVarCSVID("allDerivedItemRequirement", config) , rackDir));
-
-
-    	allDerivedSystemRequirement = 
-                CSVUtil.getRows(
-                        RackQueryUtils.createCsvFilePath(
-                                DataProcessorUtils.getVarCSVID("allDerivedSystemRequirement", config) , rackDir));
-
-    	allInterface = 
-                CSVUtil.getRows(
-                        RackQueryUtils.createCsvFilePath(
-                                DataProcessorUtils.getVarCSVID("allInterface", config) , rackDir));
-
-    	allInterfaceInput = 
-                CSVUtil.getRows(
-                        RackQueryUtils.createCsvFilePath(
-                                DataProcessorUtils.getVarCSVID("allInterfaceInput", config) , rackDir));
-
-    	allInterfaceOutput = 
-                CSVUtil.getRows(
-                        RackQueryUtils.createCsvFilePath(
-                                DataProcessorUtils.getVarCSVID("allInterfaceOutput", config) , rackDir));
-
-    	allItem = 
-                CSVUtil.getRows(
-                        RackQueryUtils.createCsvFilePath(
-                                DataProcessorUtils.getVarCSVID("allItem", config) , rackDir));
-    	
-    	allSystem = 
-                CSVUtil.getRows(
-                        RackQueryUtils.createCsvFilePath(
-                                DataProcessorUtils.getVarCSVID("allSystem", config) , rackDir));
-
-    	allItemRequirement = 
-                CSVUtil.getRows(
-                        RackQueryUtils.createCsvFilePath(
-                                DataProcessorUtils.getVarCSVID("allItemRequirement", config) , rackDir));
-
-    	allSystemRequirement = 
-                CSVUtil.getRows(
-                        RackQueryUtils.createCsvFilePath(
-                                DataProcessorUtils.getVarCSVID("allSystemRequirement", config) , rackDir));
-
-    	allInterfaceWithInputOutput = 
-                CSVUtil.getRows(
-                        RackQueryUtils.createCsvFilePath(
-                                DataProcessorUtils.getVarCSVID("allInterfaceWithInputOutput", config) , rackDir));
-
-    	allItemRequirementWIthItem = 
-                CSVUtil.getRows(
-                        RackQueryUtils.createCsvFilePath(
-                                DataProcessorUtils.getVarCSVID("allItemRequirementWIthItem", config) , rackDir));
-
-
-    	allSystemRequirementWIthSystem = 
-                CSVUtil.getRows(
-                        RackQueryUtils.createCsvFilePath(
-                                DataProcessorUtils.getVarCSVID("allSystemRequirementWIthSystem", config) , rackDir));
-
-    	allSystemWIthInterface = 
-                CSVUtil.getRows(
-                        RackQueryUtils.createCsvFilePath(
-                                DataProcessorUtils.getVarCSVID("allSystemWIthInterface", config) , rackDir));
-    	
-    	allSystemRequirementWithItemRequirement =
-                CSVUtil.getRows(
-                        RackQueryUtils.createCsvFilePath(
-                                DataProcessorUtils.getVarCSVID("allSystemRequirementWithItemRequirement", config) , rackDir));
-    		
-    }
-
-    
     /**
-     * Function to get the config
+     * function to use the configReader to read the config and the read the data from the .csv files
+     * (TODO subset, add for more supporting objectives)
+     *
      * @param rackDir
      * @param configPath
      */
-    private void getConfig( String rackDir, String configPath) {
-    	// Get configuration
-    	config = ConfigReader.getConfigFromFile(configPath);
+    private void readCSVs(String rackDir) {
+
+        // TODO: Future: Generate queries and query ids dynamically
+
+        // Use the string from configurations to create the Query/CSV IDS and use that to read the
+        // files
+        allDerivedItemRequirement =
+                CSVUtil.getRows(
+                        RackQueryUtils.createCsvFilePath(
+                                DataProcessorUtils.getVarCSVID("allDerivedItemRequirement", config),
+                                rackDir));
+
+        allDerivedSystemRequirement =
+                CSVUtil.getRows(
+                        RackQueryUtils.createCsvFilePath(
+                                DataProcessorUtils.getVarCSVID(
+                                        "allDerivedSystemRequirement", config),
+                                rackDir));
+
+        allInterface =
+                CSVUtil.getRows(
+                        RackQueryUtils.createCsvFilePath(
+                                DataProcessorUtils.getVarCSVID("allInterface", config), rackDir));
+
+        allInterfaceInput =
+                CSVUtil.getRows(
+                        RackQueryUtils.createCsvFilePath(
+                                DataProcessorUtils.getVarCSVID("allInterfaceInput", config),
+                                rackDir));
+
+        allInterfaceOutput =
+                CSVUtil.getRows(
+                        RackQueryUtils.createCsvFilePath(
+                                DataProcessorUtils.getVarCSVID("allInterfaceOutput", config),
+                                rackDir));
+
+        allItem =
+                CSVUtil.getRows(
+                        RackQueryUtils.createCsvFilePath(
+                                DataProcessorUtils.getVarCSVID("allItem", config), rackDir));
+
+        allSystem =
+                CSVUtil.getRows(
+                        RackQueryUtils.createCsvFilePath(
+                                DataProcessorUtils.getVarCSVID("allSystem", config), rackDir));
+
+        allItemRequirement =
+                CSVUtil.getRows(
+                        RackQueryUtils.createCsvFilePath(
+                                DataProcessorUtils.getVarCSVID("allItemRequirement", config),
+                                rackDir));
+
+        allSystemRequirement =
+                CSVUtil.getRows(
+                        RackQueryUtils.createCsvFilePath(
+                                DataProcessorUtils.getVarCSVID("allSystemRequirement", config),
+                                rackDir));
+
+        allInterfaceWithInputOutput =
+                CSVUtil.getRows(
+                        RackQueryUtils.createCsvFilePath(
+                                DataProcessorUtils.getVarCSVID(
+                                        "allInterfaceWithInputOutput", config),
+                                rackDir));
+
+        allItemRequirementWIthItem =
+                CSVUtil.getRows(
+                        RackQueryUtils.createCsvFilePath(
+                                DataProcessorUtils.getVarCSVID(
+                                        "allItemRequirementWIthItem", config),
+                                rackDir));
+
+        allSystemRequirementWIthSystem =
+                CSVUtil.getRows(
+                        RackQueryUtils.createCsvFilePath(
+                                DataProcessorUtils.getVarCSVID(
+                                        "allSystemRequirementWIthSystem", config),
+                                rackDir));
+
+        allSystemWIthInterface =
+                CSVUtil.getRows(
+                        RackQueryUtils.createCsvFilePath(
+                                DataProcessorUtils.getVarCSVID("allSystemWIthInterface", config),
+                                rackDir));
+
+        allSystemRequirementWithItemRequirement =
+                CSVUtil.getRows(
+                        RackQueryUtils.createCsvFilePath(
+                                DataProcessorUtils.getVarCSVID(
+                                        "allSystemRequirementWithItemRequirement", config),
+                                rackDir));
     }
-    
-	// Entry point that does sequence of operations    
+
+    /**
+     * Function to get the config
+     *
+     * @param rackDir
+     * @param configPath
+     */
+    private void getConfig(String rackDir, String configPath) {
+        // Get configuration
+        config = ConfigReader.getConfigFromFile(configPath);
+    }
+
+    // Entry point that does sequence of operations
     public void getPlanData(String rackDir, String configFileName) {
-    	String configPath = rackDir + "/" + configFileName;
-    	
-    	// read config
-    	getConfig(rackDir, configPath);
-    	
-    	// get csv data in class variables
-    	readCSVs(rackDir);
-    	
-    	// create arp4754 element objects
-    	createObjects(rackDir);
-    	
-    	
-    	
+        String configPath = rackDir + "/" + configFileName;
+
+        // read config
+        getConfig(rackDir, configPath);
+
+        // get csv data in class variables
+        readCSVs(rackDir);
+
+        // create arp4754 element objects
+        createObjects(rackDir);
     }
 }
