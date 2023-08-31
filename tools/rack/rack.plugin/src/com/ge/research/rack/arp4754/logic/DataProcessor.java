@@ -35,6 +35,7 @@ import com.ge.research.rack.arp4754.structures.Configuration;
 import com.ge.research.rack.arp4754.structures.Evidence;
 import com.ge.research.rack.arp4754.utils.DataProcessorUtils;
 import com.ge.research.rack.arp4754.utils.EvidenceUtils;
+import com.ge.research.rack.autoGsn.utils.CustomFileUtils;
 import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
 import com.ge.research.rack.do178c.utils.RackQueryUtils;
 import com.ge.research.rack.utils.CSVUtil;
@@ -85,7 +86,7 @@ public class DataProcessor {
 
     private List<String[]> allItemRequirementWIthItem;
 
-    private List<String[]> allSystemRequirementWithItemRequirement;
+    private List<String[]> allItemRequirementWIthSystemRequirement;
 
     // The Development Assurance Plan data
     private List<String[]> planData;
@@ -116,7 +117,7 @@ public class DataProcessor {
      * <p>NOTE: The order in which the connections are created is important: Depends on which stores
      * which
      */
-    private void createObjects(String rackDir) {
+    private void createEvidenceObjects(String rackDir) {
 
         // ---- Create the element objects
         for (String[] row : allDerivedItemRequirement) {
@@ -282,7 +283,6 @@ public class DataProcessor {
                                 DataProcessorUtils.getVarCSVID(
                                         "allSystemRequirementWIthSystem", config),
                                 rackDir));
-        System.out.println("Sssas");
         int sysReqIdCol =
                 CustomStringUtils.getCSVColumnIndex(
                         allSystemRequirementWIthSystemCols, config.getSysReq() + "_id");
@@ -331,6 +331,34 @@ public class DataProcessor {
                 }
             }
         }
+        
+        // get the header line for allItemRequirementWIthSystemRequirement csv file
+        String[] allItemRequirementWIthSystemRequirementCols =
+                CSVUtil.getColumnInfo(
+                        RackQueryUtils.createCsvFilePath(
+                                DataProcessorUtils.getVarCSVID(
+                                        "allItemRequirementWIthSystemRequirement", config),
+                                rackDir));
+        int sysReqIdCol2 =
+                CustomStringUtils.getCSVColumnIndex(
+                		allItemRequirementWIthSystemRequirementCols, config.getSysReq() + "_id");
+        int itemReqIdCol2 =
+                CustomStringUtils.getCSVColumnIndex(
+                		allItemRequirementWIthSystemRequirementCols, config.getItemReq() + "_id");
+
+        for (String[] row : allItemRequirementWIthSystemRequirement) {
+            if ((row[itemReqIdCol2] != null)) {
+                // find index of the object in the appropriate evidence list
+                int indx = EvidenceUtils.getEvidenceObjIndxById(itemReqObjs, row[itemReqIdCol2]);
+                // add the data to the object
+                if ((row[systemIdCol2] != null)) {
+                    itemReqObjs
+                            .get(indx)
+                            .getAllocatedTo()
+                            .add(EvidenceUtils.getEvidenceObjById(sysReqObjs, row[systemIdCol2]));
+                }
+            }
+        }
     }
 
     /**
@@ -340,7 +368,7 @@ public class DataProcessor {
      * @param rackDir
      * @param configPath
      */
-    private void readCSVs(String rackDir) {
+    private void readEvidenceCSVs(String rackDir) {
 
         // TODO: Future: Generate queries and query ids dynamically
 
@@ -425,11 +453,11 @@ public class DataProcessor {
                                 DataProcessorUtils.getVarCSVID("allSystemWIthInterface", config),
                                 rackDir));
 
-        allSystemRequirementWithItemRequirement =
+        allItemRequirementWIthSystemRequirement =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
                                 DataProcessorUtils.getVarCSVID(
-                                        "allSystemRequirementWithItemRequirement", config),
+                                        "allItemRequirementWIthSystemRequirement", config),
                                 rackDir));
     }
 
@@ -441,20 +469,26 @@ public class DataProcessor {
      */
     private void getConfig(String rackDir, String configPath) {
         // Get configuration
-        config = ConfigReader.getConfigFromFile(configPath);
+        config = ConfigReader.getConfigFromRACK(rackDir);
     }
 
     // Entry point that does sequence of operations
     public void getPlanData(String rackDir, String configFileName) {
         String configPath = rackDir + "/" + configFileName;
 
-        // read config
+        // clear the rack directory
+        CustomFileUtils.clearDirectory(rackDir);
+        
+        // read project config from RACK
         getConfig(rackDir, configPath);
+        
+        // fetch the evidence from RACK as csv files by executing queries
+        DataProcessorUtils.createAndExecuteDataQueries(config, rackDir);
 
-        // get csv data in class variables
-        readCSVs(rackDir);
+        // load csv data into class variables
+        readEvidenceCSVs(rackDir);
 
-        // create arp4754 element objects
-        createObjects(rackDir);
+        // create arp4754 element objects using the evidence data in class variables
+        createEvidenceObjects(rackDir);
     }
 }

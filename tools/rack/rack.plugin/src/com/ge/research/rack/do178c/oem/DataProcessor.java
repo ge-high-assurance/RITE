@@ -31,6 +31,7 @@
  */
 package com.ge.research.rack.do178c.oem;
 
+import com.ge.research.rack.autoGsn.utils.CustomFileUtils;
 import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
 import com.ge.research.rack.do178c.constants.DO178CQueries;
 import com.ge.research.rack.do178c.structures.DataItem;
@@ -1931,10 +1932,6 @@ public class DataProcessor {
     private void queryRackForDO178CPsac() {
 
         try {
-            // clean the outputs directory
-            File targetDirectory = new File(rackDir + "auto");
-            FileUtils.cleanDirectory(targetDirectory);
-
             //            // ***************** DO NOT DELETE ***************** TURNED OFF FOR
             // TESTING
             //            // Connect to RACK using RACK preferences
@@ -2057,7 +2054,7 @@ public class DataProcessor {
     public PsacNode getPSACData(String outDir) {
 
         rackDir = outDir;
-
+        
         // fetch the necessary data from RACK
         fetchData();
 

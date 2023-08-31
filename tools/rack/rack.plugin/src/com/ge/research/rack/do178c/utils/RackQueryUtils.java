@@ -32,6 +32,7 @@
 package com.ge.research.rack.do178c.utils;
 
 import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
+import com.ge.research.rack.do178c.constants.DO178CQueries;
 import com.ge.research.rack.do178c.structures.SparqlConnectionInfo;
 import com.ge.research.rack.utils.ConnectionUtil;
 import com.ge.research.rack.utils.Core;
@@ -294,6 +295,34 @@ public class RackQueryUtils {
         }
     }
 
+    /**
+     * Given a list of queries and an output directory creates a sparql connection and then a
+     * filename with the queryId for each query and executes each
+     *
+     * @param Queries
+     * @param outDir
+     * @throws Exception
+     */
+    public static void createConnectionAndExecuteMultiQueriesFromStore(
+            List<String> Queries, String outDir) {
+
+        //            // ***************** DO NOT DELETE ***************** TURNED OFF FOR
+        // TESTING
+        //            // Connect to RACK using RACK preferences
+        //            SparqlConnectionInfo newConnPars =
+        // RackQueryUtils.initiateQueryConnection();
+
+        // FOR TESTING ONLY : Connect to RACK using hardcoded preferences
+        SparqlConnectionInfo newConnPars = RackQueryUtils.hardcodedQueryConnectionForTesting();
+    	
+        for (int i = 0; i < Queries.size(); i++) {
+
+            String queryId = Queries.get(i);
+
+            executeSingleQueryFromStore(queryId, outDir, newConnPars);
+        }
+    }
+    
     /**
      * Reads a csv file and returns data packed into a list of string arrays where each array
      * represents a line in the file

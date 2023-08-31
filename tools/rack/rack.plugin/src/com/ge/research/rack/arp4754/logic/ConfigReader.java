@@ -139,8 +139,6 @@ public class ConfigReader {
                         RackQueryUtils.createCsvFilePath(
                                 ARP4754Queries.All.GET_CONFIG.getQId(), rackDir));
 
-        System.out.println(configData.get(0)[0]);
-
         // read file column
         String[] configCols =
                 CSVUtil.getColumnInfo(
@@ -180,10 +178,6 @@ public class ConfigReader {
     private static void queryRackForARP4754Config(String rackDir) {
 
         try {
-            // clean the outputs directory
-            File targetDirectory = new File(rackDir);
-            FileUtils.cleanDirectory(targetDirectory);
-
             //            // ***************** DO NOT DELETE ***************** TURNED OFF FOR
             // TESTING
             //            // Connect to RACK using RACK preferences
