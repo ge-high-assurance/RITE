@@ -120,6 +120,7 @@ public class DataProcessor {
     private void createEvidenceObjects(String rackDir) {
 
         // ---- Create the element objects
+    	System.out.println("---- Creating Objects for DerivedItemRequirement ----");
         for (String[] row : allDerivedItemRequirement) {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
@@ -128,6 +129,7 @@ public class DataProcessor {
             System.out.println("Created Object for " + row[0]);
         }
 
+    	System.out.println("---- Creating Objects for DerivedSystemRequirement ----");
         for (String[] row : allDerivedSystemRequirement) {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
@@ -136,6 +138,7 @@ public class DataProcessor {
             System.out.println("Created Object for " + row[0]);
         }
 
+    	System.out.println("---- Creating Objects for Interface ----");
         for (String[] row : allInterface) {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
@@ -144,6 +147,7 @@ public class DataProcessor {
             System.out.println("Created Object for " + row[0]);
         }
 
+    	System.out.println("---- Creating Objects for InterfaceInput ----");
         for (String[] row : allInterfaceInput) {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
@@ -152,6 +156,7 @@ public class DataProcessor {
             System.out.println("Created Object for " + row[0]);
         }
 
+    	System.out.println("---- Creating Objects for InterfaceOutput ----");
         for (String[] row : allInterfaceOutput) {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
@@ -160,6 +165,7 @@ public class DataProcessor {
             System.out.println("Created Object for " + row[0]);
         }
 
+    	System.out.println("---- Creating Objects for Item ----");
         for (String[] row : allItem) {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
@@ -168,6 +174,7 @@ public class DataProcessor {
             System.out.println("Created Object for " + row[0]);
         }
 
+    	System.out.println("---- Creating Objects for ItemRequirement ----");
         for (String[] row : allItemRequirement) {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
@@ -176,6 +183,7 @@ public class DataProcessor {
             System.out.println("Created Object for " + row[0]);
         }
 
+    	System.out.println("---- Creating Objects for System ----");
         for (String[] row : allSystem) {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
@@ -184,6 +192,7 @@ public class DataProcessor {
             System.out.println("Created Object for " + row[0]);
         }
 
+    	System.out.println("---- Creating Objects for SystemRequirement ----");
         for (String[] row : allSystemRequirement) {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
@@ -192,6 +201,7 @@ public class DataProcessor {
             System.out.println("Created Object for " + row[0]);
         }
 
+    	System.out.println("---- Creating Objects for System ----");
         for (String[] row : allSystem) {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
@@ -221,7 +231,7 @@ public class DataProcessor {
 
         for (String[] row : allInterfaceWithInputOutput) {
             if ((row[interfaceIdCol] != null)) {
-                System.out.println(row[interfaceIdCol]);
+//                System.out.println(row[interfaceIdCol]);
                 // find index of the object in the appropriate evidence list
                 int indx = EvidenceUtils.getEvidenceObjIndxById(interfaceObjs, row[interfaceIdCol]);
                 // add the data to the object
@@ -245,9 +255,8 @@ public class DataProcessor {
         }
 
         // get the header line for allSystemWIthInterface csv file
-        System.out.println(
-                RackQueryUtils.createCsvFilePath(
-                        DataProcessorUtils.getVarCSVID("allSystemWIthInterface", config), rackDir));
+//        System.out.println( RackQueryUtils.createCsvFilePath(DataProcessorUtils.getVarCSVID("allSystemWIthInterface", config), rackDir));
+
         String[] allSystemWIthInterfaceCols =
                 CSVUtil.getColumnInfo(
                         RackQueryUtils.createCsvFilePath(
@@ -292,6 +301,7 @@ public class DataProcessor {
 
         for (String[] row : allSystemRequirementWIthSystem) {
             if ((row[sysReqIdCol] != null)) {
+            	System.out.println(row[sysReqIdCol]);
                 // find index of the object in the appropriate evidence list
                 int indx = EvidenceUtils.getEvidenceObjIndxById(sysReqObjs, row[sysReqIdCol]);
                 // add the data to the object

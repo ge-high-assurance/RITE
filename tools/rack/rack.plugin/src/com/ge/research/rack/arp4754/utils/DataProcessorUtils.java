@@ -128,7 +128,7 @@ public class DataProcessorUtils {
 		allQueryIds.add(getVarCSVID("allItem", config));
 		allQueryIds.add(getVarCSVID("allItemRequirement", config));
 		allQueryIds.add(getVarCSVID("allSystem", config));
-		allQueryIds.add(getVarCSVID("allItemRequirement", config));
+		allQueryIds.add(getVarCSVID("allSystemRequirement", config));
 		allQueryIds.add(getVarCSVID("allInterfaceWithInputOutput", config));
 		allQueryIds.add(getVarCSVID("allItemRequirementWIthItem", config));
 		allQueryIds.add(getVarCSVID("allSystemRequirementWIthSystem", config));
