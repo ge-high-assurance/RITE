@@ -60,6 +60,9 @@ public class DataProcessorUtils {
     public static String getVarCSVID(String key, Configuration config) {
         String id = "";
         switch (key) {
+        	case "planData":
+        		id = "getDAP";
+        		break;        
             case "allDerivedItemRequirement":
                 id = config.getDerivedItemReq();
                 break;
@@ -120,6 +123,7 @@ public class DataProcessorUtils {
         // Create all required query IDs
 		List<String> allQueryIds = new ArrayList<String>();
 		
+		allQueryIds.add(getVarCSVID("planData", config));
 		allQueryIds.add(getVarCSVID("allDerivedItemRequirement", config));
 		allQueryIds.add(getVarCSVID("allDerivedSystemRequirement", config));
 		allQueryIds.add(getVarCSVID("allInterface", config));

@@ -32,7 +32,9 @@
 package com.ge.research.rack.arp4754.logic;
 
 import com.ge.research.rack.arp4754.structures.Configuration;
+import com.ge.research.rack.arp4754.structures.DAPlan;
 import com.ge.research.rack.arp4754.structures.Evidence;
+import com.ge.research.rack.arp4754.utils.DAPlanUtils;
 import com.ge.research.rack.arp4754.utils.DataProcessorUtils;
 import com.ge.research.rack.arp4754.utils.EvidenceUtils;
 import com.ge.research.rack.autoGsn.utils.CustomFileUtils;
@@ -53,9 +55,10 @@ public class DataProcessor {
      *
      * <p>NOTE: There should be an associated query for each
      */
-    // The configuration
-    private Configuration config = new Configuration();
-
+    //--- RAW DATA AS LIST OF STRINGS
+	// The plan
+    private List<String[]> planData;
+	
     // All the independent element id data (TODO subset, add for more supporting objectives)
     private List<String[]> allDerivedItemRequirement;
 
@@ -88,29 +91,112 @@ public class DataProcessor {
 
     private List<String[]> allItemRequirementWIthSystemRequirement;
 
-    // The Development Assurance Plan data
-    private List<String[]> planData;
+	
+	//--- PROCESSED DATA OBJECTS
+    // The configuration
+    private Configuration config = new Configuration();
 
+    // The Plan 
+    private DAPlan planNode = new DAPlan();
+    
     // ARP4754 Element Objects
+    private DAPlan.Output Artifacts = new DAPlan().new Output();
 
-    private List<Evidence> derItemReqObjs = new ArrayList<Evidence>();
 
-    private List<Evidence> derSysReqObjs = new ArrayList<Evidence>();
+    /**
+     * Creates the DAP object with all plans, processes, systems, and objectives
+     * 
+     * Algo:
+     *      1. create the objective objects
+     *      2. Create the process objects and attach the objectives
+     *      3. Create the plan object and attach the processes and the system, DAL
+     * 
+     * @param rackDir
+     */
+    private void createPlanObject(String rackDir) {
+    
+    	// get all headers for the csv file
+        String[] allCols =
+                CSVUtil.getColumnInfo(
+                        RackQueryUtils.createCsvFilePath(DataProcessorUtils.getVarCSVID("planData", config),rackDir));
+    	
+        int planIdCol = CustomStringUtils.getCSVColumnIndex(allCols, "Plan_id");
+        int sysIdCol = CustomStringUtils.getCSVColumnIndex(allCols, "System_id");
+        int dalCol = CustomStringUtils.getCSVColumnIndex(allCols, "DevelopmentAssuranceLevel");
+        int procIdCol = CustomStringUtils.getCSVColumnIndex(allCols, "Process_id");
+        int objIdCol = CustomStringUtils.getCSVColumnIndex(allCols, "Objective_id");
+        int planDescCol = CustomStringUtils.getCSVColumnIndex(allCols, "Plan_desc");
+        int sysDescCol = CustomStringUtils.getCSVColumnIndex(allCols, "System_desc");
+        int procDescCol = CustomStringUtils.getCSVColumnIndex(allCols, "Process_desc");
+        int objDescCol = CustomStringUtils.getCSVColumnIndex(allCols, "Objective_desc");
 
-    private List<Evidence> interfaceObjs = new ArrayList<Evidence>();
+        System.out.println(planIdCol + " " + sysIdCol + " " + dalCol + " " + procIdCol + " " + objIdCol);
 
-    private List<Evidence> interfaceInputObjs = new ArrayList<Evidence>();
+        // Create a list of Objective objects
+        List<DAPlan.Objective> objectives = new ArrayList<DAPlan.Objective>();
 
-    private List<Evidence> interfaceOutputObjs = new ArrayList<Evidence>();
+        for (String[] row : planData) {
+            if ((row[objIdCol] != null)) {
+            	// if objective does not already exist then create a new objective
+            	if(DAPlanUtils.getObjectiveObjectFromList(objectives, row[objIdCol])==null) {
+            		DAPlan.Objective newObjective = new DAPlan().new Objective();
+            		
+            		System.out.println("Created Objective object for " + row[objIdCol]);
+            		
+            		newObjective.setId(row[objIdCol]);
+            		if(row[objDescCol]!=null) {
+                		newObjective.setDesc(row[objDescCol]);            			
+            		}
+            		objectives.add(newObjective);
+            	}
+            }
+        }
 
-    private List<Evidence> itemObjs = new ArrayList<Evidence>();
 
-    private List<Evidence> itemReqObjs = new ArrayList<Evidence>();
+        // Create a list of Process objects
+        List<DAPlan.Process> processes = new ArrayList<DAPlan.Process>();
 
-    private List<Evidence> sysReqObjs = new ArrayList<Evidence>();
+        for (String[] row : planData) {
+            if ((row[procIdCol] != null)) {
+            	// if process does not already exist then create a new process
+            	if(DAPlanUtils.getProcessObjectFromList(processes, row[procIdCol])==null) {
+            		DAPlan.Process newProcess = new DAPlan().new Process();
 
-    private List<Evidence> systemObjs = new ArrayList<Evidence>();
+            		System.out.println("Created Process object for " + row[procIdCol]);
 
+            		newProcess.setId(row[procIdCol]);
+            		if(row[procDescCol]!=null) {
+                		newProcess.setDesc(row[procDescCol]);            			
+            		}
+            		processes.add(newProcess);            		
+            	}
+            	// if the row contains an objective, find the process object from the list and add the objective (if not already added)
+            	if(row[objIdCol]!=null) {
+            		// if the process does not contain the objective then add the objective to the process
+            		int existingProcessIndx = DAPlanUtils.getProcessObjectFromList(processes, row[procIdCol]);
+            		if(DAPlanUtils.getObjectiveObjectFromList(processes.get(existingProcessIndx).getObjectives(),row[objIdCol]) == null) {
+            			int existingObjectiveIndx = DAPlanUtils.getObjectiveObjectFromList(objectives, row[objIdCol]);
+            			processes.get(existingProcessIndx).getObjectives().add(objectives.get(existingObjectiveIndx));
+            		}
+            	}
+            }
+        }
+        
+        // Add things to the plan
+       if(planData.get(0)[planIdCol]!=null) {
+    	   planNode.setId(planData.get(0)[planIdCol]);
+       }
+       if(planData.get(0)[planDescCol]!=null) {
+    	   planNode.setDesc(planData.get(0)[planDescCol]);
+       }
+       if(planData.get(0)[sysIdCol]!=null) {
+    	   planNode.setSystem(planData.get(0)[sysIdCol]);
+       }
+       planNode.setProcesses(processes);    
+        
+    }
+    
+   
     /**
      * Uses the config and the data to create objects for each type of evidence
      *
@@ -125,7 +211,7 @@ public class DataProcessor {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
             newEvidenceObj.setType("Requirement");
-            derItemReqObjs.add(newEvidenceObj);
+            Artifacts.getDerItemReqObjs().add(newEvidenceObj);
             System.out.println("Created Object for " + row[0]);
         }
 
@@ -134,7 +220,7 @@ public class DataProcessor {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
             newEvidenceObj.setType("Requirement");
-            derSysReqObjs.add(newEvidenceObj);
+            Artifacts.getDerSysReqObjs().add(newEvidenceObj);
             System.out.println("Created Object for " + row[0]);
         }
 
@@ -143,7 +229,7 @@ public class DataProcessor {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
             newEvidenceObj.setType("Interface");
-            interfaceObjs.add(newEvidenceObj);
+            Artifacts.getInterfaceObjs().add(newEvidenceObj);
             System.out.println("Created Object for " + row[0]);
         }
 
@@ -152,7 +238,7 @@ public class DataProcessor {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
             newEvidenceObj.setType("InterfaceInput");
-            interfaceInputObjs.add(newEvidenceObj);
+            Artifacts.getInterfaceInputObjs().add(newEvidenceObj);
             System.out.println("Created Object for " + row[0]);
         }
 
@@ -161,7 +247,7 @@ public class DataProcessor {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
             newEvidenceObj.setType("InterfaceOutput");
-            interfaceOutputObjs.add(newEvidenceObj);
+            Artifacts.getInterfaceOutputObjs().add(newEvidenceObj);
             System.out.println("Created Object for " + row[0]);
         }
 
@@ -170,7 +256,7 @@ public class DataProcessor {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
             newEvidenceObj.setType("Item");
-            itemObjs.add(newEvidenceObj);
+            Artifacts.getItemObjs().add(newEvidenceObj);
             System.out.println("Created Object for " + row[0]);
         }
 
@@ -179,7 +265,7 @@ public class DataProcessor {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
             newEvidenceObj.setType("ItemRequirement");
-            itemReqObjs.add(newEvidenceObj);
+            Artifacts.getItemReqObjs().add(newEvidenceObj);
             System.out.println("Created Object for " + row[0]);
         }
 
@@ -188,7 +274,7 @@ public class DataProcessor {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
             newEvidenceObj.setType("System");
-            itemObjs.add(newEvidenceObj);
+            Artifacts.getItemObjs().add(newEvidenceObj);
             System.out.println("Created Object for " + row[0]);
         }
 
@@ -197,7 +283,7 @@ public class DataProcessor {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
             newEvidenceObj.setType("SystemRequirement");
-            sysReqObjs.add(newEvidenceObj);
+            Artifacts.getSysReqObjs().add(newEvidenceObj);
             System.out.println("Created Object for " + row[0]);
         }
 
@@ -206,7 +292,7 @@ public class DataProcessor {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
             newEvidenceObj.setType("System");
-            systemObjs.add(newEvidenceObj);
+            Artifacts.getSystemObjs().add(newEvidenceObj);
             System.out.println("Created Object for " + row[0]);
         }
 
@@ -233,23 +319,23 @@ public class DataProcessor {
             if ((row[interfaceIdCol] != null)) {
 //                System.out.println(row[interfaceIdCol]);
                 // find index of the object in the appropriate evidence list
-                int indx = EvidenceUtils.getEvidenceObjIndxById(interfaceObjs, row[interfaceIdCol]);
+                int indx = EvidenceUtils.getEvidenceObjIndxById(Artifacts.getInterfaceObjs(), row[interfaceIdCol]);
                 // add the data to the object
                 if ((row[inputIdCol] != null)) {
-                    interfaceObjs
+                	Artifacts.getInterfaceObjs()
                             .get(indx)
                             .getHasInputs()
                             .add(
                                     EvidenceUtils.getEvidenceObjById(
-                                            interfaceInputObjs, row[inputIdCol]));
+                                    		Artifacts.getInterfaceInputObjs(), row[inputIdCol]));
                 }
                 if ((row[outputIdCol] != null)) {
-                    interfaceObjs
+                	Artifacts.getInterfaceObjs()
                             .get(indx)
                             .getHasInputs()
                             .add(
                                     EvidenceUtils.getEvidenceObjById(
-                                            interfaceOutputObjs, row[outputIdCol]));
+                                    		Artifacts.getInterfaceOutputObjs(), row[outputIdCol]));
                 }
             }
         }
@@ -272,15 +358,15 @@ public class DataProcessor {
         for (String[] row : allSystemWIthInterface) {
             if ((row[systemIdCol] != null)) {
                 // find index of the object in the appropriate evidence list
-                int indx = EvidenceUtils.getEvidenceObjIndxById(systemObjs, row[systemIdCol]);
+                int indx = EvidenceUtils.getEvidenceObjIndxById(Artifacts.getSystemObjs(), row[systemIdCol]);
                 // add the data to the object
                 if ((row[interfaceIdCol2] != null)) {
-                    systemObjs
+                	Artifacts.getSystemObjs()
                             .get(indx)
                             .getHasInterfaces()
                             .add(
                                     EvidenceUtils.getEvidenceObjById(
-                                            interfaceObjs, row[interfaceIdCol2]));
+                                    		Artifacts.getInterfaceObjs(), row[interfaceIdCol2]));
                 }
             }
         }
@@ -303,13 +389,13 @@ public class DataProcessor {
             if ((row[sysReqIdCol] != null)) {
             	System.out.println(row[sysReqIdCol]);
                 // find index of the object in the appropriate evidence list
-                int indx = EvidenceUtils.getEvidenceObjIndxById(sysReqObjs, row[sysReqIdCol]);
+                int indx = EvidenceUtils.getEvidenceObjIndxById(Artifacts.getSysReqObjs(), row[sysReqIdCol]);
                 // add the data to the object
                 if ((row[systemIdCol2] != null)) {
-                    sysReqObjs
+                	Artifacts.getSysReqObjs()
                             .get(indx)
                             .getAllocatedTo()
-                            .add(EvidenceUtils.getEvidenceObjById(systemObjs, row[systemIdCol2]));
+                            .add(EvidenceUtils.getEvidenceObjById(Artifacts.getSystemObjs(), row[systemIdCol2]));
                 }
             }
         }
@@ -331,13 +417,13 @@ public class DataProcessor {
         for (String[] row : allItemRequirementWIthItem) {
             if ((row[itemReqIdCol] != null)) {
                 // find index of the object in the appropriate evidence list
-                int indx = EvidenceUtils.getEvidenceObjIndxById(itemReqObjs, row[itemReqIdCol]);
+                int indx = EvidenceUtils.getEvidenceObjIndxById(Artifacts.getItemReqObjs(), row[itemReqIdCol]);
                 // add the data to the object
                 if ((row[itemIdCol] != null)) {
-                    itemReqObjs
+                	Artifacts.getItemReqObjs()
                             .get(indx)
                             .getAllocatedTo()
-                            .add(EvidenceUtils.getEvidenceObjById(itemObjs, row[itemIdCol]));
+                            .add(EvidenceUtils.getEvidenceObjById(Artifacts.getItemObjs(), row[itemIdCol]));
                 }
             }
         }
@@ -359,13 +445,13 @@ public class DataProcessor {
         for (String[] row : allItemRequirementWIthSystemRequirement) {
             if ((row[itemReqIdCol2] != null)) {
                 // find index of the object in the appropriate evidence list
-                int indx = EvidenceUtils.getEvidenceObjIndxById(itemReqObjs, row[itemReqIdCol2]);
+                int indx = EvidenceUtils.getEvidenceObjIndxById(Artifacts.getItemReqObjs(), row[itemReqIdCol2]);
                 // add the data to the object
-                if ((row[systemIdCol2] != null)) {
-                    itemReqObjs
+                if ((row[sysReqIdCol2] != null)) {
+                	Artifacts.getItemReqObjs()
                             .get(indx)
                             .getAllocatedTo()
-                            .add(EvidenceUtils.getEvidenceObjById(sysReqObjs, row[systemIdCol2]));
+                            .add(EvidenceUtils.getEvidenceObjById(Artifacts.getSysReqObjs(), row[sysReqIdCol2]));
                 }
             }
         }
@@ -469,6 +555,13 @@ public class DataProcessor {
                                 DataProcessorUtils.getVarCSVID(
                                         "allItemRequirementWIthSystemRequirement", config),
                                 rackDir));
+        
+        planData =
+                CSVUtil.getRows(
+                        RackQueryUtils.createCsvFilePath(
+                                DataProcessorUtils.getVarCSVID(
+                                        "planData", config),
+                                rackDir));
     }
 
     /**
@@ -500,5 +593,8 @@ public class DataProcessor {
 
         // create arp4754 element objects using the evidence data in class variables
         createEvidenceObjects(rackDir);
+        
+        // create Plan Object
+        createPlanObject(rackDir);
     }
 }
