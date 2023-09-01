@@ -91,7 +91,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 		}
 
 		if (dedupSteps.contains(yamlPath)) {
-			RackConsole.getConsole().print("Skipping previously executed step at: " + yamlPath);
+			RackConsole.getConsole().warning("Skipping previously executed step at: " + yamlPath);
 			return IngestionStatus.DONE;
 		}
 
@@ -164,7 +164,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 			try {
 
 				RackConsole.getConsole()
-						.print("Uploading owl file " + owlFile.getName() + " to " + modelGraph + " ... ");
+						.print("Uploading owl file " + owlFile.getAbsolutePath() + " to " + modelGraph + " ... ");
 				SparqlQueryClient qAuthClient = ConnectionUtil.getOntologyUploadClient(modelGraph);
 				qAuthClient.uploadOwl(owlFile);
 				RackConsole.getConsole().printOK();
@@ -173,6 +173,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 				RackConsole.getConsole().error(e.getLocalizedMessage());
 				RackConsole.getConsole().error(
 						"Ontology processing/upload failed, make sure you are connected to RACK or RACK-BOX instance");
+				RackConsole.getConsole().error("Upload of owl failed, OWL: " + owlFile.getAbsolutePath());
 				return IngestionStatus.FAILED;
 			}
 		}
@@ -186,7 +187,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 		}
 
 		if (dedupSteps.contains(yamlPath)) {
-			RackConsole.getConsole().print("Skipping previously executed step at: " + yamlPath);
+			RackConsole.getConsole().warning("Skipping previously executed step at: " + yamlPath);
 			return IngestionStatus.DONE;
 		}
 
@@ -300,6 +301,13 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 				ArrayList<String> colsList = new ArrayList<>();
 				ArrayList<ArrayList<String>> tabData = new ArrayList<>();
 
+				if (dedupSteps.contains(csvFile.getAbsolutePath())) {
+					RackConsole.getConsole().warning("Skipping already processed file: " + csvFile.getAbsolutePath());
+					continue;
+				} else {
+					dedupSteps.add(csvFile.getAbsolutePath());
+				}
+
 				try {
 
 					FileReader reader = new FileReader(csvFile.getAbsolutePath());
@@ -352,15 +360,22 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 				}
 				final String dGraph = dataGraph;
 
+				if (dedupSteps.contains(owl.getAbsolutePath())) {
+					RackConsole.getConsole().warning("Skipping already processed file: " + owl.getAbsolutePath());
+					continue;
+				} else {
+					dedupSteps.add(owl.getAbsolutePath());
+				}
+
 				try {
-					RackConsole.getConsole().print("Uploading owl file " + owlFile + " to " + dGraph + " ... ");
+					RackConsole.getConsole()
+							.print("Uploading owl file " + owl.getAbsolutePath() + " to " + dGraph + " ... ");
 					SparqlQueryClient qAuthClient = ConnectionUtil.getOntologyUploadClient(dGraph);
 					qAuthClient.uploadOwl(owl);
 					RackConsole.getConsole().printOK();
 				} catch (Exception e) {
 					RackConsole.getConsole().printFAIL();
-					RackConsole.getConsole().error(
-							"Ontology processing/upload failed, make sure you are connected to RACK or RACK-BOX instance");
+					RackConsole.getConsole().error("Upload of owl filed, OWL: " + owl.getAbsolutePath());
 					return IngestionStatus.FAILED;
 				}
 			}
@@ -378,7 +393,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 		}
 
 		if (dedupSteps.contains(ngPath)) {
-			RackConsole.getConsole().print("Skipping previously executed step at: " + ngPath);
+			RackConsole.getConsole().warning("Skipping previously executed step at: " + ngPath);
 			return IngestionStatus.DONE;
 		}
 
@@ -392,6 +407,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 		if (!csvNgStore.exists()) {
 			RackConsole.getConsole()
 					.error("Nodegroup csv store is missing, cannot ingest nodegroups specified in folder:" + ngPath);
+			RackConsole.getConsole().error("Store data CSV: " + csvNgStore.getAbsolutePath());
 		}
 		ArrayList<String> colsList = new ArrayList<>();
 		ArrayList<ArrayList<String>> tabData = new ArrayList<>();
@@ -460,7 +476,8 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 			} catch (Exception e) {
 				RackConsole.getConsole().printFAIL();
 				RackConsole.getConsole().error(e.getLocalizedMessage());
-				RackConsole.getConsole().error("Upload of nodegroup: " + nodegroupId + ".json " + "failed");
+				RackConsole.getConsole()
+						.error("Upload of nodegroup" + nodegroupId + " failed, JSON:" + ngJson.getAbsolutePath());
 				return IngestionStatus.FAILED;
 			}
 		}
@@ -470,7 +487,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 	private IngestionStatus uploadDataFromManifestYAML(String yamlPath, IProgressMonitor monitor) throws Exception {
 
 		if (dedupSteps.contains(yamlPath)) {
-			RackConsole.getConsole().print("Skipping previously executed step at: " + yamlPath);
+			RackConsole.getConsole().warning("Skipping previously executed step at: " + yamlPath);
 			return IngestionStatus.DONE;
 		}
 
@@ -492,19 +509,22 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 		}
 		if (oYaml == null || !(oYaml instanceof Map)) {
 			RackConsole.getConsole().error("Ill formed manifest at " + dir + "/" + file.getName() + ", please check");
+			RackConsole.getConsole().error("Check YAML: " + file.getAbsolutePath());
 			return IngestionStatus.FAILED;
 		}
 
 		HashMap<String, Object> yamlMap = (HashMap) oYaml;
 
 		if (!yamlMap.containsKey("steps")) {
-			RackConsole.getConsole().warning(dir + "/" + file.getName() + " contains no ingestion step, done");
+			RackConsole.getConsole().error(dir + "/" + file.getName() + " contains no ingestion step, done");
+			RackConsole.getConsole().error("Check YAML: " + file.getAbsolutePath());
 			return IngestionStatus.FAILED;
 		}
 
 		Object oList = yamlMap.get("steps");
 		if (!(oList instanceof List)) {
 			RackConsole.getConsole().error("steps in" + dir + "/" + file.getName() + " is ill formed, please check");
+			RackConsole.getConsole().error("Check YAML: " + file.getAbsolutePath());
 			return IngestionStatus.FAILED;
 		}
 		ArrayList<Map<String, Object>> steps = (ArrayList<Map<String, Object>>) oList;
@@ -599,6 +619,8 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 		if (oYaml == null || !(oYaml instanceof Map)) {
 			RackConsole.getConsole()
 					.error("Ill formed manifest at " + dir + "/" + ingestionYaml.getName() + ", please check");
+			RackConsole.getConsole().error("Check YAML: " + ingestionYaml.getAbsolutePath());
+
 			return Status.CANCEL_STATUS;
 		}
 		// read footprint
@@ -627,10 +649,9 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 		}
 
 		try {
-
+			setRunning(true);
 			IngestionStatus value = uploadDataFromManifestYAML(manifestPath, monitor);
 			monitor.worked(100);
-			setRunning(false);
 			switch (value) {
 			case DONE:
 				RackConsole.getConsole().print(MANIFEST_SUCCESS);
@@ -643,8 +664,9 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
-			RackConsole.getConsole().error("Ingestion failed using manifest yaml");
+			RackConsole.getConsole().error("Ingestion failed, check YAML: " + ingestionYaml.getAbsolutePath());
+		} finally {
+			setRunning(false);
 		}
 
 		return Status.OK_STATUS;
@@ -683,14 +705,13 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 				 * String error = client.execFromCsvUsingClassTemplate( ingestionId,
 				 * "identifier", sCSV, ConnectionUtil.getSparqlConnection(mGraphs, dataGraph,
 				 * dataGraphs).toJson().toJSONString(), false, "override");
-				 * 
+				 *
 				 */
 				String status = client.dispatchIngestFromCsvStringsByClassTemplateSync(ingestionId, "identifier", sCSV,
 						ConnectionUtil.getSparqlConnection(mGraphs, dataGraph, dataGraphs));
-
 			}
 			RackConsole.getConsole().printOK();
-			
+
 			List<String> warnings = client.getWarnings();
 			if (warnings != null) {
 				for (String warning : warnings) {
@@ -725,12 +746,8 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 			protected IStatus run(IProgressMonitor monitor) {
 				ViewUtils.showProgressView();
 
-				if (!isRunning()) {
-					setRunning(true);
-					RackConsole.getConsole().clearConsole();
-				} else {
+				if (isRunning()) {
 					RackConsole.getConsole().error(MANIFEST_IN_PROGRESS);
-
 					return Status.CANCEL_STATUS;
 				}
 

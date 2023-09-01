@@ -41,6 +41,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.debug.ui.console.FileLink;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
@@ -108,16 +109,21 @@ public class RackConsole extends MessageConsole {
 									IWorkspace workspace = ResourcesPlugin.getWorkspace();
 									IPath location = Path.fromOSString(file.getAbsolutePath());
 									IFile ifile = workspace.getRoot().getFileForLocation(location);
-									FileLink link = new FileLink(ifile, null, -1, -1, -1);
-									console.addHyperlink(link, event.getOffset(), event.getLength());
+									final FileLink link = new FileLink(ifile, null, -1, -1, -1);
+									Display.getDefault().asyncExec(() -> {
+										try {
+											console.addHyperlink(link, event.getOffset(), event.getLength());
+										} catch (BadLocationException e) {
+
+										}
+									});
 								}
 								return;
 							}
 						}
 
 					} catch (BadLocationException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+
 					}
 				}
 
