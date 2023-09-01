@@ -147,6 +147,9 @@ public class DataProcessor {
             		if(row[objDescCol]!=null) {
                 		newObjective.setDesc(row[objDescCol]);            			
             		}
+            		//connect the artifacts to objectives
+            		newObjective.setOutputs(Artifacts);
+            		
             		objectives.add(newObjective);
             	}
             }
