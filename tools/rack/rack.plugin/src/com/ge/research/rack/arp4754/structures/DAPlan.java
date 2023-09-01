@@ -181,7 +181,10 @@ public class DAPlan {
 		private String id="";
 		private String desc="";
 		private List<Objective> objectives = new ArrayList<Objective>();
-
+		private double complianceStatus = 0.0;
+		private boolean passed = false;
+		private boolean noData = true;
+		private boolean partialData = false;
 		
 		/**
 		 * @return the id
@@ -224,6 +227,62 @@ public class DAPlan {
 		public void setObjectives(List<Objective> objectives) {
 			this.objectives = objectives;
 		}
+
+		/**
+		 * @return the complianceStatus
+		 */
+		public double getComplianceStatus() {
+			return complianceStatus;
+		}
+
+		/**
+		 * @param complianceStatus the complianceStatus to set
+		 */
+		public void setComplianceStatus(double complianceStatus) {
+			this.complianceStatus = complianceStatus;
+		}
+
+		/**
+		 * @return the passed
+		 */
+		public boolean isPassed() {
+			return passed;
+		}
+
+		/**
+		 * @param passed the passed to set
+		 */
+		public void setPassed(boolean passed) {
+			this.passed = passed;
+		}
+
+		/**
+		 * @return the noData
+		 */
+		public boolean isNoData() {
+			return noData;
+		}
+
+		/**
+		 * @param noData the noData to set
+		 */
+		public void setNoData(boolean noData) {
+			this.noData = noData;
+		}
+
+		/**
+		 * @return the partialData
+		 */
+		public boolean isPartialData() {
+			return partialData;
+		}
+
+		/**
+		 * @param partialData the partialData to set
+		 */
+		public void setPartialData(boolean partialData) {
+			this.partialData = partialData;
+		}
 		
 		
 	}
@@ -241,6 +300,11 @@ public class DAPlan {
 		private String applicability="";
 		private List<String> queries = new ArrayList<String>();
 		private Output outputs = new Output();
+		private double complianceStatus = 0.0;
+		private boolean passed = false;
+		private boolean noData = true;
+		private boolean partialData = false;
+		
 		
 		
 		/**
@@ -303,6 +367,56 @@ public class DAPlan {
 		public void setOutputs(Output outputs) {
 			this.outputs = outputs;
 		}
+		/**
+		 * @return the complianceStatus
+		 */
+		public double getComplianceStatus() {
+			return complianceStatus;
+		}
+		/**
+		 * @param complianceStatus the complianceStatus to set
+		 */
+		public void setComplianceStatus(double complianceStatus) {
+			this.complianceStatus = complianceStatus;
+		}
+		/**
+		 * @return the passed
+		 */
+		public boolean isPassed() {
+			return passed;
+		}
+		/**
+		 * @param passed the passed to set
+		 */
+		public void setPassed(boolean passed) {
+			this.passed = passed;
+		}
+		/**
+		 * @return the noData
+		 */
+		public boolean isNoData() {
+			return noData;
+		}
+		/**
+		 * @param noData the noData to set
+		 */
+		public void setNoData(boolean noData) {
+			this.noData = noData;
+		}
+		/**
+		 * @return the partialData
+		 */
+		public boolean isPartialData() {
+			return partialData;
+		}
+		/**
+		 * @param partialData the partialData to set
+		 */
+		public void setPartialData(boolean partialData) {
+			this.partialData = partialData;
+		}
+		
+		
 	}
 	
 	private String id="";
@@ -310,6 +424,8 @@ public class DAPlan {
 	private String system="";
 	private String sysDAL= "";
 	private List<Process> processes = new ArrayList<Process>();
+	private double complianceStatus = 0.0;
+	
 	
 	
 	/**
@@ -372,6 +488,20 @@ public class DAPlan {
 	public void setProcesses(List<Process> process) {
 		processes = process;
 	}
+	/**
+	 * @return the complianceStatus
+	 */
+	public double getComplianceStatus() {
+		return complianceStatus;
+	}
+	/**
+	 * @param complianceStatus the complianceStatus to set
+	 */
+	public void setComplianceStatus(double complianceStatus) {
+		this.complianceStatus = complianceStatus;
+	}
+
+
 
 	
 }
