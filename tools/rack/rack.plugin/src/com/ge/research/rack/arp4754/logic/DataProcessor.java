@@ -108,10 +108,9 @@ public class DataProcessor {
      * Passes the Plan Object to the appropriate functions to get the compliance status
      */
     private void getPlanCompliance() {
-    	
-    	
-    	
-    	
+    	DAPlan newPlanNode = new DAPlan();
+    	newPlanNode = ComplianceDAP.compute(planNode);
+    	planNode = newPlanNode;
     }
     
     

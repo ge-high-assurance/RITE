@@ -186,6 +186,10 @@ public class DAPlan {
 		private boolean passed = false;
 		private boolean noData = true;
 		private boolean partialData = false;
+		private int numObjectivesPassed = 0;
+		private int numObjectivesNoData = 0;
+		private int numObjectivesPartialData = 0;
+		
 		
 		/**
 		 * @return the id
@@ -297,6 +301,48 @@ public class DAPlan {
 		 */
 		public void setMetrics(String metrics) {
 			this.metrics = metrics;
+		}
+
+		/**
+		 * @return the numObjectivesPassed
+		 */
+		public int getNumObjectivesPassed() {
+			return numObjectivesPassed;
+		}
+
+		/**
+		 * @param numObjectivesPassed the numObjectivesPassed to set
+		 */
+		public void setNumObjectivesPassed(int numObjectivesPassed) {
+			this.numObjectivesPassed = numObjectivesPassed;
+		}
+
+		/**
+		 * @return the numObjectivesNoData
+		 */
+		public int getNumObjectivesNoData() {
+			return numObjectivesNoData;
+		}
+
+		/**
+		 * @param numObjectivesNoData the numObjectivesNoData to set
+		 */
+		public void setNumObjectivesNoData(int numObjectivesNoData) {
+			this.numObjectivesNoData = numObjectivesNoData;
+		}
+
+		/**
+		 * @return the numObjectivesParyialData
+		 */
+		public int getNumObjectivesPartialData() {
+			return numObjectivesPartialData;
+		}
+
+		/**
+		 * @param numObjectivesPartialData the numObjectivesParyialData to set
+		 */
+		public void setNumObjectivesPartialData(int numObjectivesPartialData) {
+			this.numObjectivesPartialData = numObjectivesPartialData;
 		}
 		
 		
