@@ -103,11 +103,23 @@ public class DataProcessor {
     private DAPlan.Output Artifacts = new DAPlan().new Output();
 
 
+    
+    /**
+     * Passes the Plan Object to the appropriate functions to get the compliance status
+     */
+    private void getPlanCompliance() {
+    	
+    	
+    	
+    	
+    }
+    
+    
     /**
      * Creates the DAP object with all plans, processes, systems, and objectives
      * 
      * Algo:
-     *      1. create the objective objects
+     *      1. create the objective objects and connect the evidence artifacts to them
      *      2. Create the process objects and attach the objectives
      *      3. Create the plan object and attach the processes and the system, DAL
      * 
@@ -599,5 +611,8 @@ public class DataProcessor {
         
         // create Plan Object
         createPlanObject(rackDir);
+        
+        // get compliance status for the plan object
+        getPlanCompliance();
     }
 }

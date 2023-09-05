@@ -181,6 +181,7 @@ public class DAPlan {
 		private String id="";
 		private String desc="";
 		private List<Objective> objectives = new ArrayList<Objective>();
+        private String metrics = "TBD"; // the metric to be printed in the list beside name
 		private double complianceStatus = 0.0;
 		private boolean passed = false;
 		private boolean noData = true;
@@ -283,6 +284,20 @@ public class DAPlan {
 		public void setPartialData(boolean partialData) {
 			this.partialData = partialData;
 		}
+
+		/**
+		 * @return the metrics
+		 */
+		public String getMetrics() {
+			return metrics;
+		}
+
+		/**
+		 * @param metrics the metrics to set
+		 */
+		public void setMetrics(String metrics) {
+			this.metrics = metrics;
+		}
 		
 		
 	}
@@ -300,6 +315,7 @@ public class DAPlan {
 		private String applicability="";
 		private List<String> queries = new ArrayList<String>();
 		private Output outputs = new Output();
+        private String metrics = "TBD"; // the metric to be printed in the list beside name
 		private double complianceStatus = 0.0;
 		private boolean passed = false;
 		private boolean noData = true;
@@ -414,6 +430,18 @@ public class DAPlan {
 		 */
 		public void setPartialData(boolean partialData) {
 			this.partialData = partialData;
+		}
+		/**
+		 * @return the metrics
+		 */
+		public String getMetrics() {
+			return metrics;
+		}
+		/**
+		 * @param metrics the metrics to set
+		 */
+		public void setMetrics(String metrics) {
+			this.metrics = metrics;
 		}
 		
 		

@@ -31,7 +31,99 @@
  */
 package com.ge.research.rack.arp4754.logic;
 
+import com.ge.research.rack.arp4754.structures.DAPlan;
+
 /**
  * @author 212807042
  */
-public class ComplianceDAP {}
+public class ComplianceDAP {	
+	
+	
+	
+	/**
+	 * Computes the compliance status of a DAPlan object 
+	 * 
+	 * @param plan
+	 * @return
+	 */
+	public static DAPlan compute(DAPlan plan) {
+		
+		
+		int passedProcessCounter = 0;
+		
+		// for every process in the plan, send the process to the appropriate function and replace the result in the appropriate position of the plan
+		for(int i=0; i<=plan.getProcesses().size(); i++  ) {
+			DAPlan.Process process = plan.getProcesses().get(i);
+			
+			// Compute the process compliance
+			DAPlan.Process updatedProcess = new DAPlan().new Process();
+			switch(process.getId()) {
+            case "Process-1":
+            	updatedProcess = ComplianceProcess1.computeProcess(process);
+            	if(updatedProcess.isPassed()) {
+            		passedProcessCounter++;
+            	}
+                break;
+            case "Process-2":
+            	updatedProcess = ComplianceProcess2.computeProcess(process);
+            	if(updatedProcess.isPassed()) {
+            		passedProcessCounter++;
+            	}
+            	break;    
+            case "Process-3":
+            	updatedProcess = ComplianceProcess3.computeProcess(process);
+            	if(updatedProcess.isPassed()) {
+            		passedProcessCounter++;
+            	}
+            	break;
+            case "Process-4":
+            	updatedProcess = ComplianceProcess4.computeProcess(process);
+            	if(updatedProcess.isPassed()) {
+            		passedProcessCounter++;
+            	}
+            	break;
+            case "Process-5":
+            	updatedProcess = ComplianceProcess5.computeProcess(process);
+            	if(updatedProcess.isPassed()) {
+            		passedProcessCounter++;
+            	}
+            	break;
+            case "Process-6":
+            	updatedProcess = ComplianceProcess6.computeProcess(process);
+            	if(updatedProcess.isPassed()) {
+            		passedProcessCounter++;
+            	}
+            	break;
+            case "Process-7":
+            	updatedProcess = ComplianceProcess7.computeProcess(process);
+            	if(updatedProcess.isPassed()) {
+            		passedProcessCounter++;
+            	}
+            	break;
+            case "Process-8":
+            	updatedProcess = ComplianceProcess8.computeProcess(process);
+            	if(updatedProcess.isPassed()) {
+            		passedProcessCounter++;
+            	}
+            	break;
+            default:
+            	if(updatedProcess.isPassed()) {
+            		passedProcessCounter++;
+            	}
+            	break;
+			}
+			
+			// replace old process object with updated object
+			plan.getProcesses().set(i, updatedProcess);
+						
+		}
+
+		// Compute the compliance status of plan
+		plan.setComplianceStatus((double) passedProcessCounter/plan.getProcesses().size());
+		
+		return plan;
+	}
+	
+	
+	
+}
