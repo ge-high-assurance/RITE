@@ -32,6 +32,7 @@
 package com.ge.research.rack.arp4754.logic;
 
 import com.ge.research.rack.arp4754.structures.DAPlan;
+import com.ge.research.rack.arp4754.structures.Evidence;
 import com.ge.research.rack.arp4754.utils.ComplianceUtils;
 
 public class ComplianceProcess2 {
@@ -45,9 +46,52 @@ public class ComplianceProcess2 {
 	}
 	
 
+	/**
+	 * 
+	 * 
+	 * 2.2: Aircraft functions are allocated to systems, Output: System Requirements with Interfaces
+		Check that there are a set of system requirements and each system requirement is allocated to some system
+		Check that each system linked to a system requirement has a set of associated interfaces
+		
+		Main output - System requirements, so if a system requirement meets all these criteria, make it pass. Otherwise make it fail.
+		
+		Decide the compliance status of the objective as: passed SysReqs/total SysReqs
+	 * @param objective
+	 * @return
+	 */
 	private static DAPlan.Objective computeObjective2(DAPlan.Objective objective){
 		
+
+		int numSysReqsWithInterface = 0;
 		
+		if(objective.getOutputs().getSysReqObjs()!=null) {
+			for(Evidence sysReq : objective.getOutputs().getSysReqObjs()) {
+				if(sysReq.getAllocatedTo()!=null) {
+					for(Evidence system : sysReq.getAllocatedTo()) {
+						if(system.getHasInterfaces()!=null) {
+							numSysReqsWithInterface++;
+						}
+						else {
+							objective.setPartialData(true);
+							objective.setNoData(false);
+						}
+					}	
+				}
+				else {
+					objective.setPartialData(true);
+					objective.setNoData(false);
+				}
+			}			
+			objective.setComplianceStatus((double) numSysReqsWithInterface / objective.getOutputs().getSysReqObjs().size() * 100.00);
+			if(numSysReqsWithInterface == objective.getOutputs().getSysReqObjs().size()) {
+				objective.setPassed(true);
+			}
+		}
+		else {
+			objective.setNoData(true); 
+			objective.setPartialData(false);
+		}
+	
 		return objective;
 	}
 
@@ -57,8 +101,26 @@ public class ComplianceProcess2 {
 		return objective;
 	}
 
+	/**
+	 * 2.4: System derived requirements including assumptions and system interfaces are defined, Output: System Requirements
+		Check that there are a set of derived system requirements
+
+		Main output -  Derived System Requirements
+	 * @param objective
+	 * @return
+	 */
 	private static DAPlan.Objective computeObjective4(DAPlan.Objective objective){
-		
+
+		if(objective.getOutputs().getDerSysReqObjs()!=null) {
+			objective.setComplianceStatus(100.0);
+			objective.setPassed(true);
+			objective.setNoData(false); 
+			objective.setPartialData(false);			
+		}
+		else {
+			objective.setNoData(true); 
+			objective.setPartialData(false);
+		}
 		
 		return objective;
 	}
@@ -69,6 +131,11 @@ public class ComplianceProcess2 {
 		return objective;
 	}
 
+	/**
+	 * 
+	 * @param objective
+	 * @return
+	 */
 	private static DAPlan.Objective computeObjective6(DAPlan.Objective objective){
 		
 		
@@ -77,7 +144,7 @@ public class ComplianceProcess2 {
 
 	private static DAPlan.Objective computeObjective7(DAPlan.Objective objective){
 		
-		
+	
 		return objective;
 	}
 
@@ -139,6 +206,8 @@ public class ComplianceProcess2 {
         		}
         	}
 
+        	System.out.println("Objective "+updatedObjective.getId()+" compliance status: "+updatedObjective.getComplianceStatus());
+        	
 			// replace old objective node with new node
         	process.getObjectives().set(i, updatedObjective);
 		}

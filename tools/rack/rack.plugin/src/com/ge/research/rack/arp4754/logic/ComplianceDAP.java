@@ -91,13 +91,15 @@ public class ComplianceDAP {
         		passedProcessCounter++;
         	}
 
+        	System.out.println("Objective "+updatedProcess.getId()+" compliance status: "+updatedProcess.getComplianceStatus());
+
 			// replace old process object with updated object
 			plan.getProcesses().set(i, updatedProcess);
 						
 		}
 
 		// Compute the compliance status of plan
-		plan.setComplianceStatus((double) passedProcessCounter/plan.getProcesses().size());
+		plan.setComplianceStatus((double) passedProcessCounter/plan.getProcesses().size() * 100.00);
 		
 		return plan;
 	}

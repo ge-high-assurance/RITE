@@ -23,7 +23,7 @@ public class ComplianceUtils {
 	public static Double processComplianceValue(int numPassed, int numPartial, int numNoData, int totalObjectives) {
 		Double stats = 0.0;
 		
-		stats = ((double)  numPassed /totalObjectives);
+		stats = ((double)  numPassed /totalObjectives * 100.00);
 		
 		return stats;
 	}
