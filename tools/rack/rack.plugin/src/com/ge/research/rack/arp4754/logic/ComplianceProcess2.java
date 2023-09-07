@@ -165,7 +165,7 @@ public class ComplianceProcess2 {
                     objective.setPassed(false);
     			}
     		}
-    		objective.setComplianceStatus((double) numItemreqsWithTraceAndAllocation/objective.getOutputs().getItemReqObjs().size());
+    		objective.setComplianceStatus((double) numItemreqsWithTraceAndAllocation/objective.getOutputs().getItemReqObjs().size() * 100.00);
     	}
     	else {
             objective.setNoData(true);
