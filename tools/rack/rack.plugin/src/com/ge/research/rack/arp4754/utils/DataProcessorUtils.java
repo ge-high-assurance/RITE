@@ -31,18 +31,11 @@
  */
 package com.ge.research.rack.arp4754.utils;
 
-import java.io.File;
-import java.io.IOException;
+import com.ge.research.rack.arp4754.structures.Configuration;
+import com.ge.research.rack.do178c.utils.RackQueryUtils;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.io.FileUtils;
-
-import com.ge.research.rack.arp4754.constants.ARP4754Queries;
-import com.ge.research.rack.arp4754.structures.Configuration;
-import com.ge.research.rack.do178c.constants.DO178CQueries;
-import com.ge.research.rack.do178c.structures.SparqlConnectionInfo;
-import com.ge.research.rack.do178c.utils.RackQueryUtils;
 
 /**
  * @author Saswata Paul
@@ -60,9 +53,9 @@ public class DataProcessorUtils {
     public static String getVarCSVID(String key, Configuration config) {
         String id = "";
         switch (key) {
-        	case "planData":
-        		id = "getDAP";
-        		break;        
+            case "planData":
+                id = "getDAP";
+                break;
             case "allDerivedItemRequirement":
                 id = config.getDerivedItemReq();
                 break;
@@ -111,37 +104,36 @@ public class DataProcessorUtils {
         }
         return id;
     }
-    
-    
+
     /**
-     * This function uses the config to create the IDs for all the queries needed to get the data and then executes those queries
-     * 
-     * NOTE: Currently, the queries are manually created and stored on RACK. In future, the queries themselves must also be synthesized 
+     * This function uses the config to create the IDs for all the queries needed to get the data
+     * and then executes those queries
+     *
+     * <p>NOTE: Currently, the queries are manually created and stored on RACK. In future, the
+     * queries themselves must also be synthesized
      */
-    public static void createAndExecuteDataQueries(Configuration config, String rackDir){
-    	
+    public static void createAndExecuteDataQueries(Configuration config, String rackDir) {
+
         // Create all required query IDs
-		List<String> allQueryIds = new ArrayList<String>();
-		
-		allQueryIds.add(getVarCSVID("planData", config));
-		allQueryIds.add(getVarCSVID("allDerivedItemRequirement", config));
-		allQueryIds.add(getVarCSVID("allDerivedSystemRequirement", config));
-		allQueryIds.add(getVarCSVID("allInterface", config));
-		allQueryIds.add(getVarCSVID("allInterfaceInput", config));
-		allQueryIds.add(getVarCSVID("allInterfaceOutput", config));
-		allQueryIds.add(getVarCSVID("allItem", config));
-		allQueryIds.add(getVarCSVID("allItemRequirement", config));
-		allQueryIds.add(getVarCSVID("allSystem", config));
-		allQueryIds.add(getVarCSVID("allSystemRequirement", config));
-		allQueryIds.add(getVarCSVID("allInterfaceWithInputOutput", config));
-		allQueryIds.add(getVarCSVID("allItemRequirementWIthItem", config));
-		allQueryIds.add(getVarCSVID("allSystemRequirementWIthSystem", config));
-		allQueryIds.add(getVarCSVID("allSystemWIthInterface", config));
-		allQueryIds.add(getVarCSVID("allItemRequirementWIthSystemRequirement", config));
-		
-		// Execute each predefined query
-		RackQueryUtils.createConnectionAndExecuteMultiQueriesFromStore(allQueryIds, rackDir);
-    	
+        List<String> allQueryIds = new ArrayList<String>();
+
+        allQueryIds.add(getVarCSVID("planData", config));
+        allQueryIds.add(getVarCSVID("allDerivedItemRequirement", config));
+        allQueryIds.add(getVarCSVID("allDerivedSystemRequirement", config));
+        allQueryIds.add(getVarCSVID("allInterface", config));
+        allQueryIds.add(getVarCSVID("allInterfaceInput", config));
+        allQueryIds.add(getVarCSVID("allInterfaceOutput", config));
+        allQueryIds.add(getVarCSVID("allItem", config));
+        allQueryIds.add(getVarCSVID("allItemRequirement", config));
+        allQueryIds.add(getVarCSVID("allSystem", config));
+        allQueryIds.add(getVarCSVID("allSystemRequirement", config));
+        allQueryIds.add(getVarCSVID("allInterfaceWithInputOutput", config));
+        allQueryIds.add(getVarCSVID("allItemRequirementWIthItem", config));
+        allQueryIds.add(getVarCSVID("allSystemRequirementWIthSystem", config));
+        allQueryIds.add(getVarCSVID("allSystemWIthInterface", config));
+        allQueryIds.add(getVarCSVID("allItemRequirementWIthSystemRequirement", config));
+
+        // Execute each predefined query
+        RackQueryUtils.createConnectionAndExecuteMultiQueriesFromStore(allQueryIds, rackDir);
     }
-    
 }

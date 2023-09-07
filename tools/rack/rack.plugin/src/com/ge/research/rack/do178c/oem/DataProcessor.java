@@ -31,7 +31,6 @@
  */
 package com.ge.research.rack.do178c.oem;
 
-import com.ge.research.rack.autoGsn.utils.CustomFileUtils;
 import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
 import com.ge.research.rack.do178c.constants.DO178CQueries;
 import com.ge.research.rack.do178c.structures.DataItem;
@@ -46,9 +45,6 @@ import com.ge.research.rack.do178c.utils.PsacNodeUtils;
 import com.ge.research.rack.do178c.utils.RackQueryUtils;
 import com.ge.research.rack.utils.CSVUtil;
 
-import org.apache.commons.io.FileUtils;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -2054,7 +2050,7 @@ public class DataProcessor {
     public PsacNode getPSACData(String outDir) {
 
         rackDir = outDir;
-        
+
         // fetch the necessary data from RACK
         fetchData();
 

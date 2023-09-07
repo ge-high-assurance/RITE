@@ -32,7 +32,6 @@
 package com.ge.research.rack.do178c.utils;
 
 import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
-import com.ge.research.rack.do178c.constants.DO178CQueries;
 import com.ge.research.rack.do178c.structures.SparqlConnectionInfo;
 import com.ge.research.rack.utils.ConnectionUtil;
 import com.ge.research.rack.utils.Core;
@@ -314,7 +313,7 @@ public class RackQueryUtils {
 
         // FOR TESTING ONLY : Connect to RACK using hardcoded preferences
         SparqlConnectionInfo newConnPars = RackQueryUtils.hardcodedQueryConnectionForTesting();
-    	
+
         for (int i = 0; i < Queries.size(); i++) {
 
             String queryId = Queries.get(i);
@@ -322,7 +321,7 @@ public class RackQueryUtils {
             executeSingleQueryFromStore(queryId, outDir, newConnPars);
         }
     }
-    
+
     /**
      * Reads a csv file and returns data packed into a list of string arrays where each array
      * represents a line in the file

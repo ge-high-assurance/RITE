@@ -45,18 +45,18 @@ public class TestApp {
 
         //    	Configuration config = ConfigReader.getConfigFromFile(configFile);
 
-//        Configuration config = ConfigReader.getConfigFromRACK(rackDir);
-//
-//        System.out.println("Got config");
-//
-//        System.out.println(config.getSysReq());
-//        System.out.println(config.getItemReq());
-//        System.out.println(config.getItem());
+        //        Configuration config = ConfigReader.getConfigFromRACK(rackDir);
+        //
+        //        System.out.println("Got config");
+        //
+        //        System.out.println(config.getSysReq());
+        //        System.out.println(config.getItemReq());
+        //        System.out.println(config.getItem());
 
         String configFile = "dummy.config";
-        
-    	DataProcessor processor = new DataProcessor();
-        
-    	processor.getPlanData(rackDir, configFile);
+
+        DataProcessor processor = new DataProcessor();
+
+        processor.getPlanData(rackDir, configFile);
     }
 }

@@ -43,8 +43,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
-
 /**
  * @author Saswata Paul
  *     <p>This class has structures and functions needed to read a configuration file and store the
@@ -129,10 +127,10 @@ public class ConfigReader {
     public static Configuration getConfigFromRACK(String rackDir) {
 
         Configuration projectConfig = new Configuration();
-        
+
         // Query RACK
         queryRackForARP4754Config(rackDir);
-        
+
         // Read the filedata
         List<String[]> configData =
                 CSVUtil.getRows(
@@ -171,10 +169,8 @@ public class ConfigReader {
 
         return projectConfig;
     }
-    
-    /**
-     * Queries RACK for the COnfiguration data
-     */
+
+    /** Queries RACK for the COnfiguration data */
     private static void queryRackForARP4754Config(String rackDir) {
 
         try {
@@ -188,11 +184,11 @@ public class ConfigReader {
             SparqlConnectionInfo newConnPars = RackQueryUtils.hardcodedQueryConnectionForTesting();
 
             // Execute the query to get config data
-            RackQueryUtils.executeSingleQueryFromStore(ARP4754Queries.All.GET_CONFIG.getQId(), rackDir, newConnPars);
+            RackQueryUtils.executeSingleQueryFromStore(
+                    ARP4754Queries.All.GET_CONFIG.getQId(), rackDir, newConnPars);
         } catch (Exception e) {
             System.out.println("ERROR: Was unable to successfuly query RACK!!\n");
             e.printStackTrace();
         }
     }
-    
 }
