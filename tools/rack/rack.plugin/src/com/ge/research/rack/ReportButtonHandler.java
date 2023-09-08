@@ -45,7 +45,7 @@ public class ReportButtonHandler extends AbstractHandler {
 
         System.out.println("Here");
         // Launch the AutoGsnMainView
-        JavaFXAppLaunchManager.reportMainViewLaunch();
+        JavaFXAppLaunchManager.do178CReportMainViewLaunch();
 
         return null;
     }

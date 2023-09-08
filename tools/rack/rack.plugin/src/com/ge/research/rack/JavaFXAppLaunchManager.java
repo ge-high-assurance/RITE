@@ -34,6 +34,7 @@ package com.ge.research.rack;
 import com.ge.research.rack.autoGsn.viewManagers.AutoGsnViewsManager;
 import com.ge.research.rack.autoGsn.viewManagers.GsnTreeViewManager;
 import com.ge.research.rack.do178c.viewManagers.ReportViewsManager;
+import com.ge.research.rack.arp4754.viewManagers.Arp4754ViewsManager;
 import com.ge.research.rack.views.RibView;
 
 import javafx.application.Application;
@@ -134,11 +135,11 @@ public class JavaFXAppLaunchManager {
     }
 
     /**
-     * Used to launch different Javafx ReportMainView applications by consulting the flag
+     * Used to launch different Javafx do178CReportMainView applications by consulting the flag
      *
      * <p>Sets the flag to true on the first launch.
      */
-    public static void reportMainViewLaunch() {
+    public static void do178CReportMainViewLaunch() {
         if (!launchFlag) {
             Platform.setImplicitExit(false);
             new Thread(() -> Application.launch(ReportViewsManager.class)).start();
@@ -148,6 +149,32 @@ public class JavaFXAppLaunchManager {
                     () -> {
                         try {
                             Application application = new ReportViewsManager();
+                            Stage primaryStage = new Stage();
+                            application.start(primaryStage);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+        }
+    }
+    
+    
+
+    /**
+     * Used to launch different Javafx arp4754ReportMainView applications by consulting the flag
+     *
+     * <p>Sets the flag to true on the first launch.
+     */
+    public static void arp4754ReportMainViewLaunch() {
+        if (!launchFlag) {
+            Platform.setImplicitExit(false);
+            new Thread(() -> Application.launch(Arp4754ViewsManager.class)).start();
+            launchFlag = true;
+        } else {
+            Platform.runLater(
+                    () -> {
+                        try {
+                            Application application = new Arp4754ViewsManager();
                             Stage primaryStage = new Stage();
                             application.start(primaryStage);
                         } catch (Exception e) {

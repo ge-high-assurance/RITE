@@ -57,6 +57,10 @@
             id="rackplugin.commands.reportsCommand"
             name="Generate DO178C Reports">
         </command>
+        <command categoryId="rackplugin.commands"
+            id="rackplugin.commands.arp4754Command"
+            name="Generate ARP-4754 Report">
+        </command>
 
         <!-- For auto Gsn -->
         <command categoryId="rackplugin.commands"
@@ -172,6 +176,9 @@
         <handler class="com.ge.research.rack.ReportButtonHandler"
             commandId="rackplugin.commands.reportsCommand">
         </handler>
+        <handler class="com.ge.research.rack.Arp4754ButtonHandler"
+            commandId="rackplugin.commands.arp4754Command">
+        </handler>
         <!-- For auto Gsn -->
         <handler class="com.ge.research.rack.AutoGsnButtonHandler"
             commandId="rackplugin.commands.autoGsnCommand">
@@ -226,7 +233,12 @@
                     id="rackplugin.menus.reports" label="DO-178C Compliance Report"
                     mnemonic="S" style="push">
                 </command>
-
+                
+                <command commandId="rackplugin.commands.arp4754Command"
+                    id="rackplugin.menus.arp4754" label="ARP-4754 Compliance Report"
+                    mnemonic="S" style="push">
+                </command>
+                
                 <!-- For auto Gsn -->
                 <command commandId="rackplugin.commands.autoGsnCommand"
                     id="rackplugin.menus.autoGsn" label="Automatic GSN Inference"
