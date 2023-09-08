@@ -7,7 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="600.0" prefWidth="800.0" stylesheets="@/resources/fxml/do178c/Views.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ge.research.rack.do178c.viewHandlers.ReportMainViewHandlerNew">
+<VBox prefHeight="600.0" prefWidth="800.0" stylesheets="@/resources/fxml/arp4754/Views.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ge.research.rack.arp4754.viewHandlers.MainViewHandler">
     
     <children>
 
