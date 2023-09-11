@@ -602,20 +602,20 @@ public class DataProcessor {
      * @param rackDir
      * @param configPath
      */
-    private void getConfig(String rackDir, String configPath) {
+    private void getConfig(String rackDir) {
         // Get configuration
         config = ConfigReader.getConfigFromRACK(rackDir);
     }
 
     // Entry point that does sequence of operations
-    public void getPlanData(String rackDir, String configFileName) {
+    public void getPlanDataUsingFileConfig(String rackDir, String configFileName) {
         String configPath = rackDir + "/" + configFileName;
 
         // clear the rack directory
         CustomFileUtils.clearDirectory(rackDir);
 
         // read project config from RACK
-        getConfig(rackDir, configPath);
+//        getConfig(rackDir, configPath);
 
         // fetch the evidence from RACK as csv files by executing queries
         DataProcessorUtils.createAndExecuteDataQueries(config, rackDir);
@@ -631,5 +631,32 @@ public class DataProcessor {
 
         // get compliance status for the plan object
         getPlanCompliance();
+    }
+    
+    // Entry point that does sequence of operations
+    public DAPlan getPlanData(String rackDir) {
+
+        // clear the rack directory
+        CustomFileUtils.clearDirectory(rackDir);
+
+        // read project config from RACK
+        getConfig(rackDir);
+
+        // fetch the evidence from RACK as csv files by executing queries
+        DataProcessorUtils.createAndExecuteDataQueries(config, rackDir);
+
+        // load csv data into class variables
+        readEvidenceCSVs(rackDir);
+
+        // create arp4754 element objects using the evidence data in class variables
+        createEvidenceObjects(rackDir);
+
+        // create Plan Object
+        createPlanObject(rackDir);
+
+        // get compliance status for the plan object
+        getPlanCompliance();
+        
+        return planNode;
     }
 }

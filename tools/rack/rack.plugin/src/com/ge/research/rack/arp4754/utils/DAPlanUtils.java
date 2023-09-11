@@ -33,6 +33,7 @@ package com.ge.research.rack.arp4754.utils;
 
 import com.ge.research.rack.arp4754.structures.DAPlan;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -74,5 +75,38 @@ public class DAPlanUtils {
             }
         }
         return null;
+    }
+    
+    
+    /**
+     * Sorts a given list of DAPLan Processes by id
+     * @return
+     */
+    public static List<DAPlan.Process> sortProcessList(List<DAPlan.Process> list){
+    	List<DAPlan.Process> newList = new ArrayList<DAPlan.Process>();
+    	
+        if(list.size() > 0) {
+            for(int i=0; i < list.size(); i++) {
+            	for(DAPlan.Process process : list) {
+                	if((Integer.parseInt(process.getId().replace("Process-", "")) - 1) == i) {
+                		newList.add(process);
+                		
+                		System.out.println(process.getId() + " -> "+ i );
+                	}            		
+            	}
+            }
+        }
+        
+//      for(int i = 0; i<labelList.size();i++) {
+//    	// find the appropriate label for this index
+//    	for(Label label : labelList) {
+//    		if(i == (Integer.parseInt(getProcessIdFromLabelText(label.getText()))-1)){
+//    			sortedLabelList.add(label);
+//    		}
+//    	}
+//    }
+    	
+    	
+    	return newList;
     }
 }

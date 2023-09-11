@@ -31,6 +31,8 @@
  */
 package com.ge.research.rack.arp4754.utils;
 
+import com.ge.research.rack.arp4754.structures.DAPlan;
+
 /**
  * @author Saswata Paul
  */
@@ -52,5 +54,45 @@ public class ComplianceUtils {
         stats = ((double) numPassed / totalObjectives * 100.00);
 
         return stats;
+    }
+    
+    /**
+     * Sets the process stat boolean flags
+     * @param procObj
+     * @return
+     */
+    public static DAPlan.Process getProcessStatus(DAPlan.Process procObj){
+        System.out.println(procObj.getId() + " ob no: " + procObj.getNumObjectivesNoData() + " ob partial:" + procObj.getNumObjectivesPartialData() + " ob pass:" + procObj.getNumObjectivesPassed() + " numobjs:" + procObj.getObjectives().size() );
+       
+        // set the data flags
+        if(procObj.getNumObjectivesNoData() == procObj.getObjectives().size()) {
+        	procObj.setNoData(true);
+        	procObj.setPartialData(false);
+        	procObj.setPassed(false);
+        }
+        else {
+        	procObj.setNoData(false);
+        	if(procObj.getNumObjectivesPassed() == procObj.getObjectives().size()) {
+            	procObj.setPartialData(false);
+            	procObj.setPassed(true);
+            }
+        	else {
+            	procObj.setPartialData(true);
+            	procObj.setPassed(false);        		
+        	}
+        }
+
+        
+        System.out.println(procObj.getId() + " no: " + procObj.isNoData() + " partial:" + procObj.isPartialData() + " pass:" + procObj.isPassed() );
+
+        
+        // compute process compliance
+        procObj.setComplianceStatus(
+                ComplianceUtils.processComplianceValue(
+                        procObj.getNumObjectivesPassed(), procObj.getNumObjectivesPartialData(), procObj.getNumObjectivesNoData(), procObj.getObjectives().size()));
+
+        
+        
+        return procObj;
     }
 }

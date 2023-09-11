@@ -67,13 +67,15 @@ public class ComplianceProcess2 {
                         if (system.getHasInterfaces() != null) {
                             numSysReqsWithInterface++;
                         } else {
-                            objective.setPartialData(true);
                             objective.setNoData(false);
+                            objective.setPartialData(true);
+                            objective.setPassed(false);
                         }
                     }
                 } else {
-                    objective.setPartialData(true);
                     objective.setNoData(false);
+                    objective.setPartialData(false);
+                    objective.setPassed(false);
                 }
             }
             objective.setComplianceStatus(
@@ -81,6 +83,8 @@ public class ComplianceProcess2 {
                             / objective.getOutputs().getSysReqObjs().size()
                             * 100.00);
             if (numSysReqsWithInterface == objective.getOutputs().getSysReqObjs().size()) {
+                objective.setNoData(false);
+                objective.setPartialData(false);
                 objective.setPassed(true);
             }
         } else {
@@ -109,10 +113,12 @@ public class ComplianceProcess2 {
     private static DAPlan.Objective computeObjective4(DAPlan.Objective objective) {
 
         if (objective.getOutputs().getDerSysReqObjs() != null) {
-            objective.setComplianceStatus(100.0);
-            objective.setPassed(true);
-            objective.setNoData(false);
-            objective.setPartialData(false);
+        	if(objective.getOutputs().getDerSysReqObjs().size() > 0) {
+                objective.setComplianceStatus(100.0);
+            	objective.setNoData(false);	
+                objective.setPartialData(false);
+                objective.setPassed(true);        		
+        	}
         } else {
             objective.setNoData(true);
             objective.setPartialData(false);
@@ -159,18 +165,23 @@ public class ComplianceProcess2 {
     			if(trace && allocation) {
     				numItemreqsWithTraceAndAllocation++;
     			}
-    			else {
-                    objective.setPartialData(true);
-                    objective.setNoData(false);
-                    objective.setPassed(false);
-    			}
+    		}
+    		if(numItemreqsWithTraceAndAllocation == objective.getOutputs().getItemReqObjs().size()) {
+            	objective.setNoData(false);	
+                objective.setPartialData(false);
+                objective.setPassed(true);
+    		}
+    		else {
+            	objective.setNoData(false);	
+                objective.setPartialData(true);
+                objective.setPassed(false);    			
     		}
     		objective.setComplianceStatus((double) numItemreqsWithTraceAndAllocation/objective.getOutputs().getItemReqObjs().size() * 100.00);
     	}
     	else {
-            objective.setNoData(true);
+        	objective.setNoData(true);	
             objective.setPartialData(false);
-            objective.setPassed(false);    		
+            objective.setPassed(false);
     	}
     	
         return objective;
@@ -232,7 +243,9 @@ public class ComplianceProcess2 {
                 if (updatedObjective.isPartialData()) {
                     numPartialData++;
                 } else {
-                    numNoData++;
+                	if(updatedObjective.isNoData()) {
+                        numNoData++;                		
+                	}
                 }
             }
 
@@ -241,20 +254,23 @@ public class ComplianceProcess2 {
                             + updatedObjective.getId()
                             + " compliance status: "
                             + updatedObjective.getComplianceStatus());
+            
+            System.out.println(updatedObjective.getId() + " no: " + updatedObjective.isNoData() + " partial:" + updatedObjective.isPartialData() + " pass:" + updatedObjective.isPassed() );
+
 
             // replace old objective node with new node
             process.getObjectives().set(i, updatedObjective);
         }
+        
 
         // add metrics to process
         process.setNumObjectivesNoData(numNoData);
         process.setNumObjectivesPartialData(numPartialData);
         process.setNumObjectivesPassed(numPassed);
+        
+        // set process status metrics
+        process = ComplianceUtils.getProcessStatus(process);
 
-        // compute process compliance
-        process.setComplianceStatus(
-                ComplianceUtils.processComplianceValue(
-                        numPassed, numPartialData, numNoData, process.getObjectives().size()));
 
         return process;
     }

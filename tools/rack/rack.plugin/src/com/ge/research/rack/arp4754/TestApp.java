@@ -57,6 +57,6 @@ public class TestApp {
 
         DataProcessor processor = new DataProcessor();
 
-        processor.getPlanData(rackDir, configFile);
+        processor.getPlanData(rackDir);
     }
 }

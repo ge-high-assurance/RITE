@@ -39,7 +39,7 @@
                 <VBox style="-fx-alignment: center" GridPane.rowIndex="0">
                     <children>
                         <Label fx:id="headerLabel" />
-                        <Label fx:id="header" style="-fx-font-size: 2em" />
+                        <Label fx:id="headerLabel" style="-fx-font-size: 2em" text="ARP-4754 Compliance Report" />
                     </children>
                 </VBox>
 
@@ -105,7 +105,7 @@
                             </xAxis>
 
                             <yAxis>
-                                <NumberAxis fx:id="yAxisChartTableStatus" animated="false" autoRanging="false" label="Objectives" minorTickVisible="false" side="LEFT" />
+                                <NumberAxis fx:id="yAxisChartProcessStatus" animated="false" autoRanging="false" label="Objectives" minorTickVisible="false" side="LEFT" />
                             </yAxis>
 
                         </BarChart>
@@ -115,7 +115,7 @@
                 </GridPane>
 
                 <!-- DATA TABLE -->
-                <ListView fx:id="listTables" onMouseClicked="#listTableSelectionAction" GridPane.rowIndex="3" />
+                <ListView fx:id="listProcess" onMouseClicked="#listProcessSelectionAction" GridPane.rowIndex="3" />
 
                 <!-- FETCH BUTTON & LOADING LABEL  -->
                 <VBox GridPane.rowIndex="4">
