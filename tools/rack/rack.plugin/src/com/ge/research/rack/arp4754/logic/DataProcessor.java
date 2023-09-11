@@ -144,7 +144,7 @@ public class DataProcessor {
         for (String[] row : planData) {
             if ((row[objIdCol] != null)) {
                 // if objective does not already exist then create a new objective
-                if (DAPlanUtils.getObjectiveObjectFromList(objectives, row[objIdCol]) == null) {
+                if (DAPlanUtils.getObjectivePositionFromList(objectives, row[objIdCol]) == null) {
                     DAPlan.Objective newObjective = new DAPlan().new Objective();
 
                     System.out.println("Created Objective object for " + row[objIdCol]);
@@ -167,7 +167,7 @@ public class DataProcessor {
         for (String[] row : planData) {
             if ((row[procIdCol] != null)) {
                 // if process does not already exist then create a new process
-                if (DAPlanUtils.getProcessObjectFromList(processes, row[procIdCol]) == null) {
+                if (DAPlanUtils.getProcessPositionFromList(processes, row[procIdCol]) == null) {
                     DAPlan.Process newProcess = new DAPlan().new Process();
 
                     System.out.println("Created Process object for " + row[procIdCol]);
@@ -184,13 +184,13 @@ public class DataProcessor {
                     // if the process does not contain the objective then add the objective to the
                     // process
                     int existingProcessIndx =
-                            DAPlanUtils.getProcessObjectFromList(processes, row[procIdCol]);
-                    if (DAPlanUtils.getObjectiveObjectFromList(
+                            DAPlanUtils.getProcessPositionFromList(processes, row[procIdCol]);
+                    if (DAPlanUtils.getObjectivePositionFromList(
                                     processes.get(existingProcessIndx).getObjectives(),
                                     row[objIdCol])
                             == null) {
                         int existingObjectiveIndx =
-                                DAPlanUtils.getObjectiveObjectFromList(objectives, row[objIdCol]);
+                                DAPlanUtils.getObjectivePositionFromList(objectives, row[objIdCol]);
                         processes
                                 .get(existingProcessIndx)
                                 .getObjectives()

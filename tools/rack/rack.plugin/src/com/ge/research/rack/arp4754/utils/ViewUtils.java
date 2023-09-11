@@ -27,4 +27,18 @@ public class ViewUtils {
 
         return procObj.isPassed() ? Color.GREEN : Color.RED;       
     }
+    
+    
+    /** Returns javafx color for an objective object */
+    public static Color getObjectiveColor(final DAPlan.Objective objObj) {
+
+        if (objObj.isNoData()) {
+            return Color.GRAY; // if no data, then GRAY
+        }
+        if (objObj.isPartialData()) {
+            return Color.ORANGE;
+        }
+
+        return objObj.isPassed() ? Color.GREEN : Color.RED;       
+    }
 }

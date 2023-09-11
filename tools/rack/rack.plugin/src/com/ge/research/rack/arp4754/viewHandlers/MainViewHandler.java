@@ -16,6 +16,7 @@ import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
 import com.ge.research.rack.do178c.structures.PsacNode;
 import com.ge.research.rack.do178c.utils.PsacNodeUtils;
 import com.ge.research.rack.do178c.utils.ReportViewUtils;
+import com.ge.research.rack.do178c.viewHandlers.ReportTableViewHandlerNew;
 import com.ge.research.rack.do178c.viewManagers.ReportViewsManager;
 
 import javafx.concurrent.Task;
@@ -156,7 +157,7 @@ public class MainViewHandler {
         // enable elements
         labelSwInfo.setVisible(true);
 
-        String swInfo = "Software ID: " + Arp4754ViewsManager.reportDataObj.getSystem();
+        String swInfo = "System ID: " + Arp4754ViewsManager.reportDataObj.getSystem();
         labelSwInfo.setText(swInfo);
     }
 
@@ -434,6 +435,28 @@ public class MainViewHandler {
     @FXML
     private void listProcessSelectionAction(MouseEvent event) {
 
+        // The selected label
+        Label selectedLabel = listProcess.getSelectionModel().getSelectedItem();
+
+        if (selectedLabel != null) {
+
+            // get selection
+            String selectedProc = CustomStringUtils.separateElementIdFromDescription(selectedLabel.getText());
+            System.out.println("The selected Table: " + selectedProc);
+
+            if (!DAPlanUtils.getProcessObjectFromList(Arp4754ViewsManager.reportDataObj.getProcesses(), selectedProc).isNoData()) {
+                // Set the stage with the other fxml
+                FXMLLoader processViewLoader =
+                        Arp4754ViewsManager.setNewFxmlToStage(
+                                "resources/fxml/arp4754/ProcessView.fxml");
+
+                // initialize variables in the ReportTableView page
+                ProcessViewHandler processViewLoaderClassObj = processViewLoader.getController();
+                processViewLoaderClassObj.prepareView(selectedProc);
+            }
+        }
+    	
+    	
     }
 	
 }

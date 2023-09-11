@@ -48,7 +48,7 @@ public class DAPlanUtils {
      * @param id
      * @return
      */
-    public static Integer getObjectiveObjectFromList(List<DAPlan.Objective> objectives, String id) {
+    public static Integer getObjectivePositionFromList(List<DAPlan.Objective> objectives, String id) {
 
         for (int i = 0; i < objectives.size(); i++) {
             DAPlan.Objective objective = objectives.get(i);
@@ -60,18 +60,52 @@ public class DAPlanUtils {
     }
 
     /**
+     * Returns the objective object
+     * @param objectives
+     * @param id
+     * @return
+     */
+    public static DAPlan.Objective getObjectiveObjectFromList(List<DAPlan.Objective> objectives, String id) {
+
+        for (int i = 0; i < objectives.size(); i++) {
+            DAPlan.Objective objective = objectives.get(i);
+            if (objective.getId().equalsIgnoreCase(id)) {
+                return objective;
+            }
+        }
+        return null;
+    }
+    
+    /**
      * Takes a list of process objects and an id and returns index of the object with the id
      *
      * @param processes
      * @param id
      * @return
      */
-    public static Integer getProcessObjectFromList(List<DAPlan.Process> processes, String id) {
+    public static Integer getProcessPositionFromList(List<DAPlan.Process> processes, String id) {
 
         for (int i = 0; i < processes.size(); i++) {
             DAPlan.Process process = processes.get(i);
             if (process.getId().equalsIgnoreCase(id)) {
                 return i;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Returns the process object
+     * @param processes
+     * @param id
+     * @return
+     */
+    public static DAPlan.Process getProcessObjectFromList(List<DAPlan.Process> processes, String id) {
+
+        for (int i = 0; i < processes.size(); i++) {
+            DAPlan.Process process = processes.get(i);
+            if (process.getId().equalsIgnoreCase(id)) {
+                return process;
             }
         }
         return null;
