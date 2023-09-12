@@ -129,17 +129,31 @@ public class DAPlanUtils {
                 	}            		
             	}
             }
-        }
-        
-//      for(int i = 0; i<labelList.size();i++) {
-//    	// find the appropriate label for this index
-//    	for(Label label : labelList) {
-//    		if(i == (Integer.parseInt(getProcessIdFromLabelText(label.getText()))-1)){
-//    			sortedLabelList.add(label);
-//    		}
-//    	}
-//    }
+        }   	
     	
+    	return newList;
+    }
+    
+    /**
+     * Sorts a given list of DAPLan Objectives by id
+     * @return
+     */
+    public static List<DAPlan.Objective> sortObjectiveList(List<DAPlan.Objective> list){
+    	List<DAPlan.Objective> newList = new ArrayList<DAPlan.Objective>();
+    	
+        if(list.size() > 0) {
+            for(int i=0; i < list.size(); i++) {
+            	for(DAPlan.Objective objective : list) {
+            		String[] objIdParts = objective.getId().split("-"); // "Objective-2-2"
+            		String objNum = objIdParts[objIdParts.length - 1];
+                	if((Integer.parseInt(objNum) - 1) == i) {
+                		newList.add(objective);
+                		
+                		System.out.println(objective.getId() + " -> "+ i );
+                	}            		
+            	}
+            }
+        }   	
     	
     	return newList;
     }

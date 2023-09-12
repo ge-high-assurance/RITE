@@ -68,18 +68,10 @@ public class ProcessViewHandler {
      */
     public Label getObjectiveLabel(DAPlan.Objective objObj) {
 
-        double passPercent = 0.0; // remove
-
         Label objLabel = new Label();
         objLabel.setStyle("-fx-font-weight: bold;");
 
-        //        objLabel.setText(
-        //                objObj.getId()
-        //                        + ": "
-        //                        + objObj.getDescription()
-        //                        + " ("
-        //                        + String.format("%.2f", passPercent)
-        //                        + "% compliant)");
+
         objLabel.setText(
                 objObj.getId()
                         + ": "
@@ -100,6 +92,35 @@ public class ProcessViewHandler {
         // clear old data
         listObjectives.getItems().clear();
 
+        if ((currentProcessObject.getObjectives() != null)
+                && (currentProcessObject.getObjectives().size() > 0)) {
+        	
+        	// sort the objective list
+            List<DAPlan.Objective> allObjectiveObjs =  DAPlanUtils.sortObjectiveList(currentProcessObject.getObjectives());
+
+            for (DAPlan.Objective objObj : allObjectiveObjs) {
+
+                Label objLabel = getObjectiveLabel(objObj);
+
+                if (filterKey.equalsIgnoreCase("All")) {
+                    listObjectives.getItems().add(objLabel);
+                } else if (filterKey.equalsIgnoreCase("Passed")
+                        && objObj.isPassed()) {
+                    listObjectives.getItems().add(objLabel);
+                } else if (filterKey.equalsIgnoreCase("Failed")
+                        && !objObj.isPassed()
+                        && !objObj.isNoData()
+                        && !objObj.isPartialData()) {
+                    listObjectives.getItems().add(objLabel);
+                } else if (filterKey.equalsIgnoreCase("Partial")
+                        && objObj.isPartialData()) {
+                    listObjectives.getItems().add(objLabel);
+                } else if (filterKey.equalsIgnoreCase("No data")
+                        && objObj.isNoData()) {
+                    listObjectives.getItems().add(objLabel);
+                }
+            }
+        }
 
     }
 
