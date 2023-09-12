@@ -93,6 +93,7 @@ public class ComplianceProcess2 {
             objective.setPassed(false);
         }
 
+        objective.setMetrics("");
         return objective;
     }
 
@@ -125,6 +126,7 @@ public class ComplianceProcess2 {
             objective.setPassed(false);
         }
 
+        objective.setMetrics("");
         return objective;
     }
 
@@ -184,6 +186,7 @@ public class ComplianceProcess2 {
             objective.setPassed(false);
     	}
     	
+        objective.setMetrics("");
         return objective;
     }
 
@@ -271,7 +274,7 @@ public class ComplianceProcess2 {
         // set process status metrics
         process = ComplianceUtils.getProcessStatus(process);
 
-
+        process.setMetrics("");
         return process;
     }
 }

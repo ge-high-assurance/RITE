@@ -35,6 +35,7 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 
 /**
  * @author Saswata Paul
@@ -87,31 +88,65 @@ public class MainViewHandler {
     private Label getProcessLabel(DAPlan.Process procObj) {
 
 
-        Label tabLabel = new Label();
-        String tabText =  procObj.getId()
-                        + ": "
-                        + procObj.getDesc().replace("\"", "")
-                        + " ("
-                        + String.format("%.2f", procObj.getComplianceStatus())
-                        + "% objectives passed)";
+        Label procLabel = new Label();
+        procLabel.setStyle("-fx-font-weight: bold;");
 
-        tabLabel.setText(tabText);
+        if(procObj.getMetrics().equalsIgnoreCase("TBD")) {
+          procLabel.setText(
+          procObj.getId()
+                  + ": "
+                  + procObj.getDesc().replace("\"", "")
+                  + " ("
+                  + procObj.getMetrics()
+                  + ")");        	
+          procLabel.setTextFill(Color.LIGHTGREY);    
+        }
+        else {
+            procLabel.setText(procObj.getId()
+                    + ": "
+                    + procObj.getDesc().replace("\"", "")
+                    + " ("
+                    + String.format("%.2f", procObj.getComplianceStatus())
+                    + "% objectives passed)");
+            procLabel.setTextFill(ViewUtils.getProcessColor(procObj));        	
+        }
+        
+//        String procText =  procObj.getId()
+//                        + ": "
+//                        + procObj.getDesc().replace("\"", "")
+//                        + " ("
+//                        + String.format("%.2f", procObj.getComplianceStatus())
+//                        + "% objectives passed)";
+//
+//        procLabel.setText(procText);
 
-        //        if (tabObj.getNoData()) {
-        //            tabLabel.setTextFill(Color.GRAY);
-        //        } else if (tabObj.getPartialData()) {
-        //            tabLabel.setTextFill(Color.ORANGE);
-        //        } else if (tabObj.getPassed()) {
-        //            tabLabel.setTextFill(Color.GREEN);
-        //        } else if (!tabObj.getPassed()) {
-        //            tabLabel.setTextFill(Color.RED);
-        //        }
+//        procLabel.setTextFill(ViewUtils.getProcessColor(procObj));
 
-        tabLabel.setTextFill(ViewUtils.getProcessColor(procObj));
+//        procLabel.setStyle("-fx-font-weight: bold;");
+        
+        
+//        Label objLabel = new Label();
+//        objLabel.setStyle("-fx-font-weight: bold;");
+//
+//        if(objObj.getMetrics().equalsIgnoreCase("TBD")) {
+//            objLabel.setText(
+//                    objObj.getId()
+//                            + ": "
+//                            + objObj.getDesc().replace("\"", "")
+//                            + " ("
+//                            + objObj.getMetrics()
+//                            + ")");        	
+//            objLabel.setTextFill(Color.WHITESMOKE);    
+//        }
+//        else {
+//            objLabel.setText(
+//                    objObj.getId()
+//                            + ": "
+//                            + objObj.getDesc().replace("\"", ""));
+//            objLabel.setTextFill(ViewUtils.getObjectiveColor(objObj));
+//        }        
 
-        tabLabel.setStyle("-fx-font-weight: bold;");
-
-        return tabLabel;
+        return procLabel;
     }
 
     /**

@@ -48,6 +48,8 @@ public class DAPlan {
     public class Output {
 
         // ARP4754 Output Objects
+        private List<Evidence> documentObjs = new ArrayList<Evidence>();
+    	
         private List<Evidence> derItemReqObjs = new ArrayList<Evidence>();
 
         private List<Evidence> derSysReqObjs = new ArrayList<Evidence>();
@@ -66,7 +68,33 @@ public class DAPlan {
 
         private List<Evidence> systemObjs = new ArrayList<Evidence>();
 
+        
+        //--- 
+        private List<Evidence> verificationObjs = new ArrayList<Evidence>();
+
+        private List<Evidence> reviewObjs = new ArrayList<Evidence>();
+     
+        private List<Evidence> testObjs = new ArrayList<Evidence>();
+        
+        private List<Evidence> analysisObjs = new ArrayList<Evidence>();
+        
+        
+        
         /**
+		 * @return the documentObjs
+		 */
+		public List<Evidence> getDocumentObjs() {
+			return documentObjs;
+		}
+
+		/**
+		 * @param documentObjs the documentObjs to set
+		 */
+		public void setDocumentObjs(List<Evidence> documentObjs) {
+			this.documentObjs = documentObjs;
+		}
+
+		/**
          * @return the derItemReqObjs
          */
         public List<Evidence> getDerItemReqObjs() {
@@ -191,6 +219,64 @@ public class DAPlan {
         public void setSystemObjs(List<Evidence> systemObjs) {
             this.systemObjs = systemObjs;
         }
+
+		/**
+		 * @return the verificationObjs
+		 */
+		public List<Evidence> getVerificationObjs() {
+			return verificationObjs;
+		}
+
+		/**
+		 * @param verificationObjs the verificationObjs to set
+		 */
+		public void setVerificationObjs(List<Evidence> verificationObjs) {
+			this.verificationObjs = verificationObjs;
+		}
+
+		/**
+		 * @return the reviewObjs
+		 */
+		public List<Evidence> getReviewObjs() {
+			return reviewObjs;
+		}
+
+		/**
+		 * @param reviewObjs the reviewObjs to set
+		 */
+		public void setReviewObjs(List<Evidence> reviewObjs) {
+			this.reviewObjs = reviewObjs;
+		}
+
+		/**
+		 * @return the testObjs
+		 */
+		public List<Evidence> getTestObjs() {
+			return testObjs;
+		}
+
+		/**
+		 * @param testObjs the testObjs to set
+		 */
+		public void setTestObjs(List<Evidence> testObjs) {
+			this.testObjs = testObjs;
+		}
+
+		/**
+		 * @return the analysisObjs
+		 */
+		public List<Evidence> getAnalysisObjs() {
+			return analysisObjs;
+		}
+
+		/**
+		 * @param analysisObjs the analysisObjs to set
+		 */
+		public void setAnalysisObjs(List<Evidence> analysisObjs) {
+			this.analysisObjs = analysisObjs;
+		}
+        
+        
     }
 
     /**

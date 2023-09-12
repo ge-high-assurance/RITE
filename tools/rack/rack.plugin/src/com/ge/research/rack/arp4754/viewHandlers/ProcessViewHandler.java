@@ -31,6 +31,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 /**
  * @author Saswata Paul
@@ -71,18 +72,95 @@ public class ProcessViewHandler {
         Label objLabel = new Label();
         objLabel.setStyle("-fx-font-weight: bold;");
 
+        if(objObj.getMetrics().equalsIgnoreCase("TBD")) {
+            objLabel.setText(
+                    objObj.getId()
+                            + ": "
+                            + objObj.getDesc().replace("\"", "")
+                            + " ("
+                            + objObj.getMetrics()
+                            + ")");        	
+            objLabel.setTextFill(Color.LIGHTGREY);    
+        }
+        else {
+            objLabel.setText(
+                    objObj.getId()
+                            + ": "
+                            + objObj.getDesc().replace("\"", ""));
+            objLabel.setTextFill(ViewUtils.getObjectiveColor(objObj));
+        }
 
-        objLabel.setText(
-                objObj.getId()
-                        + ": "
-                        + objObj.getDesc().replace("\"", "")
-                        + " ("
-                        + objObj.getMetrics()
-                        + ")");
-        objLabel.setTextFill(ViewUtils.getObjectiveColor(objObj));
+
         return objLabel;
     }
 
+
+
+    /** Populates the ojective status chart */
+    public void populateObjStatusChart() {
+        // clear the chart
+        chartObjStatus.getData().clear();
+
+        // enable the chart
+        chartObjStatus.setDisable(false);
+        yAxisChartObjStatus.setDisable(false);
+
+        List<Integer> artStats = ViewUtils.getProcessArtifactStats(currentProcessObject);
+
+
+        Data docBar = ReportViewUtils.createIntDataBar("Documents", artStats.get(0));
+        Data reqBar = ReportViewUtils.createIntDataBar("Requirements", artStats.get(1));
+        Data itemBar = ReportViewUtils.createIntDataBar("Items", artStats.get(2));
+        Data interfaceBar = ReportViewUtils.createIntDataBar("Interfaces", artStats.get(3));
+        Data systemBar = ReportViewUtils.createIntDataBar("Systems", artStats.get(4));
+        Data verificationBar = ReportViewUtils.createIntDataBar("Verifications", artStats.get(5));
+        Data testBar = ReportViewUtils.createIntDataBar("Tests", artStats.get(6));
+        Data reviewBar = ReportViewUtils.createIntDataBar("Reviews", artStats.get(7));
+        Data analysisBar = ReportViewUtils.createIntDataBar("Analyses", artStats.get(8));
+
+        
+        XYChart.Series tableStat = new XYChart.Series();
+
+        tableStat.getData().add(docBar);
+        tableStat.getData().add(reqBar);
+        tableStat.getData().add(itemBar);
+        tableStat.getData().add(interfaceBar);
+        tableStat.getData().add(systemBar);
+        tableStat.getData().add(verificationBar);
+        tableStat.getData().add(testBar);
+        tableStat.getData().add(reviewBar);
+        tableStat.getData().add(analysisBar);
+
+        chartObjStatus.getData().add(tableStat);
+
+        docBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
+        ReportViewUtils.assignTooltip(docBar.getNode(), docBar.getYValue().toString());
+        reqBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
+        ReportViewUtils.assignTooltip(reqBar.getNode(), reqBar.getYValue().toString());
+        itemBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
+        ReportViewUtils.assignTooltip(itemBar.getNode(), itemBar.getYValue().toString());
+        interfaceBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
+        ReportViewUtils.assignTooltip(interfaceBar.getNode(), interfaceBar.getYValue().toString());
+        systemBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
+        ReportViewUtils.assignTooltip(systemBar.getNode(), systemBar.getYValue().toString());
+        verificationBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
+        ReportViewUtils.assignTooltip(verificationBar.getNode(), verificationBar.getYValue().toString());
+        testBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
+        ReportViewUtils.assignTooltip(testBar.getNode(), testBar.getYValue().toString());
+        reviewBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
+        ReportViewUtils.assignTooltip(reviewBar.getNode(), reviewBar.getYValue().toString());
+        analysisBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
+        ReportViewUtils.assignTooltip(analysisBar.getNode(), analysisBar.getYValue().toString());
+
+        // scaling
+        int maxScale = Collections.max(artStats);
+        // *** This can help make integral ticks on Y axis ***
+        yAxisChartObjStatus.setLowerBound(0);
+        yAxisChartObjStatus.setUpperBound(maxScale);
+        yAxisChartObjStatus.setTickUnit(1);
+    }
+
+    
     /**
      * Populates the list of objectives
      *
@@ -123,64 +201,7 @@ public class ProcessViewHandler {
         }
 
     }
-
-    /** Populates the ojective status chart */
-    public void populateObjStatusChart() {
-//        // clear the chart
-//        chartObjStatus.getData().clear();
-//
-//        // enable the chart
-//        chartObjStatus.setDisable(false);
-//        yAxisChartObjStatus.setDisable(false);
-//
-//        List<Integer> artStats = ReportViewUtils.getProcessArtifactStats(currentProcessObject);
-//
-//        //        Data docBar = new XYChart.Data("Documents", artStats.get(0));
-//        //        Data reqBar = new XYChart.Data("Requirements", artStats.get(1));
-//        //        Data hzrdBar = new XYChart.Data("Hazards", artStats.get(2));
-//        //        Data tstBar = new XYChart.Data("Test Results", artStats.get(3));
-//        //        Data logBar = new XYChart.Data("Review Logs", artStats.get(4));
-//        //        Data anlsBar = new XYChart.Data("Analyses", artStats.get(5));
-//
-//        Data docBar = ReportViewUtils.createIntDataBar("Documents", artStats.get(0));
-//        Data reqBar = ReportViewUtils.createIntDataBar("Requirements", artStats.get(1));
-//        Data hzrdBar = ReportViewUtils.createIntDataBar("Hazards", artStats.get(2));
-//        Data tstBar = ReportViewUtils.createIntDataBar("Test Results", artStats.get(3));
-//        Data logBar = ReportViewUtils.createIntDataBar("Review Logs", artStats.get(4));
-//        Data anlsBar = ReportViewUtils.createIntDataBar("Analyses", artStats.get(5));
-//
-//        XYChart.Series tableStat = new XYChart.Series();
-//
-//        tableStat.getData().add(docBar);
-//        tableStat.getData().add(reqBar);
-//        tableStat.getData().add(hzrdBar);
-//        tableStat.getData().add(tstBar);
-//        tableStat.getData().add(logBar);
-//        tableStat.getData().add(anlsBar);
-//
-//        chartObjStatus.getData().add(tableStat);
-//
-//        docBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
-//        ReportViewUtils.assignTooltip(docBar.getNode(), docBar.getYValue().toString());
-//        reqBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
-//        ReportViewUtils.assignTooltip(reqBar.getNode(), reqBar.getYValue().toString());
-//        hzrdBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
-//        ReportViewUtils.assignTooltip(hzrdBar.getNode(), hzrdBar.getYValue().toString());
-//        tstBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
-//        ReportViewUtils.assignTooltip(tstBar.getNode(), tstBar.getYValue().toString());
-//        logBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
-//        ReportViewUtils.assignTooltip(logBar.getNode(), logBar.getYValue().toString());
-//        anlsBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
-//        ReportViewUtils.assignTooltip(anlsBar.getNode(), anlsBar.getYValue().toString());
-//
-//        // scaling
-//        int maxScale = Collections.max(artStats);
-//        // *** This can help make integral ticks on Y axis ***
-//        yAxisChartObjStatus.setLowerBound(0);
-//        yAxisChartObjStatus.setUpperBound(maxScale);
-//        yAxisChartObjStatus.setTickUnit(1);
-    }
-
+    
     /**
      * Used to initialize the variables from the caller view's fxml controller
      *
