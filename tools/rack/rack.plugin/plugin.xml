@@ -59,7 +59,7 @@
         </command>
         <command categoryId="rackplugin.commands"
             id="rackplugin.commands.arp4754Command"
-            name="Generate ARP-4754 Report">
+            name="Generate ARP-4754A Report">
         </command>
 
         <!-- For auto Gsn -->
@@ -235,7 +235,7 @@
                 </command>
                 
                 <command commandId="rackplugin.commands.arp4754Command"
-                    id="rackplugin.menus.arp4754" label="ARP-4754 Compliance Report"
+                    id="rackplugin.menus.arp4754" label="ARP-4754A Compliance Report"
                     mnemonic="S" style="push">
                 </command>
                 

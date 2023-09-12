@@ -86,7 +86,10 @@ public class ProcessViewHandler {
             objLabel.setText(
                     objObj.getId()
                             + ": "
-                            + objObj.getDesc().replace("\"", ""));
+                            + objObj.getDesc().replace("\"", "")
+				            + " ("
+		                    + String.format("%.2f", objObj.getComplianceStatus())
+		                    + "% complete)");
             objLabel.setTextFill(ViewUtils.getObjectiveColor(objObj));
         }
 
@@ -249,30 +252,57 @@ public class ProcessViewHandler {
 
     @FXML
     private void btnHomeAction(ActionEvent event) throws Exception {
-
+        // Set the stage with the other fxml
+        Arp4754ViewsManager.setNewFxmlToStage("resources/fxml/arp4754/MainView.fxml");
 
     }
 
     @FXML
     private void btnFontIncAction(ActionEvent event) throws Exception {
         System.out.println("increase font btn pressed");
-        ReportViewsManager.increaseGlobalFontSize(true);
+        Arp4754ViewsManager.increaseGlobalFontSize(true);
     }
 
     @FXML
     private void btnFontDecAction(ActionEvent event) throws Exception {
         System.out.println("decrease font btn pressed");
-        ReportViewsManager.increaseGlobalFontSize(false);
+        Arp4754ViewsManager.increaseGlobalFontSize(false);
     }
 
     @FXML
     private void comboFilterAction(ActionEvent event) throws Exception {
+        String key = (String) comboFilter.getValue();
+
+        // Clear and repopulate the listObjectives depending on key
+        populateListObjectives(key);
 
     }
 
     @FXML
     private void listObjectivesSelectionAction(MouseEvent event) {
+        // The selected label
+        Label selectedLabel = listObjectives.getSelectionModel().getSelectedItem();
 
+        if (selectedLabel != null) {
+
+            // get selection
+            String selectedObjective =
+                    CustomStringUtils.separateElementIdFromDescription(selectedLabel.getText());
+            System.out.println("The selected Objective: " + selectedObjective);
+
+            // switch to objective view only if the objective has some data
+            if (!DAPlanUtils.getObjectiveObjectFromList(currentProcessObject.getObjectives(), selectedObjective).isNoData()) {
+                // Set the stage with the other fxml
+                FXMLLoader objectiveViewLoader =
+                        Arp4754ViewsManager.setNewFxmlToStage(
+                                "resources/fxml/arp4754/ObjectiveView.fxml");
+
+                // initialize variables in the ReportTableView page
+                ObjectiveViewHandler objectiveViewLoaderClassObj =
+                        objectiveViewLoader.getController();
+                objectiveViewLoaderClassObj.prepareView(currentProcessId, selectedObjective);
+            }
+        }
 
     }
 	

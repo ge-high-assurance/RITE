@@ -100,13 +100,6 @@ public class ReportTableViewHandlerNew {
         Label objLabel = new Label();
         objLabel.setStyle("-fx-font-weight: bold;");
 
-        //        objLabel.setText(
-        //                objObj.getId()
-        //                        + ": "
-        //                        + objObj.getDescription()
-        //                        + " ("
-        //                        + String.format("%.2f", passPercent)
-        //                        + "% compliant)");
         objLabel.setText(
                 objObj.getId()
                         + ": "

@@ -111,41 +111,6 @@ public class MainViewHandler {
             procLabel.setTextFill(ViewUtils.getProcessColor(procObj));        	
         }
         
-//        String procText =  procObj.getId()
-//                        + ": "
-//                        + procObj.getDesc().replace("\"", "")
-//                        + " ("
-//                        + String.format("%.2f", procObj.getComplianceStatus())
-//                        + "% objectives passed)";
-//
-//        procLabel.setText(procText);
-
-//        procLabel.setTextFill(ViewUtils.getProcessColor(procObj));
-
-//        procLabel.setStyle("-fx-font-weight: bold;");
-        
-        
-//        Label objLabel = new Label();
-//        objLabel.setStyle("-fx-font-weight: bold;");
-//
-//        if(objObj.getMetrics().equalsIgnoreCase("TBD")) {
-//            objLabel.setText(
-//                    objObj.getId()
-//                            + ": "
-//                            + objObj.getDesc().replace("\"", "")
-//                            + " ("
-//                            + objObj.getMetrics()
-//                            + ")");        	
-//            objLabel.setTextFill(Color.WHITESMOKE);    
-//        }
-//        else {
-//            objLabel.setText(
-//                    objObj.getId()
-//                            + ": "
-//                            + objObj.getDesc().replace("\"", ""));
-//            objLabel.setTextFill(ViewUtils.getObjectiveColor(objObj));
-//        }        
-
         return procLabel;
     }
 
