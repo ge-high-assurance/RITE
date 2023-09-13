@@ -92,7 +92,8 @@ public class ComplianceProcess2 {
             objective.setPartialData(false);
             objective.setPassed(false);
         }
-
+        
+        
         objective.setMetrics("");
         return objective;
     }
@@ -156,11 +157,11 @@ public class ComplianceProcess2 {
     		for(Evidence itemReq : objective.getOutputs().getItemReqObjs()) {
     			boolean trace = false;
     			boolean allocation = false;
-    			if(itemReq.getTracesUp()!=null) {
+    			if(itemReq.getTracesUp().size() > 0) {
     				numItemReqsWithTrace++;
     				trace=true;
     			}
-    			if(itemReq.getAllocatedTo()!=null) {
+    			if(itemReq.getAllocatedTo().size() > 0) {
     				numItemReqsWithAllocation++;
     				allocation=true;
     			}	

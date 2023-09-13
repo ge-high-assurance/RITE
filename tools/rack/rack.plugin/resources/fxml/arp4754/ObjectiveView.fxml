@@ -44,7 +44,7 @@
                 </VBox>
 
                 <!-- SUBTITLE -->
-                <Label fx:id="labelTableInfo" style="-fx-font-size: 1.5em" text="Label" GridPane.rowIndex="1" />
+                <Label fx:id="labelProcessInfo" style="-fx-font-size: 1.5em" text="Label" GridPane.rowIndex="1" />
 
                 <!-- SUB-SUBTITLE -->
                 <Label fx:id="labelObjInfo" style="-fx-font-size: 1.5em" text="Label" GridPane.rowIndex="2" />

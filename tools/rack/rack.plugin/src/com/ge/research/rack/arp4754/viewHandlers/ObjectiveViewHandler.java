@@ -3,54 +3,40 @@
  */
 package com.ge.research.rack.arp4754.viewHandlers;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.ge.research.rack.arp4754.structures.DAPlan;
+import com.ge.research.rack.arp4754.structures.Evidence;
+import com.ge.research.rack.arp4754.utils.DAPlanUtils;
+import com.ge.research.rack.arp4754.utils.ViewUtils;
 import com.ge.research.rack.arp4754.viewManagers.Arp4754ViewsManager;
-import com.ge.research.rack.do178c.structures.DataItem;
-import com.ge.research.rack.do178c.structures.PsacNode;
-import com.ge.research.rack.do178c.structures.Requirement;
-import com.ge.research.rack.do178c.structures.ReviewLog;
-import com.ge.research.rack.do178c.structures.SwComponent;
-import com.ge.research.rack.do178c.structures.Test;
-import com.ge.research.rack.do178c.structures.PsacNode.Activity;
-import com.ge.research.rack.do178c.utils.LogicUtils;
-import com.ge.research.rack.do178c.utils.PsacNodeUtils;
 import com.ge.research.rack.do178c.utils.ReportViewUtils;
-import com.ge.research.rack.do178c.viewHandlers.ReportTableViewHandlerNew;
-import com.ge.research.rack.do178c.viewManagers.ReportViewsManager;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Data;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 
 /**
  * @author Saswata Paul
  *
  */
 public class ObjectiveViewHandler {
-	   private String currentProcessId;
+	    private String currentProcessId;
 
-	    private PsacNode.Table currentProcessObject;
+	    private DAPlan.Process currentProcessObject;
 
 	    private String currentObjId;
 
-	    private PsacNode.Objective currentObjObject;
+	    private DAPlan.Objective currentObjObject;
 
 	    private String interfaceChildrenRelation;
 
@@ -152,6 +138,242 @@ public class ObjectiveViewHandler {
 //	        systemChildrenLabel.setText("");
 	        systemChildrenList.getItems().clear();
 	    }
+	    //-------------------------------------------------------------------
+	    
+	    
+	    public void populateListInterface(String filterKey, String searchKey) {
+	    		
+            // clear the list and chart
+            interfaceList.getItems().clear();
+            interfaceChart.getData().clear();
+
+            // store children releationship for this objective
+            interfaceChildrenRelation = "I/O";
+	    	
+            
+            // TODO: objective-based setting of children
+            for(Evidence intrface : currentObjObject.getOutputs().getInterfaceObjs()){
+                if (filterKey.equalsIgnoreCase("All")
+                        && ((searchKey == null) || (intrface.getId().contains(searchKey)))) {
+                    Label evidenceLabel = new Label();
+
+                    String evidenceText =
+                            intrface.getId()
+                                    + " | Inputs: ";
+                    for(Evidence input : intrface.getHasInputs()) {
+                    	evidenceText = evidenceText + input.getId() + ", ";
+                    }
+                    evidenceText = evidenceText +  " | Outputs: ";
+                    
+                    for(Evidence output : intrface.getHasOutputs()) {
+                    	evidenceText = evidenceText + output.getId() + ", ";
+                    }
+
+                    evidenceLabel.setText(evidenceText);
+                    interfaceList.getItems().add(evidenceLabel);
+                }
+            }
+	    }
+	    
+
+	    public void populateListItem(String filterKey, String searchKey) {
+            // clear the list and chart
+            itemList.getItems().clear();
+            itemChart.getData().clear();
+
+            
+            // TODO: objective-based setting of children
+            // store children releationship for this objective
+            itemChildrenRelation = "";
+	    	
+            for(Evidence item : currentObjObject.getOutputs().getItemObjs()){
+                if (filterKey.equalsIgnoreCase("All")
+                        && ((searchKey == null) || (item.getId().contains(searchKey)))) {
+                    Label evidenceLabel = new Label();
+
+                    String evidenceText =
+                            item.getId();
+
+                    evidenceLabel.setText(evidenceText);
+                    itemList.getItems().add(evidenceLabel);
+                }
+            }	    	
+	    	
+	    }
+
+	    public void populateListRequirement(String filterKey, String searchKey) {
+            // clear the list and chart
+	    	requirementList.getItems().clear();
+	    	requirementChart.getData().clear();
+
+            if(currentObjObject.getId().equalsIgnoreCase("objective-2-2")) {
+                // TODO: objective-based setting of children
+                // store children releationship for this objective
+            	requirementChildrenRelation = "AllocatedToSystem";
+    	    	
+                for(Evidence sysReq : currentObjObject.getOutputs().getSysReqObjs()){
+                    if (filterKey.equalsIgnoreCase("All")
+                            && ((searchKey == null) || (sysReq.getId().contains(searchKey)))) {
+                        Label evidenceLabel = new Label();
+
+                        String evidenceText =
+                                sysReq.getId()
+                                + " | Allocated To Systems: ";
+
+                        for(Evidence system : sysReq.getAllocatedTo() ) {
+                        	evidenceText = evidenceText + system.getId() +", ";
+                        }
+                        
+                        evidenceLabel.setText(evidenceText);
+                        requirementList.getItems().add(evidenceLabel);
+                    }
+                }	    	
+            }
+            
+
+            if(currentObjObject.getId().equalsIgnoreCase("objective-2-6")) {
+                // TODO: objective-based setting of children
+                // store children releationship for this objective
+                requirementChildrenRelation = "Allocated To System";
+    	    	
+                for(Evidence itemReq : currentObjObject.getOutputs().getItemReqObjs()){
+                    if (filterKey.equalsIgnoreCase("All")
+                            && ((searchKey == null) || (itemReq.getId().contains(searchKey)))) {
+                        Label evidenceLabel = new Label();
+
+                        String evidenceText =
+                                itemReq.getId()
+                                + " | Traces To: ";
+
+                        for(Evidence sysReq : itemReq.getTracesUp() ) {
+                        	evidenceText = evidenceText + sysReq.getId() +", ";
+                        }
+
+                    	evidenceText = evidenceText +" | Allocated To Items:  ";
+
+                        for(Evidence item : itemReq.getAllocatedTo() ) {
+                        	evidenceText = evidenceText + item.getId() +", ";
+                        }
+                        
+                        evidenceLabel.setText(evidenceText);
+                        requirementList.getItems().add(evidenceLabel);
+                    }
+                }	    	
+            }
+	    }
+	    
+	    
+	    public void populateListSystem(String filterKey, String searchKey) {
+    		
+            // clear the list and chart
+            systemList.getItems().clear();
+            systemChart.getData().clear();
+
+            // store children releationship for this objective
+            systemChildrenRelation = "I/O";
+	    	
+            
+            // TODO: objective-based setting of children
+            for(Evidence system : currentObjObject.getOutputs().getSystemObjs()){
+                if (filterKey.equalsIgnoreCase("All")
+                        && ((searchKey == null) || (system.getId().contains(searchKey)))) {
+                    Label evidenceLabel = new Label();
+
+                    String evidenceText =
+                            system.getId()
+                                    + " | Interfaces: ";
+                    for(Evidence intrface : system.getHasInterfaces()) {
+                    	evidenceText = evidenceText + intrface.getId() + ", ";
+                    }
+
+                    evidenceLabel.setText(evidenceText);
+                    systemList.getItems().add(evidenceLabel);
+                }
+            }
+	    }
+	    //-------------------------------------------------------------------	    
+
+	    
+	    public void populateTabDocument() {
+	    	
+	    }
+
+	    public void populateTabInterface() {
+	    	if(currentObjObject.getId().equalsIgnoreCase("objective-2-2")) {
+		    	if(currentObjObject.getOutputs().getInterfaceObjs().size() > 0) {
+		    		tabInterface.setDisable(false);
+		    		populateListInterface("All", null);
+		    	}	    		
+	    	}
+	    }
+
+	    
+	    public void populateTabItem() {
+	    	if(currentObjObject.getId().equalsIgnoreCase("objective-2-6")) {
+		    	if(currentObjObject.getOutputs().getItemObjs().size() > 0) {
+		    		tabItem.setDisable(false);
+		    		populateListItem("All", null);
+		    	}	    		
+	    	}
+	    	
+	    }
+	    
+	    
+	    public void populateTabRequirement() {
+	    	if (currentObjObject.getId().equalsIgnoreCase("objective-2-2")
+	    			|| currentObjObject.getId().equalsIgnoreCase("objective-2-4")
+	    			|| currentObjObject.getId().equalsIgnoreCase("objective-2-6")) {
+		    	if((currentObjObject.getOutputs().getDerItemReqObjs().size() > 0)
+		    			|| (currentObjObject.getOutputs().getDerSysReqObjs().size() > 0)
+		    			|| (currentObjObject.getOutputs().getItemReqObjs().size() > 0)
+		    			|| (currentObjObject.getOutputs().getSysReqObjs().size() > 0)) {
+		    		tabRequirement.setDisable(false);
+		    		populateListRequirement("All", null);
+		    	}	    		
+	    	}
+	    	
+	    }
+	    
+	    
+	    
+	    public void populateTabSystem() {
+	    	if(currentObjObject.getId().equalsIgnoreCase("objective-2-2")) {
+		    	if(currentObjObject.getOutputs().getSystemObjs().size() > 0) {
+		    		tabSystem.setDisable(false);
+		    		populateListSystem("All", null);
+		    	}	    		
+	    	}
+
+	    	
+	    }
+	    
+	    
+	    
+	    public void populateTabTest() {
+	    	
+	    }
+	    
+	    
+	    
+	    public void populateTabReview() {
+	    	
+	    }
+	    
+	    
+	    
+	    public void populateTabAnalysis() {
+	    	
+	    }
+	    
+	    
+	    
+	    public void populateTabVerification() {
+	    	
+	    }
+	    
+	    
+	    
+	    
 	    
 	    /**
 	     * Used to initialize the variables from the caller view's fxml controller
@@ -161,10 +383,44 @@ public class ObjectiveViewHandler {
 	     */
 	    public void prepareView(String procId, String objId) {
 
+	    	// set the process and objective objects
+	    	currentProcessId = procId;
+	    	currentObjId = objId;
+	        currentProcessObject = DAPlanUtils.getProcessObjectFromList(Arp4754ViewsManager.reportDataObj.getProcesses(), procId);
+	        currentObjObject =  DAPlanUtils.getObjectiveObjectFromList(currentProcessObject.getObjectives(), objId);
 	    	
-	    	
-	    	
+	        
+	        // Set the label text
+	        labelProcessInfo.setText(
+	                "Table " + currentProcessId + ": " + currentProcessObject.getDesc());
+
+	        // set the label color
+	        labelProcessInfo.setTextFill(ViewUtils.getProcessColor(currentProcessObject));
+
+	        // Set the info label
+	        labelObjInfo.setText(
+	                "Objective "
+	                        + currentObjId
+	                        + ": "
+	                        + currentObjObject.getDesc().replace("\"", ""));
+
+	        // set the label color
+	        labelObjInfo.setTextFill(ViewUtils.getObjectiveColor(currentObjObject));
+
+	        
+	        
+	        // enable relevant tabs and populate them
+	        populateTabDocument();
+	        populateTabInterface();
+	        populateTabItem();
+	        populateTabRequirement();
+	        populateTabSystem();
+	        populateTabTest();
+	        populateTabReview();
+	        populateTabAnalysis();
+	        populateTabVerification();
 	    }
+
 
 	    @FXML
 	    private void initialize() {

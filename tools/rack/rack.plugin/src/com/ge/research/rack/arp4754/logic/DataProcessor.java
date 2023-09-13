@@ -350,7 +350,7 @@ public class DataProcessor {
                 if ((row[outputIdCol] != null)) {
                     Artifacts.getInterfaceObjs()
                             .get(indx)
-                            .getHasInputs()
+                            .getHasOutputs()
                             .add(
                                     EvidenceUtils.getEvidenceObjById(
                                             Artifacts.getInterfaceOutputObjs(), row[outputIdCol]));
@@ -482,7 +482,7 @@ public class DataProcessor {
                 if ((row[sysReqIdCol2] != null)) {
                     Artifacts.getItemReqObjs()
                             .get(indx)
-                            .getAllocatedTo()
+                            .getTracesUp()
                             .add(
                                     EvidenceUtils.getEvidenceObjById(
                                             Artifacts.getSysReqObjs(), row[sysReqIdCol2]));
