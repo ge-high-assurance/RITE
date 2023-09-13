@@ -6,11 +6,13 @@ package com.ge.research.rack.arp4754.viewHandlers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ge.research.rack.arp4754.structures.Category;
 import com.ge.research.rack.arp4754.structures.DAPlan;
 import com.ge.research.rack.arp4754.structures.Evidence;
 import com.ge.research.rack.arp4754.utils.DAPlanUtils;
 import com.ge.research.rack.arp4754.utils.ViewUtils;
 import com.ge.research.rack.arp4754.viewManagers.Arp4754ViewsManager;
+import com.ge.research.rack.do178c.utils.LogicUtils;
 import com.ge.research.rack.do178c.utils.ReportViewUtils;
 
 import javafx.event.ActionEvent;
@@ -18,6 +20,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -100,9 +104,140 @@ public class ObjectiveViewHandler {
 	    @FXML private Tab tabAnalysis;
 
 	    @FXML private Tab tabVerification;
+
+	    
+	    //-------------------------------------------------------------------	
+	    public void populateSubGraphs() {
+	    	
+    		System.out.println("Objective " + currentObjObject.getId());
+	    	
+	    	if(currentObjObject.getGraphs().getSysReqGraphData().getBuckets().size() > 0) {
+	    			    		
+	    		requirementChart.getData().clear();
+		        requirementChart.setVisible(false);
+	    		
+	            XYChart.Series stat = new XYChart.Series();
+	            int maxVal = 0;
+
+	            for(Category bucket : currentObjObject.getGraphs().getSysReqGraphData().getBuckets()) {
+	            	
+		    		System.out.println(bucket.getName());
+	            	
+	            	
+	            	Data bar = ReportViewUtils.createIntDataBar(bucket.getName(), bucket.getValue());
+		            stat.getData().add(bar);
+	            	if(bucket.getValue()>maxVal) {
+	            		maxVal = bucket.getValue();
+	            	}
+	            }
+	            
+	            requirementChart.getData().add(stat);
+
+	            requirementChart.setTitle(currentObjObject.getGraphs().getSysReqGraphData().getGraphTitle());
+	            // scaling
+	            // *** This can help make integral ticks on Y axis ***
+	            yAxisRequirementChart.setLowerBound(0);
+	            yAxisRequirementChart.setUpperBound(maxVal);
+	            yAxisRequirementChart.setTickUnit(1);
+	    	}
+
+	    	if(currentObjObject.getGraphs().getSystemGraphData().getBuckets().size() > 0) {
+	    		
+	    		systemChart.getData().clear();
+	    		systemChart.setVisible(false);
+	    		
+	    		
+	            XYChart.Series stat = new XYChart.Series();
+	            int maxVal = 0;
+
+	            for(Category bucket : currentObjObject.getGraphs().getSystemGraphData().getBuckets()) {	            	
+
+	            	System.out.println(bucket.getName());
+
+	            	
+	            	Data bar = ReportViewUtils.createIntDataBar(bucket.getName(), bucket.getValue());
+		            stat.getData().add(bar);
+	            	if(bucket.getValue()>maxVal) {
+	            		maxVal = bucket.getValue();
+	            	}
+	            }
+	            
+	            systemChart.getData().add(stat);
+
+	            systemChart.setTitle(currentObjObject.getGraphs().getSystemGraphData().getGraphTitle());
+	            // scaling
+	            // *** This can help make integral ticks on Y axis ***
+	            yAxisSystemChart.setLowerBound(0);
+	            yAxisSystemChart.setUpperBound(maxVal);
+	            yAxisSystemChart.setTickUnit(1);
+	    	}
+	    	
+	    	
+	    	if(currentObjObject.getGraphs().getInterfaceGraphData().getBuckets().size() > 0) {
+	    		
+	    		interfaceChart.getData().clear();
+	    		interfaceChart.setVisible(false);
+	    		
+	    		
+	            XYChart.Series stat = new XYChart.Series();
+	            int maxVal = 0;
+
+	            for(Category bucket : currentObjObject.getGraphs().getInterfaceGraphData().getBuckets()) {	            	
+
+	            	System.out.println(bucket.getName());
+
+	            	
+	            	Data bar = ReportViewUtils.createIntDataBar(bucket.getName(), bucket.getValue());
+		            stat.getData().add(bar);
+	            	if(bucket.getValue()>maxVal) {
+	            		maxVal = bucket.getValue();
+	            	}
+	            }
+	            
+	            interfaceChart.getData().add(stat);
+
+	            interfaceChart.setTitle(currentObjObject.getGraphs().getInterfaceGraphData().getGraphTitle());
+	            // scaling
+	            // *** This can help make integral ticks on Y axis ***
+	            yAxisInterfaceChart.setLowerBound(0);
+	            yAxisInterfaceChart.setUpperBound(maxVal);
+	            yAxisInterfaceChart.setTickUnit(1);
+	    	}
+	    	
+	    	if(currentObjObject.getGraphs().getItemReqGraphData().getBuckets().size() > 0) {
+	    		
+	    		requirementChart.getData().clear();
+	    		requirementChart.setVisible(false);
+	    		
+	            XYChart.Series stat = new XYChart.Series();
+	            int maxVal = 0;
+
+	            for(Category bucket : currentObjObject.getGraphs().getItemReqGraphData().getBuckets()) {	            	
+
+	            	System.out.println(bucket.getName());
+
+	            	
+	            	Data bar = ReportViewUtils.createIntDataBar(bucket.getName(), bucket.getValue());
+		            stat.getData().add(bar);
+	            	if(bucket.getValue()>maxVal) {
+	            		maxVal = bucket.getValue();
+	            	}
+	            }
+	            
+	            requirementChart.getData().add(stat);
+
+	            requirementChart.setTitle(currentObjObject.getGraphs().getItemReqGraphData().getGraphTitle());
+	            // scaling
+	            // *** This can help make integral ticks on Y axis ***
+	            yAxisRequirementChart.setLowerBound(0);
+	            yAxisRequirementChart.setUpperBound(maxVal);
+	            yAxisRequirementChart.setTickUnit(1);
+	    	}
+
+	    }
 	    
 	    
-	    //------------
+	    //-------------------------------------------------------------------	
 	    /** deactivates the childern list and label */
 	    public void deactivateInterfaceChildren(Boolean key) {
 	        interfaceChildrenList.setDisable(key);
@@ -371,7 +506,7 @@ public class ObjectiveViewHandler {
 	    	
 	    }
 	    
-	    
+	    //-------------------------------------------------------------------	
 	    
 	    
 	    
@@ -410,6 +545,7 @@ public class ObjectiveViewHandler {
 	        
 	        
 	        // enable relevant tabs and populate them
+	        //TODO: just like the subcharts, if the data to show is embedded in the objectives directory, we may be able to get rid of these very specific codes
 	        populateTabDocument();
 	        populateTabInterface();
 	        populateTabItem();
@@ -419,6 +555,9 @@ public class ObjectiveViewHandler {
 	        populateTabReview();
 	        populateTabAnalysis();
 	        populateTabVerification();
+	        
+	        // Populate the subgraphs as as appropriate
+	        populateSubGraphs();
 	    }
 
 
@@ -451,6 +590,12 @@ public class ObjectiveViewHandler {
 	        deactivateItemChildren(true);
 	        deactivateRequirementChildren(true);
 	        deactivateSystemChildren(true);
+	        
+	        // hide all child charts
+	        interfaceChart.setVisible(true);
+	        itemChart.setVisible(true);
+	        requirementChart.setVisible(true);
+	        systemChart.setVisible(true);
 
 	    }
 
