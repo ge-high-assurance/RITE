@@ -114,7 +114,7 @@ public class ObjectiveViewHandler {
 	    	if(currentObjObject.getGraphs().getSysReqGraphData().getBuckets().size() > 0) {
 	    			    		
 	    		requirementChart.getData().clear();
-		        requirementChart.setVisible(false);
+		        requirementChart.setVisible(true);
 	    		
 	            XYChart.Series stat = new XYChart.Series();
 	            int maxVal = 0;
@@ -144,7 +144,7 @@ public class ObjectiveViewHandler {
 	    	if(currentObjObject.getGraphs().getSystemGraphData().getBuckets().size() > 0) {
 	    		
 	    		systemChart.getData().clear();
-	    		systemChart.setVisible(false);
+	    		systemChart.setVisible(true);
 	    		
 	    		
 	            XYChart.Series stat = new XYChart.Series();
@@ -176,7 +176,7 @@ public class ObjectiveViewHandler {
 	    	if(currentObjObject.getGraphs().getInterfaceGraphData().getBuckets().size() > 0) {
 	    		
 	    		interfaceChart.getData().clear();
-	    		interfaceChart.setVisible(false);
+	    		interfaceChart.setVisible(true);
 	    		
 	    		
 	            XYChart.Series stat = new XYChart.Series();
@@ -207,7 +207,7 @@ public class ObjectiveViewHandler {
 	    	if(currentObjObject.getGraphs().getItemReqGraphData().getBuckets().size() > 0) {
 	    		
 	    		requirementChart.getData().clear();
-	    		requirementChart.setVisible(false);
+	    		requirementChart.setVisible(true);
 	    		
 	            XYChart.Series stat = new XYChart.Series();
 	            int maxVal = 0;
@@ -592,10 +592,10 @@ public class ObjectiveViewHandler {
 	        deactivateSystemChildren(true);
 	        
 	        // hide all child charts
-	        interfaceChart.setVisible(true);
-	        itemChart.setVisible(true);
-	        requirementChart.setVisible(true);
-	        systemChart.setVisible(true);
+	        interfaceChart.setVisible(false);
+	        itemChart.setVisible(false);
+	        requirementChart.setVisible(false);
+	        systemChart.setVisible(false);
 
 	    }
 
