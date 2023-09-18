@@ -109,6 +109,33 @@ public class ObjectiveViewHandler {
 
 	    @FXML private Tab tabVerification;
 
+	    //-------------------------------------------------------------------
+	    /** deactivates the requirement childern list and label */
+	    public void deactivateReqChildren(Boolean key) {
+	        requirementChildrenList.setDisable(key);
+	        requirementChildrenLabel.setDisable(key);
+	        // clear the list and label
+	        requirementChildrenLabel.setText("");
+	        requirementChildrenList.getItems().clear();
+	    }
+	    
+	    //------------------------------------------------------------------
+	    public void initializeComboReq() {
+
+	        comboRequirement.setPromptText("Filter");
+
+	        // TODO: write logic for other objectives
+	        if (currentObjObject.getId().equalsIgnoreCase("objective-2-6")) {
+
+	            // add the categories to the combo
+	        	comboRequirement.getItems().add("All");
+	        	comboRequirement.getItems().add("Has Trace");
+	            comboRequirement.getItems().add("Has Allocation");
+	            comboRequirement.getItems().add("Has Both");
+	            
+	        }
+
+	    }
 	    
 	    //-------------------------------------------------------------------	
 	    public void populateSubGraphs() {
@@ -369,6 +396,7 @@ public class ObjectiveViewHandler {
                 }	    	
             }
             
+            System.out.println(filterKey);
 
             if(currentObjObject.getId().equalsIgnoreCase("objective-2-6")) {
                 // TODO: objective-based setting of children
@@ -377,9 +405,98 @@ public class ObjectiveViewHandler {
     	    	
                 for(Evidence itemReq : currentObjObject.getOutputs().getItemReqObjs()){
                     if (filterKey.equalsIgnoreCase("All")
-                            && ((searchKey == null) || (itemReq.getId().contains(searchKey)))) {
+                            && ((searchKey == null) 
+                            || (itemReq.getId().contains(searchKey)))) {
                         Label evidenceLabel = new Label();
 
+                        System.out.println("in all");
+
+                        
+                        String evidenceText =
+                                itemReq.getId()
+                                + "| Description: " + itemReq.getDescription() 
+                                + " | Traces To: ";
+
+                        for(Evidence sysReq : itemReq.getTracesUp() ) {
+                        	evidenceText = evidenceText + sysReq.getId() +", ";
+                        }
+
+                    	evidenceText = evidenceText +" | Allocated To Items:  ";
+
+                        for(Evidence item : itemReq.getAllocatedTo() ) {
+                        	evidenceText = evidenceText + item.getId() +", ";
+                        }
+                        
+                        evidenceLabel.setText(evidenceText);
+                        requirementList.getItems().add(evidenceLabel);
+                        
+                    }
+                    if (filterKey.equalsIgnoreCase("Has Trace")
+                            && ((searchKey == null) 
+                            || (itemReq.getId().contains(searchKey)))
+                            && (itemReq.getTracesUp().size()>0)) {
+                        Label evidenceLabel = new Label();
+
+                        System.out.println("in trace");
+
+                        
+                        String evidenceText =
+                                itemReq.getId()
+                                + "| Description: " + itemReq.getDescription() 
+                                + " | Traces To: ";
+
+                        for(Evidence sysReq : itemReq.getTracesUp() ) {
+                        	evidenceText = evidenceText + sysReq.getId() +", ";
+                        }
+
+                    	evidenceText = evidenceText +" | Allocated To Items:  ";
+
+                        for(Evidence item : itemReq.getAllocatedTo() ) {
+                        	evidenceText = evidenceText + item.getId() +", ";
+                        }
+                        
+                        evidenceLabel.setText(evidenceText);
+                        requirementList.getItems().add(evidenceLabel);
+                        
+                    }
+                    if (filterKey.equalsIgnoreCase("Has Allocation")
+                            && ((searchKey == null) 
+                            || (itemReq.getId().contains(searchKey)))
+                            && (itemReq.getAllocatedTo().size()>0)) {
+                        Label evidenceLabel = new Label();
+
+                        System.out.println("in allocated");
+
+                        
+                        String evidenceText =
+                                itemReq.getId()
+                                + "| Description: " + itemReq.getDescription() 
+                                + " | Traces To: ";
+
+                        for(Evidence sysReq : itemReq.getTracesUp() ) {
+                        	evidenceText = evidenceText + sysReq.getId() +", ";
+                        }
+
+                    	evidenceText = evidenceText +" | Allocated To Items:  ";
+
+                        for(Evidence item : itemReq.getAllocatedTo() ) {
+                        	evidenceText = evidenceText + item.getId() +", ";
+                        }
+                        
+                        evidenceLabel.setText(evidenceText);
+                        requirementList.getItems().add(evidenceLabel);
+                        
+                    }
+                    if (filterKey.equalsIgnoreCase("Has Both")
+                            && ((searchKey == null) 
+                            || (itemReq.getId().contains(searchKey)))
+                            && (itemReq.getTracesUp().size()>0)
+                            && (itemReq.getAllocatedTo().size()>0)) {
+                        Label evidenceLabel = new Label();
+
+                        System.out.println("in both");
+
+                        
                         String evidenceText =
                                 itemReq.getId()
                                 + "| Description: " + itemReq.getDescription() 
@@ -469,7 +586,11 @@ public class ObjectiveViewHandler {
 		    			|| (currentObjObject.getOutputs().getItemReqObjs().size() > 0)
 		    			|| (currentObjObject.getOutputs().getSysReqObjs().size() > 0)) {
 		    		tabRequirement.setDisable(false);
+		    		
+		    		
 		    		populateListRequirement("All", null);
+		    		
+		            initializeComboReq();
 		    	}	    		
 	    	}
 	    	
@@ -673,6 +794,18 @@ public class ObjectiveViewHandler {
 		        }
 	            }
 
+	    }
+	    
+	    @FXML
+	    private void comboReqAction(ActionEvent event) throws Exception {
+
+	        // clear the search bar and children
+	    	searchRequirement.clear();
+	        deactivateReqChildren(true);
+
+	        String key = (String) comboRequirement.getValue();
+	        // Clear and repopulate the list depending on key
+	        populateListRequirement(key, null);
 	    }
 
 	    @FXML

@@ -190,7 +190,7 @@
                                     <HBox>
                                        <children>
                                           <TextField fx:id="searchRequirement" HBox.hgrow="ALWAYS" />
-                                          <ComboBox fx:id="comboRequirement" />
+                                          <ComboBox fx:id="comboRequirement" onAction="#comboReqAction" />
                                        </children>
                                     </HBox>
                                     <HBox VBox.vgrow="ALWAYS">

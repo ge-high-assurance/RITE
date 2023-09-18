@@ -88,7 +88,7 @@ public class ComplianceProcess2 {
                                 / objective.getOutputs().getSysReqObjs().size()
                                 * 100.00);            	
             }
-            if (numSysReqsWithInterface == objective.getOutputs().getSysReqObjs().size()) {
+            if (numSysReqsWithInterface == objective.getOutputs().getSysReqObjs().size() && objective.getOutputs().getSysReqObjs().size() > 0) {
                 objective.setNoData(false);
                 objective.setPartialData(false);
                 objective.setPassed(true);
