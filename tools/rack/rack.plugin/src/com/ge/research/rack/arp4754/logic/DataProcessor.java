@@ -223,24 +223,64 @@ public class DataProcessor {
 
         // ---- Create the element objects
         System.out.println("---- Creating Objects for DerivedItemRequirement ----");
+
+        String[] derivedItemReqCols =
+                CSVUtil.getColumnInfo(
+                        RackQueryUtils.createCsvFilePath(
+                                DataProcessorUtils.getVarCSVID(
+                                        "allDerivedItemRequirement", config),
+                                rackDir));
+        int derivedItemReqIdCol =
+                CustomStringUtils.getCSVColumnIndex(
+                		derivedItemReqCols, config.getDerivedItemReq() + "_id");
+
+        int derivedItemReqDescCol =
+                CustomStringUtils.getCSVColumnIndex(
+                		derivedItemReqCols, config.getDerivedItemReq() + "_desc");
+        
         for (String[] row : allDerivedItemRequirement) {
-            Evidence newEvidenceObj = new Evidence();
-            newEvidenceObj.setId(row[0]);
-            newEvidenceObj.setType("Requirement");
-            Artifacts.getDerItemReqObjs().add(newEvidenceObj);
-            System.out.println("Created Object for " + row[0]);
+            if((derivedItemReqIdCol >= 0) && row[derivedItemReqIdCol]!=null) {
+                Evidence newEvidenceObj = new Evidence();
+                newEvidenceObj.setType("Requirement");
+                newEvidenceObj.setId(row[derivedItemReqIdCol]);
+                if((derivedItemReqDescCol >= 0) && row[derivedItemReqDescCol]!=null) {
+                    newEvidenceObj.setDescription(row[derivedItemReqDescCol]);                	
+                }
+                Artifacts.getDerItemReqObjs().add(newEvidenceObj);
+                System.out.println("Created Object for " + row[0]);        		
+        	}
         }
 
         System.out.println("---- Creating Objects for DerivedSystemRequirement ----");
+        String[] derivedSystemReqCols =
+                CSVUtil.getColumnInfo(
+                        RackQueryUtils.createCsvFilePath(
+                                DataProcessorUtils.getVarCSVID(
+                                        "allDerivedSystemRequirement", config),
+                                rackDir));
+        int derivedSystemReqIdCol =
+                CustomStringUtils.getCSVColumnIndex(
+                		derivedSystemReqCols, config.getDerivedSysReq() + "_id");
+
+        int derivedSystemReqDescCol =
+                CustomStringUtils.getCSVColumnIndex(
+                		derivedSystemReqCols, config.getDerivedSysReq() + "_desc");
+
         for (String[] row : allDerivedSystemRequirement) {
-            Evidence newEvidenceObj = new Evidence();
-            newEvidenceObj.setId(row[0]);
-            newEvidenceObj.setType("Requirement");
-            Artifacts.getDerSysReqObjs().add(newEvidenceObj);
-            System.out.println("Created Object for " + row[0]);
+        	if((derivedSystemReqIdCol >= 0) && row[derivedSystemReqIdCol]!=null) {
+                Evidence newEvidenceObj = new Evidence();
+                newEvidenceObj.setId(row[derivedSystemReqIdCol]);
+                newEvidenceObj.setType("Requirement");
+                if((derivedSystemReqDescCol >= 0) && row[derivedSystemReqDescCol]!=null) {
+                    newEvidenceObj.setDescription(row[derivedSystemReqDescCol]);
+                	
+                }
+                Artifacts.getDerSysReqObjs().add(newEvidenceObj);
+                System.out.println("Created Object for " + row[0]);        		
+        	}
         }
 
-        System.out.println("---- Creating Objects for Interface ----");
+        System.out.println("---- Creating Objects for Interface ----"); // TODO: Add description field
         for (String[] row : allInterface) {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
@@ -249,7 +289,7 @@ public class DataProcessor {
             System.out.println("Created Object for " + row[0]);
         }
 
-        System.out.println("---- Creating Objects for InterfaceInput ----");
+        System.out.println("---- Creating Objects for InterfaceInput ----");  // TODO: Add description field
         for (String[] row : allInterfaceInput) {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
@@ -258,7 +298,7 @@ public class DataProcessor {
             System.out.println("Created Object for " + row[0]);
         }
 
-        System.out.println("---- Creating Objects for InterfaceOutput ----");
+        System.out.println("---- Creating Objects for InterfaceOutput ----");  // TODO: Add description field
         for (String[] row : allInterfaceOutput) {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
@@ -267,7 +307,7 @@ public class DataProcessor {
             System.out.println("Created Object for " + row[0]);
         }
 
-        System.out.println("---- Creating Objects for Item ----");
+        System.out.println("---- Creating Objects for Item ----");  // TODO: Add description field
         for (String[] row : allItem) {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
@@ -277,33 +317,76 @@ public class DataProcessor {
         }
 
         System.out.println("---- Creating Objects for ItemRequirement ----");
+        String[] itemReqCols =
+                CSVUtil.getColumnInfo(
+                        RackQueryUtils.createCsvFilePath(
+                                DataProcessorUtils.getVarCSVID(
+                                        "allItemRequirement", config),
+                                rackDir));
+        int itemReqIdCol =
+                CustomStringUtils.getCSVColumnIndex(
+                		itemReqCols, config.getItemReq() + "_id");
+
+        int itemReqDescCol =
+                CustomStringUtils.getCSVColumnIndex(
+                		itemReqCols, config.getItemReq() + "_desc");
+        
+        System.out.println(itemReqIdCol + " , " + itemReqDescCol);
+        
         for (String[] row : allItemRequirement) {
-            Evidence newEvidenceObj = new Evidence();
-            newEvidenceObj.setId(row[0]);
-            newEvidenceObj.setType("ItemRequirement");
-            Artifacts.getItemReqObjs().add(newEvidenceObj);
-            System.out.println("Created Object for " + row[0]);
+            if((itemReqIdCol >= 0) && row[itemReqIdCol]!=null) {
+                Evidence newEvidenceObj = new Evidence();
+                newEvidenceObj.setType("Requirement");
+                newEvidenceObj.setId(row[itemReqIdCol]);
+                if((itemReqDescCol >= 0) && row[itemReqDescCol]!=null) {
+                    newEvidenceObj.setDescription(row[itemReqDescCol]);                	
+                }
+                Artifacts.getItemReqObjs().add(newEvidenceObj);
+                System.out.println("Created Object for " + row[0]);        		
+        	}
         }
 
-        System.out.println("---- Creating Objects for System ----");
-        for (String[] row : allSystem) {
-            Evidence newEvidenceObj = new Evidence();
-            newEvidenceObj.setId(row[0]);
-            newEvidenceObj.setType("System");
-            Artifacts.getItemObjs().add(newEvidenceObj);
-            System.out.println("Created Object for " + row[0]);
-        }
+//        System.out.println("---- Creating Objects for System ----");  // TODO: Add description field
+//        for (String[] row : allSystem) {
+//            Evidence newEvidenceObj = new Evidence();
+//            newEvidenceObj.setId(row[0]);
+//            newEvidenceObj.setType("System");
+//            Artifacts.getItemObjs().add(newEvidenceObj);
+//            System.out.println("Created Object for " + row[0]);
+//        }
 
         System.out.println("---- Creating Objects for SystemRequirement ----");
+        String[] systemReqCols =
+                CSVUtil.getColumnInfo(
+                        RackQueryUtils.createCsvFilePath(
+                                DataProcessorUtils.getVarCSVID(
+                                        "allSystemRequirement", config),
+                                rackDir));
+        int systemReqIdCol =
+                CustomStringUtils.getCSVColumnIndex(
+                		systemReqCols, config.getSysReq() + "_id");
+
+        int systemReqDescCol =
+                CustomStringUtils.getCSVColumnIndex(
+                		systemReqCols, config.getSysReq() + "_desc");
+
+        System.out.println(systemReqIdCol + " , " + systemReqDescCol);
+        
         for (String[] row : allSystemRequirement) {
-            Evidence newEvidenceObj = new Evidence();
-            newEvidenceObj.setId(row[0]);
-            newEvidenceObj.setType("SystemRequirement");
-            Artifacts.getSysReqObjs().add(newEvidenceObj);
-            System.out.println("Created Object for " + row[0]);
+        	if((systemReqIdCol >= 0) && row[systemReqIdCol]!=null) {
+                Evidence newEvidenceObj = new Evidence();
+                newEvidenceObj.setId(row[systemReqIdCol]);
+                newEvidenceObj.setType("Requirement");
+                if((systemReqDescCol >= 0) && row[systemReqDescCol]!=null) {
+                    newEvidenceObj.setDescription(row[systemReqDescCol]);
+                	
+                }
+                Artifacts.getSysReqObjs().add(newEvidenceObj);
+                System.out.println("Created Object for " + row[0]);        		
+        	}
         }
 
-        System.out.println("---- Creating Objects for System ----");
+        System.out.println("---- Creating Objects for System ----"); // TODO: Add description field
         for (String[] row : allSystem) {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
@@ -358,6 +441,8 @@ public class DataProcessor {
             }
         }
 
+        System.out.println("created allInterfaceWithInputOutput");
+        
         // get the header line for allSystemWIthInterface csv file
         //        System.out.println(
         // RackQueryUtils.createCsvFilePath(DataProcessorUtils.getVarCSVID("allSystemWIthInterface",
@@ -375,6 +460,8 @@ public class DataProcessor {
                 CustomStringUtils.getCSVColumnIndex(
                         allSystemWIthInterfaceCols, config.getIntrface() + "_id");
 
+        System.out.println(systemIdCol + " , " + interfaceIdCol2);
+        
         for (String[] row : allSystemWIthInterface) {
             if ((row[systemIdCol] != null)) {
                 // find index of the object in the appropriate evidence list
@@ -393,6 +480,9 @@ public class DataProcessor {
             }
         }
 
+        System.out.println("created allSystemWIthInterface");
+
+        
         // get the header line for allSystemRequirementWIthSystem csv file
         String[] allSystemRequirementWIthSystemCols =
                 CSVUtil.getColumnInfo(
@@ -425,6 +515,9 @@ public class DataProcessor {
                 }
             }
         }
+        
+        System.out.println("created allSystemRequirementWithSystem");
+
 
         // get the header line for allItemRequirementWIthItem csv file
         String[] allItemRequirementWIthItemCols =
@@ -433,7 +526,7 @@ public class DataProcessor {
                                 DataProcessorUtils.getVarCSVID(
                                         "allItemRequirementWIthItem", config),
                                 rackDir));
-        int itemReqIdCol =
+        int itemReqIdCol2 =
                 CustomStringUtils.getCSVColumnIndex(
                         allItemRequirementWIthItemCols, config.getItemReq() + "_id");
         int itemIdCol =
@@ -441,11 +534,12 @@ public class DataProcessor {
                         allItemRequirementWIthItemCols, config.getItem() + "_id");
 
         for (String[] row : allItemRequirementWIthItem) {
-            if ((row[itemReqIdCol] != null)) {
+            if ((row[itemReqIdCol2] != null)) {
                 // find index of the object in the appropriate evidence list
+            	System.out.println(row[itemReqIdCol2]);
                 int indx =
                         EvidenceUtils.getEvidenceObjIndxById(
-                                Artifacts.getItemReqObjs(), row[itemReqIdCol]);
+                                Artifacts.getItemReqObjs(), row[itemReqIdCol2]);
                 // add the data to the object
                 if ((row[itemIdCol] != null)) {
                     Artifacts.getItemReqObjs()
@@ -458,6 +552,9 @@ public class DataProcessor {
             }
         }
 
+        System.out.println("created allItemRequirementWithItem");
+
+        
         // get the header line for allItemRequirementWIthSystemRequirement csv file
         String[] allItemRequirementWIthSystemRequirementCols =
                 CSVUtil.getColumnInfo(
@@ -468,16 +565,16 @@ public class DataProcessor {
         int sysReqIdCol2 =
                 CustomStringUtils.getCSVColumnIndex(
                         allItemRequirementWIthSystemRequirementCols, config.getSysReq() + "_id");
-        int itemReqIdCol2 =
+        int itemReqIdCol3 =
                 CustomStringUtils.getCSVColumnIndex(
                         allItemRequirementWIthSystemRequirementCols, config.getItemReq() + "_id");
 
         for (String[] row : allItemRequirementWIthSystemRequirement) {
-            if ((row[itemReqIdCol2] != null)) {
+            if ((row[itemReqIdCol3] != null)) {
                 // find index of the object in the appropriate evidence list
                 int indx =
                         EvidenceUtils.getEvidenceObjIndxById(
-                                Artifacts.getItemReqObjs(), row[itemReqIdCol2]);
+                                Artifacts.getItemReqObjs(), row[itemReqIdCol3]);
                 // add the data to the object
                 if ((row[sysReqIdCol2] != null)) {
                     Artifacts.getItemReqObjs()
@@ -489,6 +586,9 @@ public class DataProcessor {
                 }
             }
         }
+        
+        System.out.println("created allItemRequirementwithSystemRequreiment");
+
     }
 
     /**

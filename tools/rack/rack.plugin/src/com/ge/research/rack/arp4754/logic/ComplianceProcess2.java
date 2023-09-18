@@ -82,10 +82,12 @@ public class ComplianceProcess2 {
                     objective.setPassed(false);
                 }
             }
-            objective.setComplianceStatus(
-                    (double) numSysReqsWithInterface
-                            / objective.getOutputs().getSysReqObjs().size()
-                            * 100.00);
+            if(numSysReqsWithInterface > 0.0) {
+                objective.setComplianceStatus(
+                        (double) numSysReqsWithInterface
+                                / objective.getOutputs().getSysReqObjs().size()
+                                * 100.00);            	
+            }
             if (numSysReqsWithInterface == objective.getOutputs().getSysReqObjs().size()) {
                 objective.setNoData(false);
                 objective.setPartialData(false);
@@ -229,7 +231,9 @@ public class ComplianceProcess2 {
                 objective.setPartialData(true);
                 objective.setPassed(false);    			
     		}
-    		objective.setComplianceStatus((double) numItemReqsWithTraceAndAllocation/objective.getOutputs().getItemReqObjs().size() * 100.00);
+    		if(numItemReqsWithTraceAndAllocation > 0.0) {    			
+        		objective.setComplianceStatus((double) numItemReqsWithTraceAndAllocation/objective.getOutputs().getItemReqObjs().size() * 100.00);
+    		}
     	}
     	else {
         	objective.setNoData(true);	

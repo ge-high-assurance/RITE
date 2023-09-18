@@ -51,7 +51,9 @@ public class ComplianceUtils {
             int numPassed, int numPartial, int numNoData, int totalObjectives) {
         Double stats = 0.0;
 
-        stats = ((double) numPassed / totalObjectives * 100.00);
+        if(numPassed > 0.0) {
+            stats = ((double) numPassed / totalObjectives * 100.00);        	
+        }
 
         return stats;
     }
