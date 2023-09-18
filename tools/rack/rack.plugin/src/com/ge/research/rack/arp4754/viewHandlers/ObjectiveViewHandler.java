@@ -16,6 +16,8 @@ import com.ge.research.rack.do178c.structures.Requirement;
 import com.ge.research.rack.do178c.utils.LogicUtils;
 import com.ge.research.rack.do178c.utils.ReportViewUtils;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -723,6 +725,40 @@ public class ObjectiveViewHandler {
 	        itemChart.setVisible(false);
 	        requirementChart.setVisible(false);
 	        systemChart.setVisible(false);
+	        
+	        
+	        // code for the searchbars
+	        searchRequirement
+	                .textProperty()
+	                .addListener(
+	                        new ChangeListener<String>() {
+	                            @Override
+	                            public void changed(
+	                                    ObservableValue<? extends String> observable,
+	                                    String oldValue,
+	                                    String newValue) {
+
+	                                System.out.println("Search Key " + newValue);
+
+	                                // disable req children list
+	                                deactivateReqChildren(true);
+
+	                                if ((newValue != null)
+	                                        && (newValue != "")
+	                                        && (newValue.length() > 0)) { // newvalue is not null
+
+	                                    // call listview to display all elements whose IDS have newValue
+	                                    // as substring
+	                                    populateListRequirement("All", newValue);
+
+	                                } else { // newvalue is null
+	                                    // call listview to display all elements (default settings)
+	                                	populateListRequirement("All", null);
+	                                }
+	                                // reset the combo to "All"
+	                                comboRequirement.getSelectionModel().selectFirst();
+	                            }
+	                        });
 
 	    }
 	    
