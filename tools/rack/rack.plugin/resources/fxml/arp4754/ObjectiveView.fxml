@@ -195,14 +195,14 @@
                                     </HBox>
                                     <HBox VBox.vgrow="ALWAYS">
                                        <children>
-                                          <ListView fx:id="requirementList" prefHeight="312.0" prefWidth="285.0" HBox.hgrow="ALWAYS">
+                                          <ListView fx:id="requirementList" onMouseClicked="#reqListSelectionAction" prefHeight="312.0" prefWidth="285.0" HBox.hgrow="ALWAYS">
                                              <HBox.margin>
                                                 <Insets />
                                              </HBox.margin>
                                           </ListView>
                                           <VBox HBox.hgrow="ALWAYS">
                                              <children>
-                                                <Label fx:id="reqChildrenLabel11">
+                                                <Label fx:id="requirementChildrenLabel">
                                                    <VBox.margin>
                                                       <Insets left="4.0" />
                                                    </VBox.margin>

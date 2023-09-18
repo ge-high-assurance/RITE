@@ -12,6 +12,7 @@ import com.ge.research.rack.arp4754.structures.Evidence;
 import com.ge.research.rack.arp4754.utils.DAPlanUtils;
 import com.ge.research.rack.arp4754.utils.ViewUtils;
 import com.ge.research.rack.arp4754.viewManagers.Arp4754ViewsManager;
+import com.ge.research.rack.do178c.structures.Requirement;
 import com.ge.research.rack.do178c.utils.LogicUtils;
 import com.ge.research.rack.do178c.utils.ReportViewUtils;
 
@@ -23,11 +24,14 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 /**
  * @author Saswata Paul
@@ -259,9 +263,9 @@ public class ObjectiveViewHandler {
 	    /** deactivates the childern list and label */
 	    public void deactivateRequirementChildren(Boolean key) {
 	        requirementChildrenList.setDisable(key);
-//	        requirementChildrenLabel.setDisable(key);
+	        requirementChildrenLabel.setDisable(key);
 	        // clear the list and label
-//	        requirementChildrenLabel.setText("");
+	        requirementChildrenLabel.setText("");
 	        requirementChildrenList.getItems().clear();
 	    }
 	    
@@ -369,7 +373,7 @@ public class ObjectiveViewHandler {
             if(currentObjObject.getId().equalsIgnoreCase("objective-2-6")) {
                 // TODO: objective-based setting of children
                 // store children releationship for this objective
-                requirementChildrenRelation = "Allocated To System";
+                requirementChildrenRelation = "Allocated To Item";
     	    	
                 for(Evidence itemReq : currentObjObject.getOutputs().getItemReqObjs()){
                     if (filterKey.equalsIgnoreCase("All")
@@ -378,6 +382,7 @@ public class ObjectiveViewHandler {
 
                         String evidenceText =
                                 itemReq.getId()
+                                + "| Description: " + itemReq.getDescription() 
                                 + " | Traces To: ";
 
                         for(Evidence sysReq : itemReq.getTracesUp() ) {
@@ -392,6 +397,7 @@ public class ObjectiveViewHandler {
                         
                         evidenceLabel.setText(evidenceText);
                         requirementList.getItems().add(evidenceLabel);
+                        
                     }
                 }	    	
             }
@@ -596,6 +602,76 @@ public class ObjectiveViewHandler {
 	        itemChart.setVisible(false);
 	        requirementChart.setVisible(false);
 	        systemChart.setVisible(false);
+
+	    }
+	    
+	    @FXML
+	    private void reqListSelectionAction(MouseEvent event) {
+
+	        // The selected label
+	        Label selectedLabel = requirementList.getSelectionModel().getSelectedItem();
+
+	        if (selectedLabel != null) {
+
+	            // get selection
+	            String selectedReqLine = selectedLabel.getText();
+	            System.out.println("The selected req line: " + selectedReqLine);
+
+	            //TODO: below is ad hoc code. Make generic
+	            if(currentObjObject.getId().equalsIgnoreCase("objective-2-6")) {
+		            // Contextmenu for reqList
+		            ContextMenu reqListContext = new ContextMenu();
+		            MenuItem menuItemShowTrace = new MenuItem("Show Traces");
+		            MenuItem menuItemShowAllocation = new MenuItem("Show Allocations");
+		            reqListContext.getItems().add(menuItemShowTrace);
+		            reqListContext.getItems().add(menuItemShowAllocation);
+		            requirementList.setContextMenu(reqListContext);
+		            // show source of requirement in reqchildren if right click context selected
+		            menuItemShowTrace.setOnAction(
+		                    (rightClickEvent) -> {
+		                        // get the requirement id
+		                        String[] reqIdWithSpace = selectedReqLine.split("\\|");
+		                        String reqId = reqIdWithSpace[0].trim();
+
+		                        // activate the label and list and put string in label
+		                        deactivateRequirementChildren(false);
+		                        requirementChildrenLabel.setText("Traces:");
+
+		                        // find the requirement object
+		                        for (Evidence reqObj : currentObjObject.getOutputs().getItemReqObjs()) {
+		                            // set children list to the sources, if any exist
+		                            if (reqObj.getId().equals(reqId)
+		                                    && reqObj.getTracesUp() != null) {
+		                                for (Evidence trace : reqObj.getTracesUp()) {
+		                                    requirementChildrenList.getItems().add(trace.getId());
+		                                }
+		                            }
+		                        }
+		                    });
+		            menuItemShowAllocation.setOnAction(
+		                    (rightClickEvent) -> {
+		                        // get the requirement id
+		                        String[] reqIdWithSpace = selectedReqLine.split("\\|");
+		                        String reqId = reqIdWithSpace[0].trim();
+
+		                        // activate the label and list and put string in label
+		                        deactivateRequirementChildren(false);
+		                        requirementChildrenLabel.setText("Allocations:");
+
+		                        // find the requirement object
+		                        for (Evidence reqObj : currentObjObject.getOutputs().getItemReqObjs()) {
+		                            // set children list to the sources, if any exist
+		                            if (reqObj.getId().equals(reqId)
+		                                    && reqObj.getTracesUp() != null) {
+		                                for (Evidence allocation : reqObj.getAllocatedTo()) {
+		                                    requirementChildrenList.getItems().add(allocation.getId());
+		                                }
+		                            }
+		                        }
+		                    });
+
+		        }
+	            }
 
 	    }
 

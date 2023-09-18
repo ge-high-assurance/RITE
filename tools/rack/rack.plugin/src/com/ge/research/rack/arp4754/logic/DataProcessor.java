@@ -247,7 +247,7 @@ public class DataProcessor {
                     newEvidenceObj.setDescription(row[derivedItemReqDescCol]);                	
                 }
                 Artifacts.getDerItemReqObjs().add(newEvidenceObj);
-                System.out.println("Created Object for " + row[0]);        		
+                System.out.println("Created Object for " + newEvidenceObj.getId());        		
         	}
         }
 
@@ -276,7 +276,7 @@ public class DataProcessor {
                 	
                 }
                 Artifacts.getDerSysReqObjs().add(newEvidenceObj);
-                System.out.println("Created Object for " + row[0]);        		
+                System.out.println("Created Object for " + newEvidenceObj.getId());        		
         	}
         }
 
@@ -286,7 +286,7 @@ public class DataProcessor {
             newEvidenceObj.setId(row[0]);
             newEvidenceObj.setType("Interface");
             Artifacts.getInterfaceObjs().add(newEvidenceObj);
-            System.out.println("Created Object for " + row[0]);
+            System.out.println("Created Object for " + newEvidenceObj.getId());
         }
 
         System.out.println("---- Creating Objects for InterfaceInput ----");  // TODO: Add description field
@@ -295,7 +295,7 @@ public class DataProcessor {
             newEvidenceObj.setId(row[0]);
             newEvidenceObj.setType("InterfaceInput");
             Artifacts.getInterfaceInputObjs().add(newEvidenceObj);
-            System.out.println("Created Object for " + row[0]);
+            System.out.println("Created Object for " + newEvidenceObj.getId());
         }
 
         System.out.println("---- Creating Objects for InterfaceOutput ----");  // TODO: Add description field
@@ -304,7 +304,7 @@ public class DataProcessor {
             newEvidenceObj.setId(row[0]);
             newEvidenceObj.setType("InterfaceOutput");
             Artifacts.getInterfaceOutputObjs().add(newEvidenceObj);
-            System.out.println("Created Object for " + row[0]);
+            System.out.println("Created Object for " + newEvidenceObj.getId());
         }
 
         System.out.println("---- Creating Objects for Item ----");  // TODO: Add description field
@@ -313,7 +313,7 @@ public class DataProcessor {
             newEvidenceObj.setId(row[0]);
             newEvidenceObj.setType("Item");
             Artifacts.getItemObjs().add(newEvidenceObj);
-            System.out.println("Created Object for " + row[0]);
+            System.out.println("Created Object for " + newEvidenceObj.getId());
         }
 
         System.out.println("---- Creating Objects for ItemRequirement ----");
@@ -339,10 +339,11 @@ public class DataProcessor {
                 newEvidenceObj.setType("Requirement");
                 newEvidenceObj.setId(row[itemReqIdCol]);
                 if((itemReqDescCol >= 0) && row[itemReqDescCol]!=null) {
-                    newEvidenceObj.setDescription(row[itemReqDescCol]);                	
+                    newEvidenceObj.setDescription(row[itemReqDescCol]);    
+                    System.out.println("Added desc:" + row[itemReqDescCol]);
                 }
                 Artifacts.getItemReqObjs().add(newEvidenceObj);
-                System.out.println("Created Object for " + row[0]);        		
+                System.out.println("Created Object for " + newEvidenceObj.getId());        		
         	}
         }
 
@@ -352,7 +353,7 @@ public class DataProcessor {
 //            newEvidenceObj.setId(row[0]);
 //            newEvidenceObj.setType("System");
 //            Artifacts.getItemObjs().add(newEvidenceObj);
-//            System.out.println("Created Object for " + row[0]);
+//            System.out.println("Created Object for " + newEvidenceObj.getId());
 //        }
 
         System.out.println("---- Creating Objects for SystemRequirement ----");
@@ -382,7 +383,7 @@ public class DataProcessor {
                 	
                 }
                 Artifacts.getSysReqObjs().add(newEvidenceObj);
-                System.out.println("Created Object for " + row[0]);        		
+                System.out.println("Created Object for " + newEvidenceObj.getId());        		
         	}
         }
 
@@ -392,7 +393,7 @@ public class DataProcessor {
             newEvidenceObj.setId(row[0]);
             newEvidenceObj.setType("System");
             Artifacts.getSystemObjs().add(newEvidenceObj);
-            System.out.println("Created Object for " + row[0]);
+            System.out.println("Created Object for " + newEvidenceObj.getId());
         }
 
         // ---- create the connections
