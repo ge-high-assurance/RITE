@@ -327,13 +327,35 @@ public class ObjectiveViewHandler {
         // clear the list 
         docList.getItems().clear();
     	
-        for(Evidence sysDesDesc : currentObjObject.getOutputs().getSystemDesignDescriptionObjs()) {
-            Label evidenceLabel = new Label();
+        if(currentObjObject.getId().equalsIgnoreCase("objective-2-5")) {
+            for(Evidence sysDesDesc : currentObjObject.getOutputs().getSystemDesignDescriptionObjs()) {
+                Label evidenceLabel = new Label();
 
-            String evidenceText = sysDesDesc.getId() + " | " + sysDesDesc.getURL();
-            evidenceLabel.setText(evidenceText);
-           
-            docList.getItems().add(evidenceLabel);
+                String evidenceText = sysDesDesc.getId() + " | " + sysDesDesc.getURL();
+                evidenceLabel.setText(evidenceText);
+               
+                docList.getItems().add(evidenceLabel);
+            }
+        }
+        
+        if(currentObjObject.getId().equalsIgnoreCase("objective-1-1")) {
+    		for(Evidence document : currentObjObject.getOutputs().getDocumentObjs()) {
+    			System.out.println(document.getId());
+    			if(document.getId().equalsIgnoreCase("CertificationPlan")
+    					|| document.getId().equalsIgnoreCase("SafetyProgramPlan")
+    					|| document.getId().equalsIgnoreCase("DevelopmentPlan")
+    					|| document.getId().equalsIgnoreCase("ValidationPlan")
+    					|| document.getId().equalsIgnoreCase("VerificationPlan")
+    					|| document.getId().equalsIgnoreCase("ConfigurationManagementPlan")
+    					|| document.getId().equalsIgnoreCase("ProcessAssurancePlan")) {
+                    Label evidenceLabel = new Label();
+
+                    String evidenceText = document.getId();
+                    evidenceLabel.setText(evidenceText);
+                   
+                    docList.getItems().add(evidenceLabel);    				
+    			}
+    		}
         }
     }
     
@@ -566,6 +588,11 @@ public class ObjectiveViewHandler {
                 tabDocument.setDisable(false);
                 populateListDocument();
             }
+        }
+        
+        if (currentObjObject.getId().equalsIgnoreCase("objective-1-1") && !currentObjObject.isNoData()) {
+            tabDocument.setDisable(false);
+            populateListDocument();
         }
     }
 

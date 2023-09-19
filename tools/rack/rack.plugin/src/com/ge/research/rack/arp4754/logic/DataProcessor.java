@@ -79,6 +79,8 @@ public class DataProcessor {
     private List<String[]> allSystemRequirement;
     
     private List<String[]> allSystemDesignDescription;
+    
+    private List<String[]> allDOCUMENT;
 
     // The connections between the elements (TODO subset, add for more supporting objectives)
     // NOTE: The connections should be just one-level to enable automatic query synthesis in future
@@ -421,6 +423,16 @@ public class DataProcessor {
             Artifacts.getSystemObjs().add(newEvidenceObj);
             System.out.println("Created Object for " + newEvidenceObj.getId());
         }
+        
+        System.out.println(
+                "---- Creating Objects for DOCUMENT ----"); // TODO: Add description field
+        for (String[] row : allDOCUMENT) {
+            Evidence newEvidenceObj = new Evidence();
+            newEvidenceObj.setId(row[0]);
+            newEvidenceObj.setType("DOCUMENT");
+            Artifacts.getDocumentObjs().add(newEvidenceObj);
+            System.out.println("Created Object for " + newEvidenceObj.getId());
+        }
 
         // ---- create the connections
 
@@ -719,6 +731,10 @@ public class DataProcessor {
                                         "allItemRequirementWIthSystemRequirement", config),
                                 rackDir));
 
+        allDOCUMENT =
+                CSVUtil.getRows(
+                        RackQueryUtils.createCsvFilePath("DOCUMENT",
+                                rackDir));
         planData =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(

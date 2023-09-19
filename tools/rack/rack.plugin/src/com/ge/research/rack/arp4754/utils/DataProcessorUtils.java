@@ -136,6 +136,7 @@ public class DataProcessorUtils {
         allQueryIds.add(getVarCSVID("allSystemRequirementWIthSystem", config));
         allQueryIds.add(getVarCSVID("allSystemWIthInterface", config));
         allQueryIds.add(getVarCSVID("allItemRequirementWIthSystemRequirement", config));
+        allQueryIds.add("DOCUMENT");
 
         // Execute each predefined query
         RackQueryUtils.createConnectionAndExecuteMultiQueriesFromStore(allQueryIds, rackDir);
