@@ -40,121 +40,121 @@ import java.util.List;
  */
 public class DAPlan {
 
-	/**
-	 * A package for allgraphData of an objective
-	 * @author Saswata Paul
-	 *
-	 */
-	public class Graph{
-        private GraphData derItemReqGraphData = new GraphData(""); //TODO: might need to create a separate graph element for each objective
+    /**
+     * A package for allgraphData of an objective
+     *
+     * @author Saswata Paul
+     */
+    public class Graph {
+        private GraphData derItemReqGraphData =
+                new GraphData(""); // TODO: might need to create a separate graph element for each
+        // objective
         private GraphData derSysReqData = new GraphData("");
         private GraphData interfaceGraphData = new GraphData("");
         private GraphData itemGraphData = new GraphData("");
         private GraphData itemReqGraphData = new GraphData("");
         private GraphData sysReqGraphData = new GraphData("");
-        private GraphData systemGraphData = new GraphData(""); 
+        private GraphData systemGraphData = new GraphData("");
 
-		/**
-		 * @return the derItemReqGraphData
-		 */
-		public GraphData getDerItemReqGraphData() {
-			return derItemReqGraphData;
-		}
+        /**
+         * @return the derItemReqGraphData
+         */
+        public GraphData getDerItemReqGraphData() {
+            return derItemReqGraphData;
+        }
 
-		/**
-		 * @param derItemReqGraphData the derItemReqGraphData to set
-		 */
-		public void setDerItemReqGraphData(GraphData derItemReqGraphData) {
-			this.derItemReqGraphData = derItemReqGraphData;
-		}
+        /**
+         * @param derItemReqGraphData the derItemReqGraphData to set
+         */
+        public void setDerItemReqGraphData(GraphData derItemReqGraphData) {
+            this.derItemReqGraphData = derItemReqGraphData;
+        }
 
-		/**
-		 * @return the derSysReqData
-		 */
-		public GraphData getDerSysReqData() {
-			return derSysReqData;
-		}
+        /**
+         * @return the derSysReqData
+         */
+        public GraphData getDerSysReqData() {
+            return derSysReqData;
+        }
 
-		/**
-		 * @param derSysReqData the derSysReqData to set
-		 */
-		public void setDerSysReqData(GraphData derSysReqData) {
-			this.derSysReqData = derSysReqData;
-		}
+        /**
+         * @param derSysReqData the derSysReqData to set
+         */
+        public void setDerSysReqData(GraphData derSysReqData) {
+            this.derSysReqData = derSysReqData;
+        }
 
-		/**
-		 * @return the interfaceGraphData
-		 */
-		public GraphData getInterfaceGraphData() {
-			return interfaceGraphData;
-		}
+        /**
+         * @return the interfaceGraphData
+         */
+        public GraphData getInterfaceGraphData() {
+            return interfaceGraphData;
+        }
 
-		/**
-		 * @param interfaceGraphData the interfaceGraphData to set
-		 */
-		public void setInterfaceGraphData(GraphData interfaceGraphData) {
-			this.interfaceGraphData = interfaceGraphData;
-		}
+        /**
+         * @param interfaceGraphData the interfaceGraphData to set
+         */
+        public void setInterfaceGraphData(GraphData interfaceGraphData) {
+            this.interfaceGraphData = interfaceGraphData;
+        }
 
-		/**
-		 * @return the itemGraphData
-		 */
-		public GraphData getItemGraphData() {
-			return itemGraphData;
-		}
+        /**
+         * @return the itemGraphData
+         */
+        public GraphData getItemGraphData() {
+            return itemGraphData;
+        }
 
-		/**
-		 * @param itemGraphData the itemGraphData to set
-		 */
-		public void setItemGraphData(GraphData itemGraphData) {
-			this.itemGraphData = itemGraphData;
-		}
+        /**
+         * @param itemGraphData the itemGraphData to set
+         */
+        public void setItemGraphData(GraphData itemGraphData) {
+            this.itemGraphData = itemGraphData;
+        }
 
-		/**
-		 * @return the itemReqGraphData
-		 */
-		public GraphData getItemReqGraphData() {
-			return itemReqGraphData;
-		}
+        /**
+         * @return the itemReqGraphData
+         */
+        public GraphData getItemReqGraphData() {
+            return itemReqGraphData;
+        }
 
-		/**
-		 * @param itemReqGraphData the itemReqGraphData to set
-		 */
-		public void setItemReqGraphData(GraphData itemReqGraphData) {
-			this.itemReqGraphData = itemReqGraphData;
-		}
+        /**
+         * @param itemReqGraphData the itemReqGraphData to set
+         */
+        public void setItemReqGraphData(GraphData itemReqGraphData) {
+            this.itemReqGraphData = itemReqGraphData;
+        }
 
-		/**
-		 * @return the sysReqGraphData
-		 */
-		public GraphData getSysReqGraphData() {
-			return sysReqGraphData;
-		}
+        /**
+         * @return the sysReqGraphData
+         */
+        public GraphData getSysReqGraphData() {
+            return sysReqGraphData;
+        }
 
-		/**
-		 * @param sysReqGraphData the sysReqGraphData to set
-		 */
-		public void setSysReqGraphData(GraphData sysReqGraphData) {
-			this.sysReqGraphData = sysReqGraphData;
-		}
+        /**
+         * @param sysReqGraphData the sysReqGraphData to set
+         */
+        public void setSysReqGraphData(GraphData sysReqGraphData) {
+            this.sysReqGraphData = sysReqGraphData;
+        }
 
-		/**
-		 * @return the systemGraphData
-		 */
-		public GraphData getSystemGraphData() {
-			return systemGraphData;
-		}
+        /**
+         * @return the systemGraphData
+         */
+        public GraphData getSystemGraphData() {
+            return systemGraphData;
+        }
 
-		/**
-		 * @param systemGraphData the systemGraphData to set
-		 */
-		public void setSystemGraphData(GraphData systemGraphData) {
-			this.systemGraphData = systemGraphData;
-		}
+        /**
+         * @param systemGraphData the systemGraphData to set
+         */
+        public void setSystemGraphData(GraphData systemGraphData) {
+            this.systemGraphData = systemGraphData;
+        }
+    }
 
-
-	}
-	
     /**
      * A package for different types pf outputs that can be associated with an ARP4754 Objective
      *
@@ -164,7 +164,7 @@ public class DAPlan {
 
         // ARP4754 Output Objects
         private List<Evidence> documentObjs = new ArrayList<Evidence>();
-    	
+
         private List<Evidence> derItemReqObjs = new ArrayList<Evidence>();
 
         private List<Evidence> derSysReqObjs = new ArrayList<Evidence>();
@@ -181,36 +181,35 @@ public class DAPlan {
 
         private List<Evidence> sysReqObjs = new ArrayList<Evidence>();
 
-        
         private List<Evidence> systemObjs = new ArrayList<Evidence>();
 
-        
-        //--- 
+        private List<Evidence> systemDesignDescriptionObjs = new ArrayList<Evidence>();
+
+        // ---
         private List<Evidence> verificationObjs = new ArrayList<Evidence>();
 
         private List<Evidence> reviewObjs = new ArrayList<Evidence>();
-     
+
         private List<Evidence> testObjs = new ArrayList<Evidence>();
-        
+
         private List<Evidence> analysisObjs = new ArrayList<Evidence>();
-        
-        
+
         
         /**
-		 * @return the documentObjs
-		 */
-		public List<Evidence> getDocumentObjs() {
-			return documentObjs;
-		}
+         * @return the documentObjs
+         */
+        public List<Evidence> getDocumentObjs() {
+            return documentObjs;
+        }
 
-		/**
-		 * @param documentObjs the documentObjs to set
-		 */
-		public void setDocumentObjs(List<Evidence> documentObjs) {
-			this.documentObjs = documentObjs;
-		}
+        /**
+         * @param documentObjs the documentObjs to set
+         */
+        public void setDocumentObjs(List<Evidence> documentObjs) {
+            this.documentObjs = documentObjs;
+        }
 
-		/**
+        /**
          * @return the derItemReqObjs
          */
         public List<Evidence> getDerItemReqObjs() {
@@ -336,64 +335,77 @@ public class DAPlan {
             this.systemObjs = systemObjs;
         }
 
+        /**
+         * @return the verificationObjs
+         */
+        public List<Evidence> getVerificationObjs() {
+            return verificationObjs;
+        }
+
+        /**
+         * @param verificationObjs the verificationObjs to set
+         */
+        public void setVerificationObjs(List<Evidence> verificationObjs) {
+            this.verificationObjs = verificationObjs;
+        }
+
+        /**
+         * @return the reviewObjs
+         */
+        public List<Evidence> getReviewObjs() {
+            return reviewObjs;
+        }
+
+        /**
+         * @param reviewObjs the reviewObjs to set
+         */
+        public void setReviewObjs(List<Evidence> reviewObjs) {
+            this.reviewObjs = reviewObjs;
+        }
+
+        /**
+         * @return the testObjs
+         */
+        public List<Evidence> getTestObjs() {
+            return testObjs;
+        }
+
+        /**
+         * @param testObjs the testObjs to set
+         */
+        public void setTestObjs(List<Evidence> testObjs) {
+            this.testObjs = testObjs;
+        }
+
+        /**
+         * @return the analysisObjs
+         */
+        public List<Evidence> getAnalysisObjs() {
+            return analysisObjs;
+        }
+
+        /**
+         * @param analysisObjs the analysisObjs to set
+         */
+        public void setAnalysisObjs(List<Evidence> analysisObjs) {
+            this.analysisObjs = analysisObjs;
+        }
+
 		/**
-		 * @return the verificationObjs
+		 * @return the systemDesignDescriptionObjs
 		 */
-		public List<Evidence> getVerificationObjs() {
-			return verificationObjs;
+		public List<Evidence> getSystemDesignDescriptionObjs() {
+			return systemDesignDescriptionObjs;
 		}
 
 		/**
-		 * @param verificationObjs the verificationObjs to set
+		 * @param systemDesignDescriptionObjs the systemDesignDescriptionObjs to set
 		 */
-		public void setVerificationObjs(List<Evidence> verificationObjs) {
-			this.verificationObjs = verificationObjs;
+		public void setSystemDesignDescriptionObjs(List<Evidence> systemDesignDescriptionObjs) {
+			this.systemDesignDescriptionObjs = systemDesignDescriptionObjs;
 		}
-
-		/**
-		 * @return the reviewObjs
-		 */
-		public List<Evidence> getReviewObjs() {
-			return reviewObjs;
-		}
-
-		/**
-		 * @param reviewObjs the reviewObjs to set
-		 */
-		public void setReviewObjs(List<Evidence> reviewObjs) {
-			this.reviewObjs = reviewObjs;
-		}
-
-		/**
-		 * @return the testObjs
-		 */
-		public List<Evidence> getTestObjs() {
-			return testObjs;
-		}
-
-		/**
-		 * @param testObjs the testObjs to set
-		 */
-		public void setTestObjs(List<Evidence> testObjs) {
-			this.testObjs = testObjs;
-		}
-
-		/**
-		 * @return the analysisObjs
-		 */
-		public List<Evidence> getAnalysisObjs() {
-			return analysisObjs;
-		}
-
-		/**
-		 * @param analysisObjs the analysisObjs to set
-		 */
-		public void setAnalysisObjs(List<Evidence> analysisObjs) {
-			this.analysisObjs = analysisObjs;
-		}
-
-
-     }
+        
+    }
 
     /**
      * Processes in a DAP
@@ -708,19 +720,18 @@ public class DAPlan {
         public void setMetrics(String metrics) {
             this.metrics = metrics;
         }
-		/**
-		 * @return the graphs
-		 */
-		public Graph getGraphs() {
-			return graphs;
-		}
-		/**
-		 * @param graphs the graphs to set
-		 */
-		public void setGraphs(Graph graphs) {
-			this.graphs = graphs;
-		}
-        
+        /**
+         * @return the graphs
+         */
+        public Graph getGraphs() {
+            return graphs;
+        }
+        /**
+         * @param graphs the graphs to set
+         */
+        public void setGraphs(Graph graphs) {
+            this.graphs = graphs;
+        }
     }
 
     private String id = "";
@@ -802,5 +813,4 @@ public class DAPlan {
     public void setComplianceStatus(double complianceStatus) {
         this.complianceStatus = complianceStatus;
     }
-    
 }

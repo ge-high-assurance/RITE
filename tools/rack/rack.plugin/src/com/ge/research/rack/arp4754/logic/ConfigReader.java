@@ -108,6 +108,9 @@ public class ConfigReader {
                 if (config[0].equalsIgnoreCase("System")) {
                     projectConfig.setSystem(config[1]);
                 }
+                if (config[0].equalsIgnoreCase("SystemDesignDescription")) {
+                    projectConfig.setSystemDesignDescription(config[1]);
+                }
             }
             br.close();
             fr.close(); // closes the stream and release the resources
@@ -156,6 +159,7 @@ public class ConfigReader {
         int itemReqIdCol = CustomStringUtils.getCSVColumnIndex(configCols, "itemRequirementAlias");
         int sysReqIdCol = CustomStringUtils.getCSVColumnIndex(configCols, "systemRequirementAlias");
         int systemIdCol = CustomStringUtils.getCSVColumnIndex(configCols, "systemAlias");
+        int systemDesignDescriptionIdCol = CustomStringUtils.getCSVColumnIndex(configCols, "systemDesignDescriptionAlias");
 
         projectConfig.setDerivedItemReq(configData.get(0)[derItemReqIdCol]);
         projectConfig.setDerivedSysReq(configData.get(0)[derSysReqIdCol]);
@@ -166,6 +170,7 @@ public class ConfigReader {
         projectConfig.setItemReq(configData.get(0)[itemReqIdCol]);
         projectConfig.setSysReq(configData.get(0)[sysReqIdCol]);
         projectConfig.setSystem(configData.get(0)[systemIdCol]);
+        projectConfig.setSystemDesignDescription(configData.get(0)[systemDesignDescriptionIdCol]);
 
         return projectConfig;
     }

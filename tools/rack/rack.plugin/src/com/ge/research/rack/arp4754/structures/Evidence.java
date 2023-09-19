@@ -46,6 +46,7 @@ public class Evidence {
     private String id = "";
     private String description = "";
     private String type = "";
+    private String URL = "";
 
     /**
      * All possible properties that link one evidence to another must be added here
@@ -308,4 +309,19 @@ public class Evidence {
     public void setSourceDocument(List<String> sourceDocument) {
         this.sourceDocument = sourceDocument;
     }
+
+	/**
+	 * @return the uRL
+	 */
+	public String getURL() {
+		return URL;
+	}
+
+	/**
+	 * @param uRL the uRL to set
+	 */
+	public void setURL(String uRL) {
+		URL = uRL;
+	}
+    
 }

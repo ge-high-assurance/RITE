@@ -31,10 +31,10 @@
  */
 package com.ge.research.rack;
 
+import com.ge.research.rack.arp4754.viewManagers.Arp4754ViewsManager;
 import com.ge.research.rack.autoGsn.viewManagers.AutoGsnViewsManager;
 import com.ge.research.rack.autoGsn.viewManagers.GsnTreeViewManager;
 import com.ge.research.rack.do178c.viewManagers.ReportViewsManager;
-import com.ge.research.rack.arp4754.viewManagers.Arp4754ViewsManager;
 import com.ge.research.rack.views.RibView;
 
 import javafx.application.Application;
@@ -157,8 +157,6 @@ public class JavaFXAppLaunchManager {
                     });
         }
     }
-    
-    
 
     /**
      * Used to launch different Javafx arp4754ReportMainView applications by consulting the flag

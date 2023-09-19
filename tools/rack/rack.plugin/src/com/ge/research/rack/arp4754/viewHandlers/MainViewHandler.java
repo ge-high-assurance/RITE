@@ -1,23 +1,44 @@
-/**
+/*
+ * BSD 3-Clause License
  * 
+ * Copyright (c) 2023, General Electric Company and Galois, Inc.
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 
+ * 3. Neither the name of the copyright holder nor the names of its
+ *    contributors may be used to endorse or promote products derived from
+ *    this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package com.ge.research.rack.arp4754.viewHandlers;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.ge.research.rack.arp4754.viewManagers.Arp4754ViewsManager;
 import com.ge.research.rack.arp4754.logic.DataProcessor;
 import com.ge.research.rack.arp4754.structures.DAPlan;
 import com.ge.research.rack.arp4754.utils.DAPlanUtils;
 import com.ge.research.rack.arp4754.utils.ViewUtils;
+import com.ge.research.rack.arp4754.viewManagers.Arp4754ViewsManager;
 import com.ge.research.rack.autoGsn.utils.CustomFileUtils;
 import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
-import com.ge.research.rack.do178c.structures.PsacNode;
-import com.ge.research.rack.do178c.utils.PsacNodeUtils;
 import com.ge.research.rack.do178c.utils.ReportViewUtils;
-import com.ge.research.rack.do178c.viewHandlers.ReportTableViewHandlerNew;
-import com.ge.research.rack.do178c.viewManagers.ReportViewsManager;
 
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -37,9 +58,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Saswata Paul
- *
  */
 public class MainViewHandler {
 
@@ -60,13 +83,9 @@ public class MainViewHandler {
     @FXML private GridPane gridPaneLegend;
 
     @FXML private ListView<Label> listProcess;
-	
-    
-    
-    
-    //----------
-    
-    
+
+    // ----------
+
     /**
      * Given "TableAx: yzaysy", returns "Ax"
      *
@@ -87,30 +106,29 @@ public class MainViewHandler {
      */
     private Label getProcessLabel(DAPlan.Process procObj) {
 
-
         Label procLabel = new Label();
         procLabel.setStyle("-fx-font-weight: bold;");
 
-        if(procObj.getMetrics().equalsIgnoreCase("TBD")) {
-          procLabel.setText(
-          procObj.getId()
-                  + ": "
-                  + procObj.getDesc().replace("\"", "")
-                  + " ("
-                  + procObj.getMetrics()
-                  + ")");        	
-          procLabel.setTextFill(Color.LIGHTGREY);    
+        if (procObj.getMetrics().equalsIgnoreCase("TBD")) {
+            procLabel.setText(
+                    procObj.getId()
+                            + ": "
+                            + procObj.getDesc().replace("\"", "")
+                            + " ("
+                            + procObj.getMetrics()
+                            + ")");
+            procLabel.setTextFill(Color.LIGHTGREY);
+        } else {
+            procLabel.setText(
+                    procObj.getId()
+                            + ": "
+                            + procObj.getDesc().replace("\"", "")
+                            + " ("
+                            + String.format("%.2f", procObj.getComplianceStatus())
+                            + "% objectives passed)");
+            procLabel.setTextFill(ViewUtils.getProcessColor(procObj));
         }
-        else {
-            procLabel.setText(procObj.getId()
-                    + ": "
-                    + procObj.getDesc().replace("\"", "")
-                    + " ("
-                    + String.format("%.2f", procObj.getComplianceStatus())
-                    + "% objectives passed)");
-            procLabel.setTextFill(ViewUtils.getProcessColor(procObj));        	
-        }
-        
+
         return procLabel;
     }
 
@@ -125,7 +143,8 @@ public class MainViewHandler {
         // Create tempdir to store the csv files
         String tempDir = CustomFileUtils.getRackDir();
         DataProcessor rdpObj = new DataProcessor();
-        Arp4754ViewsManager.reportDataObj = rdpObj.getPlanData(tempDir);;
+        Arp4754ViewsManager.reportDataObj = rdpObj.getPlanData(tempDir);
+        ;
     }
 
     /**
@@ -175,8 +194,9 @@ public class MainViewHandler {
         int high = -1;
 
         // get list of processes
-        List<DAPlan.Process> allProcessObjs =  DAPlanUtils.sortProcessList(Arp4754ViewsManager.reportDataObj.getProcesses());
-        
+        List<DAPlan.Process> allProcessObjs =
+                DAPlanUtils.sortProcessList(Arp4754ViewsManager.reportDataObj.getProcesses());
+
         // Group bars by table id
 
         XYChart.Series passData = new XYChart.Series();
@@ -184,7 +204,8 @@ public class MainViewHandler {
         List<Data> passBars = new ArrayList<Data>();
         for (DAPlan.Process procObj : allProcessObjs) {
             Data passBar =
-                    ReportViewUtils.createIntDataBar(procObj.getId(), procObj.getNumObjectivesPassed());
+                    ReportViewUtils.createIntDataBar(
+                            procObj.getId(), procObj.getNumObjectivesPassed());
             passData.getData().add(passBar);
             passBars.add(passBar);
             if (high < procObj.getNumObjectivesPassed()) {
@@ -197,11 +218,25 @@ public class MainViewHandler {
         List<Data> failBars = new ArrayList<Data>();
         for (DAPlan.Process procObj : allProcessObjs) {
             Data failBar =
-                    ReportViewUtils.createIntDataBar(procObj.getId(), (procObj.getObjectives().size()- procObj.getNumObjectivesPassed() - procObj.getNumObjectivesPartialData() - procObj.getNumObjectivesNoData()));
+                    ReportViewUtils.createIntDataBar(
+                            procObj.getId(),
+                            (procObj.getObjectives().size()
+                                    - procObj.getNumObjectivesPassed()
+                                    - procObj.getNumObjectivesPartialData()
+                                    - procObj.getNumObjectivesNoData()));
             failData.getData().add(failBar);
             failBars.add(failBar);
-            if (high < (procObj.getObjectives().size()- procObj.getNumObjectivesPassed() - procObj.getNumObjectivesPartialData() - procObj.getNumObjectivesNoData())) {
-                high = (procObj.getObjectives().size()- procObj.getNumObjectivesPassed() - procObj.getNumObjectivesPartialData() - procObj.getNumObjectivesNoData()) + 1;
+            if (high
+                    < (procObj.getObjectives().size()
+                            - procObj.getNumObjectivesPassed()
+                            - procObj.getNumObjectivesPartialData()
+                            - procObj.getNumObjectivesNoData())) {
+                high =
+                        (procObj.getObjectives().size()
+                                        - procObj.getNumObjectivesPassed()
+                                        - procObj.getNumObjectivesPartialData()
+                                        - procObj.getNumObjectivesNoData())
+                                + 1;
             }
         }
 
@@ -210,7 +245,8 @@ public class MainViewHandler {
         List<Data> partialBars = new ArrayList<Data>();
         for (DAPlan.Process procObj : allProcessObjs) {
             Data partialBar =
-                    ReportViewUtils.createIntDataBar(procObj.getId(), procObj.getNumObjectivesPartialData());
+                    ReportViewUtils.createIntDataBar(
+                            procObj.getId(), procObj.getNumObjectivesPartialData());
             partialData.getData().add(partialBar);
             partialBars.add(partialBar);
             if (high < procObj.getNumObjectivesPartialData()) {
@@ -222,7 +258,9 @@ public class MainViewHandler {
         noData.setName("No Data");
         List<Data> noBars = new ArrayList<Data>();
         for (DAPlan.Process procObj : allProcessObjs) {
-            Data noBar = ReportViewUtils.createIntDataBar(procObj.getId(), procObj.getNumObjectivesNoData());
+            Data noBar =
+                    ReportViewUtils.createIntDataBar(
+                            procObj.getId(), procObj.getNumObjectivesNoData());
             noData.getData().add(noBar);
             noBars.add(noBar);
             if (high < procObj.getNumObjectivesNoData()) {
@@ -257,7 +295,6 @@ public class MainViewHandler {
         yAxisChartProcessStatus.setLowerBound(0);
         yAxisChartProcessStatus.setUpperBound(high);
         yAxisChartProcessStatus.setTickUnit(1);
-
     }
 
     /**
@@ -268,58 +305,55 @@ public class MainViewHandler {
     private void populateListProcesses(String key) {
         // clear old data
         listProcess.getItems().clear();
-        
 
         // enable elements
         listProcess.setDisable(false);
 
-//        List<Label> labelList = new ArrayList<Label>();
-//        List<Label> sortedLabelList = new ArrayList<Label>();
-        
+        //        List<Label> labelList = new ArrayList<Label>();
+        //        List<Label> sortedLabelList = new ArrayList<Label>();
+
         // get list of processes
-        List<DAPlan.Process> allProcessObjs = DAPlanUtils.sortProcessList(Arp4754ViewsManager.reportDataObj.getProcesses());
-        
+        List<DAPlan.Process> allProcessObjs =
+                DAPlanUtils.sortProcessList(Arp4754ViewsManager.reportDataObj.getProcesses());
+
         for (DAPlan.Process procObj : allProcessObjs) {
             Label procLabel = getProcessLabel(procObj);
-            int position = Integer.parseInt(getProcessIdFromLabelText(procLabel.getText())) - 1 ;
-            System.out.println("Position " + position + "->" +procLabel.getText());
+            int position = Integer.parseInt(getProcessIdFromLabelText(procLabel.getText())) - 1;
+            System.out.println("Position " + position + "->" + procLabel.getText());
             if (key.equalsIgnoreCase("All")) {
-//                listProcess.getItems().add(position, procLabel);
-//            	labelList.add(procLabel);
-            	listProcess.getItems().add(procLabel);
-            } else if (key.equalsIgnoreCase("Passed")
-                    && procObj.isPassed()) {
-//                listProcess.getItems().add(position, procLabel);
-//            	labelList.add(procLabel);
-            	listProcess.getItems().add(procLabel);
-            } else if (key.equalsIgnoreCase("Failed")
-                    && !procObj.isPassed()) {
-//                listProcess.getItems().add(position, procLabel);
-//            	labelList.add(procLabel);
-            	listProcess.getItems().add(procLabel);
-            } else if (key.equalsIgnoreCase("Inconclusive")
-                    && procObj.isNoData()) {
+                //                listProcess.getItems().add(position, procLabel);
+                //            	labelList.add(procLabel);
+                listProcess.getItems().add(procLabel);
+            } else if (key.equalsIgnoreCase("Passed") && procObj.isPassed()) {
+                //                listProcess.getItems().add(position, procLabel);
+                //            	labelList.add(procLabel);
+                listProcess.getItems().add(procLabel);
+            } else if (key.equalsIgnoreCase("Failed") && !procObj.isPassed()) {
+                //                listProcess.getItems().add(position, procLabel);
+                //            	labelList.add(procLabel);
+                listProcess.getItems().add(procLabel);
+            } else if (key.equalsIgnoreCase("Inconclusive") && procObj.isNoData()) {
                 //    				actLabel.setVisible(true);
-//                listProcess.getItems().add(tabLabel);
-//              listProcess.getItems().add(position, procLabel);
-//            	labelList.add(procLabel);
-            	listProcess.getItems().add(procLabel);
+                //                listProcess.getItems().add(tabLabel);
+                //              listProcess.getItems().add(position, procLabel);
+                //            	labelList.add(procLabel);
+                listProcess.getItems().add(procLabel);
             }
         }
-        
-//        // sort the list of labels
-//        for(int i = 0; i<labelList.size();i++) {
-//        	// find the appropriate label for this index
-//        	for(Label label : labelList) {
-//        		if(i == (Integer.parseInt(getProcessIdFromLabelText(label.getText()))-1)){
-//        			sortedLabelList.add(label);
-//        		}
-//        	}
-//        }
-        
-//        // add the labels to listview
-//        listProcess.getItems().addAll(sortedLabelList);
-        
+
+        //        // sort the list of labels
+        //        for(int i = 0; i<labelList.size();i++) {
+        //        	// find the appropriate label for this index
+        //        	for(Label label : labelList) {
+        //        		if(i == (Integer.parseInt(getProcessIdFromLabelText(label.getText()))-1)){
+        //        			sortedLabelList.add(label);
+        //        		}
+        //        	}
+        //        }
+
+        //        // add the labels to listview
+        //        listProcess.getItems().addAll(sortedLabelList);
+
     }
 
     /** Calls necessary functions to populate view elements from data */
@@ -330,9 +364,7 @@ public class MainViewHandler {
 
         populateListProcesses("All");
     }
-    
-    
-    
+
     @FXML
     private void initialize() {
         try {
@@ -366,9 +398,7 @@ public class MainViewHandler {
 
         enableFetchButton();
     }
-    
-    
-    
+
     @FXML
     private void btnFetchAction(ActionEvent event) throws Exception {
         // initialize the manager variables again
@@ -441,10 +471,13 @@ public class MainViewHandler {
         if (selectedLabel != null) {
 
             // get selection
-            String selectedProc = CustomStringUtils.separateElementIdFromDescription(selectedLabel.getText());
+            String selectedProc =
+                    CustomStringUtils.separateElementIdFromDescription(selectedLabel.getText());
             System.out.println("The selected Table: " + selectedProc);
 
-            if (!DAPlanUtils.getProcessObjectFromList(Arp4754ViewsManager.reportDataObj.getProcesses(), selectedProc).isNoData()) {
+            if (!DAPlanUtils.getProcessObjectFromList(
+                            Arp4754ViewsManager.reportDataObj.getProcesses(), selectedProc)
+                    .isNoData()) {
                 // Set the stage with the other fxml
                 FXMLLoader processViewLoader =
                         Arp4754ViewsManager.setNewFxmlToStage(
@@ -455,8 +488,5 @@ public class MainViewHandler {
                 processViewLoaderClassObj.prepareView(selectedProc);
             }
         }
-    	
-    	
     }
-	
 }

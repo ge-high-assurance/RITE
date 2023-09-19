@@ -47,6 +47,8 @@ public class Configuration {
     private String itemReq = "";
     private String sysReq = "";
     private String system = "";
+    private String systemDesignDescription = "";
+    
     /**
      * @return the derivedItemReq
      */
@@ -155,4 +157,18 @@ public class Configuration {
     public void setSystem(String system) {
         this.system = system;
     }
+	/**
+	 * @return the systemDesignDescription
+	 */
+	public String getSystemDesignDescription() {
+		return systemDesignDescription;
+	}
+	/**
+	 * @param systemDesignDescription the systemDesignDescription to set
+	 */
+	public void setSystemDesignDescription(String systemDesignDescription) {
+		this.systemDesignDescription = systemDesignDescription;
+	}
+    
+    
 }

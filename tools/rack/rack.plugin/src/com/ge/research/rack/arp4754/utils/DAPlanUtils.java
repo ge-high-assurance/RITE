@@ -48,7 +48,8 @@ public class DAPlanUtils {
      * @param id
      * @return
      */
-    public static Integer getObjectivePositionFromList(List<DAPlan.Objective> objectives, String id) {
+    public static Integer getObjectivePositionFromList(
+            List<DAPlan.Objective> objectives, String id) {
 
         for (int i = 0; i < objectives.size(); i++) {
             DAPlan.Objective objective = objectives.get(i);
@@ -61,11 +62,13 @@ public class DAPlanUtils {
 
     /**
      * Returns the objective object
+     *
      * @param objectives
      * @param id
      * @return
      */
-    public static DAPlan.Objective getObjectiveObjectFromList(List<DAPlan.Objective> objectives, String id) {
+    public static DAPlan.Objective getObjectiveObjectFromList(
+            List<DAPlan.Objective> objectives, String id) {
 
         for (int i = 0; i < objectives.size(); i++) {
             DAPlan.Objective objective = objectives.get(i);
@@ -75,7 +78,7 @@ public class DAPlanUtils {
         }
         return null;
     }
-    
+
     /**
      * Takes a list of process objects and an id and returns index of the object with the id
      *
@@ -93,14 +96,16 @@ public class DAPlanUtils {
         }
         return null;
     }
-    
+
     /**
      * Returns the process object
+     *
      * @param processes
      * @param id
      * @return
      */
-    public static DAPlan.Process getProcessObjectFromList(List<DAPlan.Process> processes, String id) {
+    public static DAPlan.Process getProcessObjectFromList(
+            List<DAPlan.Process> processes, String id) {
 
         for (int i = 0; i < processes.size(); i++) {
             DAPlan.Process process = processes.get(i);
@@ -110,51 +115,52 @@ public class DAPlanUtils {
         }
         return null;
     }
-    
-    
+
     /**
      * Sorts a given list of DAPLan Processes by id
+     *
      * @return
      */
-    public static List<DAPlan.Process> sortProcessList(List<DAPlan.Process> list){
-    	List<DAPlan.Process> newList = new ArrayList<DAPlan.Process>();
-    	
-        if(list.size() > 0) {
-            for(int i=0; i < list.size(); i++) {
-            	for(DAPlan.Process process : list) {
-                	if((Integer.parseInt(process.getId().replace("Process-", "")) - 1) == i) {
-                		newList.add(process);
-                		
-                		System.out.println(process.getId() + " -> "+ i );
-                	}            		
-            	}
+    public static List<DAPlan.Process> sortProcessList(List<DAPlan.Process> list) {
+        List<DAPlan.Process> newList = new ArrayList<DAPlan.Process>();
+
+        if (list.size() > 0) {
+            for (int i = 0; i < list.size(); i++) {
+                for (DAPlan.Process process : list) {
+                    if ((Integer.parseInt(process.getId().replace("Process-", "")) - 1) == i) {
+                        newList.add(process);
+
+                        System.out.println(process.getId() + " -> " + i);
+                    }
+                }
             }
-        }   	
-    	
-    	return newList;
+        }
+
+        return newList;
     }
-    
+
     /**
      * Sorts a given list of DAPLan Objectives by id
+     *
      * @return
      */
-    public static List<DAPlan.Objective> sortObjectiveList(List<DAPlan.Objective> list){
-    	List<DAPlan.Objective> newList = new ArrayList<DAPlan.Objective>();
-    	
-        if(list.size() > 0) {
-            for(int i=0; i < list.size(); i++) {
-            	for(DAPlan.Objective objective : list) {
-            		String[] objIdParts = objective.getId().split("-"); // "Objective-2-2"
-            		String objNum = objIdParts[objIdParts.length - 1];
-                	if((Integer.parseInt(objNum) - 1) == i) {
-                		newList.add(objective);
-                		
-                		System.out.println(objective.getId() + " -> "+ i );
-                	}            		
-            	}
+    public static List<DAPlan.Objective> sortObjectiveList(List<DAPlan.Objective> list) {
+        List<DAPlan.Objective> newList = new ArrayList<DAPlan.Objective>();
+
+        if (list.size() > 0) {
+            for (int i = 0; i < list.size(); i++) {
+                for (DAPlan.Objective objective : list) {
+                    String[] objIdParts = objective.getId().split("-"); // "Objective-2-2"
+                    String objNum = objIdParts[objIdParts.length - 1];
+                    if ((Integer.parseInt(objNum) - 1) == i) {
+                        newList.add(objective);
+
+                        System.out.println(objective.getId() + " -> " + i);
+                    }
+                }
             }
-        }   	
-    	
-    	return newList;
+        }
+
+        return newList;
     }
 }

@@ -77,6 +77,9 @@ public class DataProcessorUtils {
             case "allSystem":
                 id = config.getSystem();
                 break;
+            case "allSystemDesignDescription":
+                id = config.getSystemDesignDescription();
+                break;
             case "allItemRequirement":
                 id = config.getItemReq();
                 break;
@@ -127,6 +130,7 @@ public class DataProcessorUtils {
         allQueryIds.add(getVarCSVID("allItemRequirement", config));
         allQueryIds.add(getVarCSVID("allSystem", config));
         allQueryIds.add(getVarCSVID("allSystemRequirement", config));
+        allQueryIds.add(getVarCSVID("allSystemDesignDescription", config));
         allQueryIds.add(getVarCSVID("allInterfaceWithInputOutput", config));
         allQueryIds.add(getVarCSVID("allItemRequirementWIthItem", config));
         allQueryIds.add(getVarCSVID("allSystemRequirementWIthSystem", config));

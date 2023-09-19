@@ -56,7 +56,7 @@
 
                         <Tab fx:id="tabDocument" text="Documents">
                             <content>
-                                <ListView fx:id="actList" />
+                                <ListView fx:id="docList" onMouseClicked="#docListSelectionAction" />
                             </content>
                         </Tab>
 

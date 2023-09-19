@@ -1,21 +1,42 @@
-/**
+/*
+ * BSD 3-Clause License
  * 
+ * Copyright (c) 2023, General Electric Company and Galois, Inc.
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 
+ * 3. Neither the name of the copyright holder nor the names of its
+ *    contributors may be used to endorse or promote products derived from
+ *    this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package com.ge.research.rack.arp4754.viewHandlers;
-
-import java.util.Collections;
-import java.util.List;
 
 import com.ge.research.rack.arp4754.structures.DAPlan;
 import com.ge.research.rack.arp4754.utils.DAPlanUtils;
 import com.ge.research.rack.arp4754.utils.ViewUtils;
 import com.ge.research.rack.arp4754.viewManagers.Arp4754ViewsManager;
 import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
-import com.ge.research.rack.do178c.structures.PsacNode;
-import com.ge.research.rack.do178c.utils.PsacNodeUtils;
 import com.ge.research.rack.do178c.utils.ReportViewUtils;
-import com.ge.research.rack.do178c.viewHandlers.ReportObjectiveViewHandlerNew;
-import com.ge.research.rack.do178c.viewManagers.ReportViewsManager;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,9 +54,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
+import java.util.Collections;
+import java.util.List;
+
 /**
  * @author Saswata Paul
- *
  */
 public class ProcessViewHandler {
 
@@ -72,32 +95,28 @@ public class ProcessViewHandler {
         Label objLabel = new Label();
         objLabel.setStyle("-fx-font-weight: bold;");
 
-        if(objObj.getMetrics().equalsIgnoreCase("TBD")) {
+        if (objObj.getMetrics().equalsIgnoreCase("TBD")) {
             objLabel.setText(
                     objObj.getId()
                             + ": "
                             + objObj.getDesc().replace("\"", "")
                             + " ("
                             + objObj.getMetrics()
-                            + ")");        	
-            objLabel.setTextFill(Color.LIGHTGREY);    
-        }
-        else {
+                            + ")");
+            objLabel.setTextFill(Color.LIGHTGREY);
+        } else {
             objLabel.setText(
                     objObj.getId()
                             + ": "
                             + objObj.getDesc().replace("\"", "")
-				            + " ("
-		                    + String.format("%.2f", objObj.getComplianceStatus())
-		                    + "% complete)");
+                            + " ("
+                            + String.format("%.2f", objObj.getComplianceStatus())
+                            + "% complete)");
             objLabel.setTextFill(ViewUtils.getObjectiveColor(objObj));
         }
 
-
         return objLabel;
     }
-
-
 
     /** Populates the ojective status chart */
     public void populateObjStatusChart() {
@@ -110,7 +129,6 @@ public class ProcessViewHandler {
 
         List<Integer> artStats = ViewUtils.getProcessArtifactStats(currentProcessObject);
 
-
         Data docBar = ReportViewUtils.createIntDataBar("Documents", artStats.get(0));
         Data reqBar = ReportViewUtils.createIntDataBar("Requirements", artStats.get(1));
         Data itemBar = ReportViewUtils.createIntDataBar("Items", artStats.get(2));
@@ -121,7 +139,6 @@ public class ProcessViewHandler {
         Data reviewBar = ReportViewUtils.createIntDataBar("Reviews", artStats.get(7));
         Data analysisBar = ReportViewUtils.createIntDataBar("Analyses", artStats.get(8));
 
-        
         XYChart.Series tableStat = new XYChart.Series();
 
         tableStat.getData().add(docBar);
@@ -147,7 +164,8 @@ public class ProcessViewHandler {
         systemBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
         ReportViewUtils.assignTooltip(systemBar.getNode(), systemBar.getYValue().toString());
         verificationBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
-        ReportViewUtils.assignTooltip(verificationBar.getNode(), verificationBar.getYValue().toString());
+        ReportViewUtils.assignTooltip(
+                verificationBar.getNode(), verificationBar.getYValue().toString());
         testBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
         ReportViewUtils.assignTooltip(testBar.getNode(), testBar.getYValue().toString());
         reviewBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
@@ -163,7 +181,6 @@ public class ProcessViewHandler {
         yAxisChartObjStatus.setTickUnit(1);
     }
 
-    
     /**
      * Populates the list of objectives
      *
@@ -175,9 +192,10 @@ public class ProcessViewHandler {
 
         if ((currentProcessObject.getObjectives() != null)
                 && (currentProcessObject.getObjectives().size() > 0)) {
-        	
-        	// sort the objective list
-            List<DAPlan.Objective> allObjectiveObjs =  DAPlanUtils.sortObjectiveList(currentProcessObject.getObjectives());
+
+            // sort the objective list
+            List<DAPlan.Objective> allObjectiveObjs =
+                    DAPlanUtils.sortObjectiveList(currentProcessObject.getObjectives());
 
             for (DAPlan.Objective objObj : allObjectiveObjs) {
 
@@ -185,26 +203,22 @@ public class ProcessViewHandler {
 
                 if (filterKey.equalsIgnoreCase("All")) {
                     listObjectives.getItems().add(objLabel);
-                } else if (filterKey.equalsIgnoreCase("Passed")
-                        && objObj.isPassed()) {
+                } else if (filterKey.equalsIgnoreCase("Passed") && objObj.isPassed()) {
                     listObjectives.getItems().add(objLabel);
                 } else if (filterKey.equalsIgnoreCase("Failed")
                         && !objObj.isPassed()
                         && !objObj.isNoData()
                         && !objObj.isPartialData()) {
                     listObjectives.getItems().add(objLabel);
-                } else if (filterKey.equalsIgnoreCase("Partial")
-                        && objObj.isPartialData()) {
+                } else if (filterKey.equalsIgnoreCase("Partial") && objObj.isPartialData()) {
                     listObjectives.getItems().add(objLabel);
-                } else if (filterKey.equalsIgnoreCase("No data")
-                        && objObj.isNoData()) {
+                } else if (filterKey.equalsIgnoreCase("No data") && objObj.isNoData()) {
                     listObjectives.getItems().add(objLabel);
                 }
             }
         }
-
     }
-    
+
     /**
      * Used to initialize the variables from the caller view's fxml controller
      *
@@ -215,7 +229,9 @@ public class ProcessViewHandler {
         currentProcessId = procId;
 
         // set the current table object
-        currentProcessObject = DAPlanUtils.getProcessObjectFromList(Arp4754ViewsManager.reportDataObj.getProcesses(), procId);
+        currentProcessObject =
+                DAPlanUtils.getProcessObjectFromList(
+                        Arp4754ViewsManager.reportDataObj.getProcesses(), procId);
 
         // populate objectives list
         populateListObjectives("All");
@@ -254,7 +270,6 @@ public class ProcessViewHandler {
     private void btnHomeAction(ActionEvent event) throws Exception {
         // Set the stage with the other fxml
         Arp4754ViewsManager.setNewFxmlToStage("resources/fxml/arp4754/MainView.fxml");
-
     }
 
     @FXML
@@ -275,7 +290,6 @@ public class ProcessViewHandler {
 
         // Clear and repopulate the listObjectives depending on key
         populateListObjectives(key);
-
     }
 
     @FXML
@@ -291,7 +305,9 @@ public class ProcessViewHandler {
             System.out.println("The selected Objective: " + selectedObjective);
 
             // switch to objective view only if the objective has some data
-            if (!DAPlanUtils.getObjectiveObjectFromList(currentProcessObject.getObjectives(), selectedObjective).isNoData()) {
+            if (!DAPlanUtils.getObjectiveObjectFromList(
+                            currentProcessObject.getObjectives(), selectedObjective)
+                    .isNoData()) {
                 // Set the stage with the other fxml
                 FXMLLoader objectiveViewLoader =
                         Arp4754ViewsManager.setNewFxmlToStage(
@@ -303,7 +319,5 @@ public class ProcessViewHandler {
                 objectiveViewLoaderClassObj.prepareView(currentProcessId, selectedObjective);
             }
         }
-
     }
-	
 }
