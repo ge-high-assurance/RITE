@@ -554,20 +554,21 @@ public class ObjectiveViewHandler {
             }
         }
         
-        
-        if (currentObjObject.getId().equalsIgnoreCase("objective-4-1")) {
+        // TODO: clumped these two toegther since we have no reviews
+        if (currentObjObject.getId().equalsIgnoreCase("objective-4-1")
+        		|| currentObjObject.getId().equalsIgnoreCase("objective-4-4")) {
             // TODO: objective-based setting of children
             // store children releationship for this objective
             requirementChildrenRelation = "Reviews";
 
-            for (Evidence sysReq : currentObjObject.getOutputs().getSysReqObjs()) {
+            for (Evidence itemReq : currentObjObject.getOutputs().getItemReqObjs()) {
                 if (filterKey.equalsIgnoreCase("All")
-                        && ((searchKey == null) || (sysReq.getId().contains(searchKey)))) {
+                        && ((searchKey == null) || (itemReq.getId().contains(searchKey)))) {
                     Label evidenceLabel = new Label();
 
-                    String evidenceText = sysReq.getId() + " | Reviews: ";
+                    String evidenceText = itemReq.getId() + " (" + itemReq.getDescription() + ")" + " | Reviews: ";
 
-                    for (Evidence system : sysReq.getHasReviews()) {
+                    for (Evidence system : itemReq.getHasReviews()) {
                         evidenceText = evidenceText + system.getId() + ", ";
                     }
 
@@ -641,7 +642,8 @@ public class ObjectiveViewHandler {
         if (currentObjObject.getId().equalsIgnoreCase("objective-2-2")
                 || currentObjObject.getId().equalsIgnoreCase("objective-2-4")
                 || currentObjObject.getId().equalsIgnoreCase("objective-2-6")
-                || currentObjObject.getId().equalsIgnoreCase("objective-4-1")) {
+                || currentObjObject.getId().equalsIgnoreCase("objective-4-1")
+                || currentObjObject.getId().equalsIgnoreCase("objective-4-4")) {
             if ((currentObjObject.getOutputs().getDerItemReqObjs().size() > 0)
                     || (currentObjObject.getOutputs().getDerSysReqObjs().size() > 0)
                     || (currentObjObject.getOutputs().getItemReqObjs().size() > 0)

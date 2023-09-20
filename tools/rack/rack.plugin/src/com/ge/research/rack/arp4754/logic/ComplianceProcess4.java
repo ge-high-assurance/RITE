@@ -31,6 +31,7 @@
  */
 package com.ge.research.rack.arp4754.logic;
 
+import com.ge.research.rack.arp4754.structures.Category;
 import com.ge.research.rack.arp4754.structures.DAPlan;
 import com.ge.research.rack.arp4754.structures.Evidence;
 import com.ge.research.rack.arp4754.structures.DAPlan.Objective;
@@ -51,6 +52,16 @@ public class ComplianceProcess4 {
         objective.setPartialData(true);
         objective.setPassed(false);
 
+        
+        // create and add appropriate graphdata (//TODO: add actual code, hardcoded now)
+        Category reqWithNoReviews = new Category("No Review", objective.getOutputs().getItemReqObjs().size());
+        Category reqWithPassedReviews = new Category("Passed Review", 0);
+        Category reqWithFailedReviews =
+                new Category(
+                        "Failed Review",0);
+        objective.getGraphs().getItemReqGraphData().getBuckets().add(reqWithNoReviews);
+        objective.getGraphs().getItemReqGraphData().getBuckets().add(reqWithPassedReviews);
+        objective.getGraphs().getItemReqGraphData().getBuckets().add(reqWithFailedReviews);
     	
     	objective.setMetrics("");
         return objective;
@@ -82,6 +93,16 @@ public class ComplianceProcess4 {
         objective.setPartialData(true);
         objective.setPassed(false);
 
+        
+        // create and add appropriate graphdata (//TODO: add actual code, hardcoded now)
+        Category reqWithNoReviews = new Category("No Review", objective.getOutputs().getItemReqObjs().size());
+        Category reqWithPassedReviews = new Category("Passed Review", 0);
+        Category reqWithFailedReviews =
+                new Category(
+                        "Failed Review",0);
+        objective.getGraphs().getItemReqGraphData().getBuckets().add(reqWithNoReviews);
+        objective.getGraphs().getItemReqGraphData().getBuckets().add(reqWithPassedReviews);
+        objective.getGraphs().getItemReqGraphData().getBuckets().add(reqWithFailedReviews);
     	
     	objective.setMetrics("");
         return objective;
