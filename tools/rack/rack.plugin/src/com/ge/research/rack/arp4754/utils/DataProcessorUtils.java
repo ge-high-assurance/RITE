@@ -101,6 +101,19 @@ public class DataProcessorUtils {
             case "allItemRequirementWIthSystemRequirement":
                 id = config.getItemReq() + "_with_" + config.getSysReq();
                 break;
+            case "allRequirementCompleteCorrectReview":
+                id = config.getRequirementCompleteCorrectReview();
+                break;
+            case "allRequirementTraceableReview":
+                id = config.getRequirementTraceableReview();
+                break;
+            case "allRequirementWithCompleteCorrectReview": //TODO: Itemrqe needs to be turned to Generic rquirements
+                id = config.getItemReq() + "_with_" + config.getRequirementCompleteCorrectReview();
+                break;
+            case "allRequirementWithTraceableReview":
+                id =  config.getItemReq() + "_with_" + config.getRequirementTraceableReview();
+                break;
+                
             default:
                 id = "";
                 break;
@@ -136,6 +149,10 @@ public class DataProcessorUtils {
         allQueryIds.add(getVarCSVID("allSystemRequirementWIthSystem", config));
         allQueryIds.add(getVarCSVID("allSystemWIthInterface", config));
         allQueryIds.add(getVarCSVID("allItemRequirementWIthSystemRequirement", config));
+        allQueryIds.add(getVarCSVID("allRequirementCompleteCorrectReview", config));
+        allQueryIds.add(getVarCSVID("allRequirementTraceableReview", config));
+        allQueryIds.add(getVarCSVID("allRequirementWithCompleteCorrectReview", config));
+        allQueryIds.add(getVarCSVID("allRequirementWithTraceableReview", config));
         allQueryIds.add("DOCUMENT");
 
         // Execute each predefined query

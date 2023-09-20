@@ -160,6 +160,8 @@ public class ConfigReader {
         int sysReqIdCol = CustomStringUtils.getCSVColumnIndex(configCols, "systemRequirementAlias");
         int systemIdCol = CustomStringUtils.getCSVColumnIndex(configCols, "systemAlias");
         int systemDesignDescriptionIdCol = CustomStringUtils.getCSVColumnIndex(configCols, "systemDesignDescriptionAlias");
+        int requirementCompleteCorrectReviewIdCol = CustomStringUtils.getCSVColumnIndex(configCols, "requirementCompleteCorrectReviewAlias");
+        int requirementTraceableReviewIdCol = CustomStringUtils.getCSVColumnIndex(configCols, "requirementTraceableReviewAlias");
 
         projectConfig.setDerivedItemReq(configData.get(0)[derItemReqIdCol]);
         projectConfig.setDerivedSysReq(configData.get(0)[derSysReqIdCol]);
@@ -171,6 +173,8 @@ public class ConfigReader {
         projectConfig.setSysReq(configData.get(0)[sysReqIdCol]);
         projectConfig.setSystem(configData.get(0)[systemIdCol]);
         projectConfig.setSystemDesignDescription(configData.get(0)[systemDesignDescriptionIdCol]);
+        projectConfig.setRequirementCompleteCorrectReview(configData.get(0)[requirementCompleteCorrectReviewIdCol]);
+        projectConfig.setRequirementTraceableReview(configData.get(0)[requirementTraceableReviewIdCol]);
 
         return projectConfig;
     }

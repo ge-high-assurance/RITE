@@ -185,6 +185,10 @@ public class DAPlan {
 
         private List<Evidence> systemDesignDescriptionObjs = new ArrayList<Evidence>();
 
+        private List<Evidence> requirementCompleteCorrectReviewObjs = new ArrayList<Evidence>();
+
+        private List<Evidence> requirementTraceableReviewObjs = new ArrayList<Evidence>();
+
         // ---
         private List<Evidence> verificationObjs = new ArrayList<Evidence>();
 
@@ -194,8 +198,35 @@ public class DAPlan {
 
         private List<Evidence> analysisObjs = new ArrayList<Evidence>();
 
-        
         /**
+		 * @return the requirementCompleteCorrectReviewObjs
+		 */
+		public List<Evidence> getRequirementCompleteCorrectReviewObjs() {
+			return requirementCompleteCorrectReviewObjs;
+		}
+
+		/**
+		 * @param requirementCompleteCorrectReviewObjs the requirementCompleteCorrectReviewObjs to set
+		 */
+		public void setRequirementCompleteCorrectReviewObjs(List<Evidence> requirementCompleteCorrectReviewObjs) {
+			this.requirementCompleteCorrectReviewObjs = requirementCompleteCorrectReviewObjs;
+		}
+
+		/**
+		 * @return the requirementTraceableReviewObjs
+		 */
+		public List<Evidence> getRequirementTraceableReviewObjs() {
+			return requirementTraceableReviewObjs;
+		}
+
+		/**
+		 * @param requirementTraceableReviewObjs the requirementTraceableReviewObjs to set
+		 */
+		public void setRequirementTraceableReviewObjs(List<Evidence> requirementTraceableReviewObjs) {
+			this.requirementTraceableReviewObjs = requirementTraceableReviewObjs;
+		}
+
+		/**
          * @return the documentObjs
          */
         public List<Evidence> getDocumentObjs() {

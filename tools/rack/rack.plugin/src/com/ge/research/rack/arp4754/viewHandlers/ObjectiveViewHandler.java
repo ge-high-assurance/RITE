@@ -553,6 +553,29 @@ public class ObjectiveViewHandler {
                 }
             }
         }
+        
+        
+        if (currentObjObject.getId().equalsIgnoreCase("objective-4-1")) {
+            // TODO: objective-based setting of children
+            // store children releationship for this objective
+            requirementChildrenRelation = "Reviews";
+
+            for (Evidence sysReq : currentObjObject.getOutputs().getSysReqObjs()) {
+                if (filterKey.equalsIgnoreCase("All")
+                        && ((searchKey == null) || (sysReq.getId().contains(searchKey)))) {
+                    Label evidenceLabel = new Label();
+
+                    String evidenceText = sysReq.getId() + " | Reviews: ";
+
+                    for (Evidence system : sysReq.getHasReviews()) {
+                        evidenceText = evidenceText + system.getId() + ", ";
+                    }
+
+                    evidenceLabel.setText(evidenceText);
+                    requirementList.getItems().add(evidenceLabel);
+                }
+            }
+        }
     }
 
     public void populateListSystem(String filterKey, String searchKey) {
@@ -617,7 +640,8 @@ public class ObjectiveViewHandler {
     public void populateTabRequirement() {
         if (currentObjObject.getId().equalsIgnoreCase("objective-2-2")
                 || currentObjObject.getId().equalsIgnoreCase("objective-2-4")
-                || currentObjObject.getId().equalsIgnoreCase("objective-2-6")) {
+                || currentObjObject.getId().equalsIgnoreCase("objective-2-6")
+                || currentObjObject.getId().equalsIgnoreCase("objective-4-1")) {
             if ((currentObjObject.getOutputs().getDerItemReqObjs().size() > 0)
                     || (currentObjObject.getOutputs().getDerSysReqObjs().size() > 0)
                     || (currentObjObject.getOutputs().getItemReqObjs().size() > 0)

@@ -32,11 +32,69 @@
 package com.ge.research.rack.arp4754.logic;
 
 import com.ge.research.rack.arp4754.structures.DAPlan;
+import com.ge.research.rack.arp4754.structures.Evidence;
+import com.ge.research.rack.arp4754.structures.DAPlan.Objective;
+import com.ge.research.rack.arp4754.utils.ComplianceUtils;
 
 /**
  * @author Saswata Paul
  */
 public class ComplianceProcess4 {
+	
+	
+	
+    private static DAPlan.Objective computeObjective1(DAPlan.Objective objective) {
+
+    	// TODO: write logic
+    	  
+        objective.setNoData(false);
+        objective.setPartialData(true);
+        objective.setPassed(false);
+
+    	
+    	objective.setMetrics("");
+        return objective;
+
+    	
+    }    
+
+    private static DAPlan.Objective computeObjective2(DAPlan.Objective objective) {
+        return objective;
+
+    	
+    }    
+
+    
+    private static DAPlan.Objective computeObjective3(DAPlan.Objective objective) {
+        return objective;
+
+    	
+    }    
+
+    
+    private static DAPlan.Objective computeObjective4(DAPlan.Objective objective) {
+
+  
+    	// TODO: write logic
+    	
+    	
+        objective.setNoData(false);
+        objective.setPartialData(true);
+        objective.setPassed(false);
+
+    	
+    	objective.setMetrics("");
+        return objective;
+    	
+    }
+    
+    
+    private static DAPlan.Objective computeObjective6(DAPlan.Objective objective) {
+        return objective;
+
+    	
+    }    
+
 
     /**
      * Computes the compliance status of the DAPlan.process object
@@ -46,6 +104,77 @@ public class ComplianceProcess4 {
      */
     public static DAPlan.Process computeProcess(DAPlan.Process process) {
 
+        int numPassed = 0;
+        int numNoData = 0;
+        int numPartialData = 0;
+
+        for (int i = 0; i < process.getObjectives().size(); i++) {
+
+            DAPlan.Objective objective = process.getObjectives().get(i);
+
+            DAPlan.Objective updatedObjective = new DAPlan().new Objective();
+
+            switch (objective.getId()) {
+                case "Objective-4-1":
+                    updatedObjective = computeObjective1(objective);
+                    break;
+                case "Objective-4-2":
+                    updatedObjective = computeObjective2(objective);
+                    break;
+                case "Objective-4-3":
+                    updatedObjective = computeObjective3(objective);
+                    break;
+                case "Objective-4-4":
+                    updatedObjective = computeObjective4(objective);
+                    break;
+                case "Objective-4-6":
+                    updatedObjective = computeObjective6(objective);
+                    break;
+                default:
+                    break;
+            }
+
+            // get metrics
+            if (updatedObjective.isPassed()) {
+                numPassed++;
+            } else {
+                if (updatedObjective.isPartialData()) {
+                    numPartialData++;
+                } else {
+                    if (updatedObjective.isNoData()) {
+                        numNoData++;
+                    }
+                }
+            }
+
+            System.out.println(
+                    "Objective "
+                            + updatedObjective.getId()
+                            + " compliance status: "
+                            + updatedObjective.getComplianceStatus());
+
+            System.out.println(
+                    updatedObjective.getId()
+                            + " no: "
+                            + updatedObjective.isNoData()
+                            + " partial:"
+                            + updatedObjective.isPartialData()
+                            + " pass:"
+                            + updatedObjective.isPassed());
+
+            // replace old objective node with new node
+            process.getObjectives().set(i, updatedObjective);
+        }
+
+        // add metrics to process
+        process.setNumObjectivesNoData(numNoData);
+        process.setNumObjectivesPartialData(numPartialData);
+        process.setNumObjectivesPassed(numPassed);
+
+        // set process status metrics
+        process = ComplianceUtils.getProcessStatus(process);
+
+        process.setMetrics("");
         return process;
     }
 }

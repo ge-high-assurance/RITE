@@ -81,7 +81,12 @@ public class DataProcessor {
     private List<String[]> allSystemDesignDescription;
     
     private List<String[]> allDOCUMENT;
+    
+    private List<String[]> allRequirementCompleteCorrectReview;
 
+    private List<String[]> allRequirementTraceableReview;
+
+    
     // The connections between the elements (TODO subset, add for more supporting objectives)
     // NOTE: The connections should be just one-level to enable automatic query synthesis in future
     // NOTE: The ordering here is a guide for how they should be created when creating objects
@@ -95,6 +100,10 @@ public class DataProcessor {
 
     private List<String[]> allItemRequirementWIthSystemRequirement;
 
+    private List<String[]> allRequirementWithCompleteCorrectReview;
+
+    private List<String[]> allRequirementWithTraceableReview;
+    
     // --- PROCESSED DATA OBJECTS
     // The configuration
     private Configuration config = new Configuration();
@@ -199,6 +208,9 @@ public class DataProcessor {
                                 .get(existingProcessIndx)
                                 .getObjectives()
                                 .add(objectives.get(existingObjectiveIndx));
+                        
+                        System.out.println("Added objective "+ objectives.get(existingObjectiveIndx).getId() + " to process " + row[procIdCol]);
+                        
                     }
                 }
             }
@@ -434,6 +446,28 @@ public class DataProcessor {
             System.out.println("Created Object for " + newEvidenceObj.getId());
         }
 
+        
+        System.out.println(
+                "---- Creating Objects for RequirementCompleteCorrectReview ----"); // TODO: Add description field
+        for (String[] row : allRequirementCompleteCorrectReview) {
+            Evidence newEvidenceObj = new Evidence();
+            newEvidenceObj.setId(row[0]);
+            newEvidenceObj.setType("Review");
+            Artifacts.getRequirementCompleteCorrectReviewObjs().add(newEvidenceObj);
+            System.out.println("Created Object for " + newEvidenceObj.getId());
+        }
+
+        System.out.println(
+                "---- Creating Objects for RequirementTraceableReview ----"); // TODO: Add description field
+        for (String[] row : allRequirementTraceableReview) {
+            Evidence newEvidenceObj = new Evidence();
+            newEvidenceObj.setId(row[0]);
+            newEvidenceObj.setType("Review");
+            Artifacts.getRequirementTraceableReviewObjs().add(newEvidenceObj);
+            System.out.println("Created Object for " + newEvidenceObj.getId());
+        }
+
+        
         // ---- create the connections
 
         // get the header line for allInterfaceWithInputOutput csv file
@@ -624,8 +658,78 @@ public class DataProcessor {
         }
 
         System.out.println("created allItemRequirementwithSystemRequreiment");
+
+    
+    // get the header line for allRequirementCompleteCorrectReview csv file
+    String[] allRequirementCompleteCorrectReviewCols =
+            CSVUtil.getColumnInfo(
+                    RackQueryUtils.createCsvFilePath(
+                            DataProcessorUtils.getVarCSVID(
+                                    "allRequirementCompleteCorrectReview", config),
+                            rackDir));
+    int reqIdCol =
+            CustomStringUtils.getCSVColumnIndex(
+            		allRequirementCompleteCorrectReviewCols, config.getItemReq() + "_id"); //TODO: change to all requirements
+    int completeCorrectReviewIdCol =
+            CustomStringUtils.getCSVColumnIndex(
+            		allRequirementCompleteCorrectReviewCols, config.getRequirementCompleteCorrectReview() + "_id");
+
+    for (String[] row : allRequirementCompleteCorrectReview) {
+        if ((row[reqIdCol] != null)) {
+            // find index of the object in the appropriate evidence list
+            int indx =
+                    EvidenceUtils.getEvidenceObjIndxById(
+                            Artifacts.getItemReqObjs(), row[reqIdCol]);
+            // add the data to the object
+            if ((row[completeCorrectReviewIdCol] != null)) {
+                Artifacts.getItemReqObjs()
+                        .get(indx)
+                        .getHasReviews()
+                        .add(
+                                EvidenceUtils.getEvidenceObjById(
+                                        Artifacts.getSysReqObjs(), row[completeCorrectReviewIdCol]));
+            }
+        }
     }
 
+    	System.out.println("created allRequirementCompleteCorrectReview");
+
+    
+    // get the header line for allRequirementCompleteCorrectReview csv file
+    String[] allRequirementTraceableReviewCols =
+            CSVUtil.getColumnInfo(
+                    RackQueryUtils.createCsvFilePath(
+                            DataProcessorUtils.getVarCSVID(
+                                    "allRequirementTraceableReview", config),
+                            rackDir));
+    int reqIdCol2 =
+            CustomStringUtils.getCSVColumnIndex(
+            		allRequirementTraceableReviewCols, config.getItemReq() + "_id"); //TODO: change to all requirements
+    int traceableReviewIdCol =
+            CustomStringUtils.getCSVColumnIndex(
+            		allRequirementTraceableReviewCols, config.getRequirementCompleteCorrectReview() + "_id");
+
+    for (String[] row : allRequirementTraceableReview) {
+        if ((row[reqIdCol2] != null)) {
+            // find index of the object in the appropriate evidence list
+            int indx =
+                    EvidenceUtils.getEvidenceObjIndxById(
+                            Artifacts.getItemReqObjs(), row[reqIdCol2]);
+            // add the data to the object
+            if ((row[traceableReviewIdCol] != null)) {
+                Artifacts.getItemReqObjs()
+                        .get(indx)
+                        .getHasReviews()
+                        .add(
+                                EvidenceUtils.getEvidenceObjById(
+                                        Artifacts.getSysReqObjs(), row[traceableReviewIdCol]));
+            }
+        }
+    }
+
+    	System.out.println("created allRequirementTraceableReview");
+    }
+    
     /**
      * function to use the configReader to read the config and the read the data from the .csv files
      * (TODO subset, add for more supporting objectives)
@@ -731,6 +835,33 @@ public class DataProcessor {
                                         "allItemRequirementWIthSystemRequirement", config),
                                 rackDir));
 
+        allRequirementCompleteCorrectReview =
+                CSVUtil.getRows(
+                        RackQueryUtils.createCsvFilePath(
+                                DataProcessorUtils.getVarCSVID(
+                                        "allRequirementCompleteCorrectReview", config),
+                                rackDir));
+
+        allRequirementTraceableReview =
+                CSVUtil.getRows(
+                        RackQueryUtils.createCsvFilePath(
+                                DataProcessorUtils.getVarCSVID(
+                                        "allRequirementTraceableReview", config),
+                                rackDir));
+
+        allRequirementWithCompleteCorrectReview =
+                CSVUtil.getRows(
+                        RackQueryUtils.createCsvFilePath(
+                                DataProcessorUtils.getVarCSVID(
+                                        "allRequirementWithCompleteCorrectReview", config),
+                                rackDir));
+
+        allRequirementWithTraceableReview =
+                CSVUtil.getRows(
+                        RackQueryUtils.createCsvFilePath(
+                                DataProcessorUtils.getVarCSVID(
+                                        "allRequirementWithTraceableReview", config),
+                                rackDir));
         allDOCUMENT =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath("DOCUMENT",
