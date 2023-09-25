@@ -1,0 +1,186 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:provs="http://arcos.rack/PROV-S#"
+    xmlns:builtinfunctions="http://sadl.org/builtinfunctions#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:sadlimplicitmodel="http://sadl.org/sadlimplicitmodel#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:sadlbasemodel="http://sadl.org/sadlbasemodel#"
+    xmlns:tst="http://arcos.rack/TESTING#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+  <owl:Ontology rdf:about="http://arcos.rack/TESTING">
+    <owl:imports rdf:resource="http://arcos.rack/PROV-S"/>
+    <owl:imports rdf:resource="http://sadl.org/builtinfunctions"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlimplicitmodel"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlbasemodel"/>
+    <rdfs:comment xml:lang="en">This ontology was created from a SADL file 'TESTING.sadl' and should not be directly edited.</rdfs:comment>
+  </owl:Ontology>
+  <owl:Class rdf:about="http://arcos.rack/TESTING#TEST_DEVELOPMENT">
+    <rdfs:comment xml:lang="en">ACTIVITY of creating a TEST to participate in the evaluation of a requirement</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#ACTIVITY"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://arcos.rack/TESTING#TEST_PROCEDURE">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom>
+          <owl:Class rdf:about="http://arcos.rack/TESTING#TEST_STEP"/>
+        </owl:allValuesFrom>
+        <owl:onProperty rdf:resource="http://arcos.rack/PROV-S#content"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">A TEST_PROCEDURE is the TEST_STEPs that perform TESTs. </rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#COLLECTION"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://arcos.rack/TESTING#TEST">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:resource="http://arcos.rack/TESTING#TEST_DEVELOPMENT"/>
+        <owl:onProperty rdf:resource="http://arcos.rack/PROV-S#wasGeneratedBy"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">Description of a single test</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#ENTITY"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://arcos.rack/TESTING#TEST_STATUS">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:oneOf rdf:parseType="Collection">
+          <tst:TEST_STATUS rdf:about="http://arcos.rack/TESTING#Passed">
+            <provs:identifier>Passed</provs:identifier>
+          </tst:TEST_STATUS>
+          <tst:TEST_STATUS rdf:about="http://arcos.rack/TESTING#Failed">
+            <provs:identifier>Failed</provs:identifier>
+          </tst:TEST_STATUS>
+          <tst:TEST_STATUS rdf:about="http://arcos.rack/TESTING#Indeterminate">
+            <provs:identifier>Indeterminate</provs:identifier>
+          </tst:TEST_STATUS>
+        </owl:oneOf>
+      </owl:Class>
+    </owl:equivalentClass>
+    <rdfs:comment xml:lang="en">The high-level outcome of a TEST_RESULT</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#THING"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://arcos.rack/TESTING#TEST_STEP">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+        >1</owl:maxCardinality>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="http://arcos.rack/TESTING#nextStep"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:resource="http://arcos.rack/TESTING#TEST"/>
+        <owl:onProperty rdf:resource="http://arcos.rack/PROV-S#content"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">A TEST_STEP is a collection of TESTs that are performed in a single execution</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#COLLECTION"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://arcos.rack/TESTING#TEST_RESULT">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom>
+          <owl:Class rdf:about="http://arcos.rack/TESTING#TEST_EXECUTION"/>
+        </owl:allValuesFrom>
+        <owl:onProperty rdf:resource="http://arcos.rack/PROV-S#wasGeneratedBy"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onClass rdf:resource="http://arcos.rack/TESTING#TEST_STATUS"/>
+        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+        >1</owl:qualifiedCardinality>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="http://arcos.rack/TESTING#result"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">Result corresponding to one execution of one TEST</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#ENTITY"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://arcos.rack/TESTING#TEST_RECORD">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onClass rdf:resource="http://arcos.rack/TESTING#TEST_STEP"/>
+        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+        >1</owl:qualifiedCardinality>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="http://arcos.rack/TESTING#logs"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+        >1</owl:maxCardinality>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="http://arcos.rack/TESTING#nextRecord"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:resource="http://arcos.rack/TESTING#TEST_RESULT"/>
+        <owl:onProperty rdf:resource="http://arcos.rack/PROV-S#content"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">a TEST_RECORD is a collection of TEST_RESULTs associated with a TEST_STEP</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#COLLECTION"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://arcos.rack/TESTING#TEST_EXECUTION">
+    <rdfs:comment xml:lang="en">ACTIVITY of performing a TEST and record its corresponding TEST_RESULT</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#ACTIVITY"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://arcos.rack/TESTING#TEST_LOG">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:resource="http://arcos.rack/TESTING#TEST_RECORD"/>
+        <owl:onProperty rdf:resource="http://arcos.rack/PROV-S#content"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">A TEST_LOG is the TEST_RESULTs from executing a TEST_PROCEDURE</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#COLLECTION"/>
+  </owl:Class>
+  <owl:ObjectProperty rdf:about="http://arcos.rack/TESTING#verifies">
+    <rdfs:subPropertyOf rdf:resource="http://arcos.rack/PROV-S#wasImpactedBy"/>
+    <rdfs:comment xml:lang="en">ENTITY(s) (e.g. REQUIREMENT) that this test verifies</rdfs:comment>
+    <rdfs:range rdf:resource="http://arcos.rack/PROV-S#ENTITY"/>
+    <rdfs:domain rdf:resource="http://arcos.rack/TESTING#TEST"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://arcos.rack/TESTING#logs">
+    <rdfs:subPropertyOf rdf:resource="http://arcos.rack/PROV-S#wasImpactedBy"/>
+    <rdfs:comment xml:lang="en">TEST_STEP for which the TEST_RECORD is captured</rdfs:comment>
+    <rdfs:range rdf:resource="http://arcos.rack/TESTING#TEST_STEP"/>
+    <rdfs:domain rdf:resource="http://arcos.rack/TESTING#TEST_RECORD"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://arcos.rack/TESTING#confirms">
+    <rdfs:subPropertyOf rdf:resource="http://arcos.rack/PROV-S#wasImpactedBy"/>
+    <rdfs:comment xml:lang="en">Parent test(s) of this test result</rdfs:comment>
+    <rdfs:range rdf:resource="http://arcos.rack/TESTING#TEST"/>
+    <rdfs:domain rdf:resource="http://arcos.rack/TESTING#TEST_RESULT"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://arcos.rack/TESTING#nextStep">
+    <rdfs:comment xml:lang="en">The next TEST_STEP in a sequence</rdfs:comment>
+    <rdfs:range rdf:resource="http://arcos.rack/TESTING#TEST_STEP"/>
+    <rdfs:domain rdf:resource="http://arcos.rack/TESTING#TEST_STEP"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://arcos.rack/TESTING#nextRecord">
+    <rdfs:comment xml:lang="en">The next TEST_RECORD that is the next in a sequence </rdfs:comment>
+    <rdfs:range rdf:resource="http://arcos.rack/TESTING#TEST_RECORD"/>
+    <rdfs:domain rdf:resource="http://arcos.rack/TESTING#TEST_RECORD"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://arcos.rack/TESTING#testProcedure">
+    <rdfs:subPropertyOf rdf:resource="http://arcos.rack/PROV-S#used"/>
+    <rdfs:comment xml:lang="en">TEST_PROCEDURE that was executed.</rdfs:comment>
+    <rdfs:range rdf:resource="http://arcos.rack/TESTING#TEST_PROCEDURE"/>
+    <rdfs:domain rdf:resource="http://arcos.rack/TESTING#TEST_EXECUTION"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://arcos.rack/TESTING#result">
+    <rdfs:comment xml:lang="en">Pass/Failed/Indeterminate status resulting from a TEST_EXECUTION</rdfs:comment>
+    <rdfs:range rdf:resource="http://arcos.rack/TESTING#TEST_STATUS"/>
+    <rdfs:domain rdf:resource="http://arcos.rack/TESTING#TEST_RESULT"/>
+  </owl:ObjectProperty>
+</rdf:RDF>
