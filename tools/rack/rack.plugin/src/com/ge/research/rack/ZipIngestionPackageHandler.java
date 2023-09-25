@@ -31,54 +31,14 @@
  */
 package com.ge.research.rack;
 
-import com.ge.research.rack.utils.IngestionTemplateUtil;
-import com.ge.research.rack.utils.RackConsole;
-import com.ge.research.rack.views.OntologyTreeView;
-
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.handlers.HandlerUtil;
 
-public class RefreshHandler extends AbstractHandler {
-
-    private static final String ONTOLOGY_ERROR = "Unable to refresh Ontology View";
-    private static final String CSV_TEMPLATE_ERROR = "Unable to get CSV templates";
+public class ZipIngestionPackageHandler extends UploadIngestionPackageHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-
-        // hide and show ontology view, also refresh nodegroups views
-        final IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
-
-        // refresh ontology view
-        final IViewPart view = window.getActivePage().findView(OntologyTreeView.ID);
-
-        window.getActivePage().hideView(view);
-
-        try {
-            window.getActivePage().showView(OntologyTreeView.ID);
-        } catch (final PartInitException e1) {
-            RackConsole.getConsole().error(ONTOLOGY_ERROR);
-        }
-
-        // refresh nodegroups view
-        refreshNodegroups();
-        HandlerUtils.showNodegroupTable(window);
-        RackConsole.getConsole().print("Refresh done");
-        return null;
+    	return super.execute(event, false, true);
     }
 
-    public static void refreshNodegroups() {
-        BuildIngestionNodegroupsHandler.bookkeepNodegroups();
-        HandlerUtils.loadNodegroups();
-        try {
-            IngestionTemplateUtil.buildCsvTemplates();
-        } catch (Exception e) {
-            RackConsole.getConsole().error(CSV_TEMPLATE_ERROR);
-        }
-    }
 }
