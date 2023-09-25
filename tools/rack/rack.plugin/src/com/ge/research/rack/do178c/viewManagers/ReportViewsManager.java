@@ -34,6 +34,7 @@ package com.ge.research.rack.do178c.viewManagers;
 import com.ge.research.rack.do178c.structures.PsacNode;
 
 import javafx.application.Application;
+import javafx.application.HostServices;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -68,6 +69,9 @@ public class ReportViewsManager extends Application {
 
     // stores the current font size at any time
     public static double currentFontSize;
+
+    // This will be used for opening external browser where required
+    public static HostServices hostServices;
 
     /**
      * function to increase the global fontsize if tre is passed, else decrease it
@@ -172,6 +176,9 @@ public class ReportViewsManager extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
+        // sets the hostServices (only works here, no idea why)
+        hostServices = getHostServices();
 
         try {
 

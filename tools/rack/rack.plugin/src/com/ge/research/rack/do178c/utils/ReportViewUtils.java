@@ -38,6 +38,7 @@ import com.ge.research.rack.do178c.structures.PsacNode;
 import com.ge.research.rack.do178c.structures.Requirement;
 import com.ge.research.rack.do178c.structures.ReviewLog;
 import com.ge.research.rack.do178c.structures.Test;
+import com.ge.research.rack.do178c.viewManagers.ReportViewsManager;
 
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -231,5 +232,20 @@ public class ReportViewUtils {
                 FileLocator.find(bundle, new Path(GE_LOGO_IMG_PATH), null).toURI().getPath();
 
         return new ImageView(imgUrl);
+    }
+
+    /**
+     * Given a file address, opens it in the default user specified app on the platform
+     *
+     * @param url
+     */
+    public static void openUrlInDefaultApp(String url) {
+        System.out.println("Trying to open URL in default app!");
+        try {
+            ReportViewsManager.hostServices.showDocument(url);
+        } catch (Exception e) {
+            System.out.println("ERROR: Failed to open URL in default app!");
+            e.printStackTrace();
+        }
     }
 }

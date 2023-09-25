@@ -107,13 +107,14 @@ public class DataProcessorUtils {
             case "allRequirementTraceableReview":
                 id = config.getRequirementTraceableReview();
                 break;
-            case "allRequirementWithCompleteCorrectReview": //TODO: Itemrqe needs to be turned to Generic rquirements
+            case "allRequirementWithCompleteCorrectReview": // TODO: Itemrqe needs to be turned to
+                // Generic rquirements
                 id = config.getItemReq() + "_with_" + config.getRequirementCompleteCorrectReview();
                 break;
             case "allRequirementWithTraceableReview":
-                id =  config.getItemReq() + "_with_" + config.getRequirementTraceableReview();
+                id = config.getItemReq() + "_with_" + config.getRequirementTraceableReview();
                 break;
-                
+
             default:
                 id = "";
                 break;

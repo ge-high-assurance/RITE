@@ -69,7 +69,7 @@ public class Arp4754ViewsManager extends Application {
 
     // stores the current font size at any time
     public static double currentFontSize;
-    
+
     // This will be used for opening external browser where required
     public static HostServices hostServices;
 
@@ -166,7 +166,7 @@ public class Arp4754ViewsManager extends Application {
 
         // sets the hostServices (only works here, no idea why)
         hostServices = getHostServices();
-    	
+
         try {
 
             // Set stage as the new stage sent by caller

@@ -196,9 +196,9 @@ public class ProcessViewHandler {
             // sort the objective list
             List<DAPlan.Objective> allObjectiveObjs =
                     DAPlanUtils.sortObjectiveList(currentProcessObject.getObjectives());
-//            List<DAPlan.Objective> allObjectiveObjs = currentProcessObject.getObjectives();
+            //            List<DAPlan.Objective> allObjectiveObjs =
+            // currentProcessObject.getObjectives();
 
-        	
             for (DAPlan.Objective objObj : allObjectiveObjs) {
 
                 Label objLabel = getObjectiveLabel(objObj);

@@ -310,18 +310,17 @@ public class Evidence {
         this.sourceDocument = sourceDocument;
     }
 
-	/**
-	 * @return the uRL
-	 */
-	public String getURL() {
-		return URL;
-	}
+    /**
+     * @return the uRL
+     */
+    public String getURL() {
+        return URL;
+    }
 
-	/**
-	 * @param uRL the uRL to set
-	 */
-	public void setURL(String uRL) {
-		URL = uRL;
-	}
-    
+    /**
+     * @param uRL the uRL to set
+     */
+    public void setURL(String uRL) {
+        URL = uRL;
+    }
 }

@@ -50,7 +50,7 @@ public class Configuration {
     private String systemDesignDescription = "";
     private String requirementCompleteCorrectReview = "";
     private String requirementTraceableReview = "";
-    
+
     /**
      * @return the derivedItemReq
      */
@@ -159,42 +159,40 @@ public class Configuration {
     public void setSystem(String system) {
         this.system = system;
     }
-	/**
-	 * @return the systemDesignDescription
-	 */
-	public String getSystemDesignDescription() {
-		return systemDesignDescription;
-	}
-	/**
-	 * @param systemDesignDescription the systemDesignDescription to set
-	 */
-	public void setSystemDesignDescription(String systemDesignDescription) {
-		this.systemDesignDescription = systemDesignDescription;
-	}
-	/**
-	 * @return the requirementCompleteCorrectReview
-	 */
-	public String getRequirementCompleteCorrectReview() {
-		return requirementCompleteCorrectReview;
-	}
-	/**
-	 * @param requirementCompleteCorrectReview the requirementCompleteCorrectReview to set
-	 */
-	public void setRequirementCompleteCorrectReview(String requirementCompleteCorrectReview) {
-		this.requirementCompleteCorrectReview = requirementCompleteCorrectReview;
-	}
-	/**
-	 * @return the requirementTraceableReview
-	 */
-	public String getRequirementTraceableReview() {
-		return requirementTraceableReview;
-	}
-	/**
-	 * @param requirementTraceableReview the requirementTraceableReview to set
-	 */
-	public void setRequirementTraceableReview(String requirementTraceableReview) {
-		this.requirementTraceableReview = requirementTraceableReview;
-	}
-    
-    
+    /**
+     * @return the systemDesignDescription
+     */
+    public String getSystemDesignDescription() {
+        return systemDesignDescription;
+    }
+    /**
+     * @param systemDesignDescription the systemDesignDescription to set
+     */
+    public void setSystemDesignDescription(String systemDesignDescription) {
+        this.systemDesignDescription = systemDesignDescription;
+    }
+    /**
+     * @return the requirementCompleteCorrectReview
+     */
+    public String getRequirementCompleteCorrectReview() {
+        return requirementCompleteCorrectReview;
+    }
+    /**
+     * @param requirementCompleteCorrectReview the requirementCompleteCorrectReview to set
+     */
+    public void setRequirementCompleteCorrectReview(String requirementCompleteCorrectReview) {
+        this.requirementCompleteCorrectReview = requirementCompleteCorrectReview;
+    }
+    /**
+     * @return the requirementTraceableReview
+     */
+    public String getRequirementTraceableReview() {
+        return requirementTraceableReview;
+    }
+    /**
+     * @param requirementTraceableReview the requirementTraceableReview to set
+     */
+    public void setRequirementTraceableReview(String requirementTraceableReview) {
+        this.requirementTraceableReview = requirementTraceableReview;
+    }
 }

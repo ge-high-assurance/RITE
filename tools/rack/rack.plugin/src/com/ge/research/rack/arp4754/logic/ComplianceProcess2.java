@@ -172,22 +172,22 @@ public class ComplianceProcess2 {
 
     private static DAPlan.Objective computeObjective5(DAPlan.Objective objective) {
 
-    	if(objective.getOutputs().getSystemDesignDescriptionObjs()!=null && objective.getOutputs().getSystemDesignDescriptionObjs().size()>0) {
-    		for(Evidence sysDesDesc : objective.getOutputs().getSystemDesignDescriptionObjs()) {
-    			System.out.println(sysDesDesc.getId() + " " + sysDesDesc.getURL());
-    		}
+        if (objective.getOutputs().getSystemDesignDescriptionObjs() != null
+                && objective.getOutputs().getSystemDesignDescriptionObjs().size() > 0) {
+            for (Evidence sysDesDesc : objective.getOutputs().getSystemDesignDescriptionObjs()) {
+                System.out.println(sysDesDesc.getId() + " " + sysDesDesc.getURL());
+            }
             objective.setNoData(false);
             objective.setPartialData(false);
             objective.setPassed(true);
             objective.setComplianceStatus(100.00);
-    	}
-    	else {
+        } else {
             objective.setNoData(true);
             objective.setPartialData(false);
             objective.setPassed(false);
-    	}
-    	
-    	objective.setMetrics("");
+        }
+
+        objective.setMetrics("");
         return objective;
     }
 

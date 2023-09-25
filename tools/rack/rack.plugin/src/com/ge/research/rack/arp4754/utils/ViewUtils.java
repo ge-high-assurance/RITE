@@ -34,7 +34,6 @@ package com.ge.research.rack.arp4754.utils;
 import com.ge.research.rack.arp4754.structures.DAPlan;
 import com.ge.research.rack.arp4754.structures.Evidence;
 import com.ge.research.rack.arp4754.viewManagers.Arp4754ViewsManager;
-import com.ge.research.rack.autoGsn.viewManagers.AutoGsnViewsManager;
 
 import javafx.scene.paint.Color;
 
@@ -147,7 +146,7 @@ public class ViewUtils {
                 reviewIds.size(),
                 analysisIds.size());
     }
-    
+
     /**
      * Given a file address, opens it in the default user specified app on the platform
      *

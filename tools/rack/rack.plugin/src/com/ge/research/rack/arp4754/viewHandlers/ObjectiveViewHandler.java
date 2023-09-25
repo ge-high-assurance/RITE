@@ -37,7 +37,6 @@ import com.ge.research.rack.arp4754.structures.Evidence;
 import com.ge.research.rack.arp4754.utils.DAPlanUtils;
 import com.ge.research.rack.arp4754.utils.ViewUtils;
 import com.ge.research.rack.arp4754.viewManagers.Arp4754ViewsManager;
-import com.ge.research.rack.autoGsn.utils.AutoGsnGuiUtils;
 import com.ge.research.rack.do178c.utils.ReportViewUtils;
 
 import javafx.beans.value.ChangeListener;
@@ -323,42 +322,43 @@ public class ObjectiveViewHandler {
     }
     // -------------------------------------------------------------------
 
-    public void populateListDocument(){
-        // clear the list 
+    public void populateListDocument() {
+        // clear the list
         docList.getItems().clear();
-    	
-        if(currentObjObject.getId().equalsIgnoreCase("objective-2-5")) {
-            for(Evidence sysDesDesc : currentObjObject.getOutputs().getSystemDesignDescriptionObjs()) {
+
+        if (currentObjObject.getId().equalsIgnoreCase("objective-2-5")) {
+            for (Evidence sysDesDesc :
+                    currentObjObject.getOutputs().getSystemDesignDescriptionObjs()) {
                 Label evidenceLabel = new Label();
 
                 String evidenceText = sysDesDesc.getId() + " | " + sysDesDesc.getURL();
                 evidenceLabel.setText(evidenceText);
-               
+
                 docList.getItems().add(evidenceLabel);
             }
         }
-        
-        if(currentObjObject.getId().equalsIgnoreCase("objective-1-1")) {
-    		for(Evidence document : currentObjObject.getOutputs().getDocumentObjs()) {
-    			System.out.println(document.getId());
-    			if(document.getId().equalsIgnoreCase("CertificationPlan")
-    					|| document.getId().equalsIgnoreCase("SafetyProgramPlan")
-    					|| document.getId().equalsIgnoreCase("DevelopmentPlan")
-    					|| document.getId().equalsIgnoreCase("ValidationPlan")
-    					|| document.getId().equalsIgnoreCase("VerificationPlan")
-    					|| document.getId().equalsIgnoreCase("ConfigurationManagementPlan")
-    					|| document.getId().equalsIgnoreCase("ProcessAssurancePlan")) {
+
+        if (currentObjObject.getId().equalsIgnoreCase("objective-1-1")) {
+            for (Evidence document : currentObjObject.getOutputs().getDocumentObjs()) {
+                System.out.println(document.getId());
+                if (document.getId().equalsIgnoreCase("CertificationPlan")
+                        || document.getId().equalsIgnoreCase("SafetyProgramPlan")
+                        || document.getId().equalsIgnoreCase("DevelopmentPlan")
+                        || document.getId().equalsIgnoreCase("ValidationPlan")
+                        || document.getId().equalsIgnoreCase("VerificationPlan")
+                        || document.getId().equalsIgnoreCase("ConfigurationManagementPlan")
+                        || document.getId().equalsIgnoreCase("ProcessAssurancePlan")) {
                     Label evidenceLabel = new Label();
 
                     String evidenceText = document.getId();
                     evidenceLabel.setText(evidenceText);
-                   
-                    docList.getItems().add(evidenceLabel);    				
-    			}
-    		}
+
+                    docList.getItems().add(evidenceLabel);
+                }
+            }
         }
     }
-    
+
     public void populateListInterface(String filterKey, String searchKey) {
 
         // clear the list and chart
@@ -553,10 +553,10 @@ public class ObjectiveViewHandler {
                 }
             }
         }
-        
+
         // TODO: clumped these two toegther since we have no reviews
         if (currentObjObject.getId().equalsIgnoreCase("objective-4-1")
-        		|| currentObjObject.getId().equalsIgnoreCase("objective-4-4")) {
+                || currentObjObject.getId().equalsIgnoreCase("objective-4-4")) {
             // TODO: objective-based setting of children
             // store children releationship for this objective
             requirementChildrenRelation = "Reviews";
@@ -566,7 +566,12 @@ public class ObjectiveViewHandler {
                         && ((searchKey == null) || (itemReq.getId().contains(searchKey)))) {
                     Label evidenceLabel = new Label();
 
-                    String evidenceText = itemReq.getId() + " (" + itemReq.getDescription() + ")" + " | Reviews: ";
+                    String evidenceText =
+                            itemReq.getId()
+                                    + " ("
+                                    + itemReq.getDescription()
+                                    + ")"
+                                    + " | Reviews: ";
 
                     for (Evidence system : itemReq.getHasReviews()) {
                         evidenceText = evidenceText + system.getId() + ", ";
@@ -613,8 +618,9 @@ public class ObjectiveViewHandler {
                 populateListDocument();
             }
         }
-        
-        if (currentObjObject.getId().equalsIgnoreCase("objective-1-1") && !currentObjObject.isNoData()) {
+
+        if (currentObjObject.getId().equalsIgnoreCase("objective-1-1")
+                && !currentObjObject.isNoData()) {
             tabDocument.setDisable(false);
             populateListDocument();
         }
@@ -893,7 +899,6 @@ public class ObjectiveViewHandler {
         }
     }
 
-    
     @FXML
     private void comboReqAction(ActionEvent event) throws Exception {
 

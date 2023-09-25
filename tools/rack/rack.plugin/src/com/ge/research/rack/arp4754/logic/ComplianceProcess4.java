@@ -33,7 +33,6 @@ package com.ge.research.rack.arp4754.logic;
 
 import com.ge.research.rack.arp4754.structures.Category;
 import com.ge.research.rack.arp4754.structures.DAPlan;
-import com.ge.research.rack.arp4754.structures.Evidence;
 import com.ge.research.rack.arp4754.structures.DAPlan.Objective;
 import com.ge.research.rack.arp4754.utils.ComplianceUtils;
 
@@ -41,81 +40,60 @@ import com.ge.research.rack.arp4754.utils.ComplianceUtils;
  * @author Saswata Paul
  */
 public class ComplianceProcess4 {
-	
-	
-	
+
     private static DAPlan.Objective computeObjective1(DAPlan.Objective objective) {
 
-    	// TODO: write logic
-    	  
+        // TODO: write logic
+
         objective.setNoData(false);
         objective.setPartialData(true);
         objective.setPassed(false);
 
-        
         // create and add appropriate graphdata (//TODO: add actual code, hardcoded now)
-        Category reqWithNoReviews = new Category("No Review", objective.getOutputs().getItemReqObjs().size());
+        Category reqWithNoReviews =
+                new Category("No Review", objective.getOutputs().getItemReqObjs().size());
         Category reqWithPassedReviews = new Category("Passed Review", 0);
-        Category reqWithFailedReviews =
-                new Category(
-                        "Failed Review",0);
+        Category reqWithFailedReviews = new Category("Failed Review", 0);
         objective.getGraphs().getItemReqGraphData().getBuckets().add(reqWithNoReviews);
         objective.getGraphs().getItemReqGraphData().getBuckets().add(reqWithPassedReviews);
         objective.getGraphs().getItemReqGraphData().getBuckets().add(reqWithFailedReviews);
-    	
-    	objective.setMetrics("");
-        return objective;
 
-    	
-    }    
+        objective.setMetrics("");
+        return objective;
+    }
 
     private static DAPlan.Objective computeObjective2(DAPlan.Objective objective) {
         return objective;
+    }
 
-    	
-    }    
-
-    
     private static DAPlan.Objective computeObjective3(DAPlan.Objective objective) {
         return objective;
+    }
 
-    	
-    }    
-
-    
     private static DAPlan.Objective computeObjective4(DAPlan.Objective objective) {
 
-  
-    	// TODO: write logic
-    	
-    	
+        // TODO: write logic
+
         objective.setNoData(false);
         objective.setPartialData(true);
         objective.setPassed(false);
 
-        
         // create and add appropriate graphdata (//TODO: add actual code, hardcoded now)
-        Category reqWithNoReviews = new Category("No Review", objective.getOutputs().getItemReqObjs().size());
+        Category reqWithNoReviews =
+                new Category("No Review", objective.getOutputs().getItemReqObjs().size());
         Category reqWithPassedReviews = new Category("Passed Review", 0);
-        Category reqWithFailedReviews =
-                new Category(
-                        "Failed Review",0);
+        Category reqWithFailedReviews = new Category("Failed Review", 0);
         objective.getGraphs().getItemReqGraphData().getBuckets().add(reqWithNoReviews);
         objective.getGraphs().getItemReqGraphData().getBuckets().add(reqWithPassedReviews);
         objective.getGraphs().getItemReqGraphData().getBuckets().add(reqWithFailedReviews);
-    	
-    	objective.setMetrics("");
+
+        objective.setMetrics("");
         return objective;
-    	
     }
-    
-    
+
     private static DAPlan.Objective computeObjective6(DAPlan.Objective objective) {
         return objective;
-
-    	
-    }    
-
+    }
 
     /**
      * Computes the compliance status of the DAPlan.process object

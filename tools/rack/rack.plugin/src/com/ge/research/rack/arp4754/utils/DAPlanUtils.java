@@ -138,21 +138,21 @@ public class DAPlanUtils {
 
         return newList;
     }
-    
-    
+
     /**
      * Given Objective-1-2, returns 2
+     *
      * @param objective
      * @return
      */
     public static int getObjectiveNumber(DAPlan.Objective objective) {
-    	
-    	System.out.println("Objective ID to get position from: " + objective.getId());
-    	
+
+        System.out.println("Objective ID to get position from: " + objective.getId());
+
         String[] objIdParts = objective.getId().split("-"); // "Objective-2-2"
-        String objNum = objIdParts[objIdParts.length - 1];    	
-    	
-    	return Integer.parseInt(objNum);
+        String objNum = objIdParts[objIdParts.length - 1];
+
+        return Integer.parseInt(objNum);
     }
 
     /**
@@ -162,44 +162,40 @@ public class DAPlanUtils {
      */
     public static List<DAPlan.Objective> sortObjectiveList(List<DAPlan.Objective> list) {
 
+        // -- approach 1 (assumes continuous objective positions)
+        //        List<DAPlan.Objective> newList = new ArrayList<DAPlan.Objective>();
+        //        if (list.size() > 0) {
+        //            for (int i = 0; i < list.size(); i++) {
+        //                for (DAPlan.Objective objective : list) {
+        //                    String[] objIdParts = objective.getId().split("-"); // "Objective-2-2"
+        //                    String objNum = objIdParts[objIdParts.length - 1];
+        //                    if ((Integer.parseInt(objNum) - 1) == i) {
+        //                        newList.add(objective);
+        //
+        //                        System.out.println(objective.getId() + " -> " + i);
+        //                    }
+        //                }
+        //            }
+        //        }
 
-        //-- approach 1 (assumes continuous objective positions)
-//        List<DAPlan.Objective> newList = new ArrayList<DAPlan.Objective>();
-//        if (list.size() > 0) {
-//            for (int i = 0; i < list.size(); i++) {
-//                for (DAPlan.Objective objective : list) {
-//                    String[] objIdParts = objective.getId().split("-"); // "Objective-2-2"
-//                    String objNum = objIdParts[objIdParts.length - 1];
-//                    if ((Integer.parseInt(objNum) - 1) == i) {
-//                        newList.add(objective);
-//
-//                        System.out.println(objective.getId() + " -> " + i);
-//                    }
-//                }
-//            }
-//        }
-        
-        //-- bubblesort
+        // -- bubblesort
         boolean swapped;
         for (int i = 0; i < list.size() - 1; i++) {
             swapped = false;
             for (int j = 0; j < list.size() - i - 1; j++) {
                 int jNum = getObjectiveNumber(list.get(j));
-                int j1Num = getObjectiveNumber(list.get(j+1));
-            	if (jNum > j1Num) {
-            		DAPlan.Objective tempObjective = list.get(j);
-            		list.set(j, list.get(j+1));
-            		list.set(j+1, tempObjective);
+                int j1Num = getObjectiveNumber(list.get(j + 1));
+                if (jNum > j1Num) {
+                    DAPlan.Objective tempObjective = list.get(j);
+                    list.set(j, list.get(j + 1));
+                    list.set(j + 1, tempObjective);
                     swapped = true;
                 }
-            }     
+            }
             // If no two elements were swapped
             // by inner loop, then break
-            if (swapped == false)
-                break;
+            if (swapped == false) break;
         }
-        
-        
 
         return list;
     }

@@ -1458,8 +1458,10 @@ public class ReportObjectiveViewHandlerNew {
             ContextMenu reqListContext = new ContextMenu();
             MenuItem menuItemShowSource = new MenuItem("Show Entity Source");
             MenuItem menuItemShowDescription = new MenuItem("Show Entity Description");
+            MenuItem menuItemGoToSource = new MenuItem("Go to Entity Source");
             reqListContext.getItems().add(menuItemShowSource);
             reqListContext.getItems().add(menuItemShowDescription);
+            reqListContext.getItems().add(menuItemGoToSource);
             reqList.setContextMenu(reqListContext);
             // show source of requirement in reqchildren if right click context selected
             menuItemShowSource.setOnAction(
@@ -1503,6 +1505,13 @@ public class ReportObjectiveViewHandlerNew {
                             }
                         }
                     });
+            menuItemGoToSource.setOnAction(
+                    (rightClickEvent) -> {
+                        // Open URL on browser
+
+                        ReportViewUtils.openUrlInDefaultApp(
+                                "https://github.com/ge-high-assurance/RITE/blob/dasc23DO178C/examples/OEM/DummySource/RequirementData.pdf");
+                    });
 
             // call the function to populate children
             populateReqChildren(selectedReqLine);
@@ -1536,7 +1545,9 @@ public class ReportObjectiveViewHandlerNew {
             // Contextmenu for reqList
             ContextMenu tstListContext = new ContextMenu();
             MenuItem menuItemShowSource = new MenuItem("Show Entity Source");
+            MenuItem menuItemGoToSource = new MenuItem("Go to Entity Source");
             tstListContext.getItems().add(menuItemShowSource);
+            tstListContext.getItems().add(menuItemGoToSource);
             tstList.setContextMenu(tstListContext);
             // show source of requirement in reqchildren if right click context selected
             menuItemShowSource.setOnAction(
@@ -1559,6 +1570,13 @@ public class ReportObjectiveViewHandlerNew {
                                 }
                             }
                         }
+                    });
+            menuItemGoToSource.setOnAction(
+                    (rightClickEvent) -> {
+                        // Open URL on browser
+
+                        ReportViewUtils.openUrlInDefaultApp(
+                                "https://github.com/ge-high-assurance/RITE/blob/dasc23DO178C/examples/OEM/DummySource/TestData.pdf");
                     });
 
             // call the function topopulate children

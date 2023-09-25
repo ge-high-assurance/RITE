@@ -199,34 +199,37 @@ public class DAPlan {
         private List<Evidence> analysisObjs = new ArrayList<Evidence>();
 
         /**
-		 * @return the requirementCompleteCorrectReviewObjs
-		 */
-		public List<Evidence> getRequirementCompleteCorrectReviewObjs() {
-			return requirementCompleteCorrectReviewObjs;
-		}
+         * @return the requirementCompleteCorrectReviewObjs
+         */
+        public List<Evidence> getRequirementCompleteCorrectReviewObjs() {
+            return requirementCompleteCorrectReviewObjs;
+        }
 
-		/**
-		 * @param requirementCompleteCorrectReviewObjs the requirementCompleteCorrectReviewObjs to set
-		 */
-		public void setRequirementCompleteCorrectReviewObjs(List<Evidence> requirementCompleteCorrectReviewObjs) {
-			this.requirementCompleteCorrectReviewObjs = requirementCompleteCorrectReviewObjs;
-		}
+        /**
+         * @param requirementCompleteCorrectReviewObjs the requirementCompleteCorrectReviewObjs to
+         *     set
+         */
+        public void setRequirementCompleteCorrectReviewObjs(
+                List<Evidence> requirementCompleteCorrectReviewObjs) {
+            this.requirementCompleteCorrectReviewObjs = requirementCompleteCorrectReviewObjs;
+        }
 
-		/**
-		 * @return the requirementTraceableReviewObjs
-		 */
-		public List<Evidence> getRequirementTraceableReviewObjs() {
-			return requirementTraceableReviewObjs;
-		}
+        /**
+         * @return the requirementTraceableReviewObjs
+         */
+        public List<Evidence> getRequirementTraceableReviewObjs() {
+            return requirementTraceableReviewObjs;
+        }
 
-		/**
-		 * @param requirementTraceableReviewObjs the requirementTraceableReviewObjs to set
-		 */
-		public void setRequirementTraceableReviewObjs(List<Evidence> requirementTraceableReviewObjs) {
-			this.requirementTraceableReviewObjs = requirementTraceableReviewObjs;
-		}
+        /**
+         * @param requirementTraceableReviewObjs the requirementTraceableReviewObjs to set
+         */
+        public void setRequirementTraceableReviewObjs(
+                List<Evidence> requirementTraceableReviewObjs) {
+            this.requirementTraceableReviewObjs = requirementTraceableReviewObjs;
+        }
 
-		/**
+        /**
          * @return the documentObjs
          */
         public List<Evidence> getDocumentObjs() {
@@ -422,20 +425,19 @@ public class DAPlan {
             this.analysisObjs = analysisObjs;
         }
 
-		/**
-		 * @return the systemDesignDescriptionObjs
-		 */
-		public List<Evidence> getSystemDesignDescriptionObjs() {
-			return systemDesignDescriptionObjs;
-		}
+        /**
+         * @return the systemDesignDescriptionObjs
+         */
+        public List<Evidence> getSystemDesignDescriptionObjs() {
+            return systemDesignDescriptionObjs;
+        }
 
-		/**
-		 * @param systemDesignDescriptionObjs the systemDesignDescriptionObjs to set
-		 */
-		public void setSystemDesignDescriptionObjs(List<Evidence> systemDesignDescriptionObjs) {
-			this.systemDesignDescriptionObjs = systemDesignDescriptionObjs;
-		}
-        
+        /**
+         * @param systemDesignDescriptionObjs the systemDesignDescriptionObjs to set
+         */
+        public void setSystemDesignDescriptionObjs(List<Evidence> systemDesignDescriptionObjs) {
+            this.systemDesignDescriptionObjs = systemDesignDescriptionObjs;
+        }
     }
 
     /**
