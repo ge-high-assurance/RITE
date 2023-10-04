@@ -63,7 +63,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <!-- For multiple dependencies which use the same version -->
-    <version.javafx>20.0.2</version.javafx>
+    <version.javafx>21</version.javafx>
     <version.rack>${project.version}</version.rack>
     <version.surefire>3.1.2</version.surefire>
     <version.tycho>3.0.5</version.tycho>
@@ -356,7 +356,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-enforcer-plugin</artifactId>
-          <version>3.4.0</version>
+          <version>3.4.1</version>
           <configuration>
             <rules>
               <requireMavenVersion>
@@ -394,7 +394,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.5.0</version>
+          <version>3.6.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
