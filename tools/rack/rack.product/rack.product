@@ -29,8 +29,17 @@
       startupMessageRect="7,252,445,20"
       startupForegroundColor="000000" />
    <launcher name="RITE">
+      <linux icon="/rack.product/RITE-32.XPM"/>
+      <macosx icon="/rack.product/RITE.icns"/>
       <win useIco="false">
-         <bmp/>
+         <bmp
+            winSmallHigh="/rack.product/RITE-16.bmp"
+            winSmallLow="/rack.product/RITE8-16.bmp"
+            winMediumHigh="/rack.product/RITE-32.bmp"
+            winMediumLow="/rack.product/RITE8-32.bmp"
+            winLargeHigh="/rack.product/RITE-48.bmp"
+            winLargeLow="/rack.product/RITE8-48.bmp"
+            winExtraLargeHigh="/rack.product/RITE-256.bmp"/>
       </win>
    </launcher>
 
