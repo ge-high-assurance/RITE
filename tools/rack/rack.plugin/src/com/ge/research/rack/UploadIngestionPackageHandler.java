@@ -82,7 +82,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
     private static final String UPLOAD_QUEUED = "Ingestion package %s queued";
     private static final String UPLOAD_FAILED = "Ingestion package %s upload failed";
     private static final String TMP_PCKG_FILE_PREFIX = "rack-ingestion-";
-    		
+
     private static final String NO_SELECTED_PROJECT =
             "Selected resources(s) are not valid ingestion package project(s)";
 
@@ -90,7 +90,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
             "The selected item is not a valid ingestion package project";
 
     private static final String GENERATING_PROJECT = "Compressing ingestion package: %s";
-    //private static final String GENERATED_PROJECT = "Compressed ingestion package: %s";
+    // private static final String GENERATED_PROJECT = "Compressed ingestion package: %s";
 
     private static final SimpleDateFormat PACKAGE_NAME_FORMAT =
             new SimpleDateFormat("'%s-'yyyyMMddHHmmss'.zip'");
@@ -116,9 +116,9 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-    	return execute(event, true, false);
+        return execute(event, true, false);
     }
-    	
+
     public Object execute(ExecutionEvent event, boolean shouldUpload, boolean keepZip) {
 
         final TreePath[] eventResourcePaths =
@@ -177,12 +177,19 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
 
                 ingestionZipPath = Paths.get(newFilepath);
             } else {
-            	// use a temporary file
-            	ingestionZipPath = Files.createTempFile(TMP_PCKG_FILE_PREFIX, ".zip");
+                // use a temporary file
+                ingestionZipPath = Files.createTempFile(TMP_PCKG_FILE_PREFIX, ".zip");
             }
 
             // End run is called in the async callback
-            new IngestionPackageUploadJob(selectedProjectPath, ingestionZipPath, shouldUpload, keepZip, () -> { if (shouldUpload) endRun(); } )
+            new IngestionPackageUploadJob(
+                            selectedProjectPath,
+                            ingestionZipPath,
+                            shouldUpload,
+                            keepZip,
+                            () -> {
+                                if (shouldUpload) endRun();
+                            })
                     .schedule();
 
         } catch (final Exception e) {
@@ -232,7 +239,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
         private final Path ingestionPackageZipFilepath; // .zip path containing ingestion resources
         private final boolean upload;
         private final boolean keepZip;
-        
+
         public IngestionPackageUploadJob(
                 final Path ingestionPackageSource,
                 final Path ingestionPackageFilepath,
@@ -290,11 +297,11 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
                 }
 
                 if (upload) {
-                	RackConsole.getConsole().println(UPLOAD_STAGED);
+                    RackConsole.getConsole().println(UPLOAD_STAGED);
                     uploadIngestionZip(ingestionPackageZipFilepath, monitor);
                 }
                 if (!keepZip) {
-                	Files.delete(ingestionPackageZipFilepath);
+                    Files.delete(ingestionPackageZipFilepath);
                 }
 
             } catch (final Exception e) {

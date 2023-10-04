@@ -138,7 +138,8 @@ public class ConnectionUtil {
         return new NodeGroupStoreRestClient(ngConfig);
     }
 
-    public static SparqlConnection getSparqlConnection(String modelGraph, String dataGraph, List<String> dataGraphs) {
+    public static SparqlConnection getSparqlConnection(
+            String modelGraph, String dataGraph, List<String> dataGraphs) {
 
         String connType = RackPreferencePage.getConnType();
         String connURL = RackPreferencePage.getConnURL();
@@ -223,7 +224,6 @@ public class ConnectionUtil {
         return conn;
     }
 
-
     public static SparqlQueryClient getOntologyUploadClient() throws Exception {
         String protocol = RackPreferencePage.getProtocol();
         String server = RackPreferencePage.getServer();
@@ -248,8 +248,7 @@ public class ConnectionUtil {
 
         return new SparqlQueryClient(qAuthConfig);
     }
-    
-    
+
     public static SparqlQueryClient getOntologyUploadClient(String graph) throws Exception {
         String protocol = RackPreferencePage.getProtocol();
         String server = RackPreferencePage.getServer();

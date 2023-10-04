@@ -437,7 +437,13 @@ public class InstanceDataEditor extends ViewPart {
                             for (ArrayList<String> row : csv) {
                                 tab.addRow(row);
                             }
-                            RackConsole.getConsole().print("Uploading CSV to " + RackPreferencePage.getDefaultDataGraph() + "as class" +   OntologyTreeView.getSelectedClassUri() + "... ");
+                            RackConsole.getConsole()
+                                    .print(
+                                            "Uploading CSV to "
+                                                    + RackPreferencePage.getDefaultDataGraph()
+                                                    + "as class"
+                                                    + OntologyTreeView.getSelectedClassUri()
+                                                    + "... ");
                             RackConsole.getConsole().printOK();
                             String sCSV = tab.toCSVString();
                             if (bUri == false) {

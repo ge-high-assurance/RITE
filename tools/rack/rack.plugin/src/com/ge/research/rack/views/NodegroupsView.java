@@ -45,8 +45,6 @@ import org.eclipse.jface.action.*;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
@@ -202,16 +200,16 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
 
         table.setFocus();
         table.setLayoutData(tableFloatPosition);
-//        table.addSelectionListener(new NodegroupSelectionListener());
+        //        table.addSelectionListener(new NodegroupSelectionListener());
 
-//        final FormData selectAllButtonPosition = new FormData();
-//        selectAllButtonPosition.left = new FormAttachment(table, 1, SWT.LEFT);
-//        selectAllButtonPosition.top = new FormAttachment(table, 2, SWT.TOP);
-//
-//        selectAllButton = new Button(floatContainer, SWT.CHECK);
-//        selectAllButton.setLayoutData(selectAllButtonPosition);
-//        selectAllButton.moveAbove(table);
-//        selectAllButton.addSelectionListener(new NodegroupSelectAllListener());
+        //        final FormData selectAllButtonPosition = new FormData();
+        //        selectAllButtonPosition.left = new FormAttachment(table, 1, SWT.LEFT);
+        //        selectAllButtonPosition.top = new FormAttachment(table, 2, SWT.TOP);
+        //
+        //        selectAllButton = new Button(floatContainer, SWT.CHECK);
+        //        selectAllButton.setLayoutData(selectAllButtonPosition);
+        //        selectAllButton.moveAbove(table);
+        //        selectAllButton.addSelectionListener(new NodegroupSelectAllListener());
 
         makeActions();
         hookContextMenu();
@@ -330,30 +328,32 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
     }
 
     public ArrayList<String> getSelectedNodegroups() {
-    	return Arrays.stream(table.getSelection())
-              .map(ng -> (List<?>) ng.getData())
-              .filter(d -> !d.isEmpty())
-              .map(d -> (String) d.get(0))
-              .collect(Collectors.toCollection(ArrayList::new));
-    	
-//        return Arrays.stream(table.getItems())
-//                .filter(ng -> ng.getChecked())
-//                .map(ng -> (List<?>) ng.getData())
-//                .filter(d -> !d.isEmpty())
-//                .map(d -> (String) d.get(0))
-//                .collect(Collectors.toCollection(ArrayList::new));
+        return Arrays.stream(table.getSelection())
+                .map(ng -> (List<?>) ng.getData())
+                .filter(d -> !d.isEmpty())
+                .map(d -> (String) d.get(0))
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        //        return Arrays.stream(table.getItems())
+        //                .filter(ng -> ng.getChecked())
+        //                .map(ng -> (List<?>) ng.getData())
+        //                .filter(d -> !d.isEmpty())
+        //                .map(d -> (String) d.get(0))
+        //                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     private class DeleteSelectedNodeGroupsAction extends Action {
 
         @Override
         public void run() {
-        	
-        	int n = table.getSelectionCount();
-        	if (!MessageDialog.openConfirm(null, "Delete Nodegroups",
-        			"Deleting " + n + " nodegroup" + (n==1?"":"s"))) {
-        		return;
-        	}
+
+            int n = table.getSelectionCount();
+            if (!MessageDialog.openConfirm(
+                    null,
+                    "Delete Nodegroups",
+                    "Deleting " + n + " nodegroup" + (n == 1 ? "" : "s"))) {
+                return;
+            }
 
             try {
                 getSelectedNodegroups().stream()
@@ -382,8 +382,11 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
         public void run() {
             try {
                 if (table.getSelectionCount() != 1) {
-                	MessageDialog.openError(null, "RITE Error", "View action is permitted only for exactly one selection");
-                	return;
+                    MessageDialog.openError(
+                            null,
+                            "RITE Error",
+                            "View action is permitted only for exactly one selection");
+                    return;
                 }
                 NodegroupTemplateView.selectedNodegroups = getSelectedNodegroups();
                 final IWorkbenchWindow window =
@@ -431,33 +434,33 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
         }
     }
 
-//    private class NodegroupSelectAllListener implements SelectionListener {
-//
-//        @Override
-//        public void widgetSelected(final SelectionEvent e) {
-//            if (null == table) {
-//                return;
-//            }
-//            final boolean selectAll = ((Button) e.getSource()).getSelection();
-//            Arrays.stream(table.getItems()).forEach(i -> i.setChecked(selectAll));
-//        }
-//
-//        @Override
-//        public void widgetDefaultSelected(final SelectionEvent e) {}
-//    }
-//
-//    private class NodegroupSelectionListener implements SelectionListener {
-//
-//        @Override
-//        public void widgetSelected(final SelectionEvent e) {
-//            if (null == selectAllButton) {
-//                return;
-//            }
-//            selectAllButton.setSelection(
-//                    Arrays.stream(table.getItems()).allMatch(p -> p.getChecked()));
-//        }
-//
-//        @Override
-//        public void widgetDefaultSelected(final SelectionEvent e) {}
-//    }
+    //    private class NodegroupSelectAllListener implements SelectionListener {
+    //
+    //        @Override
+    //        public void widgetSelected(final SelectionEvent e) {
+    //            if (null == table) {
+    //                return;
+    //            }
+    //            final boolean selectAll = ((Button) e.getSource()).getSelection();
+    //            Arrays.stream(table.getItems()).forEach(i -> i.setChecked(selectAll));
+    //        }
+    //
+    //        @Override
+    //        public void widgetDefaultSelected(final SelectionEvent e) {}
+    //    }
+    //
+    //    private class NodegroupSelectionListener implements SelectionListener {
+    //
+    //        @Override
+    //        public void widgetSelected(final SelectionEvent e) {
+    //            if (null == selectAllButton) {
+    //                return;
+    //            }
+    //            selectAllButton.setSelection(
+    //                    Arrays.stream(table.getItems()).allMatch(p -> p.getChecked()));
+    //        }
+    //
+    //        @Override
+    //        public void widgetDefaultSelected(final SelectionEvent e) {}
+    //    }
 }
