@@ -1,0 +1,50 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:j.0="http://jena.hpl.hp.com/schemas/2003/03/ont-manager#">
+  <j.0:OntologySpec>
+    <j.0:sadlSourceURL>platform:/resource/oem_do178c_sadl_data/ontology/OEM-specific-PSAC.sadl</j.0:sadlSourceURL>
+    <j.0:prefix>bsppsac</j.0:prefix>
+    <j.0:createdBy>SADL</j.0:createdBy>
+    <j.0:language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <j.0:altURL rdf:resource="file:/C:/Users/212807042/Desktop/oem-ingestion-v2/OEM_DO178C_Data/oem_do178c_sadl_data/OwlModels/OEM-specific-PSAC.owl"/>
+    <j.0:publicURI rdf:resource="http://arcos.rack/OEM-specific-PSAC.sadl"/>
+  </j.0:OntologySpec>
+  <j.0:OntologySpec>
+    <j.0:prefix>sadllistmodel</j.0:prefix>
+    <j.0:createdBy>SADL</j.0:createdBy>
+    <j.0:language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <j.0:altURL rdf:resource="file:/C:/Users/212807042/Desktop/oem-ingestion-v2/OEM_DO178C_Data/oem_do178c_sadl_data/OwlModels/SadlListModel.owl"/>
+    <j.0:publicURI rdf:resource="http://sadl.org/sadllistmodel"/>
+  </j.0:OntologySpec>
+  <j.0:OntologySpec>
+    <j.0:sadlSourceURL>platform:/resource/oem_do178c_sadl_data/ImplicitModel/SadlImplicitModel.sadl</j.0:sadlSourceURL>
+    <j.0:prefix>sadlimplicitmodel</j.0:prefix>
+    <j.0:createdBy>SADL</j.0:createdBy>
+    <j.0:language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <j.0:altURL rdf:resource="file:/C:/Users/212807042/Desktop/oem-ingestion-v2/OEM_DO178C_Data/oem_do178c_sadl_data/OwlModels/SadlImplicitModel.owl"/>
+    <j.0:publicURI rdf:resource="http://sadl.org/sadlimplicitmodel"/>
+  </j.0:OntologySpec>
+  <j.0:OntologySpec>
+    <j.0:sadlSourceURL>platform:/resource/oem_do178c_sadl_data/ImplicitModel/SadlBuiltinFunctions.sadl</j.0:sadlSourceURL>
+    <j.0:prefix>builtinfunctions</j.0:prefix>
+    <j.0:createdBy>SADL</j.0:createdBy>
+    <j.0:language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <j.0:altURL rdf:resource="file:/C:/Users/212807042/Desktop/oem-ingestion-v2/OEM_DO178C_Data/oem_do178c_sadl_data/OwlModels/SadlBuiltinFunctions.owl"/>
+    <j.0:publicURI rdf:resource="http://sadl.org/builtinfunctions"/>
+  </j.0:OntologySpec>
+  <j.0:OntologySpec>
+    <j.0:prefix>sadlbasemodel</j.0:prefix>
+    <j.0:createdBy>SADL</j.0:createdBy>
+    <j.0:language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <j.0:altURL rdf:resource="file:/C:/Users/212807042/Desktop/oem-ingestion-v2/OEM_DO178C_Data/oem_do178c_sadl_data/OwlModels/SadlBaseModel.owl"/>
+    <j.0:publicURI rdf:resource="http://sadl.org/sadlbasemodel"/>
+  </j.0:OntologySpec>
+  <j.0:OntologySpec>
+    <j.0:sadlSourceURL>platform:/resource/oem_do178c_sadl_data/ontology/OEM-table1-instance-data.sadl</j.0:sadlSourceURL>
+    <j.0:prefix>tab1instance</j.0:prefix>
+    <j.0:createdBy>SADL</j.0:createdBy>
+    <j.0:language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <j.0:altURL rdf:resource="file:/C:/Users/212807042/Desktop/oem-ingestion-v2/OEM_DO178C_Data/oem_do178c_sadl_data/OwlModels/OEM-table1-instance-data.owl"/>
+    <j.0:publicURI rdf:resource="http://sadl.org/OEM-table1-instance-data.sadl"/>
+  </j.0:OntologySpec>
+</rdf:RDF>

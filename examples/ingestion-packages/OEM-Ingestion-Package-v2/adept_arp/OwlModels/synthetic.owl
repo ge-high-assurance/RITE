@@ -1,0 +1,47 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:syn="http://sadl.org/synthetic.sadl#"
+    xmlns:j.0="http://arcos.rack/PROV-S#"
+    xmlns:builtinfunctions="http://sadl.org/builtinfunctions#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:adap="http://sadl.org/4754dap.sadl#"
+    xmlns:sadlimplicitmodel="http://sadl.org/sadlimplicitmodel#"
+    xmlns:ev="http://sadl.org/Evidence.sadl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:sadlbasemodel="http://sadl.org/sadlbasemodel#"
+    xmlns:j.1="http://arcos.rack/DOCUMENT#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+  <owl:Ontology rdf:about="http://sadl.org/synthetic.sadl">
+    <owl:imports rdf:resource="http://sadl.org/Evidence.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/4754dap.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/builtinfunctions"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlimplicitmodel"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlbasemodel"/>
+    <rdfs:comment xml:lang="en">This ontology was created from a SADL file 'synthetic.sadl' and should not be directly edited.</rdfs:comment>
+  </owl:Ontology>
+  <ev:SystemDesignDescription rdf:about="http://sadl.org/synthetic.sadl#AdeptDesignDescription">
+    <j.0:entityURL>https://ge.box.com/s/lxf2tn6tscj86gpf039cijgqae5k8jfi</j.0:entityURL>
+    <j.0:identifier>AdeptDesignDescription</j.0:identifier>
+  </ev:SystemDesignDescription>
+  <j.1:DOCUMENT rdf:about="http://sadl.org/synthetic.sadl#CertificationPlan">
+    <j.0:identifier>CertificationPlan</j.0:identifier>
+  </j.1:DOCUMENT>
+  <j.1:DOCUMENT rdf:about="http://sadl.org/synthetic.sadl#DevelopmentPlan">
+    <j.0:identifier>DevelopmentPlan</j.0:identifier>
+  </j.1:DOCUMENT>
+  <j.1:DOCUMENT rdf:about="http://sadl.org/synthetic.sadl#SafetyProgramPlan">
+    <j.0:identifier>SafetyProgramPlan</j.0:identifier>
+  </j.1:DOCUMENT>
+  <j.1:DOCUMENT rdf:about="http://sadl.org/synthetic.sadl#ProcessAssurancePlan">
+    <j.0:identifier>ProcessAssurancePlan</j.0:identifier>
+  </j.1:DOCUMENT>
+  <j.1:DOCUMENT rdf:about="http://sadl.org/synthetic.sadl#VerificationPlan">
+    <j.0:identifier>VerificationPlan</j.0:identifier>
+  </j.1:DOCUMENT>
+  <j.1:DOCUMENT rdf:about="http://sadl.org/synthetic.sadl#ValidationPlan">
+    <j.0:identifier>ValidationPlan</j.0:identifier>
+  </j.1:DOCUMENT>
+  <j.1:DOCUMENT rdf:about="http://sadl.org/synthetic.sadl#ConfigurationManagementPlan">
+    <j.0:identifier>ConfigurationManagementPlan</j.0:identifier>
+  </j.1:DOCUMENT>
+</rdf:RDF>

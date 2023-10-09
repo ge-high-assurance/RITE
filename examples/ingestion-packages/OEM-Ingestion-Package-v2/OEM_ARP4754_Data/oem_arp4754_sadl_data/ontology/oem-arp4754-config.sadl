@@ -1,0 +1,17 @@
+ uri "http://sadl.org/oem-arp4754-config.sadl" alias oemconfig.
+ 
+  
+ import "http://sadl.org/PLAN-CORE.sadl".
+  
+  
+ AdeptConfig is a CONFIGURATION
+ 	with identifier "ADEPTConfig"
+ 	with derivedItemRequirementAlias "DerivedItemRequirement" 
+ 	with derivedsystemRequirementAlias "DerivedSystemRequirement"
+ 	with interfaceAlias "INTERFACE"
+ 	with interfaceInputAlias "Input"
+ 	with interfaceOutputAlias "Output"	 	 
+ 	with itemAlias "BladedDiskDesign"
+ 	with itemRequirementAlias"ItemRequirement"
+ 	with systemRequirementAlias "SystemRequirement"
+ 	with systemAlias "SYSTEM". 

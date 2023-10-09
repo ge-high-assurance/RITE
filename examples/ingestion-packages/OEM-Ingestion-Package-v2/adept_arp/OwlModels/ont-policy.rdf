@@ -1,0 +1,110 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://jena.hpl.hp.com/schemas/2003/03/ont-manager#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+  <OntologySpec>
+    <publicURI rdf:resource="http://arcos.rack/Manuf"/>
+    <altURL rdf:resource="file:///C:/Users/212807042/Desktop/MBE_E2E_Demo/ARP4754_prototype/SADL/ingestion_v1/MBSE_v1/OwlModels/Manuf.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>Manuf</prefix>
+    <sadlSourceURL>platform:/resource/MBSE_v1/ontology/Manuf.sadl</sadlSourceURL>
+  </OntologySpec>
+  <OntologySpec>
+    <publicURI rdf:resource="http://arcos.rack/GEAircraftEngine"/>
+    <altURL rdf:resource="file:///C:/Users/212807042/Desktop/MBE_E2E_Demo/ARP4754_prototype/SADL/ingestion_v1/MBSE_v1/OwlModels/GEAircraftEngine.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>GEeng</prefix>
+    <sadlSourceURL>platform:/resource/MBSE_v1/ontology/GEAircraftEngine.sadl</sadlSourceURL>
+  </OntologySpec>
+  <OntologySpec>
+    <publicURI rdf:resource="http://arcos.rack/Adept"/>
+    <altURL rdf:resource="file:///C:/Users/212807042/Desktop/MBE_E2E_Demo/ARP4754_prototype/SADL/ingestion_v1/MBSE_v1/OwlModels/Adept.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>Adept</prefix>
+    <sadlSourceURL>platform:/resource/MBSE_v1/ontology/Adept.sadl</sadlSourceURL>
+  </OntologySpec>
+  <OntologySpec>
+    <publicURI rdf:resource="http://arcos.rack/AircraftEngine"/>
+    <altURL rdf:resource="file:///C:/Users/212807042/Desktop/MBE_E2E_Demo/ARP4754_prototype/SADL/ingestion_v1/MBSE_v1/OwlModels/AircraftEngine.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>eng</prefix>
+    <sadlSourceURL>platform:/resource/MBSE_v1/ontology/AircraftEngine.sadl</sadlSourceURL>
+  </OntologySpec>
+  <OntologySpec>
+    <publicURI rdf:resource="http://sadl.org/synthesized.sadl"/>
+    <altURL rdf:resource="file:///C:/Users/212807042/Desktop/MBE_E2E_Demo/ARP4754_prototype/SADL/ingestion_v1/MBSE_v1/OwlModels/synthesized.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>asyn</prefix>
+    <sadlSourceURL>platform:/resource/MBSE_v1/data/synthesized.sadl</sadlSourceURL>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/adept_arp/data/synthetic.sadl</sadlSourceURL>
+    <prefix>syn</prefix>
+    <createdBy>SADL</createdBy>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/MBE_E2E_Demo/ARP4754_prototype/ingestion/ingestion_v3/adept_arp/OwlModels/synthetic.owl"/>
+    <publicURI rdf:resource="http://sadl.org/synthetic.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/adept_arp/ImplicitModel/SadlBuiltinFunctions.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/MBE_E2E_Demo/ARP4754_prototype/ingestion/ingestion_v3/adept_arp/OwlModels/SadlBuiltinFunctions.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>builtinfunctions</prefix>
+    <publicURI rdf:resource="http://sadl.org/builtinfunctions"/>
+  </OntologySpec>
+  <OntologySpec>
+    <altURL rdf:resource="http://protege.stanford.edu/plugins/owl/dc/protege-dc.owl"/>
+    <publicURI rdf:resource="http://purl.org/dc/elements/1.1/"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <prefix>dc</prefix>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/adept_arp/ImplicitModel/SadlImplicitModel.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/MBE_E2E_Demo/ARP4754_prototype/ingestion/ingestion_v3/adept_arp/OwlModels/SadlImplicitModel.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>sadlimplicitmodel</prefix>
+    <publicURI rdf:resource="http://sadl.org/sadlimplicitmodel"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/adept_arp/data/adeptconfig.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/MBE_E2E_Demo/ARP4754_prototype/ingestion/ingestion_v3/adept_arp/OwlModels/adeptconfig.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>ac</prefix>
+    <publicURI rdf:resource="http://sadl.org/adeptconfig.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/adept_arp/data/4754dap.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/MBE_E2E_Demo/ARP4754_prototype/ingestion/ingestion_v3/adept_arp/OwlModels/4754dap.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>adap</prefix>
+    <publicURI rdf:resource="http://sadl.org/4754dap.sadl"/>
+  </OntologySpec>
+  <DocumentManagerPolicy>
+    <cacheModels rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</cacheModels>
+    <processImports rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</processImports>
+  </DocumentManagerPolicy>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/adept_arp/ontology/Evidence.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/MBE_E2E_Demo/ARP4754_prototype/ingestion/ingestion_v3/adept_arp/OwlModels/Evidence.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>ev</prefix>
+    <publicURI rdf:resource="http://sadl.org/Evidence.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <publicURI rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <prefix>owl</prefix>
+  </OntologySpec>
+</rdf:RDF>

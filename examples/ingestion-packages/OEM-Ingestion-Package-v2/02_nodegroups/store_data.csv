@@ -1,0 +1,17 @@
+ID,comments,creator,jsonFile,itemType
+psac_to_activities,DASC23_DO178C,spaul,psac_to_activities.json,PrefabNodeGroup
+Objective-A2-5-query-count-all-Derived-SubDD-Reqs-that-satisfy-some-req,DASC23_DO178C,spaul,Objective-A2-5-query-count-all-Derived-SubDD-Reqs-that-satisfy-some-req.json,PrefabNodeGroup
+Objective-A2-5-query-count-all-Derived-SubDD-Reqs,DASC23_DO178C,spaul,Objective-A2-5-query-count-all-Derived-SubDD-Reqs.json,PrefabNodeGroup
+Objective-A2-4-query-count-all-SubDD-Reqs-that-satisfy-SRS_Reqs,DASC23_DO178C,spaul,Objective-A2-4-query-count-all-SubDD-Reqs-that-satisfy-SRS_Reqs.json,PrefabNodeGroup
+Objective-A2-4-query-count-all-SubDD-Reqs,DASC23_DO178C,spaul,Objective-A2-4-query-count-all-SubDD-Reqs.json,PrefabNodeGroup
+Objective-A2-2-query-count-all-Derived-SRS-Reqs-that-satisfy-some-req,DASC23_DO178C,spaul,Objective-A2-2-query-count-all-Derived-SRS-Reqs-that-satisfy-some-req.json,PrefabNodeGroup
+Objective-A2-2-query-count-all-Derived-SRS-Reqs,DASC23_DO178C,spaul,Objective-A2-2-query-count-all-Derived-SRS-Reqs.json,PrefabNodeGroup
+Objective-A2-1-query-count-all-SRS-Reqs-that-satisfy-PIDS-or-CSID_Reqs,DASC23_DO178C,spaul,Objective-A2-1-query-count-all-SRS-Reqs-that-satisfy-PIDS-or-CSID_Reqs.json,PrefabNodeGroup
+Objective-A2-1-query-count-all-SRS-Reqs,DASC23_DO178C,spaul,Objective-A2-1-query-count-all-SRS-Reqs.json,PrefabNodeGroup
+Objective-A2-1-query-count-all-PIDS-Reqs,DASC23_DO178C,spaul,Objective-A2-1-query-count-all-PIDS-Reqs.json,PrefabNodeGroup
+Objective-A2-1-query-count-all-CSID-Reqs,DASC23_DO178C,spaul,Objective-A2-1-query-count-all-CSID-Reqs.json,PrefabNodeGroup
+Objective-A1-1-query-check-output-for-PSAC-SDP-SVP-SCMPlan-SQAPlan,DASC23_DO178C,spaul,Objective-A1-1-query-check-output-for-PSAC-SDP-SVP-SCMPlan-SQAPlan.json,PrefabNodeGroup
+Objective-A7-3-4-query-SBVT-Test,DASC23_DO178C,spaul,Objective-A7-3-4-query-SBVT-Test.json,PrefabNodeGroup
+Objective-multiple-query-all-review-logs,DASC23_DO178C,spaul,Objective-multiple-query-all-review-logs.json,PrefabNodeGroup
+Objective-A5-5-query-swcomponent-subDD-trace,DASC23_DO178C,spaul,Objective-A5-5-query-swcomponent-subDD-trace.json,PrefabNodeGroup
+PSAC-query-source-document,DASC23_DO178C,spaul,PSAC-query-source-document.json,PrefabNodeGroup
