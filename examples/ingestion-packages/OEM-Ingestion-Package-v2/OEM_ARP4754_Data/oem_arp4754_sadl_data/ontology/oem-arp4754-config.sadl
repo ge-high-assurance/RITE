@@ -5,13 +5,13 @@
   
   
  AdeptConfig is a CONFIGURATION
- 	with identifier "ADEPTConfig"
+ 	with identifier "OEMConfig"
  	with derivedItemRequirementAlias "DerivedItemRequirement" 
  	with derivedsystemRequirementAlias "DerivedSystemRequirement"
  	with interfaceAlias "INTERFACE"
  	with interfaceInputAlias "Input"
  	with interfaceOutputAlias "Output"	 	 
- 	with itemAlias "BladedDiskDesign"
+ 	with itemAlias "Item"
  	with itemRequirementAlias"ItemRequirement"
  	with systemRequirementAlias "SystemRequirement"
  	with systemAlias "SYSTEM". 
