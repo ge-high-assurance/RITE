@@ -88,16 +88,18 @@
       <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#GraphPattern"/>
     </rdfs:subClassOf>
   </owl:Class>
-  <owl:Class rdf:nodeID="A3">
+  <owl:Class rdf:nodeID="A0">
     <rdfs:subClassOf>
       <owl:Restriction>
-        <owl:allValuesFrom rdf:nodeID="A3"/>
+        <owl:allValuesFrom rdf:nodeID="A0"/>
         <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#rest"/>
       </owl:Restriction>
     </rdfs:subClassOf>
     <rdfs:subClassOf>
       <owl:Restriction>
-        <owl:allValuesFrom rdf:resource="http://sadl.org/sadlimplicitmodel#GraphPattern"/>
+        <owl:allValuesFrom>
+          <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#DataTableRow"/>
+        </owl:allValuesFrom>
         <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#first"/>
       </owl:Restriction>
     </rdfs:subClassOf>
@@ -175,6 +177,36 @@
     <rdfs:subClassOf rdf:resource="http://sadl.org/sadlimplicitmodel#Equation"/>
   </owl:Class>
   <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#GPAtom"/>
+  <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#Language"/>
+  <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#DataTableRow">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onClass>
+          <owl:Class rdf:nodeID="A3"/>
+        </owl:onClass>
+        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+        >1</owl:qualifiedCardinality>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="http://sadl.org/sadlimplicitmodel#rowValues"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:nodeID="A1">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:nodeID="A1"/>
+        <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#rest"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:resource="http://sadl.org/sadlimplicitmodel#DataDescriptor"/>
+        <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#first"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="http://sadl.org/sadllistmodel#List"/>
+  </owl:Class>
   <owl:Class rdf:nodeID="A4">
     <rdfs:subClassOf>
       <owl:Restriction>
@@ -184,26 +216,11 @@
     </rdfs:subClassOf>
     <rdfs:subClassOf>
       <owl:Restriction>
-        <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <owl:allValuesFrom rdf:resource="http://sadl.org/sadlimplicitmodel#GraphPattern"/>
         <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#first"/>
       </owl:Restriction>
     </rdfs:subClassOf>
     <rdfs:subClassOf rdf:resource="http://sadl.org/sadllistmodel#List"/>
-  </owl:Class>
-  <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#Language"/>
-  <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#DataTableRow">
-    <rdfs:subClassOf>
-      <owl:Restriction>
-        <owl:onClass>
-          <owl:Class rdf:nodeID="A5"/>
-        </owl:onClass>
-        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
-        >1</owl:qualifiedCardinality>
-        <owl:onProperty>
-          <owl:ObjectProperty rdf:about="http://sadl.org/sadlimplicitmodel#rowValues"/>
-        </owl:onProperty>
-      </owl:Restriction>
-    </rdfs:subClassOf>
   </owl:Class>
   <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#ScientificConcept"/>
   <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#SemanticType">
@@ -220,36 +237,6 @@
     <rdfs:subClassOf>
       <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#AugmentedType"/>
     </rdfs:subClassOf>
-  </owl:Class>
-  <owl:Class rdf:nodeID="A2">
-    <rdfs:subClassOf>
-      <owl:Restriction>
-        <owl:allValuesFrom rdf:nodeID="A2"/>
-        <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#rest"/>
-      </owl:Restriction>
-    </rdfs:subClassOf>
-    <rdfs:subClassOf>
-      <owl:Restriction>
-        <owl:allValuesFrom rdf:resource="http://sadl.org/sadlimplicitmodel#GPAtom"/>
-        <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#first"/>
-      </owl:Restriction>
-    </rdfs:subClassOf>
-    <rdfs:subClassOf rdf:resource="http://sadl.org/sadllistmodel#List"/>
-  </owl:Class>
-  <owl:Class rdf:nodeID="A5">
-    <rdfs:subClassOf>
-      <owl:Restriction>
-        <owl:allValuesFrom rdf:nodeID="A5"/>
-        <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#rest"/>
-      </owl:Restriction>
-    </rdfs:subClassOf>
-    <rdfs:subClassOf>
-      <owl:Restriction>
-        <owl:allValuesFrom rdf:resource="http://sadl.org/sadlimplicitmodel#anyDataType"/>
-        <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#first"/>
-      </owl:Restriction>
-    </rdfs:subClassOf>
-    <rdfs:subClassOf rdf:resource="http://sadl.org/sadllistmodel#List"/>
   </owl:Class>
   <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#Script">
     <rdfs:subClassOf>
@@ -276,16 +263,16 @@
   <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#UnittedQuantity">
     <rdfs:subClassOf rdf:resource="http://sadl.org/sadlimplicitmodel#ScientificConcept"/>
   </owl:Class>
-  <owl:Class rdf:nodeID="A0">
+  <owl:Class rdf:nodeID="A2">
     <rdfs:subClassOf>
       <owl:Restriction>
-        <owl:allValuesFrom rdf:nodeID="A0"/>
+        <owl:allValuesFrom rdf:nodeID="A2"/>
         <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#rest"/>
       </owl:Restriction>
     </rdfs:subClassOf>
     <rdfs:subClassOf>
       <owl:Restriction>
-        <owl:allValuesFrom rdf:resource="http://sadl.org/sadlimplicitmodel#DataTableRow"/>
+        <owl:allValuesFrom rdf:resource="http://sadl.org/sadlimplicitmodel#GPAtom"/>
         <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#first"/>
       </owl:Restriction>
     </rdfs:subClassOf>
@@ -293,6 +280,36 @@
   </owl:Class>
   <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#GPLiteralValue">
     <rdfs:subClassOf rdf:resource="http://sadl.org/sadlimplicitmodel#GPAtom"/>
+  </owl:Class>
+  <owl:Class rdf:nodeID="A5">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:nodeID="A5"/>
+        <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#rest"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#first"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="http://sadl.org/sadllistmodel#List"/>
+  </owl:Class>
+  <owl:Class rdf:nodeID="A3">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:nodeID="A3"/>
+        <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#rest"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:resource="http://sadl.org/sadlimplicitmodel#anyDataType"/>
+        <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#first"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="http://sadl.org/sadllistmodel#List"/>
   </owl:Class>
   <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#GPVariable">
     <rdfs:subClassOf>
@@ -313,7 +330,7 @@
   <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#SemanticConstraint">
     <rdfs:subClassOf>
       <owl:Restriction>
-        <owl:onClass rdf:nodeID="A3"/>
+        <owl:onClass rdf:nodeID="A4"/>
         <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
         >1</owl:qualifiedCardinality>
         <owl:onProperty>
@@ -323,21 +340,6 @@
     </rdfs:subClassOf>
     <rdfs:comment xml:lang="en">used to identify necessary patterns in semantic domain terms</rdfs:comment>
     <rdfs:subClassOf rdf:resource="http://sadl.org/sadlimplicitmodel#AugmentedType"/>
-  </owl:Class>
-  <owl:Class rdf:nodeID="A1">
-    <rdfs:subClassOf>
-      <owl:Restriction>
-        <owl:allValuesFrom rdf:nodeID="A1"/>
-        <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#rest"/>
-      </owl:Restriction>
-    </rdfs:subClassOf>
-    <rdfs:subClassOf>
-      <owl:Restriction>
-        <owl:allValuesFrom rdf:resource="http://sadl.org/sadlimplicitmodel#DataDescriptor"/>
-        <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#first"/>
-      </owl:Restriction>
-    </rdfs:subClassOf>
-    <rdfs:subClassOf rdf:resource="http://sadl.org/sadllistmodel#List"/>
   </owl:Class>
   <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#TriplePattern">
     <rdfs:subClassOf rdf:resource="http://sadl.org/sadlimplicitmodel#GraphPattern"/>
@@ -368,7 +370,7 @@
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://sadl.org/sadlimplicitmodel#rowValues">
     <rdfs:domain rdf:resource="http://sadl.org/sadlimplicitmodel#DataTableRow"/>
-    <rdfs:range rdf:nodeID="A5"/>
+    <rdfs:range rdf:nodeID="A3"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://sadl.org/sadlimplicitmodel#returnTypes">
     <rdfs:range rdf:nodeID="A1"/>
@@ -376,7 +378,7 @@
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://sadl.org/sadlimplicitmodel#constraints">
     <rdfs:domain rdf:resource="http://sadl.org/sadlimplicitmodel#SemanticConstraint"/>
-    <rdfs:range rdf:nodeID="A3"/>
+    <rdfs:range rdf:nodeID="A4"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://sadl.org/sadlimplicitmodel#argValues">
     <rdfs:comment xml:lang="en">values of arguments to the built-in</rdfs:comment>
@@ -409,7 +411,7 @@
   <owl:DatatypeProperty rdf:about="http://sadl.org/sadlimplicitmodel#specifiedUnits">
     <rdfs:domain rdf:resource="http://sadl.org/sadlimplicitmodel#DataDescriptor"/>
     <rdfs:comment xml:lang="en">the array of possible units</rdfs:comment>
-    <rdfs:range rdf:nodeID="A4"/>
+    <rdfs:range rdf:nodeID="A5"/>
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
   </owl:DatatypeProperty>
   <owl:DatatypeProperty rdf:about="http://sadl.org/sadlimplicitmodel#gpLiteralValue">

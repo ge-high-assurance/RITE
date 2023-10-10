@@ -10,6 +10,9 @@ steps:
 - model: ARP4754-DAP-Ontology-v2/OwlModels/import.yaml
 - model: DO178C-PSAC-Ontology/OwlModels/import.yaml
 - model: OEM-Ontology/OwlModels/import.yaml
+
+- model: OEM_DO178C_Data/oem_do178c_sadl_data/OwlModels/import.yaml
+- model: OEM_ARP4754_Data/oem_arp4754_sadl_data/OwlModels/import.yaml
  
 - nodegroups: 02_nodegroups
 - data: OEM_DO178C_Data/data.yaml
