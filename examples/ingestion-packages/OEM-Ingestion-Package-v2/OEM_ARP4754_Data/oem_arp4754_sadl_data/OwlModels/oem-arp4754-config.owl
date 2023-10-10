@@ -19,8 +19,11 @@
   <j.1:CONFIGURATION rdf:about="http://sadl.org/oem-arp4754-config.sadl#AdeptConfig">
     <j.1:systemRequirementAlias>SystemRequirement</j.1:systemRequirementAlias>
     <j.0:identifier>OEMConfig</j.0:identifier>
+    <j.1:systemDesignDescriptionAlias>SystemDesignDescription</j.1:systemDesignDescriptionAlias>
+    <j.1:requirementCompleteCorrectReviewAlias>RequirementCompleteCorrectReview</j.1:requirementCompleteCorrectReviewAlias>
     <j.1:derivedsystemRequirementAlias>DerivedSystemRequirement</j.1:derivedsystemRequirementAlias>
     <j.1:interfaceAlias>INTERFACE</j.1:interfaceAlias>
+    <j.1:requirementTraceableReviewAlias>RequirementTraceableReview</j.1:requirementTraceableReviewAlias>
     <j.1:itemRequirementAlias>ItemRequirement</j.1:itemRequirementAlias>
     <j.1:derivedItemRequirementAlias>DerivedItemRequirement</j.1:derivedItemRequirementAlias>
     <j.1:itemAlias>Item</j.1:itemAlias>

@@ -59,152 +59,168 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class RackConsole extends MessageConsole {
-	private static boolean setup = false;
-	private static RackConsole console;
-	private static MessageConsoleStream stream;
-	private static MessageConsoleStream streamErr;
-	private static MessageConsoleStream streamWarn;
-	private static final Logger logger = LoggerFactory.getLogger(RackConsole.class);
-	private static final List<String> fileExtensions = (List<String>) Arrays.asList("OWL", "JSON", "YAML", "CSV");
+    private static boolean setup = false;
+    private static RackConsole console;
+    private static MessageConsoleStream stream;
+    private static MessageConsoleStream streamErr;
+    private static MessageConsoleStream streamWarn;
+    private static final Logger logger = LoggerFactory.getLogger(RackConsole.class);
+    private static final List<String> fileExtensions =
+            (List<String>) Arrays.asList("OWL", "JSON", "YAML", "CSV");
 
-	public static RackConsole getConsole() {
+    public static RackConsole getConsole() {
 
-		if (setup == false) {
-			ConsolePlugin plugin = ConsolePlugin.getDefault();
-			IConsoleManager consoleManager = plugin.getConsoleManager();
-			console = new RackConsole();
-			console.activate();
-			stream = console.newMessageStream();
-			streamErr = console.newMessageStream();
-			streamWarn = console.newMessageStream();
-			consoleManager.addConsoles(new IConsole[] { console });
-			ViewUtils.pinConsole(console);
-			setup = true;
-			console.addPatternMatchListener(new IPatternMatchListener() {
+        if (setup == false) {
+            ConsolePlugin plugin = ConsolePlugin.getDefault();
+            IConsoleManager consoleManager = plugin.getConsoleManager();
+            console = new RackConsole();
+            console.activate();
+            stream = console.newMessageStream();
+            streamErr = console.newMessageStream();
+            streamWarn = console.newMessageStream();
+            consoleManager.addConsoles(new IConsole[] {console});
+            ViewUtils.pinConsole(console);
+            setup = true;
+            console.addPatternMatchListener(
+                    new IPatternMatchListener() {
 
-				@Override
-				public void connect(TextConsole console) {
-					// TODO Auto-generated method stub
+                        @Override
+                        public void connect(TextConsole console) {
+                            // TODO Auto-generated method stub
 
-				}
+                        }
 
-				@Override
-				public void disconnect() {
-					// TODO Auto-generated method stub
+                        @Override
+                        public void disconnect() {
+                            // TODO Auto-generated method stub
 
-				}
+                        }
 
-				@Override
-				public void matchFound(PatternMatchEvent event) {
+                        @Override
+                        public void matchFound(PatternMatchEvent event) {
 
-					try {
-						String errorLine = console.getDocument().get(event.getOffset(), event.getLength());
-						for (String extension : fileExtensions) {
-							if (errorLine.contains(extension + ":")) {
+                            try {
+                                String errorLine =
+                                        console.getDocument()
+                                                .get(event.getOffset(), event.getLength());
+                                for (String extension : fileExtensions) {
+                                    if (errorLine.contains(extension + ":")) {
 
-								String[] split = errorLine.split(extension + ":");
-								String filePath = split[split.length - 1].trim();
-								File file = new File(filePath);
-								if (file.exists()) {
-									IWorkspace workspace = ResourcesPlugin.getWorkspace();
-									IPath location = Path.fromOSString(file.getAbsolutePath());
-									IFile ifile = workspace.getRoot().getFileForLocation(location);
-									final FileLink link = new FileLink(ifile, null, -1, -1, -1);
-									Display.getDefault().asyncExec(() -> {
-										try {
-											console.addHyperlink(link, event.getOffset(), event.getLength());
-										} catch (BadLocationException e) {
+                                        String[] split = errorLine.split(extension + ":");
+                                        String filePath = split[split.length - 1].trim();
+                                        File file = new File(filePath);
+                                        if (file.exists()) {
+                                            IWorkspace workspace = ResourcesPlugin.getWorkspace();
+                                            IPath location =
+                                                    Path.fromOSString(file.getAbsolutePath());
+                                            IFile ifile =
+                                                    workspace
+                                                            .getRoot()
+                                                            .getFileForLocation(location);
+                                            final FileLink link =
+                                                    new FileLink(ifile, null, -1, -1, -1);
+                                            Display.getDefault()
+                                                    .asyncExec(
+                                                            () -> {
+                                                                try {
+                                                                    console.addHyperlink(
+                                                                            link,
+                                                                            event.getOffset(),
+                                                                            event.getLength());
+                                                                } catch (BadLocationException e) {
 
-										}
-									});
-								}
-								return;
-							}
-						}
+                                                                }
+                                                            });
+                                        }
+                                        return;
+                                    }
+                                }
 
-					} catch (BadLocationException e) {
+                            } catch (BadLocationException e) {
 
-					}
-				}
+                            }
+                        }
 
-				@Override
-				public String getPattern() {
-					// TODO Auto-generated method stub
-					return Pattern.compile("(ERROR.*yaml.*)|(ERROR.*csv.*)|(ERROR.*owl.*)|(ERROR.*json.*)").pattern();
-				}
+                        @Override
+                        public String getPattern() {
+                            // TODO Auto-generated method stub
+                            return Pattern.compile(
+                                            "(ERROR.*yaml.*)|(ERROR.*csv.*)|(ERROR.*owl.*)|(ERROR.*json.*)")
+                                    .pattern();
+                        }
 
-				@Override
-				public int getCompilerFlags() {
-					// TODO Auto-generated method stub
-					return 0;
-				}
+                        @Override
+                        public int getCompilerFlags() {
+                            // TODO Auto-generated method stub
+                            return 0;
+                        }
 
-				@Override
-				public String getLineQualifier() {
-					// TODO Auto-generated method stub
-					return null;
-				}
-			});
-		}
-		return console;
-	}
+                        @Override
+                        public String getLineQualifier() {
+                            // TODO Auto-generated method stub
+                            return null;
+                        }
+                    });
+        }
+        return console;
+    }
 
-	private RackConsole() {
-		super("Rack Console", null, true);
-	}
+    private RackConsole() {
+        super("Rack Console", null, true);
+    }
 
-	public void print(String message) {
-		Color black = new Color(0, 0, 0, 255);
-		stream.setColor(black);
-		stream.print("\nINFO:  " + message);
-	}
+    public void print(String message) {
+        Color black = new Color(0, 0, 0, 255);
+        stream.setColor(black);
+        stream.print("\nINFO:  " + message);
+    }
 
-	public void printEcho(String message) {
-		Color black = new Color(0, 0, 0, 255);
-		stream.setColor(black);
-		stream.print("\n" + message);
-	}
+    public void printEcho(String message) {
+        Color black = new Color(0, 0, 0, 255);
+        stream.setColor(black);
+        stream.print("\n" + message);
+    }
 
-	public void println(String message) {
-		Color black = new Color(0, 0, 0, 255);
-		stream.setColor(black);
-		stream.print("INFO:  " + message + "\n");
-	}
+    public void println(String message) {
+        Color black = new Color(0, 0, 0, 255);
+        stream.setColor(black);
+        stream.print("INFO:  " + message + "\n");
+    }
 
-	public void printOK() {
-		stream.print("OK");
-	}
+    public void printOK() {
+        stream.print("OK");
+    }
 
-	public void printFAIL() {
-		stream.print("FAIL");
-	}
+    public void printFAIL() {
+        stream.print("FAIL");
+    }
 
-	public void error(String message) {
-		Color red = new Color(255, 0, 0, 255);
-		streamErr.setColor(red);
-		streamErr.print("\nERROR: " + message);
-	}
+    public void error(String message) {
+        Color red = new Color(255, 0, 0, 255);
+        streamErr.setColor(red);
+        streamErr.print("\nERROR: " + message);
+    }
 
-	public void errorEcho(String message) {
-		Color red = new Color(255, 0, 0, 255);
-		streamErr.setColor(red);
-		streamErr.setColor(red);
-		streamErr.print("\n" + message);
-	}
+    public void errorEcho(String message) {
+        Color red = new Color(255, 0, 0, 255);
+        streamErr.setColor(red);
+        streamErr.setColor(red);
+        streamErr.print("\n" + message);
+    }
 
-	public void error(final String message, final Exception exception) {
-		Color red = new Color(255, 0, 0, 255);
-		stream.setColor(red);
-		stream.print("\nERROR: " + message + "\n" + exception.getStackTrace() + "\n");
-	}
+    public void error(final String message, final Exception exception) {
+        Color red = new Color(255, 0, 0, 255);
+        stream.setColor(red);
+        stream.print("\nERROR: " + message + "\n" + exception.getStackTrace() + "\n");
+    }
 
-	public void warning(String message) {
-		Color yellow = new Color(255, 220, 0, 155);
-		streamWarn.setColor(yellow);
-		streamWarn.print("\nWARNING: " + message);
-	}
+    public void warning(String message) {
+        Color yellow = new Color(255, 220, 0, 155);
+        streamWarn.setColor(yellow);
+        streamWarn.print("\nWARNING: " + message);
+    }
 
-	public void clearConsole() {
-		super.clearConsole();
-	}
+    public void clearConsole() {
+        super.clearConsole();
+    }
 }

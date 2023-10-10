@@ -180,7 +180,6 @@
     <rdfs:subClassOf rdf:resource="http://sadl.org/sadlimplicitmodel#Equation"/>
   </owl:Class>
   <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#GPAtom"/>
-  <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#Language"/>
   <owl:Class rdf:nodeID="A0">
     <rdfs:subClassOf>
       <owl:Restriction>
@@ -198,21 +197,7 @@
     </rdfs:subClassOf>
     <rdfs:subClassOf rdf:resource="http://sadl.org/sadllistmodel#List"/>
   </owl:Class>
-  <owl:Class rdf:nodeID="A3">
-    <rdfs:subClassOf>
-      <owl:Restriction>
-        <owl:allValuesFrom rdf:nodeID="A3"/>
-        <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#rest"/>
-      </owl:Restriction>
-    </rdfs:subClassOf>
-    <rdfs:subClassOf>
-      <owl:Restriction>
-        <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-        <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#first"/>
-      </owl:Restriction>
-    </rdfs:subClassOf>
-    <rdfs:subClassOf rdf:resource="http://sadl.org/sadllistmodel#List"/>
-  </owl:Class>
+  <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#Language"/>
   <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#DataTableRow">
     <rdfs:subClassOf>
       <owl:Restriction>
@@ -273,6 +258,36 @@
     </rdfs:subClassOf>
     <rdfs:subClassOf rdf:resource="http://sadl.org/sadllistmodel#List"/>
   </owl:Class>
+  <owl:Class rdf:nodeID="A3">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:nodeID="A3"/>
+        <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#rest"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#first"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="http://sadl.org/sadllistmodel#List"/>
+  </owl:Class>
+  <owl:Class rdf:nodeID="A5">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:nodeID="A5"/>
+        <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#rest"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:resource="http://sadl.org/sadlimplicitmodel#GraphPattern"/>
+        <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#first"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="http://sadl.org/sadllistmodel#List"/>
+  </owl:Class>
   <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#Script">
     <rdfs:subClassOf>
       <owl:Restriction>
@@ -320,9 +335,7 @@
   <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#SemanticConstraint">
     <rdfs:subClassOf>
       <owl:Restriction>
-        <owl:onClass>
-          <owl:Class rdf:nodeID="A5"/>
-        </owl:onClass>
+        <owl:onClass rdf:nodeID="A5"/>
         <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
         >1</owl:qualifiedCardinality>
         <owl:onProperty>
@@ -333,6 +346,10 @@
     <rdfs:comment xml:lang="en">used to identify necessary patterns in semantic domain terms</rdfs:comment>
     <rdfs:subClassOf rdf:resource="http://sadl.org/sadlimplicitmodel#AugmentedType"/>
   </owl:Class>
+  <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#TriplePattern">
+    <rdfs:subClassOf rdf:resource="http://sadl.org/sadlimplicitmodel#GraphPattern"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#Rule"/>
   <owl:Class rdf:nodeID="A2">
     <rdfs:subClassOf>
       <owl:Restriction>
@@ -348,25 +365,6 @@
     </rdfs:subClassOf>
     <rdfs:subClassOf rdf:resource="http://sadl.org/sadllistmodel#List"/>
   </owl:Class>
-  <owl:Class rdf:nodeID="A5">
-    <rdfs:subClassOf>
-      <owl:Restriction>
-        <owl:allValuesFrom rdf:nodeID="A5"/>
-        <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#rest"/>
-      </owl:Restriction>
-    </rdfs:subClassOf>
-    <rdfs:subClassOf>
-      <owl:Restriction>
-        <owl:allValuesFrom rdf:resource="http://sadl.org/sadlimplicitmodel#GraphPattern"/>
-        <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#first"/>
-      </owl:Restriction>
-    </rdfs:subClassOf>
-    <rdfs:subClassOf rdf:resource="http://sadl.org/sadllistmodel#List"/>
-  </owl:Class>
-  <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#TriplePattern">
-    <rdfs:subClassOf rdf:resource="http://sadl.org/sadlimplicitmodel#GraphPattern"/>
-  </owl:Class>
-  <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#Rule"/>
   <owl:Class rdf:about="http://sadl.org/sadlimplicitmodel#NamedQuery"/>
   <owl:ObjectProperty rdf:about="http://sadl.org/sadlimplicitmodel#arguments">
     <rdfs:range rdf:nodeID="A1"/>

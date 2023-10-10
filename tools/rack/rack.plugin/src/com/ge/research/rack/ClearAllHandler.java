@@ -105,9 +105,7 @@ public class ClearAllHandler extends AbstractHandler {
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
 
-        
-        ClearRackDialog dialog =
-                new ClearRackDialog(Display.getDefault().getActiveShell());
+        ClearRackDialog dialog = new ClearRackDialog(Display.getDefault().getActiveShell());
         dialog.run();
 
         return null;

@@ -12,7 +12,7 @@
  
 
  //-- Authors: Saswata Paul, Michael Durling, Christopher Alexander (GER)
- //-- This is an attempt to formalize a PSAC for the OEM Apache Data
+ //-- This is an attempt to formalize a PSAC for the OEM Apache Data 
 
 
  uri "http://arcos.rack/OEM-specific-PSAC.sadl" alias bsppsac.

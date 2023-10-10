@@ -574,6 +574,7 @@ public class DataProcessor {
                 CustomStringUtils.getCSVColumnIndex(
                         allSystemRequirementWIthSystemCols, config.getSystem() + "_id");
 
+        System.out.println(config.getSystem());
         for (String[] row : allSystemRequirementWIthSystem) {
             if ((row[sysReqIdCol] != null)) {
                 System.out.println(row[sysReqIdCol]);
@@ -583,6 +584,7 @@ public class DataProcessor {
                                 Artifacts.getSysReqObjs(), row[sysReqIdCol]);
                 // add the data to the object
                 if ((row[systemIdCol2] != null)) {
+                    System.out.println(row[systemIdCol2]);
                     Artifacts.getSysReqObjs()
                             .get(indx)
                             .getAllocatedTo()

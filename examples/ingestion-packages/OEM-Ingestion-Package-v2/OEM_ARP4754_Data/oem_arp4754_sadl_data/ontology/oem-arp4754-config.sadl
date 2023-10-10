@@ -14,4 +14,7 @@
  	with itemAlias "Item"
  	with itemRequirementAlias"ItemRequirement"
  	with systemRequirementAlias "SystemRequirement"
- 	with systemAlias "SYSTEM". 
+ 	with systemAlias "SYSTEM"
+ 	with systemDesignDescriptionAlias "SystemDesignDescription"
+ 	with requirementCompleteCorrectReviewAlias "RequirementCompleteCorrectReview"
+ 	with requirementTraceableReviewAlias "RequirementTraceableReview".  

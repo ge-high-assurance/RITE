@@ -137,8 +137,6 @@ public class ConnectionUtil {
         NodeGroupStoreConfig ngConfig = new NodeGroupStoreConfig(protocol, server, port);
         return new NodeGroupStoreRestClient(ngConfig);
     }
-    
-    
 
     public static SparqlConnection getSparqlConnection(
             String modelGraph, String dataGraph, List<String> dataGraphs) {
@@ -165,7 +163,7 @@ public class ConnectionUtil {
                             connDataGraph,
                             RackPreferencePage.getUser(),
                             RackPreferencePage.getPassword());
-            
+
             conn = new SparqlConnection("RACK", modelSei, dataSei);
 
             // add extra data graphs here
@@ -187,7 +185,6 @@ public class ConnectionUtil {
                                 RackPreferencePage.getUser(),
                                 RackPreferencePage.getPassword());
                 conn.addDataInterface(extraDataSei);
-               
 
             } catch (Exception e) {
                 RackConsole.getConsole().error("Cannot add extra data graph: " + dataGraphs.get(i));
@@ -224,22 +221,19 @@ public class ConnectionUtil {
                             connDataGraph,
                             RackPreferencePage.getUser(),
                             RackPreferencePage.getPassword());
-            
+
             conn = new SparqlConnection("RACK", modelSei, dataSei);
-            
-            
-            for(String mGraph : additionalModelGraphs) {
-            	SparqlEndpointInterface additionalModelSei =
+
+            for (String mGraph : additionalModelGraphs) {
+                SparqlEndpointInterface additionalModelSei =
                         SparqlEndpointInterface.getInstance(
                                 connType,
                                 connURL,
                                 mGraph,
                                 RackPreferencePage.getUser(),
-                                RackPreferencePage.getPassword()); 
-            	conn.addModelInterface(additionalModelSei);
+                                RackPreferencePage.getPassword());
+                conn.addModelInterface(additionalModelSei);
             }
-            
-            
 
             // add extra data graphs here
 
@@ -260,7 +254,6 @@ public class ConnectionUtil {
                                 RackPreferencePage.getUser(),
                                 RackPreferencePage.getPassword());
                 conn.addDataInterface(extraDataSei);
-               
 
             } catch (Exception e) {
                 RackConsole.getConsole().error("Cannot add extra data graph: " + dataGraphs.get(i));
@@ -270,7 +263,6 @@ public class ConnectionUtil {
         return conn;
     }
 
-    
     public static SparqlConnection getSparqlConnection() {
 
         String connType = RackPreferencePage.getConnType();

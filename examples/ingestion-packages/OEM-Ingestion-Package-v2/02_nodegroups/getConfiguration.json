@@ -1,0 +1,251 @@
+{
+	"version": 3,
+	"sparqlConn": {
+		"name": "RACK local fuseki",
+		"domain": "",
+		"enableOwlImports": false,
+		"model": [
+			{
+				"type": "fuseki",
+				"url": "http://localhost:3030/RACK",
+				"graph": "http://rack001/model"
+			}
+		],
+		"data": [
+			{
+				"type": "fuseki",
+				"url": "http://localhost:3030/RACK",
+				"graph": "http://rack001/data"
+			},
+			{
+				"type": "fuseki",
+				"url": "http://localhost:3030/RACK",
+				"graph": "http://rack001/adeptdata"
+			}
+		]
+	},
+	"sNodeGroup": {
+		"version": 20,
+		"limit": 0,
+		"offset": 0,
+		"sNodeList": [
+			{
+				"propList": [
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://sadl.org/PLAN-CORE.sadl#derivedItemRequirementAlias",
+						"Constraints": "",
+						"SparqlID": "?derivedItemRequirementAlias",
+						"isReturned": true,
+						"optMinus": 0,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					},
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://sadl.org/PLAN-CORE.sadl#derivedsystemRequirementAlias",
+						"Constraints": "",
+						"SparqlID": "?derivedsystemRequirementAlias",
+						"isReturned": true,
+						"optMinus": 0,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					},
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://arcos.rack/PROV-S#identifier",
+						"Constraints": "",
+						"SparqlID": "?identifier",
+						"isReturned": false,
+						"optMinus": 0,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false,
+						"binding": "?Configuration",
+						"isBindingReturned": true
+					},
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://sadl.org/PLAN-CORE.sadl#interfaceAlias",
+						"Constraints": "",
+						"SparqlID": "?interfaceAlias",
+						"isReturned": true,
+						"optMinus": 0,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					},
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://sadl.org/PLAN-CORE.sadl#interfaceInputAlias",
+						"Constraints": "",
+						"SparqlID": "?interfaceInputAlias",
+						"isReturned": true,
+						"optMinus": 0,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					},
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://sadl.org/PLAN-CORE.sadl#interfaceOutputAlias",
+						"Constraints": "",
+						"SparqlID": "?interfaceOutputAlias",
+						"isReturned": true,
+						"optMinus": 0,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					},
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://sadl.org/PLAN-CORE.sadl#itemAlias",
+						"Constraints": "",
+						"SparqlID": "?itemAlias",
+						"isReturned": true,
+						"optMinus": 0,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					},
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://sadl.org/PLAN-CORE.sadl#itemRequirementAlias",
+						"Constraints": "",
+						"SparqlID": "?itemRequirementAlias",
+						"isReturned": true,
+						"optMinus": 0,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					},
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://sadl.org/PLAN-CORE.sadl#requirementCompleteCorrectReviewAlias",
+						"Constraints": "",
+						"SparqlID": "?requirementCompleteCorrectReviewAlias",
+						"isReturned": true,
+						"optMinus": 0,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					},
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://sadl.org/PLAN-CORE.sadl#requirementTraceableReviewAlias",
+						"Constraints": "",
+						"SparqlID": "?requirementTraceableReviewAlias",
+						"isReturned": true,
+						"optMinus": 0,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					},
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://sadl.org/PLAN-CORE.sadl#systemAlias",
+						"Constraints": "",
+						"SparqlID": "?systemAlias",
+						"isReturned": true,
+						"optMinus": 0,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					},
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://sadl.org/PLAN-CORE.sadl#systemDesignDescriptionAlias",
+						"Constraints": "",
+						"SparqlID": "?systemDesignDescriptionAlias",
+						"isReturned": true,
+						"optMinus": 0,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					},
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://sadl.org/PLAN-CORE.sadl#systemRequirementAlias",
+						"Constraints": "",
+						"SparqlID": "?systemRequirementAlias",
+						"isReturned": true,
+						"optMinus": 0,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					}
+				],
+				"nodeList": [],
+				"fullURIName": "http://sadl.org/PLAN-CORE.sadl#CONFIGURATION",
+				"SparqlID": "?CONFIGURATION",
+				"isReturned": false,
+				"isRuntimeConstrained": false,
+				"valueConstraint": "",
+				"instanceValue": null,
+				"deletionMode": "NO_DELETE"
+			}
+		],
+		"orderBy": [],
+		"groupBy": [],
+		"unionHash": {},
+		"columnOrder": []
+	},
+	"importSpec": {
+		"version": "1",
+		"baseURI": "",
+		"columns": [],
+		"dataValidator": [],
+		"texts": [],
+		"transforms": [],
+		"nodes": [
+			{
+				"sparqlID": "?CONFIGURATION",
+				"type": "http://sadl.org/PLAN-CORE.sadl#CONFIGURATION",
+				"mapping": [],
+				"props": []
+			}
+		]
+	},
+	"plotSpecs": null
+}

@@ -151,8 +151,7 @@ public class ClearRackDialog extends Dialog {
                                 return;
                             }
 
-                    
-                          TableItem []  items = dataGraphsTable.getItems();
+                            TableItem[] items = dataGraphsTable.getItems();
                             ArrayList<String> dataGraphs = new ArrayList<>();
                             for (TableItem item : items) {
                                 if (item.getChecked()) {
@@ -231,7 +230,7 @@ public class ClearRackDialog extends Dialog {
                         Arrays.stream(dataGraphsTable.getItems()).forEach(item -> item.dispose());
                         try {
                             graphInfo = ConnectionUtil.getGraphInfo();
-                           int numRows = graphInfo.getTable().getNumRows();
+                            int numRows = graphInfo.getTable().getNumRows();
                             for (int i = 0; i < numRows; i++) {
                                 TableItem item =
                                         new TableItem(dataGraphsTable, SWT.CENTER | SWT.CHECK);
@@ -275,7 +274,7 @@ public class ClearRackDialog extends Dialog {
             deleteAllNodegroupsBtn.setText(DELETE_ALL_NODEGROUPS);
 
             int numRows = graphInfo.getTable().getNumRows();
-                     TableColumn dataGraphHeader = new TableColumn(dataGraphsTable, SWT.CENTER);
+            TableColumn dataGraphHeader = new TableColumn(dataGraphsTable, SWT.CENTER);
             dataGraphHeader.setText("Model/Data graphs");
             dataGraphHeader.setWidth(500);
             for (int i = 0; i < numRows; i++) {

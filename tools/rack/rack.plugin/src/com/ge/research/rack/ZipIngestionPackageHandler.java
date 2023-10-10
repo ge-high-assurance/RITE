@@ -38,7 +38,6 @@ public class ZipIngestionPackageHandler extends UploadIngestionPackageHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-    	return super.execute(event, false, true);
+        return super.execute(event, false, true);
     }
-
 }

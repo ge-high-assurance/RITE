@@ -452,8 +452,7 @@
         </menuContribution>
         <menuContribution label="zipIngestionPackage"
             locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=rackplugin.commands.uploadNodegroups">
-            <command
-                commandId="rackplugin.commands.zipIngestionPackage"
+            <command commandId="rackplugin.commands.zipIngestionPackage"
                 label="Save Ingestion Package as Zip" name="Zip Ingestion Package">
                 <visibleWhen>
                     <with variable="selection">
