@@ -18,47 +18,9 @@
   </owl:Ontology>
   <do178cPsacCore:DO178CTable rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl#Table-A7">
     <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl#Objective-A7-1">
-        <j.0:description>Test procedures are correct</j.0:description>
-        <j.0:identifier>Objective-A7-1</j.0:identifier>
-      </do178cPsacCore:DO178CObjective>
-    </do178cPsacCore:objective>
-    <j.0:identifier>Table-A7</j.0:identifier>
-    <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl#Objective-A7-6">
-        <j.0:description>Test coverage of  software structure (decision coverage)  is achieved</j.0:description>
-        <j.0:identifier>Objective-A7-6</j.0:identifier>
-      </do178cPsacCore:DO178CObjective>
-    </do178cPsacCore:objective>
-    <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl#Objective-A7-9">
-        <j.0:description>Verification of additional code, that cannot be traced to source code, is achieved</j.0:description>
-        <j.0:identifier>Objective-A7-9</j.0:identifier>
-      </do178cPsacCore:DO178CObjective>
-    </do178cPsacCore:objective>
-    <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl#Objective-A7-5">
-        <j.0:description>Test coverage of software structure (modified condition/decision coverage) is achieved</j.0:description>
-        <j.0:identifier>Objective-A7-5</j.0:identifier>
-      </do178cPsacCore:DO178CObjective>
-    </do178cPsacCore:objective>
-    <j.0:description>Verification of Verification Process Results</j.0:description>
-    <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl#Objective-A7-8">
-        <j.0:description>Test coverage of  software structure (data coupling and control coupling) is achieved</j.0:description>
-        <j.0:identifier>Objective-A7-8</j.0:identifier>
-      </do178cPsacCore:DO178CObjective>
-    </do178cPsacCore:objective>
-    <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl#Objective-A7-4">
-        <j.0:description>Test coverage of low-level requirements is achieved</j.0:description>
-        <j.0:identifier>Objective-A7-4</j.0:identifier>
-      </do178cPsacCore:DO178CObjective>
-    </do178cPsacCore:objective>
-    <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl#Objective-A7-7">
-        <j.0:description>Test coverage of  software structure (statement coverage)  is achieved</j.0:description>
-        <j.0:identifier>Objective-A7-7</j.0:identifier>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl#Objective-A7-2">
+        <j.0:description>Test results are correct and descrepancies explained</j.0:description>
+        <j.0:identifier>Objective-A7-2</j.0:identifier>
       </do178cPsacCore:DO178CObjective>
     </do178cPsacCore:objective>
     <do178cPsacCore:objective>
@@ -68,9 +30,47 @@
       </do178cPsacCore:DO178CObjective>
     </do178cPsacCore:objective>
     <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl#Objective-A7-2">
-        <j.0:description>Test results are correct and descrepancies explained</j.0:description>
-        <j.0:identifier>Objective-A7-2</j.0:identifier>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl#Objective-A7-7">
+        <j.0:description>Test coverage of  software structure (statement coverage)  is achieved</j.0:description>
+        <j.0:identifier>Objective-A7-7</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl#Objective-A7-4">
+        <j.0:description>Test coverage of low-level requirements is achieved</j.0:description>
+        <j.0:identifier>Objective-A7-4</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl#Objective-A7-8">
+        <j.0:description>Test coverage of  software structure (data coupling and control coupling) is achieved</j.0:description>
+        <j.0:identifier>Objective-A7-8</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <j.0:description>Verification of Verification Process Results</j.0:description>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl#Objective-A7-5">
+        <j.0:description>Test coverage of software structure (modified condition/decision coverage) is achieved</j.0:description>
+        <j.0:identifier>Objective-A7-5</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl#Objective-A7-9">
+        <j.0:description>Verification of additional code, that cannot be traced to source code, is achieved</j.0:description>
+        <j.0:identifier>Objective-A7-9</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl#Objective-A7-6">
+        <j.0:description>Test coverage of  software structure (decision coverage)  is achieved</j.0:description>
+        <j.0:identifier>Objective-A7-6</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <j.0:identifier>Table-A7</j.0:identifier>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl#Objective-A7-1">
+        <j.0:description>Test procedures are correct</j.0:description>
+        <j.0:identifier>Objective-A7-1</j.0:identifier>
       </do178cPsacCore:DO178CObjective>
     </do178cPsacCore:objective>
   </do178cPsacCore:DO178CTable>

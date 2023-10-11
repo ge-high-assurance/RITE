@@ -18,47 +18,9 @@
   </owl:Ontology>
   <do178cPsacCore:DO178CTable rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Table-A5">
     <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-3">
-        <j.0:description>Source code is verifiable</j.0:description>
-        <j.0:identifier>Objective-A5-3</j.0:identifier>
-      </do178cPsacCore:DO178CObjective>
-    </do178cPsacCore:objective>
-    <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-8">
-        <j.0:description>Parameter data item file is correct and complete</j.0:description>
-        <j.0:identifier>Objective-A5-8</j.0:identifier>
-      </do178cPsacCore:DO178CObjective>
-    </do178cPsacCore:objective>
-    <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-6">
-        <j.0:description>Source code is accurate and consistent</j.0:description>
-        <j.0:identifier>Objective-A5-6</j.0:identifier>
-      </do178cPsacCore:DO178CObjective>
-    </do178cPsacCore:objective>
-    <j.0:description>Verification of Outputs of Software Coding and Integration Process</j.0:description>
-    <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-1">
-        <j.0:description>Source code complies with low-level requirements</j.0:description>
-        <j.0:identifier>Objective-A5-1</j.0:identifier>
-      </do178cPsacCore:DO178CObjective>
-    </do178cPsacCore:objective>
-    <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-4">
-        <j.0:description>Source code conforms to standards</j.0:description>
-        <j.0:identifier>Objective-A5-4</j.0:identifier>
-      </do178cPsacCore:DO178CObjective>
-    </do178cPsacCore:objective>
-    <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-9">
-        <j.0:description>Verification of parameter data item file is achieved</j.0:description>
-        <j.0:identifier>Objective-A5-9</j.0:identifier>
-      </do178cPsacCore:DO178CObjective>
-    </do178cPsacCore:objective>
-    <j.0:identifier>Table-A5</j.0:identifier>
-    <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-2">
-        <j.0:description>Source code complies with software architecture</j.0:description>
-        <j.0:identifier>Objective-A5-2</j.0:identifier>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-5">
+        <j.0:description>Source code is traceable to low-level requirements</j.0:description>
+        <j.0:identifier>Objective-A5-5</j.0:identifier>
       </do178cPsacCore:DO178CObjective>
     </do178cPsacCore:objective>
     <do178cPsacCore:objective>
@@ -68,9 +30,47 @@
       </do178cPsacCore:DO178CObjective>
     </do178cPsacCore:objective>
     <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-5">
-        <j.0:description>Source code is traceable to low-level requirements</j.0:description>
-        <j.0:identifier>Objective-A5-5</j.0:identifier>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-2">
+        <j.0:description>Source code complies with software architecture</j.0:description>
+        <j.0:identifier>Objective-A5-2</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <j.0:identifier>Table-A5</j.0:identifier>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-9">
+        <j.0:description>Verification of parameter data item file is achieved</j.0:description>
+        <j.0:identifier>Objective-A5-9</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-4">
+        <j.0:description>Source code conforms to standards</j.0:description>
+        <j.0:identifier>Objective-A5-4</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-1">
+        <j.0:description>Source code complies with low-level requirements</j.0:description>
+        <j.0:identifier>Objective-A5-1</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <j.0:description>Verification of Outputs of Software Coding and Integration Process</j.0:description>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-6">
+        <j.0:description>Source code is accurate and consistent</j.0:description>
+        <j.0:identifier>Objective-A5-6</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-8">
+        <j.0:description>Parameter data item file is correct and complete</j.0:description>
+        <j.0:identifier>Objective-A5-8</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-3">
+        <j.0:description>Source code is verifiable</j.0:description>
+        <j.0:identifier>Objective-A5-3</j.0:identifier>
       </do178cPsacCore:DO178CObjective>
     </do178cPsacCore:objective>
   </do178cPsacCore:DO178CTable>

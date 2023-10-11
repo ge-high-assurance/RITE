@@ -48,6 +48,10 @@
     <rdfs:comment xml:lang="en">SYSTEMs classify logical parts of the whole system being developed</rdfs:comment>
     <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#ENTITY"/>
   </owl:Class>
+  <owl:Class rdf:about="http://arcos.rack/SYSTEM#OP_PROCEDURE">
+    <rdfs:comment xml:lang="en">system operational procedures employed, e.g. going through a checklist, limiting people near runways, etc.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/DOCUMENT#PROCEDURE"/>
+  </owl:Class>
   <owl:Class rdf:about="http://arcos.rack/SYSTEM#INTERFACE">
     <rdfs:subClassOf>
       <owl:Restriction>
@@ -60,10 +64,6 @@
     </rdfs:subClassOf>
     <rdfs:comment xml:lang="en">INTERFACEs describe directed connections between a SYSTEM providing what another SYSTEM requires</rdfs:comment>
     <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#ENTITY"/>
-  </owl:Class>
-  <owl:Class rdf:about="http://arcos.rack/SYSTEM#OP_PROCEDURE">
-    <rdfs:comment xml:lang="en">system operational procedures employed, e.g. going through a checklist, limiting people near runways, etc.</rdfs:comment>
-    <rdfs:subClassOf rdf:resource="http://arcos.rack/DOCUMENT#PROCEDURE"/>
   </owl:Class>
   <owl:ObjectProperty rdf:about="http://arcos.rack/SYSTEM#provides">
     <rdfs:comment xml:lang="en">List of entities that this SYSTEM provides to others</rdfs:comment>

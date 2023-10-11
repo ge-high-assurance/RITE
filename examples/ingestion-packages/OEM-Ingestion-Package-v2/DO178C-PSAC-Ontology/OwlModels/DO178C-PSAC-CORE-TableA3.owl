@@ -18,35 +18,9 @@
   </owl:Ontology>
   <do178cPsacCore:DO178CTable rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl#Table-A3">
     <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl#Objective-A3-6">
-        <j.0:description>High-level requirements are traceable to system requirements</j.0:description>
-        <j.0:identifier>Objective-A3-6</j.0:identifier>
-      </do178cPsacCore:DO178CObjective>
-    </do178cPsacCore:objective>
-    <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl#Objective-A3-5">
-        <j.0:description>High-level requirements conform to standards</j.0:description>
-        <j.0:identifier>Objective-A3-5</j.0:identifier>
-      </do178cPsacCore:DO178CObjective>
-    </do178cPsacCore:objective>
-    <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl#Objective-A3-4">
-        <j.0:description>High-level requirements are verifiable</j.0:description>
-        <j.0:identifier>Objective-A3-4</j.0:identifier>
-      </do178cPsacCore:DO178CObjective>
-    </do178cPsacCore:objective>
-    <j.0:identifier>Table-A3</j.0:identifier>
-    <j.0:description>Verification of Outputs of Software Requirements Process</j.0:description>
-    <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl#Objective-A3-3">
-        <j.0:description>High-level requirements are compatible with target computer</j.0:description>
-        <j.0:identifier>Objective-A3-3</j.0:identifier>
-      </do178cPsacCore:DO178CObjective>
-    </do178cPsacCore:objective>
-    <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl#Objective-A3-2">
-        <j.0:description>High-level requirements are accurate and consistent</j.0:description>
-        <j.0:identifier>Objective-A3-2</j.0:identifier>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl#Objective-A3-7">
+        <j.0:description>Algorithms are accurate</j.0:description>
+        <j.0:identifier>Objective-A3-7</j.0:identifier>
       </do178cPsacCore:DO178CObjective>
     </do178cPsacCore:objective>
     <do178cPsacCore:objective>
@@ -56,9 +30,35 @@
       </do178cPsacCore:DO178CObjective>
     </do178cPsacCore:objective>
     <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl#Objective-A3-7">
-        <j.0:description>Algorithms are accurate</j.0:description>
-        <j.0:identifier>Objective-A3-7</j.0:identifier>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl#Objective-A3-2">
+        <j.0:description>High-level requirements are accurate and consistent</j.0:description>
+        <j.0:identifier>Objective-A3-2</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl#Objective-A3-3">
+        <j.0:description>High-level requirements are compatible with target computer</j.0:description>
+        <j.0:identifier>Objective-A3-3</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <j.0:description>Verification of Outputs of Software Requirements Process</j.0:description>
+    <j.0:identifier>Table-A3</j.0:identifier>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl#Objective-A3-4">
+        <j.0:description>High-level requirements are verifiable</j.0:description>
+        <j.0:identifier>Objective-A3-4</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl#Objective-A3-5">
+        <j.0:description>High-level requirements conform to standards</j.0:description>
+        <j.0:identifier>Objective-A3-5</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl#Objective-A3-6">
+        <j.0:description>High-level requirements are traceable to system requirements</j.0:description>
+        <j.0:identifier>Objective-A3-6</j.0:identifier>
       </do178cPsacCore:DO178CObjective>
     </do178cPsacCore:objective>
   </do178cPsacCore:DO178CTable>

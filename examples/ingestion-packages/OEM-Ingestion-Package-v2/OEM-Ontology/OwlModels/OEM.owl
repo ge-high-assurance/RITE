@@ -22,23 +22,23 @@
     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
     xmlns:tst="http://arcos.rack/TESTING#">
   <owl:Ontology rdf:about="http://arcos.rack/OEM">
-    <owl:imports rdf:resource="http://arcos.rack/CONFIDENCE"/>
-    <owl:imports rdf:resource="http://sadl.org/sadlimplicitmodel"/>
-    <owl:imports rdf:resource="http://sadl.org/sadlbasemodel"/>
-    <owl:imports rdf:resource="http://arcos.rack/REVIEW"/>
-    <owl:imports rdf:resource="http://arcos.rack/REQUIREMENTS"/>
-    <owl:imports rdf:resource="http://sadl.org/builtinfunctions"/>
-    <owl:imports rdf:resource="http://arcos.rack/TESTING"/>
-    <owl:imports rdf:resource="http://arcos.rack/FILE"/>
-    <owl:imports rdf:resource="http://arcos.rack/ANALYSIS"/>
-    <owl:imports rdf:resource="http://arcos.rack/SOFTWARE"/>
-    <owl:imports rdf:resource="http://arcos.rack/DOCUMENT"/>
-    <rdfs:comment xml:lang="en">This ontology was created from a SADL file 'OEM.sadl' and should not be directly edited.</rdfs:comment>
-    <owl:imports rdf:resource="http://arcos.rack/AGENTS"/>
-    <owl:imports rdf:resource="http://arcos.rack/SYSTEM"/>
-    <owl:imports rdf:resource="http://arcos.rack/HAZARD"/>
-    <owl:imports rdf:resource="http://arcos.rack/PROCESS"/>
     <owl:imports rdf:resource="http://arcos.rack/MODEL"/>
+    <owl:imports rdf:resource="http://arcos.rack/PROCESS"/>
+    <owl:imports rdf:resource="http://arcos.rack/HAZARD"/>
+    <owl:imports rdf:resource="http://arcos.rack/SYSTEM"/>
+    <owl:imports rdf:resource="http://arcos.rack/AGENTS"/>
+    <rdfs:comment xml:lang="en">This ontology was created from a SADL file 'OEM.sadl' and should not be directly edited.</rdfs:comment>
+    <owl:imports rdf:resource="http://arcos.rack/DOCUMENT"/>
+    <owl:imports rdf:resource="http://arcos.rack/SOFTWARE"/>
+    <owl:imports rdf:resource="http://arcos.rack/ANALYSIS"/>
+    <owl:imports rdf:resource="http://arcos.rack/FILE"/>
+    <owl:imports rdf:resource="http://arcos.rack/TESTING"/>
+    <owl:imports rdf:resource="http://sadl.org/builtinfunctions"/>
+    <owl:imports rdf:resource="http://arcos.rack/REQUIREMENTS"/>
+    <owl:imports rdf:resource="http://arcos.rack/REVIEW"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlbasemodel"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlimplicitmodel"/>
+    <owl:imports rdf:resource="http://arcos.rack/CONFIDENCE"/>
   </owl:Ontology>
   <owl:Class rdf:about="http://arcos.rack/OEM#DevelopSystemConOps">
     <rdfs:subClassOf>
@@ -271,9 +271,6 @@
     <rdfs:comment xml:lang="en">A Requirement identified in the Prime Item Development Specification</rdfs:comment>
     <rdfs:subClassOf rdf:resource="http://arcos.rack/REQUIREMENTS#REQUIREMENT"/>
   </owl:Class>
-  <owl:Class rdf:about="http://arcos.rack/OEM#SystemDesignDescription">
-    <rdfs:subClassOf rdf:resource="http://arcos.rack/DOCUMENT#DOCUMENT"/>
-  </owl:Class>
   <owl:Class rdf:about="http://arcos.rack/OEM#SBVT_Test">
     <rdfs:subClassOf>
       <owl:Restriction>
@@ -290,6 +287,9 @@
     </rdfs:subClassOf>
     <rdfs:comment xml:lang="en">A test identified in the Software Baseline Verification Tests</rdfs:comment>
     <rdfs:subClassOf rdf:resource="http://arcos.rack/TESTING#TEST"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://arcos.rack/OEM#SystemDesignDescription">
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/DOCUMENT#DOCUMENT"/>
   </owl:Class>
   <owl:Class rdf:about="http://arcos.rack/OEM#SRS_Doc">
     <rdfs:subClassOf>
@@ -515,13 +515,13 @@
     <j.0:identifier>sysml</j.0:identifier>
     <rdfs:comment xml:lang="en">Systems Modeling Language file format</rdfs:comment>
   </file:FORMAT>
-  <file:FORMAT rdf:about="http://arcos.rack/OEM#PngFormat">
-    <j.0:identifier>png</j.0:identifier>
-    <rdfs:comment xml:lang="en">Portable Network Graphics image file format</rdfs:comment>
-  </file:FORMAT>
   <file:FORMAT rdf:about="http://arcos.rack/OEM#CFormat">
     <j.0:identifier>c</j.0:identifier>
     <rdfs:comment xml:lang="en">C source file format</rdfs:comment>
+  </file:FORMAT>
+  <file:FORMAT rdf:about="http://arcos.rack/OEM#PngFormat">
+    <j.0:identifier>png</j.0:identifier>
+    <rdfs:comment xml:lang="en">Portable Network Graphics image file format</rdfs:comment>
   </file:FORMAT>
   <file:FORMAT rdf:about="http://arcos.rack/OEM#EmlFormat">
     <j.0:identifier>eml</j.0:identifier>
@@ -531,13 +531,13 @@
     <j.0:identifier>tiff</j.0:identifier>
     <rdfs:comment xml:lang="en">Tag Image File Format image file format</rdfs:comment>
   </file:FORMAT>
-  <file:FORMAT rdf:about="http://arcos.rack/OEM#TextFormat">
-    <j.0:identifier>txt</j.0:identifier>
-    <rdfs:comment xml:lang="en">Plain text file format</rdfs:comment>
-  </file:FORMAT>
   <file:FORMAT rdf:about="http://arcos.rack/OEM#PptFormat">
     <j.0:identifier>ppt</j.0:identifier>
     <rdfs:comment xml:lang="en">Microsoft PowerPoint file format</rdfs:comment>
+  </file:FORMAT>
+  <file:FORMAT rdf:about="http://arcos.rack/OEM#TextFormat">
+    <j.0:identifier>txt</j.0:identifier>
+    <rdfs:comment xml:lang="en">Plain text file format</rdfs:comment>
   </file:FORMAT>
   <file:FORMAT rdf:about="http://arcos.rack/OEM#SvgFormat">
     <j.0:identifier>svg</j.0:identifier>

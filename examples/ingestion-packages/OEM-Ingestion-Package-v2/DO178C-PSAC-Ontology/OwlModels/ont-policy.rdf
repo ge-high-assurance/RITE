@@ -3,138 +3,138 @@
     xmlns="http://jena.hpl.hp.com/schemas/2003/03/ont-manager#"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
   <OntologySpec>
-    <sadlSourceURL>platform:/resource/DO178C-PSAC-Ontology/ImplicitModel/SadlBuiltinFunctions.sadl</sadlSourceURL>
-    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/oem-ingestion-v2/DO178C-PSAC-Ontology/OwlModels/SadlBuiltinFunctions.owl"/>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <createdBy>SADL</createdBy>
-    <prefix>builtinfunctions</prefix>
-    <publicURI rdf:resource="http://sadl.org/builtinfunctions"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA5.sadl</sadlSourceURL>
-    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/oem-ingestion-v2/DO178C-PSAC-Ontology/OwlModels/DO178C-PSAC-CORE-TableA5.owl"/>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <createdBy>SADL</createdBy>
-    <prefix>do178cPsacCorA5</prefix>
-    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl"/>
-  </OntologySpec>
-  <OntologySpec>
-    <publicURI rdf:resource="http://sadl.org/sadllistmodel"/>
-    <altURL rdf:resource="file:///C:/Users/212807042/Desktop/SADL_files/DO178C-PSAC-Ontology/OwlModels/SadlListModel.owl"/>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <createdBy>SADL</createdBy>
-    <prefix>sadllistmodel</prefix>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA1.sadl</sadlSourceURL>
-    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/oem-ingestion-v2/DO178C-PSAC-Ontology/OwlModels/DO178C-PSAC-CORE-TableA1.owl"/>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <createdBy>SADL</createdBy>
-    <prefix>do178cPsacCorA1</prefix>
-    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA1.sadl"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA6.sadl</sadlSourceURL>
-    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/oem-ingestion-v2/DO178C-PSAC-Ontology/OwlModels/DO178C-PSAC-CORE-TableA6.owl"/>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <createdBy>SADL</createdBy>
-    <prefix>do178cPsacCorA6</prefix>
-    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA6.sadl"/>
-  </OntologySpec>
-  <OntologySpec>
-    <publicURI rdf:resource="http://sadl.org/sadlbasemodel"/>
-    <altURL rdf:resource="file:///C:/Users/212807042/Desktop/SADL_files/DO178C-PSAC-Ontology/OwlModels/SadlBaseModel.owl"/>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <createdBy>SADL</createdBy>
     <prefix>sadlbasemodel</prefix>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA7.sadl</sadlSourceURL>
-    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/oem-ingestion-v2/DO178C-PSAC-Ontology/OwlModels/DO178C-PSAC-CORE-TableA7.owl"/>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
     <createdBy>SADL</createdBy>
-    <prefix>do178cPsacCorA7</prefix>
-    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA4.sadl</sadlSourceURL>
-    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/oem-ingestion-v2/DO178C-PSAC-Ontology/OwlModels/DO178C-PSAC-CORE-TableA4.owl"/>
     <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <createdBy>SADL</createdBy>
-    <prefix>do178cPsacCorA4</prefix>
-    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl"/>
-  </OntologySpec>
-  <OntologySpec>
-    <altURL rdf:resource="http://protege.stanford.edu/plugins/owl/dc/protege-dc.owl"/>
-    <publicURI rdf:resource="http://purl.org/dc/elements/1.1/"/>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <prefix>dc</prefix>
+    <altURL rdf:resource="file:///C:/Users/212807042/Desktop/SADL_files/DO178C-PSAC-Ontology/OwlModels/SadlBaseModel.owl"/>
+    <publicURI rdf:resource="http://sadl.org/sadlbasemodel"/>
   </OntologySpec>
   <OntologySpec>
     <sadlSourceURL>platform:/resource/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA8.sadl</sadlSourceURL>
-    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/oem-ingestion-v2/DO178C-PSAC-Ontology/OwlModels/DO178C-PSAC-CORE-TableA8.owl"/>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <createdBy>SADL</createdBy>
     <prefix>do178cPsacCorA8</prefix>
+    <createdBy>SADL</createdBy>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/RITE/examples/ingestion-packages/OEM-Ingestion-Package-v2/DO178C-PSAC-Ontology/OwlModels/DO178C-PSAC-CORE-TableA8.owl"/>
     <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA8.sadl"/>
   </OntologySpec>
   <OntologySpec>
-    <sadlSourceURL>platform:/resource/DO178C-PSAC-Ontology/ImplicitModel/SadlImplicitModel.sadl</sadlSourceURL>
-    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/oem-ingestion-v2/DO178C-PSAC-Ontology/OwlModels/SadlImplicitModel.owl"/>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <sadlSourceURL>platform:/resource/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE.sadl</sadlSourceURL>
+    <prefix>do178cPsacCore</prefix>
     <createdBy>SADL</createdBy>
-    <prefix>sadlimplicitmodel</prefix>
-    <publicURI rdf:resource="http://sadl.org/sadlimplicitmodel"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/RITE/examples/ingestion-packages/OEM-Ingestion-Package-v2/DO178C-PSAC-Ontology/OwlModels/DO178C-PSAC-CORE.owl"/>
+    <publicURI rdf:resource="http://arcos.rack/DO178C-PSAC-CORE.sadl"/>
   </OntologySpec>
   <OntologySpec>
-    <sadlSourceURL>platform:/resource/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA9.sadl</sadlSourceURL>
-    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/oem-ingestion-v2/DO178C-PSAC-Ontology/OwlModels/DO178C-PSAC-CORE-TableA9.owl"/>
+    <prefix>owl</prefix>
+    <publicURI rdf:resource="http://www.w3.org/2002/07/owl"/>
     <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <createdBy>SADL</createdBy>
-    <prefix>do178cPsacCorA9</prefix>
-    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA9.sadl"/>
   </OntologySpec>
   <OntologySpec>
     <sadlSourceURL>platform:/resource/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA3.sadl</sadlSourceURL>
-    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/oem-ingestion-v2/DO178C-PSAC-Ontology/OwlModels/DO178C-PSAC-CORE-TableA3.owl"/>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <createdBy>SADL</createdBy>
     <prefix>do178cPsacCorA3</prefix>
+    <createdBy>SADL</createdBy>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/RITE/examples/ingestion-packages/OEM-Ingestion-Package-v2/DO178C-PSAC-Ontology/OwlModels/DO178C-PSAC-CORE-TableA3.owl"/>
     <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl"/>
   </OntologySpec>
   <OntologySpec>
+    <prefix>dc</prefix>
     <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <publicURI rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <prefix>owl</prefix>
+    <publicURI rdf:resource="http://purl.org/dc/elements/1.1/"/>
+    <altURL rdf:resource="http://protege.stanford.edu/plugins/owl/dc/protege-dc.owl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA4.sadl</sadlSourceURL>
+    <prefix>do178cPsacCorA4</prefix>
+    <createdBy>SADL</createdBy>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/RITE/examples/ingestion-packages/OEM-Ingestion-Package-v2/DO178C-PSAC-Ontology/OwlModels/DO178C-PSAC-CORE-TableA4.owl"/>
+    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl"/>
   </OntologySpec>
   <OntologySpec>
     <sadlSourceURL>platform:/resource/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA10.sadl</sadlSourceURL>
-    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/oem-ingestion-v2/DO178C-PSAC-Ontology/OwlModels/DO178C-PSAC-CORE-TableA10.owl"/>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <createdBy>SADL</createdBy>
     <prefix>do178cPsacCorA10</prefix>
+    <createdBy>SADL</createdBy>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/RITE/examples/ingestion-packages/OEM-Ingestion-Package-v2/DO178C-PSAC-Ontology/OwlModels/DO178C-PSAC-CORE-TableA10.owl"/>
     <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA10.sadl"/>
   </OntologySpec>
   <OntologySpec>
     <sadlSourceURL>platform:/resource/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA2.sadl</sadlSourceURL>
-    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/oem-ingestion-v2/DO178C-PSAC-Ontology/OwlModels/DO178C-PSAC-CORE-TableA2.owl"/>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <createdBy>SADL</createdBy>
     <prefix>do178cPsacCorA2</prefix>
+    <createdBy>SADL</createdBy>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/RITE/examples/ingestion-packages/OEM-Ingestion-Package-v2/DO178C-PSAC-Ontology/OwlModels/DO178C-PSAC-CORE-TableA2.owl"/>
     <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA2.sadl"/>
   </OntologySpec>
   <OntologySpec>
-    <sadlSourceURL>platform:/resource/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE.sadl</sadlSourceURL>
-    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/oem-ingestion-v2/DO178C-PSAC-Ontology/OwlModels/DO178C-PSAC-CORE.owl"/>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <sadlSourceURL>platform:/resource/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA5.sadl</sadlSourceURL>
+    <prefix>do178cPsacCorA5</prefix>
     <createdBy>SADL</createdBy>
-    <prefix>do178cPsacCore</prefix>
-    <publicURI rdf:resource="http://arcos.rack/DO178C-PSAC-CORE.sadl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/RITE/examples/ingestion-packages/OEM-Ingestion-Package-v2/DO178C-PSAC-Ontology/OwlModels/DO178C-PSAC-CORE-TableA5.owl"/>
+    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/DO178C-PSAC-Ontology/ImplicitModel/SadlImplicitModel.sadl</sadlSourceURL>
+    <prefix>sadlimplicitmodel</prefix>
+    <createdBy>SADL</createdBy>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/RITE/examples/ingestion-packages/OEM-Ingestion-Package-v2/DO178C-PSAC-Ontology/OwlModels/SadlImplicitModel.owl"/>
+    <publicURI rdf:resource="http://sadl.org/sadlimplicitmodel"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA1.sadl</sadlSourceURL>
+    <prefix>do178cPsacCorA1</prefix>
+    <createdBy>SADL</createdBy>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/RITE/examples/ingestion-packages/OEM-Ingestion-Package-v2/DO178C-PSAC-Ontology/OwlModels/DO178C-PSAC-CORE-TableA1.owl"/>
+    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA1.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA6.sadl</sadlSourceURL>
+    <prefix>do178cPsacCorA6</prefix>
+    <createdBy>SADL</createdBy>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/RITE/examples/ingestion-packages/OEM-Ingestion-Package-v2/DO178C-PSAC-Ontology/OwlModels/DO178C-PSAC-CORE-TableA6.owl"/>
+    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA6.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/DO178C-PSAC-Ontology/ImplicitModel/SadlBuiltinFunctions.sadl</sadlSourceURL>
+    <prefix>builtinfunctions</prefix>
+    <createdBy>SADL</createdBy>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/RITE/examples/ingestion-packages/OEM-Ingestion-Package-v2/DO178C-PSAC-Ontology/OwlModels/SadlBuiltinFunctions.owl"/>
+    <publicURI rdf:resource="http://sadl.org/builtinfunctions"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA7.sadl</sadlSourceURL>
+    <prefix>do178cPsacCorA7</prefix>
+    <createdBy>SADL</createdBy>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/RITE/examples/ingestion-packages/OEM-Ingestion-Package-v2/DO178C-PSAC-Ontology/OwlModels/DO178C-PSAC-CORE-TableA7.owl"/>
+    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA9.sadl</sadlSourceURL>
+    <prefix>do178cPsacCorA9</prefix>
+    <createdBy>SADL</createdBy>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <altURL rdf:resource="file:/C:/Users/212807042/Desktop/RITE/examples/ingestion-packages/OEM-Ingestion-Package-v2/DO178C-PSAC-Ontology/OwlModels/DO178C-PSAC-CORE-TableA9.owl"/>
+    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA9.sadl"/>
   </OntologySpec>
   <DocumentManagerPolicy>
-    <cacheModels rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
-    >true</cacheModels>
     <processImports rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
     >true</processImports>
+    <cacheModels rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</cacheModels>
   </DocumentManagerPolicy>
+  <OntologySpec>
+    <prefix>sadllistmodel</prefix>
+    <createdBy>SADL</createdBy>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <altURL rdf:resource="file:///C:/Users/212807042/Desktop/SADL_files/DO178C-PSAC-Ontology/OwlModels/SadlListModel.owl"/>
+    <publicURI rdf:resource="http://sadl.org/sadllistmodel"/>
+  </OntologySpec>
 </rdf:RDF>

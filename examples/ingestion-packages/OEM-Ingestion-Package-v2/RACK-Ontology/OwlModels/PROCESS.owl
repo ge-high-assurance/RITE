@@ -44,15 +44,15 @@
     <rdfs:range rdf:resource="http://arcos.rack/PROV-S#ACTIVITY"/>
     <rdfs:domain rdf:resource="http://arcos.rack/PROCESS#OBJECTIVE"/>
   </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:about="http://arcos.rack/PROCESS#scopeOf">
-    <rdfs:subPropertyOf rdf:resource="http://arcos.rack/PROV-S#wasImpactedBy"/>
-    <rdfs:comment xml:lang="en">ENTITY(s) over which the PROPERTY holds</rdfs:comment>
-    <rdfs:range rdf:resource="http://arcos.rack/PROV-S#ENTITY"/>
-    <rdfs:domain rdf:resource="http://arcos.rack/PROCESS#PROPERTY"/>
-  </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://arcos.rack/PROCESS#mitigates">
     <rdfs:subPropertyOf rdf:resource="http://arcos.rack/PROV-S#wasImpactedBy"/>
     <rdfs:comment xml:lang="en">ENTITY(s) that is being mitigated by this PROPERTY</rdfs:comment>
+    <rdfs:range rdf:resource="http://arcos.rack/PROV-S#ENTITY"/>
+    <rdfs:domain rdf:resource="http://arcos.rack/PROCESS#PROPERTY"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://arcos.rack/PROCESS#scopeOf">
+    <rdfs:subPropertyOf rdf:resource="http://arcos.rack/PROV-S#wasImpactedBy"/>
+    <rdfs:comment xml:lang="en">ENTITY(s) over which the PROPERTY holds</rdfs:comment>
     <rdfs:range rdf:resource="http://arcos.rack/PROV-S#ENTITY"/>
     <rdfs:domain rdf:resource="http://arcos.rack/PROCESS#PROPERTY"/>
   </owl:ObjectProperty>

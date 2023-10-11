@@ -376,12 +376,16 @@ public class ObjectiveViewHandler {
 
                 String evidenceText = intrface.getId() + " | Inputs: ";
                 for (Evidence input : intrface.getHasInputs()) {
-                    evidenceText = evidenceText + input.getId() + ", ";
+                	if(input!=null) {
+                        evidenceText = evidenceText + input.getId() + ", ";                		
+                	}
                 }
                 evidenceText = evidenceText + " | Outputs: ";
 
                 for (Evidence output : intrface.getHasOutputs()) {
-                    evidenceText = evidenceText + output.getId() + ", ";
+                	if(output!=null) {
+                        evidenceText = evidenceText + output.getId() + ", ";                		
+                	}
                 }
 
                 evidenceLabel.setText(evidenceText);

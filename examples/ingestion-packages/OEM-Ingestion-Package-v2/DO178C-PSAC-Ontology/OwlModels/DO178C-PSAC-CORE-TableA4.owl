@@ -18,58 +18,22 @@
   </owl:Ontology>
   <do178cPsacCore:DO178CTable rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Table-A4">
     <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-11">
-        <j.0:description>Software architecture is verifiable</j.0:description>
-        <j.0:identifier>Objective-A4-11</j.0:identifier>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-12">
+        <j.0:description>Software architecture conform to standards</j.0:description>
+        <j.0:identifier>Objective-A4-12</j.0:identifier>
       </do178cPsacCore:DO178CObjective>
     </do178cPsacCore:objective>
     <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-9">
-        <j.0:description>Software architecture is consistent</j.0:description>
-        <j.0:identifier>Objective-A4-9</j.0:identifier>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-13">
+        <j.0:description>Software partitioning integrity is confirmed</j.0:description>
+        <j.0:identifier>Objective-A4-13</j.0:identifier>
       </do178cPsacCore:DO178CObjective>
     </do178cPsacCore:objective>
+    <j.0:identifier>Table-A4</j.0:identifier>
     <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-10">
-        <j.0:description>Software architecture is compatible with target computer</j.0:description>
-        <j.0:identifier>Objective-A4-10</j.0:identifier>
-      </do178cPsacCore:DO178CObjective>
-    </do178cPsacCore:objective>
-    <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-8">
-        <j.0:description>Software architecture is compatible with high-level requirements</j.0:description>
-        <j.0:identifier>Objective-A4-8</j.0:identifier>
-      </do178cPsacCore:DO178CObjective>
-    </do178cPsacCore:objective>
-    <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-7">
-        <j.0:description>Algorithms are accurate</j.0:description>
-        <j.0:identifier>Objective-A4-7</j.0:identifier>
-      </do178cPsacCore:DO178CObjective>
-    </do178cPsacCore:objective>
-    <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-6">
-        <j.0:description>Low-level requirements are traceable to high-level requirements</j.0:description>
-        <j.0:identifier>Objective-A4-6</j.0:identifier>
-      </do178cPsacCore:DO178CObjective>
-    </do178cPsacCore:objective>
-    <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-5">
-        <j.0:description>Low-level requirements conform to standards</j.0:description>
-        <j.0:identifier>Objective-A4-5</j.0:identifier>
-      </do178cPsacCore:DO178CObjective>
-    </do178cPsacCore:objective>
-    <j.0:description>Verification of Outputs of Software Design Process</j.0:description>
-    <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-4">
-        <j.0:description>Low-level requirements are verifiable</j.0:description>
-        <j.0:identifier>Objective-A4-4</j.0:identifier>
-      </do178cPsacCore:DO178CObjective>
-    </do178cPsacCore:objective>
-    <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-2">
-        <j.0:description>Low-level requirements are accurate and consistent</j.0:description>
-        <j.0:identifier>Objective-A4-2</j.0:identifier>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-1">
+        <j.0:description>Low-level requirements comply with high-level requirements</j.0:description>
+        <j.0:identifier>Objective-A4-1</j.0:identifier>
       </do178cPsacCore:DO178CObjective>
     </do178cPsacCore:objective>
     <do178cPsacCore:objective>
@@ -79,22 +43,58 @@
       </do178cPsacCore:DO178CObjective>
     </do178cPsacCore:objective>
     <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-1">
-        <j.0:description>Low-level requirements comply with high-level requirements</j.0:description>
-        <j.0:identifier>Objective-A4-1</j.0:identifier>
-      </do178cPsacCore:DO178CObjective>
-    </do178cPsacCore:objective>
-    <j.0:identifier>Table-A4</j.0:identifier>
-    <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-13">
-        <j.0:description>Software partitioning integrity is confirmed</j.0:description>
-        <j.0:identifier>Objective-A4-13</j.0:identifier>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-2">
+        <j.0:description>Low-level requirements are accurate and consistent</j.0:description>
+        <j.0:identifier>Objective-A4-2</j.0:identifier>
       </do178cPsacCore:DO178CObjective>
     </do178cPsacCore:objective>
     <do178cPsacCore:objective>
-      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-12">
-        <j.0:description>Software architecture conform to standards</j.0:description>
-        <j.0:identifier>Objective-A4-12</j.0:identifier>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-4">
+        <j.0:description>Low-level requirements are verifiable</j.0:description>
+        <j.0:identifier>Objective-A4-4</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <j.0:description>Verification of Outputs of Software Design Process</j.0:description>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-5">
+        <j.0:description>Low-level requirements conform to standards</j.0:description>
+        <j.0:identifier>Objective-A4-5</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-6">
+        <j.0:description>Low-level requirements are traceable to high-level requirements</j.0:description>
+        <j.0:identifier>Objective-A4-6</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-7">
+        <j.0:description>Algorithms are accurate</j.0:description>
+        <j.0:identifier>Objective-A4-7</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-8">
+        <j.0:description>Software architecture is compatible with high-level requirements</j.0:description>
+        <j.0:identifier>Objective-A4-8</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-10">
+        <j.0:description>Software architecture is compatible with target computer</j.0:description>
+        <j.0:identifier>Objective-A4-10</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-9">
+        <j.0:description>Software architecture is consistent</j.0:description>
+        <j.0:identifier>Objective-A4-9</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-11">
+        <j.0:description>Software architecture is verifiable</j.0:description>
+        <j.0:identifier>Objective-A4-11</j.0:identifier>
       </do178cPsacCore:DO178CObjective>
     </do178cPsacCore:objective>
   </do178cPsacCore:DO178CTable>

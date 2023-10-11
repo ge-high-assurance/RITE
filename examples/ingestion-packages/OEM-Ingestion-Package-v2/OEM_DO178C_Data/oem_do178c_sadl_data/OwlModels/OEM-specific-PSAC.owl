@@ -14,21 +14,21 @@
     xmlns:j.5="http://arcos.rack/FILE#"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
   <owl:Ontology rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl">
-    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA1.sadl"/>
-    <rdfs:comment xml:lang="en">This ontology was created from a SADL file 'OEM-specific-PSAC.sadl' and should not be directly edited.</rdfs:comment>
-    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA8.sadl"/>
-    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA10.sadl"/>
-    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl"/>
-    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl"/>
-    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA2.sadl"/>
-    <owl:imports rdf:resource="http://sadl.org/sadlimplicitmodel"/>
-    <owl:imports rdf:resource="http://sadl.org/builtinfunctions"/>
-    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA9.sadl"/>
-    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl"/>
-    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl"/>
-    <owl:imports rdf:resource="http://arcos.rack/OEM"/>
-    <owl:imports rdf:resource="http://sadl.org/sadlbasemodel"/>
     <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA6.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlbasemodel"/>
+    <owl:imports rdf:resource="http://arcos.rack/OEM"/>
+    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA9.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/builtinfunctions"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlimplicitmodel"/>
+    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA2.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA10.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA8.sadl"/>
+    <rdfs:comment xml:lang="en">This ontology was created from a SADL file 'OEM-specific-PSAC.sadl' and should not be directly edited.</rdfs:comment>
+    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA1.sadl"/>
   </owl:Ontology>
   <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-6">
     <j.0:query>Objective-A4-6-query-OEM-subdd-Trace-Review-logs</j.0:query>
@@ -150,6 +150,22 @@
       </j.0:DO178CActivity>
     </j.0:activity>
   </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA2.sadl#Objective-A2-5">
+    <j.0:query>Objective-A2-5-query-count-all-Derived-SubDD-Reqs-that-satisfy-some-req</j.0:query>
+    <j.0:query>Objective-A2-5-query-count-all-Derived-SubDD-Reqs</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A2-5-1">
+        <j.0:performs>
+          <j.2:SoftwareHighLevelRequirementsDefinition rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-Derived-SubDD-Development">
+            <j.4:description>The OEM ontology activity concerned with derived SubDD req development</j.4:description>
+            <j.4:identifier>OEM-Derived-SubDD-Development</j.4:identifier>
+          </j.2:SoftwareHighLevelRequirementsDefinition>
+        </j.0:performs>
+        <j.4:description>A custom Do178C activity concerned with derived subDD req development</j.4:description>
+        <j.4:identifier>Activity-A2-5-1</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
   <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA1.sadl#Objective-A1-1">
     <j.0:query>Objective-A1-1-query-check-output-for-PSAC-SDP-SVP-SCMPlan-SQAPlan</j.0:query>
     <j.0:activity>
@@ -186,22 +202,6 @@
         </j.0:performs>
         <j.4:description>A custom activity for Table 1, Objective 1 that is concerned with defining the activities of the software life cycle processes in the PSAC, SDP, SVP, SCM Plan, and SQA Plan textfiles</j.4:description>
         <j.4:identifier>Activity-A1-1-1</j.4:identifier>
-      </j.0:DO178CActivity>
-    </j.0:activity>
-  </j.0:DO178CObjective>
-  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA2.sadl#Objective-A2-5">
-    <j.0:query>Objective-A2-5-query-count-all-Derived-SubDD-Reqs-that-satisfy-some-req</j.0:query>
-    <j.0:query>Objective-A2-5-query-count-all-Derived-SubDD-Reqs</j.0:query>
-    <j.0:activity>
-      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A2-5-1">
-        <j.0:performs>
-          <j.2:SoftwareHighLevelRequirementsDefinition rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-Derived-SubDD-Development">
-            <j.4:description>The OEM ontology activity concerned with derived SubDD req development</j.4:description>
-            <j.4:identifier>OEM-Derived-SubDD-Development</j.4:identifier>
-          </j.2:SoftwareHighLevelRequirementsDefinition>
-        </j.0:performs>
-        <j.4:description>A custom Do178C activity concerned with derived subDD req development</j.4:description>
-        <j.4:identifier>Activity-A2-5-1</j.4:identifier>
       </j.0:DO178CActivity>
     </j.0:activity>
   </j.0:DO178CObjective>
@@ -374,6 +374,21 @@
       </j.0:DO178CActivity>
     </j.0:activity>
   </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-4">
+    <j.0:query>Objective-A5-4-query-OEM-swcomponent-standards-review-logs</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A5-1-4">
+        <j.0:performs>
+          <j.1:REVIEW rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-source-code-standards-Review">
+            <j.4:description>Review if source code conforms to standards</j.4:description>
+            <j.4:identifier>OEM-source-code-standards-Review</j.4:identifier>
+          </j.1:REVIEW>
+        </j.0:performs>
+        <j.4:description>Review if source code conforms to standards</j.4:description>
+        <j.4:identifier>Activity-A5-1-4</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
   <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA1.sadl#Objective-A1-3">
     <j.0:query>Objective-A1-3-query-check-output-for-PSAC-SDP-SVP-SCMPlan-SQAPlan</j.0:query>
     <j.0:activity>
@@ -413,32 +428,8 @@
       </j.0:DO178CActivity>
     </j.0:activity>
   </j.0:DO178CObjective>
-  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-4">
-    <j.0:query>Objective-A5-4-query-OEM-swcomponent-standards-review-logs</j.0:query>
-    <j.0:activity>
-      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A5-1-4">
-        <j.0:performs>
-          <j.1:REVIEW rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-source-code-standards-Review">
-            <j.4:description>Review if source code conforms to standards</j.4:description>
-            <j.4:identifier>OEM-source-code-standards-Review</j.4:identifier>
-          </j.1:REVIEW>
-        </j.0:performs>
-        <j.4:description>Review if source code conforms to standards</j.4:description>
-        <j.4:identifier>Activity-A5-1-4</j.4:identifier>
-      </j.0:DO178CActivity>
-    </j.0:activity>
-  </j.0:DO178CObjective>
   <j.0:DO178CPSAC rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-SP-PSAC">
-    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA6.sadl#Table-A6"/>
-    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl#Table-A7"/>
-    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA8.sadl#Table-A8"/>
-    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA2.sadl#Table-A2"/>
-    <j.4:identifier>OEM-SP-PSAC</j.4:identifier>
-    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Table-A5"/>
-    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Table-A4"/>
-    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA10.sadl#Table-A10"/>
-    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA1.sadl#Table-A1"/>
-    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl#Table-A3"/>
+    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA9.sadl#Table-A9"/>
     <j.0:software>
       <j.3:SWCOMPONENT rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-SP-SW">
         <j.0:softwareLevel rdf:resource="http://arcos.rack/DO178C-PSAC-CORE.sadl#LevelC"/>
@@ -446,7 +437,16 @@
         <j.4:identifier>OEM-SP-SW</j.4:identifier>
       </j.3:SWCOMPONENT>
     </j.0:software>
-    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA9.sadl#Table-A9"/>
+    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl#Table-A3"/>
+    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA1.sadl#Table-A1"/>
+    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA10.sadl#Table-A10"/>
+    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Table-A4"/>
+    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Table-A5"/>
+    <j.4:identifier>OEM-SP-PSAC</j.4:identifier>
+    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA2.sadl#Table-A2"/>
+    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA8.sadl#Table-A8"/>
+    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl#Table-A7"/>
+    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA6.sadl#Table-A6"/>
   </j.0:DO178CPSAC>
   <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl#Objective-A3-4">
     <j.0:query>Objective-A3-4-query-OEM-SRS-Verifiability-Review-logs</j.0:query>
@@ -517,6 +517,21 @@
       </j.0:DO178CActivity>
     </j.0:activity>
   </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-3">
+    <j.0:query>Objective-A5-3-query-OEM-swcomponent-verifiable-review-logs</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A5-1-3">
+        <j.0:performs>
+          <j.1:REVIEW rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-source-code-verifiable-Review">
+            <j.4:description>Review if source code is verifiable</j.4:description>
+            <j.4:identifier>OEM-source-code-verifiable-Review</j.4:identifier>
+          </j.1:REVIEW>
+        </j.0:performs>
+        <j.4:description>Review if source code is verifiable</j.4:description>
+        <j.4:identifier>Activity-A5-1-3</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
   <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA1.sadl#Objective-A1-4">
     <j.0:query>Objective-A1-4-query-check-output-for-PSAC-SDP-SVP-SCMPlan-SQAPlan</j.0:query>
     <j.0:activity>
@@ -553,21 +568,6 @@
         </j.0:performs>
         <j.4:description>A custom activity for Table 1, Objective 1 that is concerned with addressing additional considerations in the PSAC, SDP, SVP, SCM Plan and SQA Plan</j.4:description>
         <j.4:identifier>Activity-A1-4-1</j.4:identifier>
-      </j.0:DO178CActivity>
-    </j.0:activity>
-  </j.0:DO178CObjective>
-  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-3">
-    <j.0:query>Objective-A5-3-query-OEM-swcomponent-verifiable-review-logs</j.0:query>
-    <j.0:activity>
-      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A5-1-3">
-        <j.0:performs>
-          <j.1:REVIEW rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-source-code-verifiable-Review">
-            <j.4:description>Review if source code is verifiable</j.4:description>
-            <j.4:identifier>OEM-source-code-verifiable-Review</j.4:identifier>
-          </j.1:REVIEW>
-        </j.0:performs>
-        <j.4:description>Review if source code is verifiable</j.4:description>
-        <j.4:identifier>Activity-A5-1-3</j.4:identifier>
       </j.0:DO178CActivity>
     </j.0:activity>
   </j.0:DO178CObjective>

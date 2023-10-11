@@ -15,17 +15,17 @@
     xmlns:ss="http://arcos.rack/SAFETY-SECURITY#"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
   <owl:Ontology rdf:about="http://arcos.rack/SAFETY-SECURITY">
-    <owl:imports rdf:resource="http://arcos.rack/SOFTWARE"/>
-    <owl:imports rdf:resource="http://arcos.rack/PROV-S"/>
-    <owl:imports rdf:resource="http://arcos.rack/SYSTEM"/>
-    <owl:imports rdf:resource="http://arcos.rack/PROCESS"/>
-    <owl:imports rdf:resource="http://sadl.org/sadlimplicitmodel"/>
-    <owl:imports rdf:resource="http://arcos.rack/HAZARD"/>
-    <owl:imports rdf:resource="http://sadl.org/sadlbasemodel"/>
-    <owl:imports rdf:resource="http://arcos.rack/HARDWARE"/>
-    <owl:imports rdf:resource="http://sadl.org/builtinfunctions"/>
-    <rdfs:comment xml:lang="en">This ontology was created from a SADL file 'SAFETY-SECURITY.sadl' and should not be directly edited.</rdfs:comment>
     <owl:imports rdf:resource="http://arcos.rack/REQUIREMENTS"/>
+    <rdfs:comment xml:lang="en">This ontology was created from a SADL file 'SAFETY-SECURITY.sadl' and should not be directly edited.</rdfs:comment>
+    <owl:imports rdf:resource="http://sadl.org/builtinfunctions"/>
+    <owl:imports rdf:resource="http://arcos.rack/HARDWARE"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlbasemodel"/>
+    <owl:imports rdf:resource="http://arcos.rack/HAZARD"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlimplicitmodel"/>
+    <owl:imports rdf:resource="http://arcos.rack/PROCESS"/>
+    <owl:imports rdf:resource="http://arcos.rack/SYSTEM"/>
+    <owl:imports rdf:resource="http://arcos.rack/PROV-S"/>
+    <owl:imports rdf:resource="http://arcos.rack/SOFTWARE"/>
   </owl:Ontology>
   <owl:Class rdf:about="http://arcos.rack/SAFETY-SECURITY#SECURITY_REQUIREMENT_SET">
     <rdfs:subClassOf>
@@ -118,12 +118,12 @@
     <rdfs:comment xml:lang="en">A threat / vulnerability to be assessed for certification</rdfs:comment>
     <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#ENTITY"/>
   </owl:Class>
+  <owl:Class rdf:about="http://arcos.rack/SAFETY-SECURITY#SAFETY_DESIGN_ASSURANCE_LEVEL">
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#THING"/>
+  </owl:Class>
   <owl:Class rdf:about="http://arcos.rack/SAFETY-SECURITY#EXPLOITATION">
     <rdfs:comment xml:lang="en">unmitigated vulnerability exploited by an attack access vector</rdfs:comment>
     <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#ENTITY"/>
-  </owl:Class>
-  <owl:Class rdf:about="http://arcos.rack/SAFETY-SECURITY#SAFETY_DESIGN_ASSURANCE_LEVEL">
-    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#THING"/>
   </owl:Class>
   <owl:Class rdf:about="http://arcos.rack/SYSTEM#FUNCTION">
     <rdfs:comment xml:lang="en">defines functionality / capability</rdfs:comment>
@@ -159,13 +159,13 @@
   <owl:Class rdf:about="http://arcos.rack/SAFETY-SECURITY#VULNERABILITY">
     <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#ENTITY"/>
   </owl:Class>
+  <owl:Class rdf:about="http://arcos.rack/SAFETY-SECURITY#HAZARD_CONDITION">
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/HAZARD#HAZARD"/>
+  </owl:Class>
   <owl:Class rdf:about="http://arcos.rack/SAFETY-SECURITY#SAFETY_ACCIDENT">
     <rdfs:subClassOf>
       <owl:Class rdf:about="http://arcos.rack/SAFETY-SECURITY#RISK_EVENT"/>
     </rdfs:subClassOf>
-  </owl:Class>
-  <owl:Class rdf:about="http://arcos.rack/SAFETY-SECURITY#HAZARD_CONDITION">
-    <rdfs:subClassOf rdf:resource="http://arcos.rack/HAZARD#HAZARD"/>
   </owl:Class>
   <owl:Class rdf:about="http://arcos.rack/SAFETY-SECURITY#COMPONENT_GUARANTEE">
     <rdfs:subClassOf>
@@ -234,6 +234,10 @@
     </rdfs:subClassOf>
     <rdfs:subClassOf rdf:resource="http://arcos.rack/REQUIREMENTS#REQUIREMENT_SET"/>
   </owl:Class>
+  <owl:Class rdf:about="http://arcos.rack/SAFETY-SECURITY#CONTROL">
+    <rdfs:comment xml:lang="en">CONTROLs mitigate THREATs</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#ENTITY"/>
+  </owl:Class>
   <owl:Class rdf:about="http://arcos.rack/SAFETY-SECURITY#GUARANTEE">
     <rdfs:subClassOf>
       <owl:Restriction>
@@ -247,13 +251,6 @@
     </rdfs:subClassOf>
     <rdfs:subClassOf rdf:resource="http://arcos.rack/PROCESS#PROPERTY"/>
   </owl:Class>
-  <owl:Class rdf:about="http://arcos.rack/SAFETY-SECURITY#CONTROL">
-    <rdfs:comment xml:lang="en">CONTROLs mitigate THREATs</rdfs:comment>
-    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#ENTITY"/>
-  </owl:Class>
-  <owl:Class rdf:about="http://arcos.rack/SAFETY-SECURITY#INTERFACE_GUARANTEE">
-    <rdfs:subClassOf rdf:resource="http://arcos.rack/SAFETY-SECURITY#GUARANTEE"/>
-  </owl:Class>
   <owl:Class rdf:about="http://arcos.rack/SAFETY-SECURITY#ATTACK_ACCESS_VECTORS">
     <rdfs:subClassOf>
       <owl:Restriction>
@@ -264,6 +261,9 @@
       </owl:Restriction>
     </rdfs:subClassOf>
     <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#ENTITY"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://arcos.rack/SAFETY-SECURITY#INTERFACE_GUARANTEE">
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/SAFETY-SECURITY#GUARANTEE"/>
   </owl:Class>
   <owl:Class rdf:about="http://arcos.rack/SAFETY-SECURITY#SWCOMPONENT_SS">
     <rdfs:subClassOf>
@@ -438,13 +438,13 @@
     <rdfs:range rdf:resource="http://arcos.rack/SAFETY-SECURITY#LOSS_CATEGORY"/>
     <rdfs:domain rdf:resource="http://arcos.rack/SAFETY-SECURITY#HAZARD_CONDITION"/>
   </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:about="http://arcos.rack/SAFETY-SECURITY#hosts">
-    <rdfs:range rdf:resource="http://arcos.rack/SOFTWARE#SWCOMPONENT"/>
-    <rdfs:domain rdf:resource="http://arcos.rack/SAFETY-SECURITY#HWCOMPONENT_SS"/>
-  </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://arcos.rack/SAFETY-SECURITY#dal">
     <rdfs:range rdf:resource="http://arcos.rack/SAFETY-SECURITY#SAFETY_DESIGN_ASSURANCE_LEVEL"/>
     <rdfs:domain rdf:resource="http://arcos.rack/SAFETY-SECURITY#SECURITY_ENCLAVE"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://arcos.rack/SAFETY-SECURITY#hosts">
+    <rdfs:range rdf:resource="http://arcos.rack/SOFTWARE#SWCOMPONENT"/>
+    <rdfs:domain rdf:resource="http://arcos.rack/SAFETY-SECURITY#HWCOMPONENT_SS"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://arcos.rack/SAFETY-SECURITY#cweReference">
     <rdfs:subPropertyOf rdf:resource="http://arcos.rack/PROV-S#wasImpactedBy"/>
@@ -480,11 +480,6 @@
     <rdfs:range rdf:resource="http://arcos.rack/SAFETY-SECURITY#SECURITY_ASSURANCE_LEVEL"/>
     <rdfs:domain rdf:resource="http://arcos.rack/SAFETY-SECURITY#SECURITY_ENCLAVE"/>
   </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:about="http://arcos.rack/SAFETY-SECURITY#exploits">
-    <rdfs:subPropertyOf rdf:resource="http://arcos.rack/PROV-S#wasImpactedBy"/>
-    <rdfs:range rdf:resource="http://arcos.rack/SAFETY-SECURITY#VULNERABILITY"/>
-    <rdfs:domain rdf:resource="http://arcos.rack/SAFETY-SECURITY#EXPLOITATION"/>
-  </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://arcos.rack/SAFETY-SECURITY#pedigree">
     <rdfs:domain>
       <owl:Class>
@@ -496,6 +491,11 @@
       </owl:Class>
     </rdfs:domain>
     <rdfs:range rdf:resource="http://arcos.rack/SAFETY-SECURITY#PEDIGREE"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://arcos.rack/SAFETY-SECURITY#exploits">
+    <rdfs:subPropertyOf rdf:resource="http://arcos.rack/PROV-S#wasImpactedBy"/>
+    <rdfs:range rdf:resource="http://arcos.rack/SAFETY-SECURITY#VULNERABILITY"/>
+    <rdfs:domain rdf:resource="http://arcos.rack/SAFETY-SECURITY#EXPLOITATION"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://arcos.rack/SAFETY-SECURITY#attacker">
     <rdfs:subPropertyOf rdf:resource="http://arcos.rack/PROV-S#wasAssociatedWith"/>
@@ -606,24 +606,24 @@
     <rdfs:range rdf:resource="http://arcos.rack/SAFETY-SECURITY#CONTROL"/>
     <rdfs:domain rdf:resource="http://arcos.rack/SAFETY-SECURITY#HAZARD_CONDITION"/>
   </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:about="http://arcos.rack/SAFETY-SECURITY#nist_800_53Reference">
-    <rdfs:subPropertyOf rdf:resource="http://arcos.rack/PROV-S#wasImpactedBy"/>
-    <rdfs:range rdf:resource="http://arcos.rack/PROV-S#ENTITY"/>
-    <rdfs:domain rdf:resource="http://arcos.rack/SAFETY-SECURITY#CONTROL"/>
-  </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://arcos.rack/SAFETY-SECURITY#communicatesOver">
     <rdfs:range rdf:resource="http://arcos.rack/SAFETY-SECURITY#VIRTUAL_CHANNEL"/>
     <rdfs:domain rdf:resource="http://arcos.rack/SAFETY-SECURITY#DATA_FLOW"/>
   </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:about="http://arcos.rack/SAFETY-SECURITY#securityLabel">
-    <rdfs:range rdf:resource="http://arcos.rack/SAFETY-SECURITY#SECURITY_LABEL"/>
-    <rdfs:domain rdf:resource="http://arcos.rack/SAFETY-SECURITY#THREAT_CONDITION"/>
+  <owl:ObjectProperty rdf:about="http://arcos.rack/SAFETY-SECURITY#nist_800_53Reference">
+    <rdfs:subPropertyOf rdf:resource="http://arcos.rack/PROV-S#wasImpactedBy"/>
+    <rdfs:range rdf:resource="http://arcos.rack/PROV-S#ENTITY"/>
+    <rdfs:domain rdf:resource="http://arcos.rack/SAFETY-SECURITY#CONTROL"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://arcos.rack/SAFETY-SECURITY#author">
     <rdfs:subPropertyOf rdf:resource="http://arcos.rack/PROV-S#wasAssociatedWith"/>
     <rdfs:comment xml:lang="en">AGENT(s) who work on this ACTIVITY</rdfs:comment>
     <rdfs:range rdf:resource="http://arcos.rack/PROV-S#AGENT"/>
     <rdfs:domain rdf:resource="http://arcos.rack/SAFETY-SECURITY#THREAT_IDENTIFICATION"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://arcos.rack/SAFETY-SECURITY#securityLabel">
+    <rdfs:range rdf:resource="http://arcos.rack/SAFETY-SECURITY#SECURITY_LABEL"/>
+    <rdfs:domain rdf:resource="http://arcos.rack/SAFETY-SECURITY#THREAT_CONDITION"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://arcos.rack/SAFETY-SECURITY#port">
     <rdfs:comment xml:lang="en">set of ports of this component</rdfs:comment>
@@ -693,14 +693,14 @@
     <provs:description>May be susceptible to security attacks.</provs:description>
     <provs:identifier>Untrusted</provs:identifier>
   </ss:TRUSTWORTHINESS>
-  <hw:HWCOMPONENT_TYPE rdf:about="http://arcos.rack/SAFETY-SECURITY#Switch">
-    <provs:identifier>Switch</provs:identifier>
-    <rdfs:comment xml:lang="en">provides switching capability between point-to-point links</rdfs:comment>
-  </hw:HWCOMPONENT_TYPE>
   <ss:GUARANTEE_TYPE rdf:about="http://arcos.rack/SAFETY-SECURITY#CPUCyclesGuarantee">
     <provs:identifier>CPUCyclesGuarantee</provs:identifier>
     <rdfs:comment xml:lang="en"></rdfs:comment>
   </ss:GUARANTEE_TYPE>
+  <hw:HWCOMPONENT_TYPE rdf:about="http://arcos.rack/SAFETY-SECURITY#Switch">
+    <provs:identifier>Switch</provs:identifier>
+    <rdfs:comment xml:lang="en">provides switching capability between point-to-point links</rdfs:comment>
+  </hw:HWCOMPONENT_TYPE>
   <ss:SECURITY_LABEL rdf:about="http://arcos.rack/SAFETY-SECURITY#Integrity">
     <provs:description>Maintain data accuracy.</provs:description>
     <provs:identifier>Integrity</provs:identifier>
