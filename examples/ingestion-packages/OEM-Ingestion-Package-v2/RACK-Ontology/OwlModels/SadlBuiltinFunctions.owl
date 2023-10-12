@@ -30,14 +30,6 @@
   </owl:Class>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#countUniqueMatches">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#countUniqueMatches</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -56,14 +48,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#listConcat">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#listConcat</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -82,14 +66,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#unique">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#unique</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -217,9 +193,7 @@
     <sadlimplicitmodel:externalURI>com.naturalsemantics.sadl.jena.reasoner.builtin#isListHead</sadlimplicitmodel:externalURI>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
+        <sadlimplicitmodel:DataDescriptor/>
       </sadllistmodel:first>
       <rdf:type rdf:nodeID="A0"/>
     </sadlimplicitmodel:arguments>
@@ -298,42 +272,8 @@
       </sadlimplicitmodel:Script>
     </sadlimplicitmodel:expression>
   </sadlimplicitmodel:ExternalEquation>
-  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#ceiling">
-    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#ceiling</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
-    <sadlimplicitmodel:arguments rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:variableNumArguments rdf:datatype=
-          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:arguments>
-    <sadlimplicitmodel:expression>
-      <sadlimplicitmodel:Script>
-        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
-        <sadlimplicitmodel:script>-- ceiling(...): uri("com.ge.research.sadl.jena.reasoner.builtin#ceiling")</sadlimplicitmodel:script>
-      </sadlimplicitmodel:Script>
-    </sadlimplicitmodel:expression>
-  </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#mod">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#mod</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -350,16 +290,26 @@
       </sadlimplicitmodel:Script>
     </sadlimplicitmodel:expression>
   </sadlimplicitmodel:ExternalEquation>
-  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#lessThan">
-    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#lessThan</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#ceiling">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#ceiling</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
         </sadlimplicitmodel:DataDescriptor>
       </sadllistmodel:first>
       <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- ceiling(...): uri("com.ge.research.sadl.jena.reasoner.builtin#ceiling")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#lessThan">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#lessThan</sadlimplicitmodel:externalURI>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -378,19 +328,9 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#firstElement">
     <sadlimplicitmodel:externalURI>com.naturalsemantics.sadl.jena.reasoner.builtin#firstElement</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
+        <sadlimplicitmodel:DataDescriptor/>
       </sadllistmodel:first>
       <rdf:type rdf:nodeID="A0"/>
     </sadlimplicitmodel:arguments>
@@ -403,14 +343,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#localname">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#localname</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -429,14 +361,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#list">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#list</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -455,14 +379,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#oneOf">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#oneOf</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -481,14 +397,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#deleteElementFromList">
     <sadlimplicitmodel:externalURI>com.naturalsemantics.sadl.jena.reasoner.builtin#deleteElementFromList</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:rest rdf:parseType="Resource">
         <sadllistmodel:first>
@@ -503,9 +411,7 @@
         <rdf:type rdf:nodeID="A0"/>
       </sadllistmodel:rest>
       <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
+        <sadlimplicitmodel:DataDescriptor/>
       </sadllistmodel:first>
       <rdf:type rdf:nodeID="A0"/>
     </sadlimplicitmodel:arguments>
@@ -528,9 +434,7 @@
     </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
+        <sadlimplicitmodel:DataDescriptor/>
       </sadllistmodel:first>
       <rdf:type rdf:nodeID="A0"/>
     </sadlimplicitmodel:arguments>
@@ -543,14 +447,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#asin">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#asin</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -608,14 +504,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#print">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#print</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -673,14 +561,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#sqrt">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#sqrt</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -726,14 +606,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#getInstance">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#getInstance</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -752,14 +624,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#notOnlyValue">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#notOnlyValue</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -778,14 +642,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#pow">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#pow</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -878,6 +734,21 @@
       </sadlimplicitmodel:Script>
     </sadlimplicitmodel:expression>
   </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#table">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins#table</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor/>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- table(--): uri("org.apache.jena.reasoner.rulesys.builtins#table")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#notBType">
     <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins#notBType</sadlimplicitmodel:externalURI>
     <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
@@ -904,31 +775,6 @@
       <sadlimplicitmodel:Script>
         <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
         <sadlimplicitmodel:script>boolean notBType(string X): uri("org.apache.jena.reasoner.rulesys.builtins#notBType")</sadlimplicitmodel:script>
-      </sadlimplicitmodel:Script>
-    </sadlimplicitmodel:expression>
-  </sadlimplicitmodel:ExternalEquation>
-  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#table">
-    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins#table</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
-    <sadlimplicitmodel:arguments rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:arguments>
-    <sadlimplicitmodel:expression>
-      <sadlimplicitmodel:Script>
-        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
-        <sadlimplicitmodel:script>-- table(--): uri("org.apache.jena.reasoner.rulesys.builtins#table")</sadlimplicitmodel:script>
       </sadlimplicitmodel:Script>
     </sadlimplicitmodel:expression>
   </sadlimplicitmodel:ExternalEquation>
@@ -1022,14 +868,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#elementInList">
     <sadlimplicitmodel:externalURI>com.naturalsemantics.sadl.jena.reasoner.builtin#elementInList</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:rest rdf:parseType="Resource">
         <sadllistmodel:first>
@@ -1044,9 +882,7 @@
         <rdf:type rdf:nodeID="A0"/>
       </sadllistmodel:rest>
       <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
+        <sadlimplicitmodel:DataDescriptor/>
       </sadllistmodel:first>
       <rdf:type rdf:nodeID="A0"/>
     </sadlimplicitmodel:arguments>
@@ -1059,14 +895,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#strbefore">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#strbefore</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -1114,27 +942,15 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#elementBefore">
     <sadlimplicitmodel:externalURI>com.naturalsemantics.sadl.jena.reasoner.builtin#elementBefore</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:rest rdf:parseType="Resource">
         <sadllistmodel:first>
-          <sadlimplicitmodel:DataDescriptor>
-            <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-          </sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:DataDescriptor/>
         </sadllistmodel:first>
         <rdf:type rdf:nodeID="A0"/>
       </sadllistmodel:rest>
       <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
+        <sadlimplicitmodel:DataDescriptor/>
       </sadllistmodel:first>
       <rdf:type rdf:nodeID="A0"/>
     </sadlimplicitmodel:arguments>
@@ -1147,14 +963,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#assign">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#assign</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -1209,42 +1017,8 @@
       </sadlimplicitmodel:Script>
     </sadlimplicitmodel:expression>
   </sadlimplicitmodel:ExternalEquation>
-  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#tan">
-    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#tan</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
-    <sadlimplicitmodel:arguments rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:variableNumArguments rdf:datatype=
-          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:arguments>
-    <sadlimplicitmodel:expression>
-      <sadlimplicitmodel:Script>
-        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
-        <sadlimplicitmodel:script>-- tan(...): uri("com.ge.research.sadl.jena.reasoner.builtin#tan")</sadlimplicitmodel:script>
-      </sadlimplicitmodel:Script>
-    </sadlimplicitmodel:expression>
-  </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#floor">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#floor</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -1258,6 +1032,24 @@
       <sadlimplicitmodel:Script>
         <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
         <sadlimplicitmodel:script>-- floor(...): uri("com.ge.research.sadl.jena.reasoner.builtin#floor")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#tan">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#tan</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- tan(...): uri("com.ge.research.sadl.jena.reasoner.builtin#tan")</sadlimplicitmodel:script>
       </sadlimplicitmodel:Script>
     </sadlimplicitmodel:expression>
   </sadlimplicitmodel:ExternalEquation>
@@ -1292,14 +1084,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#evaluateSadlEquation">
     <sadlimplicitmodel:externalURI>com.naturalsemantics.sadl.jena.reasoner.builtin#evaluateSadlEquation</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -1318,14 +1102,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#insertElementInList">
     <sadlimplicitmodel:externalURI>com.naturalsemantics.sadl.jena.reasoner.builtin#insertElementInList</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:rest rdf:parseType="Resource">
         <sadllistmodel:rest rdf:parseType="Resource">
@@ -1341,16 +1117,12 @@
           <rdf:type rdf:nodeID="A0"/>
         </sadllistmodel:rest>
         <sadllistmodel:first>
-          <sadlimplicitmodel:DataDescriptor>
-            <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-          </sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:DataDescriptor/>
         </sadllistmodel:first>
         <rdf:type rdf:nodeID="A0"/>
       </sadllistmodel:rest>
       <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
+        <sadlimplicitmodel:DataDescriptor/>
       </sadllistmodel:first>
       <rdf:type rdf:nodeID="A0"/>
     </sadlimplicitmodel:arguments>
@@ -1411,14 +1183,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#noSubjectsOtherThan">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#noSubjectsOtherThan</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -1454,14 +1218,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#average">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#average</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -1480,14 +1236,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#atan">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#atan</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -1501,6 +1249,24 @@
       <sadlimplicitmodel:Script>
         <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
         <sadlimplicitmodel:script>-- atan(...): uri("com.ge.research.sadl.jena.reasoner.builtin#atan")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#greaterThan">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#greaterThan</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- greaterThan(...): uri("com.ge.research.sadl.jena.reasoner.builtin#greaterThan")</sadlimplicitmodel:script>
       </sadlimplicitmodel:Script>
     </sadlimplicitmodel:expression>
   </sadlimplicitmodel:ExternalEquation>
@@ -1543,67 +1309,8 @@
       </sadlimplicitmodel:Script>
     </sadlimplicitmodel:expression>
   </sadlimplicitmodel:ExternalEquation>
-  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#greaterThan">
-    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#greaterThan</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
-    <sadlimplicitmodel:arguments rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:variableNumArguments rdf:datatype=
-          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:arguments>
-    <sadlimplicitmodel:expression>
-      <sadlimplicitmodel:Script>
-        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
-        <sadlimplicitmodel:script>-- greaterThan(...): uri("com.ge.research.sadl.jena.reasoner.builtin#greaterThan")</sadlimplicitmodel:script>
-      </sadlimplicitmodel:Script>
-    </sadlimplicitmodel:expression>
-  </sadlimplicitmodel:ExternalEquation>
-  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#lastElement">
-    <sadlimplicitmodel:externalURI>com.naturalsemantics.sadl.jena.reasoner.builtin#lastElement</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
-    <sadlimplicitmodel:arguments rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:arguments>
-    <sadlimplicitmodel:expression>
-      <sadlimplicitmodel:Script>
-        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
-        <sadlimplicitmodel:script>-- lastElement(--): uri("com.naturalsemantics.sadl.jena.reasoner.builtin#lastElement")</sadlimplicitmodel:script>
-      </sadlimplicitmodel:Script>
-    </sadlimplicitmodel:expression>
-  </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#subtractDates">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#subtractDates</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -1620,6 +1327,21 @@
       </sadlimplicitmodel:Script>
     </sadlimplicitmodel:expression>
   </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#lastElement">
+    <sadlimplicitmodel:externalURI>com.naturalsemantics.sadl.jena.reasoner.builtin#lastElement</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor/>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- lastElement(--): uri("com.naturalsemantics.sadl.jena.reasoner.builtin#lastElement")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#index">
     <sadlimplicitmodel:externalURI>com.naturalsemantics.sadl.jena.reasoner.builtin#index</sadlimplicitmodel:externalURI>
     <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
@@ -1633,16 +1355,12 @@
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:rest rdf:parseType="Resource">
         <sadllistmodel:first>
-          <sadlimplicitmodel:DataDescriptor>
-            <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-          </sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:DataDescriptor/>
         </sadllistmodel:first>
         <rdf:type rdf:nodeID="A0"/>
       </sadllistmodel:rest>
       <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
+        <sadlimplicitmodel:DataDescriptor/>
       </sadllistmodel:first>
       <rdf:type rdf:nodeID="A0"/>
     </sadlimplicitmodel:arguments>
@@ -1655,14 +1373,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#cos">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#cos</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -1676,6 +1386,24 @@
       <sadlimplicitmodel:Script>
         <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
         <sadlimplicitmodel:script>-- cos(...): uri("com.ge.research.sadl.jena.reasoner.builtin#cos")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#getClassFromConstraint">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#getClassFromConstraint</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- getClassFromConstraint(...): uri("com.ge.research.sadl.jena.reasoner.builtin#getClassFromConstraint")</sadlimplicitmodel:script>
       </sadlimplicitmodel:Script>
     </sadlimplicitmodel:expression>
   </sadlimplicitmodel:ExternalEquation>
@@ -1718,42 +1446,8 @@
       </sadlimplicitmodel:Script>
     </sadlimplicitmodel:expression>
   </sadlimplicitmodel:ExternalEquation>
-  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#getClassFromConstraint">
-    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#getClassFromConstraint</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
-    <sadlimplicitmodel:arguments rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:variableNumArguments rdf:datatype=
-          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:arguments>
-    <sadlimplicitmodel:expression>
-      <sadlimplicitmodel:Script>
-        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
-        <sadlimplicitmodel:script>-- getClassFromConstraint(...): uri("com.ge.research.sadl.jena.reasoner.builtin#getClassFromConstraint")</sadlimplicitmodel:script>
-      </sadlimplicitmodel:Script>
-    </sadlimplicitmodel:expression>
-  </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#strafter">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#strafter</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -1772,14 +1466,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#noValuesOtherThan">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#noValuesOtherThan</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -1827,14 +1513,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#product">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#product</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -1853,27 +1531,15 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#elementAfter">
     <sadlimplicitmodel:externalURI>com.naturalsemantics.sadl.jena.reasoner.builtin#elementAfter</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:rest rdf:parseType="Resource">
         <sadllistmodel:first>
-          <sadlimplicitmodel:DataDescriptor>
-            <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-          </sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:DataDescriptor/>
         </sadllistmodel:first>
         <rdf:type rdf:nodeID="A0"/>
       </sadllistmodel:rest>
       <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
+        <sadlimplicitmodel:DataDescriptor/>
       </sadllistmodel:first>
       <rdf:type rdf:nodeID="A0"/>
     </sadlimplicitmodel:arguments>
@@ -2028,14 +1694,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#noValue">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#noValue</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -2054,14 +1712,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#sum">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#sum</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -2080,19 +1730,9 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#tableAll">
     <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins#tableAll</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
+        <sadlimplicitmodel:DataDescriptor/>
       </sadllistmodel:first>
       <rdf:type rdf:nodeID="A0"/>
     </sadlimplicitmodel:arguments>
@@ -2105,14 +1745,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#listToString">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#listToString</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -2218,14 +1850,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#listSubtract">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#listSubtract</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -2312,14 +1936,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#sin">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#sin</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -2348,9 +1964,7 @@
     </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
+        <sadlimplicitmodel:DataDescriptor/>
       </sadllistmodel:first>
       <rdf:type rdf:nodeID="A0"/>
     </sadlimplicitmodel:arguments>
@@ -2441,14 +2055,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#noUnknownValues">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#noUnknownValues</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>
@@ -2467,14 +2073,6 @@
   </sadlimplicitmodel:ExternalEquation>
   <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#thereExists">
     <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin#thereExists</sadlimplicitmodel:externalURI>
-    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
-      <sadllistmodel:first>
-        <sadlimplicitmodel:DataDescriptor>
-          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
-        </sadlimplicitmodel:DataDescriptor>
-      </sadllistmodel:first>
-      <rdf:type rdf:nodeID="A0"/>
-    </sadlimplicitmodel:returnTypes>
     <sadlimplicitmodel:arguments rdf:parseType="Resource">
       <sadllistmodel:first>
         <sadlimplicitmodel:DataDescriptor>

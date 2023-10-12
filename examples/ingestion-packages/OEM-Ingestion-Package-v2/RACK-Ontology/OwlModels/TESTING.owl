@@ -192,16 +192,16 @@
     <rdfs:range rdf:resource="http://arcos.rack/FILE#FILE"/>
     <rdfs:domain rdf:resource="http://arcos.rack/TESTING#TEST_RECORD"/>
   </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:about="http://arcos.rack/TESTING#result">
-    <rdfs:comment xml:lang="en">Pass/Failed/Indeterminate status resulting from a TEST_EXECUTION</rdfs:comment>
-    <rdfs:range rdf:resource="http://arcos.rack/TESTING#TEST_STATUS"/>
-    <rdfs:domain rdf:resource="http://arcos.rack/TESTING#TEST_RESULT"/>
-  </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://arcos.rack/TESTING#testProcedure">
     <rdfs:subPropertyOf rdf:resource="http://arcos.rack/PROV-S#used"/>
     <rdfs:comment xml:lang="en">TEST_PROCEDURE that was executed.</rdfs:comment>
     <rdfs:range rdf:resource="http://arcos.rack/TESTING#TEST_PROCEDURE"/>
     <rdfs:domain rdf:resource="http://arcos.rack/TESTING#TEST_EXECUTION"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://arcos.rack/TESTING#result">
+    <rdfs:comment xml:lang="en">Pass/Failed/Indeterminate status resulting from a TEST_EXECUTION</rdfs:comment>
+    <rdfs:range rdf:resource="http://arcos.rack/TESTING#TEST_STATUS"/>
+    <rdfs:domain rdf:resource="http://arcos.rack/TESTING#TEST_RESULT"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://arcos.rack/TESTING#testRecordSteps">
     <rdfs:comment xml:lang="en">the initial TEST_STEPs performed</rdfs:comment>

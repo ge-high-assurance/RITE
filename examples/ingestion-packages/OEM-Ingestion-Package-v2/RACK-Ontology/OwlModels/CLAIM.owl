@@ -198,6 +198,20 @@
     <rdfs:comment xml:lang="en">Part of a set of environmental restrictions applied to a particular claim</rdfs:comment>
     <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#THING"/>
   </owl:Class>
+  <owl:Class rdf:about="http://arcos.rack/CLAIM#PROPERTY_RESULT">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onClass rdf:resource="http://arcos.rack/PROCESS#PROPERTY"/>
+        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+        >1</owl:qualifiedCardinality>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="http://arcos.rack/CLAIM#demonstrates"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">A particular result for a property.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#ENTITY"/>
+  </owl:Class>
   <owl:Class rdf:about="http://arcos.rack/CLAIM#TEST_EXECUTION_PROPERTY_RESULT">
     <rdfs:subClassOf>
       <owl:Restriction>
@@ -212,23 +226,7 @@
       </owl:Restriction>
     </rdfs:subClassOf>
     <rdfs:comment xml:lang="en">A test execution property result</rdfs:comment>
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="http://arcos.rack/CLAIM#PROPERTY_RESULT"/>
-    </rdfs:subClassOf>
-  </owl:Class>
-  <owl:Class rdf:about="http://arcos.rack/CLAIM#PROPERTY_RESULT">
-    <rdfs:subClassOf>
-      <owl:Restriction>
-        <owl:onClass rdf:resource="http://arcos.rack/PROCESS#PROPERTY"/>
-        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
-        >1</owl:qualifiedCardinality>
-        <owl:onProperty>
-          <owl:ObjectProperty rdf:about="http://arcos.rack/CLAIM#demonstrates"/>
-        </owl:onProperty>
-      </owl:Restriction>
-    </rdfs:subClassOf>
-    <rdfs:comment xml:lang="en">A particular result for a property.</rdfs:comment>
-    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#ENTITY"/>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/CLAIM#PROPERTY_RESULT"/>
   </owl:Class>
   <owl:Class rdf:about="http://arcos.rack/CLAIM#TEST_EXECUTION_OUTCOME">
     <owl:equivalentClass>

@@ -5,7 +5,7 @@ import "http://sadl.org/oem_arp4754_dap.sadl".
 // system design description 
 OEMDesignDescription is a SystemDesignDescription 
    with identifier "OEMDesignDescription" 
-   with entityURL "https://github.com/ge-high-assurance/RITE". 
+   with entityURL "https://www.geaerospace.com/propulsion/commercial/ge9x". 
 //-- Documents for Objective 1-1 
 CertificationPlan is a DOCUMENT 
    with identifier "CertificationPlan". 
