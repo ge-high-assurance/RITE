@@ -439,7 +439,7 @@ public class DataProcessor {
             Artifacts.getSystemObjs().add(newEvidenceObj);
             System.out.println("Created Object for " + newEvidenceObj.getId());
         }
-
+        
         System.out.println(
                 "---- Creating Objects for DOCUMENT ----"); // TODO: Add description field
         for (String[] row : allDOCUMENT) {

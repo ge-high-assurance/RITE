@@ -595,21 +595,24 @@ public class ObjectiveViewHandler {
         systemChart.getData().clear();
 
         // store children releationship for this objective
-        systemChildrenRelation = "I/O";
+        systemChildrenRelation = "Interfaces";
 
         // TODO: objective-based setting of children
         for (Evidence system : currentObjObject.getOutputs().getSystemObjs()) {
             if (filterKey.equalsIgnoreCase("All")
                     && ((searchKey == null) || (system.getId().contains(searchKey)))) {
-                Label evidenceLabel = new Label();
+            	if(system.getType().equalsIgnoreCase("System")) { // exclude items
+                    Label evidenceLabel = new Label();
 
-                String evidenceText = system.getId() + " | Interfaces: ";
-                for (Evidence intrface : system.getHasInterfaces()) {
-                    evidenceText = evidenceText + intrface.getId() + ", ";
-                }
+                    String evidenceText = system.getId() + " | Interfaces: ";
+                    for (Evidence intrface : system.getHasInterfaces()) {
+                        evidenceText = evidenceText + intrface.getId() + ", ";
+                    }
 
-                evidenceLabel.setText(evidenceText);
-                systemList.getItems().add(evidenceLabel);
+                    evidenceLabel.setText(evidenceText);
+                    systemList.getItems().add(evidenceLabel);
+            		
+            	}
             }
         }
     }
@@ -867,9 +870,98 @@ public class ObjectiveViewHandler {
                             }
                         });
             }
+            
+            // Contextmenu for reqList
+            ContextMenu reqListContext = new ContextMenu();
+            MenuItem menuItemGoToSource = new MenuItem("Go to Entity Source");
+            reqListContext.getItems().add(menuItemGoToSource);
+            requirementList.setContextMenu(reqListContext);
+            // show source of requirement in reqchildren if right click context selected
+            menuItemGoToSource.setOnAction(
+                    (rightClickEvent) -> {
+                        // Open URL on browser
+
+                    	ViewUtils.openUrlInDefaultApp(
+                                "https://github.com/ge-high-assurance/RITE/blob/arp4754/examples/ingestion-packages/OEM-Ingestion-Package-v2/data_source/requirements.pdf");
+                    });
         }
     }
 
+    @FXML
+    private void intrfaceListSelectionAction(MouseEvent event) {
+
+        // The selected label
+        Label selectedLabel = interfaceList.getSelectionModel().getSelectedItem();
+
+        if (selectedLabel != null) {
+
+            // get selection
+            String selectedIntrfaceLine = selectedLabel.getText();
+            System.out.println("The selected interface line: " + selectedIntrfaceLine);
+            ContextMenu intrfaceListContext = new ContextMenu();
+            MenuItem menuItemGoToSource = new MenuItem("Go to Entity Source");
+            intrfaceListContext.getItems().add(menuItemGoToSource);
+            interfaceList.setContextMenu(intrfaceListContext);
+             menuItemGoToSource.setOnAction(
+                    (rightClickEvent) -> {
+                        // Open URL on browser
+
+                    	ViewUtils.openUrlInDefaultApp(
+                                "https://github.com/ge-high-assurance/RITE/blob/arp4754/examples/ingestion-packages/OEM-Ingestion-Package-v2/data_source/interfaces.pdf");
+                    });
+        }
+    }
+    
+    @FXML
+    private void itemListSelectionAction(MouseEvent event) {
+
+        // The selected label
+        Label selectedLabel = itemList.getSelectionModel().getSelectedItem();
+
+        if (selectedLabel != null) {
+
+            // get selection
+            String selectedItemLine = selectedLabel.getText();
+            System.out.println("The selected item line: " + selectedItemLine);
+            ContextMenu itemListContext = new ContextMenu();
+            MenuItem menuItemGoToSource = new MenuItem("Go to Entity Source");
+            itemListContext.getItems().add(menuItemGoToSource);
+            itemList.setContextMenu(itemListContext);
+             menuItemGoToSource.setOnAction(
+                    (rightClickEvent) -> {
+                        // Open URL on browser
+
+                    	ViewUtils.openUrlInDefaultApp(
+                                "https://github.com/ge-high-assurance/RITE/blob/arp4754/examples/ingestion-packages/OEM-Ingestion-Package-v2/data_source/systems.pdf");
+                    });
+        }
+    }
+    
+    @FXML
+    private void systemListSelectionAction(MouseEvent event) {
+
+        // The selected label
+        Label selectedLabel = systemList.getSelectionModel().getSelectedItem();
+
+        if (selectedLabel != null) {
+
+            // get selection
+            String selectedSystemLine = selectedLabel.getText();
+            System.out.println("The selected system line: " + selectedSystemLine);
+            ContextMenu systemListContext = new ContextMenu();
+            MenuItem menuSystemGoToSource = new MenuItem("Go to Entity Source");
+            systemListContext.getItems().add(menuSystemGoToSource);
+            systemList.setContextMenu(systemListContext);
+             menuSystemGoToSource.setOnAction(
+                    (rightClickEvent) -> {
+                        // Open URL on browser
+
+                    	ViewUtils.openUrlInDefaultApp(
+                                "https://github.com/ge-high-assurance/RITE/blob/arp4754/examples/ingestion-packages/OEM-Ingestion-Package-v2/data_source/systems.pdf");
+                    });
+        }
+    }
+    
     @FXML
     private void docListSelectionAction(MouseEvent event) {
 
