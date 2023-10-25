@@ -164,13 +164,16 @@ public class NodegroupActionFactory {
                 // nodegroups
                 ArrayList<String> selection = view.getSelectedNodegroups();
                 if (selection.size() != 1) {
-                	MessageDialog.openError(null, "RITE Error", "Query action is permitted only for exactly one selection");
-                	return;
+                    MessageDialog.openError(
+                            null,
+                            "RITE Error",
+                            "Query action is permitted only for exactly one selection");
+                    return;
                 }
                 String queryNodegroup = selection.get(0);
                 SelectDataGraphsDialog dialog =
                         new SelectDataGraphsDialog(
-                                event.widget.getDisplay().getActiveShell(), queryNodegroup);
+                            event.widget.getDisplay().getActiveShell(), queryNodegroup);
                 dialog.run();
             }
         };
