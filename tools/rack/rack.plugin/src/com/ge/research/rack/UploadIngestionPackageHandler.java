@@ -51,6 +51,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.swt.SWT;
@@ -135,6 +136,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
 
         if (eventResourcePaths.length != 1) {
             RackConsole.getConsole().error(NO_SELECTED_PROJECT);
+            MessageDialog.openError(null, "Ingestion failed", NO_SELECTED_PROJECT);
             RackConsole.getConsole().activate();
             return null;
         }
@@ -147,6 +149,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
 
         if (selectedProject.isEmpty()) {
             RackConsole.getConsole().error(NO_SELECTED_PROJECT);
+            MessageDialog.openError(null, "Ingestion failed", NO_SELECTED_PROJECT);
             RackConsole.getConsole().activate();
         }
 
@@ -154,6 +157,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
 
             if (shouldUpload && !startRun()) {
                 RackConsole.getConsole().error(UPLOAD_DEBOUNCED);
+                MessageDialog.openError(null, "Ingestion failed", UPLOAD_DEBOUNCED);
                 RackConsole.getConsole().activate();
                 return null;
             }
