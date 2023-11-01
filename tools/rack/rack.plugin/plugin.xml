@@ -455,5 +455,16 @@
             type="java.lang.Object">
         </propertyTester>
     </extension>
+    
+    <!-- Import Wizard -->
+    <extension point="org.eclipse.ui.importWizards">
+	    <wizard
+	        category="org.eclipse.ui"
+	        class="com.ge.research.rack.wizard.RackImportWizard"
+	        icon="icons/sample.gif"
+	        id="com.ge.research.rack.rackImportWizard"
+	        name="Rack Import Wizard">
+	    </wizard>
+	</extension>
 
 </plugin>
