@@ -457,14 +457,68 @@
     </extension>
     
     <!-- Import Wizard -->
-    <extension point="org.eclipse.ui.importWizards">
+    <extension point="org.eclipse.ui.importWizards" project="true">
+        <category 
+          id="com.ge.research.rack.wizard.rackImportWizardCategory" 
+          name="RACK">
+    	</category> 
 	    <wizard
-	        category="org.eclipse.ui"
+	    	availableAsShortcut="true"
+	        category="com.ge.research.rack.wizard.rackImportWizardCategory"
 	        class="com.ge.research.rack.wizard.RackImportWizard"
 	        icon="icons/sample.gif"
 	        id="com.ge.research.rack.rackImportWizard"
 	        name="Rack Import Wizard">
 	    </wizard>
+	    <description>
+	         This wizard creates a simple Java editor with
+	         all the required classes and manifest markup.
+      	</description>
 	</extension>
+	
+	<!-- New Wizard -->
+    <extension point="org.eclipse.ui.newWizards" project="true">
+        <category 
+          id="com.ge.research.rack.wizard.rackImportWizardCategory" 
+          name="RACK">
+    	</category> 
+	    <wizard
+	    	availableAsShortcut="true"
+	        category="com.ge.research.rack.wizard.rackImportWizardCategory"
+	        class="com.ge.research.rack.wizard.RackImportWizard"
+	        icon="icons/sample.gif"
+	        id="com.ge.research.rack.rackImportWizard"
+	        name="Rack Import Wizard">
+	    </wizard>
+	    <description>
+	         This wizard creates a simple Java editor with
+	         all the required classes and manifest markup.
+      	</description>
+	</extension>
+	
+	<!-- Project Nature -->
+	<extension
+         id="com.ge.research.rackBuilder"
+         name="RACK Builder"
+         point="org.eclipse.core.resources.builders">
+         
+      <builder hasNature="true">
+         <run class="com.ge.research.nature.RackBuilder"> </run>
+      </builder>
+      
+   </extension>
+   
+   <extension
+         id="com.ge.research.rackNature"
+         name="RACK Project Nature"
+         point="org.eclipse.core.resources.natures">
+      
+      <runtime>
+         <run class="com.ge.research.nature.RackNature"></run>
+      </runtime>
+      
+      <builder id="com.ge.research.rackBuilder"></builder>
+      
+   </extension>
 
 </plugin>
