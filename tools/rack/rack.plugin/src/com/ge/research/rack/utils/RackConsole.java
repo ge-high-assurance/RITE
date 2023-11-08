@@ -41,7 +41,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.debug.ui.console.FileLink;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
@@ -59,6 +58,85 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class RackConsole extends MessageConsole {
+    private static boolean setup = false;
+    private static RackConsole console;
+    private static MessageConsoleStream stream;
+    private static MessageConsoleStream streamErr;
+    private static final Logger logger = LoggerFactory.getLogger(RackConsole.class);
+
+    public static RackConsole getConsole() {
+
+        if (setup == false) {
+            ConsolePlugin plugin = ConsolePlugin.getDefault();
+            IConsoleManager consoleManager = plugin.getConsoleManager();
+            console = new RackConsole();
+            console.activate();
+            stream = console.newMessageStream();
+            streamErr = console.newMessageStream();
+            consoleManager.addConsoles(new IConsole[] {console});
+            ViewUtils.pinConsole(console);
+            setup = true;
+        }
+        return console;
+    }
+
+    private RackConsole() {
+        super("Rack Console", null, true);
+    }
+
+    public void print(String message) {
+        Color black = new Color(0, 0, 0, 255);
+        stream.setColor(black);
+        stream.print("\nINFO:  " + message);
+    }
+
+    public void printEcho(String message) {
+        Color black = new Color(0, 0, 0, 255);
+        stream.setColor(black);
+        stream.print("\n" + message);
+    }
+
+    public void println(String message) {
+        Color black = new Color(0, 0, 0, 255);
+        stream.setColor(black);
+        stream.print("INFO:  " + message + "\n");
+    }
+
+    public void printOK() {
+        stream.print("OK");
+    }
+
+    public void printFAIL() {
+        stream.print("FAIL");
+    }
+
+    public void error(String message) {
+        Color red = new Color(255, 0, 0, 255);
+        streamErr.setColor(red);
+        streamErr.print("\nERROR: " + message);
+    }
+
+    public void errorEcho(String message) {
+        Color red = new Color(255, 0, 0, 255);
+        streamErr.setColor(red);
+        streamErr.setColor(red);
+        streamErr.print("\n" + message);
+    }
+
+    public void error(final String message, final Exception exception) {
+        Color red = new Color(255, 0, 0, 255);
+        stream.setColor(red);
+        stream.print("\nERROR: " + message + "\n" + exception.getStackTrace() + "\n");
+    }
+
+    public void warning(String message) {
+        stream.print("\nWARNING: " + message);
+    }
+
+    public void clearConsole() {
+        super.clearConsole();
+    }
+
 	private static boolean setup = false;
 	private static RackConsole console;
 	private static MessageConsoleStream stream;

@@ -391,7 +391,7 @@ public class OntologyTreeView extends ViewPart implements INodegroupView {
             if (!hasTriplesCount(graphInfo)) {
                 return;
             }
-            Composite scComposite = new ScrolledComposite(parent, SWT.H_SCROLL|SWT.V_SCROLL);
+            Composite scComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
             Composite mainComposite = new Composite(scComposite, SWT.NONE);
             mainComposite.setLayout(new FillLayout());
             Table table = new Table(mainComposite, SWT.NONE);
