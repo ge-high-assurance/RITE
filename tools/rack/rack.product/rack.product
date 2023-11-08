@@ -31,7 +31,7 @@
    <launcher name="RITE">
       <linux icon="/rack.product/RITE-32.XPM"/>
       <macosx icon="/rack.product/RITE.icns"/>
-      <win useIco="false">
+      <win useIco="true">
          <bmp
             winSmallHigh="/rack.product/RITE-16.bmp"
             winSmallLow="/rack.product/RITE8-16.bmp"
@@ -46,6 +46,7 @@
 
    <vm>
    </vm>
+
 
    <plugins>
    </plugins>
