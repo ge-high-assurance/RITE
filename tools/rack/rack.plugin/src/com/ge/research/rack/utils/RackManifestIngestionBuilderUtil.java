@@ -89,7 +89,7 @@ public class RackManifestIngestionBuilderUtil {
 
     public static class IngestionBuilderException extends Exception {
 
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
         private static String YAML_PARSE_ERROR = "Unable to parse the file at %s to YAML";
 
         private IngestionBuilderException(String msg, Exception e) {

@@ -36,20 +36,40 @@ import com.ge.research.rack.utils.*;
 import com.ge.research.rack.utils.TreeNode;
 import com.google.inject.*;
 
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.action.*;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.awt.SWT_AWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.*;
 import org.eclipse.ui.part.*;
+import org.eclipse.ui.part.ViewPart;
+import org.osgi.framework.Bundle;
 
+import java.awt.Frame;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
+
+import javax.swing.JPanel;
 
 /**
  * This sample class demonstrates how to plug-in a new workbench view. The view shows data obtained
@@ -271,24 +291,97 @@ public class AssuranceCaseTree extends ViewPart {
     @Override
     public void createPartControl(Composite parent) {
 
-        viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-        drillDownAdapter = new DrillDownAdapter(viewer);
+        //        viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+        //        drillDownAdapter = new DrillDownAdapter(viewer);
+        //
+        //        viewer.setContentProvider(new ViewContentProvider());
+        //        viewer.setInput(getViewSite());
+        //        viewer.setLabelProvider(new ViewLabelProvider());
+        //
+        //        // Create the help context id for the viewer's control
+        //        if (index == null) {
+        //            return;
+        //        }
+        //
+        //        // workbench.getHelpSystem().setHelp(viewer.getControl(), "rack.plugin.viewer");
+        //        getSite().setSelectionProvider(viewer);
+        //        makeActions();
+        //        hookContextMenu();
+        //        hookDoubleClickAction();
+        //        contributeToActionBars();
+        //    }
 
-        viewer.setContentProvider(new ViewContentProvider());
-        viewer.setInput(getViewSite());
-        viewer.setLabelProvider(new ViewLabelProvider());
+        Composite composite = new Composite(parent, SWT.EMBEDDED | SWT.NO_BACKGROUND);
+        final Frame frame = SWT_AWT.new_Frame(composite);
 
-        // Create the help context id for the viewer's control
-        if (index == null) {
-            return;
-        }
+        final JPanel parentPanel = new JPanel();
 
-        // workbench.getHelpSystem().setHelp(viewer.getControl(), "rack.plugin.viewer");
-        getSite().setSelectionProvider(viewer);
-        makeActions();
-        hookContextMenu();
-        hookDoubleClickAction();
-        contributeToActionBars();
+        final JFXPanel fxPanel = new JFXPanel();
+
+        final TabPane tPane = new TabPane();
+        Tab firstTab = new Tab("First Tab");
+
+        GridPane gPane = new GridPane();
+        gPane.setHgap(10.0);
+        gPane.setVgap(10.0);
+
+        final TextField tField = new TextField();
+        tField.setPrefWidth(100.0);
+        tField.setEditable(true);
+        tField.managedProperty().bind(tField.editableProperty());
+        tField.setStyle("-fx-border-color: black; -fx-border-width: 2");
+
+        Label userName = new Label("User Name");
+
+        gPane.add(userName, 0, 0);
+        gPane.add(tField, 1, 0);
+
+        firstTab.setContent(gPane);
+        tPane.getTabs().add(firstTab);
+
+        Platform.runLater(
+                new Runnable() {
+
+                    @Override
+                    public void run() {
+                        try {
+
+                            Bundle bundle =
+                                    org.eclipse.core.runtime.Platform.getBundle("rack.plugin");
+                            URL fxmlUrl =
+                                    FileLocator.find(
+                                            bundle,
+                                            new Path(
+                                                    "resources/fxml/autoGsn/AutoGsnUnifiedMainView.fxml"),
+                                            null);
+                            fxmlUrl = FileLocator.toFileURL(fxmlUrl);
+
+                            // Creating an FXMLLoader object that can be returned for use where
+                            // needed
+                            FXMLLoader loader = new FXMLLoader(fxmlUrl);
+
+                            System.out.println(
+                                    "Time before loading fxml:" + System.currentTimeMillis());
+                            Parent root = loader.load();
+                            System.out.println(
+                                    "Time after loading fxml:" + System.currentTimeMillis());
+                            // stage.setTitle("Automatic GSN Inference");
+                            System.out.println(
+                                    "Time before creating new scene:" + System.currentTimeMillis());
+
+                            Scene scene = new Scene(root);
+                            fxPanel.setScene(scene);
+
+                            parentPanel.add(fxPanel);
+                            frame.add(parentPanel);
+                            frame.setSize(1300, 600);
+                            frame.setVisible(true);
+                        } catch (Exception ex) {
+
+                            ex.printStackTrace();
+                        }
+                    }
+                });
     }
 
     private void hookContextMenu() {

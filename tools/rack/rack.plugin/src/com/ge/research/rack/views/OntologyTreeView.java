@@ -90,7 +90,7 @@ public class OntologyTreeView extends ViewPart implements INodegroupView {
     private static Image ontFieldImg = null;
     private static String selectedUri = "";
     private static TreeParent selectedNode = null;
-    //private static String selectedName = "";
+    // private static String selectedName = "";
 
     class TreeObject implements IAdaptable {
         private String name;
@@ -339,7 +339,7 @@ public class OntologyTreeView extends ViewPart implements INodegroupView {
                         if (((TreeParent) itemData).type.equals("inner")
                                 && ((TreeParent) itemData).hasChildren()) {
                             selectedUri = ((TreeParent) itemData).uri;
-                            //selectedName = ((TreeParent) itemData).getName();
+                            // selectedName = ((TreeParent) itemData).getName();
                         }
                         selectedNode = (TreeParent) itemData;
                     }

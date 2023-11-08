@@ -88,31 +88,33 @@ public class GsnTreeViewHandler {
         return nodeLabel;
     }
 
-//    /**
-//     * For a given GSN node, creates a treeitem and recursively creates treeitems for all supporting
-//     * nodes
-//     *
-//     * @param node
-//     * @return
-//     */
-//    private TreeItem<Label> populateTreeViewGsnCascade(GsnNode node, String currentGoalId) {
-//        Node nodeImage = AutoGsnGuiUtils.getNodeImage(node);
-//
-//        var elementItem = new TreeItem<>(getNodeTreeLabel(node), nodeImage);
-//        // if this is the currentgoal, expand it by default
-//        System.out.println(node.getNodeId() + " ------- " + currentGoalId);
-//        if (node.getNodeId().equalsIgnoreCase(currentGoalId)) {
-//            System.out.println("expanded");
-//            elementItem.setExpanded(true);
-//        }
-//
-//        if (node.getSupportedBy() != null) {
-//            for (GsnNode child : node.getSupportedBy()) {
-//                elementItem.getChildren().add(populateTreeViewGsnCascade(child, currentGoalId));
-//            }
-//        }
-//        return elementItem;
-//    }
+    //    /**
+    //     * For a given GSN node, creates a treeitem and recursively creates treeitems for all
+    // supporting
+    //     * nodes
+    //     *
+    //     * @param node
+    //     * @return
+    //     */
+    //    private TreeItem<Label> populateTreeViewGsnCascade(GsnNode node, String currentGoalId) {
+    //        Node nodeImage = AutoGsnGuiUtils.getNodeImage(node);
+    //
+    //        var elementItem = new TreeItem<>(getNodeTreeLabel(node), nodeImage);
+    //        // if this is the currentgoal, expand it by default
+    //        System.out.println(node.getNodeId() + " ------- " + currentGoalId);
+    //        if (node.getNodeId().equalsIgnoreCase(currentGoalId)) {
+    //            System.out.println("expanded");
+    //            elementItem.setExpanded(true);
+    //        }
+    //
+    //        if (node.getSupportedBy() != null) {
+    //            for (GsnNode child : node.getSupportedBy()) {
+    //                elementItem.getChildren().add(populateTreeViewGsnCascade(child,
+    // currentGoalId));
+    //            }
+    //        }
+    //        return elementItem;
+    //    }
 
     /**
      * For a given GSN node, creates a treeitem and recursively creates treeitems for all supporting
@@ -171,8 +173,7 @@ public class GsnTreeViewHandler {
         }
 
         // create TreeItemAndBoolean to return to parent
-        var returnPack =
-                new MultiClassPackets().new TreeItemAndBoolean<>(elementItem, myExpFlag);
+        var returnPack = new MultiClassPackets().new TreeItemAndBoolean<>(elementItem, myExpFlag);
 
         return returnPack;
     }

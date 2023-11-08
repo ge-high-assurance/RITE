@@ -245,7 +245,7 @@ public class ReportViewUtils {
      * @param value
      * @return
      */
-    public static XYChart.Data<String,Double> createDoubleDataBar(String country, double value) {
+    public static XYChart.Data<String, Double> createDoubleDataBar(String country, double value) {
         var data = new XYChart.Data<>(country, value);
 
         String text = Double.toString(value);
@@ -272,8 +272,8 @@ public class ReportViewUtils {
      * @param value
      * @return
      */
-    public static XYChart.Data<String,Integer> createIntDataBar(String country, int value) {
-        var data = new XYChart.Data<String,Integer>(country, value);
+    public static XYChart.Data<String, Integer> createIntDataBar(String country, int value) {
+        var data = new XYChart.Data<String, Integer>(country, value);
 
         String text = Integer.toString(value);
 

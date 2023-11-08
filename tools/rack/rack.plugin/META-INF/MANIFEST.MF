@@ -42,7 +42,8 @@ Require-Bundle: com.ge.research.jena,
  org.eclipse.ui.forms,
  org.slf4j.api,
  org.yaml.snakeyaml,
- org.eclipse.debug.ui
+ org.eclipse.debug.ui,
+ openjfx.swing;bundle-version="17.0.2"
 Bundle-ClassPath: .,
  lib/connectionUtils.jar,
  lib/graphviz-java.jar,
