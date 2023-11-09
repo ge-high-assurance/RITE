@@ -173,7 +173,7 @@ public class NodegroupActionFactory {
                 String queryNodegroup = selection.get(0);
                 SelectDataGraphsDialog dialog =
                         new SelectDataGraphsDialog(
-                                event.widget.getDisplay().getActiveShell(), queryNodegroup);
+                            event.widget.getDisplay().getActiveShell(), queryNodegroup);
                 dialog.run();
             }
         };

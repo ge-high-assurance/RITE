@@ -35,7 +35,6 @@ import com.ge.research.rack.utils.ConnectionUtil;
 import com.ge.research.rack.utils.RackConsole;
 import com.google.inject.*;
 
-import org.eclipse.jface.action.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;

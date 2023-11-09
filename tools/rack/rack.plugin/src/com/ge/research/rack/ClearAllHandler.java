@@ -105,10 +105,9 @@ public class ClearAllHandler extends AbstractHandler {
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
 
-        String queryNodegroup = "";
-
+        
         ClearRackDialog dialog =
-                new ClearRackDialog(Display.getDefault().getActiveShell(), queryNodegroup);
+                new ClearRackDialog(Display.getDefault().getActiveShell());
         dialog.run();
 
         return null;

@@ -31,8 +31,6 @@
  */
 package com.ge.research.rack;
 
-import com.ge.research.rack.utils.RackConsole;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -42,11 +40,14 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceProxy;
 import org.eclipse.core.resources.IResourceProxyVisitor;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.DumperOptions.FlowStyle;
 import org.yaml.snakeyaml.Yaml;
+
+import com.ge.research.rack.utils.RackConsole;
 
 import java.io.ByteArrayInputStream;
 import java.io.CharArrayWriter;

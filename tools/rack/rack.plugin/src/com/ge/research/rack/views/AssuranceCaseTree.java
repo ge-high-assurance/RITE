@@ -115,14 +115,14 @@ public class AssuranceCaseTree extends ViewPart {
     }
 
     class TreeParent extends TreeObject {
-        private ArrayList children;
-        private ArrayList siblings;
+        private ArrayList<TreeObject> children;
+        private ArrayList<TreeObject> siblings;
         private GSN gsnType;
 
         public TreeParent(TreeNode node) {
             super(node);
-            children = new ArrayList();
-            siblings = new ArrayList();
+            children = new ArrayList<>();
+            siblings = new ArrayList<>();
         }
 
         public void addChild(TreeObject child) {

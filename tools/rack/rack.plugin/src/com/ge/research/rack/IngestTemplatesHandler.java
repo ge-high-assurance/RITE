@@ -49,11 +49,9 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.console.IConsoleConstants;
 import org.eclipse.ui.console.IConsoleView;
-import org.eclipse.ui.handlers.HandlerUtil;
 
 import java.io.File;
 import java.nio.charset.Charset;
@@ -189,7 +187,6 @@ public class IngestTemplatesHandler extends AbstractHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-        IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
 
         try {
 

@@ -60,13 +60,15 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.ui.PlatformUI;
 
 import java.io.File;
 import java.util.ArrayList;
 
 /** Author: Paul Meng */
 public class SelectDataGraphsDialog extends Dialog {
-    private Font font, boldFont;
+    private Font font;
+    //private Font boldFont;
     public static String nodegroupId = "";
     private static Table table;
 
@@ -74,7 +76,7 @@ public class SelectDataGraphsDialog extends Dialog {
         super(parent);
         nodegroupId = nodegroup;
         font = new Font(null, "Helvetica", 12, SWT.NORMAL);
-        boldFont = new Font(null, "Helvetica", 12, SWT.BOLD);
+        //boldFont = new Font(null, "Helvetica", 12, SWT.BOLD);
     }
 
     @Override
@@ -99,6 +101,7 @@ public class SelectDataGraphsDialog extends Dialog {
         Composite mainComposite = new Composite(parent, SWT.NONE);
         mainComposite.setLayout(new GridLayout(1, false));
         mainComposite.setSize(700, 700);
+
         renderNumTriples(mainComposite);
         // save and close buttons
         Composite closeButtons = new Composite(mainComposite, SWT.NONE);
@@ -120,6 +123,14 @@ public class SelectDataGraphsDialog extends Dialog {
         Point bestSize = getShell().computeSize(SWT.DEFAULT, SWT.DEFAULT);
         getShell().setSize(bestSize);
 
+        var wb = PlatformUI.getWorkbench();
+        var win = wb.getActiveWorkbenchWindow();
+        if (win != null) {
+            var rect = win.getShell().getBounds();
+            var sz = getShell().getSize();
+            getShell().setLocation(rect.x + (rect.width-sz.x)/2, rect.y + (rect.height-sz.y)/2);
+        }
+        
         cancel.addSelectionListener(
                 new SelectionAdapter() {
                     @Override

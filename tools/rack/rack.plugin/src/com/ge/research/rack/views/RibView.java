@@ -46,7 +46,7 @@ import java.net.URL;
 
 public class RibView extends Application {
 
-    private Stage stage;
+//    private Stage stage;
 
     @Override
     public void start(Stage primaryStage) {

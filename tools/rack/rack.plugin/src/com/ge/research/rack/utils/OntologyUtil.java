@@ -33,7 +33,6 @@ package com.ge.research.rack.utils;
 
 import com.ge.research.semtk.edc.client.OntologyInfoClient;
 import com.ge.research.semtk.edc.client.OntologyInfoClientConfig;
-import com.ge.research.semtk.ontologyTools.*;
 import com.ge.research.semtk.ontologyTools.OntologyClass;
 import com.ge.research.semtk.ontologyTools.OntologyInfo;
 import com.ge.research.semtk.sparqlX.SparqlConnection;

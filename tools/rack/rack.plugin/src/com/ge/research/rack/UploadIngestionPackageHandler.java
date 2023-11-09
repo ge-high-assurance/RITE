@@ -51,6 +51,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.swt.SWT;
@@ -79,15 +80,14 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
     private static final String ZIP = "zip";
     private static final String UPLOAD_DEBOUNCED = "Ingestion package already uploading";
     private static final String UPLOAD_STAGED = "Ingestion package upload staged";
-    
+
     private static final String UPLOAD_QUEUED = "Ingestion package %s upload queued";
     private static final String UPLOAD_FAILED = "Ingestion package %s upload failed";
-    
+
     private static final String CREATION_QUEUED = "Ingestion package %s creation queued";
     private static final String CREATION_FAILED = "Ingestion package %s creation failed";
 
     private static final String TMP_PCKG_FILE_PREFIX = "rack-ingestion-";
-
 
     private static final String NO_SELECTED_PROJECT =
             "Selected resources(s) are not valid ingestion package project(s)";
@@ -136,6 +136,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
 
         if (eventResourcePaths.length != 1) {
             RackConsole.getConsole().error(NO_SELECTED_PROJECT);
+            MessageDialog.openError(null, "Ingestion failed", NO_SELECTED_PROJECT);
             RackConsole.getConsole().activate();
             return null;
         }
@@ -148,6 +149,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
 
         if (selectedProject.isEmpty()) {
             RackConsole.getConsole().error(NO_SELECTED_PROJECT);
+            MessageDialog.openError(null, "Ingestion failed", NO_SELECTED_PROJECT);
             RackConsole.getConsole().activate();
         }
 
@@ -155,6 +157,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
 
             if (shouldUpload && !startRun()) {
                 RackConsole.getConsole().error(UPLOAD_DEBOUNCED);
+                MessageDialog.openError(null, "Ingestion failed", UPLOAD_DEBOUNCED);
                 RackConsole.getConsole().activate();
                 return null;
             }
@@ -272,7 +275,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
                                 RackConsole.getConsole()
                                         .error(
                                                 String.format(
-                                                		upload ? UPLOAD_FAILED : CREATION_FAILED,
+                                                        upload ? UPLOAD_FAILED : CREATION_FAILED,
                                                         ingestionPackageZipFilepath));
                             }
                             asyncCallback.run();
@@ -283,7 +286,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
                             RackConsole.getConsole()
                                     .print(
                                             String.format(
-                                                    upload ? UPLOAD_QUEUED : CREATION_QUEUED, 
+                                                    upload ? UPLOAD_QUEUED : CREATION_QUEUED,
                                                     ingestionPackageZipFilepath));
                         }
                     };
