@@ -497,5 +497,15 @@
             type="java.lang.Object">
         </propertyTester>
     </extension>
+    <extension id="com.ge.research.rack.product" name="RITE"
+        point="org.eclipse.core.runtime.products">
+        <product name="RITE"
+            application="org.eclipse.ui.ide.workbench">
+        </product>
+        <property name="appName" value="RITE" />
+        <property name="windowImages"
+            value="./RITE-16.bmp,./RITE-32.bmp,./RITE-128.bmp,./RITE-256.bmp" />
+
+    </extension>
 
 </plugin>
