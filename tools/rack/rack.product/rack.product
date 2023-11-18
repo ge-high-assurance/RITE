@@ -32,6 +32,7 @@
       <linux icon="/rack.product/RITE-32.XPM"/>
       <macosx icon="/rack.product/RITE.icns"/>
       <win useIco="true">
+         <ico path="/rack.product/RITE-128.ICO"/>
          <bmp
             winSmallHigh="/rack.product/RITE-16.bmp"
             winSmallLow="/rack.product/RITE8-16.bmp"
@@ -43,9 +44,9 @@
       </win>
    </launcher>
 
+
    <vm>
    </vm>
-
 
    <plugins>
    </plugins>
