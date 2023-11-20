@@ -1,23 +1,23 @@
 /*
  * BSD 3-Clause License
- * 
+ *
  * Copyright (c) 2023, General Electric Company and Galois, Inc.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -31,9 +31,8 @@
  */
 package com.ge.research.rack.autoGsn.structures;
 
-import javafx.scene.control.TreeItem;
-
 import java.util.List;
+import javafx.scene.control.TreeItem;
 
 /**
  * @author Saswata Paul
@@ -62,36 +61,42 @@ public class MultiClassPackets {
             this.second = second;
             this.third = third;
         }
+
         /**
          * @return the first
          */
         public int getFirst() {
             return first;
         }
+
         /**
          * @param first the first to set
          */
         public void setFirst(int first) {
             this.first = first;
         }
+
         /**
          * @return the second
          */
         public int getSecond() {
             return second;
         }
+
         /**
          * @param second the second to set
          */
         public void setSecond(int second) {
             this.second = second;
         }
+
         /**
          * @return the third
          */
         public int getThird() {
             return third;
         }
+
         /**
          * @param third the third to set
          */
@@ -119,24 +124,28 @@ public class MultiClassPackets {
             this.goalId = goalId;
             this.goalClass = goalClass;
         }
+
         /**
          * @return the goalId
          */
         public String getGoalId() {
             return goalId;
         }
+
         /**
          * @param goalId the goalId to set
          */
         public void setGoalId(String goalId) {
             this.goalId = goalId;
         }
+
         /**
          * @return the goalClass
          */
         public String getGoalClass() {
             return goalClass;
         }
+
         /**
          * @param goalClass the goalClass to set
          */
@@ -161,18 +170,21 @@ public class MultiClassPackets {
         public List<GsnNode> getGsnList() {
             return gsnList;
         }
+
         /**
          * @param gsnList the gsnList to set
          */
         public void setGsnList(List<GsnNode> gsnList) {
             this.gsnList = gsnList;
         }
+
         /**
          * @return the dependencyList
          */
         public List<InstanceData> getDependencyList() {
             return dependencyList;
         }
+
         /**
          * @param dependencyList the dependencyList to set
          */
@@ -202,18 +214,21 @@ public class MultiClassPackets {
         public TreeItem getTreeItem() {
             return treeItem;
         }
+
         /**
          * @param treeItem the treeItem to set
          */
         public void setTreeItem(TreeItem treeItem) {
             this.treeItem = treeItem;
         }
+
         /**
          * @return the expandFlag
          */
         public Boolean getExpandFlag() {
             return expandFlag;
         }
+
         /**
          * @param expandFlag the expandFlag to set
          */

@@ -1,23 +1,23 @@
 /*
  * BSD 3-Clause License
- * 
+ *
  * Copyright (c) 2023, General Electric Company and Galois, Inc.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -35,7 +35,8 @@ import com.ge.research.rack.IngestInstanceDataHandler;
 import com.ge.research.rack.utils.ConnectionUtil;
 import com.ge.research.rack.utils.RackConsole;
 import com.ge.research.semtk.resultSet.TableResultSet;
-
+import java.util.ArrayList;
+import java.util.Arrays;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
@@ -57,9 +58,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /** Author: Paul Meng */
 public class ClearRackDialog extends Dialog {
@@ -151,8 +149,7 @@ public class ClearRackDialog extends Dialog {
                                 return;
                             }
 
-                    
-                          TableItem []  items = dataGraphsTable.getItems();
+                            TableItem[] items = dataGraphsTable.getItems();
                             ArrayList<String> dataGraphs = new ArrayList<>();
                             for (TableItem item : items) {
                                 if (item.getChecked()) {
@@ -231,7 +228,7 @@ public class ClearRackDialog extends Dialog {
                         Arrays.stream(dataGraphsTable.getItems()).forEach(item -> item.dispose());
                         try {
                             graphInfo = ConnectionUtil.getGraphInfo();
-                           int numRows = graphInfo.getTable().getNumRows();
+                            int numRows = graphInfo.getTable().getNumRows();
                             for (int i = 0; i < numRows; i++) {
                                 TableItem item =
                                         new TableItem(dataGraphsTable, SWT.CENTER | SWT.CHECK);
@@ -275,7 +272,7 @@ public class ClearRackDialog extends Dialog {
             deleteAllNodegroupsBtn.setText(DELETE_ALL_NODEGROUPS);
 
             int numRows = graphInfo.getTable().getNumRows();
-                     TableColumn dataGraphHeader = new TableColumn(dataGraphsTable, SWT.CENTER);
+            TableColumn dataGraphHeader = new TableColumn(dataGraphsTable, SWT.CENTER);
             dataGraphHeader.setText("Model/Data graphs");
             dataGraphHeader.setWidth(500);
             for (int i = 0; i < numRows; i++) {

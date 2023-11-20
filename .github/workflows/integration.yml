@@ -1,22 +1,28 @@
-# Runs whenever a pull request is created, modified, or reopened
-
 name: RITE Integration Workflow
+
+# Runs whenever a pull request is created, reopened, or modified
 
 on:
   pull_request:
     types: [ opened, reopened, synchronize ]
   workflow_dispatch:
 
-# Builds RITE source with Java and Maven
-# Caches Maven dependencies
+# Runs integration workflow as a CI check:
+# - Builds RITE source and runs unit tests
 
 jobs:
   integration:
+    container:
+      image: maven:${{ matrix.maven-version }}
+      volumes:
+      - /usr/bin/docker:/usr/bin/docker
+      - /var/run/docker.sock:/var/run/docker.sock
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         distribution: [ temurin ]
         java-version: [ 17 ]
+        maven-version: [ 3.9.5 ]
         os: [ ubuntu-22.04 ]
 
     steps:
@@ -26,7 +32,7 @@ jobs:
     - name: Set up Java and Maven
       uses: actions/setup-java@v3.13.0
       with:
-        #cache: maven
+        cache: maven
         distribution: ${{ matrix.distribution }}
         java-version: ${{ matrix.java-version }}
 
