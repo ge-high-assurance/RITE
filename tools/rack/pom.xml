@@ -159,7 +159,9 @@
             <execution>
               <?m2e execute onConfiguration?>
               <id>default-apply</id>
-              <goals></goals>
+              <goals>
+                <goal>apply</goal>
+              </goals>
               <phase>validate</phase>
             </execution>
           </executions>
