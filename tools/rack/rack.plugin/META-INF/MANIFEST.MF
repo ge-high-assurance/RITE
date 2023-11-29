@@ -91,7 +91,11 @@ Bundle-ClassPath: .,
  lib/json-simple.jar,
  lib/opencsv.jar,
  lib/sparqlGraphLibrary.jar,
- lib/viz.js-graphviz-java.jar
+ lib/viz.js-graphviz-java.jar,
+ lib/javafx-swing.jar,
+ lib/javafx-swing-linux.jar,
+ lib/javafx-swing-mac.jar,
+ lib/javafx-swing-win.jar
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: com.ge.research.rack.Activator
