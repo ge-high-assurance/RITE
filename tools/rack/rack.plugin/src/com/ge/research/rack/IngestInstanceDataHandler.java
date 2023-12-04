@@ -113,10 +113,6 @@ public class IngestInstanceDataHandler extends AbstractHandler {
         }
         if (oYaml == null || !(oYaml instanceof Map)) {
             ErrorMessageUtil.error("Ill formed " + dir + "/import.yaml, please check");
-        }
-        if (oYaml == null || !(oYaml instanceof Map)) {
-            RackConsole.getConsole().error("Ill formed " + dir + "/import.yaml, please check");
->>>>>>> main
             return IngestionStatus.FAILED;
         }
 
