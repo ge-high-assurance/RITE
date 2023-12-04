@@ -35,7 +35,6 @@ import com.ge.research.rack.RefreshHandler;
 import com.ge.research.rack.utils.ConnectionUtil;
 import com.ge.research.rack.utils.ErrorMessageUtil;
 import com.ge.research.rack.utils.NodegroupUtil;
-import com.ge.research.rack.utils.RackConsole;
 import com.google.inject.*;
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -34,7 +34,6 @@ package com.ge.research.rack;
 import com.ge.research.rack.utils.ConnectionUtil;
 import com.ge.research.rack.utils.ErrorMessageUtil;
 import com.ge.research.rack.utils.ProjectUtils;
-import com.ge.research.rack.utils.RackConsole;
 import com.ge.research.rack.views.RackPreferencePage;
 import com.ge.research.rack.views.ViewUtils;
 import com.ge.research.semtk.api.nodeGroupExecution.client.NodeGroupExecutionClient;
@@ -77,7 +76,6 @@ public class IngestInstanceDataHandler extends AbstractHandler {
     private static List<String> dGraphs = new ArrayList<>();
     private static List<String> mGraphs = new ArrayList<>();
     private static List<String> dedupSteps = new ArrayList<>();
-    private static IngestionStatus status = null;
 
     private static enum IngestionStatus {
         FAILED,
@@ -116,7 +114,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
             return IngestionStatus.FAILED;
         }
 
-        HashMap<String, Object> yamlMap = (HashMap) oYaml;
+        HashMap<String, Object> yamlMap = (HashMap<String, Object>) oYaml;
 
         if (!yamlMap.containsKey("files")) {
             ErrorMessageUtil.warning(dir + "/import.yaml contains no owl files to upload, done");
@@ -221,7 +219,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
             return IngestionStatus.FAILED;
         }
 
-        HashMap<String, Object> yamlMap = (HashMap) oYaml;
+        HashMap<String, Object> yamlMap = (HashMap<String, Object>) oYaml;
 
         if (!yamlMap.containsKey("ingestion-steps")) {
             ErrorMessageUtil.warning(dir + "/import.yaml contains no ingestion step, done");
@@ -543,13 +541,13 @@ public class IngestInstanceDataHandler extends AbstractHandler {
             return IngestionStatus.FAILED;
         }
         String dir = file.getParent();
-        Object oYaml = null;
+        HashMap<String, Object> yamlMap = null;
         try {
-            oYaml = ProjectUtils.readYaml(yamlPath);
+        	yamlMap = ProjectUtils.readYaml(yamlPath);
         } catch (Exception e) {
         	ErrorMessageUtil.error("Unable to read " + dir + "/" + file.getName());
         }
-        if (oYaml == null || !(oYaml instanceof Map)) {
+        if (yamlMap == null) {
             ErrorMessageUtil
                     .error(
                             "Ill formed manifest at "
@@ -560,8 +558,6 @@ public class IngestInstanceDataHandler extends AbstractHandler {
             ErrorMessageUtil.error("Check YAML: " + file.getAbsolutePath());
             return IngestionStatus.FAILED;
         }
-
-        HashMap<String, Object> yamlMap = (HashMap) oYaml;
 
         if (!yamlMap.containsKey("steps")) {
         	ErrorMessageUtil.error(dir + "/" + file.getName() + " contains no ingestion step, done");
@@ -674,14 +670,14 @@ public class IngestInstanceDataHandler extends AbstractHandler {
         }
 
         String dir = ingestionYaml.getParent();
-        Object oYaml = null;
+        HashMap<String, Object> yamlMap = null;
         try {
-            oYaml = ProjectUtils.readYaml(ingestionYaml.getAbsolutePath());
+        	yamlMap = ProjectUtils.readYaml(ingestionYaml.getAbsolutePath());
         } catch (Exception e) {
         	ErrorMessageUtil.error("Unable to read " + dir + "/" + ingestionYaml.getName());
             return Status.CANCEL_STATUS;
         }
-        if (oYaml == null || !(oYaml instanceof Map)) {
+        if (yamlMap == null) {
         	ErrorMessageUtil.error(
                             "Ill formed manifest at "
                                     + dir
@@ -693,7 +689,6 @@ public class IngestInstanceDataHandler extends AbstractHandler {
             return Status.CANCEL_STATUS;
         }
         // read footprint
-        HashMap<String, Object> yamlMap = (HashMap) oYaml;
         if (yamlMap.containsKey("footprint")) {
 
             Object oFootprint = yamlMap.get("footprint");

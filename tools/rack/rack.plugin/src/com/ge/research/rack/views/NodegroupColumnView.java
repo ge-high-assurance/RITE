@@ -36,8 +36,6 @@ import com.google.inject.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
-import org.eclipse.jface.action.*;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;

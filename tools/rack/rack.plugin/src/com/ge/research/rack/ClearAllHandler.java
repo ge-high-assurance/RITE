@@ -43,7 +43,6 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.core.runtime.jobs.*;
 import org.eclipse.swt.widgets.Display;
 
 public class ClearAllHandler extends AbstractHandler {
