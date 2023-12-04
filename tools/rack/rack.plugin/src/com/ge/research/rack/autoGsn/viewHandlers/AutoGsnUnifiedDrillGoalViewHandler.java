@@ -76,7 +76,7 @@ public class AutoGsnUnifiedDrillGoalViewHandler {
     // -------- Local variables to store data
 
     // All relevant GSN for this traverse instance
-    //private List<GsnNode> allRelevantGsn;
+    // private List<GsnNode> allRelevantGsn;
 
     // Current level
     private int currentGoalLevel = 0;
@@ -283,10 +283,10 @@ public class AutoGsnUnifiedDrillGoalViewHandler {
 
         // populate the status chart
 
-        XYChart.Series<String,Integer> dataSeries1 = new XYChart.Series<>();
+        XYChart.Series<String, Integer> dataSeries1 = new XYChart.Series<>();
 
-        Data<String,Integer> passBar = new XYChart.Data<>("Passed", numPassed);
-        Data<String,Integer> failBar = new XYChart.Data<>("Failed", numFailed);
+        Data<String, Integer> passBar = new XYChart.Data<>("Passed", numPassed);
+        Data<String, Integer> failBar = new XYChart.Data<>("Failed", numFailed);
 
         dataSeries1.getData().add(passBar);
         dataSeries1.getData().add(failBar);

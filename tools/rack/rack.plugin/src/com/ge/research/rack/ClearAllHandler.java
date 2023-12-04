@@ -105,14 +105,15 @@ public class ClearAllHandler extends AbstractHandler {
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
 
-        
-        ClearRackDialog dialog =
-                new ClearRackDialog(Display.getDefault().getActiveShell());
+        ClearRackDialog dialog = new ClearRackDialog(Display.getDefault().getActiveShell());
         dialog.run();
 
         return null;
 
-        /*	try {
+        /*	A computational thread is used, the RackConsole.getConsole().error calls
+         * have to be changed to ErrorMessageUtil.showError calls.
+         * 
+         * try {
 
             String consoleViewId = IConsoleConstants.ID_CONSOLE_VIEW;
             IConsoleView consoleView =

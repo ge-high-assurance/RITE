@@ -31,8 +31,6 @@
  */
 package com.ge.research.rack.utils;
 
-import com.ge.research.rack.views.ViewUtils;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;

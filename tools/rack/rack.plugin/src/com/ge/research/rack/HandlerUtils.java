@@ -163,7 +163,7 @@ public class HandlerUtils {
 
         return paths;
     }
-    
+
     public static IProject getCurrentIProject(ExecutionEvent event) {
         ISelection selection = HandlerUtil.getCurrentSelection(event);
 

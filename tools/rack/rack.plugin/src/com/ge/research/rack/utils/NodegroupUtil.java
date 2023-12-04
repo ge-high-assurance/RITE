@@ -74,8 +74,7 @@ public class NodegroupUtil {
             ProjectUtils.writeYaml(yamlMap, yamlPath);
         } catch (Exception e) {
             String prj = RackPreferencePage.getInstanceDataFolder();
-            RackConsole.getConsole()
-                    .error("Cannot write back to " + prj + " project's metadata.yaml");
+            ErrorMessageUtil.error("Cannot write back to " + prj + " project's metadata.yaml");
         }
     }
 

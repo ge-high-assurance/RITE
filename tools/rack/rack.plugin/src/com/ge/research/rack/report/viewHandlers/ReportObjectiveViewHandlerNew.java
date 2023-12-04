@@ -104,7 +104,7 @@ public class ReportObjectiveViewHandlerNew {
     @FXML private ListView<Label> reqList;
     @FXML private ComboBox<String> comboReq;
     @FXML private TextField searchReq;
-    @FXML private BarChart<String,Integer> reqChart;
+    @FXML private BarChart<String, Integer> reqChart;
     @FXML private NumberAxis yAxisReqChart;
     @FXML private Label reqChildrenLabel;
     @FXML private ListView<Label> reqChildrenList;
@@ -115,7 +115,7 @@ public class ReportObjectiveViewHandlerNew {
     @FXML private ListView<Label> tstList;
     @FXML private ComboBox<String> comboTst;
     @FXML private TextField searchTst;
-    @FXML private BarChart<String,Integer> tstChart;
+    @FXML private BarChart<String, Integer> tstChart;
     @FXML private NumberAxis yAxisTstChart;
     @FXML private Label tstChildrenLabel;
     @FXML private ListView<Label> tstChildrenList;
@@ -125,7 +125,7 @@ public class ReportObjectiveViewHandlerNew {
     @FXML private Tab tabRev;
     @FXML private ListView<Label> revList;
     @FXML private ComboBox<String> comboRev;
-    @FXML private BarChart<String,Integer> revChart;
+    @FXML private BarChart<String, Integer> revChart;
     @FXML private NumberAxis yAxisRevChart;
 
     @FXML private Button btnTab;
@@ -269,11 +269,11 @@ public class ReportObjectiveViewHandlerNew {
         yAxisReqChart.setDisable(false);
 
         // to store the highest value for scaling
-        //int high = -1;
+        // int high = -1;
 
         // TODO: write logic for other objectives
         if (currentObjId.equals("A2-1") || currentObjId.equals("A2-4")) {
-            var reqStat = new XYChart.Series<String,Integer>();
+            var reqStat = new XYChart.Series<String, Integer>();
 
             int numTrace = LogicUtils.getNumReqsWithTrace(reqList);
 
@@ -303,7 +303,7 @@ public class ReportObjectiveViewHandlerNew {
 
         // TODO: write logic for other objectives
         if (currentObjId.equals("A7-3") || currentObjId.equals("A7-4")) {
-            var reqStat = new XYChart.Series<String,Integer>();
+            var reqStat = new XYChart.Series<String, Integer>();
 
             List<Integer> testStats = LogicUtils.getRequirementTestStatus(reqList);
 
@@ -351,7 +351,7 @@ public class ReportObjectiveViewHandlerNew {
                 || currentObjId.equals("A4-4")
                 || currentObjId.equals("A4-5")
                 || currentObjId.equals("A4-6")) {
-            var reqStat = new XYChart.Series<String,Integer>();
+            var reqStat = new XYChart.Series<String, Integer>();
 
             List<Integer> testStats = LogicUtils.getRequirementLogStatus(reqList);
 
@@ -397,11 +397,11 @@ public class ReportObjectiveViewHandlerNew {
         yAxisTstChart.setDisable(false);
 
         // to store the highest value for scaling
-        //int high = -1;
+        // int high = -1;
 
         // TODO: write logic for other objectives
         if (currentObjId.equals("A7-3") || currentObjId.equals("A7-4")) {
-            var tstStat = new XYChart.Series<String,Integer>();
+            var tstStat = new XYChart.Series<String, Integer>();
 
             int numPassed = 0;
             int numFailed = 0;
@@ -443,7 +443,7 @@ public class ReportObjectiveViewHandlerNew {
 
         // TODO: write logic for other objectives
         if (currentObjId.equals("A7-1")) {
-            var tstStat = new XYChart.Series<String,Integer>();
+            var tstStat = new XYChart.Series<String, Integer>();
 
             List<Integer> testStats = LogicUtils.getTestLogStatus(tstList);
 

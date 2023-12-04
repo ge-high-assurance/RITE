@@ -85,7 +85,7 @@ public class ReportTableViewHandlerNew {
 
     @FXML private ComboBox<String> comboFilter;
 
-    @FXML private BarChart<String,Integer> chartObjStatus;
+    @FXML private BarChart<String, Integer> chartObjStatus;
     @FXML private NumberAxis yAxisChartObjStatus;
 
     // --------------------------------
@@ -98,7 +98,7 @@ public class ReportTableViewHandlerNew {
      */
     public Label getObjectiveLabel(PsacNode.Objective objObj) {
 
-        //double passPercent =
+        // double passPercent =
         //        ((double) objObj.getNumActPassed()
         //                        / (objObj.getNumActPassed()
         //                                + objObj.getNumActFailed()
@@ -197,7 +197,7 @@ public class ReportTableViewHandlerNew {
         var logBar = ReportViewUtils.createIntDataBar("Review Logs", artStats.get(4));
         var anlsBar = ReportViewUtils.createIntDataBar("Analyses", artStats.get(5));
 
-        XYChart.Series<String,Integer> tableStat = new XYChart.Series<>();
+        XYChart.Series<String, Integer> tableStat = new XYChart.Series<>();
 
         tableStat.getData().add(docBar);
         tableStat.getData().add(reqBar);

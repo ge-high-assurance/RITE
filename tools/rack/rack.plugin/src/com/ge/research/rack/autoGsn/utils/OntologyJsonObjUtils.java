@@ -87,7 +87,7 @@ public class OntologyJsonObjUtils {
             String rowRangeInfo = classPropertyRange.get(2).toString();
 
             String rowClassId = rowClassInfo.split("\\:")[1];
-            //String rowClassUri =
+            // String rowClassUri =
             //        getUriPrefix(ontInfo, rowClassInfo.split("\\:")[0]) + "#" + rowClassId;
             String rowPropId = rowPropInfo.split("\\:")[1];
             String rowPropUri =

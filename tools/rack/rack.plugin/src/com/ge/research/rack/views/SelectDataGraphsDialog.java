@@ -68,7 +68,7 @@ import java.util.ArrayList;
 /** Author: Paul Meng */
 public class SelectDataGraphsDialog extends Dialog {
     private Font font;
-    //private Font boldFont;
+    // private Font boldFont;
     public static String nodegroupId = "";
     private static Table table;
 
@@ -76,7 +76,7 @@ public class SelectDataGraphsDialog extends Dialog {
         super(parent);
         nodegroupId = nodegroup;
         font = new Font(null, "Helvetica", 12, SWT.NORMAL);
-        //boldFont = new Font(null, "Helvetica", 12, SWT.BOLD);
+        // boldFont = new Font(null, "Helvetica", 12, SWT.BOLD);
     }
 
     @Override
@@ -128,9 +128,11 @@ public class SelectDataGraphsDialog extends Dialog {
         if (win != null) {
             var rect = win.getShell().getBounds();
             var sz = getShell().getSize();
-            getShell().setLocation(rect.x + (rect.width-sz.x)/2, rect.y + (rect.height-sz.y)/2);
+            getShell()
+                    .setLocation(
+                            rect.x + (rect.width - sz.x) / 2, rect.y + (rect.height - sz.y) / 2);
         }
-        
+
         cancel.addSelectionListener(
                 new SelectionAdapter() {
                     @Override

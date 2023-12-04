@@ -84,7 +84,7 @@ public class ReportMainViewHandlerNew {
     @FXML private Label labelWait;
     @FXML private ProgressIndicator progInd;
 
-    @FXML private BarChart<String,Integer> chartTableStatus;
+    @FXML private BarChart<String, Integer> chartTableStatus;
     @FXML private NumberAxis yAxisChartTableStatus;
     @FXML private GridPane gridPaneLegend;
 
@@ -214,9 +214,9 @@ public class ReportMainViewHandlerNew {
 
         // Group bars by table id
 
-        var passData = new XYChart.Series<String,Integer>();
+        var passData = new XYChart.Series<String, Integer>();
         passData.setName("Complete");
-        var passBars = new ArrayList<Data<String,Integer>>();
+        var passBars = new ArrayList<Data<String, Integer>>();
         for (PsacNode.Table tabObj : ReportViewsManager.reportDataObj.getReportTables()) {
             //            Data passBar = new XYChart.Data(tabObj.getId(), tabObj.getNumObjPassed());
             var passBar =
@@ -228,9 +228,9 @@ public class ReportMainViewHandlerNew {
             }
         }
 
-        var failData = new XYChart.Series<String,Integer>();
+        var failData = new XYChart.Series<String, Integer>();
         failData.setName("Complete");
-        var failBars = new ArrayList<Data<String,Integer>>();
+        var failBars = new ArrayList<Data<String, Integer>>();
         for (PsacNode.Table tabObj : ReportViewsManager.reportDataObj.getReportTables()) {
             //            Data failBar = new XYChart.Data(tabObj.getId(), tabObj.getNumObjFailed());
             var failBar =
@@ -242,9 +242,9 @@ public class ReportMainViewHandlerNew {
             }
         }
 
-        var partialData = new XYChart.Series<String,Integer>();
+        var partialData = new XYChart.Series<String, Integer>();
         partialData.setName("Partial Data");
-        var partialBars = new ArrayList<Data<String,Integer>>();
+        var partialBars = new ArrayList<Data<String, Integer>>();
         for (PsacNode.Table tabObj : ReportViewsManager.reportDataObj.getReportTables()) {
             //            Data partialBar = new XYChart.Data(tabObj.getId(),
             // tabObj.getNumObjPartial());
@@ -257,9 +257,9 @@ public class ReportMainViewHandlerNew {
             }
         }
 
-        var noData = new XYChart.Series<String,Integer>();
+        var noData = new XYChart.Series<String, Integer>();
         noData.setName("No Data");
-        var noBars = new ArrayList<Data<String,Integer>>();
+        var noBars = new ArrayList<Data<String, Integer>>();
         for (PsacNode.Table tabObj : ReportViewsManager.reportDataObj.getReportTables()) {
             //            Data noBar = new XYChart.Data(tabObj.getId(), tabObj.getNumObjNodata());
             var noBar = ReportViewUtils.createIntDataBar(tabObj.getId(), tabObj.getNumObjNodata());

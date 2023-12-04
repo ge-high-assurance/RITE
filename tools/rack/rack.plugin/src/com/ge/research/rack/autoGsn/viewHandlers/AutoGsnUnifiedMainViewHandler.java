@@ -98,7 +98,7 @@ public class AutoGsnUnifiedMainViewHandler {
 
     @FXML private GridPane gridPaneCharts;
     //    @FXML private BarChart chartBarStatus;
-    @FXML private BarChart<String,Integer> chartBarClass;
+    @FXML private BarChart<String, Integer> chartBarClass;
 
     // --------------------------------
 
@@ -192,11 +192,11 @@ public class AutoGsnUnifiedMainViewHandler {
 
         // populate the class bar chart
 
-        XYChart.Series<String,Integer> classData = new XYChart.Series<>();
+        XYChart.Series<String, Integer> classData = new XYChart.Series<>();
 
         // Create a list to store the Data objects so that we can
         // color them later
-        List<Data<String,Integer>> classBarList = new ArrayList<>();
+        List<Data<String, Integer>> classBarList = new ArrayList<>();
 
         // By this step, all classes will have been added
         // to the comboClassFilter
@@ -206,7 +206,8 @@ public class AutoGsnUnifiedMainViewHandler {
             if (!classKey.equalsIgnoreCase("All")) {
                 int classCount =
                         AutoGsnGuiUtils.getClassCount(AutoGsnViewsManager.allRootGoals, classKey);
-                Data<String,Integer> classBar = new XYChart.Data<String,Integer>(classKey, classCount);
+                Data<String, Integer> classBar =
+                        new XYChart.Data<String, Integer>(classKey, classCount);
                 classData.getData().add(classBar);
                 classBarList.add(classBar);
             }

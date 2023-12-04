@@ -293,31 +293,31 @@ public class OtherNodegroups extends ViewPart implements INodegroupView {
         return ngIds;
     }
 
-//    private void deleteSelectedNodeGroups() throws Exception {
-//
-//        // Collect nodegroup ids to be deleted
-//        ArrayList<String> ngIds = getSelectedNodegroups();
-//        // delete collected nodegroups by id
-//        Thread thread =
-//                new Thread(
-//                        () -> {
-//                            try {
-//
-//                                for (String id : ngIds) {
-//                                    NodegroupUtil.client.deleteStoredNodeGroup(id);
-//                                }
-//                                NodegroupUtil.getAllNodegroups();
-//
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                            }
-//                        });
-//        thread.start();
-//        thread.join();
-//
-//        IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
-//        HandlerUtils.showNodegroupTable(window);
-//    }
+    //    private void deleteSelectedNodeGroups() throws Exception {
+    //
+    //        // Collect nodegroup ids to be deleted
+    //        ArrayList<String> ngIds = getSelectedNodegroups();
+    //        // delete collected nodegroups by id
+    //        Thread thread =
+    //                new Thread(
+    //                        () -> {
+    //                            try {
+    //
+    //                                for (String id : ngIds) {
+    //                                    NodegroupUtil.client.deleteStoredNodeGroup(id);
+    //                                }
+    //                                NodegroupUtil.getAllNodegroups();
+    //
+    //                            } catch (Exception e) {
+    //                                e.printStackTrace();
+    //                            }
+    //                        });
+    //        thread.start();
+    //        thread.join();
+    //
+    //        IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+    //        HandlerUtils.showNodegroupTable(window);
+    //    }
 
     @Override
     public void setFocus() {
