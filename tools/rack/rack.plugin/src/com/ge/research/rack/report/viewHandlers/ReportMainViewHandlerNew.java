@@ -1,23 +1,23 @@
 /*
  * BSD 3-Clause License
- * 
+ *
  * Copyright (c) 2023, General Electric Company and Galois, Inc.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -38,7 +38,10 @@ import com.ge.research.rack.report.structures.PsacNode;
 import com.ge.research.rack.report.utils.PsacNodeUtils;
 import com.ge.research.rack.report.utils.ReportViewUtils;
 import com.ge.research.rack.report.viewManagers.ReportViewsManager;
-
+import java.io.File;
+import java.io.FileInputStream;
+import java.net.URL;
+import java.util.ArrayList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -56,16 +59,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.net.URL;
-import java.util.ArrayList;
 
 /**
  * @author Saswata Paul
@@ -84,7 +81,7 @@ public class ReportMainViewHandlerNew {
     @FXML private Label labelWait;
     @FXML private ProgressIndicator progInd;
 
-    @FXML private BarChart<String,Integer> chartTableStatus;
+    @FXML private BarChart<String, Integer> chartTableStatus;
     @FXML private NumberAxis yAxisChartTableStatus;
     @FXML private GridPane gridPaneLegend;
 
@@ -214,9 +211,9 @@ public class ReportMainViewHandlerNew {
 
         // Group bars by table id
 
-        var passData = new XYChart.Series<String,Integer>();
+        var passData = new XYChart.Series<String, Integer>();
         passData.setName("Complete");
-        var passBars = new ArrayList<Data<String,Integer>>();
+        var passBars = new ArrayList<Data<String, Integer>>();
         for (PsacNode.Table tabObj : ReportViewsManager.reportDataObj.getReportTables()) {
             //            Data passBar = new XYChart.Data(tabObj.getId(), tabObj.getNumObjPassed());
             var passBar =
@@ -228,9 +225,9 @@ public class ReportMainViewHandlerNew {
             }
         }
 
-        var failData = new XYChart.Series<String,Integer>();
+        var failData = new XYChart.Series<String, Integer>();
         failData.setName("Complete");
-        var failBars = new ArrayList<Data<String,Integer>>();
+        var failBars = new ArrayList<Data<String, Integer>>();
         for (PsacNode.Table tabObj : ReportViewsManager.reportDataObj.getReportTables()) {
             //            Data failBar = new XYChart.Data(tabObj.getId(), tabObj.getNumObjFailed());
             var failBar =
@@ -242,9 +239,9 @@ public class ReportMainViewHandlerNew {
             }
         }
 
-        var partialData = new XYChart.Series<String,Integer>();
+        var partialData = new XYChart.Series<String, Integer>();
         partialData.setName("Partial Data");
-        var partialBars = new ArrayList<Data<String,Integer>>();
+        var partialBars = new ArrayList<Data<String, Integer>>();
         for (PsacNode.Table tabObj : ReportViewsManager.reportDataObj.getReportTables()) {
             //            Data partialBar = new XYChart.Data(tabObj.getId(),
             // tabObj.getNumObjPartial());
@@ -257,9 +254,9 @@ public class ReportMainViewHandlerNew {
             }
         }
 
-        var noData = new XYChart.Series<String,Integer>();
+        var noData = new XYChart.Series<String, Integer>();
         noData.setName("No Data");
-        var noBars = new ArrayList<Data<String,Integer>>();
+        var noBars = new ArrayList<Data<String, Integer>>();
         for (PsacNode.Table tabObj : ReportViewsManager.reportDataObj.getReportTables()) {
             //            Data noBar = new XYChart.Data(tabObj.getId(), tabObj.getNumObjNodata());
             var noBar = ReportViewUtils.createIntDataBar(tabObj.getId(), tabObj.getNumObjNodata());

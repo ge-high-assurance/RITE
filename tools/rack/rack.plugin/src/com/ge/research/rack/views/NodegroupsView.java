@@ -1,23 +1,23 @@
 /*
  * BSD 3-Clause License
- * 
+ *
  * Copyright (c) 2023, General Electric Company and Galois, Inc.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -33,10 +33,14 @@ package com.ge.research.rack.views;
 
 import com.ge.research.rack.RefreshHandler;
 import com.ge.research.rack.utils.ConnectionUtil;
+import com.ge.research.rack.utils.ErrorMessageUtil;
 import com.ge.research.rack.utils.NodegroupUtil;
-import com.ge.research.rack.utils.RackConsole;
 import com.google.inject.*;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -62,12 +66,6 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.*;
 import org.eclipse.ui.part.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class NodegroupsView extends ViewPart implements INodegroupView {
 
@@ -256,7 +254,7 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
             table.pack();
 
         } catch (final Exception e) {
-            RackConsole.getConsole().warning(UPDATE_NODEGROUP_LIST_ERROR);
+        	ErrorMessageUtil.warning(UPDATE_NODEGROUP_LIST_ERROR);
         }
     }
 
@@ -290,7 +288,7 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
             // table.pack();
 
         } catch (final Exception e) {
-            RackConsole.getConsole().warning(UPDATE_NODEGROUP_LIST_ERROR);
+        	ErrorMessageUtil.warning(UPDATE_NODEGROUP_LIST_ERROR);
         }
     }
 
@@ -364,12 +362,12 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
                                         thr.schedule();
                                         thr.join();
                                     } catch (final InterruptedException e) {
-                                        RackConsole.getConsole().error(NODEGROUP_DELETE_ERROR, e);
+                                    	ErrorMessageUtil.error(NODEGROUP_DELETE_ERROR, e);
                                     }
                                 });
 
             } catch (final Exception e) {
-                RackConsole.getConsole().error(NODEGROUP_DELETE_ERROR, e);
+            	ErrorMessageUtil.error(NODEGROUP_DELETE_ERROR, e);
             }
 
             refreshNodegroupList();
@@ -398,7 +396,7 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
                 window.getActivePage().showView(NodegroupTemplateView.ID);
 
             } catch (final Exception e) {
-                RackConsole.getConsole().error(TEMPLATE_VIEW_ERROR, e);
+            	ErrorMessageUtil.error(TEMPLATE_VIEW_ERROR, e);
             }
         }
     }
@@ -416,19 +414,18 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
         @Override
         protected IStatus run(IProgressMonitor monitor) {
             try {
-                RackConsole.getConsole().println("Deleting nodegroup: " + nodegroupId + " ... ");
+            	ErrorMessageUtil.println("Deleting nodegroup: " + nodegroupId + " ... ");
                 NodegroupUtil.client.deleteStoredNodeGroup(nodegroupId);
-                RackConsole.getConsole().printOK();
+                ErrorMessageUtil.printOK();
 
             } catch (final Exception e) {
-                RackConsole.getConsole().printFAIL();
-                RackConsole.getConsole()
-                        .error(String.format(NODEGROUP_DELETE_ERROR, nodegroupId), e);
+            	ErrorMessageUtil.printFAIL();
+            	ErrorMessageUtil.error(String.format(NODEGROUP_DELETE_ERROR, nodegroupId), e);
 
                 return Status.CANCEL_STATUS;
             }
 
-            RackConsole.getConsole().println(String.format(NODEGROUP_DELETE_SUCCESS, nodegroupId));
+            ErrorMessageUtil.println(String.format(NODEGROUP_DELETE_SUCCESS, nodegroupId));
 
             return Status.OK_STATUS;
         }

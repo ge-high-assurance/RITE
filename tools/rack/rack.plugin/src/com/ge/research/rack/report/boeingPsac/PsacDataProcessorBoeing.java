@@ -1,23 +1,23 @@
 /*
  * BSD 3-Clause License
- * 
+ *
  * Copyright (c) 2023, General Electric Company and Galois, Inc.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -43,12 +43,10 @@ import com.ge.research.rack.report.utils.LogicUtils;
 import com.ge.research.rack.report.utils.PsacNodeUtils;
 import com.ge.research.rack.report.utils.RackQueryUtils;
 import com.ge.research.rack.utils.CSVUtil;
-
-import org.apache.commons.io.FileUtils;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.io.FileUtils;
 
 /**
  * @author Saswata Paul
@@ -1570,7 +1568,7 @@ public class PsacDataProcessorBoeing {
                 CustomStringUtils.getCSVColumnIndex(subddtToSrdCols, "identifier_subdd_req");
         int srsIdCol = CustomStringUtils.getCSVColumnIndex(subddtToSrdCols, "identifier_srs_req");
 
-        //int counter = 1;
+        // int counter = 1;
 
         for (String[] row : allSUBDD) {
             if (row[subddIdCol] != null) {
@@ -1603,7 +1601,7 @@ public class PsacDataProcessorBoeing {
                     if ((row2.length > subddIdCol2) && (row2.length > srsIdCol)) {
                         //        				System.out.println("Finding object for " + row2[srsIdCol] + "
                         // iteration number: " + counter);
-                        //counter++;
+                        // counter++;
 
                         if (row2[subddIdCol2].equals(row[subddIdCol])) { // if relevant to the req
 

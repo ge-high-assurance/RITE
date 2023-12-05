@@ -1,23 +1,23 @@
 /*
  * BSD 3-Clause License
- * 
+ *
  * Copyright (c) 2023, General Electric Company and Galois, Inc.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -35,7 +35,6 @@ import com.ge.research.rack.autoGsn.structures.GsnNode;
 import com.ge.research.rack.autoGsn.structures.MultiClassPackets;
 import com.ge.research.rack.autoGsn.structures.MultiClassPackets.TreeItemAndBoolean;
 import com.ge.research.rack.autoGsn.utils.AutoGsnGuiUtils;
-
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -88,31 +87,33 @@ public class GsnTreeViewHandler {
         return nodeLabel;
     }
 
-//    /**
-//     * For a given GSN node, creates a treeitem and recursively creates treeitems for all supporting
-//     * nodes
-//     *
-//     * @param node
-//     * @return
-//     */
-//    private TreeItem<Label> populateTreeViewGsnCascade(GsnNode node, String currentGoalId) {
-//        Node nodeImage = AutoGsnGuiUtils.getNodeImage(node);
-//
-//        var elementItem = new TreeItem<>(getNodeTreeLabel(node), nodeImage);
-//        // if this is the currentgoal, expand it by default
-//        System.out.println(node.getNodeId() + " ------- " + currentGoalId);
-//        if (node.getNodeId().equalsIgnoreCase(currentGoalId)) {
-//            System.out.println("expanded");
-//            elementItem.setExpanded(true);
-//        }
-//
-//        if (node.getSupportedBy() != null) {
-//            for (GsnNode child : node.getSupportedBy()) {
-//                elementItem.getChildren().add(populateTreeViewGsnCascade(child, currentGoalId));
-//            }
-//        }
-//        return elementItem;
-//    }
+    //    /**
+    //     * For a given GSN node, creates a treeitem and recursively creates treeitems for all
+    // supporting
+    //     * nodes
+    //     *
+    //     * @param node
+    //     * @return
+    //     */
+    //    private TreeItem<Label> populateTreeViewGsnCascade(GsnNode node, String currentGoalId) {
+    //        Node nodeImage = AutoGsnGuiUtils.getNodeImage(node);
+    //
+    //        var elementItem = new TreeItem<>(getNodeTreeLabel(node), nodeImage);
+    //        // if this is the currentgoal, expand it by default
+    //        System.out.println(node.getNodeId() + " ------- " + currentGoalId);
+    //        if (node.getNodeId().equalsIgnoreCase(currentGoalId)) {
+    //            System.out.println("expanded");
+    //            elementItem.setExpanded(true);
+    //        }
+    //
+    //        if (node.getSupportedBy() != null) {
+    //            for (GsnNode child : node.getSupportedBy()) {
+    //                elementItem.getChildren().add(populateTreeViewGsnCascade(child,
+    // currentGoalId));
+    //            }
+    //        }
+    //        return elementItem;
+    //    }
 
     /**
      * For a given GSN node, creates a treeitem and recursively creates treeitems for all supporting
@@ -171,8 +172,7 @@ public class GsnTreeViewHandler {
         }
 
         // create TreeItemAndBoolean to return to parent
-        var returnPack =
-                new MultiClassPackets().new TreeItemAndBoolean<>(elementItem, myExpFlag);
+        var returnPack = new MultiClassPackets().new TreeItemAndBoolean<>(elementItem, myExpFlag);
 
         return returnPack;
     }
