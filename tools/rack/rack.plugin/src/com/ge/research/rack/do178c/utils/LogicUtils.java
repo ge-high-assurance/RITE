@@ -31,12 +31,13 @@
  */
 package com.ge.research.rack.do178c.utils;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.ge.research.rack.do178c.structures.PsacNode;
 import com.ge.research.rack.do178c.structures.Requirement;
 import com.ge.research.rack.do178c.structures.ReviewLog;
+import com.ge.research.rack.do178c.structures.SwComponent;
 import com.ge.research.rack.do178c.structures.Test;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -131,6 +132,24 @@ public class LogicUtils {
         }
 
         return relevant;
+    }
+
+    /**
+     * Given a key and a list of swComponent objects, returns the swComponent object whose id = key,
+     *
+     * @param swCompList
+     * @param key
+     * @return
+     */
+    public static SwComponent findSwCompObjById(List<SwComponent> swCompList, String key) {
+
+        for (SwComponent swComp : swCompList) {
+            if (swComp.getId().equals(key)) {
+                return swComp;
+            }
+        }
+
+        return null; // if nothing is found in the loop
     }
 
     /**
@@ -290,6 +309,39 @@ public class LogicUtils {
         packet.add(numFailed);
         packet.add(numNoTest);
         return packet;
+    }
+
+    /**
+     * Takes a list of swComponents and checks the number that have a sbDD trace and number that
+     * don't
+     *
+     * @param swCompList
+     * @return
+     */
+    public static int getSwCompSubDDTraceStats(List<SwComponent> swCompList) {
+
+        int numSwCompWithSubDDTrace = 0;
+
+        for (SwComponent swComp : swCompList) {
+            if (swComp.getWasImpactedBy().size() < 1) { // no trace
+                // do nothing
+            } else { // some trace
+                Boolean hasSubDDTrace = false;
+                for (Requirement req : swComp.getWasImpactedBy()) {
+                    if (req.getType().equalsIgnoreCase("SubDD_Req")) {
+                        hasSubDDTrace = true;
+                        break;
+                    }
+                }
+                if (hasSubDDTrace) {
+                    numSwCompWithSubDDTrace = numSwCompWithSubDDTrace + 1;
+                } else {
+                    // nothing
+                }
+            }
+        }
+
+        return numSwCompWithSubDDTrace;
     }
 
     /**

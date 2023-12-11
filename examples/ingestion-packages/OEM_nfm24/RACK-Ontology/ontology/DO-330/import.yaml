@@ -1,0 +1,12 @@
+data-graph: "http://rack001/do-330"
+ingestion-steps:
+#Phase1: Identifiers Only
+- {class: "http://arcos.rack/PROV-S#AGENT", csv: "AGENT_1.csv"}
+- {class: "http://arcos.rack/DOCUMENT#SPECIFICATION", csv: "SPECIFICATION_1.csv"}
+- {class: "http://arcos.rack/DOCUMENT#SECTION", csv: "SECTION_1.csv"}
+- {class: "http://arcos.rack/PROCESS#OBJECTIVE", csv: "OBJECTIVE_1.csv"}
+
+#Phase2: The rest of the data
+- {class: "http://arcos.rack/DOCUMENT#SPECIFICATION", csv: "SPECIFICATION_2.csv"}
+- {class: "http://arcos.rack/DOCUMENT#SECTION", csv: "SECTION_2.csv"}
+- {class: "http://arcos.rack/PROCESS#OBJECTIVE", csv: "OBJECTIVE_2.csv"}

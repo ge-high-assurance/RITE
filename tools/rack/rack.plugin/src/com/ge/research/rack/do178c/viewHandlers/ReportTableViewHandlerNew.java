@@ -49,18 +49,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
-import org.osgi.framework.Bundle;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
@@ -109,13 +100,6 @@ public class ReportTableViewHandlerNew {
         Label objLabel = new Label();
         objLabel.setStyle("-fx-font-weight: bold;");
 
-        //        objLabel.setText(
-        //                objObj.getId()
-        //                        + ": "
-        //                        + objObj.getDescription()
-        //                        + " ("
-        //                        + String.format("%.2f", passPercent)
-        //                        + "% compliant)");
         objLabel.setText(
                 objObj.getId()
                         + ": "
@@ -258,26 +242,11 @@ public class ReportTableViewHandlerNew {
 
     @FXML
     private void initialize() {
-        // initialize the header label
         try {
-            String imagePath = "resources/images/headerWithLogoTransparent.png";
-
-            Bundle bundle = Platform.getBundle("rack.plugin");
-            URL imgUrl = FileLocator.find(bundle, new Path(imagePath), null);
-            imgUrl = FileLocator.toFileURL(imgUrl);
-
-            // the imgURL starts with "file:/", so stripping it here
-            String imgUrlStr = imgUrl.toString().substring("file:/".length());
-
-            // System.out.println(imgUrl.toString());
-
-            ImageView icon = new ImageView(new Image(new FileInputStream(new File(imgUrlStr))));
-            icon.setFitHeight(60);
+            final ImageView icon = ReportViewUtils.loadGeIcon();
             icon.setPreserveRatio(true);
-
             headerLabel.setGraphic(icon);
         } catch (Exception e) {
-            // do nothing for now
         }
 
         // set SINGLE Selection Model for ListView of Goals
@@ -295,7 +264,7 @@ public class ReportTableViewHandlerNew {
     private void btnHomeAction(ActionEvent event) throws Exception {
 
         // Set the stage with the other fxml
-        ReportViewsManager.setNewFxmlToStage("resources/fxml/report/ReportMainView_new.fxml");
+        ReportViewsManager.setNewFxmlToStage("resources/fxml/do178c/DO178CMainView.fxml");
     }
 
     @FXML
@@ -339,7 +308,7 @@ public class ReportTableViewHandlerNew {
                 // Set the stage with the other fxml
                 FXMLLoader objectiveViewLoader =
                         ReportViewsManager.setNewFxmlToStage(
-                                "resources/fxml/report/ReportObjectiveView_new_boeing.fxml");
+                                "resources/fxml/do178c/DO178CObjectiveView.fxml");
 
                 // initialize variables in the ReportTableView page
                 ReportObjectiveViewHandlerNew objectiveViewLoaderClassObj =

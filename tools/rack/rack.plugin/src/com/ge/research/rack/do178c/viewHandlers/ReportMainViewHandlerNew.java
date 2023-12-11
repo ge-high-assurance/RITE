@@ -33,7 +33,7 @@ package com.ge.research.rack.do178c.viewHandlers;
 
 import com.ge.research.rack.autoGsn.utils.CustomFileUtils;
 import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
-import com.ge.research.rack.do178c.boeingPsac.PsacDataProcessorBoeing;
+import com.ge.research.rack.do178c.oem.DataProcessor;
 import com.ge.research.rack.do178c.structures.PsacNode;
 import com.ge.research.rack.do178c.utils.PsacNodeUtils;
 import com.ge.research.rack.do178c.utils.ReportViewUtils;
@@ -52,19 +52,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
-import org.osgi.framework.Bundle;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -162,7 +153,7 @@ public class ReportMainViewHandlerNew {
         // Create tempdir to store the csv files
         String tempDir = CustomFileUtils.getRackDir();
 
-        PsacDataProcessorBoeing rdpObj = new PsacDataProcessorBoeing();
+        DataProcessor rdpObj = new DataProcessor();
 
         ReportViewsManager.reportDataObj = rdpObj.getPSACData(tempDir);
     }
@@ -344,26 +335,11 @@ public class ReportMainViewHandlerNew {
 
     @FXML
     private void initialize() {
-        // initialize the header label
         try {
-            String imagePath = "resources/images/headerWithLogoTransparent.png";
-
-            Bundle bundle = Platform.getBundle("rack.plugin");
-            URL imgUrl = FileLocator.find(bundle, new Path(imagePath), null);
-            imgUrl = FileLocator.toFileURL(imgUrl);
-
-            // the imgURL starts with "file:/", so stripping it here
-            String imgUrlStr = imgUrl.toString().substring("file:/".length());
-
-            // System.out.println(imgUrl.toString());
-
-            ImageView icon = new ImageView(new Image(new FileInputStream(new File(imgUrlStr))));
-            icon.setFitHeight(60);
+            final ImageView icon = ReportViewUtils.loadGeIcon();
             icon.setPreserveRatio(true);
-
             headerLabel.setGraphic(icon);
         } catch (Exception e) {
-            // do nothing for now
         }
 
         // disable the display environments
@@ -471,7 +447,7 @@ public class ReportMainViewHandlerNew {
                 // Set the stage with the other fxml
                 FXMLLoader tableViewLoader =
                         ReportViewsManager.setNewFxmlToStage(
-                                "resources/fxml/report/ReportTableView_new.fxml");
+                                "resources/fxml/do178c/DO178CTableView.fxml");
 
                 // initialize variables in the ReportTableView page
                 ReportTableViewHandlerNew tableViewLoaderClassObj = tableViewLoader.getController();

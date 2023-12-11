@@ -62,42 +62,36 @@ public class MultiClassPackets {
             this.second = second;
             this.third = third;
         }
-
         /**
          * @return the first
          */
         public int getFirst() {
             return first;
         }
-
         /**
          * @param first the first to set
          */
         public void setFirst(int first) {
             this.first = first;
         }
-
         /**
          * @return the second
          */
         public int getSecond() {
             return second;
         }
-
         /**
          * @param second the second to set
          */
         public void setSecond(int second) {
             this.second = second;
         }
-
         /**
          * @return the third
          */
         public int getThird() {
             return third;
         }
-
         /**
          * @param third the third to set
          */
@@ -125,28 +119,24 @@ public class MultiClassPackets {
             this.goalId = goalId;
             this.goalClass = goalClass;
         }
-
         /**
          * @return the goalId
          */
         public String getGoalId() {
             return goalId;
         }
-
         /**
          * @param goalId the goalId to set
          */
         public void setGoalId(String goalId) {
             this.goalId = goalId;
         }
-
         /**
          * @return the goalClass
          */
         public String getGoalClass() {
             return goalClass;
         }
-
         /**
          * @param goalClass the goalClass to set
          */
@@ -171,21 +161,18 @@ public class MultiClassPackets {
         public List<GsnNode> getGsnList() {
             return gsnList;
         }
-
         /**
          * @param gsnList the gsnList to set
          */
         public void setGsnList(List<GsnNode> gsnList) {
             this.gsnList = gsnList;
         }
-
         /**
          * @return the dependencyList
          */
         public List<InstanceData> getDependencyList() {
             return dependencyList;
         }
-
         /**
          * @param dependencyList the dependencyList to set
          */
@@ -215,21 +202,18 @@ public class MultiClassPackets {
         public TreeItem getTreeItem() {
             return treeItem;
         }
-
         /**
          * @param treeItem the treeItem to set
          */
         public void setTreeItem(TreeItem treeItem) {
             this.treeItem = treeItem;
         }
-
         /**
          * @return the expandFlag
          */
         public Boolean getExpandFlag() {
             return expandFlag;
         }
-
         /**
          * @param expandFlag the expandFlag to set
          */

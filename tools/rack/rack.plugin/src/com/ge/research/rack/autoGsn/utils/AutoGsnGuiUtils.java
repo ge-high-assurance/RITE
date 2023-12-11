@@ -254,11 +254,11 @@ public class AutoGsnGuiUtils {
      * @param url
      */
     public static void openUrlInDefaultApp(String url) {
-        System.out.println("Trying to open generated GSN svg file in default app!");
+        System.out.println("Trying to open URL in default app!");
         try {
             AutoGsnViewsManager.hostServices.showDocument(url);
         } catch (Exception e) {
-            System.out.println("ERROR: Failed to open generated GSN svg file in default app!");
+            System.out.println("ERROR: Failed to open URL in default app!");
             e.printStackTrace();
         }
     }

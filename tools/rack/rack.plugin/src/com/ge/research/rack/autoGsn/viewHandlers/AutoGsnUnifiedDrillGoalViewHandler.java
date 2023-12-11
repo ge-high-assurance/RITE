@@ -118,7 +118,6 @@ public class AutoGsnUnifiedDrillGoalViewHandler {
     @FXML private ComboBox comboPassFail;
 
     @FXML private TreeView treeGsn;
-
     // --------------------------------
 
     /**

@@ -53,6 +53,22 @@ public class Review {
     private List<ReviewLog> logs =
             new ArrayList<ReviewLog>(); // initializing so that the list does not need to be created
 
+    private List<String> sourceDocument = new ArrayList<String>();
+
+    /**
+     * @return the sourceDocument
+     */
+    public List<String> getSourceDocument() {
+        return sourceDocument;
+    }
+
+    /**
+     * @param sourceDocument the sourceDocument to set
+     */
+    public void setSourceDocument(List<String> sourceDocument) {
+        this.sourceDocument = sourceDocument;
+    }
+
     /**
      * @return the id
      */

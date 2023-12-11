@@ -31,6 +31,18 @@
  */
 package com.ge.research.rack.do178c.viewHandlers;
 
+import com.ge.research.rack.do178c.structures.DataItem;
+import com.ge.research.rack.do178c.structures.PsacNode;
+import com.ge.research.rack.do178c.structures.PsacNode.Activity;
+import com.ge.research.rack.do178c.structures.Requirement;
+import com.ge.research.rack.do178c.structures.ReviewLog;
+import com.ge.research.rack.do178c.structures.SwComponent;
+import com.ge.research.rack.do178c.structures.Test;
+import com.ge.research.rack.do178c.utils.LogicUtils;
+import com.ge.research.rack.do178c.utils.PsacNodeUtils;
+import com.ge.research.rack.do178c.utils.ReportViewUtils;
+import com.ge.research.rack.do178c.viewManagers.ReportViewsManager;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -42,34 +54,15 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
-import org.osgi.framework.Bundle;
-
-import com.ge.research.rack.do178c.structures.DataItem;
-import com.ge.research.rack.do178c.structures.PsacNode;
-import com.ge.research.rack.do178c.structures.Requirement;
-import com.ge.research.rack.do178c.structures.ReviewLog;
-import com.ge.research.rack.do178c.structures.Test;
-import com.ge.research.rack.do178c.structures.PsacNode.Activity;
-import com.ge.research.rack.do178c.utils.LogicUtils;
-import com.ge.research.rack.do178c.utils.PsacNodeUtils;
-import com.ge.research.rack.do178c.utils.ReportViewUtils;
-import com.ge.research.rack.do178c.viewManagers.ReportViewsManager;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.net.URL;
 import java.util.List;
 
 /**
@@ -88,6 +81,8 @@ public class ReportObjectiveViewHandlerNew {
     private String reqChildrenRelation;
 
     private String tstChildrenRelation;
+
+    private String swCompChildrenRelation;
 
     // -------- FXML GUI variables below --------------
     @FXML private Label headerLabel;
@@ -129,6 +124,15 @@ public class ReportObjectiveViewHandlerNew {
     @FXML private BarChart revChart;
     @FXML private NumberAxis yAxisRevChart;
 
+    @FXML private Tab tabSwComp;
+    @FXML private ListView<Label> swCompList;
+    @FXML private ComboBox comboSwComp;
+    @FXML private TextField searchSwComp;
+    @FXML private BarChart swCompChart;
+    @FXML private NumberAxis yAxisSwCompChart;
+    @FXML private Label swCompChildrenLabel;
+    @FXML private ListView swCompChildrenList;
+
     @FXML private Button btnTab;
     @FXML private Button btnHome;
     @FXML private Button btnFontInc;
@@ -154,6 +158,15 @@ public class ReportObjectiveViewHandlerNew {
         tstChildrenList.getItems().clear();
     }
 
+    /** deactivates the swComponent childern list and label */
+    public void deactivateSwCompChildren(Boolean key) {
+        swCompChildrenList.setDisable(key);
+        swCompChildrenLabel.setDisable(key);
+        // clear the list and label
+        swCompChildrenLabel.setText("");
+        swCompChildrenList.getItems().clear();
+    }
+
     /**
      * Populates the list of requirement children appropriately
      *
@@ -171,6 +184,11 @@ public class ReportObjectiveViewHandlerNew {
 
             for (Requirement reqObj : currentObjObject.getObjOutputs().getRequirements()) {
                 if (reqObj.getId().equalsIgnoreCase(reqId)) { // find the requirement object
+
+                    //                	// add source
+                    //
+                    //	reqSrcLabel.setText(ReportViewUtils.getSrcLabelText(reqObj.getSourceDocument()));
+
                     if (reqObj.getSatisfies().size() > 0) {
                         for (Requirement satisfiesObj : reqObj.getSatisfies()) {
                             Label reqChildLabel = new Label();
@@ -186,7 +204,13 @@ public class ReportObjectiveViewHandlerNew {
             reqChildrenLabel.setText("Logs:");
 
             for (Requirement reqObj : currentObjObject.getObjOutputs().getRequirements()) {
+
                 if (reqObj.getId().equalsIgnoreCase(reqId)) { // find the requirement object
+
+                    //                	// add source
+                    //
+                    //	reqSrcLabel.setText(ReportViewUtils.getSrcLabelText(reqObj.getSourceDocument()));
+
                     if (reqObj.getLogs().size() > 0) {
                         for (ReviewLog logObj : reqObj.getLogs()) {
                             Label reqChildLabel = new Label();
@@ -202,7 +226,13 @@ public class ReportObjectiveViewHandlerNew {
             reqChildrenLabel.setText("Tests:");
 
             for (Requirement reqObj : currentObjObject.getObjOutputs().getRequirements()) {
+
                 if (reqObj.getId().equalsIgnoreCase(reqId)) { // find the requirement object
+
+                    //                	// add source
+                    //
+                    //	reqSrcLabel.setText(ReportViewUtils.getSrcLabelText(reqObj.getSourceDocument()));
+
                     if (reqObj.getTests().size() > 0) {
                         for (Test tstObj : reqObj.getTests()) {
                             Label reqChildLabel = new Label();
@@ -232,6 +262,11 @@ public class ReportObjectiveViewHandlerNew {
 
             for (Test tstObj : currentObjObject.getObjOutputs().getTests()) {
                 if (tstObj.getId().equalsIgnoreCase(tstId)) { // find the Test object
+
+                    //                	// add source
+                    //
+                    //	tstSrcLabel.setText(ReportViewUtils.getSrcLabelText(tstObj.getSourceDocument()));
+
                     if (tstObj.getVerifies().size() > 0) {
                         for (String Verifies : tstObj.getVerifies()) {
                             Label tstChildLabel = new Label();
@@ -248,11 +283,45 @@ public class ReportObjectiveViewHandlerNew {
 
             for (Test tstObj : currentObjObject.getObjOutputs().getTests()) {
                 if (tstObj.getId().equalsIgnoreCase(tstId)) { // find the test object
+
+                    //                	// add source
+                    //
+                    //	tstSrcLabel.setText(ReportViewUtils.getSrcLabelText(tstObj.getSourceDocument()));
+
                     if (tstObj.getLogs().size() > 0) {
                         for (ReviewLog logObj : tstObj.getLogs()) {
                             Label tstChildLabel = new Label();
                             tstChildLabel.setText(logObj.getId());
                             tstChildrenList.getItems().add(tstChildLabel);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void populateSwCompChildren(String swCompLine) {
+        // get the test id
+        String[] swCompIdWithSpace = swCompLine.split("\\|");
+        String swCompId = swCompIdWithSpace[0].trim();
+
+        if (swCompChildrenRelation.equalsIgnoreCase("wasImpactedBy")) {
+            // activate the label and list and put string in label
+            deactivateSwCompChildren(false);
+            swCompChildrenLabel.setText("wasImpactedBy:");
+
+            for (SwComponent swCompObj : currentObjObject.getObjOutputs().getSwComponents()) {
+                if (swCompObj.getId().equalsIgnoreCase(swCompId)) { // find the swComp object
+
+                    //                	// add source
+                    //
+                    //	swCompSrcLabel.setText(ReportViewUtils.getSrcLabelText(swCompObj.getSourceDocument()));
+
+                    if (swCompObj.getWasImpactedBy().size() > 0) {
+                        for (Requirement req : swCompObj.getWasImpactedBy()) {
+                            Label swCompChildLabel = new Label();
+                            swCompChildLabel.setText(req.getId());
+                            swCompChildrenList.getItems().add(swCompChildLabel);
                         }
                     }
                 }
@@ -480,6 +549,79 @@ public class ReportObjectiveViewHandlerNew {
         }
     }
 
+    public void populateSwCompChart(List<SwComponent> swCompList) {
+        // clear the chart
+        swCompChart.getData().clear();
+
+        // enable the chart
+        swCompChart.setDisable(false);
+        yAxisSwCompChart.setDisable(false);
+
+        if (currentObjId.equals("A5-5")) {
+            XYChart.Series swCompStat = new XYChart.Series();
+
+            int numWithSubDDTrace = LogicUtils.getSwCompSubDDTraceStats(swCompList);
+            ;
+            int numWithoutSubDDTrace = swCompList.size() - numWithSubDDTrace;
+
+            Data passBar = ReportViewUtils.createIntDataBar("SubDD Trace", numWithSubDDTrace);
+            Data failBar = ReportViewUtils.createIntDataBar("No SubDD Trace", numWithoutSubDDTrace);
+
+            swCompStat.getData().add(passBar);
+            swCompStat.getData().add(failBar);
+
+            swCompChart.getData().add(swCompStat);
+
+            passBar.getNode().getStyleClass().add("color-passed");
+            ReportViewUtils.assignTooltip(passBar.getNode(), passBar.getYValue().toString());
+            failBar.getNode().getStyleClass().add("color-failed");
+            ReportViewUtils.assignTooltip(failBar.getNode(), failBar.getYValue().toString());
+
+            swCompChart.setTitle("Total SwComponents = " + swCompList.size());
+
+            // scaling
+            int maxScale = Math.max(numWithSubDDTrace, numWithoutSubDDTrace);
+            // *** This can help make integral ticks on Y axis ***
+            yAxisSwCompChart.setLowerBound(0);
+            yAxisSwCompChart.setUpperBound(maxScale);
+            yAxisSwCompChart.setTickUnit(1);
+        }
+
+        // below hardcoded
+        if (currentObjId.equals("A5-1")
+                || currentObjId.equals("A5-2")
+                || currentObjId.equals("A5-3")
+                || currentObjId.equals("A5-4")) {
+
+            XYChart.Series swCompStat = new XYChart.Series();
+
+            int numWithLogs = 0; // hardcoded
+            int numWithoutLogs = swCompList.size() - numWithLogs;
+
+            Data passBar = ReportViewUtils.createIntDataBar("Has Logs", numWithLogs);
+            Data failBar = ReportViewUtils.createIntDataBar("No Logs", numWithoutLogs);
+
+            swCompStat.getData().add(passBar);
+            swCompStat.getData().add(failBar);
+
+            swCompChart.getData().add(swCompStat);
+
+            passBar.getNode().getStyleClass().add("color-passed");
+            ReportViewUtils.assignTooltip(passBar.getNode(), passBar.getYValue().toString());
+            failBar.getNode().getStyleClass().add("color-failed");
+            ReportViewUtils.assignTooltip(failBar.getNode(), failBar.getYValue().toString());
+
+            swCompChart.setTitle("Total SwComponents = " + swCompList.size());
+
+            // scaling
+            int maxScale = Math.max(numWithLogs, numWithoutLogs);
+            // *** This can help make integral ticks on Y axis ***
+            yAxisSwCompChart.setLowerBound(0);
+            yAxisSwCompChart.setUpperBound(maxScale);
+            yAxisSwCompChart.setTickUnit(1);
+        }
+    }
+
     public void initializeComboReq() {
 
         comboReq.setPromptText("Filter");
@@ -545,6 +687,30 @@ public class ReportObjectiveViewHandlerNew {
         }
     }
 
+    public void initializeComboSwComp() {
+
+        comboSwComp.setPromptText("Filter");
+
+        // TODO: write logic for other objectives
+        if (currentObjId.equals("A5-5")) {
+
+            // add the categories to the combo
+            comboSwComp.getItems().add("All");
+            comboSwComp.getItems().add("Has SubDD Trace");
+            comboSwComp.getItems().add("No SubDD Trace");
+        }
+        if (currentObjId.equals("A5-1")
+                || currentObjId.equals("A5-2")
+                || currentObjId.equals("A5-3")
+                || currentObjId.equals("A5-4")) {
+
+            // add the categories to the combo
+            comboSwComp.getItems().add("All");
+            comboSwComp.getItems().add("Has Logs");
+            comboSwComp.getItems().add("No Logs");
+        }
+    }
+
     public void populateListReq(String filterKey, String searchKey) {
 
         // TODO: write logic for other objectives
@@ -578,7 +744,7 @@ public class ReportObjectiveViewHandlerNew {
                         String onHover =
                                 "(" + req.getType() + ") " + req.getDescription().replace("\"", "");
                         reqLabel.setText(reqText);
-                        reqLabel.setTooltip(new Tooltip(onHover));
+                        //                        reqLabel.setTooltip(new Tooltip(onHover));
                         reqList.getItems().add(reqLabel);
 
                     } else if (filterKey.equalsIgnoreCase("Trace")
@@ -592,7 +758,7 @@ public class ReportObjectiveViewHandlerNew {
                                             + ") "
                                             + req.getDescription().replace("\"", "");
                             reqLabel.setText(reqText);
-                            reqLabel.setTooltip(new Tooltip(onHover));
+                            //                            reqLabel.setTooltip(new Tooltip(onHover));
                             reqList.getItems().add(reqLabel);
                         }
                     } else if (filterKey.equalsIgnoreCase("No Trace")
@@ -606,7 +772,7 @@ public class ReportObjectiveViewHandlerNew {
                                             + ") "
                                             + req.getDescription().replace("\"", "");
                             reqLabel.setText(reqText);
-                            reqLabel.setTooltip(new Tooltip(onHover));
+                            //                            reqLabel.setTooltip(new Tooltip(onHover));
                             reqList.getItems().add(reqLabel);
                         }
                     }
@@ -643,7 +809,7 @@ public class ReportObjectiveViewHandlerNew {
                         String onHover =
                                 "(" + req.getType() + ") " + req.getDescription().replace("\"", "");
                         reqLabel.setText(reqText);
-                        reqLabel.setTooltip(new Tooltip(onHover));
+                        //                        reqLabel.setTooltip(new Tooltip(onHover));
                         reqList.getItems().add(reqLabel);
 
                     } else if ((filterKey.equalsIgnoreCase("Passed Coverage")
@@ -667,7 +833,8 @@ public class ReportObjectiveViewHandlerNew {
                                                 + ") "
                                                 + req.getDescription().replace("\"", "");
                                 reqLabel.setText(reqText);
-                                reqLabel.setTooltip(new Tooltip(onHover));
+                                //                                reqLabel.setTooltip(new
+                                // Tooltip(onHover));
                                 reqList.getItems().add(reqLabel);
                             }
                             if (!failFlag && filterKey.equalsIgnoreCase("Passed Coverage")) {
@@ -677,7 +844,8 @@ public class ReportObjectiveViewHandlerNew {
                                                 + ") "
                                                 + req.getDescription().replace("\"", "");
                                 reqLabel.setText(reqText);
-                                reqLabel.setTooltip(new Tooltip(onHover));
+                                //                                reqLabel.setTooltip(new
+                                // Tooltip(onHover));
                                 reqList.getItems().add(reqLabel);
                             }
                         }
@@ -693,7 +861,7 @@ public class ReportObjectiveViewHandlerNew {
                                             + ") "
                                             + req.getDescription().replace("\"", "");
                             reqLabel.setText(reqText);
-                            reqLabel.setTooltip(new Tooltip(onHover));
+                            //                            reqLabel.setTooltip(new Tooltip(onHover));
                             reqList.getItems().add(reqLabel);
                         }
                     }
@@ -741,7 +909,7 @@ public class ReportObjectiveViewHandlerNew {
                         String onHover =
                                 "(" + req.getType() + ") " + req.getDescription().replace("\"", "");
                         reqLabel.setText(reqText);
-                        reqLabel.setTooltip(new Tooltip(onHover));
+                        //                        reqLabel.setTooltip(new Tooltip(onHover));
                         reqList.getItems().add(reqLabel);
 
                     } else if (filterKey.equalsIgnoreCase("Logs")
@@ -759,7 +927,7 @@ public class ReportObjectiveViewHandlerNew {
                                             + ") "
                                             + req.getDescription().replace("\"", "");
                             reqLabel.setText(reqText);
-                            reqLabel.setTooltip(new Tooltip(onHover));
+                            //                            reqLabel.setTooltip(new Tooltip(onHover));
                             reqList.getItems().add(reqLabel);
                         }
                     } else if (filterKey.equalsIgnoreCase("No Logs")
@@ -774,9 +942,126 @@ public class ReportObjectiveViewHandlerNew {
                                             + ") "
                                             + req.getDescription().replace("\"", "");
                             reqLabel.setText(reqText);
-                            reqLabel.setTooltip(new Tooltip(onHover));
+                            //                            reqLabel.setTooltip(new Tooltip(onHover));
                             reqList.getItems().add(reqLabel);
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    public void populateListSwComp(String filterKey, String searchKey) {
+        if (currentObjId.equals("A5-5")) {
+
+            if ((currentObjObject.getObjOutputs().getSwComponents() != null)
+                    & (currentObjObject.getObjOutputs().getSwComponents().size() > 0)) {
+                tabSwComp.setDisable(false);
+
+                // clear the list and chart
+                swCompList.getItems().clear();
+                swCompChart.getData().clear();
+
+                swCompChildrenRelation = "wasImpactedBy";
+
+                // TODO: Populate the chart
+                populateSwCompChart(currentObjObject.getObjOutputs().getSwComponents());
+
+                for (SwComponent swComp : currentObjObject.getObjOutputs().getSwComponents()) {
+                    if (filterKey.equalsIgnoreCase("All")
+                            && ((searchKey == null)
+                                    || (swComp.getId().contains(searchKey)))) { // All
+                        System.out.println("Selected " + filterKey + ", using all");
+                        Label swCompLabel = new Label();
+                        String swCompText =
+                                swComp.getId()
+                                        + " | wasImpactedBy: "
+                                        + swComp.getWasImpactedByAsString();
+                        swCompLabel.setText(swCompText);
+                        swCompList.getItems().add(swCompLabel);
+                    } else if (filterKey.equalsIgnoreCase("Has SubDD Trace")
+                            && ((searchKey == null)
+                                    || (swComp.getId().contains(searchKey)))) { // SubDD Trace
+                        System.out.println("Selected " + filterKey + ", using trace");
+                        Boolean hasSubDDTrace = false;
+                        for (Requirement req : swComp.getWasImpactedBy()) {
+                            if (req.getType().equalsIgnoreCase("SubDD_Req")) {
+                                hasSubDDTrace = true;
+                                break;
+                            }
+                        }
+                        if (hasSubDDTrace) {
+                            Label swCompLabel = new Label();
+                            String swCompText =
+                                    swComp.getId()
+                                            + " | wasImpactedBy: "
+                                            + swComp.getWasImpactedByAsString();
+                            swCompLabel.setText(swCompText);
+                            swCompList.getItems().add(swCompLabel);
+                        }
+                    } else if (filterKey.equalsIgnoreCase("No SubDD Trace")
+                            && ((searchKey == null)
+                                    || (swComp.getId().contains(searchKey)))) { // No SubDD Trace
+                        System.out.println("Selected " + filterKey + ", using no trace");
+                        Boolean hasSubDDTrace = false;
+                        for (Requirement req : swComp.getWasImpactedBy()) {
+                            if (req.getType().equalsIgnoreCase("SubDD_Req")) {
+                                hasSubDDTrace = true;
+                                break;
+                            }
+                        }
+                        if (!hasSubDDTrace) {
+                            Label swCompLabel = new Label();
+                            String swCompText =
+                                    swComp.getId()
+                                            + " | wasImpactedBy: "
+                                            + swComp.getWasImpactedByAsString();
+                            swCompLabel.setText(swCompText);
+                            swCompList.getItems().add(swCompLabel);
+                        }
+                    }
+                }
+            }
+        }
+
+        /** mostly hardcoded, not good code */
+        if (currentObjId.equals("A5-1")
+                || currentObjId.equals("A5-2")
+                || currentObjId.equals("A5-3")
+                || currentObjId.equals("A5-4")) {
+
+            if ((currentObjObject.getObjOutputs().getSwComponents() != null)
+                    & (currentObjObject.getObjOutputs().getSwComponents().size() > 0)) {
+                tabSwComp.setDisable(false);
+
+                // clear the list and chart
+                swCompList.getItems().clear();
+                swCompChart.getData().clear();
+
+                swCompChildrenRelation = "wasImpactedBy";
+
+                // TODO: Populate the chart
+                populateSwCompChart(currentObjObject.getObjOutputs().getSwComponents());
+
+                for (SwComponent swComp : currentObjObject.getObjOutputs().getSwComponents()) {
+                    if (filterKey.equalsIgnoreCase("All")
+                            && ((searchKey == null)
+                                    || (swComp.getId().contains(searchKey)))) { // All
+                        Label swCompLabel = new Label();
+                        String swCompText = swComp.getId() + " | Logs: ";
+                        swCompLabel.setText(swCompText);
+                        swCompList.getItems().add(swCompLabel);
+                    } else if (filterKey.equalsIgnoreCase("Has Logs")
+                            && ((searchKey == null)
+                                    || (swComp.getId().contains(searchKey)))) { // SubDD Trace
+                        // nothing
+                    } else if (filterKey.equalsIgnoreCase("No Logs")
+                            && ((searchKey == null)
+                                    || (swComp.getId().contains(searchKey)))) { // No SubDD Trace
+                        Label swCompLabel = new Label();
+                        String swCompText = swComp.getId() + " | Logs: ";
+                        swCompLabel.setText(swCompText);
+                        swCompList.getItems().add(swCompLabel);
                     }
                 }
             }
@@ -1008,10 +1293,12 @@ public class ReportObjectiveViewHandlerNew {
         populateListAct();
         populateListDoc();
         populateListTst("All", null);
+        populateListSwComp("All", null);
 
         // initialize the combos in the tabs
         initializeComboReq();
         initializeComboTst();
+        initializeComboSwComp();
 
         // code for the searchbars
         searchReq
@@ -1078,30 +1365,49 @@ public class ReportObjectiveViewHandlerNew {
                                 comboTst.getSelectionModel().selectFirst();
                             }
                         });
+
+        // code for the searchbars
+        searchSwComp
+                .textProperty()
+                .addListener(
+                        new ChangeListener<String>() {
+                            @Override
+                            public void changed(
+                                    ObservableValue<? extends String> observable,
+                                    String oldValue,
+                                    String newValue) {
+
+                                System.out.println("Search Key " + newValue);
+
+                                // disable tst children list
+                                deactivateTstChildren(true);
+
+                                if ((newValue != null)
+                                        && (newValue != "")
+                                        && (newValue.length() > 0)) { // newvalue is not null
+
+                                    // call listview to display all elements whose IDS have newValue
+                                    // as substring
+                                    populateListTst("All", newValue);
+
+                                } else { // newvalue is null
+                                    // call listview to display all elements (default settings)
+                                    populateListTst("All", null);
+                                }
+                                // reset the combo to "All"
+                                comboTst.getSelectionModel().selectFirst();
+                            }
+                        });
     }
 
     @FXML
     private void initialize() {
         // initialize the header label
         try {
-            String imagePath = "resources/images/headerWithLogoTransparent.png";
-
-            Bundle bundle = Platform.getBundle("rack.plugin");
-            URL imgUrl = FileLocator.find(bundle, new Path(imagePath), null);
-            imgUrl = FileLocator.toFileURL(imgUrl);
-
-            // the imgURL starts with "file:/", so stripping it here
-            String imgUrlStr = imgUrl.toString().substring("file:/".length());
-
-            // System.out.println(imgUrl.toString());
-
-            ImageView icon = new ImageView(new Image(new FileInputStream(new File(imgUrlStr))));
-            icon.setFitHeight(60);
+            final ImageView icon = ReportViewUtils.loadGeIcon();
             icon.setPreserveRatio(true);
-
             headerLabel.setGraphic(icon);
         } catch (Exception e) {
-            // do nothing for now
         }
 
         // wrap label text
@@ -1116,10 +1422,12 @@ public class ReportObjectiveViewHandlerNew {
         tabTest.setDisable(true);
         tabAnls.setDisable(true);
         tabRev.setDisable(true);
+        tabSwComp.setDisable(true);
 
         // disable all child lists
         deactivateReqChildren(true);
         deactivateTstChildren(true);
+        deactivateSwCompChildren(true);
     }
 
     @FXML
@@ -1146,7 +1454,66 @@ public class ReportObjectiveViewHandlerNew {
             String selectedReqLine = selectedLabel.getText();
             System.out.println("The selected req line: " + selectedReqLine);
 
-            // call the function topopulate children
+            // Contextmenu for reqList
+            ContextMenu reqListContext = new ContextMenu();
+            MenuItem menuItemShowSource = new MenuItem("Show Entity Source");
+            MenuItem menuItemShowDescription = new MenuItem("Show Entity Description");
+            MenuItem menuItemGoToSource = new MenuItem("Go to Entity Source");
+            reqListContext.getItems().add(menuItemShowSource);
+            reqListContext.getItems().add(menuItemShowDescription);
+            reqListContext.getItems().add(menuItemGoToSource);
+            reqList.setContextMenu(reqListContext);
+            // show source of requirement in reqchildren if right click context selected
+            menuItemShowSource.setOnAction(
+                    (rightClickEvent) -> {
+                        // get the requirement id
+                        String[] reqIdWithSpace = selectedReqLine.split("\\|");
+                        String reqId = reqIdWithSpace[0].trim();
+
+                        // activate the label and list and put string in label
+                        deactivateReqChildren(false);
+                        reqChildrenLabel.setText("Requirement Source:");
+
+                        // find the requirement object
+                        for (Requirement reqObj :
+                                currentObjObject.getObjOutputs().getRequirements()) {
+                            // set children list to the sources, if any exist
+                            if (reqObj.getId().equals(reqId)
+                                    && reqObj.getSourceDocument() != null) {
+                                for (String src : reqObj.getSourceDocument()) {
+                                    reqChildrenList.getItems().add(src);
+                                }
+                            }
+                        }
+                    });
+            menuItemShowDescription.setOnAction(
+                    (rightClickEvent) -> {
+                        // get the requirement id
+                        String[] reqIdWithSpace = selectedReqLine.split("\\|");
+                        String reqId = reqIdWithSpace[0].trim();
+
+                        // activate the label and list and put string in label
+                        deactivateReqChildren(false);
+                        reqChildrenLabel.setText("Requirement Description:");
+
+                        // find the requirement object
+                        for (Requirement reqObj :
+                                currentObjObject.getObjOutputs().getRequirements()) {
+                            // set children list to the sources, if any exist
+                            if (reqObj.getId().equals(reqId) && reqObj.getDescription() != null) {
+                                reqChildrenList.getItems().add(reqObj.getDescription());
+                            }
+                        }
+                    });
+            menuItemGoToSource.setOnAction(
+                    (rightClickEvent) -> {
+                        // Open URL on browser
+
+                        ReportViewUtils.openUrlInDefaultApp(
+                                "https://github.com/ge-high-assurance/RITE/blob/dasc23DO178C/examples/OEM/DummySource/RequirementData.pdf");
+                    });
+
+            // call the function to populate children
             populateReqChildren(selectedReqLine);
         }
     }
@@ -1175,8 +1542,103 @@ public class ReportObjectiveViewHandlerNew {
             String selectedTstLine = selectedLabel.getText();
             System.out.println("The selected tst line: " + selectedTstLine);
 
+            // Contextmenu for reqList
+            ContextMenu tstListContext = new ContextMenu();
+            MenuItem menuItemShowSource = new MenuItem("Show Entity Source");
+            MenuItem menuItemGoToSource = new MenuItem("Go to Entity Source");
+            tstListContext.getItems().add(menuItemShowSource);
+            tstListContext.getItems().add(menuItemGoToSource);
+            tstList.setContextMenu(tstListContext);
+            // show source of requirement in reqchildren if right click context selected
+            menuItemShowSource.setOnAction(
+                    (rightClickEvent) -> {
+                        // get the requirement id
+                        String[] tstIdWithSpace = selectedTstLine.split("\\|");
+                        String tstId = tstIdWithSpace[0].trim();
+
+                        // activate the label and list and put string in label
+                        deactivateTstChildren(false);
+                        tstChildrenLabel.setText("Test Source:");
+
+                        // find the requirement object
+                        for (Test tstObj : currentObjObject.getObjOutputs().getTests()) {
+                            // set children list to the sources, if any exist
+                            if (tstObj.getId().equals(tstId)
+                                    && tstObj.getSourceDocument() != null) {
+                                for (String src : tstObj.getSourceDocument()) {
+                                    tstChildrenList.getItems().add(src);
+                                }
+                            }
+                        }
+                    });
+            menuItemGoToSource.setOnAction(
+                    (rightClickEvent) -> {
+                        // Open URL on browser
+
+                        ReportViewUtils.openUrlInDefaultApp(
+                                "https://github.com/ge-high-assurance/RITE/blob/dasc23DO178C/examples/OEM/DummySource/TestData.pdf");
+                    });
+
             // call the function topopulate children
             populateTstChildren(selectedTstLine);
+        }
+    }
+
+    @FXML
+    private void comboSwCompAction(ActionEvent event) throws Exception {
+
+        // clear the search bar and children
+        searchSwComp.clear();
+        deactivateSwCompChildren(true);
+
+        String key = (String) comboSwComp.getValue();
+        // Clear and repopulate the list depending on key
+        populateListSwComp(key, null);
+    }
+
+    @FXML
+    private void swCompListSelectionAction(MouseEvent event) {
+
+        // The selected label
+        Label selectedLabel = swCompList.getSelectionModel().getSelectedItem();
+
+        if (selectedLabel != null) {
+
+            // get selection
+            String selectedSwCompLine = selectedLabel.getText();
+            System.out.println("The selected swComp line: " + selectedSwCompLine);
+
+            // Contextmenu for reqList
+            ContextMenu swCompListContext = new ContextMenu();
+            MenuItem menuItemShowSource = new MenuItem("Show Entity Source");
+            swCompListContext.getItems().add(menuItemShowSource);
+            swCompList.setContextMenu(swCompListContext);
+            // show source of requirement in reqchildren if right click context selected
+            menuItemShowSource.setOnAction(
+                    (rightClickEvent) -> {
+                        // get the requirement id
+                        String[] swCompIdWithSpace = selectedSwCompLine.split("\\|");
+                        String swCompId = swCompIdWithSpace[0].trim();
+
+                        // activate the label and list and put string in label
+                        deactivateSwCompChildren(false);
+                        swCompChildrenLabel.setText("SwComponent Source:");
+
+                        // find the requirement object
+                        for (SwComponent swCompObj :
+                                currentObjObject.getObjOutputs().getSwComponents()) {
+                            // set children list to the sources, if any exist
+                            if (swCompObj.getId().equals(swCompId)
+                                    && swCompObj.getSourceDocument() != null) {
+                                for (String src : swCompObj.getSourceDocument()) {
+                                    swCompChildrenList.getItems().add(src);
+                                }
+                            }
+                        }
+                    });
+
+            // call the function topopulate children
+            populateSwCompChildren(selectedSwCompLine);
         }
     }
 
@@ -1184,8 +1646,7 @@ public class ReportObjectiveViewHandlerNew {
     private void btnTabAction(ActionEvent event) throws Exception {
         // Set the stage with the other fxml
         FXMLLoader tableViewLoader =
-                ReportViewsManager.setNewFxmlToStage(
-                        "resources/fxml/report/ReportTableView_new.fxml");
+                ReportViewsManager.setNewFxmlToStage("resources/fxml/do178c/DO178CTableView.fxml");
 
         // initialize variables in the ReportTableView page
         ReportTableViewHandlerNew tableViewLoaderClassObj = tableViewLoader.getController();
@@ -1196,7 +1657,7 @@ public class ReportObjectiveViewHandlerNew {
     private void btnHomeAction(ActionEvent event) throws Exception {
 
         // Set the stage with the other fxml
-        ReportViewsManager.setNewFxmlToStage("resources/fxml/report/ReportMainView_new.fxml");
+        ReportViewsManager.setNewFxmlToStage("resources/fxml/do178c/DO178CMainView.fxml");
     }
 
     @FXML

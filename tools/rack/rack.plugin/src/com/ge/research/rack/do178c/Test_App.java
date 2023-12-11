@@ -31,8 +31,6 @@
  */
 package com.ge.research.rack.do178c;
 
-import com.ge.research.rack.do178c.boeingPsac.PsacDataProcessorBoeing;
-
 /**
  * FOR TESTING THE BACKEND FUNCTIONS DURING DEVELOPMENT
  *
@@ -40,12 +38,12 @@ import com.ge.research.rack.do178c.boeingPsac.PsacDataProcessorBoeing;
  */
 public class Test_App {
 
-    public static void main(String[] args) {
-
-        String tempDir = "C:\\Users\\212807042\\Desktop\\RACK_tests\\temp_results\\";
-
-        PsacDataProcessorBoeing obj = new PsacDataProcessorBoeing();
-
-        obj.getPSACData(tempDir);
-    }
+    //    public static void main(String[] args) {
+    //
+    //        String tempDir = "C:\\Users\\212807042\\Desktop\\RACK_tests\\temp_results\\";
+    //
+    //        DataProcessor obj = new DataProcessor();
+    //
+    //        obj.getPSACData(tempDir);
+    //    }
 }
