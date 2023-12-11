@@ -31,7 +31,10 @@
  */
 package com.ge.research.rack.do178c.viewManagers;
 
+import com.ge.research.rack.do178c.structures.PsacNode;
+
 import javafx.application.Application;
+import javafx.application.HostServices;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -45,8 +48,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
 
-import com.ge.research.rack.do178c.structures.PsacNode;
-
 import java.net.URL;
 
 /**
@@ -54,7 +55,7 @@ import java.net.URL;
  */
 public class ReportViewsManager extends Application {
 
-    private static final String FXML_FILE_PATH = "resources/fxml/report/ReportMainView_new.fxml";
+    private static final String FXML_FILE_PATH = "resources/fxml/do178c/DO178CMainView.fxml";
     private static final String REPORT_TITLE = "DO-178C Compliance Report";
     private static double DEFAULT_FONT_SIZE_PX = 20;
     private static final double MIN_HEIGHT_PX = 600;
@@ -68,6 +69,9 @@ public class ReportViewsManager extends Application {
 
     // stores the current font size at any time
     public static double currentFontSize;
+
+    // This will be used for opening external browser where required
+    public static HostServices hostServices;
 
     /**
      * function to increase the global fontsize if tre is passed, else decrease it
@@ -171,6 +175,9 @@ public class ReportViewsManager extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
+        // sets the hostServices (only works here, no idea why)
+        hostServices = getHostServices();
 
         try {
 

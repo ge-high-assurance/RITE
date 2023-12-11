@@ -31,7 +31,6 @@
  */
 package com.ge.research.rack.do178c.utils;
 
-import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
 import com.ge.research.rack.do178c.structures.Analysis;
 import com.ge.research.rack.do178c.structures.DataItem;
 import com.ge.research.rack.do178c.structures.Hazard;
@@ -39,6 +38,7 @@ import com.ge.research.rack.do178c.structures.PsacNode;
 import com.ge.research.rack.do178c.structures.Requirement;
 import com.ge.research.rack.do178c.structures.ReviewLog;
 import com.ge.research.rack.do178c.structures.Test;
+import com.ge.research.rack.do178c.viewManagers.ReportViewsManager;
 
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -46,89 +46,80 @@ import javafx.scene.Node;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
+import org.osgi.framework.Bundle;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Saswata Paul
  */
 public class ReportViewUtils {
 
-    /**
-     * Assign a given text tooltip to a given javafx node
-     *
-     * @param node
-     * @param text
-     */
+    private static final Font VERANDA_FONT = Font.font("Verdana", FontWeight.BOLD, 12);
+
+    private static final String TOOLTIP_FONT_SIZE_STYLE = "-fx-font-size: 20";
+
+    private static final String RACK_PLUGIN_BUNDLE_NAME = "rack.plugin";
+
+    private static final String GE_LOGO_IMG_PATH = "resources/images/GE_AEROSPACE_LOGO_L.png";
+
+    /** Assign a given text tooltip to a given javafx node */
     public static void assignTooltip(Node node, String text) {
-        Tooltip tooltip = new Tooltip(text);
+        final Tooltip tooltip = new Tooltip(text);
         tooltip.setShowDelay(Duration.seconds(0.1));
-        tooltip.setStyle("-fx-font-size: 20");
+        tooltip.setStyle(TOOLTIP_FONT_SIZE_STYLE);
         Tooltip.install(node, tooltip);
     }
 
-    /**
-     * Returns javafx color for a given objective object
-     *
-     * @param node
-     * @return
-     */
-    public static Color getObjectiveColor(PsacNode.Objective objective) {
-        if (!objective.getNoData()) { // not no data
-            if (objective.getPartialData()) {
-                return Color.ORANGE;
-            } else if (objective.getPassed()) {
-                return Color.GREEN;
-            } else if (!objective.getPassed()) {
-                return Color.RED;
-            }
-        } else { // if no data
-            if (objective.getMetrics().equals("TBD")) { // if TBD
-                return Color.GRAY;
-            } else { // if not relevant
-                return Color.LIGHTGREY;
-            }
+    /** Returns javafx color for a given objective object */
+    public static Color getObjectiveColor(final PsacNode.Objective objective) {
+
+        if (objective.getNoData()) {
+            return objective.getMetrics().equals("TBD") ? Color.GRAY : Color.LIGHTGREY;
         }
-        return Color.GRAY; // unhandled case, should not occur
+
+        if (objective.getPartialData()) {
+            return Color.ORANGE;
+        }
+
+        return objective.getPassed() ? Color.GREEN : Color.RED;
     }
 
-    /**
-     * Returns javafx color for a table object
-     *
-     * @param table
-     * @return
-     */
-    public static Color getTableColor(PsacNode.Table table) {
-        Color col = Color.GRAY;
-        if (!table.getNoData()) {
-            if (table.getPartialData()) {
-                return Color.ORANGE;
-            } else if (table.getPassed()) {
-                return Color.GREEN;
-            } else if (!table.getPassed()) {
-                return Color.RED;
-            }
+    /** Returns javafx color for a table object */
+    public static Color getTableColor(final PsacNode.Table table) {
+
+        if (table.getNoData()) {
+            return Color.GRAY; // if no data, then GRAY
         }
-        return col; // if no data, then GRAY
+        if (table.getPartialData()) {
+            return Color.ORANGE;
+        }
+
+        return table.getPassed() ? Color.GREEN : Color.RED;
     }
 
-    /**
-     * Given a table object, returns a list of doubles containing the objective metrics in order
-     *
-     * @param table
-     * @return
-     */
+    /** Given a table object, returns a list of doubles containing the objective metrics in order */
     public static List<Double> getObjectiveOrder(PsacNode.Table table) {
-        List<Double> objStats = new ArrayList<Double>();
 
-        for (PsacNode.Objective obj : table.getTabObjectives()) {
+        final List<Double> objStats = new ArrayList<Double>();
+
+        for (final PsacNode.Objective obj : table.getTabObjectives()) {
             if (obj.getMetrics().contains("%")) { // if there is a numeric value
                 objStats.add(Double.parseDouble(obj.getMetrics().split("%")[0]));
             } else { // if no numeric value, use -1.0 to differentiate later
@@ -145,150 +136,116 @@ public class ReportViewUtils {
     /**
      * Given a table, returns the combined total number of associated artifacts for all objectives
      * in the table
-     *
-     * @param table
-     * @return
      */
     public static List<Integer> getTableArtifactStats(PsacNode.Table table) {
-        List<Integer> artStats = new ArrayList<Integer>();
-        //    	int docCount = 0;
-        //    	int reqCount = 0;
-        //    	int hzrdCount = 0;
-        //    	int tstCount = 0;
-        //    	int logCount = 0;
-        //    	int anlsCount = 0;
 
-        List<String> docIds = new ArrayList<String>();
-        List<String> reqIds = new ArrayList<String>();
-        List<String> hzrdIds = new ArrayList<String>();
-        List<String> tstIds = new ArrayList<String>();
-        List<String> logIds = new ArrayList<String>();
-        List<String> anlsIds = new ArrayList<String>();
+        final Set<String> docIds = new HashSet<String>();
+        final Set<String> reqIds = new HashSet<String>();
+        final Set<String> hzrdIds = new HashSet<String>();
+        final Set<String> tstIds = new HashSet<String>();
+        final Set<String> logIds = new HashSet<String>();
+        final Set<String> anlsIds = new HashSet<String>();
 
-        for (PsacNode.Objective objective : table.getTabObjectives()) {
-            //    		docCount = docCount + objective.getObjOutputs().getDataItems().size();
-            //    		reqCount = reqCount + objective.getObjOutputs().getRequirements().size();
-            //    		hzrdCount = hzrdCount + objective.getObjOutputs().getHazards().size();
-            //    		tstCount = tstCount + objective.getObjOutputs().getTests().size();
-            //    		logCount = logCount + objective.getObjOutputs().getLogs().size();
-            //    		anlsCount = anlsCount + objective.getObjOutputs().getAnalyses().size();
+        table.getTabObjectives().stream()
+                .map(PsacNode.Objective::getObjOutputs)
+                .forEach(
+                        objective -> {
+                            for (final DataItem doc : objective.getDocuments()) {
+                                docIds.add(doc.getId());
+                            }
+                            for (final Requirement req : objective.getRequirements()) {
+                                reqIds.add(req.getId());
+                            }
+                            for (final Hazard hzrd : objective.getHazards()) {
+                                hzrdIds.add(hzrd.getId());
+                            }
+                            for (final Test tst : objective.getTests()) {
+                                tstIds.add(tst.getId());
+                            }
+                            for (final ReviewLog log : objective.getLogs()) {
+                                logIds.add(log.getId());
+                            }
+                            for (final Analysis anls : objective.getAnalyses()) {
+                                anlsIds.add(anls.getId());
+                            }
+                        });
 
-            if (objective.getObjOutputs().getDocuments() != null) {
-                for (DataItem doc : objective.getObjOutputs().getDocuments()) {
-                    docIds.add(doc.getId());
-                }
-            }
-
-            if (objective.getObjOutputs().getRequirements() != null) {
-                for (Requirement req : objective.getObjOutputs().getRequirements()) {
-                    reqIds.add(req.getId());
-                    //        			reqIds.add(req.getDescription()); //Note: using description instead
-                    // of ID here because the boeing dataset has multiple descriptions for same req
-                    // and we want all charts to show the same number
-                }
-            }
-
-            if (objective.getObjOutputs().getHazards() != null) {
-                for (Hazard hzrd : objective.getObjOutputs().getHazards()) {
-                    hzrdIds.add(hzrd.getId());
-                }
-            }
-
-            if (objective.getObjOutputs().getTests() != null) {
-                for (Test tst : objective.getObjOutputs().getTests()) {
-                    tstIds.add(tst.getId());
-                }
-            }
-
-            if (objective.getObjOutputs().getLogs() != null) {
-                for (ReviewLog log : objective.getObjOutputs().getLogs()) {
-                    logIds.add(log.getId());
-                }
-            }
-
-            if (objective.getObjOutputs().getAnalyses() != null) {
-                for (Analysis anls : objective.getObjOutputs().getAnalyses()) {
-                    anlsIds.add(anls.getId());
-                }
-            }
-        }
-
-        // remove duplicates
-        docIds = CustomStringUtils.removeDuplicates(docIds);
-        reqIds = CustomStringUtils.removeDuplicates(reqIds);
-        hzrdIds = CustomStringUtils.removeDuplicates(hzrdIds);
-        tstIds = CustomStringUtils.removeDuplicates(tstIds);
-        logIds = CustomStringUtils.removeDuplicates(logIds);
-        anlsIds = CustomStringUtils.removeDuplicates(anlsIds);
-
-        //    	artStats.add(docCount);
-        //    	artStats.add(reqCount);
-        //    	artStats.add(hzrdCount);
-        //    	artStats.add(tstCount);
-        //    	artStats.add(logCount);
-        //    	artStats.add(anlsCount);
-
-        artStats.add(docIds.size());
-        artStats.add(reqIds.size());
-        artStats.add(hzrdIds.size());
-        artStats.add(tstIds.size());
-        artStats.add(logIds.size());
-        artStats.add(anlsIds.size());
-
-        return artStats;
+        return List.of(
+                docIds.size(),
+                reqIds.size(),
+                hzrdIds.size(),
+                tstIds.size(),
+                logIds.size(),
+                anlsIds.size());
     }
 
-    /**
-     * Creates a data bar and adds a value label to the top (only for double values)
-     *
-     * @param country
-     * @param value
-     * @return
-     */
+    /** Creates a data bar and adds a value label to the top (only for double values) */
     public static XYChart.Data<String, Double> createDoubleDataBar(String country, double value) {
-        var data = new XYChart.Data<>(country, value);
 
-        String text = Double.toString(value);
-
-        StackPane node = new StackPane();
-        Label label = new Label(text);
+        final Label label = new Label(Double.toString(value));
         label.setTextFill(Color.WHITE);
-        label.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+        label.setFont(VERANDA_FONT);
 
-        //        label.setRotate(-90);
-        Group group = new Group(label);
+        final Group group = new Group(label);
         StackPane.setAlignment(group, Pos.TOP_CENTER);
-        //        StackPane.setMargin(group, new Insets(0, 0, 5, 0));
+
+        final StackPane node = new StackPane();
         node.getChildren().add(group);
+
+        final XYChart.Data<String, Double> data = new XYChart.Data<String, Double>(country, value);
+
         data.setNode(node);
 
         return data;
     }
 
-    /**
-     * Creates a data bar and adds a value label to the top (only for int values)
-     *
-     * @param country
-     * @param value
-     * @return
-     */
+    /** Creates a data bar and adds a value label to the top (only for int values) */
     public static XYChart.Data<String, Integer> createIntDataBar(String country, int value) {
-        var data = new XYChart.Data<String, Integer>(country, value);
 
-        String text = Integer.toString(value);
-
-        StackPane node = new StackPane();
-        Label label = new Label(text);
+        final Label label = new Label(Integer.toString(value));
         label.setTextFill(Color.WHITE);
-        label.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+        label.setFont(VERANDA_FONT);
 
-        //        label.setRotate(-90);
-        Group group = new Group(label);
+        final Group group = new Group(label);
         StackPane.setAlignment(group, Pos.TOP_CENTER);
-        //        StackPane.setMargin(group, new Insets(0, 0, 5, 0));
+
+        final StackPane node = new StackPane();
         node.getChildren().add(group);
+
+        final XYChart.Data<String, Integer> data =
+                new XYChart.Data<String, Integer>(country, value);
+
         data.setNode(node);
 
         return data;
+    }
+
+    public static String getSrcLabelText(String src) {
+        return String.format("Source: %s", null != src ? src : "Not Found");
+    }
+
+    public static ImageView loadGeIcon() throws IOException, URISyntaxException {
+
+        final Bundle bundle = Platform.getBundle(RACK_PLUGIN_BUNDLE_NAME);
+
+        final String imgUrl =
+                FileLocator.find(bundle, new Path(GE_LOGO_IMG_PATH), null).toURI().getPath();
+
+        return new ImageView(imgUrl);
+    }
+
+    /**
+     * Given a file address, opens it in the default user specified app on the platform
+     *
+     * @param url
+     */
+    public static void openUrlInDefaultApp(String url) {
+        System.out.println("Trying to open URL in default app!");
+        try {
+            ReportViewsManager.hostServices.showDocument(url);
+        } catch (Exception e) {
+            System.out.println("ERROR: Failed to open URL in default app!");
+            e.printStackTrace();
+        }
     }
 }

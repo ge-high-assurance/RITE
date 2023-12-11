@@ -46,6 +46,22 @@ public class Test {
     private List<String> verifies = new ArrayList<String>();
     private List<ReviewLog> logs = new ArrayList<ReviewLog>();
 
+    private List<String> sourceDocument = new ArrayList<String>();
+
+    /**
+     * @return the sourceDocument
+     */
+    public List<String> getSourceDocument() {
+        return sourceDocument;
+    }
+
+    /**
+     * @param sourceDocument the sourceDocument to set
+     */
+    public void setSourceDocument(List<String> sourceDocument) {
+        this.sourceDocument = sourceDocument;
+    }
+
     /**
      * @param id
      * @param result
@@ -65,7 +81,6 @@ public class Test {
     public List<ReviewLog> getLogs() {
         return logs;
     }
-
     /**
      * @param logs the logs to set
      */
@@ -79,21 +94,18 @@ public class Test {
     public String getId() {
         return id;
     }
-
     /**
      * @param id the id to set
      */
     public void setId(String id) {
         this.id = id;
     }
-
     /**
      * @return the result
      */
     public String getResult() {
         return result;
     }
-
     /**
      * @param result the result to set
      */
@@ -107,21 +119,18 @@ public class Test {
     public List<String> getVerifies() {
         return verifies;
     }
-
     /**
      * @param verifies the verifies to set
      */
     public void setVerifies(List<String> verifies) {
         this.verifies = verifies;
     }
-
     /**
      * @return the type
      */
     public String getType() {
         return type;
     }
-
     /**
      * @param type the type to set
      */

@@ -59,6 +59,24 @@ public class PsacNode {
 
         private List<Hazard> hazards = new ArrayList<Hazard>();
 
+        private List<SwComponent> swComponents = new ArrayList<SwComponent>();
+
+        private String sourceDocument;
+
+        /**
+         * @return the sourceDocument
+         */
+        public String getSourceDocument() {
+            return sourceDocument;
+        }
+
+        /**
+         * @param sourceDocument the sourceDocument to set
+         */
+        public void setSourceDocument(String sourceDocument) {
+            this.sourceDocument = sourceDocument;
+        }
+
         /**
          * @return the hazards
          */
@@ -155,6 +173,20 @@ public class PsacNode {
          */
         public void setAnalyses(List<Analysis> analyses) {
             this.analyses = analyses;
+        }
+
+        /**
+         * @return the swComponents
+         */
+        public List<SwComponent> getSwComponents() {
+            return swComponents;
+        }
+
+        /**
+         * @param swComponents the swComponents to set
+         */
+        public void setSwComponents(List<SwComponent> swComponents) {
+            this.swComponents = swComponents;
         }
     }
 

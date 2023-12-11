@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.chart.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox prefHeight="600.0" prefWidth="800.0" stylesheets="@/resources/fxml/arp4754/Views.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ge.research.rack.arp4754.viewHandlers.MainViewHandler">
+    
+    <children>
+
+        <!-- DEBUG FRAMES: -fx-grid-lines-visible: true-->
+        <GridPane style="-fx-vgap: 1em; -fx-padding: 1.5em 3em 1.5em 3em" VBox.vgrow="ALWAYS"> 
+
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" />
+            </columnConstraints>
+
+            <rowConstraints>
+
+                <!-- TITLE -->
+                <RowConstraints vgrow="SOMETIMES" />
+                <!-- SUB-TITLE -->
+                <RowConstraints vgrow="SOMETIMES" />
+                <!-- LEGEND & GRAPH -->
+                <RowConstraints vgrow="ALWAYS" />
+                <!-- DATA TABLE -->
+                <RowConstraints vgrow="ALWAYS" />
+                <!-- FETCH BUTTON & LOADING LABEL  -->
+                <RowConstraints prefHeight="40.0" vgrow="SOMETIMES" />
+
+            </rowConstraints>
+
+            <children>
+
+                <!-- TITLE -->
+                <VBox style="-fx-alignment: center" GridPane.rowIndex="0">
+                    <children>
+                        <Label fx:id="headerLabel" />
+                        <Label fx:id="headerLabel" style="-fx-font-size: 2em" text="ARP-4754A Compliance Report" />
+                    </children>
+                </VBox>
+
+                <!-- SUB-TITLE -->
+                <Label fx:id="labelSwInfo" style="-fx-font-size: 1.5em" text="Label" GridPane.rowIndex="1" />
+
+                <!-- LEGEND & GRAPH -->
+                <GridPane GridPane.rowIndex="2">
+
+                    <columnConstraints>
+
+                        <!-- LEGEND -->
+                        <ColumnConstraints hgrow="SOMETIMES" />
+
+                        <!-- DATA GRAPH -->
+                        <ColumnConstraints hgrow="ALWAYS" />
+
+                    </columnConstraints>
+
+                    <rowConstraints>
+                        <RowConstraints vgrow="ALWAYS" />
+                    </rowConstraints>
+
+                    <children>
+
+                        <GridPane fx:id="gridPaneLegend" style="-fx-alignment: center; -fx-vgap: .5em; -fx-hgap: 1em;" GridPane.columnIndex="0">
+
+                            <columnConstraints>
+                                <ColumnConstraints />
+                                <ColumnConstraints />
+                            </columnConstraints>
+                            
+                            <rowConstraints>
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                            </rowConstraints>
+                            
+                            <children>
+
+                                <Button styleClass="legend-button, color-passed" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                <Label mnemonicParsing="false" text="Passed" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                                <Button styleClass="legend-button, color-failed" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                <Label mnemonicParsing="false" text="Failed" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                                <Button styleClass="legend-button, color-partial-data" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                <Label mnemonicParsing="false" text="Partial Data" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                                <Button styleClass="legend-button, color-no-data" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                <Label mnemonicParsing="false" text="No Data" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                            </children>
+                            
+
+                        </GridPane>
+
+                        <BarChart fx:id="chartProcessStatus" animated="false" barGap="2.0" categoryGap="4.0" horizontalGridLinesVisible="false" legendVisible="false" style="-fx-font-size: .8em" titleSide="BOTTOM" verticalGridLinesVisible="false" GridPane.columnIndex="1">
+
+                            <xAxis>
+                                <CategoryAxis side="BOTTOM" />
+                            </xAxis>
+
+                            <yAxis>
+                                <NumberAxis fx:id="yAxisChartProcessStatus" animated="false" autoRanging="false" label="Objectives" minorTickVisible="false" side="LEFT" />
+                            </yAxis>
+
+                        </BarChart>
+
+                    </children>
+
+                </GridPane>
+
+                <!-- DATA TABLE -->
+                <ListView fx:id="listProcess" onMouseClicked="#listProcessSelectionAction" GridPane.rowIndex="3" />
+
+                <!-- FETCH BUTTON & LOADING LABEL  -->
+                <VBox GridPane.rowIndex="4">
+                    <children>
+
+                        <AnchorPane>
+                            <children>
+                                
+                                <Label fx:id="labelWait" text="Fetching RACK data. Please be patient ..." AnchorPane.leftAnchor="10" AnchorPane.topAnchor="-140" />
+
+                                <ProgressIndicator fx:id="progInd" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="-120" />
+                                
+                            </children>
+                        </AnchorPane>
+                        
+                        <HBox HBox.hgrow="ALWAYS">
+                            
+                            <children>
+                                
+                                <Button fx:id="btnFetch" mnemonicParsing="false" onAction="#btnFetchAction" text="Fetch Report Data" />
+
+                                <Pane HBox.hgrow="ALWAYS" />
+
+                                <Button fx:id="btnFontInc" mnemonicParsing="false" onAction="#btnFontIncAction" styleClass="transparent-button">
+                                    <graphic>
+                                        <HBox alignment="CENTER">
+                                            <children>
+                                                <Label text="A" />
+                                                <Label styleClass="superscript" text="+" />
+                                            </children>
+                                        </HBox>
+                                    </graphic>
+                                </Button>
+
+                                <Button fx:id="btnFontDec" mnemonicParsing="false" onAction="#btnFontDecAction" styleClass="transparent-button">
+                                    <graphic>
+                                        <HBox alignment="CENTER">
+                                            <children>
+                                                <Label text="A" />
+                                                <Label styleClass="superscript" text="-" />
+                                            </children>
+                                        </HBox>
+                                    </graphic>
+                                </Button>
+                                
+                            </children>
+                            
+                        </HBox>
+                    
+                    </children>
+                </VBox>
+
+            </children>
+        </GridPane>
+    </children>
+
+
+</VBox>

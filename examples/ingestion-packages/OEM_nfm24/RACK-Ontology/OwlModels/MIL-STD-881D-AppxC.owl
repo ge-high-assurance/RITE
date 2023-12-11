@@ -1,0 +1,817 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:j.0="http://arcos.rack/PROV-S#"
+    xmlns:m881D="http://arcos.rack/MIL-STD-881D/MIL-STD-881D#"
+    xmlns:MIL-STD-881D-AppxC="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#"
+    xmlns:builtinfunctions="http://sadl.org/builtinfunctions#"
+    xmlns:j.1="http://arcos.rack/SYSTEM#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:sadlimplicitmodel="http://sadl.org/sadlimplicitmodel#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:sadlbasemodel="http://sadl.org/sadlbasemodel#"
+    xmlns:j.2="http://arcos.rack/DOCUMENT#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+  <owl:Ontology rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC">
+    <owl:imports rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D"/>
+    <owl:imports rdf:resource="http://sadl.org/builtinfunctions"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlimplicitmodel"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlbasemodel"/>
+    <rdfs:comment xml:lang="en">This ontology was created from a SADL file 'MIL-STD-881D-AppxC.sadl' and should not be directly edited.</rdfs:comment>
+  </owl:Ontology>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#AntennaAssembly-1.2.8.2">
+    <m881D:wbs>1.2.8.2</m881D:wbs>
+    <j.1:partOf>
+      <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Communications-1.2.8">
+        <m881D:wbs>1.2.8</m881D:wbs>
+        <j.1:partOf>
+          <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#AirVehicleMunition-1.2">
+            <m881D:wbs>1.2</m881D:wbs>
+            <j.1:partOf>
+              <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#MissileOrdnanceSystem-1">
+                <m881D:wbs>1</m881D:wbs>
+                <j.0:identifier>MissileOrdnanceSystem-1</j.0:identifier>
+              </j.1:SYSTEM>
+            </j.1:partOf>
+            <j.0:identifier>AirVehicleMunition-1.2</j.0:identifier>
+          </j.1:SYSTEM>
+        </j.1:partOf>
+        <j.0:identifier>Communications-1.2.8</j.0:identifier>
+      </j.1:SYSTEM>
+    </j.1:partOf>
+    <j.0:identifier>AntennaAssembly-1.2.8.2</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SensorAssemblies-1.2.6.2">
+    <m881D:wbs>1.2.6.2</m881D:wbs>
+    <j.1:partOf>
+      <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Navigation-1.2.6">
+        <m881D:wbs>1.2.6</m881D:wbs>
+        <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#AirVehicleMunition-1.2"/>
+        <j.0:identifier>Navigation-1.2.6</j.0:identifier>
+      </j.1:SYSTEM>
+    </j.1:partOf>
+    <j.0:identifier>SensorAssemblies-1.2.6.2</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PropulsionSoftwareRelease1TonSpecify-1.2.3.8">
+    <m881D:wbs>1.2.3.8</m881D:wbs>
+    <j.1:partOf>
+      <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PropulsionSubsystem1TonSpecify-1.2.3">
+        <m881D:wbs>1.2.3</m881D:wbs>
+        <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#AirVehicleMunition-1.2"/>
+        <j.0:identifier>PropulsionSubsystem1TonSpecify-1.2.3</j.0:identifier>
+      </j.1:SYSTEM>
+    </j.1:partOf>
+    <j.0:identifier>PropulsionSoftwareRelease1TonSpecify-1.2.3.8</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#MissionComputer-1.2.5.4">
+    <m881D:wbs>1.2.5.4</m881D:wbs>
+    <j.1:partOf>
+      <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Guidance-1.2.5">
+        <m881D:wbs>1.2.5</m881D:wbs>
+        <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#AirVehicleMunition-1.2"/>
+        <j.0:identifier>Guidance-1.2.5</j.0:identifier>
+      </j.1:SYSTEM>
+    </j.1:partOf>
+    <j.0:identifier>MissionComputer-1.2.5.4</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Mock-upsSystemIntegrationLabsSILs-1.9.4">
+    <m881D:wbs>1.9.4</m881D:wbs>
+    <j.1:partOf>
+      <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SystemTestandEvaluation-1.9">
+        <m881D:wbs>1.9</m881D:wbs>
+        <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#MissileOrdnanceSystem-1"/>
+        <j.0:identifier>SystemTestandEvaluation-1.9</j.0:identifier>
+      </j.1:SYSTEM>
+    </j.1:partOf>
+    <j.0:identifier>Mock-upsSystemIntegrationLabsSILs-1.9.4</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#TestFacilities-1.9.6">
+    <m881D:wbs>1.9.6</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SystemTestandEvaluation-1.9"/>
+    <j.0:identifier>TestFacilities-1.9.6</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#OtherCommandandorLaunch1TonSpecify-1.4.10">
+    <m881D:wbs>1.4.10</m881D:wbs>
+    <j.1:partOf>
+      <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#CommandandorLaunch-1.4">
+        <m881D:wbs>1.4</m881D:wbs>
+        <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#MissileOrdnanceSystem-1"/>
+        <j.0:identifier>CommandandorLaunch-1.4</j.0:identifier>
+      </j.1:SYSTEM>
+    </j.1:partOf>
+    <j.0:identifier>OtherCommandandorLaunch1TonSpecify-1.4.10</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#NavigationIntegrationAssemblyTestandCheckout-1.2.6.1">
+    <m881D:wbs>1.2.6.1</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Navigation-1.2.6"/>
+    <j.0:identifier>NavigationIntegrationAssemblyTestandCheckout-1.2.6.1</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Launcher-1.4.4">
+    <m881D:wbs>1.4.4</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#CommandandorLaunch-1.4"/>
+    <j.0:identifier>Launcher-1.4.4</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#TrainingSoftware1TonSpecify-1.10.4">
+    <m881D:wbs>1.10.4</m881D:wbs>
+    <j.1:partOf>
+      <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Training-1.10">
+        <m881D:wbs>1.10</m881D:wbs>
+        <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#MissileOrdnanceSystem-1"/>
+        <j.0:identifier>Training-1.10</j.0:identifier>
+      </j.1:SYSTEM>
+    </j.1:partOf>
+    <j.0:identifier>TrainingSoftware1TonSpecify-1.10.4</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#AirVehicleSoftwareRelease1TonSpecify-1.2.13">
+    <m881D:wbs>1.2.13</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#AirVehicleMunition-1.2"/>
+    <j.0:identifier>AirVehicleSoftwareRelease1TonSpecify-1.2.13</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#OtherNavigationSubsystems1TonSpecify-1.2.6.4">
+    <m881D:wbs>1.2.6.4</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Navigation-1.2.6"/>
+    <j.0:identifier>OtherNavigationSubsystems1TonSpecify-1.2.6.4</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SupportandHandlingEquipmentOtherMajorSubsystems1TonSpecify-1.13.2.4">
+    <m881D:wbs>1.13.2.4</m881D:wbs>
+    <j.1:partOf>
+      <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SupportandHandlingEquipment-1.13.2">
+        <m881D:wbs>1.13.2</m881D:wbs>
+        <j.1:partOf>
+          <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#CommonSupportEquipment-1.13">
+            <m881D:wbs>1.13</m881D:wbs>
+            <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#MissileOrdnanceSystem-1"/>
+            <j.0:identifier>CommonSupportEquipment-1.13</j.0:identifier>
+          </j.1:SYSTEM>
+        </j.1:partOf>
+        <j.0:identifier>SupportandHandlingEquipment-1.13.2</j.0:identifier>
+      </j.1:SYSTEM>
+    </j.1:partOf>
+    <j.0:identifier>SupportandHandlingEquipmentOtherMajorSubsystems1TonSpecify-1.13.2.4</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#DataDeliverables1TonSpecify-1.11.1">
+    <m881D:wbs>1.11.1</m881D:wbs>
+    <j.1:partOf>
+      <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Data-1.11">
+        <m881D:wbs>1.11</m881D:wbs>
+        <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#MissileOrdnanceSystem-1"/>
+        <j.0:identifier>Data-1.11</j.0:identifier>
+      </j.1:SYSTEM>
+    </j.1:partOf>
+    <j.0:identifier>DataDeliverables1TonSpecify-1.11.1</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PowerConditioningElectronics-1.2.4.3">
+    <m881D:wbs>1.2.4.3</m881D:wbs>
+    <j.1:partOf>
+      <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PowerandDistribution-1.2.4">
+        <m881D:wbs>1.2.4</m881D:wbs>
+        <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#AirVehicleMunition-1.2"/>
+        <j.0:identifier>PowerandDistribution-1.2.4</j.0:identifier>
+      </j.1:SYSTEM>
+    </j.1:partOf>
+    <j.0:identifier>PowerConditioningElectronics-1.2.4.3</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#IntegratedLogisticsSupportILSSystemsEngineering-1.7.2">
+    <m881D:wbs>1.7.2</m881D:wbs>
+    <j.1:partOf>
+      <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SystemsEngineering-1.7">
+        <m881D:wbs>1.7</m881D:wbs>
+        <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#MissileOrdnanceSystem-1"/>
+        <j.0:identifier>SystemsEngineering-1.7</j.0:identifier>
+      </j.1:SYSTEM>
+    </j.1:partOf>
+    <j.0:identifier>IntegratedLogisticsSupportILSSystemsEngineering-1.7.2</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PayloadIntegrationAssemblyTestandCheckout-1.2.9.1">
+    <m881D:wbs>1.2.9.1</m881D:wbs>
+    <j.1:partOf>
+      <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Payload-1.2.9">
+        <m881D:wbs>1.2.9</m881D:wbs>
+        <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#AirVehicleMunition-1.2"/>
+        <j.0:identifier>Payload-1.2.9</j.0:identifier>
+      </j.1:SYSTEM>
+    </j.1:partOf>
+    <j.0:identifier>PayloadIntegrationAssemblyTestandCheckout-1.2.9.1</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#CommandandorLaunchSoftwareRelease1TonSpecify-1.4.9">
+    <m881D:wbs>1.4.9</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#CommandandorLaunch-1.4"/>
+    <j.0:identifier>CommandandorLaunchSoftwareRelease1TonSpecify-1.4.9</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#OtherPropulsionSubsystems1TonSpecify-1.2.3.9">
+    <m881D:wbs>1.2.3.9</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PropulsionSubsystem1TonSpecify-1.2.3"/>
+    <j.0:identifier>OtherPropulsionSubsystems1TonSpecify-1.2.3.9</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#OperatorInstructionalEquipment-1.10.1.1">
+    <m881D:wbs>1.10.1.1</m881D:wbs>
+    <j.1:partOf>
+      <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Equipment-1.10.1">
+        <m881D:wbs>1.10.1</m881D:wbs>
+        <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Training-1.10"/>
+        <j.0:identifier>Equipment-1.10.1</j.0:identifier>
+      </j.1:SYSTEM>
+    </j.1:partOf>
+    <j.0:identifier>OperatorInstructionalEquipment-1.10.1.1</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Communications-1.4.3">
+    <m881D:wbs>1.4.3</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#CommandandorLaunch-1.4"/>
+    <j.0:identifier>Communications-1.4.3</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SupportandHandlingEquipmentAirframeHullVehicle-1.12.2.1">
+    <m881D:wbs>1.12.2.1</m881D:wbs>
+    <j.1:partOf>
+      <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SupportandHandlingEquipment-1.12.2">
+        <m881D:wbs>1.12.2</m881D:wbs>
+        <j.1:partOf>
+          <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PeculiarSupportEquipment-1.12">
+            <m881D:wbs>1.12</m881D:wbs>
+            <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#MissileOrdnanceSystem-1"/>
+            <j.0:identifier>PeculiarSupportEquipment-1.12</j.0:identifier>
+          </j.1:SYSTEM>
+        </j.1:partOf>
+        <j.0:identifier>SupportandHandlingEquipment-1.12.2</j.0:identifier>
+      </j.1:SYSTEM>
+    </j.1:partOf>
+    <j.0:identifier>SupportandHandlingEquipmentAirframeHullVehicle-1.12.2.1</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#InterimContractorSupportICS-1.14.5">
+    <m881D:wbs>1.14.5</m881D:wbs>
+    <j.1:partOf>
+      <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#OperationalSiteActivationbySite1TonSpecify-1.14">
+        <m881D:wbs>1.14</m881D:wbs>
+        <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#MissileOrdnanceSystem-1"/>
+        <j.0:identifier>OperationalSiteActivationbySite1TonSpecify-1.14</j.0:identifier>
+      </j.1:SYSTEM>
+    </j.1:partOf>
+    <j.0:identifier>InterimContractorSupportICS-1.14.5</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#OnBoardTrainingEquipment-1.2.11">
+    <m881D:wbs>1.2.11</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#AirVehicleMunition-1.2"/>
+    <j.0:identifier>OnBoardTrainingEquipment-1.2.11</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#CommandandorLaunchIntegrationAssemblyTestandCheckout-1.4.1">
+    <m881D:wbs>1.4.1</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#CommandandorLaunch-1.4"/>
+    <j.0:identifier>CommandandorLaunchIntegrationAssemblyTestandCheckout-1.4.1</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#CoreProgramManagement-1.8.4">
+    <m881D:wbs>1.8.4</m881D:wbs>
+    <j.1:partOf>
+      <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#ProgramManagement-1.8">
+        <m881D:wbs>1.8</m881D:wbs>
+        <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#MissileOrdnanceSystem-1"/>
+        <j.0:identifier>ProgramManagement-1.8</j.0:identifier>
+      </j.1:SYSTEM>
+    </j.1:partOf>
+    <j.0:identifier>CoreProgramManagement-1.8.4</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#ControlPower-1.2.7.5">
+    <m881D:wbs>1.2.7.5</m881D:wbs>
+    <j.1:partOf>
+      <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Controls-1.2.7">
+        <m881D:wbs>1.2.7</m881D:wbs>
+        <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#AirVehicleMunition-1.2"/>
+        <j.0:identifier>Controls-1.2.7</j.0:identifier>
+      </j.1:SYSTEM>
+    </j.1:partOf>
+    <j.0:identifier>ControlPower-1.2.7.5</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SupportandHandlingEquipmentOtherMajorSubsystems1TonSpecify-1.12.2.4">
+    <m881D:wbs>1.12.2.4</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SupportandHandlingEquipment-1.12.2"/>
+    <j.0:identifier>SupportandHandlingEquipmentOtherMajorSubsystems1TonSpecify-1.12.2.4</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#NavigationSoftwareRelease1TonSpecify-1.2.6.3">
+    <m881D:wbs>1.2.6.3</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Navigation-1.2.6"/>
+    <j.0:identifier>NavigationSoftwareRelease1TonSpecify-1.2.6.3</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#TestandEvaluationSupport-1.9.5">
+    <m881D:wbs>1.9.5</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SystemTestandEvaluation-1.9"/>
+    <j.0:identifier>TestandEvaluationSupport-1.9.5</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#IntegratedLogisticsSupportILSProgramManagement-1.8.2">
+    <m881D:wbs>1.8.2</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#ProgramManagement-1.8"/>
+    <j.0:identifier>IntegratedLogisticsSupportILSProgramManagement-1.8.2</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SupportandHandlingEquipmentPropulsion-1.12.2.2">
+    <m881D:wbs>1.12.2.2</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SupportandHandlingEquipment-1.12.2"/>
+    <j.0:identifier>SupportandHandlingEquipmentPropulsion-1.12.2.2</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PowerandDistributionSoftwareRelease1TonSpecify-1.2.4.5">
+    <m881D:wbs>1.2.4.5</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PowerandDistribution-1.2.4"/>
+    <j.0:identifier>PowerandDistributionSoftwareRelease1TonSpecify-1.2.4.5</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#ThrustVectorActuation-1.2.3.4">
+    <m881D:wbs>1.2.3.4</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PropulsionSubsystem1TonSpecify-1.2.3"/>
+    <j.0:identifier>ThrustVectorActuation-1.2.3.4</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#FinCanardDeploymentSystem-1.2.7.3">
+    <m881D:wbs>1.2.7.3</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Controls-1.2.7"/>
+    <j.0:identifier>FinCanardDeploymentSystem-1.2.7.3</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#DataRights1TonSpecify-1.11.3">
+    <m881D:wbs>1.11.3</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Data-1.11"/>
+    <j.0:identifier>DataRights1TonSpecify-1.11.3</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#EncasementDeviceIntegrationAssemblyTestandCheckout-1.3.1">
+    <m881D:wbs>1.3.1</m881D:wbs>
+    <j.1:partOf>
+      <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#EncasementDevice-1.3">
+        <m881D:wbs>1.3</m881D:wbs>
+        <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#MissileOrdnanceSystem-1"/>
+        <j.0:identifier>EncasementDevice-1.3</j.0:identifier>
+      </j.1:SYSTEM>
+    </j.1:partOf>
+    <j.0:identifier>EncasementDeviceIntegrationAssemblyTestandCheckout-1.3.1</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#TestandMeasurementEquipmentPropulsion-1.12.1.2">
+    <m881D:wbs>1.12.1.2</m881D:wbs>
+    <j.1:partOf>
+      <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#TestandMeasurementEquipment-1.12.1">
+        <m881D:wbs>1.12.1</m881D:wbs>
+        <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PeculiarSupportEquipment-1.12"/>
+        <j.0:identifier>TestandMeasurementEquipment-1.12.1</j.0:identifier>
+      </j.1:SYSTEM>
+    </j.1:partOf>
+    <j.0:identifier>TestandMeasurementEquipmentPropulsion-1.12.1.2</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#FlightTerminationMissionTermination-1.2.3.7">
+    <m881D:wbs>1.2.3.7</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PropulsionSubsystem1TonSpecify-1.2.3"/>
+    <j.0:identifier>FlightTerminationMissionTermination-1.2.3.7</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#OtherPayloadSubsystems1TonSpecify-1.2.9.6">
+    <m881D:wbs>1.2.9.6</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Payload-1.2.9"/>
+    <j.0:identifier>OtherPayloadSubsystems1TonSpecify-1.2.9.6</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#TargetDefeatMechanism-1.2.9.2">
+    <m881D:wbs>1.2.9.2</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Payload-1.2.9"/>
+    <j.0:identifier>TargetDefeatMechanism-1.2.9.2</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#TestandMeasurementEquipmentOtherMajorSubsystems1TonSpecify-1.13.1.4">
+    <m881D:wbs>1.13.1.4</m881D:wbs>
+    <j.1:partOf>
+      <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#TestandMeasurementEquipment-1.13.1">
+        <m881D:wbs>1.13.1</m881D:wbs>
+        <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#CommonSupportEquipment-1.13"/>
+        <j.0:identifier>TestandMeasurementEquipment-1.13.1</j.0:identifier>
+      </j.1:SYSTEM>
+    </j.1:partOf>
+    <j.0:identifier>TestandMeasurementEquipmentOtherMajorSubsystems1TonSpecify-1.13.1.4</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#OtherGuidanceSubsystems1TonSpecify-1.2.5.6">
+    <m881D:wbs>1.2.5.6</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Guidance-1.2.5"/>
+    <j.0:identifier>OtherGuidanceSubsystems1TonSpecify-1.2.5.6</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SoftwareSystemsEngineering-1.7.1">
+    <m881D:wbs>1.7.1</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SystemsEngineering-1.7"/>
+    <j.0:identifier>SoftwareSystemsEngineering-1.7.1</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#TestandMeasurementEquipmentAirframeHullVehicle-1.13.1.1">
+    <m881D:wbs>1.13.1.1</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#TestandMeasurementEquipment-1.13.1"/>
+    <j.0:identifier>TestandMeasurementEquipmentAirframeHullVehicle-1.13.1.1</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PlatformIntegrationAssemblyTestandCheckout1TonSpecify-1.6">
+    <m881D:wbs>1.6</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#MissileOrdnanceSystem-1"/>
+    <j.0:identifier>PlatformIntegrationAssemblyTestandCheckout1TonSpecify-1.6</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#OtherEncasementDeviceSubsystems1TonSpecify-1.3.4">
+    <m881D:wbs>1.3.4</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#EncasementDevice-1.3"/>
+    <j.0:identifier>OtherEncasementDeviceSubsystems1TonSpecify-1.3.4</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#FuelManagement-1.2.3.3">
+    <m881D:wbs>1.2.3.3</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PropulsionSubsystem1TonSpecify-1.2.3"/>
+    <j.0:identifier>FuelManagement-1.2.3.3</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PropulsionIntegrationAssemblyTestandCheckout-1.2.3.1">
+    <m881D:wbs>1.2.3.1</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PropulsionSubsystem1TonSpecify-1.2.3"/>
+    <j.0:identifier>PropulsionIntegrationAssemblyTestandCheckout-1.2.3.1</j.0:identifier>
+  </j.1:SYSTEM>
+  <rdf:Description rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D#MIL-STD-881D">
+    <j.0:content>
+      <j.2:SECTION rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#C.4">
+        <j.0:title>DEFINITIONS</j.0:title>
+      </j.2:SECTION>
+    </j.0:content>
+    <j.0:content>
+      <j.2:SECTION rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#C.3">
+        <j.0:title>WORK BREAKDOWN STRUCTURE LEVELS</j.0:title>
+      </j.2:SECTION>
+    </j.0:content>
+    <j.0:content>
+      <j.2:SECTION rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#C.2">
+        <j.0:title>APPLICABLE DOCUMENTS</j.0:title>
+      </j.2:SECTION>
+    </j.0:content>
+    <j.0:content>
+      <j.2:SECTION rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#C.1">
+        <j.0:title>SCOPE</j.0:title>
+      </j.2:SECTION>
+    </j.0:content>
+  </rdf:Description>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#MissileOrdnanceSystemSoftwareRelease1TonSpecify-1.5">
+    <m881D:wbs>1.5</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#MissileOrdnanceSystem-1"/>
+    <j.0:identifier>MissileOrdnanceSystemSoftwareRelease1TonSpecify-1.5</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#TestandMeasurementEquipmentAirframeHullVehicle-1.12.1.1">
+    <m881D:wbs>1.12.1.1</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#TestandMeasurementEquipment-1.12.1"/>
+    <j.0:identifier>TestandMeasurementEquipmentAirframeHullVehicle-1.12.1.1</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#ControlsIntegrationAssemblyTestandCheckout-1.2.7.1">
+    <m881D:wbs>1.2.7.1</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Controls-1.2.7"/>
+    <j.0:identifier>ControlsIntegrationAssemblyTestandCheckout-1.2.7.1</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#GuidanceSoftwareRelease1TonSpecify-1.2.5.5">
+    <m881D:wbs>1.2.5.5</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Guidance-1.2.5"/>
+    <j.0:identifier>GuidanceSoftwareRelease1TonSpecify-1.2.5.5</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#GuidanceIntegrationAssemblyTestandCheckout-1.2.5.1">
+    <m881D:wbs>1.2.5.1</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Guidance-1.2.5"/>
+    <j.0:identifier>GuidanceIntegrationAssemblyTestandCheckout-1.2.5.1</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#OperationalTestandEvaluation-1.9.2">
+    <m881D:wbs>1.9.2</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SystemTestandEvaluation-1.9"/>
+    <j.0:identifier>OperationalTestandEvaluation-1.9.2</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#OtherProgramManagement1TonSpecify-1.8.5">
+    <m881D:wbs>1.8.5</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#ProgramManagement-1.8"/>
+    <j.0:identifier>OtherProgramManagement1TonSpecify-1.8.5</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Actuators-1.2.7.4">
+    <m881D:wbs>1.2.7.4</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Controls-1.2.7"/>
+    <j.0:identifier>Actuators-1.2.7.4</j.0:identifier>
+  </j.1:SYSTEM>
+  <rdf:Description rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D#MIL-STD-881D-AppxC">
+    <j.0:title>MISSILE/ORDNANCE SYSTEMS</j.0:title>
+  </rdf:Description>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#OtherAirframeComponents1TonSpecify-1.2.2.5">
+    <m881D:wbs>1.2.2.5</m881D:wbs>
+    <j.1:partOf>
+      <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Airframe-1.2.2">
+        <m881D:wbs>1.2.2</m881D:wbs>
+        <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#AirVehicleMunition-1.2"/>
+        <j.0:identifier>Airframe-1.2.2</j.0:identifier>
+      </j.1:SYSTEM>
+    </j.1:partOf>
+    <j.0:identifier>OtherAirframeComponents1TonSpecify-1.2.2.5</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#LaunchandGuidanceControl-1.4.6">
+    <m881D:wbs>1.4.6</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#CommandandorLaunch-1.4"/>
+    <j.0:identifier>LaunchandGuidanceControl-1.4.6</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Fuze-1.2.9.4">
+    <m881D:wbs>1.2.9.4</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Payload-1.2.9"/>
+    <j.0:identifier>Fuze-1.2.9.4</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#ContractorLogisticsSupportCLS-1.15">
+    <m881D:wbs>1.15</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#MissileOrdnanceSystem-1"/>
+    <j.0:identifier>ContractorLogisticsSupportCLS-1.15</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Receiver-1.2.8.4">
+    <m881D:wbs>1.2.8.4</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Communications-1.2.8"/>
+    <j.0:identifier>Receiver-1.2.8.4</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#CommunicationsIntegrationAssemblyTestandCheckout-1.2.8.1">
+    <m881D:wbs>1.2.8.1</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Communications-1.2.8"/>
+    <j.0:identifier>CommunicationsIntegrationAssemblyTestandCheckout-1.2.8.1</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#TestandMeasurementEquipmentElectronicsAvionics-1.12.1.3">
+    <m881D:wbs>1.12.1.3</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#TestandMeasurementEquipment-1.12.1"/>
+    <j.0:identifier>TestandMeasurementEquipmentElectronicsAvionics-1.12.1.3</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SoftwareProgramManagement-1.8.1">
+    <m881D:wbs>1.8.1</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#ProgramManagement-1.8"/>
+    <j.0:identifier>SoftwareProgramManagement-1.8.1</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#ConstructionConversionExpansion-1.16.1">
+    <m881D:wbs>1.16.1</m881D:wbs>
+    <j.1:partOf>
+      <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#IndustrialFacilities-1.16">
+        <m881D:wbs>1.16</m881D:wbs>
+        <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#MissileOrdnanceSystem-1"/>
+        <j.0:identifier>IndustrialFacilities-1.16</j.0:identifier>
+      </j.1:SYSTEM>
+    </j.1:partOf>
+    <j.0:identifier>ConstructionConversionExpansion-1.16.1</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#MaintainerInstructionalServices-1.10.2.2">
+    <m881D:wbs>1.10.2.2</m881D:wbs>
+    <j.1:partOf>
+      <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Services-1.10.2">
+        <m881D:wbs>1.10.2</m881D:wbs>
+        <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Training-1.10"/>
+        <j.0:identifier>Services-1.10.2</j.0:identifier>
+      </j.1:SYSTEM>
+    </j.1:partOf>
+    <j.0:identifier>MaintainerInstructionalServices-1.10.2.2</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#AuxiliaryEquipment-1.4.8">
+    <m881D:wbs>1.4.8</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#CommandandorLaunch-1.4"/>
+    <j.0:identifier>AuxiliaryEquipment-1.4.8</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SiteShipVehicleConversion-1.14.4">
+    <m881D:wbs>1.14.4</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#OperationalSiteActivationbySite1TonSpecify-1.14"/>
+    <j.0:identifier>SiteShipVehicleConversion-1.14.4</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#AdapterKits-1.4.5">
+    <m881D:wbs>1.4.5</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#CommandandorLaunch-1.4"/>
+    <j.0:identifier>AdapterKits-1.4.5</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#CybersecurityTestandEvaluation-1.9.3">
+    <m881D:wbs>1.9.3</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SystemTestandEvaluation-1.9"/>
+    <j.0:identifier>CybersecurityTestandEvaluation-1.9.3</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#MissileOrdnanceSystemIntegrationAssemblyTestandCheckout-1.1">
+    <m881D:wbs>1.1</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#MissileOrdnanceSystem-1"/>
+    <j.0:identifier>MissileOrdnanceSystemIntegrationAssemblyTestandCheckout-1.1</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#ControlsSoftwareRelease1TonSpecify-1.2.7.6">
+    <m881D:wbs>1.2.7.6</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Controls-1.2.7"/>
+    <j.0:identifier>ControlsSoftwareRelease1TonSpecify-1.2.7.6</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#CommunicationsSoftwareRelease1TonSpecify-1.2.8.5">
+    <m881D:wbs>1.2.8.5</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Communications-1.2.8"/>
+    <j.0:identifier>CommunicationsSoftwareRelease1TonSpecify-1.2.8.5</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#AirVehicleMunitionIntegrationAssemblyTestandCheckout-1.2.1">
+    <m881D:wbs>1.2.1</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#AirVehicleMunition-1.2"/>
+    <j.0:identifier>AirVehicleMunitionIntegrationAssemblyTestandCheckout-1.2.1</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#AttitudeControlSystem-1.2.3.5">
+    <m881D:wbs>1.2.3.5</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PropulsionSubsystem1TonSpecify-1.2.3"/>
+    <j.0:identifier>AttitudeControlSystem-1.2.3.5</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#MaintainerInstructionalEquipment-1.10.1.2">
+    <m881D:wbs>1.10.1.2</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Equipment-1.10.1"/>
+    <j.0:identifier>MaintainerInstructionalEquipment-1.10.1.2</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#DomeAssembly-1.2.5.2">
+    <m881D:wbs>1.2.5.2</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Guidance-1.2.5"/>
+    <j.0:identifier>DomeAssembly-1.2.5.2</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#DistributionHarness-1.2.4.4">
+    <m881D:wbs>1.2.4.4</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PowerandDistribution-1.2.4"/>
+    <j.0:identifier>DistributionHarness-1.2.4.4</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#OperatorInstructionalServices-1.10.2.1">
+    <m881D:wbs>1.10.2.1</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Services-1.10.2"/>
+    <j.0:identifier>OperatorInstructionalServices-1.10.2.1</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#EquipmentAcquisitionorModernization-1.16.2">
+    <m881D:wbs>1.16.2</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#IndustrialFacilities-1.16"/>
+    <j.0:identifier>EquipmentAcquisitionorModernization-1.16.2</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Aero-Structures-1.2.2.4">
+    <m881D:wbs>1.2.2.4</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Airframe-1.2.2"/>
+    <j.0:identifier>Aero-Structures-1.2.2.4</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#CybersecurityManagement-1.8.3">
+    <m881D:wbs>1.8.3</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#ProgramManagement-1.8"/>
+    <j.0:identifier>CybersecurityManagement-1.8.3</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#OtherCommunicationsSubsystems1TonSpecify-1.2.8.6">
+    <m881D:wbs>1.2.8.6</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Communications-1.2.8"/>
+    <j.0:identifier>OtherCommunicationsSubsystems1TonSpecify-1.2.8.6</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Transmitter-1.2.8.3">
+    <m881D:wbs>1.2.8.3</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Communications-1.2.8"/>
+    <j.0:identifier>Transmitter-1.2.8.3</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#OtherControlSubsystems1TonSpecify-1.2.7.7">
+    <m881D:wbs>1.2.7.7</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Controls-1.2.7"/>
+    <j.0:identifier>OtherControlSubsystems1TonSpecify-1.2.7.7</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#ReadyMagazine-1.4.7">
+    <m881D:wbs>1.4.7</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#CommandandorLaunch-1.4"/>
+    <j.0:identifier>ReadyMagazine-1.4.7</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SeekerAssemblies-1.2.5.3">
+    <m881D:wbs>1.2.5.3</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Guidance-1.2.5"/>
+    <j.0:identifier>SeekerAssemblies-1.2.5.3</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#ContractorTechnicalSupport-1.14.2">
+    <m881D:wbs>1.14.2</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#OperationalSiteActivationbySite1TonSpecify-1.14"/>
+    <j.0:identifier>ContractorTechnicalSupport-1.14.2</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PowerandDistributionIntegrationAssemblyTestandCheckout-1.2.4.1">
+    <m881D:wbs>1.2.4.1</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PowerandDistribution-1.2.4"/>
+    <j.0:identifier>PowerandDistributionIntegrationAssemblyTestandCheckout-1.2.4.1</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SiteConstruction-1.14.3">
+    <m881D:wbs>1.14.3</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#OperationalSiteActivationbySite1TonSpecify-1.14"/>
+    <j.0:identifier>SiteConstruction-1.14.3</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PayloadSoftwareRelease1TonSpecify-1.2.9.5">
+    <m881D:wbs>1.2.9.5</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Payload-1.2.9"/>
+    <j.0:identifier>PayloadSoftwareRelease1TonSpecify-1.2.9.5</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#EncasementDeviceSoftwareRelease1TonSpecify-1.3.3">
+    <m881D:wbs>1.3.3</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#EncasementDevice-1.3"/>
+    <j.0:identifier>EncasementDeviceSoftwareRelease1TonSpecify-1.3.3</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#InitialSparesandRepairParts-1.17">
+    <m881D:wbs>1.17</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#MissileOrdnanceSystem-1"/>
+    <j.0:identifier>InitialSparesandRepairParts-1.17</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SecondaryStructure-1.2.2.3">
+    <m881D:wbs>1.2.2.3</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Airframe-1.2.2"/>
+    <j.0:identifier>SecondaryStructure-1.2.2.3</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#CoreSystemsEngineering-1.7.4">
+    <m881D:wbs>1.7.4</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SystemsEngineering-1.7"/>
+    <j.0:identifier>CoreSystemsEngineering-1.7.4</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#MotorEngineSpecify-1.2.3.2">
+    <m881D:wbs>1.2.3.2</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PropulsionSubsystem1TonSpecify-1.2.3"/>
+    <j.0:identifier>MotorEngineSpecify-1.2.3.2</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#DataRepository-1.11.2">
+    <m881D:wbs>1.11.2</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Data-1.11"/>
+    <j.0:identifier>DataRepository-1.11.2</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#MaintenanceIndustrialFacilities-1.16.3">
+    <m881D:wbs>1.16.3</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#IndustrialFacilities-1.16"/>
+    <j.0:identifier>MaintenanceIndustrialFacilities-1.16.3</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#TestandMeasurementEquipmentPropulsion-1.13.1.2">
+    <m881D:wbs>1.13.1.2</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#TestandMeasurementEquipment-1.13.1"/>
+    <j.0:identifier>TestandMeasurementEquipmentPropulsion-1.13.1.2</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#OtherPowerandDistrbutionSubsystems1TonSpecify-1.2.4.6">
+    <m881D:wbs>1.2.4.6</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PowerandDistribution-1.2.4"/>
+    <j.0:identifier>OtherPowerandDistrbutionSubsystems1TonSpecify-1.2.4.6</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SurveillanceIdentificationandTrackingSensors-1.4.2">
+    <m881D:wbs>1.4.2</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#CommandandorLaunch-1.4"/>
+    <j.0:identifier>SurveillanceIdentificationandTrackingSensors-1.4.2</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#OtherSystemsEngineering1TonSpecify-1.7.5">
+    <m881D:wbs>1.7.5</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SystemsEngineering-1.7"/>
+    <j.0:identifier>OtherSystemsEngineering1TonSpecify-1.7.5</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SupportandHandlingEquipmentElectronicsAvionics-1.12.2.3">
+    <m881D:wbs>1.12.2.3</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SupportandHandlingEquipment-1.12.2"/>
+    <j.0:identifier>SupportandHandlingEquipmentElectronicsAvionics-1.12.2.3</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#AirframeIntegrationAssemblyTestandCheckout-1.2.2.1">
+    <m881D:wbs>1.2.2.1</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Airframe-1.2.2"/>
+    <j.0:identifier>AirframeIntegrationAssemblyTestandCheckout-1.2.2.1</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PrimaryStructure-1.2.2.2">
+    <m881D:wbs>1.2.2.2</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Airframe-1.2.2"/>
+    <j.0:identifier>PrimaryStructure-1.2.2.2</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#TestandMeasurementEquipmentElectronicsAvionics-1.13.1.3">
+    <m881D:wbs>1.13.1.3</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#TestandMeasurementEquipment-1.13.1"/>
+    <j.0:identifier>TestandMeasurementEquipmentElectronicsAvionics-1.13.1.3</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#OnBoardTestEquipment-1.2.10">
+    <m881D:wbs>1.2.10</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#AirVehicleMunition-1.2"/>
+    <j.0:identifier>OnBoardTestEquipment-1.2.10</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SupportandHandlingEquipmentElectronicsAvionics-1.13.2.3">
+    <m881D:wbs>1.13.2.3</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SupportandHandlingEquipment-1.13.2"/>
+    <j.0:identifier>SupportandHandlingEquipmentElectronicsAvionics-1.13.2.3</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#EncasementDeviceStructure-1.3.2">
+    <m881D:wbs>1.3.2</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#EncasementDevice-1.3"/>
+    <j.0:identifier>EncasementDeviceStructure-1.3.2</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Facilities-1.10.3">
+    <m881D:wbs>1.10.3</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Training-1.10"/>
+    <j.0:identifier>Facilities-1.10.3</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PrimaryPower-1.2.4.2">
+    <m881D:wbs>1.2.4.2</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PowerandDistribution-1.2.4"/>
+    <j.0:identifier>PrimaryPower-1.2.4.2</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#TargetDetectionDevice-1.2.9.3">
+    <m881D:wbs>1.2.9.3</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Payload-1.2.9"/>
+    <j.0:identifier>TargetDetectionDevice-1.2.9.3</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SupportandHandlingEquipmentPropulsion-1.13.2.2">
+    <m881D:wbs>1.13.2.2</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SupportandHandlingEquipment-1.13.2"/>
+    <j.0:identifier>SupportandHandlingEquipmentPropulsion-1.13.2.2</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#AuxiliaryEquipment-1.2.12">
+    <m881D:wbs>1.2.12</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#AirVehicleMunition-1.2"/>
+    <j.0:identifier>AuxiliaryEquipment-1.2.12</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#DevelopmentTestandEvaluation-1.9.1">
+    <m881D:wbs>1.9.1</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SystemTestandEvaluation-1.9"/>
+    <j.0:identifier>DevelopmentTestandEvaluation-1.9.1</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SystemAssemblyInstallationandCheckout-1.14.1">
+    <m881D:wbs>1.14.1</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#OperationalSiteActivationbySite1TonSpecify-1.14"/>
+    <j.0:identifier>SystemAssemblyInstallationandCheckout-1.14.1</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#TestandMeasurementEquipmentOtherMajorSubsystems1TonSpecify-1.12.1.4">
+    <m881D:wbs>1.12.1.4</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#TestandMeasurementEquipment-1.12.1"/>
+    <j.0:identifier>TestandMeasurementEquipmentOtherMajorSubsystems1TonSpecify-1.12.1.4</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PrimaryStructure-1.2.7.2">
+    <m881D:wbs>1.2.7.2</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#Controls-1.2.7"/>
+    <j.0:identifier>PrimaryStructure-1.2.7.2</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#CybersecuritySystemsEngineering-1.7.3">
+    <m881D:wbs>1.7.3</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SystemsEngineering-1.7"/>
+    <j.0:identifier>CybersecuritySystemsEngineering-1.7.3</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#ArmFireDevice-1.2.3.6">
+    <m881D:wbs>1.2.3.6</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#PropulsionSubsystem1TonSpecify-1.2.3"/>
+    <j.0:identifier>ArmFireDevice-1.2.3.6</j.0:identifier>
+  </j.1:SYSTEM>
+  <j.1:SYSTEM rdf:about="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SupportandHandlingEquipmentAirframeHullVehicle-1.13.2.1">
+    <m881D:wbs>1.13.2.1</m881D:wbs>
+    <j.1:partOf rdf:resource="http://arcos.rack/MIL-STD-881D/MIL-STD-881D-AppxC#SupportandHandlingEquipment-1.13.2"/>
+    <j.0:identifier>SupportandHandlingEquipmentAirframeHullVehicle-1.13.2.1</j.0:identifier>
+  </j.1:SYSTEM>
+</rdf:RDF>

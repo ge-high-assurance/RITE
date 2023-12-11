@@ -53,6 +53,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -293,6 +294,34 @@ public class RackQueryUtils {
     }
 
     /**
+     * Given a list of queries and an output directory creates a sparql connection and then a
+     * filename with the queryId for each query and executes each
+     *
+     * @param Queries
+     * @param outDir
+     * @throws Exception
+     */
+    public static void createConnectionAndExecuteMultiQueriesFromStore(
+            List<String> Queries, String outDir) {
+
+        //            // ***************** DO NOT DELETE ***************** TURNED OFF FOR
+        // TESTING
+        //            // Connect to RACK using RACK preferences
+        //            SparqlConnectionInfo newConnPars =
+        // RackQueryUtils.initiateQueryConnection();
+
+        // FOR TESTING ONLY : Connect to RACK using hardcoded preferences
+        SparqlConnectionInfo newConnPars = RackQueryUtils.hardcodedQueryConnectionForTesting();
+
+        for (int i = 0; i < Queries.size(); i++) {
+
+            String queryId = Queries.get(i);
+
+            executeSingleQueryFromStore(queryId, outDir, newConnPars);
+        }
+    }
+
+    /**
      * Reads a csv file and returns data packed into a list of string arrays where each array
      * represents a line in the file
      *
@@ -310,7 +339,7 @@ public class RackQueryUtils {
         // to store the csv data as a list of lists
         List<String[]> fileArray = new ArrayList<String[]>();
 
-        try (BufferedReader reader = Files.newBufferedReader(filePath, Charset.defaultCharset())) {
+        try (BufferedReader reader = Files.newBufferedReader(filePath, StandardCharsets.US_ASCII)) {
 
             // read the first line from the csv file
             String csvLine = reader.readLine();
@@ -357,7 +386,7 @@ public class RackQueryUtils {
         // get entire file as a string object
         String fileString =
                 com.ge.research.rack.autoGsn.utils.CustomFileUtils.readFile(
-                        flPth, Charset.defaultCharset());
+                        flPth, StandardCharsets.US_ASCII);
 
         // replace all commas and newlines inside quote
         String cleanString = CustomStringUtils.removeCommasAndNewlinesInQuotes(fileString);
@@ -410,7 +439,7 @@ public class RackQueryUtils {
         // get entire file as a string object
         String fileString =
                 com.ge.research.rack.autoGsn.utils.CustomFileUtils.readFile(
-                        flPth, Charset.defaultCharset());
+                        flPth, StandardCharsets.US_ASCII);
 
         // replace all commmas and newlines inside quote
         String cleanString = CustomStringUtils.removeCommasAndNewlinesInQuotes(fileString);
@@ -456,7 +485,7 @@ public class RackQueryUtils {
         // get entire file as a string object
         String fileString =
                 com.ge.research.rack.autoGsn.utils.CustomFileUtils.readFile(
-                        flPth, Charset.defaultCharset());
+                        flPth, StandardCharsets.US_ASCII);
 
         // replace all commmas and newlines inside quote
         String cleanString = CustomStringUtils.removeCommasAndNewlinesInQuotes(fileString);
@@ -467,10 +496,6 @@ public class RackQueryUtils {
             // read the first line from the csv file
             String csvLine = reader.readLine();
 
-            if (csvLine == null) {
-                String[] arr = {};
-                return arr;
-            }
             // This helps ignore commas within quotes
             String[] row = csvLine.split(",(?=([^\"]|\"[^\"]*\")*$)");
 
