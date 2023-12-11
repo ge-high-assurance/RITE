@@ -2,34 +2,34 @@
 <?eclipse version="3.0"?>
 <plugin>
 
-  <!-- Command IDs -->
-  <extension point="org.eclipse.ui.commands">
+    <!-- Command IDs -->
+    <extension point="org.eclipse.ui.commands">
 
-    <category description="RACK Commands"
-      id="rackplugin.commands" name="RACK Commands">
-    </category>
+        <category description="RACK Commands"
+            id="rackplugin.commands" name="RACK Commands">
+        </category>
 
-    <command categoryId="rackplugin.commands"
-      id="rackplugin.commands.clearAll" name="Clear RACK">
-    </command>
+        <command categoryId="rackplugin.commands"
+            id="rackplugin.commands.clearAll" name="Clear RACK">
+        </command>
 
-    <command categoryId="rackplugin.commands"
-      id="rackplugin.commands.uploadOwlModels" name="Upload Ontology">
-    </command>
+        <command categoryId="rackplugin.commands"
+            id="rackplugin.commands.uploadOwlModels" name="Upload Ontology">
+        </command>
 
-    <command categoryId="rackplugin.commands"
-      id="rackplugin.commands.uploadNodegroups" name="Upload Nodegroup(s)">
-    </command>
+        <command categoryId="rackplugin.commands"
+            id="rackplugin.commands.uploadNodegroups" name="Upload Nodegroup(s)">
+        </command>
 
-    <command categoryId="rackplugin.commands"
-      id="rackplugin.commands.uploadIngestionPackage"
-      name="Upload as Ingestion Package">
-    </command>
+        <command categoryId="rackplugin.commands"
+            id="rackplugin.commands.uploadIngestionPackage"
+            name="Upload as Ingestion Package">
+        </command>
 
-    <command categoryId="rackplugin.commands"
-      id="rackplugin.commands.zipIngestionPackage"
-      name="Save Ingestion Package as ZIP">
-    </command>
+        <command categoryId="rackplugin.commands"
+            id="rackplugin.commands.zipIngestionPackage"
+            name="Save Ingestion Package as ZIP">
+        </command>
 
     <command categoryId="rackplugin.commands"
       id="rackplugin.commands.ingestInstanceData" name="Manifest Import">
@@ -218,50 +218,32 @@
         <!-- <command commandId="rackplugin.commands.uploadOwlModels" id="rackplugin.menus.uploadOwlModels"
           label="Upload Ontology" mnemonic="S"> </command> -->
         <command
-          commandId="rackplugin.commands.buildIngestionNodegroups"
-          id="rackplugin.menus.buildIngestionNodegroups"
-          label="Generate All Ingestion Nodegroups" mnemonic="S">
-        </command>
-        <command commandId="rackplugin.commands.regenerateManifest"
-          id="rackplugin.menus.regenerateManifest"
-          label="Regenerate manifest file" mnemonic="R">
-        </command>
-        <command commandId="rackplugin.commands.ingestInstanceData"
-          id="rackplugin.menus.ingestInstanceData" label="Manifest Import"
-          mnemonic="S">
-        </command>
-        <command commandId="rackplugin.commands.clearAll"
-          id="rackplugin.menus.clearAll" label="Clear RACK" mnemonic="S">
+            id="rackplugin.commands.setProjectAsDataPackageCommand"
+            name="Set Project as Instance Data">
+            <commandParameter id="rackplugin.projectType"
+                name="Project Type Parameter" optional="false">
+            </commandParameter>
         </command>
         <command commandId="rackplugin.commands.runWorkflow"
           id="rackplugin.menus.runWorkflow" label="Run Workflow">
         </command>
 
-        <separator name="separator2" visible="true">
-        </separator>
-
-        <!-- <command commandId="rackplugin.commands.gsnCommand" id="rackplugin.menus.loadGsn"
-          label="Show GSN Assurance Case" mnemonic="S"> </command> -->
-
-        <!-- <command commandId="rackplugin.commands.loadQueriesCommand" id="rackplugin.menus.loadQueries"
-          label="Load Query Nodegroups from Disk" mnemonic="S"> </command> <command
-          commandId="rackplugin.commands.reportsCommand" id="rackplugin.menus.reports"
-          label="DO-178C Compliance Report" mnemonic="S" style="push"> </command> -->
+        <!-- For reports -->
+        <command categoryId="rackplugin.commands"
+            id="rackplugin.commands.reportsCommand"
+            name="Generate DO178C Reports">
+        </command>
 
         <!-- For auto Gsn -->
-        <command commandId="rackplugin.commands.autoGsnCommand"
-          id="rackplugin.menus.autoGsn" label="Automatic GSN Inference"
-          mnemonic="S" style="push">
+        <command categoryId="rackplugin.commands"
+            id="rackplugin.commands.autoGsnCommand"
+            name="Automatic GSN Inference">
         </command>
 
-        <!--<!-For semtk browser-> <command commandId="rackplugin.commands.ribCommand"
-          id="rackplugin.menus.rib" label="Access RiB" mnemonic="S" style="push"> </command> -->
-
-        <command commandId="rackplugin.commands.settingCommand"
-          id="rackplugin.menus.setting" label="RACK Settings" mnemonic="S">
+        <!-- For semtk browser -->
+        <command categoryId="rackplugin.commands"
+            id="rackplugin.commands.ribCommand" name="Access RiB">
         </command>
-      </menu>
-    </menuContribution>
 
     <menuContribution
       locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
@@ -274,17 +256,10 @@
           icon="icons/refresh.png" id="rack.plugin.toolbars.refreshCommand"
           tooltip="Refresh Ontology and Nodegroups views with latest information on RACK">
         </command>
-      </toolbar>
-    </menuContribution>
 
-    <!-- <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
-      <toolbar id="rack.plugin.toolbars.showNumTriples"> <command commandId="rackplugin.commands.showNumTriplesCommand"
-      icon="icons/ontclass.png" id="rack.plugin.toolbars.showNumTriplesCommand"
-      tooltip="Show Data graphs with number of triples currently on RACK"> </command>
-      </toolbar> </menuContribution> -->
+    </extension>
 
-  </extension>
-
+<<<<<<< HEAD
   <!-- UI Views (Navbar > Window > Show View > Other) -->
   <extension point="org.eclipse.ui.views">
     <category id="rackplugin" name="RACK views">
@@ -328,181 +303,67 @@
       name="Nodegroup Store">
     </view>
   </extension>
+    <!-- UI Handlers -->
+    <extension point="org.eclipse.ui.handlers">
 
-  <extension point="org.eclipse.help.contexts">
-    <contexts file="contexts.xml">
-    </contexts>
-    <contexts file="contexts.xml">
-    </contexts>
-    <contexts file="contexts.xml">
-    </contexts>
-    <contexts file="contexts.xml">
-    </contexts>
-    <contexts file="contexts.xml">
-    </contexts>
-    <contexts file="contexts.xml">
-    </contexts>
-    <contexts file="contexts.xml">
-    </contexts>
-    <contexts file="contexts.xml">
-    </contexts>
-    <contexts file="contexts.xml">
-    </contexts>
-  </extension>
+        <!-- For reports -->
+        <handler class="com.ge.research.rack.ReportButtonHandler"
+            commandId="rackplugin.commands.reportsCommand">
+        </handler>
+        <!-- For auto Gsn -->
+        <handler class="com.ge.research.rack.AutoGsnButtonHandler"
+            commandId="rackplugin.commands.autoGsnCommand">
+        </handler>
+        <!-- For semtk browser -->
+        <handler class="com.ge.research.rack.RibButtonHandler"
+            commandId="rackplugin.commands.ribCommand">
+        </handler>
+        <handler class="com.ge.research.rack.RefreshHandler"
+            commandId="rack.plugin.commands.refreshCommand">
+        </handler>
+        <handler class="com.ge.research.rack.ShowNumTriplesHandler"
+            commandId="rack.plugin.commands.showNumTriplesCommand">
+        </handler>
 
-  <!-- <extension point="org.eclipse.ui.menus"> <menuContribution label="GSN"
-    locationURI="popup:org.eclipse.ui.popup.any"> <command commandId="rackplugin.commands.gsnCommand"
-    name="Load Assurance Case"> <visibleWhen> <with variable="selection"> <count
-    value="1" /> <iterate> <adapt type="org.eclipse.core.resources.IFile" />
-    </iterate> </with> </visibleWhen> </command> </menuContribution> </extension> -->
-
-  <extension point="org.eclipse.ui.menus">
-    <menuContribution
-      locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=export">
-      <command commandId="rackplugin.commands.ingestInstanceData"
-        name="Manifest Import">
-        <enabledWhen>
-          <test args="null" forcePluginActivation="true"
-            property="com.ge.research.rack.isManifestSelected" value="true">
-          </test>
-        </enabledWhen>
-        <visibleWhen>
-          <with variable="selection">
-            <count value="1" />
-            <iterate>
-              <adapt type="org.eclipse.core.resources.IFile" />
-            </iterate>
-          </with>
-        </visibleWhen>
-      </command>
-    </menuContribution>
-  </extension>
+    </extension>
+    <extension point="org.eclipse.ui.bindings"></extension>
 
 
-  <extension point="org.eclipse.ui.menus">
-    <menuContribution label="projectDataPackage"
-      locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=export">
-      <separator name="separator-id" visible="true">
-      </separator>
-      <command
-        commandId="rackplugin.commands.setProjectAsDataPackageCommand"
-        label="Set as RACK Project" name="Set as Instance Data Project">
-        <visibleWhen>
-          <with variable="selection">
-            <count value="1" />
-            <iterate>
-              <adapt type="org.eclipse.core.resources.IProject" />
-            </iterate>
-          </with>
-        </visibleWhen>
-        <parameter name="rackplugin.projectType"
-          value="rackplugin.DataPackage">
-        </parameter>
-      </command>
-    </menuContribution>
-  </extension>
-  <!-- <extension point="org.eclipse.ui.menus"> <menuContribution label="uploadOwlModels"
-    locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=rackplugin.commands.setProjectAsDataPackageCommand">
-    <command commandId="rackplugin.commands.uploadOwlModels" label="Upload Ontology"
-    name="Upload Ontology"> <visibleWhen> <with variable="selection"> <count
-    value="1" /> <iterate> <adapt type="org.eclipse.core.resources.IProject"
-    /> </iterate> </with> </visibleWhen> </command> </menuContribution> </extension> -->
+    <!-- UI Menus (Navbar > RACK Dropdown) -->
+    <extension point="org.eclipse.ui.menus">
+        <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
 
-  <extension point="org.eclipse.ui.menus">
-    <menuContribution label="uploadNodegroups"
-      locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=rackplugin.commands.setProjectAsDataPackageCommand">
-      <separator name="separator-id" visible="true"></separator>
-      <command commandId="rackplugin.commands.uploadNodegroups"
-        label="Upload Nodegroup(s)" name="Upload Nodegroups">
-        <visibleWhen>
-          <with variable="selection">
-            <count value="+" />
-            <iterate ifEmpty="false" operator="and">
-              <or>
-                <instanceof
-                  value="org.eclipse.core.resources.IProject" />
-                <instanceof value="org.eclipse.core.resources.IFile" />
-                <instanceof
-                  value="org.eclipse.core.resources.IFolder" />
-              </or>
-            </iterate>
-          </with>
-        </visibleWhen>
-      </command>
-    </menuContribution>
-  </extension>
+            <menu id="rackplugin.menus.sampleMenu" label="RACK" mnemonic="M">
+                <!-- <command commandId="rackplugin.commands.uploadOwlModels" id="rackplugin.menus.uploadOwlModels"
+                    label="Upload Ontology" mnemonic="S"> </command> -->
+                <command
+                    commandId="rackplugin.commands.buildIngestionNodegroups"
+                    id="rackplugin.menus.buildIngestionNodegroups"
+                    label="Generate All Ingestion Nodegroups" mnemonic="S">
+                </command>
+                <command commandId="rackplugin.commands.regenerateManifest"
+                    id="rackplugin.menus.regenerateManifest"
+                    label="Regenerate manifest file" mnemonic="R">
+                </command>
+                <command commandId="rackplugin.commands.ingestInstanceData"
+                    id="rackplugin.menus.ingestInstanceData" label="Manifest Import"
+                    mnemonic="S">
+                </command>
+                <command commandId="rackplugin.commands.clearAll"
+                    id="rackplugin.menus.clearAll" label="Clear RACK" mnemonic="S">
+                </command>
 
-  <extension point="org.eclipse.ui.menus">
-    <menuContribution label="uploadIngestionPackage"
-      locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=rackplugin.commands.uploadNodegroups">
-      <command
-        commandId="rackplugin.commands.uploadIngestionPackage"
-        label="Upload as Ingestion Package" name="Upload Ingestion Package">
-        <visibleWhen>
-          <with variable="selection">
-            <count value="+" />
-            <iterate ifEmpty="false" operator="and">
-              <or>
-                <instanceof
-                  value="org.eclipse.core.resources.IProject" />
-                <instanceof value="org.eclipse.core.resources.IFile" />
-                <instanceof
-                  value="org.eclipse.core.resources.IFolder" />
-              </or>
-            </iterate>
-          </with>
-        </visibleWhen>
-      </command>
-    </menuContribution>
-    <menuContribution label="zipIngestionPackage"
-      locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=rackplugin.commands.uploadNodegroups">
-      <command commandId="rackplugin.commands.zipIngestionPackage"
-        label="Save Ingestion Package as Zip" name="Zip Ingestion Package">
-        <visibleWhen>
-          <with variable="selection">
-            <count value="+" />
-            <iterate ifEmpty="false" operator="and">
-              <or>
-                <instanceof
-                  value="org.eclipse.core.resources.IProject" />
-                <instanceof value="org.eclipse.core.resources.IFile" />
-                <instanceof
-                  value="org.eclipse.core.resources.IFolder" />
-              </or>
-            </iterate>
-          </with>
-        </visibleWhen>
-      </command>
-    </menuContribution>
-  </extension>
+                <separator name="separator2" visible="true">
+                </separator>
 
-  <extension point="org.eclipse.core.expressions.definitions">
-    <definition id="com.ge.research.rack.eObjectSelected">
-      <with variable="selection">
-        <and>
-          <count value="1">
-          </count>
-          <iterate ifEmpty="false" operator="and">
-            <or>
-              <instanceof
-                value="org.eclipse.core.resources.IProject">
-              </instanceof>
-              <instanceof value="org.eclipse.core.resources.IFile">
-              </instanceof>
-              <instanceof value="org.eclipse.core.resources.IFolder">
-              </instanceof>
-            </or>
-          </iterate>
-        </and>
-      </with>
-    </definition>
-  </extension>
+                <!-- <command commandId="rackplugin.commands.gsnCommand" id="rackplugin.menus.loadGsn"
+                    label="Show GSN Assurance Case" mnemonic="S"> </command> -->
 
-  <extension point="org.eclipse.ui.preferencePages">
-    <page id="com.ge.research.rack.pref"
-      class="com.ge.research.rack.views.RackPreferencePage" name="RACK"
-      category="com.ge.research.rack.settings" />
-  </extension>
+                <!-- <command commandId="rackplugin.commands.loadQueriesCommand" id="rackplugin.menus.loadQueries"
+                    label="Load Query Nodegroups from Disk" mnemonic="S"> </command> <command
+                    commandId="rackplugin.commands.reportsCommand" id="rackplugin.menus.reports"
+                    label="DO-178C Compliance Report" mnemonic="S" style="push"> </command> -->
 
   <extension
     point="org.eclipse.core.expressions.propertyTesters">
@@ -523,5 +384,6 @@
       value="./RITE-16.bmp,./RITE-32.bmp,./RITE-128.bmp,./RITE-256.bmp" />
 
   </extension>
+
 
 </plugin>
