@@ -1,23 +1,23 @@
 /*
  * BSD 3-Clause License
- * 
+ *
  * Copyright (c) 2023, General Electric Company and Galois, Inc.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -32,7 +32,14 @@
 package com.ge.research.rack.utils;
 
 import com.ge.research.rack.views.RackPreferencePage;
-
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.StringWriter;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.core.internal.resources.ICoreConstants;
 import org.eclipse.core.internal.resources.Workspace;
@@ -48,15 +55,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.yaml.snakeyaml.*;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.StringWriter;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 public class ProjectUtils {
     public static boolean isOverlaySelected = false;
@@ -206,13 +204,13 @@ public class ProjectUtils {
         String path = RackPreferencePage.getInstanceDataFolder();
         File dir = new File(path);
         if (!dir.exists()) {
-            RackConsole.getConsole()
+            ErrorMessageUtil
                     .error(
                             "RACK Project does not exist, please set a valid directory as RACK project");
             return false;
         }
         if (!dir.isDirectory()) {
-            RackConsole.getConsole()
+            ErrorMessageUtil
                     .error(
                             "RACK Project is not a directory, please set a valid directory as RACK project");
             return false;

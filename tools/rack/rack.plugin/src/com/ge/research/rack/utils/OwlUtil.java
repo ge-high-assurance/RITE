@@ -1,23 +1,23 @@
 /*
  * BSD 3-Clause License
- * 
+ *
  * Copyright (c) 2023, General Electric Company and Galois, Inc.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -31,16 +31,15 @@
  */
 package com.ge.research.rack.utils;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import org.apache.jena.graph.Triple;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 public class OwlUtil {
 
@@ -52,7 +51,7 @@ public class OwlUtil {
         try {
             model.read(new FileInputStream(owlFile), null);
         } catch (FileNotFoundException e) {
-            RackConsole.getConsole().error("Cannot read Owl File: " + owlFile + ", file not found");
+            ErrorMessageUtil.error("Cannot read Owl File: " + owlFile + ", file not found");
         }
 
         StmtIterator it = model.listStatements();
@@ -81,7 +80,7 @@ public class OwlUtil {
     //        }
     //
     //        if (!ontDir.exists()) {
-    //            RackConsole.getConsole().error("Cannot find OwlModels folder for project: " +
+    //            ErrorMessageUtil.error("Cannot find OwlModels folder for project: " +
     // dir);
     //            return classes;
     //        }
@@ -90,7 +89,7 @@ public class OwlUtil {
     //                getOwlFilesFromYAML(ontDir.getAbsolutePath() + "/import.yaml");
     //
     //        if (owlFilePaths == null) {
-    //            RackConsole.getConsole()
+    //            ErrorMessageUtil
     //                    .error(
     //                            "Unable to extract ontology classes for project at "
     //                                    + dir
@@ -104,7 +103,7 @@ public class OwlUtil {
     //            }
     //            File owlFile = new File(owlFilePath);
     //            if (!owlFile.exists() || !owlFile.isFile()) {
-    //                RackConsole.getConsole().error(owlFilePath + " is not an owl file");
+    //                ErrorMessageUtil.error(owlFilePath + " is not an owl file");
     //                continue;
     //            }
     //            classes.addAll(getOwlClasses(owlFilePath));
@@ -117,20 +116,20 @@ public class OwlUtil {
     //        ArrayList<String> owlFilePaths = new ArrayList<>();
     //        File owlYaml = new File(path);
     //        if (!owlYaml.exists()) {
-    //            RackConsole.getConsole().error("No import.yaml at " + path);
+    //            ErrorMessageUtil.error("No import.yaml at " + path);
     //            return null;
     //        }
     //        Map<String, Object> owlFiles = null;
     //        try {
     //            owlFiles = (Map<String, Object>) ProjectUtils.readYaml(owlYaml.getAbsolutePath());
     //        } catch (Exception e) {
-    //            RackConsole.getConsole().error("Unable to read import.yaml");
+    //            ErrorMessageUtil.error("Unable to read import.yaml");
     //            return null;
     //        }
     //
     //        if (owlFiles == null || !(owlFiles instanceof Map) ||
     // (!owlFiles.containsKey("files"))) {
-    //            RackConsole.getConsole().error("Ill formed import.yaml at " + path + ", please
+    //            ErrorMessageUtil.error("Ill formed import.yaml at " + path + ", please
     // check");
     //            return null;
     //        }
@@ -138,14 +137,14 @@ public class OwlUtil {
     //        Object files = owlFiles.get("files");
     //
     //        if (files == null || !(files instanceof ArrayList)) {
-    //            RackConsole.getConsole().error("Ill formed import.yaml at " + path + ", please
+    //            ErrorMessageUtil.error("Ill formed import.yaml at " + path + ", please
     // check");
     //            return null;
     //        }
     //        files = (ArrayList<String>) owlFiles.get("files");
     //
     //        if (files == null) {
-    //            RackConsole.getConsole()
+    //            ErrorMessageUtil
     //                    .error(
     //                            "import.yaml at "
     //                                    + path
