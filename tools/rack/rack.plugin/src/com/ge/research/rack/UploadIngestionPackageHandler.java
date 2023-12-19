@@ -271,20 +271,20 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
                         @Override
                         public void done(IJobChangeEvent event) {
                             if (event.getResult() != Status.OK_STATUS) {
-                            	ErrorMessageUtil.error(
-                                                String.format(
-                                                        upload ? UPLOAD_FAILED : CREATION_FAILED,
-                                                        ingestionPackageZipFilepath));
+                                ErrorMessageUtil.error(
+                                        String.format(
+                                                upload ? UPLOAD_FAILED : CREATION_FAILED,
+                                                ingestionPackageZipFilepath));
                             }
                             asyncCallback.run();
                         }
 
                         @Override
                         public void scheduled(IJobChangeEvent event) {
-                        	ErrorMessageUtil.print(
-                                            String.format(
-                                                    upload ? UPLOAD_QUEUED : CREATION_QUEUED,
-                                                    ingestionPackageZipFilepath));
+                            ErrorMessageUtil.print(
+                                    String.format(
+                                            upload ? UPLOAD_QUEUED : CREATION_QUEUED,
+                                            ingestionPackageZipFilepath));
                         }
                     };
 
@@ -312,7 +312,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
                 }
 
             } catch (final Exception e) {
-            	ErrorMessageUtil.error(e.getMessage());
+                ErrorMessageUtil.error(e.getMessage());
                 return Status.CANCEL_STATUS;
             }
             return Status.OK_STATUS;
@@ -328,7 +328,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
         try (FileOutputStream fos = new FileOutputStream(zipFilepath.toFile());
                 ZipOutputStream zipStream = new ZipOutputStream(fos)) {
 
-        	ErrorMessageUtil.error(String.format(GENERATING_PROJECT, zipFilepath.toString()));
+            ErrorMessageUtil.error(String.format(GENERATING_PROJECT, zipFilepath.toString()));
 
             new RackManifestIngestionBuilderUtil().zipManifestResources(folder, zipStream);
         }
@@ -369,7 +369,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
                 if (semTkOutputLine.contains(ERROR_LINE)) {
                     ErrorMessageUtil.errorEcho(semTkOutputLine);
                 } else {
-                	ErrorMessageUtil.printEcho(semTkOutputLine);
+                    ErrorMessageUtil.printEcho(semTkOutputLine);
                 }
             }
         }

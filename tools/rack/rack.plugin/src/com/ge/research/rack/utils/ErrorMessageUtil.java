@@ -54,10 +54,10 @@ public class ErrorMessageUtil {
         if (shell == null) System.out.println("NO SHELL"); // Just for debugging
         return shell;
     }
-    
+
     public static void raiseConsole() {
-    	var console = RackConsole.getConsole();
-    	console.activate();
+        var console = RackConsole.getConsole();
+        console.activate();
     }
 
     /**

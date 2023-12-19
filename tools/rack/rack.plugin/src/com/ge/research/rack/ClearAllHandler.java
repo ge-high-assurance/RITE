@@ -109,7 +109,7 @@ public class ClearAllHandler extends AbstractHandler {
 
         /*	A computational thread is used, the RackConsole.getConsole().error calls
          * have to be changed to ErrorMessageUtil.showError calls.
-         * 
+         *
          * try {
 
             String consoleViewId = IConsoleConstants.ID_CONSOLE_VIEW;

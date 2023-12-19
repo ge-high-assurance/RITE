@@ -274,238 +274,238 @@
 
   </extension>
 
-    <!-- UI Views (Navbar > Window > Show View > Other) -->
-    <extension point="org.eclipse.ui.views">
-        <category id="rackplugin" name="RACK views">
-        </category>
-        <view category="rackplugin"
-            class="com.ge.research.rack.views.OntologyTreeView"
-            id="rackplugin.views.TreeView" inject="true" name="Ontology Info">
-        </view>
-        <view category="rackplugin"
-            class="com.ge.research.rack.views.InstanceDataEditor"
-            id="rackplugin.views.SampleTableView" inject="true"
-            name="Create Instance Data">
-        </view>
-        <view category="rackplugin"
-            class="com.ge.research.rack.views.NodegroupTemplateView"
-            id="rackplugin.views.CSVTemplates" inject="true"
-            name="View CDR Templates">
-        </view>
-        <view category="rackplugin"
-            class="com.ge.research.rack.views.AssuranceCaseTree"
-            id="rackplugin.views.AssuranceCaseTree" inject="true"
-            name="Assurance Case GSN">
-        </view>
-        <view category="rackplugin"
-            class="com.ge.research.rack.views.NodegroupColumnView"
-            id="rackplugin.views.ManageCSVColumns" inject="true"
-            name="Add/Remove Columns for Nodegroup">
-        </view>
-        <view category="rackplugin"
-            class="com.ge.research.rack.views.QueryResultsView"
-            id="rackplugin.views.QueryResults" inject="true" name="Query Results">
-        </view>
-        <view category="rackplugin"
-            class="com.ge.research.rack.views.NodegroupsView"
-            id="rackplugin.views.NodegroupsView" inject="true"
-            name="Nodegroup Store">
-        </view>
-    </extension>
+  <!-- UI Views (Navbar > Window > Show View > Other) -->
+  <extension point="org.eclipse.ui.views">
+    <category id="rackplugin" name="RACK views">
+    </category>
+    <view category="rackplugin"
+      class="com.ge.research.rack.views.OntologyTreeView"
+      id="rackplugin.views.TreeView" inject="true" name="Ontology Info">
+    </view>
+    <view category="rackplugin"
+      class="com.ge.research.rack.views.InstanceDataEditor"
+      id="rackplugin.views.SampleTableView" inject="true"
+      name="Create Instance Data">
+    </view>
+    <view category="rackplugin"
+      class="com.ge.research.rack.views.NodegroupTemplateView"
+      id="rackplugin.views.CSVTemplates" inject="true"
+      name="View CDR Templates">
+    </view>
+    <view category="rackplugin"
+      class="com.ge.research.rack.views.AssuranceCaseTree"
+      id="rackplugin.views.AssuranceCaseTree" inject="true"
+      name="Assurance Case GSN">
+    </view>
+    <view category="rackplugin"
+      class="com.ge.research.rack.views.NodegroupColumnView"
+      id="rackplugin.views.ManageCSVColumns" inject="true"
+      name="Add/Remove Columns for Nodegroup">
+    </view>
+    <view category="rackplugin"
+      class="com.ge.research.rack.views.QueryResultsView"
+      id="rackplugin.views.QueryResults" inject="true" name="Query Results">
+    </view>
+    <view category="rackplugin"
+      class="com.ge.research.rack.views.NodegroupsView"
+      id="rackplugin.views.NodegroupsView" inject="true"
+      name="Nodegroup Store">
+    </view>
+  </extension>
 
-    <extension point="org.eclipse.help.contexts">
-        <contexts file="contexts.xml">
-        </contexts>
-        <contexts file="contexts.xml">
-        </contexts>
-        <contexts file="contexts.xml">
-        </contexts>
-        <contexts file="contexts.xml">
-        </contexts>
-        <contexts file="contexts.xml">
-        </contexts>
-        <contexts file="contexts.xml">
-        </contexts>
-        <contexts file="contexts.xml">
-        </contexts>
-        <contexts file="contexts.xml">
-        </contexts>
-        <contexts file="contexts.xml">
-        </contexts>
-    </extension>
+  <extension point="org.eclipse.help.contexts">
+    <contexts file="contexts.xml">
+    </contexts>
+    <contexts file="contexts.xml">
+    </contexts>
+    <contexts file="contexts.xml">
+    </contexts>
+    <contexts file="contexts.xml">
+    </contexts>
+    <contexts file="contexts.xml">
+    </contexts>
+    <contexts file="contexts.xml">
+    </contexts>
+    <contexts file="contexts.xml">
+    </contexts>
+    <contexts file="contexts.xml">
+    </contexts>
+    <contexts file="contexts.xml">
+    </contexts>
+  </extension>
 
-    <!-- <extension point="org.eclipse.ui.menus"> <menuContribution label="GSN"
-        locationURI="popup:org.eclipse.ui.popup.any"> <command commandId="rackplugin.commands.gsnCommand"
-        name="Load Assurance Case"> <visibleWhen> <with variable="selection"> <count
-        value="1" /> <iterate> <adapt type="org.eclipse.core.resources.IFile" />
-        </iterate> </with> </visibleWhen> </command> </menuContribution> </extension> -->
+  <!-- <extension point="org.eclipse.ui.menus"> <menuContribution label="GSN"
+    locationURI="popup:org.eclipse.ui.popup.any"> <command commandId="rackplugin.commands.gsnCommand"
+    name="Load Assurance Case"> <visibleWhen> <with variable="selection"> <count
+    value="1" /> <iterate> <adapt type="org.eclipse.core.resources.IFile" />
+    </iterate> </with> </visibleWhen> </command> </menuContribution> </extension> -->
 
-    <extension point="org.eclipse.ui.menus">
-        <menuContribution
-            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=export">
-            <command commandId="rackplugin.commands.ingestInstanceData"
-                name="Manifest Import">
-                <enabledWhen>
-                    <test args="null" forcePluginActivation="true"
-                        property="com.ge.research.rack.isManifestSelected" value="true">
-                    </test>
-                </enabledWhen>
-                <visibleWhen>
-                    <with variable="selection">
-                        <count value="1" />
-                        <iterate>
-                            <adapt type="org.eclipse.core.resources.IFile" />
-                        </iterate>
-                    </with>
-                </visibleWhen>
-            </command>
-        </menuContribution>
-    </extension>
+  <extension point="org.eclipse.ui.menus">
+    <menuContribution
+      locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=export">
+      <command commandId="rackplugin.commands.ingestInstanceData"
+        name="Manifest Import">
+        <enabledWhen>
+          <test args="null" forcePluginActivation="true"
+            property="com.ge.research.rack.isManifestSelected" value="true">
+          </test>
+        </enabledWhen>
+        <visibleWhen>
+          <with variable="selection">
+            <count value="1" />
+            <iterate>
+              <adapt type="org.eclipse.core.resources.IFile" />
+            </iterate>
+          </with>
+        </visibleWhen>
+      </command>
+    </menuContribution>
+  </extension>
 
 
-    <extension point="org.eclipse.ui.menus">
-        <menuContribution label="projectDataPackage"
-            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=export">
-            <separator name="separator-id" visible="true">
-            </separator>
-            <command
-                commandId="rackplugin.commands.setProjectAsDataPackageCommand"
-                label="Set as RACK Project" name="Set as Instance Data Project">
-                <visibleWhen>
-                    <with variable="selection">
-                        <count value="1" />
-                        <iterate>
-                            <adapt type="org.eclipse.core.resources.IProject" />
-                        </iterate>
-                    </with>
-                </visibleWhen>
-                <parameter name="rackplugin.projectType"
-                    value="rackplugin.DataPackage">
-                </parameter>
-            </command>
-        </menuContribution>
-    </extension>
-    <!-- <extension point="org.eclipse.ui.menus"> <menuContribution label="uploadOwlModels"
-        locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=rackplugin.commands.setProjectAsDataPackageCommand">
-        <command commandId="rackplugin.commands.uploadOwlModels" label="Upload Ontology"
-        name="Upload Ontology"> <visibleWhen> <with variable="selection"> <count
-        value="1" /> <iterate> <adapt type="org.eclipse.core.resources.IProject"
-        /> </iterate> </with> </visibleWhen> </command> </menuContribution> </extension> -->
+  <extension point="org.eclipse.ui.menus">
+    <menuContribution label="projectDataPackage"
+      locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=export">
+      <separator name="separator-id" visible="true">
+      </separator>
+      <command
+        commandId="rackplugin.commands.setProjectAsDataPackageCommand"
+        label="Set as RACK Project" name="Set as Instance Data Project">
+        <visibleWhen>
+          <with variable="selection">
+            <count value="1" />
+            <iterate>
+              <adapt type="org.eclipse.core.resources.IProject" />
+            </iterate>
+          </with>
+        </visibleWhen>
+        <parameter name="rackplugin.projectType"
+          value="rackplugin.DataPackage">
+        </parameter>
+      </command>
+    </menuContribution>
+  </extension>
+  <!-- <extension point="org.eclipse.ui.menus"> <menuContribution label="uploadOwlModels"
+    locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=rackplugin.commands.setProjectAsDataPackageCommand">
+    <command commandId="rackplugin.commands.uploadOwlModels" label="Upload Ontology"
+    name="Upload Ontology"> <visibleWhen> <with variable="selection"> <count
+    value="1" /> <iterate> <adapt type="org.eclipse.core.resources.IProject"
+    /> </iterate> </with> </visibleWhen> </command> </menuContribution> </extension> -->
 
-    <extension point="org.eclipse.ui.menus">
-        <menuContribution label="uploadNodegroups"
-            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=rackplugin.commands.setProjectAsDataPackageCommand">
-            <separator name="separator-id" visible="true"></separator>
-            <command commandId="rackplugin.commands.uploadNodegroups"
-                label="Upload Nodegroup(s)" name="Upload Nodegroups">
-                <visibleWhen>
-                    <with variable="selection">
-                        <count value="+" />
-                        <iterate ifEmpty="false" operator="and">
-                            <or>
-                                <instanceof
-                                    value="org.eclipse.core.resources.IProject" />
-                                <instanceof value="org.eclipse.core.resources.IFile" />
-                                <instanceof
-                                    value="org.eclipse.core.resources.IFolder" />
-                            </or>
-                        </iterate>
-                    </with>
-                </visibleWhen>
-            </command>
-        </menuContribution>
-    </extension>
+  <extension point="org.eclipse.ui.menus">
+    <menuContribution label="uploadNodegroups"
+      locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=rackplugin.commands.setProjectAsDataPackageCommand">
+      <separator name="separator-id" visible="true"></separator>
+      <command commandId="rackplugin.commands.uploadNodegroups"
+        label="Upload Nodegroup(s)" name="Upload Nodegroups">
+        <visibleWhen>
+          <with variable="selection">
+            <count value="+" />
+            <iterate ifEmpty="false" operator="and">
+              <or>
+                <instanceof
+                  value="org.eclipse.core.resources.IProject" />
+                <instanceof value="org.eclipse.core.resources.IFile" />
+                <instanceof
+                  value="org.eclipse.core.resources.IFolder" />
+              </or>
+            </iterate>
+          </with>
+        </visibleWhen>
+      </command>
+    </menuContribution>
+  </extension>
 
-    <extension point="org.eclipse.ui.menus">
-        <menuContribution label="uploadIngestionPackage"
-            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=rackplugin.commands.uploadNodegroups">
-            <command
-                commandId="rackplugin.commands.uploadIngestionPackage"
-                label="Upload as Ingestion Package" name="Upload Ingestion Package">
-                <visibleWhen>
-                    <with variable="selection">
-                        <count value="+" />
-                        <iterate ifEmpty="false" operator="and">
-                            <or>
-                                <instanceof
-                                    value="org.eclipse.core.resources.IProject" />
-                                <instanceof value="org.eclipse.core.resources.IFile" />
-                                <instanceof
-                                    value="org.eclipse.core.resources.IFolder" />
-                            </or>
-                        </iterate>
-                    </with>
-                </visibleWhen>
-            </command>
-        </menuContribution>
-        <menuContribution label="zipIngestionPackage"
-            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=rackplugin.commands.uploadNodegroups">
-            <command commandId="rackplugin.commands.zipIngestionPackage"
-                label="Save Ingestion Package as Zip" name="Zip Ingestion Package">
-                <visibleWhen>
-                    <with variable="selection">
-                        <count value="+" />
-                        <iterate ifEmpty="false" operator="and">
-                            <or>
-                                <instanceof
-                                    value="org.eclipse.core.resources.IProject" />
-                                <instanceof value="org.eclipse.core.resources.IFile" />
-                                <instanceof
-                                    value="org.eclipse.core.resources.IFolder" />
-                            </or>
-                        </iterate>
-                    </with>
-                </visibleWhen>
-            </command>
-        </menuContribution>
-    </extension>
+  <extension point="org.eclipse.ui.menus">
+    <menuContribution label="uploadIngestionPackage"
+      locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=rackplugin.commands.uploadNodegroups">
+      <command
+        commandId="rackplugin.commands.uploadIngestionPackage"
+        label="Upload as Ingestion Package" name="Upload Ingestion Package">
+        <visibleWhen>
+          <with variable="selection">
+            <count value="+" />
+            <iterate ifEmpty="false" operator="and">
+              <or>
+                <instanceof
+                  value="org.eclipse.core.resources.IProject" />
+                <instanceof value="org.eclipse.core.resources.IFile" />
+                <instanceof
+                  value="org.eclipse.core.resources.IFolder" />
+              </or>
+            </iterate>
+          </with>
+        </visibleWhen>
+      </command>
+    </menuContribution>
+    <menuContribution label="zipIngestionPackage"
+      locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=rackplugin.commands.uploadNodegroups">
+      <command commandId="rackplugin.commands.zipIngestionPackage"
+        label="Save Ingestion Package as Zip" name="Zip Ingestion Package">
+        <visibleWhen>
+          <with variable="selection">
+            <count value="+" />
+            <iterate ifEmpty="false" operator="and">
+              <or>
+                <instanceof
+                  value="org.eclipse.core.resources.IProject" />
+                <instanceof value="org.eclipse.core.resources.IFile" />
+                <instanceof
+                  value="org.eclipse.core.resources.IFolder" />
+              </or>
+            </iterate>
+          </with>
+        </visibleWhen>
+      </command>
+    </menuContribution>
+  </extension>
 
-    <extension point="org.eclipse.core.expressions.definitions">
-        <definition id="com.ge.research.rack.eObjectSelected">
-            <with variable="selection">
-                <and>
-                    <count value="1">
-                    </count>
-                    <iterate ifEmpty="false" operator="and">
-                        <or>
-                            <instanceof
-                                value="org.eclipse.core.resources.IProject">
-                            </instanceof>
-                            <instanceof value="org.eclipse.core.resources.IFile">
-                            </instanceof>
-                            <instanceof value="org.eclipse.core.resources.IFolder">
-                            </instanceof>
-                        </or>
-                    </iterate>
-                </and>
-            </with>
-        </definition>
-    </extension>
+  <extension point="org.eclipse.core.expressions.definitions">
+    <definition id="com.ge.research.rack.eObjectSelected">
+      <with variable="selection">
+        <and>
+          <count value="1">
+          </count>
+          <iterate ifEmpty="false" operator="and">
+            <or>
+              <instanceof
+                value="org.eclipse.core.resources.IProject">
+              </instanceof>
+              <instanceof value="org.eclipse.core.resources.IFile">
+              </instanceof>
+              <instanceof value="org.eclipse.core.resources.IFolder">
+              </instanceof>
+            </or>
+          </iterate>
+        </and>
+      </with>
+    </definition>
+  </extension>
 
-    <extension point="org.eclipse.ui.preferencePages">
-        <page id="com.ge.research.rack.pref"
-            class="com.ge.research.rack.views.RackPreferencePage" name="RACK"
-            category="com.ge.research.rack.settings" />
-    </extension>
+  <extension point="org.eclipse.ui.preferencePages">
+    <page id="com.ge.research.rack.pref"
+      class="com.ge.research.rack.views.RackPreferencePage" name="RACK"
+      category="com.ge.research.rack.settings" />
+  </extension>
 
-    <extension
-        point="org.eclipse.core.expressions.propertyTesters">
-        <propertyTester
-            class="com.ge.research.rack.ManifestSelectedPropertyTester"
-            id="com.ge.research.rack.manifestSelected"
-            namespace="com.ge.research.rack" properties="isManifestSelected"
-            type="java.lang.Object">
-        </propertyTester>
-    </extension>
-    <extension id="com.ge.research.rack.product" name="RITE"
-        point="org.eclipse.core.runtime.products">
-        <product name="RITE"
-            application="org.eclipse.ui.ide.workbench">
-        </product>
-        <property name="appName" value="RITE" />
-        <property name="windowImages"
-            value="./RITE-16.bmp,./RITE-32.bmp,./RITE-128.bmp,./RITE-256.bmp" />
+  <extension
+    point="org.eclipse.core.expressions.propertyTesters">
+    <propertyTester
+      class="com.ge.research.rack.ManifestSelectedPropertyTester"
+      id="com.ge.research.rack.manifestSelected"
+      namespace="com.ge.research.rack" properties="isManifestSelected"
+      type="java.lang.Object">
+    </propertyTester>
+  </extension>
+  <extension id="com.ge.research.rack.product" name="RITE"
+    point="org.eclipse.core.runtime.products">
+    <product name="RITE"
+      application="org.eclipse.ui.ide.workbench">
+    </product>
+    <property name="appName" value="RITE" />
+    <property name="windowImages"
+      value="./RITE-16.bmp,./RITE-32.bmp,./RITE-128.bmp,./RITE-256.bmp" />
 
-    </extension>
+  </extension>
 
 </plugin>

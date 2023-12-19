@@ -58,7 +58,8 @@ public class OntologyUtil {
             OntologyInfoClient ontClient = new OntologyInfoClient(config);
             oInfo = ontClient.getOntologyInfo(conn);
         } catch (Exception e) {
-        	ErrorMessageUtil.error(" Unable to connect to ontology service, please check connection parameters and retry");
+            ErrorMessageUtil.error(
+                    " Unable to connect to ontology service, please check connection parameters and retry");
             return null;
         }
         return oInfo;

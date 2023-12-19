@@ -203,14 +203,16 @@ public class UploadNodegroupsHandler extends AbstractHandler {
                         @Override
                         public void done(IJobChangeEvent event) {
                             if (event.getResult() != Status.OK_STATUS) {
-                                ErrorMessageUtil.error(String.format(UPLOAD_FAILED, nodegroupFilepaths));
+                                ErrorMessageUtil.error(
+                                        String.format(UPLOAD_FAILED, nodegroupFilepaths));
                             }
                             asyncCallback.run();
                         }
 
                         @Override
                         public void scheduled(IJobChangeEvent event) {
-                        	ErrorMessageUtil.println(String.format(UPLOAD_QUEUED, nodegroupFilepaths));
+                            ErrorMessageUtil.println(
+                                    String.format(UPLOAD_QUEUED, nodegroupFilepaths));
                         }
                     });
         }

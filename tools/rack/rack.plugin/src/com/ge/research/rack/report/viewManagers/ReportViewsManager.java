@@ -161,7 +161,7 @@ public class ReportViewsManager extends Application {
 
         } catch (Exception ex) {
 
-        	ErrorMessageUtil.error("Exception caught in setNewFxmlToStage", ex);
+            ErrorMessageUtil.error("Exception caught in setNewFxmlToStage", ex);
         }
 
         return null;
@@ -183,7 +183,7 @@ public class ReportViewsManager extends Application {
 
         } catch (Exception ex) {
 
-        	ErrorMessageUtil.error("Exception caught in ReportViewsManager.start", ex);
+            ErrorMessageUtil.error("Exception caught in ReportViewsManager.start", ex);
         }
     }
 }
