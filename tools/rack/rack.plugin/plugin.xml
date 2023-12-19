@@ -244,12 +244,8 @@
                     mnemonic="S" style="push">
                 </command>
 
-				<!--
-                <command commandId="rackplugin.commands.arp4754Command"
-                    id="rackplugin.menus.arp4754" label="ARP-4754A Compliance Report"
-                    mnemonic="S" style="push">
-                </command>
-				-->
+                <!-- <command commandId="rackplugin.commands.arp4754Command" id="rackplugin.menus.arp4754"
+                    label="ARP-4754A Compliance Report" mnemonic="S" style="push"> </command> -->
 
                 <!-- For auto Gsn -->
                 <command commandId="rackplugin.commands.autoGsnCommand"

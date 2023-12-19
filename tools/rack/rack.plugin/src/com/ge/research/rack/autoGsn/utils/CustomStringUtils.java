@@ -378,4 +378,19 @@ public class CustomStringUtils {
         }
         return s;
     }
+
+    // checks if a word exists in a sentence
+    public static boolean checkWordExistence(String word, String sentence) {
+
+        if (sentence.contains(word)) {
+            int start = sentence.indexOf(word);
+            int end = start + word.length();
+
+            boolean valid_left = ((start == 0) || (sentence.charAt(start - 1) == ' '));
+            boolean valid_right = ((end == sentence.length()) || (sentence.charAt(end) == ' '));
+
+            return valid_left && valid_right;
+        }
+        return false;
+    }
 }
