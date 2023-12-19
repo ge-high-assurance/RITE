@@ -204,15 +204,13 @@ public class ProjectUtils {
         String path = RackPreferencePage.getInstanceDataFolder();
         File dir = new File(path);
         if (!dir.exists()) {
-            ErrorMessageUtil
-                    .error(
-                            "RACK Project does not exist, please set a valid directory as RACK project");
+            ErrorMessageUtil.error(
+                    "RACK Project does not exist, please set a valid directory as RACK project");
             return false;
         }
         if (!dir.isDirectory()) {
-            ErrorMessageUtil
-                    .error(
-                            "RACK Project is not a directory, please set a valid directory as RACK project");
+            ErrorMessageUtil.error(
+                    "RACK Project is not a directory, please set a valid directory as RACK project");
             return false;
         }
         return true;

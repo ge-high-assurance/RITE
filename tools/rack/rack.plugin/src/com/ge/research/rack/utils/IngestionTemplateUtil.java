@@ -66,7 +66,7 @@ public class IngestionTemplateUtil {
             String ingestionId = IngestionTemplateUtil.getIngestionNodegroupId(className);
             String template = IngestionTemplateUtil.getNodegroupCSVTemplate(className);
             if (template == null) {
-            	ErrorMessageUtil.error("Unable to get CSV template for: " + ingestionId);
+                ErrorMessageUtil.error("Unable to get CSV template for: " + ingestionId);
             }
             csvTemplates.put(ingestionId, template);
         }

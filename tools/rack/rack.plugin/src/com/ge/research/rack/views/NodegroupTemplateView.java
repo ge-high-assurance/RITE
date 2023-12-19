@@ -69,8 +69,8 @@ public class NodegroupTemplateView extends ViewPart {
     @Inject IWorkbench workbench;
 
     private TableViewer viewer;
-    //private Action action1;
-    //private Action action2;
+    // private Action action1;
+    // private Action action2;
     //    private Action doubleClickAction;
     private static Table table;
     public static ArrayList<String> selectedNodegroups = null;

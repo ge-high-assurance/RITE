@@ -254,7 +254,7 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
             table.pack();
 
         } catch (final Exception e) {
-        	ErrorMessageUtil.warning(UPDATE_NODEGROUP_LIST_ERROR);
+            ErrorMessageUtil.warning(UPDATE_NODEGROUP_LIST_ERROR);
         }
     }
 
@@ -288,7 +288,7 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
             // table.pack();
 
         } catch (final Exception e) {
-        	ErrorMessageUtil.warning(UPDATE_NODEGROUP_LIST_ERROR);
+            ErrorMessageUtil.warning(UPDATE_NODEGROUP_LIST_ERROR);
         }
     }
 
@@ -362,12 +362,12 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
                                         thr.schedule();
                                         thr.join();
                                     } catch (final InterruptedException e) {
-                                    	ErrorMessageUtil.error(NODEGROUP_DELETE_ERROR, e);
+                                        ErrorMessageUtil.error(NODEGROUP_DELETE_ERROR, e);
                                     }
                                 });
 
             } catch (final Exception e) {
-            	ErrorMessageUtil.error(NODEGROUP_DELETE_ERROR, e);
+                ErrorMessageUtil.error(NODEGROUP_DELETE_ERROR, e);
             }
 
             refreshNodegroupList();
@@ -396,7 +396,7 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
                 window.getActivePage().showView(NodegroupTemplateView.ID);
 
             } catch (final Exception e) {
-            	ErrorMessageUtil.error(TEMPLATE_VIEW_ERROR, e);
+                ErrorMessageUtil.error(TEMPLATE_VIEW_ERROR, e);
             }
         }
     }
@@ -414,13 +414,13 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
         @Override
         protected IStatus run(IProgressMonitor monitor) {
             try {
-            	ErrorMessageUtil.println("Deleting nodegroup: " + nodegroupId + " ... ");
+                ErrorMessageUtil.println("Deleting nodegroup: " + nodegroupId + " ... ");
                 NodegroupUtil.client.deleteStoredNodeGroup(nodegroupId);
                 ErrorMessageUtil.printOK();
 
             } catch (final Exception e) {
-            	ErrorMessageUtil.printFAIL();
-            	ErrorMessageUtil.error(String.format(NODEGROUP_DELETE_ERROR, nodegroupId), e);
+                ErrorMessageUtil.printFAIL();
+                ErrorMessageUtil.error(String.format(NODEGROUP_DELETE_ERROR, nodegroupId), e);
 
                 return Status.CANCEL_STATUS;
             }

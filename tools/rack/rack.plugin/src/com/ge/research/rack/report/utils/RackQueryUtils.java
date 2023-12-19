@@ -116,7 +116,8 @@ public class RackQueryUtils {
             return newConnPars;
         } catch (Exception e) {
             ErrorMessageUtil.error(
-                    "ERROR: Was unable to create SparQlGraph connection using user preferences!!", e);
+                    "ERROR: Was unable to create SparQlGraph connection using user preferences!!",
+                    e);
             return null;
         }
     }
@@ -173,7 +174,8 @@ public class RackQueryUtils {
 
             return newConnPars;
         } catch (Exception e) {
-            ErrorMessageUtil.error("ERROR: Was unable to create hardcoded SparQlGraph connection!!", e);
+            ErrorMessageUtil.error(
+                    "ERROR: Was unable to create hardcoded SparQlGraph connection!!", e);
             return null;
         }
     }
@@ -248,7 +250,7 @@ public class RackQueryUtils {
                 ErrorMessageUtil.error("ERROR: Could not create and write data to CSV files.\n", e);
             }
         } catch (Exception e) {
-        	ErrorMessageUtil.error(
+            ErrorMessageUtil.error(
                     "ERROR: Could not execute query " + queryId + " successfully on RACK!!\n", e);
         }
     }
@@ -328,7 +330,7 @@ public class RackQueryUtils {
             }
 
         } catch (IOException ioe) {
-        	ErrorMessageUtil.error(
+            ErrorMessageUtil.error(
                     "ERROR: Was unable to read the CSV files created by querying RACK!!\n", ioe);
         }
 
@@ -381,7 +383,7 @@ public class RackQueryUtils {
             }
 
         } catch (IOException ioe) {
-        	ErrorMessageUtil.error(
+            ErrorMessageUtil.error(
                     "ERROR: Was unable to read the CSV files created by querying RACK!!\n", ioe);
         }
 
@@ -431,7 +433,7 @@ public class RackQueryUtils {
             }
 
         } catch (IOException ioe) {
-        	ErrorMessageUtil.error(
+            ErrorMessageUtil.error(
                     "ERROR: Was unable to read the CSV files created by querying RACK!!\n", ioe);
         }
 
@@ -473,7 +475,7 @@ public class RackQueryUtils {
             return row;
 
         } catch (IOException ioe) {
-        	ErrorMessageUtil.error(
+            ErrorMessageUtil.error(
                     "ERROR: Was unable to read the CSV files created by querying RACK!!\n", ioe);
         }
 
@@ -526,12 +528,12 @@ public class RackQueryUtils {
                 return true;
 
             } catch (Exception e) {
-            	ErrorMessageUtil.error(
+                ErrorMessageUtil.error(
                         "ERROR: Upload of nodegroup: " + queryId + ".json " + "failed!\n", e);
                 return false;
             }
         } catch (Exception e) {
-        	ErrorMessageUtil.error(
+            ErrorMessageUtil.error(
                     "ERROR: Could not use json string from filePath to create nodegroup!\n", e);
             return false;
         }

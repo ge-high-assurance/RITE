@@ -88,6 +88,7 @@ public class OntologyTreeView extends ViewPart implements INodegroupView {
     private static Image ontFieldImg = null;
     private static String selectedUri = "";
     private static TreeParent selectedNode = null;
+
     // private static String selectedName = "";
 
     class TreeObject implements IAdaptable {
