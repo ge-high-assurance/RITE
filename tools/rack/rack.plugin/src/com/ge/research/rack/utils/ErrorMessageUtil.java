@@ -83,6 +83,10 @@ public class ErrorMessageUtil {
                         });
         raiseConsole();
     }
+    
+    public static void doit(Runnable r) {
+    	getShell().getDisplay().asyncExec(r);
+    }
 
     /**
      * Shows an error message in the RackConsole, which must be done in the UI thread; this method
@@ -91,9 +95,7 @@ public class ErrorMessageUtil {
      * @param msg
      */
     public static void error(String msg) {
-        getShell()
-                .getDisplay()
-                .asyncExec(
+        doit(
                         new Runnable() {
                             public void run() {
                                 try {
@@ -109,9 +111,7 @@ public class ErrorMessageUtil {
     }
 
     public static void error(String msg, Exception e) {
-        getShell()
-                .getDisplay()
-                .asyncExec(
+        doit(
                         new Runnable() {
                             public void run() {
                                 try {
@@ -133,9 +133,7 @@ public class ErrorMessageUtil {
      * @param msg
      */
     public static void errorEcho(String msg) {
-        getShell()
-                .getDisplay()
-                .asyncExec(
+        doit(
                         new Runnable() {
                             public void run() {
                                 try {
@@ -157,9 +155,7 @@ public class ErrorMessageUtil {
      * @param msg
      */
     public static void printEcho(String msg) {
-        getShell()
-                .getDisplay()
-                .asyncExec(
+        doit(
                         new Runnable() {
                             public void run() {
                                 try {
@@ -174,9 +170,7 @@ public class ErrorMessageUtil {
     }
 
     public static void print(String msg) {
-        getShell()
-                .getDisplay()
-                .asyncExec(
+        doit(
                         new Runnable() {
                             public void run() {
                                 try {
@@ -191,9 +185,7 @@ public class ErrorMessageUtil {
     }
 
     public static void println(String msg) {
-        getShell()
-                .getDisplay()
-                .asyncExec(
+        doit(
                         new Runnable() {
                             public void run() {
                                 try {
@@ -208,9 +200,7 @@ public class ErrorMessageUtil {
     }
 
     public static void printOK() {
-        getShell()
-                .getDisplay()
-                .asyncExec(
+        doit(
                         new Runnable() {
                             public void run() {
                                 try {
@@ -225,9 +215,7 @@ public class ErrorMessageUtil {
     }
 
     public static void printFAIL() {
-        getShell()
-                .getDisplay()
-                .asyncExec(
+        doit(
                         new Runnable() {
                             public void run() {
                                 try {

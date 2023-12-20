@@ -71,6 +71,11 @@ import java.util.Set;
 
 import javax.swing.JPanel;
 
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
+
+
 /**
  * This sample class demonstrates how to plug-in a new workbench view. The view shows data obtained
  * from the model. The sample creates a dummy model on the fly, but a real implementation would
@@ -311,6 +316,7 @@ public class AssuranceCaseTree extends ViewPart {
         //        contributeToActionBars();
         //    }
 
+    	ErrorMessageUtil.print("createPartControl");
         Composite composite = new Composite(parent, SWT.EMBEDDED | SWT.NO_BACKGROUND);
         final Frame frame = SWT_AWT.new_Frame(composite);
 
@@ -339,6 +345,7 @@ public class AssuranceCaseTree extends ViewPart {
         firstTab.setContent(gPane);
         tPane.getTabs().add(firstTab);
 
+    	ErrorMessageUtil.print("createPartControl-B");
         Platform.runLater(
                 new Runnable() {
 
@@ -346,23 +353,43 @@ public class AssuranceCaseTree extends ViewPart {
                     public void run() {
                         try {
 
+                        	ErrorMessageUtil.print("createPartControl-run");
+                        	
+//                            var testButton = new Button("I am a JavaFX Button");
+//                            var testTextField = new TextField();
+//                            var testLabel = new Label("empty");
+//                            var pane = new VBox();
+//                            pane.setAlignment(Pos.CENTER);
+//                            pane.getChildren().addAll(testTextField, testButton, testLabel);
+                            
                             Bundle bundle =
                                     org.eclipse.core.runtime.Platform.getBundle("rack.plugin");
+                        	ErrorMessageUtil.print("bundle: " + bundle);
                             URL fxmlUrl =
                                     FileLocator.find(
                                             bundle,
                                             new Path(
-                                                    "resources/fxml/autoGsn/AutoGsnUnifiedMainView.fxml"),
+                                                    "resources/fxml/autoGsn/AutoGsnUnifiedMainView2.fxml"
+                                            		//"resources/demo.fxml"
+                                            		),
                                             null);
+                        	ErrorMessageUtil.print("fxmlURL A: " + fxmlUrl);
                             fxmlUrl = FileLocator.toFileURL(fxmlUrl);
+                        	
+                            //fxmlUrl = getClass().getResource("resources/fxml/autoGsn/AutoGsnUnifiedMainView.fxml");
+                            //fxmlUrl = getClass().getResource("demo.fxml");
+
+                        	ErrorMessageUtil.print("fxmlURL B: " + fxmlUrl);
 
                             // Creating an FXMLLoader object that can be returned for use where
                             // needed
                             FXMLLoader loader = new FXMLLoader(fxmlUrl);
-
+                            loader.setController(fxPanel); //new com.ge.research.rack.autoGsn.viewHandlers.AutoGsnUnifiedMainViewHandler());
+                            
                             System.out.println(
                                     "Time before loading fxml:" + System.currentTimeMillis());
                             Parent root = loader.load();
+                        	ErrorMessageUtil.print("createPartControl-loaded");
                             System.out.println(
                                     "Time after loading fxml:" + System.currentTimeMillis());
                             // stage.setTitle("Automatic GSN Inference");
@@ -370,18 +397,22 @@ public class AssuranceCaseTree extends ViewPart {
                                     "Time before creating new scene:" + System.currentTimeMillis());
 
                             Scene scene = new Scene(root);
+                            //Scene scene = new Scene(pane);
                             fxPanel.setScene(scene);
 
                             parentPanel.add(fxPanel);
                             frame.add(parentPanel);
                             frame.setSize(1300, 600);
                             frame.setVisible(true);
+                        	ErrorMessageUtil.print("createPartControl-run-end");
                         } catch (Exception ex) {
+                        	ErrorMessageUtil.error("createPartControl-exception " + ex);
 
                             ex.printStackTrace();
                         }
                     }
                 });
+    	ErrorMessageUtil.print("createPartControl-Z");
     }
 
     private void hookContextMenu() {
@@ -478,4 +509,6 @@ public class AssuranceCaseTree extends ViewPart {
     public void setFocus() {
         // viewer.getControl().setFocus();
     }
+    
+    
 }
