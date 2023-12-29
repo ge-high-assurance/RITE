@@ -327,17 +327,14 @@ public class AssuranceCaseTree extends ViewPart {
 //    	obj = new AutoGsnUnifiedMainViewHandler();
 //    	obj.initialize();
     	
-    	ErrorMessageUtil.print("createPartControl");
         Composite composite = new Composite(parent, SWT.EMBEDDED | SWT.NO_BACKGROUND);
         final Frame frame = SWT_AWT.new_Frame(composite);
         
-        //final JScrollPane spane = new JScrollPane(frame, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
         final JScrollPane parentPanel = new JScrollPane();
         parentPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         parentPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        //spane.setViewportView(parentPanel);
 
+        var vp = new JViewport();
         final JFXPanel fxPanel = new JFXPanel();
 
         final TabPane tPane = new TabPane();
@@ -361,77 +358,54 @@ public class AssuranceCaseTree extends ViewPart {
         firstTab.setContent(gPane);
         tPane.getTabs().add(firstTab);
 
-    	ErrorMessageUtil.print("createPartControl-B");
         Platform.runLater(
-                new Runnable() {
+            new Runnable() {
 
-                    @Override
-                    public void run() {
-                        try {
+            	@Override
+            	public void run() {
+            		try {
 
-                        	ErrorMessageUtil.print("createPartControl-run");
-                        	
-//                            var testButton = new Button("I am a JavaFX Button");
-//                            var testTextField = new TextField();
-//                            var testLabel = new Label("empty");
-//                            var pane = new VBox();
-//                            pane.setAlignment(Pos.CENTER);
-//                            pane.getChildren().addAll(testTextField, testButton, testLabel);
-                            
-                            Bundle bundle =
-                                    org.eclipse.core.runtime.Platform.getBundle("rack.plugin");
-                        	ErrorMessageUtil.print("bundle: " + bundle);
-                            URL fxmlUrl =
-                                    FileLocator.find(
-                                            bundle,
-                                            new Path(
-                                                    "resources/fxml/autoGsn/AutoGsnUnifiedMainView2.fxml"
-                                            		//"resources/demo.fxml"
-                                            		),
-                                            null);
-                        	ErrorMessageUtil.print("fxmlURL A: " + fxmlUrl);
-                            fxmlUrl = FileLocator.toFileURL(fxmlUrl);
-                        	
-                            //fxmlUrl = getClass().getResource("resources/fxml/autoGsn/AutoGsnUnifiedMainView.fxml");
-                            //fxmlUrl = getClass().getResource("demo.fxml");
+            			Bundle bundle =
+            					org.eclipse.core.runtime.Platform.getBundle("rack.plugin");
+            			URL fxmlUrl =
+            					FileLocator.find(
+            							bundle,
+            							new Path(
+            									"resources/fxml/autoGsn/AutoGsnUnifiedMainView2.fxml"
+            									//"resources/demo.fxml"
+            									),
+            							null);
+            			fxmlUrl = FileLocator.toFileURL(fxmlUrl);
 
-                        	ErrorMessageUtil.print("fxmlURL B: " + fxmlUrl);
+            			// Creating an FXMLLoader object that can be returned for use where needed
+            			FXMLLoader loader = new FXMLLoader(fxmlUrl);
 
-                            // Creating an FXMLLoader object that can be returned for use where
-                            // needed
-                            FXMLLoader loader = new FXMLLoader(fxmlUrl);
-                            //loader.setController(fxPanel); //new com.ge.research.rack.autoGsn.viewHandlers.AutoGsnUnifiedMainViewHandler());
-                            
-                            System.out.println(
-                                    "Time before loading fxml:" + System.currentTimeMillis());
-                            Parent root = loader.load();
-                        	ErrorMessageUtil.print("createPartControl-loaded");
-                            System.out.println(
-                                    "Time after loading fxml:" + System.currentTimeMillis());
-                            // stage.setTitle("Automatic GSN Inference");
-                            System.out.println(
-                                    "Time before creating new scene:" + System.currentTimeMillis());
+            			System.out.println(
+            					"Time before loading fxml:" + System.currentTimeMillis());
+            			Parent root = loader.load();
+            			System.out.println(
+            					"Time after loading fxml:" + System.currentTimeMillis());
+            			// stage.setTitle("Automatic GSN Inference");
+            			System.out.println(
+            					"Time before creating new scene:" + System.currentTimeMillis());
 
-                            Scene scene = new Scene(root);
-                            //Scene scene = new Scene(pane);
-                            fxPanel.setScene(scene);
+            			Scene scene = new Scene(root);
+            			fxPanel.setScene(scene);
 
-                            var vp = new JViewport();
-                            vp.add(fxPanel);
-                            parentPanel.setViewport(vp);
-                            //parentPanel.add(fxPanel);
-                            frame.add(parentPanel);
-                            frame.setSize(1300, 600);
-                            frame.setVisible(true);
-                        	ErrorMessageUtil.print("createPartControl-run-end");
-                        } catch (Exception ex) {
-                        	ErrorMessageUtil.error("createPartControl-exception " + ex);
+            			vp.add(fxPanel);
+            			parentPanel.setViewport(vp);
 
-                            ex.printStackTrace();
-                        }
-                    }
-                });
-    	ErrorMessageUtil.print("createPartControl-Z");
+            			frame.add(parentPanel);
+            			frame.setSize(1300, 600);
+            			frame.setVisible(true);
+            		} catch (Exception ex) {
+            			ErrorMessageUtil.error("createPartControl-exception " + ex);
+
+            			ex.printStackTrace();
+            		}
+            	}
+            }
+        );
     }
 
     private void hookContextMenu() {
