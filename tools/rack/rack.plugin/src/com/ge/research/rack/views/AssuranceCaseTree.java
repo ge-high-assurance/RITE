@@ -32,12 +32,15 @@
 package com.ge.research.rack.views;
 
 import com.ge.research.rack.LoadAssuranceCaseHandler;
+import com.ge.research.rack.autoGsn.viewHandlers.AutoGsnUnifiedMainViewHandler;
 import com.ge.research.rack.utils.*;
 import com.ge.research.rack.utils.TreeNode;
 import com.google.inject.*;
 
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -45,6 +48,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
 import org.eclipse.core.runtime.FileLocator;
@@ -70,6 +74,8 @@ import java.util.HashMap;
 import java.util.Set;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JViewport;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -102,6 +108,8 @@ public class AssuranceCaseTree extends ViewPart {
     private Action action1;
     private Action action2;
     private Action doubleClickAction;
+    
+    private AutoGsnUnifiedMainViewHandler obj;
 
     class TreeObject implements IAdaptable {
         private String name;
@@ -316,11 +324,19 @@ public class AssuranceCaseTree extends ViewPart {
         //        contributeToActionBars();
         //    }
 
+//    	obj = new AutoGsnUnifiedMainViewHandler();
+//    	obj.initialize();
+    	
     	ErrorMessageUtil.print("createPartControl");
         Composite composite = new Composite(parent, SWT.EMBEDDED | SWT.NO_BACKGROUND);
         final Frame frame = SWT_AWT.new_Frame(composite);
+        
+        //final JScrollPane spane = new JScrollPane(frame, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-        final JPanel parentPanel = new JPanel();
+        final JScrollPane parentPanel = new JScrollPane();
+        parentPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        parentPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        //spane.setViewportView(parentPanel);
 
         final JFXPanel fxPanel = new JFXPanel();
 
@@ -384,7 +400,7 @@ public class AssuranceCaseTree extends ViewPart {
                             // Creating an FXMLLoader object that can be returned for use where
                             // needed
                             FXMLLoader loader = new FXMLLoader(fxmlUrl);
-                            loader.setController(fxPanel); //new com.ge.research.rack.autoGsn.viewHandlers.AutoGsnUnifiedMainViewHandler());
+                            //loader.setController(fxPanel); //new com.ge.research.rack.autoGsn.viewHandlers.AutoGsnUnifiedMainViewHandler());
                             
                             System.out.println(
                                     "Time before loading fxml:" + System.currentTimeMillis());
@@ -400,7 +416,10 @@ public class AssuranceCaseTree extends ViewPart {
                             //Scene scene = new Scene(pane);
                             fxPanel.setScene(scene);
 
-                            parentPanel.add(fxPanel);
+                            var vp = new JViewport();
+                            vp.add(fxPanel);
+                            parentPanel.setViewport(vp);
+                            //parentPanel.add(fxPanel);
                             frame.add(parentPanel);
                             frame.setSize(1300, 600);
                             frame.setVisible(true);
@@ -510,5 +529,28 @@ public class AssuranceCaseTree extends ViewPart {
         // viewer.getControl().setFocus();
     }
     
-    
+    @FXML
+    private void comboFilterAction(ActionEvent event) throws Exception {
+    	ErrorMessageUtil.print("comboFilterAction");
+    }
+
+    @FXML
+    private void btnFetchGoalsAction(ActionEvent event) throws Exception {
+    	ErrorMessageUtil.print("btnFetchGoalsAction");
+    }
+
+    @FXML
+    private void btnGenerateAction(ActionEvent event) throws Exception {
+    	ErrorMessageUtil.print("btnGenerateAction");
+    }
+
+    @FXML
+    private void btnTraverseAction(ActionEvent event) throws Exception {
+    	ErrorMessageUtil.print("btnTraverseAction");
+    }
+
+    @FXML
+    private void listGoalsSelectAction(MouseEvent event) {
+    	ErrorMessageUtil.print("listGoalsSelectAction");
+    }
 }

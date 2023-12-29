@@ -267,7 +267,7 @@ public class AutoGsnUnifiedMainViewHandler {
     }
 
     @FXML
-    private void initialize() {
+    public void initialize() {
 
         // Disabled buttons
         btnFetchGoals.setDisable(true);
@@ -314,7 +314,7 @@ public class AutoGsnUnifiedMainViewHandler {
     }
 
     @FXML
-    private void btnFetchGoalsAction(ActionEvent event) throws Exception {
+    public void btnFetchGoalsAction(ActionEvent event) throws Exception {
 
         // initialize the manager variables again
         AutoGsnViewsManager.initializeViewVariables();
@@ -380,7 +380,7 @@ public class AutoGsnUnifiedMainViewHandler {
     }
 
     @FXML
-    private void btnGenerateAction(ActionEvent event) throws Exception {
+    public void btnGenerateAction(ActionEvent event) throws Exception {
 
         // get selections (Although only one will be selected)
         ObservableList<Label> selected = listGoals.getSelectionModel().getSelectedItems();
@@ -461,7 +461,7 @@ public class AutoGsnUnifiedMainViewHandler {
     }
 
     @FXML
-    private void comboFilterAction(ActionEvent event) throws Exception {
+    public void comboFilterAction(ActionEvent event) throws Exception {
 
         String newClassKey = (String) comboClassFilter.getValue();
 
@@ -474,7 +474,7 @@ public class AutoGsnUnifiedMainViewHandler {
     }
 
     @FXML
-    private void btnTraverseAction(ActionEvent event) throws Exception {
+    public void btnTraverseAction(ActionEvent event) throws Exception {
 
         // get selections
         ObservableList<Label> selected = listGoals.getSelectionModel().getSelectedItems();
@@ -506,7 +506,7 @@ public class AutoGsnUnifiedMainViewHandler {
     }
 
     @FXML
-    private void listGoalsSelectAction(MouseEvent event) {
+    public void listGoalsSelectAction(MouseEvent event) {
 
         //        // activate/deactivate the GoalView button
         //        // if exactly one selection, activate, otherwise deactivate

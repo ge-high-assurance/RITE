@@ -8,7 +8,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<GridPane prefHeight="639.0" prefWidth="1090.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
+<!--  prefHeight="639.0" prefWidth="1090.0" -->
+<GridPane  xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" prefHeight="639.0" prefWidth="1090.0" fx:controller="com.ge.research.rack.views.AssuranceCaseTree">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -61,8 +62,7 @@
                         </BarChart>
                      </children>
                   </GridPane>
-                  <!--  onMouseClicked="#listGoalsSelectAction"  -->
-                  <ListView fx:id="listGoals" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                  <ListView fx:id="listGoals" onMouseClicked="#listGoalsSelectAction" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                      <opaqueInsets>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </opaqueInsets>
@@ -82,8 +82,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <!--  onAction="#comboFilterAction"  -->
-                        <ComboBox fx:id="comboClassFilter" prefHeight="25.0" prefWidth="215.0" promptText="Filter Goals By Class" GridPane.columnIndex="2" GridPane.valignment="BOTTOM">
+                        <ComboBox fx:id="comboClassFilter" onAction="#comboFilterAction" prefHeight="25.0" prefWidth="215.0" promptText="Filter Goals By Class" GridPane.columnIndex="2" GridPane.valignment="BOTTOM">
                            <opaqueInsets>
                               <Insets right="5.0" />
                            </opaqueInsets>
@@ -111,11 +110,9 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-              <!-- 
                   <Button fx:id="btnFetchGoals" mnemonicParsing="false" onAction="#btnFetchGoalsAction" prefWidth="120.0" text="Get Possible Goals" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" />
                   <Button fx:id="btnGenerate" mnemonicParsing="false" onAction="#btnGenerateAction" prefWidth="120.0" text="Generate ArtiFacts" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="BOTTOM" />
                   <Button fx:id="btnTraverse" mnemonicParsing="false" onAction="#btnTraverseAction" prefWidth="120.0" text="Navigate Goal GSN" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="BOTTOM" />
-               -->
                   <ProgressIndicator fx:id="progInd" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
