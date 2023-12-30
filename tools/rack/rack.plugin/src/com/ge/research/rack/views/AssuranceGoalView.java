@@ -100,293 +100,66 @@ public class AssuranceGoalView extends ViewPart {
     /** The ID of the view as specified by the extension. */
     public static final String ID = "rackplugin.views.AssuranceGoalView";
 
-    @Inject IWorkbench workbench;
-    public static HashMap<TreeNode, ArrayList<TreeNode>> graph = null;
-    public static HashMap<String, TreeNode> index = null;
-//    private TreeViewer viewer;
-//    private DrillDownAdapter drillDownAdapter;
-//    private Action action1;
-//    private Action action2;
-//    private Action doubleClickAction;
-    
-//    private AutoGsnUnifiedMainViewHandler obj;
-
-//    class TreeObject implements IAdaptable {
-//        private String name;
-//        private TreeParent parent;
-//
-//        public TreeObject(TreeNode node) {
-//            String label = node.getLabel();
-//            String name =
-//                    (label != null && !label.equals(""))
-//                            ? (node.getId() + ": " + label)
-//                            : (node.getId());
-//            this.name = name;
-//        }
-//
-//        public String getName() {
-//            return name;
-//        }
-//
-//        public void setParent(TreeParent parent) {
-//            this.parent = parent;
-//        }
-//
-//        public TreeParent getParent() {
-//            return parent;
-//        }
-//
-//        @Override
-//        public String toString() {
-//            return getName();
-//        }
-//
-//        @Override
-//        public <T> T getAdapter(Class<T> key) {
-//            return null;
-//        }
-//    }
-//
-//    class TreeParent extends TreeObject {
-//        private ArrayList<TreeObject> children;
-//        private ArrayList<TreeObject> siblings;
-//        private GSN gsnType;
-//
-//        public TreeParent(TreeNode node) {
-//            super(node);
-//            children = new ArrayList<>();
-//            siblings = new ArrayList<>();
-//        }
-//
-//        public void addChild(TreeObject child) {
-//            children.add(child);
-//            child.setParent(this);
-//        }
-//
-//        public void addSibling(TreeObject sibling) {
-//            siblings.add(sibling);
-//        }
-//
-//        public void removeSibling(TreeObject sibling) {
-//            siblings.remove(sibling);
-//        }
-//
-//        public void removeChild(TreeObject child) {
-//            children.remove(child);
-//            child.setParent(null);
-//        }
-//
-//        public TreeObject[] getChildren() {
-//            return (TreeObject[]) children.toArray(new TreeObject[children.size()]);
-//        }
-//
-//        public boolean hasChildren() {
-//            return children.size() > 0;
-//        }
-//
-//        public void setGsnType(GSN type) {
-//            this.gsnType = type;
-//        }
-//
-//        public GSN getGsnType() {
-//            return this.gsnType;
-//        }
-//    }
-//
-//    class ViewContentProvider implements ITreeContentProvider {
-//        private TreeParent invisibleRoot;
-//
-//        public Object[] getElements(Object parent) {
-//            if (parent.equals(getViewSite())) {
-//                if (invisibleRoot == null) initialize();
-//                return getChildren(invisibleRoot);
-//            }
-//            return getChildren(parent);
-//        }
-//
-//        public Object getParent(Object child) {
-//            if (child instanceof TreeObject) {
-//                return ((TreeObject) child).getParent();
-//            }
-//            return null;
-//        }
-//
-//        public Object[] getChildren(Object parent) {
-//            if (parent instanceof TreeParent) {
-//                return ((TreeParent) parent).getChildren();
-//            }
-//            return new Object[0];
-//        }
-//
-//        public boolean hasChildren(Object parent) {
-//            if (parent instanceof TreeParent) return ((TreeParent) parent).hasChildren();
-//            return false;
-//        }
-//
-//        /*
-//         * We will set up a dummy model to initialize tree heararchy. In a real code,
-//         * you will connect to a real model and expose its hierarchy.
-//         */
-//        private void initialize() {
-//            index = LoadAssuranceCaseHandler.index;
-//            invisibleRoot = new TreeParent(new TreeNode(""));
-//
-//            Set<String> nodes = index.keySet();
-//            for (String node : nodes) {
-//                TreeNode treeNode = index.get(node);
-//                if (treeNode == null || (treeNode.getGsnType() == null)) {
-//                    continue;
-//                }
-//                if (treeNode.isTopLevelNode()) {
-//                    TreeParent parent = new TreeParent(treeNode);
-//                    parent.setGsnType(treeNode.getGsnType());
-//                    invisibleRoot.addChild(parent);
-//                    drawTree(parent, treeNode);
-//                }
-//            }
-//        }
-//    }
-//
-//    public void drawTree(TreeParent parent, TreeNode node) {
-//        ArrayList<TreeNode> inContextOf = node.getContexts();
-//        ArrayList<TreeNode> supportedBy = node.getSupports();
-//
-//        for (TreeNode contextNode : inContextOf) {
-//            TreeParent subTree = new TreeParent(contextNode);
-//            subTree.setGsnType(contextNode.getGsnType());
-//            parent.addChild(subTree);
-//        }
-//
-//        for (TreeNode supportedByNode : supportedBy) {
-//
-//            TreeParent subTree = new TreeParent(supportedByNode);
-//            subTree.setGsnType(supportedByNode.getGsnType());
-//            parent.addChild(subTree);
-//            drawTree(subTree, supportedByNode);
-//        }
-//    }
-//
-//    class ViewLabelProvider extends LabelProvider {
-//
-//        public String getText(Object obj) {
-//            return obj.toString();
-//        }
-//
-//        public Image getImage(Object obj) {
-//
-//            try {
-//                switch (((TreeParent) obj).getGsnType()) {
-//                    case GOAL:
-//                        return ViewUtils.getIcon("goal.png");
-//                    case STRATEGY:
-//                        return ViewUtils.getIcon("strategy.png");
-//                    case JUSTIFICATION:
-//                        return ViewUtils.getIcon("justification.png");
-//                    case SOLUTION:
-//                        return ViewUtils.getIcon("solution.png");
-//                    case CONTEXT:
-//                        return ViewUtils.getIcon("context.png");
-//                    case ASSUMPTION:
-//                        return ViewUtils.getIcon("justification.png");
-//                    case UNDEVGOAL:
-//                        return ViewUtils.getIcon("undevGoal.png");
-//                    case UNDEVSTRATEGY:
-//                        return ViewUtils.getIcon("undevStrategy.png");
-//                    default:
-//                        return ViewUtils.getIcon("context.png");
-//                }
-//            } catch (Exception e) {
-//                return null;
-//            }
-//        }
-//    }
-
     @Override
     public void createPartControl(Composite parent) {
     	try {
 
-//    	obj = new AutoGsnUnifiedMainViewHandler();
-//    	obj.initialize();
-    	
-        Composite composite = new Composite(parent, SWT.EMBEDDED | SWT.NO_BACKGROUND);
-        final Frame frame = SWT_AWT.new_Frame(composite);
-        
-        final JScrollPane parentPanel = new JScrollPane();
-        parentPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        parentPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    		Composite composite = new Composite(parent, SWT.EMBEDDED | SWT.NO_BACKGROUND);
+    		final Frame frame = SWT_AWT.new_Frame(composite);
 
-        var vp = new JViewport();
-        final JFXPanel fxPanel = new JFXPanel();
+    		final JScrollPane parentPanel = new JScrollPane();
+    		parentPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    		parentPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-        Parent root = FXMLLoader.load(getClass().getResource("/resources/fxml/autoGsn/AutoGsnUnifiedDrillGoalView.fxml"));
-        Platform.setImplicitExit(false);
-        Platform.runLater(
-            new Runnable() {
+    		var vp = new JViewport();
+    		final JFXPanel fxPanel = new JFXPanel();
 
-            	@Override
-            	public void run() {
-            		try {
+    		Parent root = FXMLLoader.load(getClass().getResource("/resources/fxml/autoGsn/AutoGsnUnifiedDrillGoalView.fxml"));
+    		Platform.setImplicitExit(false);
+    		Platform.runLater(
+    			new Runnable() {
 
-            			Scene scene = new Scene(root);
-            			fxPanel.setScene(scene);
+    				@Override
+    				public void run() {
+    					try {
 
-            			vp.add(fxPanel);
-            			parentPanel.setViewport(vp);
+    						Scene scene = new Scene(root);
+    						fxPanel.setScene(scene);
 
-            			frame.add(parentPanel);
-            			frame.setSize(1300, 600);
-            			frame.setVisible(true);
-            		} catch (Exception ex) {
-            			ErrorMessageUtil.error("createPartControl-exception " + ex);
+    						vp.add(fxPanel);
+    						parentPanel.setViewport(vp);
 
-            			ex.printStackTrace();
-            		}
-            	}
-            }
-        );
+    						frame.add(parentPanel);
+    						frame.setSize(1300, 600);
+    						frame.setVisible(true);
+
+    						showView();
+
+    					} catch (Exception ex) {
+    						ErrorMessageUtil.error("createPartControl-exception " + ex);
+
+    						ex.printStackTrace();
+    					}
+    				}
+    			}
+    		);
     	} catch (Exception ex) {
-			ErrorMessageUtil.error("createPartControl-exception-end " + ex);
+    		ErrorMessageUtil.error("createPartControl-exception-end " + ex);
     	}
     }
 
 
-//    private void showMessage(String message) {
-//        MessageDialog.openInformation(
-//                viewer.getControl().getShell(), "Assurance Case GSN", message);
-//    }
-
     @Override
     public void setFocus() {
-        // viewer.getControl().setFocus();
+    	showView();
     }
     
-    @FXML
-    private void btnUpAction(ActionEvent event) throws Exception {
-    	ErrorMessageUtil.print("btnUpAction");
+    public static void showView() {
+    	
+    	try {
+    	    PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(ID);
+    	} catch (Exception e) {
+    		// skip
+    	}
     }
-
-    @FXML
-    private void btnRootAction(ActionEvent event) throws Exception {
-    	ErrorMessageUtil.print("btnRootAction");
-    }
-
-    @FXML
-    private void btnHomeAction(ActionEvent event) throws Exception {
-    	ErrorMessageUtil.print("btnHomeAction");
-    }
-
-    @FXML
-    private void btnTreePopAction(ActionEvent event) throws Exception {
-    	ErrorMessageUtil.print("btnTreePopAction");
-    }
-
-    @FXML
-    private void comboPassFailAction(ActionEvent event) throws Exception {
-    	ErrorMessageUtil.print("comboPassFailAction");
-    }
-
-
-    @FXML
-    private void listSubGoalsSelectAction(MouseEvent event) {
-    	ErrorMessageUtil.print("listSubGoalsSelectAction");
-    }}
+}

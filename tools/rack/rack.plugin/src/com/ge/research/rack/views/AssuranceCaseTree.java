@@ -31,33 +31,23 @@
  */
 package com.ge.research.rack.views;
 
-import com.ge.research.rack.autoGsn.viewHandlers.AutoGsnUnifiedMainViewHandler;
 import com.ge.research.rack.utils.*;
 import com.ge.research.rack.utils.TreeNode;
 import com.google.inject.*;
 
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.*;
 import org.eclipse.ui.part.ViewPart;
-import org.osgi.framework.Bundle;
 
 import java.awt.Frame;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -84,14 +74,6 @@ public class AssuranceCaseTree extends ViewPart {
     /** The ID of the view as specified by the extension. */
     public static final String ID = "rackplugin.views.AssuranceCaseTree";
 
-    @Inject IWorkbench workbench;
-    public static HashMap<TreeNode, ArrayList<TreeNode>> graph = null;
-    public static HashMap<String, TreeNode> index = null;
-    
-//    private AutoGsnUnifiedMainViewHandler obj;
-
-
-
     @Override
     public void createPartControl(Composite parent) {
 
@@ -107,9 +89,6 @@ public class AssuranceCaseTree extends ViewPart {
         var vp = new JViewport();
         final JFXPanel fxPanel = new JFXPanel();
 
-//        obj = new AutoGsnUnifiedMainViewHandler();
-
-
         Parent root = FXMLLoader.load(getClass().getResource("/resources/fxml/autoGsn/AutoGsnUnifiedMainView.fxml"));
         Platform.setImplicitExit(false);
         Platform.runLater(
@@ -118,30 +97,6 @@ public class AssuranceCaseTree extends ViewPart {
             	@Override
             	public void run() {
             		try {
-
-//            			Bundle bundle =
-//            					org.eclipse.core.runtime.Platform.getBundle("rack.plugin");
-//            			URL fxmlUrl =
-//            					FileLocator.find(
-//            							bundle,
-//            							new Path(
-//            									"resources/fxml/autoGsn/AutoGsnUnifiedMainView.fxml"
-//            									//"resources/demo.fxml"
-//            									),
-//            							null);
-//            			fxmlUrl = FileLocator.toFileURL(fxmlUrl);
-//
-//            			// Creating an FXMLLoader object that can be returned for use where needed
-//            			FXMLLoader loader = new FXMLLoader(fxmlUrl);
-//
-//            			System.out.println(
-//            					"Time before loading fxml:" + System.currentTimeMillis());
-//            			Parent root = loader.load();
-//            			System.out.println(
-//            					"Time after loading fxml:" + System.currentTimeMillis());
-//            			// stage.setTitle("Automatic GSN Inference");
-//            			System.out.println(
-//            					"Time before creating new scene:" + System.currentTimeMillis());
 
             			Scene scene = new Scene(root);
             			fxPanel.setScene(scene);
@@ -153,7 +108,7 @@ public class AssuranceCaseTree extends ViewPart {
             			frame.setSize(1300, 600);
             			frame.setVisible(true);
 
-            			//obj.initialize();
+                		showView();
             	    	
             		} catch (Exception ex) {
             			ErrorMessageUtil.error("createPartControl-exception " + ex);
@@ -168,38 +123,17 @@ public class AssuranceCaseTree extends ViewPart {
     	}
     }
 
-//    private void showMessage(String message) {
-//        MessageDialog.openInformation(
-//                viewer.getControl().getShell(), "Assurance Case GSN", message);
-//    }
-
     @Override
     public void setFocus() {
-        // viewer.getControl().setFocus();
+    	showView();
     }
     
-    @FXML
-    private void comboFilterAction(ActionEvent event) throws Exception {
-    	ErrorMessageUtil.print("comboFilterAction");
-    }
-
-    @FXML
-    private void btnFetchGoalsAction(ActionEvent event) throws Exception {
-    	ErrorMessageUtil.print("btnFetchGoalsAction");
-    }
-
-    @FXML
-    private void btnGenerateAction(ActionEvent event) throws Exception {
-    	ErrorMessageUtil.print("btnGenerateAction");
-    }
-
-    @FXML
-    private void btnTraverseAction(ActionEvent event) throws Exception {
-    	ErrorMessageUtil.print("btnTraverseAction");
-    }
-
-    @FXML
-    private void listGoalsSelectAction(MouseEvent event) {
-    	ErrorMessageUtil.print("listGoalsSelectAction");
+    public static void showView() {
+    	
+    	try {
+    	    PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(ID);
+    	} catch (Exception e) {
+    		// skip
+    	}
     }
 }
