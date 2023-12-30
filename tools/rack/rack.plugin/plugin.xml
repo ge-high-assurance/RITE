@@ -298,6 +298,11 @@
       name="Assurance Case GSN">
     </view>
     <view category="rackplugin"
+      class="com.ge.research.rack.views.AssuranceGoalView"
+      id="rackplugin.views.AssuranceGoalView" inject="true"
+      name="Assurance Goals">
+    </view>
+    <view category="rackplugin"
       class="com.ge.research.rack.views.NodegroupColumnView"
       id="rackplugin.views.ManageCSVColumns" inject="true"
       name="Add/Remove Columns for Nodegroup">
