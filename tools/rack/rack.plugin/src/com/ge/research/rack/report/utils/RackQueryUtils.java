@@ -207,7 +207,7 @@ public class RackQueryUtils {
      */
     public static String createCsvFilePath(String QueryId, String outDir) {
 
-        String filePath = outDir + "\\" + QueryId + ".csv";
+        String filePath = outDir + File.separator + QueryId + ".csv";
 
         return filePath;
     }
@@ -245,7 +245,7 @@ public class RackQueryUtils {
                 FileWriter myWriter = new FileWriter(csvFilePath);
                 myWriter.write(csv_string);
                 myWriter.close();
-                System.out.println("Successfully created and wrote data to CSV files.\n");
+                System.out.println("Successfully created and wrote data to CSV files: " + csvFilePath + "\n");
             } catch (Exception e) {
                 ErrorMessageUtil.error("ERROR: Could not create and write data to CSV files.\n", e);
             }

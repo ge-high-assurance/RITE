@@ -303,6 +303,7 @@ public class AssuranceGoalView extends ViewPart {
 
     @Override
     public void createPartControl(Composite parent) {
+    	try {
 
 //    	obj = new AutoGsnUnifiedMainViewHandler();
 //    	obj.initialize();
@@ -317,36 +318,14 @@ public class AssuranceGoalView extends ViewPart {
         var vp = new JViewport();
         final JFXPanel fxPanel = new JFXPanel();
 
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/fxml/autoGsn/AutoGsnUnifiedDrillGoalView.fxml"));
+        Platform.setImplicitExit(false);
         Platform.runLater(
             new Runnable() {
 
             	@Override
             	public void run() {
             		try {
-
-            			Bundle bundle =
-            					org.eclipse.core.runtime.Platform.getBundle("rack.plugin");
-            			URL fxmlUrl =
-            					FileLocator.find(
-            							bundle,
-            							new Path(
-            									"resources/fxml/autoGsn/AutoGsnUnifiedDrillGoalView2.fxml"
-            									//"resources/demo.fxml"
-            									),
-            							null);
-            			fxmlUrl = FileLocator.toFileURL(fxmlUrl);
-
-            			// Creating an FXMLLoader object that can be returned for use where needed
-            			FXMLLoader loader = new FXMLLoader(fxmlUrl);
-
-            			System.out.println(
-            					"Time before loading fxml:" + System.currentTimeMillis());
-            			Parent root = loader.load();
-            			System.out.println(
-            					"Time after loading fxml:" + System.currentTimeMillis());
-            			// stage.setTitle("Automatic GSN Inference");
-            			System.out.println(
-            					"Time before creating new scene:" + System.currentTimeMillis());
 
             			Scene scene = new Scene(root);
             			fxPanel.setScene(scene);
@@ -365,6 +344,9 @@ public class AssuranceGoalView extends ViewPart {
             	}
             }
         );
+    	} catch (Exception ex) {
+			ErrorMessageUtil.error("createPartControl-exception-end " + ex);
+    	}
     }
 
 
