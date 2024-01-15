@@ -247,10 +247,10 @@ public class RunWorkflowHandler extends AbstractHandler {
     }
 
     public void runWorkflow(String name) throws Exception {
-        MessageDialog.openInformation(null, "", "Running workflow " + name);
+        //MessageDialog.openInformation(null, "", "Running workflow " + name);
         top = workflows.get(name);
         if (top == null) {
-            // This error should not be reachable
+            // This error should not be reachable, since only well-formed workflows should be in 'this.workflows'
             MessageDialog.openError(null, "Error", "No XML document found for workflow " + name);
             return;
         }
@@ -336,6 +336,11 @@ public class RunWorkflowHandler extends AbstractHandler {
 			return;
     	}
     	view.clearXMLDisplay();
+    	try {
+    		runWorkflow(workflowName);
+    	} catch (Exception e) {
+            MessageDialog.openError(null, "Error", "Failed to restart workflow\n" + e);
+    	}
     }
 
     public void back() {
@@ -350,6 +355,7 @@ public class RunWorkflowHandler extends AbstractHandler {
     	view.clearXMLDisplay();
     	top = null;
     	workflowName = null;
+    	view.displayEmpty();
     }
 
     public static String previousSelection = null;

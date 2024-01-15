@@ -39,11 +39,14 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.widgets.WidgetFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
+import org.eclipse.ui.internal.console.ConsoleView;
 import org.eclipse.ui.part.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
@@ -61,6 +64,7 @@ public class SessionView extends ViewPart {
     /** The ID of the view as specified by the extension. */
     public static final String ID = "rackplugin.views.SessionView";
 
+    private Composite parent;
     private Composite outer;
     private Composite composite;
     public RunWorkflowHandler handler;
@@ -70,139 +74,51 @@ public class SessionView extends ViewPart {
 
     @Override
     public void createPartControl(Composite parent) {
+    	this.parent = parent;
+    	
+        displayEmpty();
+    }
 
-        final Display display = Display.getCurrent();
-
+    public void clearXMLDisplay() {
+    	if (!this.outer.isDisposed()) this.outer.dispose();
+    }
+    
+    public void displayEmpty() {
         outer = new Composite(parent, SWT.NONE);
         GridLayout layout0 = new GridLayout();
         layout0.numColumns = 1;
         layout0.verticalSpacing = 10;
         outer.setLayout(layout0);
         outer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-
-        Composite buttons = new Composite(outer, SWT.NONE);
-        GridLayout layout2 = new GridLayout();
-        layout2.numColumns = 4; // number of buttons
-        layout2.verticalSpacing = 10;
-        buttons.setLayout(layout2);
-        buttons.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        createButton(buttons, IDialogConstants.ABORT_ID, "Abort", false);
-        createButton(buttons, IDialogConstants.RETRY_ID, "Restart", false);
-        createButton(buttons, IDialogConstants.BACK_ID, "Back", false);
-        createButton(buttons, IDialogConstants.OK_ID, "Next", true);
-
-        //      final ScrolledComposite sc = new ScrolledComposite(outer, SWT.H_SCROLL |
-        // SWT.V_SCROLL);
-        composite = clearXMLDisplay();
-        //      sc.setContent(composite);
-
-        // FIXME - restore the scrolling
-        // FIXME - put buttons at bottom
-        // FIXME - fix clearing and restarting the di8splay
-
-        parent.layout(true, true);
-    }
-
-    protected Button createButton(Composite buttons, int id, String label, boolean defaultButton) {
-        // increment the number of columns in the button bar
-        //		((GridLayout) buttons.getLayout()).numColumns++;
-        Button button =
-                WidgetFactory.button(SWT.PUSH)
-                        .text(label)
-                        .font(JFaceResources.getDialogFont())
-                        .data(Integer.valueOf(id))
-                        .onSelect(
-                                event ->
-                                        buttonPressed(
-                                                ((Integer) event.widget.getData()).intValue()))
-                        .create(buttons);
-        if (defaultButton) {
-            Shell shell = buttons.getShell();
-            if (shell != null) {
-                shell.setDefaultButton(button);
-            }
-        }
-        // buttons.put(Integer.valueOf(id), button);
-        // setButtonLayoutData(button);
-        return button;
-    }
-
-    protected void buttonPressed(int buttonId) {
-        //MessageDialog.openInformation(null, "", "Button " + buttonId);
-        switch (buttonId) {
-        case IDialogConstants.OK_ID:
-        	handler.next();
-        	break;
-        case IDialogConstants.ABORT_ID:
-        	handler.abort();
-        	break;
-        case IDialogConstants.BACK_ID:
-        	handler.back();
-        	break;
-        case IDialogConstants.RETRY_ID:
-        	handler.retry();
-        	break;
-        default:
-        }
-    }
-
-
-
-    public void addTextBox(String label, String initialText, int lines, boolean readonly) {
-        if (label != null) addLabel(label, composite);
-        Text textBox2 =
-                new Text(composite, SWT.LEFT | SWT.MULTI | SWT.V_SCROLL | SWT.WRAP | SWT.BORDER);
-        textBox2.setText(initialText);
-        textBox2.setTextLimit(10000);
-        // FIXME - set size, readonly
-    }
-
-    public void addLabel(String text, Composite parent) {
-        Label textBox1 = new Label(parent, SWT.LEFT);
-        textBox1.setText(text);
-        textBox1.setBackground(parent.getBackground());
-        // TODO: Would like to set to bold
-    }
-
-    public void addSeparator() {
-        // FIXME - make longer, make darker
-        var rule = new Label(composite, SWT.HORIZONTAL | SWT.SEPARATOR);
-    }
-
-    public void addButton(String label) {
-        Button b = new Button(composite, SWT.PUSH);
-        b.setText(label);
-        b.addSelectionListener(
-                new SelectionListener() {
-
-                    @Override
-                    public void widgetSelected(SelectionEvent e) {
-                        //        		next();
-
-                    }
-
-                    @Override
-                    public void widgetDefaultSelected(SelectionEvent e) {
-                        //       		next();
-                    }
-                });
-    }
-
-
-    public Composite clearXMLDisplay() {
-    	if (this.composite != null && !this.composite.isDisposed()) this.composite.dispose();
-        Composite composite = new Composite(outer, SWT.NONE);
-        GridLayout layout1 = new GridLayout();
-        layout1.numColumns = 1;
-        layout1.verticalSpacing = 10;
-        composite.setLayout(layout1);
-        composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        return composite;
+        addLabel("There is no workflow in progress", outer);
+        parent.getParent().pack();
     }
 
     public void displayXML(Element top, String name) {
-        composite = clearXMLDisplay();
-        addLabel("Executing workflow " + name, composite);
+    	clearXMLDisplay();
+        outer = new Composite(parent, SWT.NONE);
+        GridLayout layout0 = new GridLayout();
+        layout0.numColumns = 1;
+        layout0.verticalSpacing = 10;
+        outer.setLayout(layout0);
+        outer.setLayoutData(new GridData(GridData.FILL_HORIZONTAL, SWT.CENTER, true, false));
+
+        // FIXME - it is non-obvious how to get the text box to have a reasonable size vertically
+        // FIXME - adding scrollbars is problematic also
+        
+        addLabel("Executing workflow " + name, outer);
+
+        composite = outer;
+//        final ScrolledComposite sc = new ScrolledComposite(outer, SWT.FILL | SWT.H_SCROLL | SWT.V_SCROLL);
+//        sc.setLayoutData(new GridData(GridData.FILL_HORIZONTAL, SWT.CENTER, true, false));
+//
+//        composite = new Composite(sc, SWT.NONE);
+//        GridLayout layout1 = new GridLayout();
+//        layout1.numColumns = 1;
+//        layout1.verticalSpacing = 10;
+//        composite.setLayout(layout1);
+//        composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
         try {
             if (!"form".equals(top.getNodeName())) {
                 MessageDialog.openError(null, "Error", "Incorrrect top-level node name");
@@ -225,11 +141,106 @@ public class SessionView extends ViewPart {
                     }
                 }
             }
-            addSeparator();
-            outer.layout(true, true);
 
         } catch (Exception e) {
             MessageDialog.openError(null, "Error", "Failure to display XML\n" + e);
         }
+
+        addSeparator(outer);
+
+        Composite buttons = new Composite(outer, SWT.NONE);
+        GridLayout layout2 = new GridLayout();
+        layout2.numColumns = 4; // number of buttons
+        layout2.verticalSpacing = 10;
+        buttons.setLayout(layout2);
+        buttons.setLayoutData(new GridData(GridData.FILL_HORIZONTAL, SWT.LEFT, true, false));
+        createButton(buttons, IDialogConstants.ABORT_ID, "Abort", false);
+        createButton(buttons, IDialogConstants.RETRY_ID, "Restart", false);
+        createButton(buttons, IDialogConstants.BACK_ID, "Back", false);
+        createButton(buttons, IDialogConstants.OK_ID, "Next", true);
+
+        parent.getParent().layout(true, true);
+
     }
+
+    protected Button createButton(Composite buttons, int id, String label, boolean defaultButton) {
+        Button button =
+                WidgetFactory.button(SWT.PUSH)
+                        .text(label)
+                        .font(JFaceResources.getDialogFont())
+                        .data(Integer.valueOf(id))
+                        .onSelect(
+                                event ->
+                                        buttonPressed(
+                                                ((Integer) event.widget.getData()).intValue()))
+                        .create(buttons);
+        if (defaultButton) {
+            Shell shell = buttons.getShell();
+            if (shell != null) {
+                shell.setDefaultButton(button);
+            }
+        }
+        return button;
+    }
+
+    protected void buttonPressed(int buttonId) {
+        switch (buttonId) {
+        case IDialogConstants.OK_ID:
+        	handler.next();
+        	break;
+        case IDialogConstants.ABORT_ID:
+        	handler.abort();
+        	break;
+        case IDialogConstants.BACK_ID:
+        	handler.back();
+        	break;
+        case IDialogConstants.RETRY_ID:
+        	handler.retry();
+        	break;
+        default:
+        }
+    }
+
+
+
+    public void addTextBox(String label, String initialText, int lines, boolean readonly) {
+        if (label != null) addLabel(label, composite);
+        Text textBox =
+                new Text(composite, SWT.LEFT | SWT.MULTI | SWT.V_SCROLL | SWT.WRAP | SWT.BORDER);
+        textBox.setText(initialText + "\n\n\n\n\n\n");
+        textBox.setTextLimit(10000);
+        textBox.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        // FIXME - set size, readonly
+    }
+
+    public void addLabel(String text, Composite parent) {
+        Label textBox1 = new Label(parent, SWT.LEFT);
+        textBox1.setText(text);
+        textBox1.setBackground(parent.getBackground());
+        // TODO: Would like to set to bold
+    }
+
+    public void addSeparator(Composite parent) {
+        new Label(parent, SWT.HORIZONTAL | SWT.SEPARATOR).setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+    }
+
+    public void addButton(String label) {
+        Button b = new Button(composite, SWT.PUSH);
+        b.setText(label);
+        b.addSelectionListener(
+                new SelectionListener() {
+
+                    @Override
+                    public void widgetSelected(SelectionEvent e) {
+                        //        		next();
+
+                    }
+
+                    @Override
+                    public void widgetDefaultSelected(SelectionEvent e) {
+                        //       		next();
+                    }
+                });
+    }
+
 }
