@@ -96,7 +96,7 @@ public class AutoGsnUnifiedMainViewHandler {
 
     @FXML private GridPane gridPaneCharts;
     //    @FXML private BarChart chartBarStatus;
-    @FXML private BarChart chartBarClass;
+    @FXML private BarChart<String, Integer> chartBarClass;
 
     // --------------------------------
 
@@ -190,11 +190,11 @@ public class AutoGsnUnifiedMainViewHandler {
 
         // populate the class bar chart
 
-        XYChart.Series classData = new XYChart.Series();
+        XYChart.Series<String, Integer> classData = new XYChart.Series<>();
 
         // Create a list to store the Data objects so that we can
         // color them later
-        List<Data> classBarList = new ArrayList<Data>();
+        List<Data<String, Integer>> classBarList = new ArrayList<>();
 
         // By this step, all classes will have been added
         // to the comboClassFilter
@@ -204,7 +204,8 @@ public class AutoGsnUnifiedMainViewHandler {
             if (!classKey.equalsIgnoreCase("All")) {
                 int classCount =
                         AutoGsnGuiUtils.getClassCount(AutoGsnViewsManager.allRootGoals, classKey);
-                Data classBar = new XYChart.Data(classKey, classCount);
+                Data<String, Integer> classBar =
+                        new XYChart.Data<String, Integer>(classKey, classCount);
                 classData.getData().add(classBar);
                 classBarList.add(classBar);
             }
@@ -212,7 +213,7 @@ public class AutoGsnUnifiedMainViewHandler {
         chartBarClass.getData().add(classData);
 
         // set random colors to the class bars
-        for (Data bar : classBarList) {
+        for (var bar : classBarList) {
             //            bar.getNode().setStyle("-fx-bar-fill: " + AutoGsnGuiUtils.randomColor() +
             // ";");
             bar.getNode().setStyle("-fx-bar-fill: #635452;");

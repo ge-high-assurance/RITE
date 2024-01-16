@@ -33,7 +33,6 @@ package com.ge.research.rack.utils;
 
 import com.ge.research.semtk.edc.client.OntologyInfoClient;
 import com.ge.research.semtk.edc.client.OntologyInfoClientConfig;
-import com.ge.research.semtk.ontologyTools.*;
 import com.ge.research.semtk.ontologyTools.OntologyClass;
 import com.ge.research.semtk.ontologyTools.OntologyInfo;
 import com.ge.research.semtk.sparqlX.SparqlConnection;
@@ -59,9 +58,8 @@ public class OntologyUtil {
             OntologyInfoClient ontClient = new OntologyInfoClient(config);
             oInfo = ontClient.getOntologyInfo(conn);
         } catch (Exception e) {
-            RackConsole.getConsole()
-                    .error(
-                            " Unable to connect to ontology service, please check connection parameters and retry");
+            ErrorMessageUtil.error(
+                    " Unable to connect to ontology service, please check connection parameters and retry");
             return null;
         }
         return oInfo;

@@ -35,6 +35,7 @@ import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
 import com.ge.research.rack.report.structures.SparqlConnectionInfo;
 import com.ge.research.rack.utils.ConnectionUtil;
 import com.ge.research.rack.utils.Core;
+import com.ge.research.rack.utils.ErrorMessageUtil;
 import com.ge.research.rack.views.RackPreferencePage;
 import com.ge.research.semtk.api.nodeGroupExecution.client.NodeGroupExecutionClient;
 import com.ge.research.semtk.api.nodeGroupExecution.client.NodeGroupExecutionClientConfig;
@@ -114,9 +115,9 @@ public class RackQueryUtils {
 
             return newConnPars;
         } catch (Exception e) {
-            System.out.println(
-                    "ERROR: Was unable to create SparQlGraph connection using user preferences!!");
-            e.printStackTrace();
+            ErrorMessageUtil.error(
+                    "ERROR: Was unable to create SparQlGraph connection using user preferences!!",
+                    e);
             return null;
         }
     }
@@ -173,8 +174,8 @@ public class RackQueryUtils {
 
             return newConnPars;
         } catch (Exception e) {
-            System.out.println("ERROR: Was unable to create hardcoded SparQlGraph connection!!");
-            e.printStackTrace();
+            ErrorMessageUtil.error(
+                    "ERROR: Was unable to create hardcoded SparQlGraph connection!!", e);
             return null;
         }
     }
@@ -246,13 +247,11 @@ public class RackQueryUtils {
                 myWriter.close();
                 System.out.println("Successfully created and wrote data to CSV files.\n");
             } catch (Exception e) {
-                System.out.println("ERROR: Could not create and write data to CSV files.\n");
-                e.printStackTrace();
+                ErrorMessageUtil.error("ERROR: Could not create and write data to CSV files.\n", e);
             }
         } catch (Exception e) {
-            System.out.println(
-                    "ERROR: Could not execute query " + queryId + " successfully on RACK!!\n");
-            e.printStackTrace();
+            ErrorMessageUtil.error(
+                    "ERROR: Could not execute query " + queryId + " successfully on RACK!!\n", e);
         }
     }
 
@@ -331,9 +330,8 @@ public class RackQueryUtils {
             }
 
         } catch (IOException ioe) {
-            System.out.println(
-                    "ERROR: Was unable to read the CSV files created by querying RACK!!\n");
-            ioe.printStackTrace();
+            ErrorMessageUtil.error(
+                    "ERROR: Was unable to read the CSV files created by querying RACK!!\n", ioe);
         }
 
         return fileArray;
@@ -366,7 +364,7 @@ public class RackQueryUtils {
         try (BufferedReader reader = new BufferedReader(new StringReader(cleanString))) {
 
             // read the second line from the csv file
-            String columnHeadersLine = reader.readLine();
+            // String columnHeadersLine = reader.readLine();
 
             // read the second line
             String csvLine = reader.readLine();
@@ -385,9 +383,8 @@ public class RackQueryUtils {
             }
 
         } catch (IOException ioe) {
-            System.out.println(
-                    "ERROR: Was unable to read the CSV files created by querying RACK!!\n");
-            ioe.printStackTrace();
+            ErrorMessageUtil.error(
+                    "ERROR: Was unable to read the CSV files created by querying RACK!!\n", ioe);
         }
 
         return fileArray;
@@ -436,9 +433,8 @@ public class RackQueryUtils {
             }
 
         } catch (IOException ioe) {
-            System.out.println(
-                    "ERROR: Was unable to read the CSV files created by querying RACK!!\n");
-            ioe.printStackTrace();
+            ErrorMessageUtil.error(
+                    "ERROR: Was unable to read the CSV files created by querying RACK!!\n", ioe);
         }
 
         return fileArray;
@@ -479,9 +475,8 @@ public class RackQueryUtils {
             return row;
 
         } catch (IOException ioe) {
-            System.out.println(
-                    "ERROR: Was unable to read the CSV files created by querying RACK!!\n");
-            ioe.printStackTrace();
+            ErrorMessageUtil.error(
+                    "ERROR: Was unable to read the CSV files created by querying RACK!!\n", ioe);
         }
 
         return null;
@@ -529,19 +524,17 @@ public class RackQueryUtils {
                                 Core.NODEGROUP_INGEST_COMMENT,
                                 System.getProperty("user.name"),
                                 json.getJson());
-                System.out.println("Successfully uploaded nodegroup to RACK store!\n");
+                ErrorMessageUtil.println("Successfully uploaded nodegroup to RACK store!\n");
                 return true;
 
             } catch (Exception e) {
-                System.out.println(
-                        "ERROR: Upload of nodegroup: " + queryId + ".json " + "failed!\n");
-                e.printStackTrace();
+                ErrorMessageUtil.error(
+                        "ERROR: Upload of nodegroup: " + queryId + ".json " + "failed!\n", e);
                 return false;
             }
         } catch (Exception e) {
-            System.out.println(
-                    "ERROR: Could not use json string from filePath to create nodegroup!\n");
-            e.printStackTrace();
+            ErrorMessageUtil.error(
+                    "ERROR: Could not use json string from filePath to create nodegroup!\n", e);
             return false;
         }
     }

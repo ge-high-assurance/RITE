@@ -74,7 +74,7 @@ public class AutoGsnUnifiedDrillGoalViewHandler {
     // -------- Local variables to store data
 
     // All relevant GSN for this traverse instance
-    private List<GsnNode> allRelevantGsn;
+    // private List<GsnNode> allRelevantGsn;
 
     // Current level
     private int currentGoalLevel = 0;
@@ -108,14 +108,14 @@ public class AutoGsnUnifiedDrillGoalViewHandler {
     @FXML private Label labelGoalStatus;
     @FXML private Label labelSubElementsHeading;
 
-    @FXML private BarChart chartGoalStatus;
+    @FXML private BarChart<String, Integer> chartGoalStatus;
     @FXML private NumberAxis chartGoalStatusNumberAxis;
 
     @FXML private ListView<Label> listSubGoals;
 
-    @FXML private ComboBox comboPassFail;
+    @FXML private ComboBox<String> comboPassFail;
 
-    @FXML private TreeView treeGsn;
+    @FXML private TreeView<Label> treeGsn;
 
     // --------------------------------
 
@@ -154,11 +154,11 @@ public class AutoGsnUnifiedDrillGoalViewHandler {
      * @param node
      * @return
      */
-    private TreeItemAndBoolean populateTreeViewGsnCascadeWithExpansion(
+    private TreeItemAndBoolean<Label> populateTreeViewGsnCascadeWithExpansion(
             GsnNode node, String currentGoalId, Boolean expandFlag) {
         Node nodeImage = AutoGsnGuiUtils.getNodeImage(node);
 
-        TreeItem elementItem = new TreeItem(getNodeTreeLabel(node), nodeImage);
+        TreeItem<Label> elementItem = new TreeItem<Label>(getNodeTreeLabel(node), nodeImage);
 
         Boolean myExpFlag = false;
 
@@ -176,7 +176,7 @@ public class AutoGsnUnifiedDrillGoalViewHandler {
             Boolean someChildExpanded = false;
             for (GsnNode child : node.getSupportedBy()) {
 
-                TreeItemAndBoolean childReturned =
+                TreeItemAndBoolean<Label> childReturned =
                         populateTreeViewGsnCascadeWithExpansion(child, currentGoalId, false);
 
                 // Add the child treeitem
@@ -202,8 +202,8 @@ public class AutoGsnUnifiedDrillGoalViewHandler {
         }
 
         // create TreeItemAndBoolean to return to parent
-        MultiClassPackets.TreeItemAndBoolean returnPack =
-                new MultiClassPackets().new TreeItemAndBoolean(elementItem, myExpFlag);
+        MultiClassPackets.TreeItemAndBoolean<Label> returnPack =
+                new MultiClassPackets().new TreeItemAndBoolean<>(elementItem, myExpFlag);
 
         return returnPack;
     }
@@ -214,7 +214,7 @@ public class AutoGsnUnifiedDrillGoalViewHandler {
 
         // get the GSN tree
         // TreeItem tree = populateTreeViewGsnCascade(rootGsn, currentGoalId);
-        TreeItemAndBoolean treeItemWithFlag =
+        TreeItemAndBoolean<Label> treeItemWithFlag =
                 populateTreeViewGsnCascadeWithExpansion(rootGsn, currentGoalId, false);
 
         // Assign the tree to the treeview
@@ -282,10 +282,10 @@ public class AutoGsnUnifiedDrillGoalViewHandler {
 
         // populate the status chart
 
-        XYChart.Series dataSeries1 = new XYChart.Series();
+        XYChart.Series<String, Integer> dataSeries1 = new XYChart.Series<>();
 
-        Data passBar = new XYChart.Data("Passed", numPassed);
-        Data failBar = new XYChart.Data("Failed", numFailed);
+        Data<String, Integer> passBar = new XYChart.Data<>("Passed", numPassed);
+        Data<String, Integer> failBar = new XYChart.Data<>("Failed", numFailed);
 
         dataSeries1.getData().add(passBar);
         dataSeries1.getData().add(failBar);

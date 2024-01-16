@@ -32,6 +32,7 @@
 package com.ge.research.rack.report.viewManagers;
 
 import com.ge.research.rack.report.structures.PsacNode;
+import com.ge.research.rack.utils.ErrorMessageUtil;
 import java.net.URL;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
@@ -160,10 +161,9 @@ public class ReportViewsManager extends Application {
 
         } catch (Exception ex) {
 
-            ex.printStackTrace();
+            ErrorMessageUtil.error("Exception caught in setNewFxmlToStage", ex);
         }
 
-        System.out.println("Here");
         return null;
     }
 
@@ -183,7 +183,7 @@ public class ReportViewsManager extends Application {
 
         } catch (Exception ex) {
 
-            ex.printStackTrace();
+            ErrorMessageUtil.error("Exception caught in ReportViewsManager.start", ex);
         }
     }
 }

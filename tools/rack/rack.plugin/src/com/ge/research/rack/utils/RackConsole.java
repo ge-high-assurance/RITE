@@ -31,7 +31,6 @@
  */
 package com.ge.research.rack.utils;
 
-import com.ge.research.rack.views.ViewUtils;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -72,12 +71,13 @@ public class RackConsole extends MessageConsole {
             ConsolePlugin plugin = ConsolePlugin.getDefault();
             IConsoleManager consoleManager = plugin.getConsoleManager();
             console = new RackConsole();
-            console.activate();
+            // console.activate();
             stream = console.newMessageStream();
             streamErr = console.newMessageStream();
             streamWarn = console.newMessageStream();
             consoleManager.addConsoles(new IConsole[] {console});
-            ViewUtils.pinConsole(console);
+            console.activate();
+            // ViewUtils.pinConsole(console);
             setup = true;
             console.addPatternMatchListener(
                     new IPatternMatchListener() {

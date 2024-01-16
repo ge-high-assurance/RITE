@@ -59,7 +59,7 @@ public class CustomStringUtils {
      * @return
      */
     public static String getGsnOutDir(String instanceFilePath) {
-        String dirPath = "";
+        // String dirPath = "";
 
         // get the instance folder path
         String instDir = CustomFileUtils.getFileDirectory(instanceFilePath);
