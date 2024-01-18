@@ -74,7 +74,7 @@ public class AutoGsnViewsManager extends Application {
     // stores rack output directory
     public static String rackDir;
 
-    // stores the paterninfo and queries once created
+    // stores the pattern info and queries once created
     public static GsnPathInferenceEngine pathInferEngObj;
 
     // stores all goal class id info

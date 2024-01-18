@@ -43,6 +43,7 @@ import javafx.scene.Scene;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.*;
 import org.eclipse.ui.part.ViewPart;
@@ -76,10 +77,23 @@ public class AssuranceCaseTree extends ViewPart {
 
     @Override
     public void createPartControl(Composite parent) {
-
+    	
     	try {
     		
+
+    	if (RackPreferencePage.getJavaFxPreference()) {
+            Composite composite = new Composite(parent, SWT.NONE);
+    		//composite.setLayout(new RowLayout(SWT.VERTICAL));
+    		new org.eclipse.swt.widgets.Label(composite, SWT.LEFT).setText(
+    				"Using floating JavaFx windows rather than Eclipse views.\n"+
+    				"To change to Eclipse views, change the option in the RACK preferences page."
+    				);
+    		composite.pack();
+    		return;
+    	}
+
         Composite composite = new Composite(parent, SWT.EMBEDDED | SWT.NO_BACKGROUND);
+
         final Frame frame = SWT_AWT.new_Frame(composite);
         
         final JScrollPane parentPanel = new JScrollPane();

@@ -49,6 +49,7 @@ import org.eclipse.jface.preference.FieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.FileFieldEditor;
 import org.eclipse.jface.preference.StringFieldEditor;
+import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
@@ -75,6 +76,9 @@ public class RackPreferencePage extends FieldEditorPreferencePage
     private static final String GSN_PROJECT_PATTERN_SADL =
             "gsn_project_pattern_sadl"; // initial value must be ""
 
+    private static final String JAVAFX_WINDOW = "rack_javafx";
+    private static final String SHOW_CONSOLE = "rack_console";
+    
     // singleton preference store
     private static ScopedPreferenceStore preferenceStore =
             new ScopedPreferenceStore(InstanceScope.INSTANCE, "rack.plugin");
@@ -87,6 +91,8 @@ public class RackPreferencePage extends FieldEditorPreferencePage
 
     @Override
     public void init(IWorkbench workbench) {
+    	preferenceStore.setDefault(JAVAFX_WINDOW, false);
+    	preferenceStore.setDefault(SHOW_CONSOLE, false);
         setDescription("SemTK Preference");
         preferenceStore.setDefault(PROTOCOL, "http");
         preferenceStore.setDefault(SERVER, "localhost");
@@ -106,6 +112,14 @@ public class RackPreferencePage extends FieldEditorPreferencePage
         preferenceStore.setDefault(GSN_PROJECT_PATTERN_SADL, "");
 
         setPreferenceStore(preferenceStore);
+    }
+    
+    public static boolean getJavaFxPreference() {
+    	return preferenceStore.getBoolean(JAVAFX_WINDOW);
+    }
+
+    public static boolean getShowConsole() {
+    	return preferenceStore.getBoolean(SHOW_CONSOLE);
     }
 
     public static String getProtocol() {
@@ -203,12 +217,12 @@ public class RackPreferencePage extends FieldEditorPreferencePage
                 || getGsnProjectPatternSadl().equalsIgnoreCase("")) {
             return false;
         } else {
-            System.out.println(
-                    "The GSN preferences: "
-                            + getGsnProjectPatternSadl()
-                            + " (project pattern), "
-                            + getGsnProjectOverlaySadl()
-                            + " (project overlay)");
+//            System.out.println(
+//                    "The GSN preferences: "
+//                            + getGsnProjectPatternSadl()
+//                            + " (project pattern), "
+//                            + getGsnProjectOverlaySadl()
+//                            + " (project overlay)");
         }
 
         return true;
@@ -216,7 +230,7 @@ public class RackPreferencePage extends FieldEditorPreferencePage
 
     @Override
     protected void createFieldEditors() {
-
+    	
         StringFieldEditor stemDir =
                 new StringFieldEditor(PROTOCOL, "Protocol:", getFieldEditorParent());
         addField(stemDir);
@@ -303,6 +317,18 @@ public class RackPreferencePage extends FieldEditorPreferencePage
                         "GSN Project Pattern .sadl Path:",
                         getFieldEditorParent());
         addField(gsnProjectPattern);
+        
+    	var javafxPref =
+    			new BooleanFieldEditor(JAVAFX_WINDOW, "Use javfx floating indows for assurance goals (if unselected, use an Eclipse view).\n"
+    					+"Requires a restart when changed.",
+    					getFieldEditorParent());
+        addField(javafxPref);
+
+    	var consolePref =
+    			new BooleanFieldEditor(SHOW_CONSOLE, "Show console when output is written to it",
+    					getFieldEditorParent());
+        addField(consolePref);
+
     }
 
     @Override

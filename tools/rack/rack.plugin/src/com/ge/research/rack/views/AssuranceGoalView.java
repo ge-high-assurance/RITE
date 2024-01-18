@@ -31,56 +31,25 @@
  */
 package com.ge.research.rack.views;
 
-import com.ge.research.rack.LoadAssuranceCaseHandler;
-import com.ge.research.rack.autoGsn.viewHandlers.AutoGsnUnifiedMainViewHandler;
 import com.ge.research.rack.utils.*;
-import com.ge.research.rack.utils.TreeNode;
-import com.google.inject.*;
 
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.jface.action.*;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
-import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.*;
-import org.eclipse.ui.part.*;
 import org.eclipse.ui.part.ViewPart;
-import org.osgi.framework.Bundle;
 
 import java.awt.Frame;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
 
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
-
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
-
 
 /**
  * This sample class demonstrates how to plug-in a new workbench view. The view shows data obtained
@@ -104,8 +73,20 @@ public class AssuranceGoalView extends ViewPart {
     public void createPartControl(Composite parent) {
     	try {
 
+
+        	if (RackPreferencePage.getJavaFxPreference()) {
+        		Composite composite = new Composite(parent, SWT.NONE);
+//        		composite.setLayout(new RowLayout(SWT.VERTICAL)));
+        		new org.eclipse.swt.widgets.Label(composite, SWT.LEFT).setText(
+        				"Using floating JavaFx windows rather than Eclipse views.\n"+
+        				"To change to Eclipse views, change the option in the RACK preferences page."
+        				);
+        		composite.pack();
+        		return;
+        	}
+
     		Composite composite = new Composite(parent, SWT.EMBEDDED | SWT.NO_BACKGROUND);
-    		final Frame frame = SWT_AWT.new_Frame(composite);
+        	final Frame frame = SWT_AWT.new_Frame(composite);
 
     		final JScrollPane parentPanel = new JScrollPane();
     		parentPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);

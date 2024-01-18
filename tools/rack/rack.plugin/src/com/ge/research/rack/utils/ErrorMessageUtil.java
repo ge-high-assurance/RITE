@@ -35,6 +35,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
+import com.ge.research.rack.views.RackPreferencePage;
+
 public class ErrorMessageUtil {
     public static String getErrorMessage(Exception e) {
         return "";
@@ -81,7 +83,7 @@ public class ErrorMessageUtil {
                                 }
                             }
                         });
-        raiseConsole();
+        if (RackPreferencePage.getShowConsole()) raiseConsole();
     }
     
     public static void doit(Runnable r) {
@@ -107,7 +109,7 @@ public class ErrorMessageUtil {
                                 }
                             }
                         });
-        raiseConsole();
+        if (RackPreferencePage.getShowConsole()) raiseConsole();
     }
 
     public static void error(String msg, Exception e) {
@@ -123,7 +125,7 @@ public class ErrorMessageUtil {
                                 }
                             }
                         });
-        raiseConsole();
+        if (RackPreferencePage.getShowConsole()) raiseConsole();
     }
 
     /**
@@ -145,7 +147,7 @@ public class ErrorMessageUtil {
                                 }
                             }
                         });
-        raiseConsole();
+        if (RackPreferencePage.getShowConsole()) raiseConsole();
     }
 
     /**

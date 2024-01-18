@@ -34,14 +34,24 @@ package com.ge.research.rack;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.jface.dialogs.MessageDialog;
+
+import com.ge.research.rack.views.AssuranceCaseTree;
+import com.ge.research.rack.views.AssuranceGoalView;
+import com.ge.research.rack.views.RackPreferencePage;
+import com.ge.research.rack.views.ViewUtils;
 
 public class AutoGsnButtonHandler extends AbstractHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
         // Launch the AutoGsnMainView
-        JavaFXAppLaunchManager.autoGsnMainViewLaunch();
-
+    	MessageDialog.openInformation(null, "", "Mode " + RackPreferencePage.getJavaFxPreference());
+        if (RackPreferencePage.getJavaFxPreference()) {
+        	JavaFXAppLaunchManager.autoGsnMainViewLaunch();
+        } else {
+        	AssuranceCaseTree.showView();
+        }
         return null;
     }
 }
