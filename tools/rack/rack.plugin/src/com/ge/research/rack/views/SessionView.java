@@ -31,33 +31,23 @@
  */
 package com.ge.research.rack.views;
 
-import java.io.File;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import com.ge.research.rack.RunWorkflowHandler;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.widgets.WidgetFactory;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
-import org.eclipse.ui.internal.console.ConsoleView;
 import org.eclipse.ui.part.*;
-import org.w3c.dom.Document;
-import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
-import org.w3c.dom.Entity;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.helpers.*;
 
-import com.ge.research.rack.RunWorkflowHandler;
+record Input(Element element, Widget widget) {}
 
 public class SessionView extends ViewPart {
 
@@ -68,21 +58,22 @@ public class SessionView extends ViewPart {
     private Composite outer;
     private Composite composite;
     public RunWorkflowHandler handler;
+    public java.util.List<Input> inputs;
 
     @Override
     public void setFocus() {}
 
     @Override
     public void createPartControl(Composite parent) {
-    	this.parent = parent;
-    	
+        this.parent = parent;
+
         displayEmpty();
     }
 
     public void clearXMLDisplay() {
-    	if (!this.outer.isDisposed()) this.outer.dispose();
+        if (!this.outer.isDisposed()) this.outer.dispose();
     }
-    
+
     public void displayEmpty() {
         outer = new Composite(parent, SWT.NONE);
         GridLayout layout0 = new GridLayout();
@@ -95,7 +86,8 @@ public class SessionView extends ViewPart {
     }
 
     public void displayXML(Element top, String name) {
-    	clearXMLDisplay();
+        clearXMLDisplay();
+        inputs = new java.util.LinkedList<>();
         outer = new Composite(parent, SWT.NONE);
         GridLayout layout0 = new GridLayout();
         layout0.numColumns = 1;
@@ -105,23 +97,25 @@ public class SessionView extends ViewPart {
 
         // FIXME - it is non-obvious how to get the text box to have a reasonable size vertically
         // FIXME - adding scrollbars is problematic also
-        
+
         addLabel("Executing workflow " + name, outer);
 
         composite = outer;
-//        final ScrolledComposite sc = new ScrolledComposite(outer, SWT.FILL | SWT.H_SCROLL | SWT.V_SCROLL);
-//        sc.setLayoutData(new GridData(GridData.FILL_HORIZONTAL, SWT.CENTER, true, false));
-//
-//        composite = new Composite(sc, SWT.NONE);
-//        GridLayout layout1 = new GridLayout();
-//        layout1.numColumns = 1;
-//        layout1.verticalSpacing = 10;
-//        composite.setLayout(layout1);
-//        composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        //        final ScrolledComposite sc = new ScrolledComposite(outer, SWT.FILL | SWT.H_SCROLL
+        // | SWT.V_SCROLL);
+        //        sc.setLayoutData(new GridData(GridData.FILL_HORIZONTAL, SWT.CENTER, true, false));
+        //
+        //        composite = new Composite(sc, SWT.NONE);
+        //        GridLayout layout1 = new GridLayout();
+        //        layout1.numColumns = 1;
+        //        layout1.verticalSpacing = 10;
+        //        composite.setLayout(layout1);
+        //        composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
         try {
             if (!"form".equals(top.getNodeName())) {
-                MessageDialog.openError(null, "Error", "Incorrrect top-level node name");
+                addLabel("Received XML is invalid", outer);
+                MessageDialog.openError(null, "Error", "Incorrect top-level node name");
                 return;
             }
             NodeList ns = top.getElementsByTagName("control");
@@ -130,19 +124,23 @@ public class SessionView extends ViewPart {
                 if (n instanceof Element element) {
                     String type = element.getAttribute("type");
                     String label = element.getAttribute("label");
-                    if ("textinput".equals(type)) {
+                    String text = element.getTextContent();
+                    if ("textinput".equals(type) || "textbox".equals(type)) {
                         String lines = element.getAttribute("lines");
                         String readonly = element.getAttribute("readonly");
-                        addTextBox(label, "Add text", 10, "true".equals(readonly));
+                        var in = addTextBox(label, text, 10, "true".equals(readonly));
+                        inputs.add(new Input(element, in));
                     } else if ("label".equals(type)) {
-                        addLabel(label, composite);
+                        addLabel(text, composite);
                     } else {
+                        addLabel("Received XML is invalid", outer);
                         MessageDialog.openInformation(null, "", "Unknown control type: " + type);
                     }
                 }
             }
 
         } catch (Exception e) {
+            addLabel("Received XML is invalid", outer);
             MessageDialog.openError(null, "Error", "Failure to display XML\n" + e);
         }
 
@@ -150,17 +148,30 @@ public class SessionView extends ViewPart {
 
         Composite buttons = new Composite(outer, SWT.NONE);
         GridLayout layout2 = new GridLayout();
-        layout2.numColumns = 4; // number of buttons
+        layout2.numColumns = 6; // number of buttons
         layout2.verticalSpacing = 10;
         buttons.setLayout(layout2);
         buttons.setLayoutData(new GridData(GridData.FILL_HORIZONTAL, SWT.LEFT, true, false));
         createButton(buttons, IDialogConstants.ABORT_ID, "Abort", false);
+        createButton(buttons, IDialogConstants.FINISH_ID, "Save", false); // There is no built-in ID named SAVE
+        createButton(buttons, IDialogConstants.OPEN_ID, "Load", false);
         createButton(buttons, IDialogConstants.RETRY_ID, "Restart", false);
         createButton(buttons, IDialogConstants.BACK_ID, "Back", false);
         createButton(buttons, IDialogConstants.OK_ID, "Next", true);
 
         parent.getParent().layout(true, true);
-
+    }
+    
+    public void collectXML() {
+    	if (inputs != null) {
+    		for (var p: inputs) {
+    			if (p.widget() instanceof Text t) {
+    				var s = t.getText();
+    				s = s.replaceAll("\n+$","").replaceAll("^\n+", "");
+    				p.element().setTextContent(s);
+    			}
+    		}
+    	}
     }
 
     protected Button createButton(Composite buttons, int id, String label, boolean defaultButton) {
@@ -185,31 +196,35 @@ public class SessionView extends ViewPart {
 
     protected void buttonPressed(int buttonId) {
         switch (buttonId) {
-        case IDialogConstants.OK_ID:
-        	handler.next();
-        	break;
-        case IDialogConstants.ABORT_ID:
-        	handler.abort();
-        	break;
-        case IDialogConstants.BACK_ID:
-        	handler.back();
-        	break;
-        case IDialogConstants.RETRY_ID:
-        	handler.retry();
-        	break;
-        default:
+            case IDialogConstants.OK_ID:
+                handler.next();
+                break;
+            case IDialogConstants.ABORT_ID:
+                handler.abort();
+                break;
+            case IDialogConstants.BACK_ID:
+                handler.back();
+                break;
+            case IDialogConstants.RETRY_ID:
+                handler.retry();
+                break;
+            case IDialogConstants.OPEN_ID: // Load
+                handler.load(this.getSite().getShell());
+                break;
+            case IDialogConstants.FINISH_ID: // SAVE
+                handler.save(this.getSite().getShell());
+                break;
+            default:
         }
     }
 
-
-
-    public void addTextBox(String label, String initialText, int lines, boolean readonly) {
+    public Text addTextBox(String label, String initialText, int lines, boolean readonly) {
         if (label != null) addLabel(label, composite);
         Text textBox =
                 new Text(composite, SWT.LEFT | SWT.MULTI | SWT.V_SCROLL | SWT.WRAP | SWT.BORDER);
-        textBox.setText(initialText + "\n\n\n\n\n\n");
-        textBox.setTextLimit(10000);
+        textBox.setText(initialText.isEmpty()? "\n\n\n\n\n\n" : initialText);
         textBox.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        return textBox;
         // FIXME - set size, readonly
     }
 
@@ -217,13 +232,15 @@ public class SessionView extends ViewPart {
         Label textBox1 = new Label(parent, SWT.LEFT);
         textBox1.setText(text);
         textBox1.setBackground(parent.getBackground());
-        // TODO: Would like to set to bold
+        // FIXME: Would like to set to bold
     }
 
     public void addSeparator(Composite parent) {
-        new Label(parent, SWT.HORIZONTAL | SWT.SEPARATOR).setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        new Label(parent, SWT.HORIZONTAL | SWT.SEPARATOR)
+                .setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
     }
 
+    // FIXME - not yet used
     public void addButton(String label) {
         Button b = new Button(composite, SWT.PUSH);
         b.setText(label);
@@ -242,5 +259,4 @@ public class SessionView extends ViewPart {
                     }
                 });
     }
-
 }

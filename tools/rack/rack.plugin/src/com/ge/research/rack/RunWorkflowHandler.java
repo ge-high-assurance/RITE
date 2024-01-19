@@ -32,14 +32,25 @@
 package com.ge.research.rack;
 
 import com.ge.research.rack.views.SessionView;
+import com.google.common.io.Files;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.PrintStream;
+import java.io.StringWriter;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -57,25 +68,47 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.PlatformUI;
 import org.osgi.framework.Bundle;
 import org.w3c.dom.*;
+import org.xml.sax.SAXException;
 
 public class RunWorkflowHandler extends AbstractHandler {
 
+    List<String> workflowDirs = null;
+    Map<String, Element> workflows = null;
+    DocumentBuilder db;
+    public List<Document> history;
+    
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
         try {
 
+            try {
+                view =
+                        (SessionView)
+                                PlatformUI.getWorkbench()
+                                        .getActiveWorkbenchWindow()
+                                        .getActivePage()
+                                        .showView(SessionView.ID);
+                view.handler = this;
+
+            } catch (Exception e) {
+                MessageDialog.openError(null, "Error", "Failed to find corresponding View\n" + e);
+                throw e;
+            }
+            
             x:
             while (true) {
+            	// Initialize the list of workflows
                 findWorkflows();
                 var keys = new ArrayList<String>(new TreeSet<String>(workflows.keySet()));
                 var wd = new WorkflowDialog(keys);
 
+                // put up a dialog to seelct one
                 int code = wd.open();
                 switch (code) {
                     case IDialogConstants.OK_ID:
                         if (wd.selected == null || wd.selected.isEmpty()) {
                             MessageDialog.openInformation(null, "", "No workflow selected");
-                            break; // FIXME - does a refresh
+                            break; // FIXME - does a refresh of the list of workflows
                         }
                         previousSelection = wd.selected;
                         runWorkflow(wd.selected);
@@ -108,15 +141,11 @@ public class RunWorkflowHandler extends AbstractHandler {
                 if (process != null) process.destroy();
 
             } catch (Exception e) {
-                // Just iognore any cascading exceptions
+                // Just ignore any cascading exceptions
             }
         }
         return null;
     }
-
-    List<String> workflowDirs = null;
-    Map<String, Element> workflows = null;
-    DocumentBuilder db;
 
     public List<String> getWorkflowDirs() throws Exception {
         var path = "resources/workflows";
@@ -124,22 +153,20 @@ public class RunWorkflowHandler extends AbstractHandler {
         for (var p : path.split(File.pathSeparator)) {
             try {
                 Bundle bundle = Platform.getBundle("rack.plugin");
-                URL url = FileLocator.find(bundle, new Path("resources/workflows"), null);
+                URL url = FileLocator.find(bundle, new Path(p), null);
                 var dir = FileLocator.toFileURL(url).getFile();
                 dirs.add(dir);
             } catch (Exception e) {
-                MessageDialog.openError(null, "Error", "Failed to open resource\n" + e);
+                MessageDialog.openError(null, "Error", "Failed to open resource " + p + "\n" + e);
                 throw e;
             }
         }
         return dirs;
-        // return
-        // List.of("/Users/davidcok/projects/galois/RACK/RITE/tools/rack/rack.plugin/resources/workflows");
     }
 
     public void findWorkflows() throws Exception {
         var dirs = getWorkflowDirs();
-        if (!dirs.equals(workflowDirs)) {
+        if (!Objects.equals(dirs,workflowDirs)) {
             workflows = new HashMap<>();
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             try {
@@ -176,7 +203,7 @@ public class RunWorkflowHandler extends AbstractHandler {
                             MessageDialog.openError(
                                     null,
                                     "Error",
-                                    "Workflow XML does not contain an outer node of tyep 'workflow':"
+                                    "Workflow XML does not contain an outer node of type 'workflow': "
                                             + fullname);
                         }
 
@@ -200,9 +227,65 @@ public class RunWorkflowHandler extends AbstractHandler {
     PrintStream writer;
     BufferedReader reader;
     SessionView view;
+    Document doc;
     Element top;
     String workflowName;
+    String currentXML;
+    int count;
+
+    public void runWorkflow(String name) throws Exception {
+        // MessageDialog.openInformation(null, "", "Running workflow " + name);
+    	doc = null;
+    	history = new LinkedList<>();
+        top = workflows.get(name);
+        if (top == null) {
+            // This error should not be reachable, since only well-formed workflows should be in
+            // 'this.workflows'
+            MessageDialog.openError(null, "Error", "No XML document found for workflow " + name);
+            return;
+        }
+        String workflowtype = top.getAttribute("type");
+        String closingInput = top.getAttribute("close"); // Not relevant for default 'xmlonce'
+
+        workflowName = name;
+        launchWorkflow();
+
+        // FIXME - need to check error output
+        // FIXME - need to kill process on failure and perhaps on termination
+        // FIXME - need to be able to refresh the list of workflows -- or maybe we do not need to
+        // cache them
+        // FIXME - failures just abort the whole interaction (without careful cleanup)
+        // FIXME - catch if the target program crashes
+
+        if (workflowtype.isEmpty() || workflowtype.equals("xmlonce")) {
+        	count = 0;
+        	// default - a process that communicates via xml, but restarts and terminates on each send-response pair
+            
+        	currentXML = initialXML(workflowName);
+        	
+        	next();
+
+        } else {
+            MessageDialog.openInformation(null, "", "Only the default workflow type is implemented");
+        }
+    }
     
+    public String initialXML(String workflowName) {
+    	return
+    		"""
+            <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+            <form workflow="example">
+               <connection>
+                  <data-graph>http://...</data-graph>
+                  <model-graph>http://...</model-graph>
+                 <url>http://localhost:3030/RACK</url>
+               </connection>
+            </form>    				
+            """
+    			.replace("example",workflowName);
+    }
+    // FIXME - need to fill in the data-graph and model-graph
+
     public void launchWorkflow() throws Exception {
         String command = top.getAttribute("command");
         String initialInput = top.getAttribute("input");
@@ -219,7 +302,7 @@ public class RunWorkflowHandler extends AbstractHandler {
                 new java.io.BufferedReader(new java.io.InputStreamReader(process.getInputStream()));
 
         try {
-            writer.print(initialInput);
+            if (initialInput != null && !initialInput.isEmpty()) writer.print(initialInput);
         } catch (Exception e) {
             MessageDialog.openError(null, "Error", "Failed to write initialInput");
             throw e;
@@ -245,118 +328,137 @@ public class RunWorkflowHandler extends AbstractHandler {
             throw e;
         }
     }
+    
 
-    public void runWorkflow(String name) throws Exception {
-        //MessageDialog.openInformation(null, "", "Running workflow " + name);
-        top = workflows.get(name);
+    public void next() {
+    	count++;
         if (top == null) {
-            // This error should not be reachable, since only well-formed workflows should be in 'this.workflows'
-            MessageDialog.openError(null, "Error", "No XML document found for workflow " + name);
+            MessageDialog.openInformation(
+                    null, "", "No workflow selected (previous workflow aborted)");
             return;
         }
-        String workflowtype = top.getAttribute("type");
-        String response = top.getAttribute("response");
-        String closingInput = top.getAttribute("close");
-
-        workflowName = name;
-        launchWorkflow();
-
-        // FIXME - need to check error output
-        // FIXME - need to kill process on failure and perhaps on termination
-        // FIXME - need to be able to refresh the list of workflows -- or maybe we do not need to
-        // cache them
-        // FIXME - failures just abort the whole interaction (without careful cleanup)
-        // FIXME - catch if the target program crashes
-
-        if (workflowtype.isEmpty() || workflowtype.equals("xmlloop")) {
-            runXMLworkflow(top);
-
-        } else {
-
-            String responseText = getResponse();
-            MessageDialog.openInformation(null, "Output", responseText);
-            if (closingInput != null && !closingInput.isEmpty()) {
-                send(closingInput);
-            }
-        }
-    }
-
-    public void runXMLworkflow(Element top) throws Exception {
+        String responseText = "";
         try {
-            
-            try {
-                view =
-                        (SessionView)
-                                PlatformUI.getWorkbench()
-                                        .getActiveWorkbenchWindow()
-                                        .getActivePage()
-                                        .showView(SessionView.ID);
-                view.handler = this;
+    		launchWorkflow();
+    		if (doc == null) {
+    			currentXML = initialXML(workflowName);
+    		} else {
+    			view.collectXML();
+    			currentXML = getStringFromDocument(doc);
+    		}
+			send(currentXML);
+    		writer.close();
+    		responseText = getResponse();
+            doc = db.parse(new java.io.ByteArrayInputStream(responseText.getBytes()));
+            view.displayXML(doc.getDocumentElement(), workflowName);
+    		history.add(0, doc);
 
-            } catch (Exception e) {
-                MessageDialog.openError(null, "Error", "Failed to find View\n" + e);
-                throw e;
-            }
-
-    		String responseText = getResponse();
-    		var doc = db.parse(new java.io.ByteArrayInputStream(responseText.getBytes()));
-    		view.displayXML(doc.getDocumentElement(), workflowName);
-
+//            var staysActive = "true".equals(top.getAttribute("stays-active"));
+//            if (!staysActive) launchWorkflow();
+//            if (process.isAlive()) {
+//                send("<form></form>\n"); // FIXME - scrape the user input
+//
+//                String responseText = getResponse();
+//                var doc = db.parse(new java.io.ByteArrayInputStream(responseText.getBytes()));
+//                view.displayXML(doc.getDocumentElement(), workflowName);
+//
+//            } else {
+//                MessageDialog.openInformation(null, "", "Workflow process terminated");
+//            }
         } catch (Exception e) {
-            throw e;
+            MessageDialog.openError(null, "Error", "Communication failure\n" + responseText + "\n" + e);
         }
     }
-    
-    public void next() {
-    	if (top == null) {
-			MessageDialog.openInformation(null, "", "No workflow selected (previous workflow aborted)");
-			return;
-    	}
-    	try {
-    		var staysActive = "true".equals(top.getAttribute("stays-active"));
-    		if (!staysActive) launchWorkflow();
-    		if (process.isAlive()) {
-    			send("<form></form>\n"); // FIXME - scrape the user input
 
-    			String responseText = getResponse();
-    			var doc = db.parse(new java.io.ByteArrayInputStream(responseText.getBytes()));
-    			view.displayXML(doc.getDocumentElement(), workflowName);
-
-    		} else {
-    			MessageDialog.openInformation(null, "", "Workflow process terminated");
-    		}
-    	} catch (Exception e) {
-            MessageDialog.openError(null, "Error", "Communication failure\n" + e);
-    	}
+    public void save(Shell shell) {
+        if (top == null) {
+            MessageDialog.openInformation(
+                    null, "", "No workflow selected (previous workflow aborted)");
+            return;
+        }
+        var fd = new FileDialog(shell, SWT.SAVE);
+        var file = fd.open();
+        if (file != null) {
+        	var d = history.get(0);
+        	var s = getStringFromDocument(d);
+        	try {
+        	    java.nio.file.Files.write(Paths.get(file), s.getBytes());
+        	} catch (java.io.IOException e) {
+        		MessageDialog.openError(null, "Error", "Failed to save file " + file + "\n" + e);
+        	}
+        }
     }
-    
+
+    public void load(Shell shell) {
+        var fd = new FileDialog(shell, SWT.OPEN);
+        var file = fd.open();
+        try {
+        	String text = new String(java.nio.file.Files.readAllBytes(Paths.get(file)), StandardCharsets.UTF_8);
+        	Document d = db.parse(new java.io.ByteArrayInputStream(text.getBytes()));
+        	history.clear();
+        	history.add(d);
+        	doc = d;
+        	// FIXME - need to get new workflow name
+            view.displayXML(doc.getDocumentElement(), workflowName);
+        } catch (java.io.IOException e) {
+        	MessageDialog.openError(null, "Error", "Failed to read file " + file + "\n" + e);
+        } catch (SAXException e) {
+        	MessageDialog.openError(null, "Error", "Failed to parse file " + file + "\n" + e);
+        }
+    }
+
     public void retry() {
-    	if (top == null) {
-			MessageDialog.openInformation(null, "", "No workflow selected (previous workflow aborted)");
-			return;
-    	}
-    	view.clearXMLDisplay();
-    	try {
-    		runWorkflow(workflowName);
-    	} catch (Exception e) {
+        if (top == null) {
+            MessageDialog.openInformation(
+                    null, "", "No workflow selected (previous workflow aborted)");
+            return;
+        }
+        view.clearXMLDisplay();
+        try {
+            runWorkflow(workflowName);
+        } catch (Exception e) {
             MessageDialog.openError(null, "Error", "Failed to restart workflow\n" + e);
-    	}
+        }
     }
 
     public void back() {
-    	if (top == null) {
-			MessageDialog.openInformation(null, "", "No workflow selected (previous workflow aborted)");
-			return;
-    	}
-		MessageDialog.openInformation(null, "", "Back is not implemented"); // FIXME
+        if (top == null) {
+            MessageDialog.openInformation(
+                    null, "", "No workflow selected (previous workflow aborted)");
+            return;
+        }
+        if (history.size() <= 1) {
+            MessageDialog.openInformation(
+                    null, "", "No further history");
+            return;
+        }
+        history.remove(0);
+        doc = history.get(0);
+        view.displayXML(doc.getDocumentElement(), workflowName);
     }
 
     public void abort() {
-    	view.clearXMLDisplay();
-    	top = null;
-    	workflowName = null;
-    	view.displayEmpty();
+        view.clearXMLDisplay();
+        top = null;
+        workflowName = null;
+        view.displayEmpty();
     }
+    
+    //method to convert Document to String
+    public String getStringFromDocument(Document doc) {
+        try {
+           DOMSource domSource = new DOMSource(doc);
+           StringWriter writer = new StringWriter();
+           StreamResult result = new StreamResult(writer);
+           TransformerFactory tf = TransformerFactory.newInstance();
+           Transformer transformer = tf.newTransformer();
+           transformer.transform(domSource, result);
+           return writer.toString();
+        } catch (TransformerException ex) {
+           ex.printStackTrace();
+           return null;
+        }
+    } 
 
     public static String previousSelection = null;
 
