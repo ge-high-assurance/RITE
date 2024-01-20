@@ -217,7 +217,7 @@ public class SessionView extends ViewPart {
                             if (!readonly) inputs.add(new Input(element, in));
                         } else if ("label".equals(type)) {
                             addLabel(composite, text);
-                        } else if ("checkbox".equals(text)) {
+                        } else if ("checkbox".equals(type)) {
                             boolean value = element.hasAttribute("checked");
                             var in = addCheckbox(composite, label, value, readonly);
                             if (!readonly) inputs.add(new Input(element, in));
@@ -275,7 +275,7 @@ public class SessionView extends ViewPart {
                     var hasChecked = p.element().hasAttribute("checked");
                     var checked = b.getSelection();
                     if (checked && !hasChecked) {
-                        p.element().setAttribute("checked", "");
+                        p.element().setAttribute("checked", "checked");
                     } else if (!checked && hasChecked) {
                         p.element().removeAttribute("checked");
                     }
