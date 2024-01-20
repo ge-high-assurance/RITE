@@ -31,6 +31,7 @@
  */
 package com.ge.research.rack;
 
+import com.ge.research.rack.views.RackPreferencePage;
 import com.ge.research.rack.views.SessionView;
 import java.io.BufferedReader;
 import java.io.File;
@@ -309,15 +310,17 @@ public class RunWorkflowHandler extends AbstractHandler {
     public String initialXML(String workflowName) {
         return """
             <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-            <form workflow="example">
+            <form workflow="#example">
                <connection>
-                  <data-graph>http://...</data-graph>
-                  <model-graph>http://...</model-graph>
+                  <data-graph>#data_graph</data-graph>
+                  <model-graph>#model_graph</model-graph>
                  <url>http://localhost:3030/RACK</url>
                </connection>
             </form>
             """
-                .replace("example", workflowName);
+         .replace("#example", workflowName)
+        .replace("#data_graph", RackPreferencePage.getDefaultDataGraph())
+        .replace("#model_graph", RackPreferencePage.getDefaultModelGraph());
     }
 
     // FIXME - need to fill in the data-graph and model-graph
