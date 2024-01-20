@@ -36,6 +36,7 @@ import java.util.List;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.widgets.WidgetFactory;
 import org.eclipse.swt.SWT;
@@ -365,7 +366,8 @@ public class SessionView extends ViewPart {
     /** Adds (readonly) text to the parent Composite */
     public void addLabel(Composite parent, String text) {
         Label label = new Label(parent, SWT.LEFT);
-        var boldFont = new Font( label.getDisplay(), new FontData( "Arial", 12, SWT.BOLD ) );
+        FontDescriptor boldDescriptor = FontDescriptor.createFrom(label.getFont()).setStyle(SWT.BOLD);
+        Font boldFont = boldDescriptor.createFont(label.getDisplay());
         label.setFont( boldFont );
         label.setText(text);
         label.setBackground(parent.getBackground());
