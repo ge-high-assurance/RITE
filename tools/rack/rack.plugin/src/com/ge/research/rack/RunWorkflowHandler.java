@@ -454,7 +454,7 @@ public class RunWorkflowHandler extends AbstractHandler {
                     null, "", "No workflow selected (previous workflow aborted)");
             return;
         }
-        if (history.size() == 0) {
+        if (history.size() <= 1) {
             MessageDialog.openInformation(
                     null, "", "No further history");
             return;

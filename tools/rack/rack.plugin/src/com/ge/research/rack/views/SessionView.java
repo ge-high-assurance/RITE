@@ -59,6 +59,8 @@ import org.w3c.dom.NodeList;
 // FIXME - allow multiple instances of this View
 // FIXME - add a select button on a View
 // FIXME - allow multiple communicating processes
+// FIXME - im0lement readonlyness
+// FIXME - implement xml remaining attributes
 
 // FIXME - use computational thread? be able to abort a stuck process?
 
@@ -92,7 +94,7 @@ public class SessionView extends ViewPart {
     }
 
     public void clearXMLDisplay() {
-        if (!this.outer.isDisposed()) {
+        if (this.outer != null && !this.outer.isDisposed()) {
         	this.outer.dispose();
         	this.outer = null;
         }
@@ -102,7 +104,6 @@ public class SessionView extends ViewPart {
         outer = new Composite(parent, SWT.NONE);
         GridLayout layout0 = new GridLayout();
         layout0.numColumns = 1;
-// FIXME - needed?       layout0.verticalSpacing = 10;
         outer.setLayout(layout0);
         outer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         addLabel(outer, "There is no workflow in progress");
@@ -121,7 +122,6 @@ public class SessionView extends ViewPart {
         outer = new Composite(parent, SWT.NONE);
         GridLayout layout0 = new GridLayout();
         layout0.numColumns = 1;
-// FIXME - needed?       layout0.verticalSpacing = 10;
         outer.setLayout(layout0);
         outer.setLayoutData(new GridData(GridData.FILL_HORIZONTAL, SWT.CENTER, true, false));
 
@@ -131,6 +131,7 @@ public class SessionView extends ViewPart {
     	} else {
     		addLabel(outer, "Executing workflow " + name);
     	}
+    	String debug = handler.getStringFromDocument(doc);
 
         composite = outer;
         //        final ScrolledComposite sc = new ScrolledComposite(outer, SWT.FILL | SWT.H_SCROLL
@@ -150,17 +151,15 @@ public class SessionView extends ViewPart {
                 MessageDialog.openError(null, "Error", "Incorrect top-level node name");
                 return;
             }
-            NodeList nsbox = top.getChildNodes(); // All children should be <box>
+            NodeList nsbox = top.getChildNodes(); // All children should be <box> (or #text)
             for (int k = 0; k < nsbox.getLength(); k++) {
             	var box = nsbox.item(k);
-            	NodeList ns = box.getChildNodes(); // All children should be <control>
+            	if (!box.getNodeName().equals("box")) continue;
+            	NodeList ns = box.getChildNodes(); // All children should be <control> (or #text)
             	if (k != 0) addSeparator(composite);
             	for (int i = 0; i < ns.getLength(); i++) {
             		Node n = ns.item(i);
-            		if (!n.getNodeName().equals("control")) {
-        				addLabel(outer, "Received XML is invalid");
-        				MessageDialog.openInformation(null, "", "A <box> is expected to contain only <controL> elements: " + n.getNodeName());
-            		} else if (n instanceof Element element) {
+            		if (n.getNodeName().equals("control") && n instanceof Element element) {
             			String type = element.getAttribute("type");
             			String label = element.getAttribute("label");
             			String text = element.getTextContent();
