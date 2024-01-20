@@ -32,7 +32,12 @@
 package com.ge.research.rack.views;
 
 import com.ge.research.rack.RunWorkflowHandler;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
+
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -45,7 +50,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.FontMetrics;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.layout.GridData;
@@ -60,14 +64,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 // Crucial:
-// FIXME - adding scrollbars is problematic also
-// FIXME - use computational thread? be able to abort a stuck process?
+// FIXME - cannot get scrolled content to display properly
+// FIXME - fill in connection information
 
 // Should do:
-// FIXME - test checkboxes
-// FIXME - implement xml remaining attributes
-// FIXME - implement resources
-// FIXME - fix or document handling of missing names in workflows
+// FIXME - use computational thread? be able to abort a stuck process?
 
 // Nice to do:
 // FIXME - handle stderr
@@ -75,6 +76,8 @@ import org.w3c.dom.NodeList;
 // FIXME - add a combo control
 
 // Future:
+// FIXME - do something with the language attribute
+// FIXME _ do something with id attributes
 // FIXME - allow multiple instances of this View
 // FIXME - allow multiple communicating processes
 
@@ -176,14 +179,16 @@ public class SessionView extends ViewPart {
         //String debug = handler.getStringFromDocument(doc);
 
 //        ScrolledComposite sc = new ScrolledComposite(outer, SWT.H_SCROLL | SWT.V_SCROLL);
-//        sc.setLayoutData(new GridData(GridData.FILL_HORIZONTAL, SWT.CENTER, true, true));
-
+//        sc.setLayoutData(new GridData(GridData.FILL_HORIZONTAL, SWT.TOP, true, false));
+//        sc.setBackground(outer.getBackground());
+        
         composite = new Composite(outer, SWT.NONE);
 //        sc.setContent(composite);
         GridLayout layout1 = new GridLayout();
         layout1.numColumns = 1;
         composite.setLayout(layout1);
         composite.setLayoutData(new GridData(GridData.FILL, SWT.CENTER, true, false));
+        composite.setBackground(composite.getParent().getBackground());
 
         try {
             if (!"form".equals(top.getNodeName())) {
@@ -193,42 +198,66 @@ public class SessionView extends ViewPart {
             }
             NodeList nsbox = top.getChildNodes(); // All children should be <box> (or #text)
             for (int k = 0; k < nsbox.getLength(); k++) {
-                var box = nsbox.item(k);
-                if (!box.getNodeName().equals("box")) continue;
-                NodeList ns = box.getChildNodes(); // All children should be <control> (or #text)
-                if (k != 0) addSeparator(composite);
-                for (int i = 0; i < ns.getLength(); i++) {
-                    Node n = ns.item(i);
-                    if (n.getNodeName().equals("control") && n instanceof Element element) {
-                        String type = element.getAttribute("type");
-                        String label = element.getAttribute("label");
-                        String text = element.getTextContent();
-                        boolean readonly = element.hasAttribute("readonly");
-                        if ("textbox".equals(type)) {
-                            String strlines = element.getAttribute("lines");
-                            int lines = 0;
-                            if (!strlines.isEmpty()) try { 
-                            	lines = Integer.parseInt(strlines);
-                            } catch (NumberFormatException e) {
-                                MessageDialog.openError(null, "Error", "Invalid integer string: " + strlines);
-                            }
-                            if (lines <= 0) lines = 10; // default
-                            var in = addTextBox(composite, label, text, lines, readonly);
-                            if (!readonly) inputs.add(new Input(element, in));
-                        } else if ("label".equals(type)) {
-                            addLabel(composite, text);
-                        } else if ("checkbox".equals(type)) {
-                            boolean value = element.hasAttribute("checked");
-                            var in = addCheckbox(composite, label, value, readonly);
-                            if (!readonly) inputs.add(new Input(element, in));
-                        } else {
-                            addLabel(outer, "Received XML is invalid");
-                            MessageDialog.openInformation(
-                                    null, "", "Unknown control type: " + type);
-                        }
-                    }
+                var elem = nsbox.item(k);
+                switch (elem.getNodeName()) {
+                case "box":
+                	var box = elem;
+                	NodeList ns = box.getChildNodes(); // All children should be <control> (or #text)
+                	if (k != 0) addSeparator(composite);
+                	for (int i = 0; i < ns.getLength(); i++) {
+                		Node n = ns.item(i);
+                		if (n.getNodeName().equals("control") && n instanceof Element element) {
+                			String type = element.getAttribute("type");
+                			String label = element.getAttribute("label");
+                			String text = element.getTextContent();
+                			String id = element.getAttribute("id");
+                			String language = element.getAttribute("language"); // FIXME - not used
+                			boolean readonly = element.hasAttribute("readonly");
+                			if ("textbox".equals(type)) {
+                				String strlines = element.getAttribute("lines");
+                				int lines = 0;
+                				if (!strlines.isEmpty()) try { 
+                					lines = Integer.parseInt(strlines);
+                				} catch (NumberFormatException e) {
+                					MessageDialog.openError(null, "Error", "Invalid integer string: " + strlines);
+                				}
+                				if (lines <= 0) lines = 10; // default
+                				var in = addTextBox(composite, label, text, lines, readonly);
+                				if (!readonly) inputs.add(new Input(element, in));
+                			} else if ("label".equals(type)) {
+                				addLabel(composite, text);
+                				if (element.hasAttribute("error")) {
+                    				MessageDialog.openInformation(
+                    						null, "", "The workflow responded with an error:\n" + text);
+                				}
+                			} else if ("checkbox".equals(type)) {
+                				boolean value = element.hasAttribute("checked");
+                				var in = addCheckbox(composite, label, value, readonly);
+                				if (!readonly) inputs.add(new Input(element, in));
+                			} else {
+                				addLabel(outer, "Received XML is invalid");
+                				MessageDialog.openInformation(
+                						null, "", "Unknown control type: " + type);
+                			}
+                		}
+                	}
+                	composite.layout(true,true);
+                	break;
+                case "resource":
+                	var resource = (Element)elem;
+                	inputs.add(new Input(resource, null));
+                	break;
+                case "parameter":
+                case "connection":
+                case "#text":
+                	// Nothing to display for these tags
+                	break;
+                default:
+    				MessageDialog.openInformation(
+    						null, "", "Unknown tag type: " + elem.getNodeName());
                 }
             }
+
 
             if (top.hasAttribute("complete")) {
             	addLabel(outer, "Workflow is complete");
@@ -267,7 +296,23 @@ public class SessionView extends ViewPart {
     public void collectXML() {
         if (inputs != null) {
             for (var p : inputs) {
-                if (p.widget() instanceof Text t) {
+            	if (p.element().getNodeName().equals("resource")) {
+            		Element resource = p.element();
+                	String path = resource.getAttribute("path");
+                	String ws = ResourcesPlugin.getWorkspace().getRoot().getLocation().toString();
+                	var f = new java.io.File(ws,path);
+                	if (!f.exists()) {
+        				MessageDialog.openInformation(
+        						null, "", "Resource does not exist: " + path);
+                	} else {
+                		try {
+                			var content = Files.readString(Path.of(ws,path));
+                			resource.setTextContent(content);
+                		} catch (Exception e) {
+                            MessageDialog.openError(null, "Error", "Failed to read resource: " + path + " in " + ws + "\n" + e);
+                		}
+                	}
+            	} else if (p.widget() instanceof Text t) {
                     var s = t.getText();
                     s = s.replaceAll("\n+$", "").replaceAll("^\n+", "");
                     p.element().setTextContent(s);

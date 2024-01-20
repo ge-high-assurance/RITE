@@ -249,7 +249,7 @@ public class RunWorkflowHandler extends AbstractHandler {
                         var n = doc.getDocumentElement();
                         if (n.getNodeName().equals("workflow")) {
                             var name = n.getAttribute("name");
-                            if (!wname.equals(name)) {
+                            if (n.hasAttribute("name") && !wname.equals(name)) {
                                 MessageDialog.openError(
                                         null,
                                         "Error",
