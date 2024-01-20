@@ -410,6 +410,7 @@ public class RunWorkflowHandler extends AbstractHandler {
                                 + workflowName);
                 workflowName = newname;
             }
+            
 
         } catch (Exception e) {
             MessageDialog.openError(

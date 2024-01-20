@@ -118,10 +118,12 @@ public class SessionView extends ViewPart {
         inputs = null;
     }
 
-    /** Refreshes the View area to display the given XML document */
-    public void displayXML(Document doc) {
+    /** Refreshes the View area to display the given XML document;
+     * returns true when workflow is complete */
+    public boolean displayXML(Document doc) {
         var top = doc.getDocumentElement();
         var name = top.getAttribute("workflow");
+        boolean result = false;
         clearXMLDisplay();
         inputs = new java.util.LinkedList<>();
         outer = new Composite(parent, SWT.NONE);
@@ -154,7 +156,7 @@ public class SessionView extends ViewPart {
             if (!"form".equals(top.getNodeName())) {
                 addLabel(outer, "Received XML is invalid");
                 MessageDialog.openError(null, "Error", "Incorrect top-level node name");
-                return;
+                return false;
             }
             NodeList nsbox = top.getChildNodes(); // All children should be <box> (or #text)
             for (int k = 0; k < nsbox.getLength(); k++) {
@@ -187,6 +189,11 @@ public class SessionView extends ViewPart {
                     }
                 }
             }
+            if (top.hasAttribute("complete")) {
+            	addLabel(outer, "Workflow is complete");
+            	result = true;
+            }
+
 
         } catch (Exception e) {
             addLabel(outer, "Received XML is invalid");
@@ -210,9 +217,10 @@ public class SessionView extends ViewPart {
         createButton(buttons, IDialogConstants.OPEN_ID, "Load", false);
         createButton(buttons, IDialogConstants.RETRY_ID, "Restart", false);
         createButton(buttons, IDialogConstants.BACK_ID, "Back", false);
-        createButton(buttons, IDialogConstants.OK_ID, "Next", true);
+        createButton(buttons, IDialogConstants.OK_ID, "Next", true).setEnabled(!result);
 
         parent.getParent().layout(true, true);
+        return result;
     }
 
     /**
