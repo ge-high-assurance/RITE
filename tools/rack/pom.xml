@@ -63,7 +63,7 @@
     <!-- Versions of dependencies which share the same version -->
     <version.javafx>21.0.1</version.javafx>
     <version.rack>${project.version}</version.rack>
-    <version.surefire>3.2.3</version.surefire>
+    <version.surefire>3.2.5</version.surefire>
     <version.tycho>4.0.4</version.tycho>
   </properties>
 
@@ -334,7 +334,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.12.0</version>
+          <version>3.12.1</version>
           <configuration>
             <compilerArgs>
               <arg>-Xlint:all</arg>
@@ -397,7 +397,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jxr-plugin</artifactId>
-          <version>3.3.1</version>
+          <version>3.3.2</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
