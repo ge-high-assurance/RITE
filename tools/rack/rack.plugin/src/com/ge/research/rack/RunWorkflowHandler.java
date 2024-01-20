@@ -32,19 +32,17 @@
 package com.ge.research.rack;
 
 import com.ge.research.rack.views.SessionView;
-
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.io.StringWriter;
-import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -52,7 +50,6 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -70,40 +67,47 @@ import org.xml.sax.SAXException;
 
 public class RunWorkflowHandler extends AbstractHandler {
 
-	/** Cached list of folders containing workflows (that is, a workflow path) */
+    /** Cached list of folders containing workflows (that is, a workflow path) */
     List<String> workflowDirs = null;
-    
+
     /** Cached map (name->workflow XML) of workflows found */
     Map<String, Element> workflows = null;
-    
+
     /** XML parser (for both workflows and forms) */
     DocumentBuilder parser;
-    
-    /** History list of XML documents presented to the user; history.getItem(0) is the current document */
-    public Stack<Document> history = new Stack<>(); // FIXME - is this maintained across different instances of the View? Perhaps should belong to the View?
-    
+
+    /**
+     * History list of XML documents presented to the user; history.getItem(0) is the current
+     * document
+     */
+    public Stack<Document> history =
+            new Stack<>(); // FIXME - is this maintained across different instances of the View?
+
+    // Perhaps should belong to the View?
+
     /** The associated Eclipse View for showing running workflows */
     SessionView view;
-    
+
     /** The current Document being shown (or null) */
     Document currentDisplayedDoc;
-    
+
     /** The name of the current workflow */
     String workflowName;
+
     // Invariant:
     // workflowName == null && currentDisplayedDoc == null ==> No workflow in execution
     // workflowName != null && currentDisplayedDoc == null ==> Starting named workflow
-    // workflowName != null && currentDisplayedDoc != null ==> Given workflow in progress; name in currentDisplayedDoc must match workflowName
-    // workflowName == null && currentDisplayedDoc != null ==> Given workflow in progress; name is in currentDisplayedDoc
-    
+    // workflowName != null && currentDisplayedDoc != null ==> Given workflow in progress; name in
+    // currentDisplayedDoc must match workflowName
+    // workflowName == null && currentDisplayedDoc != null ==> Given workflow in progress; name is
+    // in currentDisplayedDoc
 
     public RunWorkflowHandler() {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             parser = dbf.newDocumentBuilder();
         } catch (Exception e) {
-            MessageDialog.openError(
-                    null, "Error", "Failed to initialize document parser\n" + e);
+            MessageDialog.openError(null, "Error", "Failed to initialize document parser\n" + e);
             parser = null;
             // FIXME - not sure other code is robust if 'parser' is null
             return;
@@ -114,7 +118,7 @@ public class RunWorkflowHandler extends AbstractHandler {
     private Document parseXML(String xml) throws SAXException, IOException {
         return parser.parse(new java.io.ByteArrayInputStream(xml.getBytes()));
     }
-    
+
     /** Reads a file, producing an XML Document, throws exceptions on parsing failure */
     private Document parseXMLFile(String fullname) throws SAXException, IOException {
         return parser.parse(new File(fullname));
@@ -123,27 +127,28 @@ public class RunWorkflowHandler extends AbstractHandler {
     /** Renders XML Document as String (inverse of parseXML) */
     public String getStringFromDocument(Document doc) {
         try {
-           DOMSource domSource = new DOMSource(doc);
-           StringWriter writer = new StringWriter();
-           StreamResult result = new StreamResult(writer);
-           TransformerFactory tf = TransformerFactory.newInstance();
-           Transformer transformer = tf.newTransformer();
-           transformer.transform(domSource, result);
-           return writer.toString();
+            DOMSource domSource = new DOMSource(doc);
+            StringWriter writer = new StringWriter();
+            StreamResult result = new StreamResult(writer);
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer transformer = tf.newTransformer();
+            transformer.transform(domSource, result);
+            return writer.toString();
         } catch (TransformerException ex) {
-           ex.printStackTrace();
-           return null;
+            ex.printStackTrace();
+            return null;
         }
-    } 
+    }
 
-
-    /** Called when the 'Run Workflow' menu button is pressed */ 
+    /** Called when the 'Run Workflow' menu button is pressed */
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
         try {
-        	// Find the corresponding view (currently there only ever is at most one)
+            // Find the corresponding view (currently there only ever is at most one)
             try {
-                view = (SessionView) PlatformUI.getWorkbench()
+                view =
+                        (SessionView)
+                                PlatformUI.getWorkbench()
                                         .getActiveWorkbenchWindow()
                                         .getActivePage()
                                         .showView(SessionView.ID);
@@ -153,10 +158,10 @@ public class RunWorkflowHandler extends AbstractHandler {
                 MessageDialog.openError(null, "Error", "Failed to find corresponding View\n" + e);
                 throw e;
             }
-            
+
             x:
             while (true) {
-            	// Initialize the list of workflows
+                // Initialize the list of workflows
                 findWorkflows();
                 var keys = new ArrayList<String>(new TreeSet<String>(workflows.keySet()));
                 var wd = new SessionView.WorkflowDialog(keys);
@@ -216,7 +221,7 @@ public class RunWorkflowHandler extends AbstractHandler {
     /** Sets the list of discovered workflows */
     public void findWorkflows() throws Exception {
         var dirs = getWorkflowDirs();
-        if (!Objects.equals(dirs,workflowDirs)) {
+        if (!Objects.equals(dirs, workflowDirs)) {
             workflows = new HashMap<>();
             for (var d : dirs) {
                 var dir = new java.io.File(d);
@@ -229,19 +234,29 @@ public class RunWorkflowHandler extends AbstractHandler {
                     continue;
                 }
 
-                for (var filename : dir.list((f,s)->s.endsWith(".xml"))) {
+                for (var filename : dir.list((f, s) -> s.endsWith(".xml"))) {
                     var fullname = dir + java.io.File.separator + filename;
-                	if (!new File(fullname).isFile()) continue;
-                	new File(fullname).setExecutable(true); // Just because git sometimes does not retain exectuable flag
+                    if (!new File(fullname).isFile()) continue;
+                    new File(fullname)
+                            .setExecutable(
+                                    true); // Just because git sometimes does not retain exectuable
+                    // flag
                     try {
-                    	String wname = filename.substring(0, filename.length()-4); // 4 is the length of '.xml'
+                        String wname =
+                                filename.substring(
+                                        0, filename.length() - 4); // 4 is the length of '.xml'
                         var doc = parseXMLFile(fullname);
                         var n = doc.getDocumentElement();
                         if (n.getNodeName().equals("workflow")) {
                             var name = n.getAttribute("name");
                             if (!wname.equals(name)) {
                                 MessageDialog.openError(
-                                        null, "Error", "File name does not match workflow name: " + wname + " vs. " + name);
+                                        null,
+                                        "Error",
+                                        "File name does not match workflow name: "
+                                                + wname
+                                                + " vs. "
+                                                + name);
                             }
                             var prev = workflows.put(wname, n);
                             if (prev != null) {
@@ -272,7 +287,7 @@ public class RunWorkflowHandler extends AbstractHandler {
 
     /** Initiate the named workflow */
     public void runWorkflow(String name) throws Exception {
-    	currentDisplayedDoc = null;
+        currentDisplayedDoc = null;
         var top = workflows.get(name);
         if (top == null) {
             // This error should not be reachable, since only well-formed workflows should be in
@@ -280,20 +295,19 @@ public class RunWorkflowHandler extends AbstractHandler {
             MessageDialog.openError(null, "Error", "No XML document found for workflow " + name);
             return;
         }
-        
+
         // An empty-as-possible XML string as a starting document
         workflowName = name;
 
         next();
     }
-    
+
     public String workflowNameFromDoc(Document doc) {
-    	return doc.getDocumentElement().getAttribute("workflow");
+        return doc.getDocumentElement().getAttribute("workflow");
     }
-    
+
     public String initialXML(String workflowName) {
-    	return
-    		"""
+        return """
             <?xml version="1.0" encoding="UTF-8" standalone="no"?>
             <form workflow="example">
                <connection>
@@ -301,12 +315,13 @@ public class RunWorkflowHandler extends AbstractHandler {
                   <model-graph>http://...</model-graph>
                  <url>http://localhost:3030/RACK</url>
                </connection>
-            </form>    				
+            </form>
             """
-    			.replace("example",workflowName);
+                .replace("example", workflowName);
     }
+
     // FIXME - need to fill in the data-graph and model-graph
-    
+
     public void next() {
         if (currentDisplayedDoc == null && workflowName == null) {
             MessageDialog.openInformation(
@@ -314,32 +329,39 @@ public class RunWorkflowHandler extends AbstractHandler {
             return;
         }
 
-    	if (workflowName == null) workflowName = workflowNameFromDoc(currentDisplayedDoc);
+        if (workflowName == null) workflowName = workflowNameFromDoc(currentDisplayedDoc);
         var top = workflows.get(workflowName);
         String command = top.getAttribute("command");
         if (command == null || command.isEmpty()) {
-            MessageDialog.openError(null, "Error", "No command string found for workflow: " + workflowName);
+            MessageDialog.openError(
+                    null, "Error", "No command string found for workflow: " + workflowName);
             return;
         }
         command = command.strip();
-        if (!new File(command).isAbsolute()) { // FIXME - this test is inappropriate for commands with arguments
+        int k = command.indexOf(' ');
+        String exec = k < 0 ? command : command.substring(0, k);
+        if (!new File(exec).isAbsolute()) {
             try {
                 Bundle bundle = Platform.getBundle("rack.plugin");
                 URL url = FileLocator.find(bundle, new Path("resources/workflows"), null);
                 var dir = FileLocator.toFileURL(url).getFile();
                 command = dir + command;
+                exec = dir + exec;
             } catch (Exception e) {
-                MessageDialog.openError(null, "Error", "Failed to find command " + command + "\n" + e);
+                MessageDialog.openError(
+                        null, "Error", "Failed to find command " + command + "\n" + e);
                 return;
             }
         }
+        new File(exec).setExecutable(true);
 
         // launch workflow
         Process process = null;
         try {
             process = Runtime.getRuntime().exec(command);
         } catch (Exception e) {
-            MessageDialog.openError(null, "Error", "Failed to launch process: " + command + "\n" + e);
+            MessageDialog.openError(
+                    null, "Error", "Failed to launch process: " + command + "\n" + e);
             return;
         }
         if (process == null || !process.isAlive()) {
@@ -348,20 +370,20 @@ public class RunWorkflowHandler extends AbstractHandler {
         }
 
         String responseText = "";
-        try ( PrintStream writer = new java.io.PrintStream(process.getOutputStream());
-        	  BufferedReader reader =
-                        new java.io.BufferedReader(new java.io.InputStreamReader(process.getInputStream()))
-        		) {
+        try (PrintStream writer = new java.io.PrintStream(process.getOutputStream());
+                BufferedReader reader =
+                        new java.io.BufferedReader(
+                                new java.io.InputStreamReader(process.getInputStream()))) {
 
             String currentXML;
-    		if (currentDisplayedDoc == null) {
-    			currentXML = initialXML(workflowName);
-    		} else {
-    			view.collectXML();
-    			currentXML = getStringFromDocument(currentDisplayedDoc);
-    		}
-    		
-    		// send
+            if (currentDisplayedDoc == null) {
+                currentXML = initialXML(workflowName);
+            } else {
+                view.collectXML();
+                currentXML = getStringFromDocument(currentDisplayedDoc);
+            }
+
+            // send
             writer.print(currentXML);
             writer.close(); // So that the workflow script knows the stdin is complete
 
@@ -376,59 +398,72 @@ public class RunWorkflowHandler extends AbstractHandler {
             // Parse and display response
             currentDisplayedDoc = parseXML(responseText);
             view.displayXML(currentDisplayedDoc);
-    		history.push(currentDisplayedDoc);
-    		String newname = workflowNameFromDoc(currentDisplayedDoc);
-    		if (!workflowName.equals(newname)) {
-                MessageDialog.openError(null, "Error", "Returned XML contains a different workflow name than the filename: " + newname + " vs. " + workflowName);
+            history.push(currentDisplayedDoc);
+            String newname = workflowNameFromDoc(currentDisplayedDoc);
+            if (!workflowName.equals(newname)) {
+                MessageDialog.openError(
+                        null,
+                        "Error",
+                        "Returned XML contains a different workflow name than the filename: "
+                                + newname
+                                + " vs. "
+                                + workflowName);
                 workflowName = newname;
-    		}
+            }
 
         } catch (Exception e) {
-            MessageDialog.openError(null, "Error", "Communication failure\n" + responseText + "\n" + e);
+            MessageDialog.openError(
+                    null, "Error", "Communication failure\n" + responseText + "\n" + e);
         } finally {
-        	if (process != null) {
-        		process.destroy();
-        		process = null;
-        	}
+            if (process != null) {
+                process.destroy();
+                process = null;
+            }
         }
     }
 
-    /** Called when the Save button is pressed;
-     * launches a dialog allowing the user to choose a destination file and saves the
-     * current XML Document to that file (in String form).
+    /**
+     * Called when the Save button is pressed; launches a dialog allowing the user to choose a
+     * destination file and saves the current XML Document to that file (in String form).
      */
     public void save(Shell shell) {
         var fd = new FileDialog(shell, SWT.SAVE);
         var file = fd.open();
         if (file != null) {
-        	var d = history.peek();
-        	var s = getStringFromDocument(d);
-        	try {
-        	    java.nio.file.Files.write(Paths.get(file), s.getBytes());
-        	} catch (java.io.IOException e) {
-        		MessageDialog.openError(null, "Error", "Failed to save file " + file + "\n" + e);
-        	}
+            var d = history.peek();
+            var s = getStringFromDocument(d);
+            try {
+                java.nio.file.Files.write(Paths.get(file), s.getBytes());
+            } catch (java.io.IOException e) {
+                MessageDialog.openError(null, "Error", "Failed to save file " + file + "\n" + e);
+            }
         }
     }
 
-    /** Called when the 'Load' button is pressed; launches a FileDialog enabling a choice of existing file and
-     * loads that file as the current XML document */
+    /**
+     * Called when the 'Load' button is pressed; launches a FileDialog enabling a choice of existing
+     * file and loads that file as the current XML document
+     */
     public void load(Shell shell) {
         var fd = new FileDialog(shell, SWT.OPEN);
         var file = fd.open();
-        if (file != null) try {
-        	currentDisplayedDoc = null; // in case there is an exception
-        	String text = new String(java.nio.file.Files.readAllBytes(Paths.get(file)), StandardCharsets.UTF_8);
-        	Document displayDoc = parseXML(text);
-        	history.push(displayDoc);
-            view.displayXML(displayDoc);
-            currentDisplayedDoc = displayDoc;
-            workflowName = workflowNameFromDoc(currentDisplayedDoc);
-        } catch (java.io.IOException e) {
-        	MessageDialog.openError(null, "Error", "Failed to read file " + file + "\n" + e);
-        } catch (SAXException e) {
-        	MessageDialog.openError(null, "Error", "Failed to parse file " + file + "\n" + e);
-        }
+        if (file != null)
+            try {
+                currentDisplayedDoc = null; // in case there is an exception
+                String text =
+                        new String(
+                                java.nio.file.Files.readAllBytes(Paths.get(file)),
+                                StandardCharsets.UTF_8);
+                Document displayDoc = parseXML(text);
+                history.push(displayDoc);
+                view.displayXML(displayDoc);
+                currentDisplayedDoc = displayDoc;
+                workflowName = workflowNameFromDoc(currentDisplayedDoc);
+            } catch (java.io.IOException e) {
+                MessageDialog.openError(null, "Error", "Failed to read file " + file + "\n" + e);
+            } catch (SAXException e) {
+                MessageDialog.openError(null, "Error", "Failed to parse file " + file + "\n" + e);
+            }
     }
 
     /** Called when the 'Restart' button is pressed */
@@ -438,7 +473,7 @@ public class RunWorkflowHandler extends AbstractHandler {
                     null, "", "No workflow selected (previous workflow aborted)");
             return;
         }
-    	workflowName = workflowNameFromDoc(currentDisplayedDoc);
+        workflowName = workflowNameFromDoc(currentDisplayedDoc);
         view.clearXMLDisplay();
         try {
             runWorkflow(workflowName);
@@ -455,13 +490,12 @@ public class RunWorkflowHandler extends AbstractHandler {
             return;
         }
         if (history.size() <= 1) {
-            MessageDialog.openInformation(
-                    null, "", "No further history");
+            MessageDialog.openInformation(null, "", "No further history");
             return;
         }
         history.pop();
         currentDisplayedDoc = history.peek();
-    	workflowName = workflowNameFromDoc(currentDisplayedDoc);
+        workflowName = workflowNameFromDoc(currentDisplayedDoc);
         view.displayXML(currentDisplayedDoc);
     }
 
