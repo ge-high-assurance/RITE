@@ -448,7 +448,7 @@ public class RunWorkflowHandler extends AbstractHandler {
     public void load(Shell shell) {
         var fd = new FileDialog(shell, SWT.OPEN);
         var file = fd.open();
-        if (file != null)
+        if (file != null) {
             try {
                 currentDisplayedDoc = null; // in case there is an exception
                 String text =
@@ -465,6 +465,7 @@ public class RunWorkflowHandler extends AbstractHandler {
             } catch (SAXException e) {
                 MessageDialog.openError(null, "Error", "Failed to parse file " + file + "\n" + e);
             }
+        }
     }
     
     public void select(Shell shell) {

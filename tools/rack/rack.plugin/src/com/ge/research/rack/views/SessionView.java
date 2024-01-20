@@ -41,6 +41,9 @@ import org.eclipse.jface.widgets.WidgetFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.FontMetrics;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
@@ -53,9 +56,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 // Crucial:
-// FIXME - it is non-obvious how to get the text box to have a reasonable size vertically
 // FIXME - adding scrollbars is problematic also
-// FIXME - be able to cancel a Load without changing history or display
 // FIXME - use computational thread? be able to abort a stuck process?
 
 // Should do:
@@ -67,7 +68,7 @@ import org.w3c.dom.NodeList;
 // Nice to do:
 // FIXME - handle stderr
 // FIXME - set labels to bold text
-
+// FIXME - a workflow path listing candidate folders for workflows
 
 // Future:
 // FIXME - allow multiple instances of this View
@@ -124,7 +125,7 @@ public class SessionView extends ViewPart {
     }
 
     public void displayEmpty() {
-    	if (this.handler == null) this.handler = new RunWorkflowHandler();
+    	if (this.handler == null) this.handler = new RunWorkflowHandler(); // FIXME - do we need this
         outer = new Composite(parent, SWT.NONE);
         GridLayout layout0 = new GridLayout();
         layout0.numColumns = 1;
@@ -202,15 +203,22 @@ public class SessionView extends ViewPart {
                         String text = element.getTextContent();
                         boolean readonly = element.hasAttribute("readonly");
                         if ("textbox".equals(type)) {
-                            // FIXME: String lines = element.getAttribute("lines");
-                            var in = addTextBox(composite, label, text, 10, readonly);
-                            inputs.add(new Input(element, in));
+                            String strlines = element.getAttribute("lines");
+                            int lines = 0;
+                            if (!strlines.isEmpty()) try { 
+                            	lines = Integer.parseInt(strlines);
+                            } catch (NumberFormatException e) {
+                                MessageDialog.openError(null, "Error", "Invalid integer string: " + strlines);
+                            }
+                            if (lines <= 0) lines = 10; // default
+                            var in = addTextBox(composite, label, text, lines, readonly);
+                            if (!readonly) inputs.add(new Input(element, in));
                         } else if ("label".equals(type)) {
                             addLabel(composite, text);
                         } else if ("checkbox".equals(text)) {
                             boolean value = element.hasAttribute("checked");
                             var in = addCheckbox(composite, label, value, readonly);
-                            inputs.add(new Input(element, in));
+                            if (!readonly) inputs.add(new Input(element, in));
                         } else {
                             addLabel(outer, "Received XML is invalid");
                             MessageDialog.openInformation(
@@ -330,9 +338,22 @@ public class SessionView extends ViewPart {
         Text textBox =
                 new Text(parent, SWT.LEFT | SWT.MULTI | SWT.V_SCROLL | SWT.WRAP | SWT.BORDER);
         textBox.setText(initialText.isEmpty() ? "\n\n\n\n\n\n" : initialText);
-        textBox.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        textBox.setEnabled(!readonly);
+        var gdata = new GridData(GridData.FILL_HORIZONTAL);
+        gdata.heightHint = convertHeightInCharsToPixels(textBox,lines);
+        gdata.grabExcessVerticalSpace = false;
+        textBox.setLayoutData(gdata);
+        textBox.setEditable(!readonly);
+        if (readonly) textBox.setForeground(new Color(150,150,150));
         return textBox;
+    }
+    
+    public int convertHeightInCharsToPixels(Text text, int lines) {
+    	GC gc = new GC(text);
+    	gc.setFont(text.getFont());
+    	FontMetrics fontMetrics = gc.getFontMetrics();
+    	int height = fontMetrics.getHeight() * lines;
+    	gc.dispose();
+    	return height;
     }
 
     /** Adds (readonly) text to the parent Composite */
