@@ -13,7 +13,7 @@ orig=`echo "$input" | sed -e 's/^.*<form workflow=\"Calc\">//' -e 'sx</form>.*$x
 if echo "$input" | grep -q connection  ; then
 ## FIRST TIME
 
-echo "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><form workflow=\"Calc\"><box><control type=\"textbox\" label=\"Enter an expression for the bc calculator:\"></control></box></form>"
+echo "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><form workflow=\"Calc\"><box><control type=\"textbox\" lines=\"3\" label=\"Enter an expression for the bc calculator:\"></control></box></form>"
 
 else 
 ## NOT FIRST TIME
@@ -30,7 +30,7 @@ else
 res=`echo "$expr" | bc`
 ##echo RES "$res" >> $LOG
 
-echo "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><form workflow=\"Calc\">$orig <box><control type=\"label\">$res</control><control type=\"textbox\" label=\"Enter an expression for the bc calculator:\"></control></box></form>"
+echo "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><form workflow=\"Calc\">$orig <box><control type=\"label\">$res</control><control type=\"textbox\" lines=\"3\" label=\"Enter an expression for the bc calculator:\"></control></box></form>"
 fi
 fi
 

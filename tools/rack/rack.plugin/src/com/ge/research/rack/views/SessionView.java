@@ -39,9 +39,12 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.widgets.WidgetFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.FontMetrics;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.layout.GridData;
@@ -67,8 +70,8 @@ import org.w3c.dom.NodeList;
 
 // Nice to do:
 // FIXME - handle stderr
-// FIXME - set labels to bold text
 // FIXME - a workflow path listing candidate folders for workflows
+// FIXME - add a combo control
 
 // Future:
 // FIXME - allow multiple instances of this View
@@ -169,19 +172,17 @@ public class SessionView extends ViewPart {
         } else {
             addLabel(outer, "Executing workflow " + name);
         }
-        String debug = handler.getStringFromDocument(doc);
+        //String debug = handler.getStringFromDocument(doc);
 
-        composite = outer;
-        //        final ScrolledComposite sc = new ScrolledComposite(outer, SWT.FILL | SWT.H_SCROLL
-        // | SWT.V_SCROLL);
-        //        sc.setLayoutData(new GridData(GridData.FILL_HORIZONTAL, SWT.CENTER, true, false));
-        //
-        //        composite = new Composite(sc, SWT.NONE);
-        //        GridLayout layout1 = new GridLayout();
-        //        layout1.numColumns = 1;
-        //        layout1.verticalSpacing = 10;
-        //        composite.setLayout(layout1);
-        //        composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+//        ScrolledComposite sc = new ScrolledComposite(outer, SWT.H_SCROLL | SWT.V_SCROLL);
+//        sc.setLayoutData(new GridData(GridData.FILL_HORIZONTAL, SWT.CENTER, true, true));
+
+        composite = new Composite(outer, SWT.NONE);
+//        sc.setContent(composite);
+        GridLayout layout1 = new GridLayout();
+        layout1.numColumns = 1;
+        composite.setLayout(layout1);
+        composite.setLayoutData(new GridData(GridData.FILL, SWT.CENTER, true, false));
 
         try {
             if (!"form".equals(top.getNodeName())) {
@@ -227,6 +228,7 @@ public class SessionView extends ViewPart {
                     }
                 }
             }
+
             if (top.hasAttribute("complete")) {
             	addLabel(outer, "Workflow is complete");
             	result = true;
@@ -243,7 +245,6 @@ public class SessionView extends ViewPart {
         Composite buttons = new Composite(outer, SWT.NONE);
         GridLayout layout2 = new GridLayout();
         layout2.numColumns = 7; // number of buttons
-        layout2.verticalSpacing = 10;
         buttons.setLayout(layout2);
         buttons.setLayoutData(new GridData(GridData.FILL_HORIZONTAL, SWT.LEFT, true, false));
         createButton(buttons, IDialogConstants.ABORT_ID, "Abort", false);
@@ -337,8 +338,13 @@ public class SessionView extends ViewPart {
         if (label != null) addLabel(parent, label);
         Text textBox =
                 new Text(parent, SWT.LEFT | SWT.MULTI | SWT.V_SCROLL | SWT.WRAP | SWT.BORDER);
-        textBox.setText(initialText.isEmpty() ? "\n\n\n\n\n\n" : initialText);
+        textBox.setText(initialText);
         var gdata = new GridData(GridData.FILL_HORIZONTAL);
+        gdata.minimumHeight = convertHeightInCharsToPixels(textBox,1);
+        if (readonly) {
+        	int n = (int)initialText.lines().count();
+        	if (n < lines) lines = n;
+        }
         gdata.heightHint = convertHeightInCharsToPixels(textBox,lines);
         gdata.grabExcessVerticalSpace = false;
         textBox.setLayoutData(gdata);
@@ -358,9 +364,11 @@ public class SessionView extends ViewPart {
 
     /** Adds (readonly) text to the parent Composite */
     public void addLabel(Composite parent, String text) {
-        Label textBox1 = new Label(parent, SWT.LEFT);
-        textBox1.setText(text);
-        textBox1.setBackground(parent.getBackground());
+        Label label = new Label(parent, SWT.LEFT);
+        var boldFont = new Font( label.getDisplay(), new FontData( "Arial", 12, SWT.BOLD ) );
+        label.setFont( boldFont );
+        label.setText(text);
+        label.setBackground(parent.getBackground());
     }
 
     /** Adds a checkbox to the parent Composite */
