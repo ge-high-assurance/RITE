@@ -44,26 +44,35 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+// Crucial:
 // FIXME - it is non-obvious how to get the text box to have a reasonable size vertically
 // FIXME - adding scrollbars is problematic also
-// FIXME - set labels to bold text
-// FIXME - add Load and Select buttons to the empty display
-// FIXME - allow multiple instances of this View
-// FIXME - add a select button on a View
-// FIXME - allow multiple communicating processes
-// FIXME - im0lement readonlyness
+// FIXME - be able to cancel a Load without changing history or display
+// FIXME - use computational thread? be able to abort a stuck process?
+
+// Should do:
+// FIXME - test checkboxes
 // FIXME - implement xml remaining attributes
-// FIXME - implement termination of iteration
 // FIXME - implement resources
 // FIXME - fix or document handling of missing names in workflows
 
-// FIXME - use computational thread? be able to abort a stuck process?
+// Nice to do:
+// FIXME - handle stderr
+// FIXME - set labels to bold text
+
+
+// Future:
+// FIXME - allow multiple instances of this View
+// FIXME - allow multiple communicating processes
+
 
 /** A helper class used in transferring user input from the IDE to the XML structure */
 record Input(Element element, Widget widget) {}
@@ -97,6 +106,15 @@ public class SessionView extends ViewPart {
         this.parent = parent;
         displayEmpty();
     }
+    
+    public void showView() {
+        try {
+            IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+            window.getActivePage().showView(ID);
+        } catch (Exception e) {
+        	// Ignore
+        }
+    }
 
     public void clearXMLDisplay() {
         if (this.outer != null && !this.outer.isDisposed()) {
@@ -106,15 +124,27 @@ public class SessionView extends ViewPart {
     }
 
     public void displayEmpty() {
+    	if (this.handler == null) this.handler = new RunWorkflowHandler();
         outer = new Composite(parent, SWT.NONE);
         GridLayout layout0 = new GridLayout();
         layout0.numColumns = 1;
         outer.setLayout(layout0);
         outer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         addLabel(outer, "There is no workflow in progress");
-        parent.getParent().pack();
+
+        addSeparator(outer);
+
+        Composite buttons = new Composite(outer, SWT.NONE);
+        GridLayout layout2 = new GridLayout();
+        layout2.numColumns = 2; // number of buttons
+        buttons.setLayout(layout2);
+        buttons.setLayoutData(new GridData(GridData.FILL_HORIZONTAL, SWT.LEFT, true, false));
+        createButton(buttons, IDialogConstants.OPEN_ID, "Load", false);
+        createButton(buttons, IDialogConstants.PROCEED_ID, "Select", false);
+
+        parent.getParent().layout(true, true);
+        showView();
         composite = null;
-        handler = null;
         inputs = null;
     }
 
@@ -204,16 +234,13 @@ public class SessionView extends ViewPart {
 
         Composite buttons = new Composite(outer, SWT.NONE);
         GridLayout layout2 = new GridLayout();
-        layout2.numColumns = 6; // number of buttons
+        layout2.numColumns = 7; // number of buttons
         layout2.verticalSpacing = 10;
         buttons.setLayout(layout2);
         buttons.setLayoutData(new GridData(GridData.FILL_HORIZONTAL, SWT.LEFT, true, false));
         createButton(buttons, IDialogConstants.ABORT_ID, "Abort", false);
-        createButton(
-                buttons,
-                IDialogConstants.FINISH_ID,
-                "Save",
-                false); // There is no built-in ID named SAVE
+        createButton(buttons, IDialogConstants.PROCEED_ID, "Select", false);
+        createButton(buttons, IDialogConstants.FINISH_ID, "Save", false); // There is no built-in ID named SAVE
         createButton(buttons, IDialogConstants.OPEN_ID, "Load", false);
         createButton(buttons, IDialogConstants.RETRY_ID, "Restart", false);
         createButton(buttons, IDialogConstants.BACK_ID, "Back", false);
@@ -288,6 +315,9 @@ public class SessionView extends ViewPart {
                 break;
             case IDialogConstants.FINISH_ID: // SAVE
                 handler.save(this.getSite().getShell());
+                break;
+            case IDialogConstants.PROCEED_ID: // Select (from workflow list)
+                handler.select(this.getSite().getShell());
                 break;
             default:
         }

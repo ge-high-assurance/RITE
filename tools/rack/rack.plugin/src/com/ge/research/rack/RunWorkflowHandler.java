@@ -466,6 +466,14 @@ public class RunWorkflowHandler extends AbstractHandler {
                 MessageDialog.openError(null, "Error", "Failed to parse file " + file + "\n" + e);
             }
     }
+    
+    public void select(Shell shell) {
+    	try {
+    	    execute(null);
+    	} catch (Exception e) {
+            MessageDialog.openError(null, "Error", "Failed to open selection dialog" + e);
+    	}
+    }
 
     /** Called when the 'Restart' button is pressed */
     public void retry() {
