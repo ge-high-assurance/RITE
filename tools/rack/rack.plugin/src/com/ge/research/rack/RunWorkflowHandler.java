@@ -318,9 +318,9 @@ public class RunWorkflowHandler extends AbstractHandler {
                </connection>
             </form>
             """
-         .replace("#example", workflowName)
-        .replace("#data_graph", RackPreferencePage.getDefaultDataGraph())
-        .replace("#model_graph", RackPreferencePage.getDefaultModelGraph());
+                .replace("#example", workflowName)
+                .replace("#data_graph", RackPreferencePage.getDefaultDataGraph())
+                .replace("#model_graph", RackPreferencePage.getDefaultModelGraph());
     }
 
     // FIXME - need to fill in the data-graph and model-graph
@@ -413,7 +413,6 @@ public class RunWorkflowHandler extends AbstractHandler {
                                 + workflowName);
                 workflowName = newname;
             }
-            
 
         } catch (Exception e) {
             MessageDialog.openError(
@@ -470,13 +469,13 @@ public class RunWorkflowHandler extends AbstractHandler {
             }
         }
     }
-    
+
     public void select(Shell shell) {
-    	try {
-    	    execute(null);
-    	} catch (Exception e) {
+        try {
+            execute(null);
+        } catch (Exception e) {
             MessageDialog.openError(null, "Error", "Failed to open selection dialog" + e);
-    	}
+        }
     }
 
     /** Called when the 'Restart' button is pressed */
