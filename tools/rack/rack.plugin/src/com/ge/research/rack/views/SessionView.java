@@ -61,10 +61,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 // Crucial:
-// FIXME - cannot get scrolled content to display properly
 
 // Should do:
 // FIXME - use computational thread? be able to abort a stuck process?
+// FIXME - tone down the amount of switching to the console that happens
+// FIXME - relayout the widgets when the view size changes
+// FIXME - send scrollbar to bottom on each Next
 
 // Nice to have:
 // FIXME - handle stderr
@@ -126,8 +128,8 @@ public class SessionView extends ViewPart {
     }
 
     public void displayEmpty() {
-        if (this.handler == null)
-            this.handler = new RunWorkflowHandler(); // FIXME - do we need this
+        if (this.handler == null) this.handler = new RunWorkflowHandler();
+
         outer = new Composite(parent, SWT.NONE);
         GridLayout layout0 = new GridLayout();
         layout0.numColumns = 1;
@@ -175,17 +177,19 @@ public class SessionView extends ViewPart {
         }
         // String debug = handler.getStringFromDocument(doc);
 
-        //ScrolledComposite sc = new ScrolledComposite(outer, SWT.H_SCROLL | SWT.V_SCROLL | SWT.FILL);
-        // sc.setLayoutData(new GridData(GridData.FILL_HORIZONTAL, SWT.TOP, true, false));
-        // sc.setBackground(outer.getBackground());
+        ScrolledComposite sc = new ScrolledComposite(outer, SWT.H_SCROLL | SWT.V_SCROLL);
+        sc.setLayoutData(new GridData(GridData.FILL_HORIZONTAL, SWT.TOP, true, true));
+        sc.setExpandHorizontal(true);
+        sc.setAlwaysShowScrollBars(true);
+        //sc.setBackground(outer.getBackground());
 
-        composite = new Composite(outer, SWT.NONE);
-        //sc.setContent(composite);
+        composite = new Composite(sc, SWT.NONE);
         GridLayout layout1 = new GridLayout();
         layout1.numColumns = 1;
         composite.setLayout(layout1);
-        composite.setLayoutData(new GridData(GridData.FILL, SWT.CENTER, true, false));
+        composite.setLayoutData(new GridData(GridData.FILL, SWT.CENTER, true, true));
         composite.setBackground(composite.getParent().getBackground());
+        sc.setContent(composite);
 
         try {
             if (!"form".equals(top.getNodeName())) {
@@ -201,7 +205,7 @@ public class SessionView extends ViewPart {
                         var box = elem;
                         NodeList ns =
                                 box.getChildNodes(); // All children should be <control> (or #text)
-                        if (k != 0) addSeparator(composite);
+                        addSeparator(composite);
                         for (int i = 0; i < ns.getLength(); i++) {
                             Node n = ns.item(i);
                             if (n.getNodeName().equals("control") && n instanceof Element element) {
@@ -210,7 +214,7 @@ public class SessionView extends ViewPart {
                                 String text = element.getTextContent();
                                 String id = element.getAttribute("id");
                                 String language =
-                                        element.getAttribute("language"); // FIXME - not used
+                                        element.getAttribute("language");
                                 boolean readonly = element.hasAttribute("readonly");
                                 if ("textbox".equals(type)) {
                                     String strlines = element.getAttribute("lines");
@@ -263,6 +267,10 @@ public class SessionView extends ViewPart {
                                 null, "", "Unknown tag type: " + elem.getNodeName());
                 }
             }
+            outer.setSize(outer.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+            sc.setMinWidth(parent.getSize().x-sc.getVerticalBar().getSize().x-10);
+            sc.setMinHeight(1);
+            composite.setSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
             if (top.hasAttribute("complete")) {
                 addLabel(outer, "Workflow is complete");
@@ -273,7 +281,6 @@ public class SessionView extends ViewPart {
             addLabel(outer, "Received XML is invalid");
             MessageDialog.openError(null, "Error", "Failure to display XML\n" + e);
         }
-
         addSeparator(outer);
 
         Composite buttons = new Composite(outer, SWT.NONE);
@@ -441,9 +448,10 @@ public class SessionView extends ViewPart {
     }
 
     /** Adds a horizontal separator to the parent Composite */
-    public void addSeparator(Composite parent) {
-        new Label(parent, SWT.HORIZONTAL | SWT.SEPARATOR)
-                .setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+    public Label addSeparator(Composite parent) {
+        Label w = new Label(parent, SWT.HORIZONTAL | SWT.SEPARATOR);
+        w.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        return w;
     }
 
     // FIXME - not yet used

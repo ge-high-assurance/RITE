@@ -81,8 +81,8 @@ public class RunWorkflowHandler extends AbstractHandler {
      * History list of XML documents presented to the user; history.getItem(0) is the current
      * document
      */
-    public Stack<Document> history =
-            new Stack<>(); // FIXME - is this maintained across different instances of the View?
+    public Stack<Document> history = new Stack<>(); 
+            // FIXME - is this maintained across different instances of the View?
 
     // Perhaps should belong to the View?
 
@@ -322,8 +322,6 @@ public class RunWorkflowHandler extends AbstractHandler {
                 .replace("#data_graph", RackPreferencePage.getDefaultDataGraph())
                 .replace("#model_graph", RackPreferencePage.getDefaultModelGraph());
     }
-
-    // FIXME - need to fill in the data-graph and model-graph
 
     public void next() {
         if (currentDisplayedDoc == null && workflowName == null) {
