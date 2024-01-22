@@ -168,6 +168,7 @@ public class SessionView extends ViewPart {
         layout0.numColumns = 1;
         outer.setLayout(layout0);
         outer.setLayoutData(new GridData(GridData.FILL_HORIZONTAL, SWT.CENTER, true, false));
+        outer.setBackground(parent.getBackground());
 
         if (name.isEmpty()) {
             addLabel(outer, "Received XML is invalid: no workflow name");
@@ -181,7 +182,7 @@ public class SessionView extends ViewPart {
         sc.setLayoutData(new GridData(GridData.FILL_HORIZONTAL, SWT.TOP, true, true));
         sc.setExpandHorizontal(true);
         sc.setAlwaysShowScrollBars(true);
-        //sc.setBackground(outer.getBackground());
+        sc.setBackground(parent.getBackground());
 
         composite = new Composite(sc, SWT.NONE);
         GridLayout layout1 = new GridLayout();
