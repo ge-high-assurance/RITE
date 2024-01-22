@@ -241,7 +241,7 @@ public class SessionView extends ViewPart {
                                     }
                                 } else if ("checkbox".equals(type)) {
                                     boolean value = element.hasAttribute("checked");
-                                    var in = addCheckbox(composite, label, value, readonly);
+                                    var in = addCheckbox(composite, text, value, readonly);
                                     if (!readonly) inputs.add(new Input(element, in));
                                 } else {
                                     addLabel(composite, "Received XML is invalid");

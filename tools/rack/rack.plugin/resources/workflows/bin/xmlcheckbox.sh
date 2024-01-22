@@ -7,7 +7,7 @@ orig=`echo "$input" | sed -e 's/^.*<form [^>]*>//' -e 'sx</form>.*$xx'`
 if echo "$input" | grep -q connection  ; then
 ## FIRST TIME
 
-echo "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><form workflow=\"Checkbox\"><box><control type=\"checkbox\" label=\"Check me\"></control></box></form>"
+echo "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><form workflow=\"Checkbox\"><box><control type=\"checkbox\" >Check me</control></box></form>"
 
 else 
 ## NOT FIRST TIME
@@ -23,5 +23,5 @@ else
 fi
 echo EXPR "$expr" >> /Users/davidcok/Desktop/log
 
-echo "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><form workflow=\"Checkbox\">$orig <box><control type=\"label\">$lab</control><control type=\"checkbox\"  label=\"Check me again\" $expr ></control></box></form>"
+echo "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><form workflow=\"Checkbox\">$orig <box><control type=\"label\">$lab</control><control type=\"checkbox\"  $expr >Check me again</control></box></form>"
 fi
