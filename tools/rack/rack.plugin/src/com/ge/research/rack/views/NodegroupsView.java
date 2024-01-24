@@ -49,9 +49,6 @@ import org.eclipse.jface.action.*;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -64,7 +61,6 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -231,15 +227,17 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
         refreshNodegroupList();
 
         // Initially show all columns for visibility / view reset
-//        Arrays.stream(table.getColumns()).forEach(c -> c.setWidth(150));
+        //        Arrays.stream(table.getColumns()).forEach(c -> c.setWidth(150));
 
         parent.pack();
-//        var cols = table.getColumns();
-//        String s = "WIDTH " + parent.getSize().x + " " + topComposite.getSize().x + " " + composite.getSize().x + " " + floatContainer.getSize().x + " " + table.getSize().x;
-//        for (var c: cols) s = s + " " + c.getWidth();
-//        var sb = topComposite.getHorizontalBar();
-//        s = s + " SB " + sb.getSelection() + " " + sb.getMinimum() + " " + sb.getMaximum() + " " + sb.getIncrement() + " " + sb.getPageIncrement() + " " + sb.getThumb();
-//        s = s;
+        //        var cols = table.getColumns();
+        //        String s = "WIDTH " + parent.getSize().x + " " + topComposite.getSize().x + " " +
+        // composite.getSize().x + " " + floatContainer.getSize().x + " " + table.getSize().x;
+        //        for (var c: cols) s = s + " " + c.getWidth();
+        //        var sb = topComposite.getHorizontalBar();
+        //        s = s + " SB " + sb.getSelection() + " " + sb.getMinimum() + " " + sb.getMaximum()
+        // + " " + sb.getIncrement() + " " + sb.getPageIncrement() + " " + sb.getThumb();
+        //        s = s;
 
     }
 
@@ -341,11 +339,11 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
     }
 
     public ArrayList<String> getSelectedNodegroups() {
-    	return Arrays.stream(table.getSelection())
-              .map(ng -> (List<?>) ng.getData())
-              .filter(d -> !d.isEmpty())
-              .map(d -> (String) d.get(0))
-              .collect(Collectors.toCollection(ArrayList::new));
+        return Arrays.stream(table.getSelection())
+                .map(ng -> (List<?>) ng.getData())
+                .filter(d -> !d.isEmpty())
+                .map(d -> (String) d.get(0))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     private class DeleteSelectedNodeGroupsAction extends Action {
@@ -439,5 +437,4 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
             return Status.OK_STATUS;
         }
     }
-
 }
