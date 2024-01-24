@@ -31,11 +31,11 @@
  */
 package com.ge.research.rack.arp4754.logic;
 
+import com.ge.research.rack.analysis.structures.SparqlConnectionInfo;
+import com.ge.research.rack.analysis.utils.CustomStringUtils;
+import com.ge.research.rack.analysis.utils.RackQueryUtils;
 import com.ge.research.rack.arp4754.constants.ARP4754Queries;
 import com.ge.research.rack.arp4754.structures.Configuration;
-import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
-import com.ge.research.rack.do178c.structures.SparqlConnectionInfo;
-import com.ge.research.rack.do178c.utils.RackQueryUtils;
 import com.ge.research.rack.utils.CSVUtil;
 
 import java.io.BufferedReader;

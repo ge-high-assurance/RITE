@@ -31,13 +31,13 @@
  */
 package com.ge.research.rack.autoGsn.logic;
 
+import com.ge.research.rack.analysis.structures.SparqlConnectionInfo;
+import com.ge.research.rack.analysis.utils.CustomStringUtils;
+import com.ge.research.rack.analysis.utils.RackQueryUtils;
 import com.ge.research.rack.autoGsn.structures.PatternInfo;
 import com.ge.research.rack.autoGsn.structures.PatternInfo.*;
-import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
 import com.ge.research.rack.autoGsn.utils.OntologyJsonObjUtils;
 import com.ge.research.rack.autoGsn.utils.QueryGenerationUtils;
-import com.ge.research.rack.do178c.structures.SparqlConnectionInfo;
-import com.ge.research.rack.do178c.utils.RackQueryUtils;
 import com.ge.research.rack.utils.CSVUtil;
 import com.ge.research.semtk.edc.client.OntologyInfoClient;
 import com.ge.research.semtk.edc.client.OntologyInfoClientConfig;

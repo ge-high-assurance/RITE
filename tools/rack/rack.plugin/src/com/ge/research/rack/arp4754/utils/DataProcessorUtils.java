@@ -31,8 +31,8 @@
  */
 package com.ge.research.rack.arp4754.utils;
 
+import com.ge.research.rack.analysis.utils.RackQueryUtils;
 import com.ge.research.rack.arp4754.structures.Configuration;
-import com.ge.research.rack.do178c.utils.RackQueryUtils;
 
 import java.util.ArrayList;
 import java.util.List;

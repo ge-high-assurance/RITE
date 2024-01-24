@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  * 
- * Copyright (c) 2023, General Electric Company and Galois, Inc.
+ * Copyright (c) 2024, General Electric Company and Galois, Inc.
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -29,34 +29,9 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.ge.research.rack.arp4754;
+package com.ge.research.rack.analysis.structures;
 
-import com.ge.research.rack.arp4754.logic.DataProcessor;
+public abstract class DataProcessor {
 
-/**
- * @author Saswata Paul
- */
-public class TestApp {
-
-    public static void main(String[] args) throws Exception {
-        String configFilePath =
-                "C://Users/212807042/Desktop/RACK_tests/temp_results/arp4754_dev/dummy.config";
-        String rackDir = "C://Users/212807042/Desktop/RACK_tests/temp_results/arp4754_dev";
-
-        //    	Configuration config = ConfigReader.getConfigFromFile(configFile);
-
-        //        Configuration config = ConfigReader.getConfigFromRACK(rackDir);
-        //
-        //        System.out.println("Got config");
-        //
-        //        System.out.println(config.getSysReq());
-        //        System.out.println(config.getItemReq());
-        //        System.out.println(config.getItem());
-
-        String configFile = "dummy.config";
-
-        DataProcessor processor = new DataProcessor();
-
-        processor.getData(rackDir);
-    }
+    protected abstract AnalysisNode getData(String outDir);
 }

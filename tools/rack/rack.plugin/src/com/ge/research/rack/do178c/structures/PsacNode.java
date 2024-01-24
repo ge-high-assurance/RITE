@@ -31,6 +31,8 @@
  */
 package com.ge.research.rack.do178c.structures;
 
+import com.ge.research.rack.analysis.structures.AnalysisNode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +40,7 @@ import java.util.List;
  * @author Saswata Paul
  *     <p>A collection of hierarchical data structures to store a PSAC and associated RACK data
  */
-public class PsacNode {
+public class PsacNode extends AnalysisNode {
 
     /**
      * objective outputs
@@ -659,9 +661,6 @@ public class PsacNode {
     // The ID and level of the main software
     private String mainOFP = "";
 
-    // The Id of the psac
-    private String psacId = "";
-
     // List of tables in psac
     private List<Table> reportTables = new ArrayList<Table>();
 
@@ -710,17 +709,8 @@ public class PsacNode {
         this.mainOFP = mainOFP;
     }
 
-    /**
-     * @return the psacId
-     */
-    public String getPsacId() {
-        return psacId;
-    }
-
-    /**
-     * @param psacId the psacId to set
-     */
-    public void setPsacId(String psacId) {
-        this.psacId = psacId;
+    @Override
+    protected String swLabel() {
+        return mainOFP;
     }
 }

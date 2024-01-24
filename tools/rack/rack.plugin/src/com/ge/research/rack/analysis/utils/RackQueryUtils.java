@@ -29,10 +29,9 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.ge.research.rack.do178c.utils;
+package com.ge.research.rack.analysis.utils;
 
-import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
-import com.ge.research.rack.do178c.structures.SparqlConnectionInfo;
+import com.ge.research.rack.analysis.structures.SparqlConnectionInfo;
 import com.ge.research.rack.utils.ConnectionUtil;
 import com.ge.research.rack.utils.Core;
 import com.ge.research.rack.views.RackPreferencePage;
@@ -387,7 +386,7 @@ public class RackQueryUtils {
 
         // get entire file as a string object
         String fileString =
-                com.ge.research.rack.autoGsn.utils.CustomFileUtils.readFile(
+                com.ge.research.rack.analysis.utils.CustomFileUtils.readFile(
                         flPth, StandardCharsets.US_ASCII);
 
         // replace all commas and newlines inside quote
@@ -441,7 +440,7 @@ public class RackQueryUtils {
 
         // get entire file as a string object
         String fileString =
-                com.ge.research.rack.autoGsn.utils.CustomFileUtils.readFile(
+                com.ge.research.rack.analysis.utils.CustomFileUtils.readFile(
                         flPth, StandardCharsets.US_ASCII);
 
         // replace all commmas and newlines inside quote
@@ -488,7 +487,7 @@ public class RackQueryUtils {
 
         // get entire file as a string object
         String fileString =
-                com.ge.research.rack.autoGsn.utils.CustomFileUtils.readFile(
+                com.ge.research.rack.analysis.utils.CustomFileUtils.readFile(
                         flPth, StandardCharsets.US_ASCII);
 
         // replace all commmas and newlines inside quote

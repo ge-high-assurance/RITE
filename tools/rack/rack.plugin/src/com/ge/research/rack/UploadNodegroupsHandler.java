@@ -31,7 +31,7 @@
  */
 package com.ge.research.rack;
 
-import com.ge.research.rack.do178c.utils.RackQueryUtils;
+import com.ge.research.rack.analysis.utils.RackQueryUtils;
 import com.ge.research.rack.utils.RackConsole;
 
 import org.apache.commons.io.FileUtils;

@@ -31,8 +31,8 @@
  */
 package com.ge.research.rack.do178c.viewHandlers;
 
-import com.ge.research.rack.autoGsn.utils.CustomFileUtils;
-import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
+import com.ge.research.rack.analysis.utils.CustomFileUtils;
+import com.ge.research.rack.analysis.utils.CustomStringUtils;
 import com.ge.research.rack.do178c.oem.DataProcessor;
 import com.ge.research.rack.do178c.structures.PsacNode;
 import com.ge.research.rack.do178c.utils.PsacNodeUtils;
@@ -76,7 +76,7 @@ public class ReportMainViewHandlerNew {
     @FXML private Label labelWait;
     @FXML private ProgressIndicator progInd;
 
-    @FXML private BarChart chartTableStatus;
+    @FXML private BarChart<String, Integer> chartTableStatus;
     @FXML private NumberAxis yAxisChartTableStatus;
     @FXML private GridPane gridPaneLegend;
 
@@ -155,7 +155,7 @@ public class ReportMainViewHandlerNew {
 
         DataProcessor rdpObj = new DataProcessor();
 
-        ReportViewsManager.reportDataObj = rdpObj.getPSACData(tempDir);
+        ReportViewsManager.reportDataObj = (PsacNode) rdpObj.getData(tempDir);
     }
 
     /**
@@ -206,12 +206,12 @@ public class ReportMainViewHandlerNew {
 
         // Group bars by table id
 
-        XYChart.Series passData = new XYChart.Series();
+        XYChart.Series<String, Integer> passData = new XYChart.Series<String, Integer>();
         passData.setName("Complete");
-        List<Data> passBars = new ArrayList<Data>();
+        List<Data<String, Integer>> passBars = new ArrayList<Data<String, Integer>>();
         for (PsacNode.Table tabObj : ReportViewsManager.reportDataObj.getReportTables()) {
             //            Data passBar = new XYChart.Data(tabObj.getId(), tabObj.getNumObjPassed());
-            Data passBar =
+            Data<String, Integer> passBar =
                     ReportViewUtils.createIntDataBar(tabObj.getId(), tabObj.getNumObjPassed());
             passData.getData().add(passBar);
             passBars.add(passBar);
@@ -220,12 +220,12 @@ public class ReportMainViewHandlerNew {
             }
         }
 
-        XYChart.Series failData = new XYChart.Series();
+        XYChart.Series<String, Integer> failData = new XYChart.Series<String, Integer>();
         failData.setName("Complete");
-        List<Data> failBars = new ArrayList<Data>();
+        List<Data<String, Integer>> failBars = new ArrayList<Data<String, Integer>>();
         for (PsacNode.Table tabObj : ReportViewsManager.reportDataObj.getReportTables()) {
             //            Data failBar = new XYChart.Data(tabObj.getId(), tabObj.getNumObjFailed());
-            Data failBar =
+            Data<String, Integer> failBar =
                     ReportViewUtils.createIntDataBar(tabObj.getId(), tabObj.getNumObjFailed());
             failData.getData().add(failBar);
             failBars.add(failBar);
@@ -234,13 +234,13 @@ public class ReportMainViewHandlerNew {
             }
         }
 
-        XYChart.Series partialData = new XYChart.Series();
+        XYChart.Series<String, Integer> partialData = new XYChart.Series<String, Integer>();
         partialData.setName("Partial Data");
-        List<Data> partialBars = new ArrayList<Data>();
+        List<Data<String, Integer>> partialBars = new ArrayList<Data<String, Integer>>();
         for (PsacNode.Table tabObj : ReportViewsManager.reportDataObj.getReportTables()) {
             //            Data partialBar = new XYChart.Data(tabObj.getId(),
             // tabObj.getNumObjPartial());
-            Data partialBar =
+            Data<String, Integer> partialBar =
                     ReportViewUtils.createIntDataBar(tabObj.getId(), tabObj.getNumObjPartial());
             partialData.getData().add(partialBar);
             partialBars.add(partialBar);
@@ -249,12 +249,13 @@ public class ReportMainViewHandlerNew {
             }
         }
 
-        XYChart.Series noData = new XYChart.Series();
+        XYChart.Series<String, Integer> noData = new XYChart.Series<String, Integer>();
         noData.setName("No Data");
-        List<Data> noBars = new ArrayList<Data>();
+        List<Data<String, Integer>> noBars = new ArrayList<Data<String, Integer>>();
         for (PsacNode.Table tabObj : ReportViewsManager.reportDataObj.getReportTables()) {
             //            Data noBar = new XYChart.Data(tabObj.getId(), tabObj.getNumObjNodata());
-            Data noBar = ReportViewUtils.createIntDataBar(tabObj.getId(), tabObj.getNumObjNodata());
+            Data<String, Integer> noBar =
+                    ReportViewUtils.createIntDataBar(tabObj.getId(), tabObj.getNumObjNodata());
             noData.getData().add(noBar);
             noBars.add(noBar);
             if (high < tabObj.getNumObjNodata()) {
@@ -267,19 +268,19 @@ public class ReportMainViewHandlerNew {
         chartTableStatus.getData().add(noData);
         chartTableStatus.getData().add(partialData);
 
-        for (Data bar : passBars) {
+        for (Data<String, Integer> bar : passBars) {
             bar.getNode().getStyleClass().add("color-passed");
             ReportViewUtils.assignTooltip(bar.getNode(), bar.getYValue().toString());
         }
-        for (Data bar : failBars) {
+        for (Data<String, Integer> bar : failBars) {
             bar.getNode().getStyleClass().add("color-failed");
             ReportViewUtils.assignTooltip(bar.getNode(), bar.getYValue().toString());
         }
-        for (Data bar : partialBars) {
+        for (Data<String, Integer> bar : partialBars) {
             bar.getNode().getStyleClass().add("color-partial-data");
             ReportViewUtils.assignTooltip(bar.getNode(), bar.getYValue().toString());
         }
-        for (Data bar : noBars) {
+        for (Data<String, Integer> bar : noBars) {
             bar.getNode().getStyleClass().add("color-no-data");
             ReportViewUtils.assignTooltip(bar.getNode(), bar.getYValue().toString());
         }

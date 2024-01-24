@@ -31,18 +31,19 @@
  */
 package com.ge.research.rack.do178c.oem;
 
-import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
+import com.ge.research.rack.analysis.structures.AnalysisNode;
+import com.ge.research.rack.analysis.structures.SparqlConnectionInfo;
+import com.ge.research.rack.analysis.utils.CustomStringUtils;
+import com.ge.research.rack.analysis.utils.RackQueryUtils;
 import com.ge.research.rack.do178c.constants.DO178CQueries;
 import com.ge.research.rack.do178c.structures.DataItem;
 import com.ge.research.rack.do178c.structures.PsacNode;
 import com.ge.research.rack.do178c.structures.Requirement;
 import com.ge.research.rack.do178c.structures.ReviewLog;
-import com.ge.research.rack.do178c.structures.SparqlConnectionInfo;
 import com.ge.research.rack.do178c.structures.SwComponent;
 import com.ge.research.rack.do178c.structures.Test;
 import com.ge.research.rack.do178c.utils.LogicUtils;
 import com.ge.research.rack.do178c.utils.PsacNodeUtils;
-import com.ge.research.rack.do178c.utils.RackQueryUtils;
 import com.ge.research.rack.utils.CSVUtil;
 
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ import java.util.Set;
 /**
  * @author Saswata Paul
  */
-public class DataProcessor {
+public class DataProcessor extends com.ge.research.rack.analysis.structures.DataProcessor {
 
     // class variables to store required parameters
     String rackDir;
@@ -922,7 +923,7 @@ public class DataProcessor {
 
             // these two details will be redundantly filled everytime, but it should not matter as
             // long as the data is not garbage
-            psacNode.setPsacId(row[psacIdCol]);
+            psacNode.setId(row[psacIdCol]);
             psacNode.setMainOFP(
                     row[swIdCol]
                             + " (Level "
@@ -2047,7 +2048,8 @@ public class DataProcessor {
      * @param rackDir
      * @return
      */
-    public PsacNode getPSACData(String outDir) {
+    @Override
+    public AnalysisNode getData(String outDir) {
 
         rackDir = outDir;
 

@@ -31,6 +31,8 @@
  */
 package com.ge.research.rack.arp4754.structures;
 
+import com.ge.research.rack.analysis.structures.AnalysisNode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +40,7 @@ import java.util.List;
  * @author Saswata Paul
  *     <p>A class representing Development Assurance Plans for ARP4754
  */
-public class DAPlan {
+public class DAPlan extends AnalysisNode {
 
     /**
      * A package for allgraphData of an objective
@@ -767,7 +769,6 @@ public class DAPlan {
         }
     }
 
-    private String id = "";
     private String desc = "";
     private String system = "";
     private String sysDAL = "";
@@ -780,66 +781,68 @@ public class DAPlan {
     public String getDesc() {
         return desc;
     }
+
     /**
      * @param desc the desc to set
      */
     public void setDesc(String desc) {
         this.desc = desc;
     }
-    /**
-     * @return the id
-     */
-    public String getId() {
-        return id;
-    }
-    /**
-     * @param id the id to set
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
+
     /**
      * @return the system
      */
     public String getSystem() {
         return system;
     }
+
     /**
      * @param system the system to set
      */
     public void setSystem(String system) {
         this.system = system;
     }
+
+    @Override
+    protected String swLabel() {
+        return system;
+    }
+
     /**
      * @return the sysDAL
      */
     public String getSysDAL() {
         return sysDAL;
     }
+
     /**
      * @param sysDAL the sysDAL to set
      */
     public void setSysDAL(String sysDAL) {
         this.sysDAL = sysDAL;
     }
+
     /**
      * @return the process
      */
     public List<Process> getProcesses() {
         return processes;
     }
+
     /**
      * @param process the process to set
      */
     public void setProcesses(List<Process> process) {
         processes = process;
     }
+
     /**
      * @return the complianceStatus
      */
     public double getComplianceStatus() {
         return complianceStatus;
     }
+
     /**
      * @param complianceStatus the complianceStatus to set
      */

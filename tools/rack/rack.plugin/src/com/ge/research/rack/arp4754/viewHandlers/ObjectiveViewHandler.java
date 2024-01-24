@@ -37,7 +37,6 @@ import com.ge.research.rack.arp4754.structures.Evidence;
 import com.ge.research.rack.arp4754.utils.DAPlanUtils;
 import com.ge.research.rack.arp4754.utils.ViewUtils;
 import com.ge.research.rack.arp4754.viewManagers.Arp4754ViewsManager;
-import com.ge.research.rack.do178c.utils.ReportViewUtils;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -91,7 +90,7 @@ public class ObjectiveViewHandler {
     @FXML private ListView<Label> interfaceList;
     @FXML private ComboBox comboInterface;
     @FXML private TextField searchInterface;
-    @FXML private BarChart interfaceChart;
+    @FXML private BarChart<String, Integer> interfaceChart;
     @FXML private NumberAxis yAxisInterfaceChart;
     @FXML private Label interfaceChildrenLabel;
     @FXML private ListView interfaceChildrenList;
@@ -100,25 +99,25 @@ public class ObjectiveViewHandler {
     @FXML private ListView<Label> itemList;
     @FXML private ComboBox comboItem;
     @FXML private TextField searchItem;
-    @FXML private BarChart itemChart;
+    @FXML private BarChart<String, Integer> itemChart;
     @FXML private NumberAxis yAxisItemChart;
     @FXML private Label itemChildrenLabel;
     @FXML private ListView itemChildrenList;
 
     @FXML private Tab tabRequirement;
     @FXML private ListView<Label> requirementList;
-    @FXML private ComboBox comboRequirement;
+    @FXML private ComboBox<String> comboRequirement;
     @FXML private TextField searchRequirement;
-    @FXML private BarChart requirementChart;
+    @FXML private BarChart<String, Integer> requirementChart;
     @FXML private NumberAxis yAxisRequirementChart;
     @FXML private Label requirementChildrenLabel;
-    @FXML private ListView requirementChildrenList;
+    @FXML private ListView<String> requirementChildrenList;
 
     @FXML private Tab tabSystem;
     @FXML private ListView<Label> systemList;
     @FXML private ComboBox comboSystem;
     @FXML private TextField searchSystem;
-    @FXML private BarChart systemChart;
+    @FXML private BarChart<String, Integer> systemChart;
     @FXML private NumberAxis yAxisSystemChart;
     @FXML private Label systemChildrenLabel;
     @FXML private ListView systemChildrenList;
@@ -167,14 +166,15 @@ public class ObjectiveViewHandler {
             requirementChart.getData().clear();
             requirementChart.setVisible(true);
 
-            XYChart.Series stat = new XYChart.Series();
+            XYChart.Series<String, Integer> stat = new XYChart.Series<String, Integer>();
             int maxVal = 0;
 
             for (Category bucket : currentObjObject.getGraphs().getSysReqGraphData().getBuckets()) {
 
                 System.out.println(bucket.getName());
 
-                Data bar = ReportViewUtils.createIntDataBar(bucket.getName(), bucket.getValue());
+                Data<String, Integer> bar =
+                        ViewUtils.createIntDataBar(bucket.getName(), bucket.getValue());
                 stat.getData().add(bar);
                 if (bucket.getValue() > maxVal) {
                     maxVal = bucket.getValue();
@@ -197,14 +197,15 @@ public class ObjectiveViewHandler {
             systemChart.getData().clear();
             systemChart.setVisible(true);
 
-            XYChart.Series stat = new XYChart.Series();
+            XYChart.Series<String, Integer> stat = new XYChart.Series<String, Integer>();
             int maxVal = 0;
 
             for (Category bucket : currentObjObject.getGraphs().getSystemGraphData().getBuckets()) {
 
                 System.out.println(bucket.getName());
 
-                Data bar = ReportViewUtils.createIntDataBar(bucket.getName(), bucket.getValue());
+                Data<String, Integer> bar =
+                        ViewUtils.createIntDataBar(bucket.getName(), bucket.getValue());
                 stat.getData().add(bar);
                 if (bucket.getValue() > maxVal) {
                     maxVal = bucket.getValue();
@@ -226,7 +227,7 @@ public class ObjectiveViewHandler {
             interfaceChart.getData().clear();
             interfaceChart.setVisible(true);
 
-            XYChart.Series stat = new XYChart.Series();
+            XYChart.Series<String, Integer> stat = new XYChart.Series<String, Integer>();
             int maxVal = 0;
 
             for (Category bucket :
@@ -234,7 +235,8 @@ public class ObjectiveViewHandler {
 
                 System.out.println(bucket.getName());
 
-                Data bar = ReportViewUtils.createIntDataBar(bucket.getName(), bucket.getValue());
+                Data<String, Integer> bar =
+                        ViewUtils.createIntDataBar(bucket.getName(), bucket.getValue());
                 stat.getData().add(bar);
                 if (bucket.getValue() > maxVal) {
                     maxVal = bucket.getValue();
@@ -257,7 +259,7 @@ public class ObjectiveViewHandler {
             requirementChart.getData().clear();
             requirementChart.setVisible(true);
 
-            XYChart.Series stat = new XYChart.Series();
+            XYChart.Series<String, Integer> stat = new XYChart.Series<String, Integer>();
             int maxVal = 0;
 
             for (Category bucket :
@@ -265,7 +267,8 @@ public class ObjectiveViewHandler {
 
                 System.out.println(bucket.getName());
 
-                Data bar = ReportViewUtils.createIntDataBar(bucket.getName(), bucket.getValue());
+                Data<String, Integer> bar =
+                        ViewUtils.createIntDataBar(bucket.getName(), bucket.getValue());
                 stat.getData().add(bar);
                 if (bucket.getValue() > maxVal) {
                     maxVal = bucket.getValue();
@@ -376,16 +379,16 @@ public class ObjectiveViewHandler {
 
                 String evidenceText = intrface.getId() + " | Inputs: ";
                 for (Evidence input : intrface.getHasInputs()) {
-                	if(input!=null) {
-                        evidenceText = evidenceText + input.getId() + ", ";                		
-                	}
+                    if (input != null) {
+                        evidenceText = evidenceText + input.getId() + ", ";
+                    }
                 }
                 evidenceText = evidenceText + " | Outputs: ";
 
                 for (Evidence output : intrface.getHasOutputs()) {
-                	if(output!=null) {
-                        evidenceText = evidenceText + output.getId() + ", ";                		
-                	}
+                    if (output != null) {
+                        evidenceText = evidenceText + output.getId() + ", ";
+                    }
                 }
 
                 evidenceLabel.setText(evidenceText);
@@ -601,7 +604,7 @@ public class ObjectiveViewHandler {
         for (Evidence system : currentObjObject.getOutputs().getSystemObjs()) {
             if (filterKey.equalsIgnoreCase("All")
                     && ((searchKey == null) || (system.getId().contains(searchKey)))) {
-            	if(system.getType().equalsIgnoreCase("System")) { // exclude items
+                if (system.getType().equalsIgnoreCase("System")) { // exclude items
                     Label evidenceLabel = new Label();
 
                     String evidenceText = system.getId() + " | Interfaces: ";
@@ -611,8 +614,7 @@ public class ObjectiveViewHandler {
 
                     evidenceLabel.setText(evidenceText);
                     systemList.getItems().add(evidenceLabel);
-            		
-            	}
+                }
             }
         }
     }
@@ -741,7 +743,7 @@ public class ObjectiveViewHandler {
     private void initialize() {
         // initialize the header label
         try {
-            final ImageView icon = ReportViewUtils.loadGeIcon();
+            final ImageView icon = ViewUtils.loadGeIcon();
             icon.setPreserveRatio(true);
             headerLabel.setGraphic(icon);
         } catch (Exception e) {
@@ -870,7 +872,7 @@ public class ObjectiveViewHandler {
                             }
                         });
             }
-            
+
             // Contextmenu for reqList
             ContextMenu reqListContext = new ContextMenu();
             MenuItem menuItemGoToSource = new MenuItem("Go to Entity Source");
@@ -881,7 +883,7 @@ public class ObjectiveViewHandler {
                     (rightClickEvent) -> {
                         // Open URL on browser
 
-                    	ViewUtils.openUrlInDefaultApp(
+                        ViewUtils.openUrlInDefaultApp(
                                 "https://github.com/ge-high-assurance/RITE/blob/arp4754/examples/ingestion-packages/OEM-Ingestion-Package-v2/data_source/requirements.pdf");
                     });
         }
@@ -902,16 +904,16 @@ public class ObjectiveViewHandler {
             MenuItem menuItemGoToSource = new MenuItem("Go to Entity Source");
             intrfaceListContext.getItems().add(menuItemGoToSource);
             interfaceList.setContextMenu(intrfaceListContext);
-             menuItemGoToSource.setOnAction(
+            menuItemGoToSource.setOnAction(
                     (rightClickEvent) -> {
                         // Open URL on browser
 
-                    	ViewUtils.openUrlInDefaultApp(
+                        ViewUtils.openUrlInDefaultApp(
                                 "https://github.com/ge-high-assurance/RITE/blob/arp4754/examples/ingestion-packages/OEM-Ingestion-Package-v2/data_source/interfaces.pdf");
                     });
         }
     }
-    
+
     @FXML
     private void itemListSelectionAction(MouseEvent event) {
 
@@ -927,16 +929,16 @@ public class ObjectiveViewHandler {
             MenuItem menuItemGoToSource = new MenuItem("Go to Entity Source");
             itemListContext.getItems().add(menuItemGoToSource);
             itemList.setContextMenu(itemListContext);
-             menuItemGoToSource.setOnAction(
+            menuItemGoToSource.setOnAction(
                     (rightClickEvent) -> {
                         // Open URL on browser
 
-                    	ViewUtils.openUrlInDefaultApp(
+                        ViewUtils.openUrlInDefaultApp(
                                 "https://github.com/ge-high-assurance/RITE/blob/arp4754/examples/ingestion-packages/OEM-Ingestion-Package-v2/data_source/systems.pdf");
                     });
         }
     }
-    
+
     @FXML
     private void systemListSelectionAction(MouseEvent event) {
 
@@ -952,16 +954,16 @@ public class ObjectiveViewHandler {
             MenuItem menuSystemGoToSource = new MenuItem("Go to Entity Source");
             systemListContext.getItems().add(menuSystemGoToSource);
             systemList.setContextMenu(systemListContext);
-             menuSystemGoToSource.setOnAction(
+            menuSystemGoToSource.setOnAction(
                     (rightClickEvent) -> {
                         // Open URL on browser
 
-                    	ViewUtils.openUrlInDefaultApp(
+                        ViewUtils.openUrlInDefaultApp(
                                 "https://github.com/ge-high-assurance/RITE/blob/arp4754/examples/ingestion-packages/OEM-Ingestion-Package-v2/data_source/systems.pdf");
                     });
         }
     }
-    
+
     @FXML
     private void docListSelectionAction(MouseEvent event) {
 

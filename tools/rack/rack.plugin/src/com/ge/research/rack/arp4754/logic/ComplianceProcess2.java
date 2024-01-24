@@ -61,10 +61,11 @@ public class ComplianceProcess2 {
 
         int numSysReqsWithInterface = 0;
 
-        if (objective.getOutputs().getSysReqObjs() != null && objective.getOutputs().getSysReqObjs().size()>0) {
+        if (objective.getOutputs().getSysReqObjs() != null
+                && objective.getOutputs().getSysReqObjs().size() > 0) {
             for (Evidence sysReq : objective.getOutputs().getSysReqObjs()) {
-            	System.out.println("-------- " + sysReq.getId());
-                if (sysReq.getAllocatedTo() != null && sysReq.getAllocatedTo().size()>0) {
+                System.out.println("-------- " + sysReq.getId());
+                if (sysReq.getAllocatedTo() != null && sysReq.getAllocatedTo().size() > 0) {
                     for (Evidence system : sysReq.getAllocatedTo()) {
                         if (system.getHasInterfaces() != null) {
                             numSysReqsWithInterface++;
@@ -154,7 +155,8 @@ public class ComplianceProcess2 {
      */
     private static DAPlan.Objective computeObjective4(DAPlan.Objective objective) {
 
-        if (objective.getOutputs().getDerSysReqObjs() != null && objective.getOutputs().getDerSysReqObjs().size()>0) {
+        if (objective.getOutputs().getDerSysReqObjs() != null
+                && objective.getOutputs().getDerSysReqObjs().size() > 0) {
             if (objective.getOutputs().getDerSysReqObjs().size() > 0) {
                 objective.setComplianceStatus(100.0);
                 objective.setNoData(false);
@@ -208,7 +210,8 @@ public class ComplianceProcess2 {
         int numItemReqsWithAllocation = 0;
         int numItemReqsWithTraceAndAllocation = 0;
 
-        if (objective.getOutputs().getItemReqObjs() != null && objective.getOutputs().getItemReqObjs().size()>0) {
+        if (objective.getOutputs().getItemReqObjs() != null
+                && objective.getOutputs().getItemReqObjs().size() > 0) {
             for (Evidence itemReq : objective.getOutputs().getItemReqObjs()) {
                 boolean trace = false;
                 boolean allocation = false;

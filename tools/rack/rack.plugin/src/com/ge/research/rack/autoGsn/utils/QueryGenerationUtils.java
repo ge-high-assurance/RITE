@@ -31,9 +31,10 @@
  */
 package com.ge.research.rack.autoGsn.utils;
 
+import com.ge.research.rack.analysis.structures.SparqlConnectionInfo;
+import com.ge.research.rack.analysis.utils.CustomStringUtils;
 import com.ge.research.rack.autoGsn.constants.PrefixedPatternQueries;
 import com.ge.research.rack.autoGsn.constants.QueryTemplates;
-import com.ge.research.rack.do178c.structures.SparqlConnectionInfo;
 
 import org.json.simple.JSONObject;
 

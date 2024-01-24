@@ -31,10 +31,11 @@
  */
 package com.ge.research.rack.autoGsn.utils;
 
+import com.ge.research.rack.analysis.utils.CustomStringUtils;
+import com.ge.research.rack.analysis.utils.RackQueryUtils;
 import com.ge.research.rack.autoGsn.structures.MultiClassPackets;
 import com.ge.research.rack.autoGsn.structures.MultiClassPackets.GoalIdAndClass;
 import com.ge.research.rack.autoGsn.structures.PatternInfo;
-import com.ge.research.rack.do178c.utils.RackQueryUtils;
 import com.ge.research.rack.utils.CSVUtil;
 
 import java.util.ArrayList;

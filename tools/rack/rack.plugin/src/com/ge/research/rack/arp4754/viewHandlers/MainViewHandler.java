@@ -31,31 +31,24 @@
  */
 package com.ge.research.rack.arp4754.viewHandlers;
 
+import com.ge.research.rack.analysis.utils.CustomFileUtils;
+import com.ge.research.rack.analysis.utils.CustomStringUtils;
 import com.ge.research.rack.arp4754.logic.DataProcessor;
 import com.ge.research.rack.arp4754.structures.DAPlan;
 import com.ge.research.rack.arp4754.utils.DAPlanUtils;
 import com.ge.research.rack.arp4754.utils.ViewUtils;
 import com.ge.research.rack.arp4754.viewManagers.Arp4754ViewsManager;
-import com.ge.research.rack.autoGsn.utils.CustomFileUtils;
-import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
-import com.ge.research.rack.do178c.utils.ReportViewUtils;
 
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -64,27 +57,32 @@ import java.util.List;
 /**
  * @author Saswata Paul
  */
-public class MainViewHandler {
+public class MainViewHandler extends com.ge.research.rack.analysis.handlers.MainViewHandler {
 
     // -------- FXML GUI variables below --------------
-    @FXML private Label headerLabel;
+    //    @FXML private Label headerLabel;
 
-    @FXML private Button btnFetch;
-    @FXML private Button btnFontInc;
-    @FXML private Button btnFontDec;
+    //    @FXML private Button btnFetch;
+    //    @FXML private Button btnFontInc;
+    //    @FXML private Button btnFontDec;
 
-    @FXML private Label labelSwInfo;
+    //    @FXML private Label labelSwInfo;
 
-    @FXML private Label labelWait;
-    @FXML private ProgressIndicator progInd;
+    //    @FXML private Label labelWait;
+    //    @FXML private ProgressIndicator progInd;
 
-    @FXML private BarChart chartProcessStatus;
-    @FXML private NumberAxis yAxisChartProcessStatus;
-    @FXML private GridPane gridPaneLegend;
+    //    @FXML private BarChart<String, Integer> chartProcessStatus;
+    //    @FXML private NumberAxis yAxisChartProcessStatus;
+    //    @FXML private GridPane gridPaneLegend;
 
-    @FXML private ListView<Label> listProcess;
+    //    @FXML private ListView<Label> listProcess;
 
     // ----------
+
+    protected String bucketLabel() {
+        // default value; Subclasses to override
+        return new String("Process-");
+    }
 
     /**
      * Given "TableAx: yzaysy", returns "Ax"
@@ -92,11 +90,11 @@ public class MainViewHandler {
      * @param procLabelText
      * @return
      */
-    private String getProcessIdFromLabelText(String procLabelText) {
-        String Processx = CustomStringUtils.separateElementIdFromDescription(procLabelText);
-        String x = Processx.replace("Process-", "");
-        return x;
-    }
+    //    private String getBucketIdFromLabelText(String procLabelText) {
+    //        String Processx = CustomStringUtils.separateElementIdFromDescription(procLabelText);
+    //        String x = Processx.replace("Process-", "");
+    //        return x;
+    //    }
 
     /**
      * Create the label for table listview for a given process object
@@ -139,56 +137,64 @@ public class MainViewHandler {
      * @return
      * @throws Exception
      */
-    private void getReportData() throws Exception {
+    @Override
+    protected void getReportData() throws Exception {
         // Create tempdir to store the csv files
         String tempDir = CustomFileUtils.getRackDir();
         DataProcessor rdpObj = new DataProcessor();
-        Arp4754ViewsManager.reportDataObj = rdpObj.getPlanData(tempDir);
-        ;
+        Arp4754ViewsManager.reportDataObj = (DAPlan) rdpObj.getData(tempDir);
     }
 
     /**
      * Decides whether the fetch button should be enabled or, if already enabled, if it should be
      * disabled with the dependents
      */
-    private void enableFetchButton() {
-        // TODO: Add condition
-        if (true) {
-            btnFetch.setDisable(false);
-        } else {
-            // TODO: add action
-            System.out.println("Unspecified for now");
-        }
-    }
+    //    private void enableFetchButton() {
+    //        // TODO: Add condition
+    //        if (true) {
+    //            btnFetch.setDisable(false);
+    //        } else {
+    //            // TODO: add action
+    //            System.out.println("Unspecified for now");
+    //        }
+    //    }
 
     /**
      * Enables/disables the wait message
      *
      * @param val
      */
-    private void enableWaitMessage(Boolean val) {
-        labelWait.setVisible(val);
-        progInd.setVisible(val);
+    //    private void enableWaitMessage(Boolean val) {
+    //        labelWait.setVisible(val);
+    //        progInd.setVisible(val);
+    //    }
+
+    @Override
+    protected String swLabel() {
+        // default value; Subclass to override
+        return "System ID: " + Arp4754ViewsManager.reportDataObj.getSystem();
     }
 
     /** populates the top label with sw info */
-    private void populateLabelSwInfo() {
-        // enable elements
-        labelSwInfo.setVisible(true);
-
-        String swInfo = "System ID: " + Arp4754ViewsManager.reportDataObj.getSystem();
-        labelSwInfo.setText(swInfo);
-    }
+    //    private void populateLabelSwInfo() {
+    //        // enable elements
+    //        labelSwInfo.setVisible(true);
+    //
+    //        String swInfo = "System ID: " + Arp4754ViewsManager.reportDataObj.getSystem();
+    //        labelSwInfo.setText(swInfo);
+    //    }
 
     /** populates the chart */
-    private void populateChartProcessStatus() {
-        // clear the chart
-        chartProcessStatus.getData().clear();
-
-        // enable the chart
-        chartProcessStatus.setDisable(false);
-        yAxisChartProcessStatus.setDisable(false);
-        gridPaneLegend.setDisable(false);
+    @Override
+    protected void populateChartStatus() {
+        //        // clear the chart
+        //        chartProcessStatus.getData().clear();
+        //
+        //        // enable the chart
+        //        chartProcessStatus.setDisable(false);
+        //        yAxisChartProcessStatus.setDisable(false);
+        //        gridPaneLegend.setDisable(false);
+        super.populateChartStatus();
 
         // to store the highest value for scaling
         int high = -1;
@@ -199,13 +205,12 @@ public class MainViewHandler {
 
         // Group bars by table id
 
-        XYChart.Series passData = new XYChart.Series();
+        XYChart.Series<String, Integer> passData = new XYChart.Series<String, Integer>();
         passData.setName("Complete");
-        List<Data> passBars = new ArrayList<Data>();
+        List<Data<String, Integer>> passBars = new ArrayList<Data<String, Integer>>();
         for (DAPlan.Process procObj : allProcessObjs) {
-            Data passBar =
-                    ReportViewUtils.createIntDataBar(
-                            procObj.getId(), procObj.getNumObjectivesPassed());
+            Data<String, Integer> passBar =
+                    ViewUtils.createIntDataBar(procObj.getId(), procObj.getNumObjectivesPassed());
             passData.getData().add(passBar);
             passBars.add(passBar);
             if (high < procObj.getNumObjectivesPassed()) {
@@ -213,12 +218,12 @@ public class MainViewHandler {
             }
         }
 
-        XYChart.Series failData = new XYChart.Series();
+        XYChart.Series<String, Integer> failData = new XYChart.Series<String, Integer>();
         failData.setName("Complete");
-        List<Data> failBars = new ArrayList<Data>();
+        List<Data<String, Integer>> failBars = new ArrayList<Data<String, Integer>>();
         for (DAPlan.Process procObj : allProcessObjs) {
-            Data failBar =
-                    ReportViewUtils.createIntDataBar(
+            Data<String, Integer> failBar =
+                    ViewUtils.createIntDataBar(
                             procObj.getId(),
                             (procObj.getObjectives().size()
                                     - procObj.getNumObjectivesPassed()
@@ -240,12 +245,12 @@ public class MainViewHandler {
             }
         }
 
-        XYChart.Series partialData = new XYChart.Series();
+        XYChart.Series<String, Integer> partialData = new XYChart.Series<String, Integer>();
         partialData.setName("Partial Data");
-        List<Data> partialBars = new ArrayList<Data>();
+        List<Data<String, Integer>> partialBars = new ArrayList<Data<String, Integer>>();
         for (DAPlan.Process procObj : allProcessObjs) {
-            Data partialBar =
-                    ReportViewUtils.createIntDataBar(
+            Data<String, Integer> partialBar =
+                    ViewUtils.createIntDataBar(
                             procObj.getId(), procObj.getNumObjectivesPartialData());
             partialData.getData().add(partialBar);
             partialBars.add(partialBar);
@@ -254,13 +259,12 @@ public class MainViewHandler {
             }
         }
 
-        XYChart.Series noData = new XYChart.Series();
+        XYChart.Series<String, Integer> noData = new XYChart.Series<String, Integer>();
         noData.setName("No Data");
-        List<Data> noBars = new ArrayList<Data>();
+        List<Data<String, Integer>> noBars = new ArrayList<Data<String, Integer>>();
         for (DAPlan.Process procObj : allProcessObjs) {
-            Data noBar =
-                    ReportViewUtils.createIntDataBar(
-                            procObj.getId(), procObj.getNumObjectivesNoData());
+            Data<String, Integer> noBar =
+                    ViewUtils.createIntDataBar(procObj.getId(), procObj.getNumObjectivesNoData());
             noData.getData().add(noBar);
             noBars.add(noBar);
             if (high < procObj.getNumObjectivesNoData()) {
@@ -268,33 +272,33 @@ public class MainViewHandler {
             }
         }
 
-        chartProcessStatus.getData().add(passData);
-        chartProcessStatus.getData().add(failData);
-        chartProcessStatus.getData().add(noData);
-        chartProcessStatus.getData().add(partialData);
+        chartStatus.getData().add(passData);
+        chartStatus.getData().add(failData);
+        chartStatus.getData().add(noData);
+        chartStatus.getData().add(partialData);
 
-        for (Data bar : passBars) {
+        for (Data<String, Integer> bar : passBars) {
             bar.getNode().getStyleClass().add("color-passed");
-            ReportViewUtils.assignTooltip(bar.getNode(), bar.getYValue().toString());
+            ViewUtils.assignTooltip(bar.getNode(), bar.getYValue().toString());
         }
-        for (Data bar : failBars) {
+        for (Data<String, Integer> bar : failBars) {
             bar.getNode().getStyleClass().add("color-failed");
-            ReportViewUtils.assignTooltip(bar.getNode(), bar.getYValue().toString());
+            ViewUtils.assignTooltip(bar.getNode(), bar.getYValue().toString());
         }
-        for (Data bar : partialBars) {
+        for (Data<String, Integer> bar : partialBars) {
             bar.getNode().getStyleClass().add("color-partial-data");
-            ReportViewUtils.assignTooltip(bar.getNode(), bar.getYValue().toString());
+            ViewUtils.assignTooltip(bar.getNode(), bar.getYValue().toString());
         }
-        for (Data bar : noBars) {
+        for (Data<String, Integer> bar : noBars) {
             bar.getNode().getStyleClass().add("color-no-data");
-            ReportViewUtils.assignTooltip(bar.getNode(), bar.getYValue().toString());
+            ViewUtils.assignTooltip(bar.getNode(), bar.getYValue().toString());
         }
 
         // scaling
         // *** This can help make integral ticks on Y axis ***
-        yAxisChartProcessStatus.setLowerBound(0);
-        yAxisChartProcessStatus.setUpperBound(high);
-        yAxisChartProcessStatus.setTickUnit(1);
+        yAxisChartStatus.setLowerBound(0);
+        yAxisChartStatus.setUpperBound(high);
+        yAxisChartStatus.setTickUnit(1);
     }
 
     /**
@@ -302,12 +306,14 @@ public class MainViewHandler {
      *
      * @param key
      */
-    private void populateListProcesses(String key) {
-        // clear old data
-        listProcess.getItems().clear();
-
-        // enable elements
-        listProcess.setDisable(false);
+    @Override
+    protected void populateLists(String key) {
+        //        // clear old data
+        //        listProcess.getItems().clear();
+        //
+        //        // enable elements
+        //        listProcess.setDisable(false);
+        super.populateLists(key);
 
         //        List<Label> labelList = new ArrayList<Label>();
         //        List<Label> sortedLabelList = new ArrayList<Label>();
@@ -318,26 +324,26 @@ public class MainViewHandler {
 
         for (DAPlan.Process procObj : allProcessObjs) {
             Label procLabel = getProcessLabel(procObj);
-            int position = Integer.parseInt(getProcessIdFromLabelText(procLabel.getText())) - 1;
+            int position = Integer.parseInt(getBucketIdFromLabelText(procLabel.getText())) - 1;
             System.out.println("Position " + position + "->" + procLabel.getText());
             if (key.equalsIgnoreCase("All")) {
                 //                listProcess.getItems().add(position, procLabel);
                 //            	labelList.add(procLabel);
-                listProcess.getItems().add(procLabel);
+                listBuckets.getItems().add(procLabel);
             } else if (key.equalsIgnoreCase("Passed") && procObj.isPassed()) {
                 //                listProcess.getItems().add(position, procLabel);
                 //            	labelList.add(procLabel);
-                listProcess.getItems().add(procLabel);
+                listBuckets.getItems().add(procLabel);
             } else if (key.equalsIgnoreCase("Failed") && !procObj.isPassed()) {
                 //                listProcess.getItems().add(position, procLabel);
                 //            	labelList.add(procLabel);
-                listProcess.getItems().add(procLabel);
+                listBuckets.getItems().add(procLabel);
             } else if (key.equalsIgnoreCase("Inconclusive") && procObj.isNoData()) {
                 //    				actLabel.setVisible(true);
                 //                listProcess.getItems().add(tabLabel);
                 //              listProcess.getItems().add(position, procLabel);
                 //            	labelList.add(procLabel);
-                listProcess.getItems().add(procLabel);
+                listBuckets.getItems().add(procLabel);
             }
         }
 
@@ -357,35 +363,35 @@ public class MainViewHandler {
     }
 
     /** Calls necessary functions to populate view elements from data */
-    private void populateViewElements() {
-        populateLabelSwInfo();
-
-        populateChartProcessStatus();
-
-        populateListProcesses("All");
-    }
+    //    private void populateViewElements() {
+    //        populateLabelSwInfo();
+    //
+    //        populateChartProcessStatus();
+    //
+    //        populateListProcesses("All");
+    //    }
 
     @FXML
     private void initialize() {
         try {
-            final ImageView icon = ReportViewUtils.loadGeIcon();
+            final ImageView icon = ViewUtils.loadGeIcon();
             icon.setPreserveRatio(true);
             headerLabel.setGraphic(icon);
         } catch (Exception e) {
         }
 
         // disable the display environments
-        chartProcessStatus.setDisable(true);
-        yAxisChartProcessStatus.setDisable(true);
+        chartStatus.setDisable(true);
+        yAxisChartStatus.setDisable(true);
         gridPaneLegend.setDisable(true);
-        listProcess.setDisable(true);
+        listBuckets.setDisable(true);
         labelSwInfo.setVisible(false);
         labelSwInfo.setText("");
         enableWaitMessage(false);
 
         // set properties
         // set SINGLE Selection Model for ListView of Processes
-        listProcess.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        listBuckets.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         // If the report variables have already been initialized
         if (Arp4754ViewsManager.reportDataObj.getProcesses() != null) {
@@ -466,7 +472,7 @@ public class MainViewHandler {
     private void listProcessSelectionAction(MouseEvent event) {
 
         // The selected label
-        Label selectedLabel = listProcess.getSelectionModel().getSelectedItem();
+        Label selectedLabel = listBuckets.getSelectionModel().getSelectedItem();
 
         if (selectedLabel != null) {
 

@@ -31,12 +31,11 @@
  */
 package com.ge.research.rack.arp4754.viewHandlers;
 
+import com.ge.research.rack.analysis.utils.CustomStringUtils;
 import com.ge.research.rack.arp4754.structures.DAPlan;
 import com.ge.research.rack.arp4754.utils.DAPlanUtils;
 import com.ge.research.rack.arp4754.utils.ViewUtils;
 import com.ge.research.rack.arp4754.viewManagers.Arp4754ViewsManager;
-import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
-import com.ge.research.rack.do178c.utils.ReportViewUtils;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -79,7 +78,7 @@ public class ProcessViewHandler {
 
     @FXML private ComboBox comboFilter;
 
-    @FXML private BarChart chartObjStatus;
+    @FXML private BarChart<String, Integer> chartObjStatus;
     @FXML private NumberAxis yAxisChartObjStatus;
 
     // --------------------------------
@@ -129,17 +128,19 @@ public class ProcessViewHandler {
 
         List<Integer> artStats = ViewUtils.getProcessArtifactStats(currentProcessObject);
 
-        Data docBar = ReportViewUtils.createIntDataBar("Documents", artStats.get(0));
-        Data reqBar = ReportViewUtils.createIntDataBar("Requirements", artStats.get(1));
-        Data itemBar = ReportViewUtils.createIntDataBar("Items", artStats.get(2));
-        Data interfaceBar = ReportViewUtils.createIntDataBar("Interfaces", artStats.get(3));
-        Data systemBar = ReportViewUtils.createIntDataBar("Systems", artStats.get(4));
-        Data verificationBar = ReportViewUtils.createIntDataBar("Verifications", artStats.get(5));
-        Data testBar = ReportViewUtils.createIntDataBar("Tests", artStats.get(6));
-        Data reviewBar = ReportViewUtils.createIntDataBar("Reviews", artStats.get(7));
-        Data analysisBar = ReportViewUtils.createIntDataBar("Analyses", artStats.get(8));
+        Data<String, Integer> docBar = ViewUtils.createIntDataBar("Documents", artStats.get(0));
+        Data<String, Integer> reqBar = ViewUtils.createIntDataBar("Requirements", artStats.get(1));
+        Data<String, Integer> itemBar = ViewUtils.createIntDataBar("Items", artStats.get(2));
+        Data<String, Integer> interfaceBar =
+                ViewUtils.createIntDataBar("Interfaces", artStats.get(3));
+        Data<String, Integer> systemBar = ViewUtils.createIntDataBar("Systems", artStats.get(4));
+        Data<String, Integer> verificationBar =
+                ViewUtils.createIntDataBar("Verifications", artStats.get(5));
+        Data<String, Integer> testBar = ViewUtils.createIntDataBar("Tests", artStats.get(6));
+        Data<String, Integer> reviewBar = ViewUtils.createIntDataBar("Reviews", artStats.get(7));
+        Data<String, Integer> analysisBar = ViewUtils.createIntDataBar("Analyses", artStats.get(8));
 
-        XYChart.Series tableStat = new XYChart.Series();
+        XYChart.Series<String, Integer> tableStat = new XYChart.Series<String, Integer>();
 
         tableStat.getData().add(docBar);
         tableStat.getData().add(reqBar);
@@ -154,24 +155,23 @@ public class ProcessViewHandler {
         chartObjStatus.getData().add(tableStat);
 
         docBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
-        ReportViewUtils.assignTooltip(docBar.getNode(), docBar.getYValue().toString());
+        ViewUtils.assignTooltip(docBar.getNode(), docBar.getYValue().toString());
         reqBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
-        ReportViewUtils.assignTooltip(reqBar.getNode(), reqBar.getYValue().toString());
+        ViewUtils.assignTooltip(reqBar.getNode(), reqBar.getYValue().toString());
         itemBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
-        ReportViewUtils.assignTooltip(itemBar.getNode(), itemBar.getYValue().toString());
+        ViewUtils.assignTooltip(itemBar.getNode(), itemBar.getYValue().toString());
         interfaceBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
-        ReportViewUtils.assignTooltip(interfaceBar.getNode(), interfaceBar.getYValue().toString());
+        ViewUtils.assignTooltip(interfaceBar.getNode(), interfaceBar.getYValue().toString());
         systemBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
-        ReportViewUtils.assignTooltip(systemBar.getNode(), systemBar.getYValue().toString());
+        ViewUtils.assignTooltip(systemBar.getNode(), systemBar.getYValue().toString());
         verificationBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
-        ReportViewUtils.assignTooltip(
-                verificationBar.getNode(), verificationBar.getYValue().toString());
+        ViewUtils.assignTooltip(verificationBar.getNode(), verificationBar.getYValue().toString());
         testBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
-        ReportViewUtils.assignTooltip(testBar.getNode(), testBar.getYValue().toString());
+        ViewUtils.assignTooltip(testBar.getNode(), testBar.getYValue().toString());
         reviewBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
-        ReportViewUtils.assignTooltip(reviewBar.getNode(), reviewBar.getYValue().toString());
+        ViewUtils.assignTooltip(reviewBar.getNode(), reviewBar.getYValue().toString());
         analysisBar.getNode().setStyle("-fx-bar-fill: LightBlue;");
-        ReportViewUtils.assignTooltip(analysisBar.getNode(), analysisBar.getYValue().toString());
+        ViewUtils.assignTooltip(analysisBar.getNode(), analysisBar.getYValue().toString());
 
         // scaling
         int maxScale = Collections.max(artStats);
@@ -251,7 +251,7 @@ public class ProcessViewHandler {
     @FXML
     private void initialize() {
         try {
-            final ImageView icon = ReportViewUtils.loadGeIcon();
+            final ImageView icon = ViewUtils.loadGeIcon();
             icon.setPreserveRatio(true);
             headerLabel.setGraphic(icon);
         } catch (Exception e) {

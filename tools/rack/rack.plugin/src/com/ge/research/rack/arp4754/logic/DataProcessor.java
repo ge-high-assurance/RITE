@@ -31,15 +31,16 @@
  */
 package com.ge.research.rack.arp4754.logic;
 
+import com.ge.research.rack.analysis.structures.AnalysisNode;
+import com.ge.research.rack.analysis.utils.CustomFileUtils;
+import com.ge.research.rack.analysis.utils.CustomStringUtils;
+import com.ge.research.rack.analysis.utils.RackQueryUtils;
 import com.ge.research.rack.arp4754.structures.Configuration;
 import com.ge.research.rack.arp4754.structures.DAPlan;
 import com.ge.research.rack.arp4754.structures.Evidence;
 import com.ge.research.rack.arp4754.utils.DAPlanUtils;
 import com.ge.research.rack.arp4754.utils.DataProcessorUtils;
 import com.ge.research.rack.arp4754.utils.EvidenceUtils;
-import com.ge.research.rack.autoGsn.utils.CustomFileUtils;
-import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
-import com.ge.research.rack.do178c.utils.RackQueryUtils;
 import com.ge.research.rack.utils.CSVUtil;
 
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ import java.util.List;
 /**
  * @author 212807042
  */
-public class DataProcessor {
+public class DataProcessor extends com.ge.research.rack.analysis.structures.DataProcessor {
 
     /**
      * Class variables to store the raw data fetched from CSV files
@@ -439,7 +440,7 @@ public class DataProcessor {
             Artifacts.getSystemObjs().add(newEvidenceObj);
             System.out.println("Created Object for " + newEvidenceObj.getId());
         }
-        
+
         System.out.println(
                 "---- Creating Objects for DOCUMENT ----"); // TODO: Add description field
         for (String[] row : allDOCUMENT) {
@@ -918,25 +919,26 @@ public class DataProcessor {
     }
 
     // Entry point that does sequence of operations
-    public DAPlan getPlanData(String rackDir) {
+    @Override
+    public AnalysisNode getData(String outDir) {
 
         // clear the rack directory
-        CustomFileUtils.clearDirectory(rackDir);
+        CustomFileUtils.clearDirectory(outDir);
 
         // read project config from RACK
-        getConfig(rackDir);
+        getConfig(outDir);
 
         // fetch the evidence from RACK as csv files by executing queries
-        DataProcessorUtils.createAndExecuteDataQueries(config, rackDir);
+        DataProcessorUtils.createAndExecuteDataQueries(config, outDir);
 
         // load csv data into class variables
-        readEvidenceCSVs(rackDir);
+        readEvidenceCSVs(outDir);
 
         // create arp4754 element objects using the evidence data in class variables
-        createEvidenceObjects(rackDir);
+        createEvidenceObjects(outDir);
 
         // create Plan Object
-        createPlanObject(rackDir);
+        createPlanObject(outDir);
 
         // get compliance status for the plan object
         getPlanCompliance();

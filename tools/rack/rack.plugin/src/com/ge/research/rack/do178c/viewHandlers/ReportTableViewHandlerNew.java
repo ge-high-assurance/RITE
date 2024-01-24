@@ -31,7 +31,7 @@
  */
 package com.ge.research.rack.do178c.viewHandlers;
 
-import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
+import com.ge.research.rack.analysis.utils.CustomStringUtils;
 import com.ge.research.rack.do178c.structures.PsacNode;
 import com.ge.research.rack.do178c.utils.PsacNodeUtils;
 import com.ge.research.rack.do178c.utils.ReportViewUtils;
@@ -77,7 +77,7 @@ public class ReportTableViewHandlerNew {
 
     @FXML private ComboBox comboFilter;
 
-    @FXML private BarChart chartObjStatus;
+    @FXML private BarChart<String, Integer> chartObjStatus;
     @FXML private NumberAxis yAxisChartObjStatus;
 
     // --------------------------------
@@ -175,14 +175,20 @@ public class ReportTableViewHandlerNew {
         //        Data logBar = new XYChart.Data("Review Logs", artStats.get(4));
         //        Data anlsBar = new XYChart.Data("Analyses", artStats.get(5));
 
-        Data docBar = ReportViewUtils.createIntDataBar("Documents", artStats.get(0));
-        Data reqBar = ReportViewUtils.createIntDataBar("Requirements", artStats.get(1));
-        Data hzrdBar = ReportViewUtils.createIntDataBar("Hazards", artStats.get(2));
-        Data tstBar = ReportViewUtils.createIntDataBar("Test Results", artStats.get(3));
-        Data logBar = ReportViewUtils.createIntDataBar("Review Logs", artStats.get(4));
-        Data anlsBar = ReportViewUtils.createIntDataBar("Analyses", artStats.get(5));
+        Data<String, Integer> docBar =
+                ReportViewUtils.createIntDataBar("Documents", artStats.get(0));
+        Data<String, Integer> reqBar =
+                ReportViewUtils.createIntDataBar("Requirements", artStats.get(1));
+        Data<String, Integer> hzrdBar =
+                ReportViewUtils.createIntDataBar("Hazards", artStats.get(2));
+        Data<String, Integer> tstBar =
+                ReportViewUtils.createIntDataBar("Test Results", artStats.get(3));
+        Data<String, Integer> logBar =
+                ReportViewUtils.createIntDataBar("Review Logs", artStats.get(4));
+        Data<String, Integer> anlsBar =
+                ReportViewUtils.createIntDataBar("Analyses", artStats.get(5));
 
-        XYChart.Series tableStat = new XYChart.Series();
+        XYChart.Series<String, Integer> tableStat = new XYChart.Series<String, Integer>();
 
         tableStat.getData().add(docBar);
         tableStat.getData().add(reqBar);

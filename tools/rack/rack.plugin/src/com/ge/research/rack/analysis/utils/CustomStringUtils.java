@@ -29,7 +29,7 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.ge.research.rack.autoGsn.utils;
+package com.ge.research.rack.analysis.utils;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;

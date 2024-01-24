@@ -35,8 +35,26 @@ import com.ge.research.rack.arp4754.structures.DAPlan;
 import com.ge.research.rack.arp4754.structures.Evidence;
 import com.ge.research.rack.arp4754.viewManagers.Arp4754ViewsManager;
 
+import javafx.geometry.Pos;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.util.Duration;
 
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
+import org.osgi.framework.Bundle;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -45,6 +63,43 @@ import java.util.Set;
  * @author Saswata Paul
  */
 public class ViewUtils {
+
+    private static final Font VERANDA_FONT = Font.font("Verdana", FontWeight.BOLD, 12);
+
+    private static final String TOOLTIP_FONT_SIZE_STYLE = "-fx-font-size: 20";
+
+    private static final String RACK_PLUGIN_BUNDLE_NAME = "rack.plugin";
+
+    private static final String GE_LOGO_IMG_PATH = "resources/images/GE_AEROSPACE_LOGO_L.png";
+
+    /** Assign a given text tooltip to a given javafx node */
+    public static void assignTooltip(Node node, String text) {
+        final Tooltip tooltip = new Tooltip(text);
+        tooltip.setShowDelay(Duration.seconds(0.1));
+        tooltip.setStyle(TOOLTIP_FONT_SIZE_STYLE);
+        Tooltip.install(node, tooltip);
+    }
+
+    /** Creates a data bar and adds a value label to the top (only for int values) */
+    public static XYChart.Data<String, Integer> createIntDataBar(String country, int value) {
+
+        final Label label = new Label(Integer.toString(value));
+        label.setTextFill(Color.WHITE);
+        label.setFont(VERANDA_FONT);
+
+        final Group group = new Group(label);
+        StackPane.setAlignment(group, Pos.TOP_CENTER);
+
+        final StackPane node = new StackPane();
+        node.getChildren().add(group);
+
+        final XYChart.Data<String, Integer> data =
+                new XYChart.Data<String, Integer>(country, value);
+
+        data.setNode(node);
+
+        return data;
+    }
 
     /** Returns javafx color for a process object */
     public static Color getProcessColor(final DAPlan.Process procObj) {
@@ -70,6 +125,16 @@ public class ViewUtils {
         }
 
         return objObj.isPassed() ? Color.GREEN : Color.RED;
+    }
+
+    public static ImageView loadGeIcon() throws IOException, URISyntaxException {
+
+        final Bundle bundle = Platform.getBundle(RACK_PLUGIN_BUNDLE_NAME);
+
+        final String imgUrl =
+                FileLocator.find(bundle, new Path(GE_LOGO_IMG_PATH), null).toURI().getPath();
+
+        return new ImageView(imgUrl);
     }
 
     /**
