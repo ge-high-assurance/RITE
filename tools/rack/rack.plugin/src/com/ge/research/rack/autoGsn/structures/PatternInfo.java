@@ -1,23 +1,23 @@
 /*
  * BSD 3-Clause License
- * 
+ *
  * Copyright (c) 2023, General Electric Company and Galois, Inc.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -31,10 +31,9 @@
  */
 package com.ge.research.rack.autoGsn.structures;
 
-import org.json.simple.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.json.simple.JSONObject;
 
 /**
  * @author Saswata Paul
@@ -60,36 +59,42 @@ public class PatternInfo {
             this.statusProperty = statusProperty;
             this.passVal = passVal;
         }
+
         /**
          * @return the evidenceClass
          */
         public String getEvidenceClass() {
             return evidenceClass;
         }
+
         /**
          * @param evidenceClass the evidenceClass to set
          */
         public void setEvidenceClass(String evidenceClass) {
             this.evidenceClass = evidenceClass;
         }
+
         /**
          * @return the statusProperty
          */
         public String getStatusProperty() {
             return statusProperty;
         }
+
         /**
          * @param statusProperty the statusProperty to set
          */
         public void setStatusProperty(String statusProperty) {
             this.statusProperty = statusProperty;
         }
+
         /**
          * @return the passVal
          */
         public String getPassVal() {
             return passVal;
         }
+
         /**
          * @param passVal the passVal to set
          */
@@ -119,36 +124,42 @@ public class PatternInfo {
             this.desc = desc;
             this.goalClass = goalClass;
         }
+
         /**
          * @return the id
          */
         public String getId() {
             return id;
         }
+
         /**
          * @param id the id to set
          */
         public void setId(String id) {
             this.id = id;
         }
+
         /**
          * @return the desc
          */
         public String getDesc() {
             return desc;
         }
+
         /**
          * @param desc the desc to set
          */
         public void setDesc(String desc) {
             this.desc = desc;
         }
+
         /**
          * @return the goalClass
          */
         public String getGoalClass() {
             return goalClass;
         }
+
         /**
          * @param goalClass the goalClass to set
          */
@@ -170,6 +181,7 @@ public class PatternInfo {
         private String property;
         private Boolean
                 propIsForward; // true if the property goes from goal to subgoal and false if the
+
         // opposite
 
         /**
@@ -195,54 +207,63 @@ public class PatternInfo {
         public String getId() {
             return id;
         }
+
         /**
          * @param id the id to set
          */
         public void setId(String id) {
             this.id = id;
         }
+
         /**
          * @return the desc
          */
         public String getDesc() {
             return desc;
         }
+
         /**
          * @param desc the desc to set
          */
         public void setDesc(String desc) {
             this.desc = desc;
         }
+
         /**
          * @return the goalClass
          */
         public String getGoalClass() {
             return goalClass;
         }
+
         /**
          * @param goalClass the goalClass to set
          */
         public void setGoalClass(String goalClass) {
             this.goalClass = goalClass;
         }
+
         /**
          * @return the subGoalClass
          */
         public String getSubGoalClass() {
             return subGoalClass;
         }
+
         /**
          * @param subGoalClass the subGoalClass to set
          */
         public void setSubGoalClass(String subGoalClass) {
             this.subGoalClass = subGoalClass;
         }
+
         /**
          * @return the property
          */
         public String getProperty() {
             return property;
         }
+
         /**
          * @param property the property to set
          */
@@ -347,66 +368,77 @@ public class PatternInfo {
     public JSONObject getOntInfo() {
         return ontInfo;
     }
+
     /**
      * @param ontInfo the ontInfo to set
      */
     public void setOntInfo(JSONObject ontInfo) {
         this.ontInfo = ontInfo;
     }
+
     /**
      * @return the goalPats
      */
     public List<GoalPat> getGoalPats() {
         return goalPats;
     }
+
     /**
      * @param goalPats the goalPats to set
      */
     public void setGoalPats(List<GoalPat> goalPats) {
         this.goalPats = goalPats;
     }
+
     /**
      * @return the stratPats
      */
     public List<StratPat> getStratPats() {
         return stratPats;
     }
+
     /**
      * @param stratPats the stratPats to set
      */
     public void setStratPats(List<StratPat> stratPats) {
         this.stratPats = stratPats;
     }
+
     /**
      * @return the evdPats
      */
     public List<EvidencePat> getEvdPats() {
         return evdPats;
     }
+
     /**
      * @param evdPats the evdPats to set
      */
     public void setEvdPats(List<EvidencePat> evdPats) {
         this.evdPats = evdPats;
     }
+
     /**
      * @return the paths
      */
     public List<PathTree> getPathTrees() {
         return pathTrees;
     }
+
     /**
      * @param paths the paths to set
      */
     public void setPathTrees(List<PathTree> paths) {
         this.pathTrees = paths;
     }
+
     /**
      * @return the queryIds
      */
     public List<String> getQueryJsonFilePaths() {
         return queryJsonFilePaths;
     }
+
     /**
      * @param queryIds the queryIds to set
      */

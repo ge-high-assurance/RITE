@@ -1,23 +1,23 @@
 /*
  * BSD 3-Clause License
- * 
+ *
  * Copyright (c) 2023, General Electric Company and Galois, Inc.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -45,7 +45,6 @@ import com.ge.research.semtk.sparqlX.SparqlConnection;
 import com.ge.research.semtk.sparqlX.SparqlEndpointInterface;
 import com.ge.research.semtk.sparqlX.client.SparqlQueryAuthClientConfig;
 import com.ge.research.semtk.sparqlX.client.SparqlQueryClient;
-
 import java.util.List;
 
 public class ConnectionUtil {
@@ -138,11 +137,11 @@ public class ConnectionUtil {
         return new NodeGroupStoreRestClient(ngConfig);
     }
 
-    public static SparqlConnection getSparqlConnection(String dataGraph, List<String> dataGraphs) {
+    public static SparqlConnection getSparqlConnection(
+            String modelGraph, String dataGraph, List<String> dataGraphs) {
 
         String connType = RackPreferencePage.getConnType();
         String connURL = RackPreferencePage.getConnURL();
-        String defaultModelGraph = RackPreferencePage.getDefaultModelGraph();
         String connDataGraph =
                 (dataGraph == null || dataGraph.isEmpty())
                         ? RackPreferencePage.getDefaultDataGraph()
@@ -153,7 +152,7 @@ public class ConnectionUtil {
                     SparqlEndpointInterface.getInstance(
                             connType,
                             connURL,
-                            defaultModelGraph,
+                            modelGraph,
                             RackPreferencePage.getUser(),
                             RackPreferencePage.getPassword()); // Connection
             SparqlEndpointInterface dataSei =
@@ -163,7 +162,77 @@ public class ConnectionUtil {
                             connDataGraph,
                             RackPreferencePage.getUser(),
                             RackPreferencePage.getPassword());
+
             conn = new SparqlConnection("RACK", modelSei, dataSei);
+
+            // add extra data graphs here
+
+        } catch (Exception e) {
+            RackConsole.getConsole()
+                    .error(
+                            "Unable to connect to Sparql, please check configuration in RACK preference page");
+        }
+
+        for (int i = 0; i < dataGraphs.size(); i++) {
+
+            try {
+                SparqlEndpointInterface extraDataSei =
+                        SparqlEndpointInterface.getInstance(
+                                connType,
+                                connURL,
+                                dataGraphs.get(i),
+                                RackPreferencePage.getUser(),
+                                RackPreferencePage.getPassword());
+                conn.addDataInterface(extraDataSei);
+
+            } catch (Exception e) {
+                RackConsole.getConsole().error("Cannot add extra data graph: " + dataGraphs.get(i));
+            }
+        }
+
+        return conn;
+    }
+
+    public static SparqlConnection getSparqlConnection(
+            List<String> modelGraphs, String dataGraph, List<String> dataGraphs) {
+
+        String connType = RackPreferencePage.getConnType();
+        String connURL = RackPreferencePage.getConnURL();
+        String connDataGraph =
+                (dataGraph == null || dataGraph.isEmpty())
+                        ? RackPreferencePage.getDefaultDataGraph()
+                        : dataGraph;
+        SparqlConnection conn = null;
+        String modelGraph = modelGraphs.get(0);
+        List<String> additionalModelGraphs = modelGraphs.subList(1, modelGraphs.size());
+        try {
+            SparqlEndpointInterface modelSei =
+                    SparqlEndpointInterface.getInstance(
+                            connType,
+                            connURL,
+                            modelGraph,
+                            RackPreferencePage.getUser(),
+                            RackPreferencePage.getPassword()); // Connection
+            SparqlEndpointInterface dataSei =
+                    SparqlEndpointInterface.getInstance(
+                            connType,
+                            connURL,
+                            connDataGraph,
+                            RackPreferencePage.getUser(),
+                            RackPreferencePage.getPassword());
+
+            conn = new SparqlConnection("RACK", modelSei, dataSei);
+
+            for (String mGraph : additionalModelGraphs) {
+                SparqlEndpointInterface additionalModelSei =
+                        SparqlEndpointInterface.getInstance(
+                                connType,
+                                connURL,
+                                mGraph,
+                                RackPreferencePage.getUser(),
+                                RackPreferencePage.getPassword());
+                conn.addModelInterface(additionalModelSei);
+            }
 
             // add extra data graphs here
 
@@ -243,6 +312,30 @@ public class ConnectionUtil {
                         connURL,
                         connType,
                         defaultModelGraph,
+                        user,
+                        password);
+
+        return new SparqlQueryClient(qAuthConfig);
+    }
+
+    public static SparqlQueryClient getOntologyUploadClient(String graph) throws Exception {
+        String protocol = RackPreferencePage.getProtocol();
+        String server = RackPreferencePage.getServer();
+        int port = Integer.parseInt(RackPreferencePage.getQueryPort());
+        String sparqlQueryEndPoint = "/sparqlQueryService/uploadOwl";
+        String connURL = RackPreferencePage.getConnURL();
+        String connType = RackPreferencePage.getConnType();
+        String user = RackPreferencePage.getUser();
+        String password = RackPreferencePage.getPassword();
+        SparqlQueryAuthClientConfig qAuthConfig =
+                new SparqlQueryAuthClientConfig(
+                        protocol,
+                        server,
+                        port,
+                        sparqlQueryEndPoint,
+                        connURL,
+                        connType,
+                        graph,
                         user,
                         password);
 
