@@ -4,7 +4,7 @@ input=`cat -`
 
 orig=`echo "$input" | sed -e 's/^.*<form [^>]*>//' -e 'sx</form>.*$xx'`
 
-if echo "$input" | grep -q connection  ; then
+if ! echo "$input" | grep -q control  ; then
 ## FIRST TIME
 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><form workflow=\"Checkbox\"><box><control type=\"checkbox\" >Check me</control></box></form>"

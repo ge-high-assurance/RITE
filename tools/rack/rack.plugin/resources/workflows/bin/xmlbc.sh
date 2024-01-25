@@ -10,7 +10,7 @@ orig=`echo "$input" | sed -e 's/^.*<form workflow=\"Calc\">//' -e 'sx</form>.*$x
 
 ##echo ORIG "$orig" >> $LOG
 
-if echo "$input" | grep -q connection  ; then
+if ! echo "$input" | grep -q textbox  ; then
 ## FIRST TIME
 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><form workflow=\"Calc\"><box><control type=\"textbox\" lines=\"3\" label=\"Enter an expression for the bc calculator:\"></control></box></form>"

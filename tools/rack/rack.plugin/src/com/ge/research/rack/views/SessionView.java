@@ -68,7 +68,8 @@ import org.w3c.dom.NodeList;
 // FIXME - tone down the amount of switching to the console that happens
 // FIXME - relayout the widgets when the view size changes
 // FIXME - send scrollbar to bottom on each Next
-// FIXME - check and document whether Save saves the current contents of the user-modifiable controls
+// FIXME - check and document whether Save saves the current contents of the user-modifiable
+// controls
 
 // Nice to have:
 // FIXME - handle stderr
@@ -203,7 +204,8 @@ public class SessionView extends ViewPart {
                 return false;
             }
             NodeList nsbox = top.getChildNodes(); // All children should be <box> (or #text)
-            x: for (int k = 0; k < nsbox.getLength(); k++) {
+            x:
+            for (int k = 0; k < nsbox.getLength(); k++) {
                 var elem = nsbox.item(k);
                 switch (elem.getNodeName()) {
                     case "box":
@@ -218,8 +220,7 @@ public class SessionView extends ViewPart {
                                 String label = element.getAttribute("label");
                                 String text = element.getTextContent();
                                 String id = element.getAttribute("id");
-                                String language =
-                                        element.getAttribute("language");
+                                String language = element.getAttribute("language");
                                 boolean readonly = element.hasAttribute("readonly");
                                 if ("textbox".equals(type)) {
                                     String strlines = element.getAttribute("lines");
@@ -273,7 +274,7 @@ public class SessionView extends ViewPart {
                 }
             }
             outer.setSize(outer.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-            sc.setMinWidth(parent.getSize().x-sc.getVerticalBar().getSize().x-10);
+            sc.setMinWidth(parent.getSize().x - sc.getVerticalBar().getSize().x - 10);
             sc.setMinHeight(1);
             composite.setSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
@@ -313,7 +314,7 @@ public class SessionView extends ViewPart {
      * Runs through the list of pairs in 'inputs', inspecting each UI widget for user input and
      * adjusting the corresponding XML Element/Attribute accordingly.
      */
-    public void collectXML() {
+    public void collectXML(Document currentDisplayedDoc) {
         if (inputs != null) {
             for (var p : inputs) {
                 if (p.element().getNodeName().equals("resource")) {
@@ -349,6 +350,19 @@ public class SessionView extends ViewPart {
                 }
             }
         }
+        var top = currentDisplayedDoc.getDocumentElement();
+        var connections = top.getElementsByTagName("connection");
+        Node connection;
+        if (connections.getLength() == 0) {
+        	connection = currentDisplayedDoc.createElement("connection");
+        	top.appendChild(connection);
+        } else {
+        	connection = connections.item(0);
+        }
+        Element element = (Element)connection;
+        element.setAttribute("data_graph",RackPreferencePage.getDefaultDataGraph());
+        element.setAttribute("model_graph",RackPreferencePage.getDefaultModelGraph());
+        element.setAttribute("url",RackPreferencePage.getConnURL());
     }
 
     /** Adds a button to the given composite */

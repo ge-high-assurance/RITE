@@ -10,7 +10,7 @@ orig=`echo "$input" | sed -e 's/^.*<form[^>]*>//' -e 'sx</form>.*$xx'`
 
 ##echo ORIG "$orig" >> $LOG
 
-if echo "$input" | grep -q connection  ; then
+if ! echo "$input" | grep -q control  ; then
 ## FIRST TIME
 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><form workflow=\"Echosh\"><box><control type=\"textbox\" label=\"Enter an expression to echo:\"></control></box></form>"

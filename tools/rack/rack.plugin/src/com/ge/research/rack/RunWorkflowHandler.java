@@ -81,8 +81,9 @@ public class RunWorkflowHandler extends AbstractHandler {
      * History list of XML documents presented to the user; history.getItem(0) is the current
      * document
      */
-    public Stack<Document> history = new Stack<>(); 
-            // FIXME - is this maintained across different instances of the View?
+    public Stack<Document> history = new Stack<>();
+
+    // FIXME - is this maintained across different instances of the View?
 
     // Perhaps should belong to the View?
 
@@ -380,17 +381,19 @@ public class RunWorkflowHandler extends AbstractHandler {
             if (currentDisplayedDoc == null) {
                 currentXML = initialXML(workflowName);
             } else {
-                view.collectXML();
+                view.collectXML(currentDisplayedDoc);
                 currentXML = getStringFromDocument(currentDisplayedDoc);
             }
 
             // send
+            //MessageDialog.openInformation(null, "Sending", currentXML);
             writer.print(currentXML);
             writer.close(); // So that the workflow script knows the stdin is complete
 
             // read response
             try {
                 responseText = reader.lines().collect(Collectors.joining(System.lineSeparator()));
+                //MessageDialog.openInformation(null, "Received", responseText);
             } catch (Exception e) {
                 MessageDialog.openError(null, "Error", "Failed to read response");
                 throw e;
