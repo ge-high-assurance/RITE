@@ -37,7 +37,6 @@ import com.ge.research.rack.autoGsn.structures.GsnViewsStore;
 import com.ge.research.rack.autoGsn.structures.InstanceData;
 import com.ge.research.rack.autoGsn.structures.MultiClassPackets.GoalIdAndClass;
 import com.ge.research.rack.autoGsn.viewManagers.AutoGsnViewsManager;
-
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
@@ -250,43 +249,45 @@ public class AutoGsnGuiUtils {
      * @param url
      */
     public static void openUrlInDefaultApp(String path) {
-        //System.out.println("Trying to open generated GSN svg file in default app! " + path);
+        // System.out.println("Trying to open generated GSN svg file in default app! " + path);
         try {
-        	if (AutoGsnViewsManager.hostServices != null) {
-        		// Running a javafx application
-        		AutoGsnViewsManager.hostServices.showDocument(path);
-        	} else {
-        		// Using Eclipse views
-        		if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-        		    //Desktop.getDesktop().browse(new java.net.URI("data:image/svg+xml,/" + url.replace("//","/")));
+            if (AutoGsnViewsManager.hostServices != null) {
+                // Running a javafx application
+                AutoGsnViewsManager.hostServices.showDocument(path);
+            } else {
+                // Using Eclipse views
+                if (Desktop.isDesktopSupported()
+                        && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                    // Desktop.getDesktop().browse(new java.net.URI("data:image/svg+xml,/" +
+                    // url.replace("//","/")));
 
-        		    open(path);
-        		
-        		}
-        	}
+                    open(path);
+                }
+            }
         } catch (Exception e) {
-            System.out.println("ERROR: Failed to open generated GSN svg file in default app! " + path);
+            System.out.println(
+                    "ERROR: Failed to open generated GSN svg file in default app! " + path);
             e.printStackTrace();
         }
     }
-    
+
     private static void open(final String path) throws java.net.MalformedURLException {
-    	var url = new java.net.URL("file:" + path);
+        var url = new java.net.URL("file:" + path);
         org.eclipse.swt.widgets.Display.getDefault().asyncExec(() -> internalOpen(url, true));
     }
 
     private static void internalOpen(final URL url, final boolean useExternalBrowser) {
-    	org.eclipse.swt.custom.BusyIndicator.showWhile(
+        org.eclipse.swt.custom.BusyIndicator.showWhile(
                 null,
                 () -> {
                     URL helpSystemUrl =
-                    		org.eclipse.ui.PlatformUI.getWorkbench()
+                            org.eclipse.ui.PlatformUI.getWorkbench()
                                     .getHelpSystem()
                                     .resolve(url.toExternalForm(), true);
                     try {
-                    	var browserSupport =
-                    			org.eclipse.ui.PlatformUI.getWorkbench().getBrowserSupport();
-                    	org.eclipse.ui.browser.IWebBrowser browser;
+                        var browserSupport =
+                                org.eclipse.ui.PlatformUI.getWorkbench().getBrowserSupport();
+                        org.eclipse.ui.browser.IWebBrowser browser;
                         if (useExternalBrowser) {
                             browser = browserSupport.getExternalBrowser();
                         } else {
@@ -297,7 +298,6 @@ public class AutoGsnGuiUtils {
                     }
                 });
     }
-
 
     /**
      * Takes a List<GoalIdAndClass> and returns all unique class ids

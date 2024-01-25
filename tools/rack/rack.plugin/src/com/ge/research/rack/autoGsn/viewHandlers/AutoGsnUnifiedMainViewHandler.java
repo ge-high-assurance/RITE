@@ -40,13 +40,11 @@ import com.ge.research.rack.autoGsn.utils.CustomFileUtils;
 import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
 import com.ge.research.rack.autoGsn.utils.QueryResultUtils;
 import com.ge.research.rack.autoGsn.viewManagers.AutoGsnViewsManager;
-import com.ge.research.rack.autoGsn.viewHandlers.*;
 import com.ge.research.rack.report.structures.SparqlConnectionInfo;
 import com.ge.research.rack.report.utils.RackQueryUtils;
 import com.ge.research.rack.report.utils.ReportViewUtils;
 import com.ge.research.rack.views.AssuranceCaseTree;
 import com.ge.research.rack.views.RackPreferencePage;
-import com.ge.research.rack.views.ViewUtils;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.ObservableList;
@@ -165,13 +163,13 @@ public class AutoGsnUnifiedMainViewHandler {
      * disabled with the dependents
      */
     private void enableFetchButton() {
-        //System.out.println("3");
+        // System.out.println("3");
         // If preferences are there
         if (RackPreferencePage.areGSNPreferencesComplete()) {
-            //System.out.println("4");
+            // System.out.println("4");
             btnFetchGoals.setDisable(false);
         } else {
-            //System.out.println("5");
+            // System.out.println("5");
             labelSelectPreferences.setVisible(true);
         }
     }
@@ -290,7 +288,7 @@ public class AutoGsnUnifiedMainViewHandler {
         if ((AutoGsnViewsManager.gsnVObjs != null)
                 && (AutoGsnViewsManager.allRootGoals.size() > 0)
                 && AutoGsnViewsManager.allGoalClassIds.size() > 0) {
-            //System.out.println("1");
+            // System.out.println("1");
 
             // Then populate the list
             populateListGoals("All");
@@ -308,7 +306,7 @@ public class AutoGsnUnifiedMainViewHandler {
             populateCharts();
             labelSelectionGuide.setVisible(true);
         } else {
-            //System.out.println("2");
+            // System.out.println("2");
             // Initialize the variables
             AutoGsnViewsManager.initializeViewVariables();
         }
@@ -395,8 +393,9 @@ public class AutoGsnUnifiedMainViewHandler {
             for (int i = 0; i < selected.size(); i++)
                 actualSelections.add(selected.get(i).getText());
         } else {
-        	org.eclipse.jface.dialogs.MessageDialog.openInformation(null, "", "No goals are selected");
-        	return;
+            org.eclipse.jface.dialogs.MessageDialog.openInformation(
+                    null, "", "No goals are selected");
+            return;
         }
 
         // Strip "::" from each element in actual selections to get goal Ids only
@@ -502,24 +501,26 @@ public class AutoGsnUnifiedMainViewHandler {
                             listGoals.getSelectionModel().getSelectedItem().getText());
 
             if (RackPreferencePage.getJavaFxPreference()) {
-            	// Set the stage with the other fxml
-            	FXMLLoader drillViewLoader = AutoGsnViewsManager.setNewFxmlToStage(
-            			"resources/fxml/autoGsn/AutoGsnUnifiedDrillGoalView.fxml");
-            	// initialize variables in the AutoGsnDrillGoalView page
-            	AutoGsnUnifiedDrillGoalViewHandler drillViewLoaderClassObj =
-            			drillViewLoader.getController();
-            	drillViewLoaderClassObj.prepareView(0, selectionId, recentlyGeneratedGsn);
+                // Set the stage with the other fxml
+                FXMLLoader drillViewLoader =
+                        AutoGsnViewsManager.setNewFxmlToStage(
+                                "resources/fxml/autoGsn/AutoGsnUnifiedDrillGoalView.fxml");
+                // initialize variables in the AutoGsnDrillGoalView page
+                AutoGsnUnifiedDrillGoalViewHandler drillViewLoaderClassObj =
+                        drillViewLoader.getController();
+                drillViewLoaderClassObj.prepareView(0, selectionId, recentlyGeneratedGsn);
 
             } else {
-            	com.ge.research.rack.views.AssuranceGoalView.showView();
+                com.ge.research.rack.views.AssuranceGoalView.showView();
 
-            	try {
-            		AutoGsnUnifiedDrillGoalViewHandler drillViewLoaderClassObj = AutoGsnUnifiedDrillGoalViewHandler.self;
-            		drillViewLoaderClassObj.prepareView(0, selectionId, recentlyGeneratedGsn);
-                	com.ge.research.rack.views.AssuranceGoalView.showView();
-            	} catch (Exception e) {
-            		System.out.println("EXCEPTION " + e);
-            	}
+                try {
+                    AutoGsnUnifiedDrillGoalViewHandler drillViewLoaderClassObj =
+                            AutoGsnUnifiedDrillGoalViewHandler.self;
+                    drillViewLoaderClassObj.prepareView(0, selectionId, recentlyGeneratedGsn);
+                    com.ge.research.rack.views.AssuranceGoalView.showView();
+                } catch (Exception e) {
+                    System.out.println("EXCEPTION " + e);
+                }
             }
         }
     }

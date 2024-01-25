@@ -142,7 +142,7 @@ public class OntologyJsonObjUtils {
      */
     public static String getClassURI(JSONObject ontInfo, String classId) {
 
-        //System.out.println("Finding URI of class " + classId);
+        // System.out.println("Finding URI of class " + classId);
 
         JSONArray subClassSuperClassList = (JSONArray) ontInfo.get("subClassSuperClassList");
         var subClassSuperClassListIter = subClassSuperClassList.iterator();
@@ -192,7 +192,7 @@ public class OntologyJsonObjUtils {
             String rowSuperClassId = rowSuperInfo.split("\\:")[1];
 
             if (rowSubClassId.equals(classId)) {
-                //System.out.println(rowSuperClassId);
+                // System.out.println(rowSuperClassId);
                 return rowSuperClassId;
             }
         }

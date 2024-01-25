@@ -31,11 +31,10 @@
  */
 package com.ge.research.rack.utils;
 
+import com.ge.research.rack.views.RackPreferencePage;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
-
-import com.ge.research.rack.views.RackPreferencePage;
 
 public class ErrorMessageUtil {
     public static String getErrorMessage(Exception e) {
@@ -85,9 +84,9 @@ public class ErrorMessageUtil {
                         });
         if (RackPreferencePage.getShowConsole()) raiseConsole();
     }
-    
+
     public static void doit(Runnable r) {
-    	getShell().getDisplay().asyncExec(r);
+        getShell().getDisplay().asyncExec(r);
     }
 
     /**
@@ -98,33 +97,33 @@ public class ErrorMessageUtil {
      */
     public static void error(String msg) {
         doit(
-                        new Runnable() {
-                            public void run() {
-                                try {
-                                    RackConsole.getConsole().error(msg);
-                                } catch (Exception ee) {
-                                    // Don't think this should happen, but catching the exception so
-                                    // as not to propagate it further
-                                    ee.printStackTrace(System.out);
-                                }
-                            }
-                        });
+                new Runnable() {
+                    public void run() {
+                        try {
+                            RackConsole.getConsole().error(msg);
+                        } catch (Exception ee) {
+                            // Don't think this should happen, but catching the exception so
+                            // as not to propagate it further
+                            ee.printStackTrace(System.out);
+                        }
+                    }
+                });
         if (RackPreferencePage.getShowConsole()) raiseConsole();
     }
 
     public static void error(String msg, Exception e) {
         doit(
-                        new Runnable() {
-                            public void run() {
-                                try {
-                                    RackConsole.getConsole().error(msg, e);
-                                } catch (Exception ee) {
-                                    // Don't think this should happen, but catching the exception so
-                                    // as not to propagate it further
-                                    ee.printStackTrace(System.out);
-                                }
-                            }
-                        });
+                new Runnable() {
+                    public void run() {
+                        try {
+                            RackConsole.getConsole().error(msg, e);
+                        } catch (Exception ee) {
+                            // Don't think this should happen, but catching the exception so
+                            // as not to propagate it further
+                            ee.printStackTrace(System.out);
+                        }
+                    }
+                });
         if (RackPreferencePage.getShowConsole()) raiseConsole();
     }
 
@@ -136,17 +135,17 @@ public class ErrorMessageUtil {
      */
     public static void errorEcho(String msg) {
         doit(
-                        new Runnable() {
-                            public void run() {
-                                try {
-                                    RackConsole.getConsole().errorEcho(msg);
-                                } catch (Exception ee) {
-                                    // Don't think this should happen, but catching the exception so
-                                    // as not to propagate it further
-                                    ee.printStackTrace(System.out);
-                                }
-                            }
-                        });
+                new Runnable() {
+                    public void run() {
+                        try {
+                            RackConsole.getConsole().errorEcho(msg);
+                        } catch (Exception ee) {
+                            // Don't think this should happen, but catching the exception so
+                            // as not to propagate it further
+                            ee.printStackTrace(System.out);
+                        }
+                    }
+                });
         if (RackPreferencePage.getShowConsole()) raiseConsole();
     }
 
@@ -158,76 +157,76 @@ public class ErrorMessageUtil {
      */
     public static void printEcho(String msg) {
         doit(
-                        new Runnable() {
-                            public void run() {
-                                try {
-                                    RackConsole.getConsole().printEcho(msg);
-                                } catch (Exception ee) {
-                                    // Don't think this should happen, but catching the exception so
-                                    // as not to propagate it further
-                                    ee.printStackTrace(System.out);
-                                }
-                            }
-                        });
+                new Runnable() {
+                    public void run() {
+                        try {
+                            RackConsole.getConsole().printEcho(msg);
+                        } catch (Exception ee) {
+                            // Don't think this should happen, but catching the exception so
+                            // as not to propagate it further
+                            ee.printStackTrace(System.out);
+                        }
+                    }
+                });
     }
 
     public static void print(String msg) {
         doit(
-                        new Runnable() {
-                            public void run() {
-                                try {
-                                    RackConsole.getConsole().print(msg);
-                                } catch (Exception ee) {
-                                    // Don't think this should happen, but catching the exception so
-                                    // as not to propagate it further
-                                    ee.printStackTrace(System.out);
-                                }
-                            }
-                        });
+                new Runnable() {
+                    public void run() {
+                        try {
+                            RackConsole.getConsole().print(msg);
+                        } catch (Exception ee) {
+                            // Don't think this should happen, but catching the exception so
+                            // as not to propagate it further
+                            ee.printStackTrace(System.out);
+                        }
+                    }
+                });
     }
 
     public static void println(String msg) {
         doit(
-                        new Runnable() {
-                            public void run() {
-                                try {
-                                    RackConsole.getConsole().println(msg);
-                                } catch (Exception ee) {
-                                    // Don't think this should happen, but catching the exception so
-                                    // as not to propagate it further
-                                    ee.printStackTrace(System.out);
-                                }
-                            }
-                        });
+                new Runnable() {
+                    public void run() {
+                        try {
+                            RackConsole.getConsole().println(msg);
+                        } catch (Exception ee) {
+                            // Don't think this should happen, but catching the exception so
+                            // as not to propagate it further
+                            ee.printStackTrace(System.out);
+                        }
+                    }
+                });
     }
 
     public static void printOK() {
         doit(
-                        new Runnable() {
-                            public void run() {
-                                try {
-                                    RackConsole.getConsole().printOK();
-                                } catch (Exception ee) {
-                                    // Don't think this should happen, but catching the exception so
-                                    // as not to propagate it further
-                                    ee.printStackTrace(System.out);
-                                }
-                            }
-                        });
+                new Runnable() {
+                    public void run() {
+                        try {
+                            RackConsole.getConsole().printOK();
+                        } catch (Exception ee) {
+                            // Don't think this should happen, but catching the exception so
+                            // as not to propagate it further
+                            ee.printStackTrace(System.out);
+                        }
+                    }
+                });
     }
 
     public static void printFAIL() {
         doit(
-                        new Runnable() {
-                            public void run() {
-                                try {
-                                    RackConsole.getConsole().printFAIL();
-                                } catch (Exception ee) {
-                                    // Don't think this should happen, but catching the exception so
-                                    // as not to propagate it further
-                                    ee.printStackTrace(System.out);
-                                }
-                            }
-                        });
+                new Runnable() {
+                    public void run() {
+                        try {
+                            RackConsole.getConsole().printFAIL();
+                        } catch (Exception ee) {
+                            // Don't think this should happen, but catching the exception so
+                            // as not to propagate it further
+                            ee.printStackTrace(System.out);
+                        }
+                    }
+                });
     }
 }

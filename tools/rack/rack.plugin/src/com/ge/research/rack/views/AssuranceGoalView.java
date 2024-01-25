@@ -32,24 +32,19 @@
 package com.ge.research.rack.views;
 
 import com.ge.research.rack.utils.*;
-
+import java.awt.Frame;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
+import javax.swing.JScrollPane;
+import javax.swing.JViewport;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.*;
 import org.eclipse.ui.part.ViewPart;
-
-import java.awt.Frame;
-
-import javax.swing.JScrollPane;
-import javax.swing.JViewport;
 
 /**
  * This sample class demonstrates how to plug-in a new workbench view. The view shows data obtained
@@ -71,76 +66,77 @@ public class AssuranceGoalView extends ViewPart {
 
     @Override
     public void createPartControl(Composite parent) {
-    	try {
+        try {
 
+            if (RackPreferencePage.getJavaFxPreference()) {
+                Composite composite = new Composite(parent, SWT.NONE);
+                //        		composite.setLayout(new RowLayout(SWT.VERTICAL)));
+                new org.eclipse.swt.widgets.Label(composite, SWT.LEFT)
+                        .setText(
+                                "Using floating JavaFx windows rather than Eclipse views.\n"
+                                        + "To change to Eclipse views, change the option in the RACK preferences page.");
+                composite.pack();
+                return;
+            }
 
-        	if (RackPreferencePage.getJavaFxPreference()) {
-        		Composite composite = new Composite(parent, SWT.NONE);
-//        		composite.setLayout(new RowLayout(SWT.VERTICAL)));
-        		new org.eclipse.swt.widgets.Label(composite, SWT.LEFT).setText(
-        				"Using floating JavaFx windows rather than Eclipse views.\n"+
-        				"To change to Eclipse views, change the option in the RACK preferences page."
-        				);
-        		composite.pack();
-        		return;
-        	}
+            Composite composite = new Composite(parent, SWT.EMBEDDED | SWT.NO_BACKGROUND);
+            final Frame frame = SWT_AWT.new_Frame(composite);
 
-    		Composite composite = new Composite(parent, SWT.EMBEDDED | SWT.NO_BACKGROUND);
-        	final Frame frame = SWT_AWT.new_Frame(composite);
+            final JScrollPane parentPanel = new JScrollPane();
+            parentPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            parentPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-    		final JScrollPane parentPanel = new JScrollPane();
-    		parentPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    		parentPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            var vp = new JViewport();
+            final JFXPanel fxPanel = new JFXPanel();
 
-    		var vp = new JViewport();
-    		final JFXPanel fxPanel = new JFXPanel();
+            Parent root =
+                    FXMLLoader.load(
+                            getClass()
+                                    .getResource(
+                                            "/resources/fxml/autoGsn/AutoGsnUnifiedDrillGoalView.fxml"));
+            Platform.setImplicitExit(false);
+            Platform.runLater(
+                    new Runnable() {
 
-    		Parent root = FXMLLoader.load(getClass().getResource("/resources/fxml/autoGsn/AutoGsnUnifiedDrillGoalView.fxml"));
-    		Platform.setImplicitExit(false);
-    		Platform.runLater(
-    			new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
 
-    				@Override
-    				public void run() {
-    					try {
+                                Scene scene = new Scene(root);
+                                fxPanel.setScene(scene);
 
-    						Scene scene = new Scene(root);
-    						fxPanel.setScene(scene);
+                                vp.add(fxPanel);
+                                parentPanel.setViewport(vp);
 
-    						vp.add(fxPanel);
-    						parentPanel.setViewport(vp);
+                                frame.add(parentPanel);
+                                frame.setSize(1300, 600);
+                                frame.setVisible(true);
 
-    						frame.add(parentPanel);
-    						frame.setSize(1300, 600);
-    						frame.setVisible(true);
+                                showView();
 
-    						showView();
+                            } catch (Exception ex) {
+                                ErrorMessageUtil.error("createPartControl-exception " + ex);
 
-    					} catch (Exception ex) {
-    						ErrorMessageUtil.error("createPartControl-exception " + ex);
-
-    						ex.printStackTrace();
-    					}
-    				}
-    			}
-    		);
-    	} catch (Exception ex) {
-    		ErrorMessageUtil.error("createPartControl-exception-end " + ex);
-    	}
+                                ex.printStackTrace();
+                            }
+                        }
+                    });
+        } catch (Exception ex) {
+            ErrorMessageUtil.error("createPartControl-exception-end " + ex);
+        }
     }
-
 
     @Override
     public void setFocus() {
-    	showView();
+        showView();
     }
-    
+
     public static void showView() {
-    	
-    	try {
-    	    PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(ID);
-    	} catch (Exception e) {
-    		// skip
-    	}
+
+        try {
+            PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(ID);
+        } catch (Exception e) {
+            // skip
+        }
     }
 }

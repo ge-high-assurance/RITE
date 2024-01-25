@@ -245,7 +245,8 @@ public class RackQueryUtils {
                 FileWriter myWriter = new FileWriter(csvFilePath);
                 myWriter.write(csv_string);
                 myWriter.close();
-                System.out.println("Successfully created and wrote data to CSV files: " + csvFilePath + "\n");
+                System.out.println(
+                        "Successfully created and wrote data to CSV files: " + csvFilePath + "\n");
             } catch (Exception e) {
                 ErrorMessageUtil.error("ERROR: Could not create and write data to CSV files.\n", e);
             }
