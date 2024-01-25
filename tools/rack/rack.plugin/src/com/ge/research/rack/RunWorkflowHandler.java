@@ -320,6 +320,7 @@ public class RunWorkflowHandler extends AbstractHandler {
             </form>
             """
                 .replace("#example", workflowName)
+                .replace("#url", RackPreferencePage.getConnURL())
                 .replace("#data_graph", RackPreferencePage.getDefaultDataGraph())
                 .replace("#model_graph", RackPreferencePage.getDefaultModelGraph());
     }
