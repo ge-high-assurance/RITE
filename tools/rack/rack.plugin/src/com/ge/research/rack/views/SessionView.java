@@ -360,9 +360,15 @@ public class SessionView extends ViewPart {
         	connection = connections.item(0);
         }
         Element element = (Element)connection;
-        element.setAttribute("data_graph",RackPreferencePage.getDefaultDataGraph());
-        element.setAttribute("model_graph",RackPreferencePage.getDefaultModelGraph());
-        element.setAttribute("url",RackPreferencePage.getConnURL());
+    	var e = currentDisplayedDoc.createElement("data-graph");
+    	e.setTextContent(RackPreferencePage.getDefaultDataGraph());
+    	element.appendChild(e);
+    	e = currentDisplayedDoc.createElement("model-graph");
+    	e.setTextContent(RackPreferencePage.getDefaultModelGraph());
+    	element.appendChild(e);
+    	e = currentDisplayedDoc.createElement("url");
+    	e.setTextContent(RackPreferencePage.getConnURL());
+    	element.appendChild(e);
     }
 
     /** Adds a button to the given composite */
