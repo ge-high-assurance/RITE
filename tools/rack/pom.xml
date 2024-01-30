@@ -64,7 +64,7 @@
     <version.javafx>21.0.2</version.javafx>
     <version.rack>${project.version}</version.rack>
     <version.surefire>3.2.5</version.surefire>
-    <version.tycho>4.0.4</version.tycho>
+    <version.tycho>4.0.5</version.tycho>
   </properties>
 
   <!-- Set all dependency versions in one place -->
