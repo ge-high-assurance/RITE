@@ -55,13 +55,20 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.console.ConsolePlugin;
 import org.osgi.framework.Bundle;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
@@ -356,75 +363,141 @@ public class RunWorkflowHandler extends AbstractHandler {
                 return;
             }
         }
+        var fcommand = command;
         new File(exec).setExecutable(true);
 
-        // launch workflow
-        Process process = null;
-        try {
-            process = Runtime.getRuntime().exec(command);
-        } catch (Exception e) {
-            MessageDialog.openError(
-                    null, "Error", "Failed to launch process: " + command + "\n" + e);
-            return;
+		String currentXML;
+		if (currentDisplayedDoc == null) {
+			currentXML = initialXML(workflowName);
+		} else {
+			view.collectXML(currentDisplayedDoc);
+			currentXML = getStringFromDocument(currentDisplayedDoc);
+		}
+		//MessageDialog.openInformation(null, "Sending", currentXML);
+
+        var output = new String[1];
+        var process_ = new Process[1];
+        var error = new String[1];
+        var canceled = new boolean[] { false };
+        var dialog_ = new MessageDialog[1];
+        //MessageDialog.openInformation(null, "Sending", currentXML);
+        var job = new Job("Workflow Communication: " + workflowName) {
+        	protected IStatus run(IProgressMonitor monitor) {
+        		// launch workflow
+        		Process process = null;
+        		try {
+        			process = Runtime.getRuntime().exec(fcommand);
+        		} catch (Exception e) {
+        			error[0] = "Failed to launch process: " + fcommand + "\n" + e;
+        			return Status.CANCEL_STATUS;
+        		}
+        		if (process == null || !process.isAlive()) {
+        			error[0] = "Failed to launch process: " + fcommand;
+        			return Status.CANCEL_STATUS;
+        		}
+        		process_[0] = process;
+
+        		String responseText = "";
+        		try (PrintStream writer = new java.io.PrintStream(process.getOutputStream());
+        				BufferedReader reader =
+        						new java.io.BufferedReader(
+        								new java.io.InputStreamReader(process.getInputStream()))) {
+
+        			// send
+
+                    //System.out.println("WROTE " + currentXML);
+        			writer.print(currentXML);
+        			writer.close(); // So that the workflow script knows the stdin is complete
+
+                    // read response
+                    try {
+                        responseText = reader.lines().collect(Collectors.joining(System.lineSeparator()));
+                    } catch (Exception e) {
+                        error[0] = "Failed to read response: " + e;
+        				return Status.CANCEL_STATUS;
+                    }
+                    //System.out.println("READ " + responseText);
+            		output[0] = responseText;
+                    return Status.OK_STATUS;
+        		} catch (Exception e) {
+        			error[0] = "Communication failure\n" + responseText + "\n" + e;
+    				return Status.CANCEL_STATUS;
+        		} finally {
+        			if (process != null) {
+        				process.destroy();
+        				process = null;
+        			}
+        		}
+        		
+        	}
+        };
+        var listener = new JobChangeAdapter() {
+        	public void done(IJobChangeEvent event) {
+        		if (event.getResult() == Status.OK_STATUS) {
+        			PlatformUI.getWorkbench().getDisplay().syncExec( new Runnable() {
+        				public void run() {
+        					try {
+        						if (dialog_[0] != null) { dialog_[0].close(); dialog_[0] = null; }
+        						if (canceled[0]) {
+        							MessageDialog.openError(null, "Error", "Response canceled");
+        							return;
+        						}
+        						if (error[0] != null) {
+        							MessageDialog.openError(null, "Error", error[0]);
+        							return;
+        						}
+        						var responseText = output[0];
+        						MessageDialog.openInformation(null, "Received", responseText);
+
+        						// Parse and display response
+        						try {
+        							currentDisplayedDoc = parseXML(responseText);
+        							view.displayXML(currentDisplayedDoc);
+        							history.push(currentDisplayedDoc);
+        							String newname = workflowNameFromDoc(currentDisplayedDoc);
+        							if (!workflowName.equals(newname)) {
+        								MessageDialog.openError(
+        										null,
+        										"Error",
+        										"Returned XML contains a different workflow name than the filename: "
+        												+ newname
+        												+ " vs. "
+        												+ workflowName);
+        								workflowName = newname;
+        							}
+        						} catch (Exception e) {
+        							MessageDialog.openError(
+        									null, "Error", "Communication failure\n" + responseText + "\n" + e);
+        						}
+        					} finally {
+        						view.enableButtons(true);
+        					}
+        				}
+        			});
+        		}
+        	}
+        };
+        job.addJobChangeListener(listener);
+        job.setPriority(Job.SHORT);
+        if (currentDisplayedDoc != null) {
+        	view.enableButtons(false);
+            MessageDialog dialog = new MessageDialog(null, "Cancel", null,
+            		"Cancel the workflow?", MessageDialog.QUESTION, new String[] { "Yes" }, 0) {
+            	protected Control createDialogArea(Composite parent) {
+               	    setShellStyle(SWT.CLOSE | SWT.MODELESS | SWT.BORDER | SWT.TITLE);
+            		setBlockOnOpen(false);
+            		return super.createDialogArea(parent);
+            	}
+            	protected void buttonPressed(int buttonID) {
+            		if (process_[0] != null) process_[0].destroy();
+            		canceled[0] = true;           				
+            		super.buttonPressed(buttonID);
+            	}
+            };
+            dialog_[0] = dialog;
+            dialog.open();
         }
-        if (process == null || !process.isAlive()) {
-            MessageDialog.openError(null, "Error", "Failed to launch process: " + command);
-            return;
-        }
-
-        String responseText = "";
-        try (PrintStream writer = new java.io.PrintStream(process.getOutputStream());
-                BufferedReader reader =
-                        new java.io.BufferedReader(
-                                new java.io.InputStreamReader(process.getInputStream()))) {
-
-            String currentXML;
-            if (currentDisplayedDoc == null) {
-                currentXML = initialXML(workflowName);
-            } else {
-                view.collectXML(currentDisplayedDoc);
-                currentXML = getStringFromDocument(currentDisplayedDoc);
-            }
-
-            // send
-            //MessageDialog.openInformation(null, "Sending", currentXML);
-            writer.print(currentXML);
-            writer.close(); // So that the workflow script knows the stdin is complete
-
-            // read response
-            try {
-                responseText = reader.lines().collect(Collectors.joining(System.lineSeparator()));
-                //MessageDialog.openInformation(null, "Received", responseText);
-            } catch (Exception e) {
-                MessageDialog.openError(null, "Error", "Failed to read response");
-                throw e;
-            }
-
-            // Parse and display response
-            currentDisplayedDoc = parseXML(responseText);
-            view.displayXML(currentDisplayedDoc);
-            history.push(currentDisplayedDoc);
-            String newname = workflowNameFromDoc(currentDisplayedDoc);
-            if (!workflowName.equals(newname)) {
-                MessageDialog.openError(
-                        null,
-                        "Error",
-                        "Returned XML contains a different workflow name than the filename: "
-                                + newname
-                                + " vs. "
-                                + workflowName);
-                workflowName = newname;
-            }
-
-        } catch (Exception e) {
-            MessageDialog.openError(
-                    null, "Error", "Communication failure\n" + responseText + "\n" + e);
-        } finally {
-            if (process != null) {
-                process.destroy();
-                process = null;
-            }
-        }
+        job.schedule(); // start as soon as possible 
     }
 
     /**

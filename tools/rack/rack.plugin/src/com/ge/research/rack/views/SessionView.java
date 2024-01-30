@@ -34,6 +34,7 @@ package com.ge.research.rack.views;
 import com.ge.research.rack.RunWorkflowHandler;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.LinkedList;
 import java.util.List;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.dialogs.Dialog;
@@ -130,6 +131,7 @@ public class SessionView extends ViewPart {
             this.outer.dispose();
             this.outer = null;
         }
+        buttonList.clear();
     }
 
     public void displayEmpty() {
@@ -289,6 +291,7 @@ public class SessionView extends ViewPart {
         }
         addSeparator(outer);
 
+        buttonList.clear();
         Composite buttons = new Composite(outer, SWT.NONE);
         GridLayout layout2 = new GridLayout();
         layout2.numColumns = 7; // number of buttons
@@ -296,11 +299,7 @@ public class SessionView extends ViewPart {
         buttons.setLayoutData(new GridData(GridData.FILL_HORIZONTAL, SWT.LEFT, true, false));
         createButton(buttons, IDialogConstants.ABORT_ID, "Abort", false);
         createButton(buttons, IDialogConstants.PROCEED_ID, "Select", false);
-        createButton(
-                buttons,
-                IDialogConstants.FINISH_ID,
-                "Save",
-                false); // There is no built-in ID named SAVE
+        createButton(buttons, IDialogConstants.FINISH_ID, "Save",false);
         createButton(buttons, IDialogConstants.OPEN_ID, "Load", false);
         createButton(buttons, IDialogConstants.RETRY_ID, "Restart", false);
         createButton(buttons, IDialogConstants.BACK_ID, "Back", false);
@@ -370,6 +369,8 @@ public class SessionView extends ViewPart {
     	e.setTextContent(RackPreferencePage.getConnURL());
     	element.appendChild(e);
     }
+    
+    public List<Button> buttonList = new LinkedList<>();
 
     /** Adds a button to the given composite */
     protected Button createButton(Composite buttons, int id, String label, boolean defaultButton) {
@@ -389,7 +390,12 @@ public class SessionView extends ViewPart {
                 shell.setDefaultButton(button);
             }
         }
+        buttonList.add(button);
         return button;
+    }
+    
+    public void enableButtons(boolean enable) {
+    	for (var b: buttonList) b.setEnabled(enable);
     }
 
     /** Callback when a button is pressed */
