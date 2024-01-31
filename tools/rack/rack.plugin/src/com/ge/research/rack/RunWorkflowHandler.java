@@ -447,7 +447,7 @@ public class RunWorkflowHandler extends AbstractHandler {
         							return;
         						}
         						var responseText = output[0];
-        						MessageDialog.openInformation(null, "Received", responseText);
+        						//MessageDialog.openInformation(null, "Received", responseText);
 
         						// Parse and display response
         						try {
