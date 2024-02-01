@@ -68,6 +68,7 @@ import org.w3c.dom.NodeList;
 // FIXME - send scrollbar to bottom on each Next
 // FIXME - check and document whether Save saves the current contents of the user-modifiable
 // controls
+// FIXME - there are still some race conditions that can happen between job execution and canceling
 
 // Nice to have:
 // FIXME - handle stderr

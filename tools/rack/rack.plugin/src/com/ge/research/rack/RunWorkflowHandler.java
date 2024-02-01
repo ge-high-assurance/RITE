@@ -375,28 +375,31 @@ public class RunWorkflowHandler extends AbstractHandler {
 		}
 		//MessageDialog.openInformation(null, "Sending", currentXML);
 
-        var output = new String[1];
-        var process_ = new Process[1];
-        var error = new String[1];
-        var canceled = new boolean[] { false };
-        var dialog_ = new MessageDialog[1];
-        //MessageDialog.openInformation(null, "Sending", currentXML);
+		final var output = new String[1];
+        final var process_ = new Process[1];
+        final var error = new String[1];
+        final var canceled = new boolean[] { false };
+        final var dialog_ = new MessageDialog[1];
+
+		// launch workflow before the communication Job so that there is no race
+        // between creating the process and cancelling it
+		Process process = null;
+		try {
+			process = Runtime.getRuntime().exec(fcommand);
+		} catch (Exception e) {
+			MessageDialog.openError(null, "Error", "Failed to launch process: " + fcommand + "\n" + e);
+			return;
+		}
+		if (process == null || !process.isAlive()) {
+			MessageDialog.openError(null, "Error", "Failed to launch process: " + fcommand);
+			return;
+		}
+		process_[0] = process;
+
+		//MessageDialog.openInformation(null, "Sending", currentXML);
         var job = new Job("Workflow Communication: " + workflowName) {
         	protected IStatus run(IProgressMonitor monitor) {
-        		// launch workflow
-        		Process process = null;
-        		try {
-        			process = Runtime.getRuntime().exec(fcommand);
-        		} catch (Exception e) {
-        			error[0] = "Failed to launch process: " + fcommand + "\n" + e;
-        			return Status.CANCEL_STATUS;
-        		}
-        		if (process == null || !process.isAlive()) {
-        			error[0] = "Failed to launch process: " + fcommand;
-        			return Status.CANCEL_STATUS;
-        		}
-        		process_[0] = process;
-
+        		var process = process_[0];
         		String responseText = "";
         		try (PrintStream writer = new java.io.PrintStream(process.getOutputStream());
         				BufferedReader reader =
@@ -425,7 +428,7 @@ public class RunWorkflowHandler extends AbstractHandler {
         		} finally {
         			if (process != null) {
         				process.destroy();
-        				process = null;
+        				process_[0] = null;
         			}
         		}
         		
