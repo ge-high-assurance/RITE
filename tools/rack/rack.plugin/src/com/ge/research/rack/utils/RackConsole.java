@@ -55,6 +55,8 @@ import org.eclipse.ui.console.TextConsole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ge.research.rack.views.RackPreferencePage;
+
 public class RackConsole extends MessageConsole {
     private static boolean setup = false;
     private static RackConsole console;
@@ -76,7 +78,7 @@ public class RackConsole extends MessageConsole {
             streamErr = console.newMessageStream();
             streamWarn = console.newMessageStream();
             consoleManager.addConsoles(new IConsole[] {console});
-            console.activate();
+            if (RackPreferencePage.getShowConsole()) console.activate();
             // ViewUtils.pinConsole(console);
             setup = true;
             console.addPatternMatchListener(

@@ -62,11 +62,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 // Crucial:
-// FIXME - Send connection information every time
 
 // Should do:
-// FIXME - use computational thread? be able to abort a stuck process?
-// FIXME - tone down the amount of switching to the console that happens
 // FIXME - relayout the widgets when the view size changes
 // FIXME - send scrollbar to bottom on each Next
 // FIXME - check and document whether Save saves the current contents of the user-modifiable
