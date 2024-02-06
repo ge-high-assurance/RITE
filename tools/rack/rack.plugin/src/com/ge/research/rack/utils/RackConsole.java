@@ -31,6 +31,7 @@
  */
 package com.ge.research.rack.utils;
 
+import com.ge.research.rack.views.RackPreferencePage;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -54,8 +55,6 @@ import org.eclipse.ui.console.PatternMatchEvent;
 import org.eclipse.ui.console.TextConsole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.ge.research.rack.views.RackPreferencePage;
 
 public class RackConsole extends MessageConsole {
     private static boolean setup = false;

@@ -297,12 +297,13 @@ public class SessionView extends ViewPart {
         buttons.setLayoutData(new GridData(GridData.FILL_HORIZONTAL, SWT.LEFT, true, false));
         createButton(buttons, IDialogConstants.ABORT_ID, "Abort", false);
         createButton(buttons, IDialogConstants.PROCEED_ID, "Select", false);
-        createButton(buttons, IDialogConstants.FINISH_ID, "Save",false);
+        createButton(buttons, IDialogConstants.FINISH_ID, "Save", false);
         createButton(buttons, IDialogConstants.OPEN_ID, "Load", false);
         createButton(buttons, IDialogConstants.RETRY_ID, "Restart", false);
-        createButton(buttons, IDialogConstants.BACK_ID, "Back", false).setEnabled(handler.history.size() > 1);
+        createButton(buttons, IDialogConstants.BACK_ID, "Back", false)
+                .setEnabled(handler.history.size() > 1);
         createButton(buttons, IDialogConstants.OK_ID, "Next", true).setEnabled(!complete);
-        
+
         parent.getParent().layout(true, true);
         return complete;
     }
@@ -351,23 +352,23 @@ public class SessionView extends ViewPart {
         var connections = top.getElementsByTagName("connection");
         Node connection;
         if (connections.getLength() == 0) {
-        	connection = currentDisplayedDoc.createElement("connection");
-        	top.appendChild(connection);
+            connection = currentDisplayedDoc.createElement("connection");
+            top.appendChild(connection);
         } else {
-        	connection = connections.item(0);
+            connection = connections.item(0);
         }
-        Element element = (Element)connection;
-    	var e = currentDisplayedDoc.createElement("data-graph");
-    	e.setTextContent(RackPreferencePage.getDefaultDataGraph());
-    	element.appendChild(e);
-    	e = currentDisplayedDoc.createElement("model-graph");
-    	e.setTextContent(RackPreferencePage.getDefaultModelGraph());
-    	element.appendChild(e);
-    	e = currentDisplayedDoc.createElement("url");
-    	e.setTextContent(RackPreferencePage.getConnURL());
-    	element.appendChild(e);
+        Element element = (Element) connection;
+        var e = currentDisplayedDoc.createElement("data-graph");
+        e.setTextContent(RackPreferencePage.getDefaultDataGraph());
+        element.appendChild(e);
+        e = currentDisplayedDoc.createElement("model-graph");
+        e.setTextContent(RackPreferencePage.getDefaultModelGraph());
+        element.appendChild(e);
+        e = currentDisplayedDoc.createElement("url");
+        e.setTextContent(RackPreferencePage.getConnURL());
+        element.appendChild(e);
     }
-    
+
     public List<Button> buttonList = new LinkedList<>();
 
     /** Adds a button to the given composite */
@@ -391,13 +392,12 @@ public class SessionView extends ViewPart {
         buttonList.add(button);
         return button;
     }
-    
-    public void enableButtons(boolean enable) {
-    	for (var b: buttonList) b.setEnabled(enable);
-    	if (enable && handler.history.size() <= 1) {
-    		buttonList.get(5).setEnabled(false); // Back button disabled if no history
-    	}
 
+    public void enableButtons(boolean enable) {
+        for (var b : buttonList) b.setEnabled(enable);
+        if (enable && handler.history.size() <= 1) {
+            buttonList.get(5).setEnabled(false); // Back button disabled if no history
+        }
     }
 
     /** Callback when a button is pressed */
