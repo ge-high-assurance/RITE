@@ -34,6 +34,7 @@ package com.ge.research.rack.analysis.handlers;
 import com.ge.research.rack.analysis.utils.CustomStringUtils;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Button;
@@ -42,10 +43,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.GridPane;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 /**
  * @author Saswata Paul
  */
-public class MainViewHandler {
+public class MainViewHandler implements Initializable {
 
     // -------- FXML GUI variables below --------------
     @FXML protected Label headerLabel;
@@ -97,12 +101,12 @@ public class MainViewHandler {
      */
     protected void enableFetchButton() {
         // TODO: Add condition
-        if (true) {
-            btnFetch.setDisable(false);
-        } else {
-            // TODO: add action
-            System.out.println("Unspecified for now");
-        }
+        // if (true) {
+        btnFetch.setDisable(false);
+        // } else {
+        // TODO: add action
+        //    System.out.println("Unspecified for now");
+        // }
     }
 
     /**
@@ -119,7 +123,6 @@ public class MainViewHandler {
     protected void populateLabelSwInfo() {
         // enable elements
         labelSwInfo.setVisible(true);
-
         labelSwInfo.setText(swLabel());
     }
 
@@ -151,5 +154,10 @@ public class MainViewHandler {
         populateLabelSwInfo();
         populateChartStatus();
         populateLists("All");
+    }
+
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        // Subclass to refine
     }
 }

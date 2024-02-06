@@ -43,6 +43,7 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Label;
@@ -51,50 +52,21 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * @author Saswata Paul
  */
-public class MainViewHandler extends com.ge.research.rack.analysis.handlers.MainViewHandler {
+public class MainViewHandler extends com.ge.research.rack.analysis.handlers.MainViewHandler
+        implements Initializable {
 
-    // -------- FXML GUI variables below --------------
-    //    @FXML private Label headerLabel;
-
-    //    @FXML private Button btnFetch;
-    //    @FXML private Button btnFontInc;
-    //    @FXML private Button btnFontDec;
-
-    //    @FXML private Label labelSwInfo;
-
-    //    @FXML private Label labelWait;
-    //    @FXML private ProgressIndicator progInd;
-
-    //    @FXML private BarChart<String, Integer> chartProcessStatus;
-    //    @FXML private NumberAxis yAxisChartProcessStatus;
-    //    @FXML private GridPane gridPaneLegend;
-
-    //    @FXML private ListView<Label> listProcess;
-
-    // ----------
-
+    @Override
     protected String bucketLabel() {
-        // default value; Subclasses to override
         return new String("Process-");
     }
-
-    /**
-     * Given "TableAx: yzaysy", returns "Ax"
-     *
-     * @param procLabelText
-     * @return
-     */
-    //    private String getBucketIdFromLabelText(String procLabelText) {
-    //        String Processx = CustomStringUtils.separateElementIdFromDescription(procLabelText);
-    //        String x = Processx.replace("Process-", "");
-    //        return x;
-    //    }
 
     /**
      * Create the label for table listview for a given process object
@@ -145,55 +117,15 @@ public class MainViewHandler extends com.ge.research.rack.analysis.handlers.Main
         Arp4754ViewsManager.reportDataObj = (DAPlan) rdpObj.getData(tempDir);
     }
 
-    /**
-     * Decides whether the fetch button should be enabled or, if already enabled, if it should be
-     * disabled with the dependents
-     */
-    //    private void enableFetchButton() {
-    //        // TODO: Add condition
-    //        if (true) {
-    //            btnFetch.setDisable(false);
-    //        } else {
-    //            // TODO: add action
-    //            System.out.println("Unspecified for now");
-    //        }
-    //    }
-
-    /**
-     * Enables/disables the wait message
-     *
-     * @param val
-     */
-    //    private void enableWaitMessage(Boolean val) {
-    //        labelWait.setVisible(val);
-    //        progInd.setVisible(val);
-    //    }
-
     @Override
     protected String swLabel() {
         // default value; Subclass to override
         return "System ID: " + Arp4754ViewsManager.reportDataObj.getSystem();
     }
 
-    /** populates the top label with sw info */
-    //    private void populateLabelSwInfo() {
-    //        // enable elements
-    //        labelSwInfo.setVisible(true);
-    //
-    //        String swInfo = "System ID: " + Arp4754ViewsManager.reportDataObj.getSystem();
-    //        labelSwInfo.setText(swInfo);
-    //    }
-
     /** populates the chart */
     @Override
     protected void populateChartStatus() {
-        //        // clear the chart
-        //        chartProcessStatus.getData().clear();
-        //
-        //        // enable the chart
-        //        chartProcessStatus.setDisable(false);
-        //        yAxisChartProcessStatus.setDisable(false);
-        //        gridPaneLegend.setDisable(false);
         super.populateChartStatus();
 
         // to store the highest value for scaling
@@ -204,7 +136,6 @@ public class MainViewHandler extends com.ge.research.rack.analysis.handlers.Main
                 DAPlanUtils.sortProcessList(Arp4754ViewsManager.reportDataObj.getProcesses());
 
         // Group bars by table id
-
         XYChart.Series<String, Integer> passData = new XYChart.Series<String, Integer>();
         passData.setName("Complete");
         List<Data<String, Integer>> passBars = new ArrayList<Data<String, Integer>>();
@@ -308,15 +239,10 @@ public class MainViewHandler extends com.ge.research.rack.analysis.handlers.Main
      */
     @Override
     protected void populateLists(String key) {
-        //        // clear old data
-        //        listProcess.getItems().clear();
-        //
-        //        // enable elements
-        //        listProcess.setDisable(false);
         super.populateLists(key);
 
-        //        List<Label> labelList = new ArrayList<Label>();
-        //        List<Label> sortedLabelList = new ArrayList<Label>();
+        // List<Label> labelList = new ArrayList<Label>();
+        // List<Label> sortedLabelList = new ArrayList<Label>();
 
         // get list of processes
         List<DAPlan.Process> allProcessObjs =
@@ -327,57 +253,50 @@ public class MainViewHandler extends com.ge.research.rack.analysis.handlers.Main
             int position = Integer.parseInt(getBucketIdFromLabelText(procLabel.getText())) - 1;
             System.out.println("Position " + position + "->" + procLabel.getText());
             if (key.equalsIgnoreCase("All")) {
-                //                listProcess.getItems().add(position, procLabel);
-                //            	labelList.add(procLabel);
+                // listProcess.getItems().add(position, procLabel);
+                // labelList.add(procLabel);
                 listBuckets.getItems().add(procLabel);
             } else if (key.equalsIgnoreCase("Passed") && procObj.isPassed()) {
-                //                listProcess.getItems().add(position, procLabel);
-                //            	labelList.add(procLabel);
+                // listProcess.getItems().add(position, procLabel);
+                // labelList.add(procLabel);
                 listBuckets.getItems().add(procLabel);
             } else if (key.equalsIgnoreCase("Failed") && !procObj.isPassed()) {
-                //                listProcess.getItems().add(position, procLabel);
-                //            	labelList.add(procLabel);
+                // listProcess.getItems().add(position, procLabel);
+                // labelList.add(procLabel);
                 listBuckets.getItems().add(procLabel);
             } else if (key.equalsIgnoreCase("Inconclusive") && procObj.isNoData()) {
-                //    				actLabel.setVisible(true);
-                //                listProcess.getItems().add(tabLabel);
-                //              listProcess.getItems().add(position, procLabel);
-                //            	labelList.add(procLabel);
+                // actLabel.setVisible(true);
+                // listProcess.getItems().add(tabLabel);
+                // listProcess.getItems().add(position, procLabel);
+                // labelList.add(procLabel);
                 listBuckets.getItems().add(procLabel);
             }
         }
 
-        //        // sort the list of labels
-        //        for(int i = 0; i<labelList.size();i++) {
-        //        	// find the appropriate label for this index
-        //        	for(Label label : labelList) {
-        //        		if(i == (Integer.parseInt(getProcessIdFromLabelText(label.getText()))-1)){
-        //        			sortedLabelList.add(label);
-        //        		}
-        //        	}
+        // sort the list of labels
+        // for(int i = 0; i<labelList.size();i++) {
+        // find the appropriate label for this index
+        //    for(Label label : labelList) {
+        //        if(i == (Integer.parseInt(getProcessIdFromLabelText(label.getText()))-1)){
+        //            sortedLabelList.add(label);
         //        }
+        //    }
+        // }
 
-        //        // add the labels to listview
-        //        listProcess.getItems().addAll(sortedLabelList);
-
+        // add the labels to listview
+        // listProcess.getItems().addAll(sortedLabelList);
     }
 
-    /** Calls necessary functions to populate view elements from data */
-    //    private void populateViewElements() {
-    //        populateLabelSwInfo();
-    //
-    //        populateChartProcessStatus();
-    //
-    //        populateListProcesses("All");
-    //    }
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        super.initialize(arg0, arg1);
 
-    @FXML
-    private void initialize() {
         try {
             final ImageView icon = ViewUtils.loadGeIcon();
             icon.setPreserveRatio(true);
             headerLabel.setGraphic(icon);
         } catch (Exception e) {
+            // Do nothing
         }
 
         // disable the display environments
@@ -394,9 +313,9 @@ public class MainViewHandler extends com.ge.research.rack.analysis.handlers.Main
         listBuckets.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         // If the report variables have already been initialized
-        if (Arp4754ViewsManager.reportDataObj.getProcesses() != null) {
+        if (Arp4754ViewsManager.reportDataObj != null
+                && Arp4754ViewsManager.reportDataObj.getProcesses() != null) {
             populateViewElements();
-
         } else {
             // Initialize the variables
             Arp4754ViewsManager.initializeViewVariables();
@@ -411,10 +330,11 @@ public class MainViewHandler extends com.ge.research.rack.analysis.handlers.Main
         Arp4754ViewsManager.initializeViewVariables();
 
         // reset all the views again
-        initialize();
+        initialize(null, null);
 
         // disable the fetch button
         btnFetch.setDisable(true);
+
         // enable wait label
         enableWaitMessage(true);
 
@@ -427,14 +347,12 @@ public class MainViewHandler extends com.ge.research.rack.analysis.handlers.Main
                 new Task<Void>() {
                     @Override
                     protected Void call() throws Exception {
-
                         long startTime = System.currentTimeMillis();
 
                         // Get report data
                         getReportData();
 
                         long finishTime = System.currentTimeMillis();
-
                         System.out.println(
                                 "Time taken to fetch data and create report: "
                                         + (finishTime - startTime)
@@ -443,6 +361,7 @@ public class MainViewHandler extends com.ge.research.rack.analysis.handlers.Main
                         return null;
                     }
                 };
+
         task.setOnSucceeded(
                 evt -> {
                     // populate views
@@ -453,6 +372,7 @@ public class MainViewHandler extends com.ge.research.rack.analysis.handlers.Main
                     // enable the fetch button
                     btnFetch.setDisable(false);
                 });
+
         new Thread(task).start();
     }
 
@@ -470,12 +390,10 @@ public class MainViewHandler extends com.ge.research.rack.analysis.handlers.Main
 
     @FXML
     private void listProcessSelectionAction(MouseEvent event) {
-
         // The selected label
         Label selectedLabel = listBuckets.getSelectionModel().getSelectedItem();
 
         if (selectedLabel != null) {
-
             // get selection
             String selectedProc =
                     CustomStringUtils.separateElementIdFromDescription(selectedLabel.getText());

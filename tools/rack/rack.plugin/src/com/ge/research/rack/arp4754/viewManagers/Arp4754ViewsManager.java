@@ -115,9 +115,7 @@ public class Arp4754ViewsManager extends Application {
      * @return
      */
     public static FXMLLoader setNewFxmlToStage(final String fxmlFilePath) {
-
         try {
-
             final Bundle bundle = Platform.getBundle("rack.plugin");
             final URL fxmlUrl =
                     FileLocator.toFileURL(FileLocator.find(bundle, new Path(fxmlFilePath), null));
@@ -149,11 +147,9 @@ public class Arp4754ViewsManager extends Application {
             stage.setWidth(prevWidth);
 
             stage.show();
-
             return loader;
 
         } catch (Exception ex) {
-
             ex.printStackTrace();
         }
 
@@ -163,12 +159,10 @@ public class Arp4754ViewsManager extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
         // sets the hostServices (only works here, no idea why)
         hostServices = getHostServices();
 
         try {
-
             // Set stage as the new stage sent by caller
             stage = primaryStage;
 
@@ -177,9 +171,7 @@ public class Arp4754ViewsManager extends Application {
             initializeViewVariables();
 
             setNewFxmlToStage(FXML_FILE_PATH);
-
         } catch (Exception ex) {
-
             ex.printStackTrace();
         }
     }

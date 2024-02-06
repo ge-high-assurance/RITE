@@ -323,6 +323,11 @@
             id="rackplugin.views.NodegroupsView" inject="true"
             name="Nodegroup Store">
         </view>
+        <view category="rackplugin"
+            class="com.ge.research.rack.views.ComplianceToolView"
+            id="rackplugin.views.ComplianceToolView" inject="true"
+            name="ARP4754A Compliance Tool">
+        </view>
     </extension>
 
     <extension point="org.eclipse.help.contexts">
