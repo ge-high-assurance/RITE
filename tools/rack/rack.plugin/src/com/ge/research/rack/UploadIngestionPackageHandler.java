@@ -32,6 +32,7 @@
 package com.ge.research.rack;
 
 import com.ge.research.rack.utils.ConnectionUtil;
+import com.ge.research.rack.utils.ErrorMessageUtil;
 import com.ge.research.rack.utils.RackConsole;
 import com.ge.research.rack.utils.RackManifestIngestionBuilderUtil;
 import com.ge.research.rack.utils.RackManifestIngestionBuilderUtil.IngestionBuilderException;
@@ -62,6 +63,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.swt.SWT;
@@ -133,6 +135,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
 
         if (eventResourcePaths.length != 1) {
             RackConsole.getConsole().error(NO_SELECTED_PROJECT);
+            MessageDialog.openError(null, "Ingestion failed", NO_SELECTED_PROJECT);
             RackConsole.getConsole().activate();
             return null;
         }
@@ -145,6 +148,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
 
         if (selectedProject.isEmpty()) {
             RackConsole.getConsole().error(NO_SELECTED_PROJECT);
+            MessageDialog.openError(null, "Ingestion failed", NO_SELECTED_PROJECT);
             RackConsole.getConsole().activate();
         }
 
@@ -152,6 +156,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
 
             if (shouldUpload && !startRun()) {
                 RackConsole.getConsole().error(UPLOAD_DEBOUNCED);
+                MessageDialog.openError(null, "Ingestion failed", UPLOAD_DEBOUNCED);
                 RackConsole.getConsole().activate();
                 return null;
             }
@@ -266,22 +271,20 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
                         @Override
                         public void done(IJobChangeEvent event) {
                             if (event.getResult() != Status.OK_STATUS) {
-                                RackConsole.getConsole()
-                                        .error(
-                                                String.format(
-                                                        upload ? UPLOAD_FAILED : CREATION_FAILED,
-                                                        ingestionPackageZipFilepath));
+                                ErrorMessageUtil.error(
+                                        String.format(
+                                                upload ? UPLOAD_FAILED : CREATION_FAILED,
+                                                ingestionPackageZipFilepath));
                             }
                             asyncCallback.run();
                         }
 
                         @Override
                         public void scheduled(IJobChangeEvent event) {
-                            RackConsole.getConsole()
-                                    .print(
-                                            String.format(
-                                                    upload ? UPLOAD_QUEUED : CREATION_QUEUED,
-                                                    ingestionPackageZipFilepath));
+                            ErrorMessageUtil.print(
+                                    String.format(
+                                            upload ? UPLOAD_QUEUED : CREATION_QUEUED,
+                                            ingestionPackageZipFilepath));
                         }
                     };
 
@@ -309,7 +312,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
                 }
 
             } catch (final Exception e) {
-                RackConsole.getConsole().error(e.getMessage());
+                ErrorMessageUtil.error(e.getMessage());
                 return Status.CANCEL_STATUS;
             }
             return Status.OK_STATUS;
@@ -325,8 +328,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
         try (FileOutputStream fos = new FileOutputStream(zipFilepath.toFile());
                 ZipOutputStream zipStream = new ZipOutputStream(fos)) {
 
-            RackConsole.getConsole()
-                    .print(String.format(GENERATING_PROJECT, zipFilepath.toString()));
+            ErrorMessageUtil.error(String.format(GENERATING_PROJECT, zipFilepath.toString()));
 
             new RackManifestIngestionBuilderUtil().zipManifestResources(folder, zipStream);
         }
@@ -365,9 +367,9 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
                     return;
                 }
                 if (semTkOutputLine.contains(ERROR_LINE)) {
-                    RackConsole.getConsole().errorEcho(semTkOutputLine);
+                    ErrorMessageUtil.errorEcho(semTkOutputLine);
                 } else {
-                    RackConsole.getConsole().printEcho(semTkOutputLine);
+                    ErrorMessageUtil.printEcho(semTkOutputLine);
                 }
             }
         }

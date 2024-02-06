@@ -32,6 +32,7 @@
 package com.ge.research.rack;
 
 import com.ge.research.rack.report.utils.RackQueryUtils;
+import com.ge.research.rack.utils.ErrorMessageUtil;
 import com.ge.research.rack.utils.RackConsole;
 import java.io.File;
 import java.util.List;
@@ -202,16 +203,16 @@ public class UploadNodegroupsHandler extends AbstractHandler {
                         @Override
                         public void done(IJobChangeEvent event) {
                             if (event.getResult() != Status.OK_STATUS) {
-                                RackConsole.getConsole()
-                                        .error(String.format(UPLOAD_FAILED, nodegroupFilepaths));
+                                ErrorMessageUtil.error(
+                                        String.format(UPLOAD_FAILED, nodegroupFilepaths));
                             }
                             asyncCallback.run();
                         }
 
                         @Override
                         public void scheduled(IJobChangeEvent event) {
-                            RackConsole.getConsole()
-                                    .println(String.format(UPLOAD_QUEUED, nodegroupFilepaths));
+                            ErrorMessageUtil.println(
+                                    String.format(UPLOAD_QUEUED, nodegroupFilepaths));
                         }
                     });
         }

@@ -198,12 +198,12 @@ public class MultiClassPackets {
      *
      * @author Saswata Paul
      */
-    public class TreeItemAndBoolean {
+    public class TreeItemAndBoolean<T> {
 
-        TreeItem treeItem;
+        TreeItem<T> treeItem;
         Boolean expandFlag;
 
-        public TreeItemAndBoolean(TreeItem treeItem, Boolean expandFlag) {
+        public TreeItemAndBoolean(TreeItem<T> treeItem, Boolean expandFlag) {
             this.treeItem = treeItem;
             this.expandFlag = expandFlag;
         }
@@ -211,14 +211,14 @@ public class MultiClassPackets {
         /**
          * @return the treeItem
          */
-        public TreeItem getTreeItem() {
+        public TreeItem<T> getTreeItem() {
             return treeItem;
         }
 
         /**
          * @param treeItem the treeItem to set
          */
-        public void setTreeItem(TreeItem treeItem) {
+        public void setTreeItem(TreeItem<T> treeItem) {
             this.treeItem = treeItem;
         }
 

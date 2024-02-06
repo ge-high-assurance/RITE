@@ -1568,7 +1568,7 @@ public class PsacDataProcessorBoeing {
                 CustomStringUtils.getCSVColumnIndex(subddtToSrdCols, "identifier_subdd_req");
         int srsIdCol = CustomStringUtils.getCSVColumnIndex(subddtToSrdCols, "identifier_srs_req");
 
-        int counter = 1;
+        // int counter = 1;
 
         for (String[] row : allSUBDD) {
             if (row[subddIdCol] != null) {
@@ -1601,7 +1601,7 @@ public class PsacDataProcessorBoeing {
                     if ((row2.length > subddIdCol2) && (row2.length > srsIdCol)) {
                         //        				System.out.println("Finding object for " + row2[srsIdCol] + "
                         // iteration number: " + counter);
-                        counter++;
+                        // counter++;
 
                         if (row2[subddIdCol2].equals(row[subddIdCol])) { // if relevant to the req
 

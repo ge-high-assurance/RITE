@@ -91,7 +91,7 @@ public class QueryGenerationUtils {
         String targetClassUri = OntologyJsonObjUtils.getClassURI(ontInfo, targetClassId);
         String sourceClassUri = OntologyJsonObjUtils.getClassURI(ontInfo, sourceClassId);
 
-        List propertyInfo =
+        List<String> propertyInfo =
                 OntologyJsonObjUtils.getPropertyRangeURIs(ontInfo, sourceClassId, propertyId);
 
         String propertyUri =
@@ -187,7 +187,7 @@ public class QueryGenerationUtils {
         String targetClassUri = OntologyJsonObjUtils.getClassURI(ontInfo, targetClassId);
         String sourceClassUri = OntologyJsonObjUtils.getClassURI(ontInfo, sourceClassId);
 
-        List propertyInfo =
+        List<String> propertyInfo =
                 OntologyJsonObjUtils.getPropertyRangeURIs(ontInfo, sourceClassId, propertyId);
 
         String propertyUri =

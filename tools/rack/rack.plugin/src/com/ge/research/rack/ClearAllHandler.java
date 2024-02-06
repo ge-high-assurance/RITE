@@ -43,7 +43,6 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.core.runtime.jobs.*;
 import org.eclipse.swt.widgets.Display;
 
 public class ClearAllHandler extends AbstractHandler {
@@ -108,7 +107,10 @@ public class ClearAllHandler extends AbstractHandler {
 
         return null;
 
-        /*	try {
+        /*	A computational thread is used, the RackConsole.getConsole().error calls
+         * have to be changed to ErrorMessageUtil.showError calls.
+         *
+         * try {
 
             String consoleViewId = IConsoleConstants.ID_CONSOLE_VIEW;
             IConsoleView consoleView =
