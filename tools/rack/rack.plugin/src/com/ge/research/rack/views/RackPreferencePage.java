@@ -321,7 +321,7 @@ public class RackPreferencePage extends FieldEditorPreferencePage
         var javafxPref =
                 new BooleanFieldEditor(
                         JAVAFX_WINDOW,
-                        "Use javfx floating indows for assurance goals (if unselected, use an Eclipse view).\n"
+                        "Use javafx floating indows for assurance goals (if unselected, use an Eclipse view).\n"
                                 + "Requires a restart when changed.",
                         getFieldEditorParent());
         addField(javafxPref);

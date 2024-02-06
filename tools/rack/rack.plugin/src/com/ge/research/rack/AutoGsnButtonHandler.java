@@ -36,14 +36,14 @@ import com.ge.research.rack.views.RackPreferencePage;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.jface.dialogs.MessageDialog;
 
 public class AutoGsnButtonHandler extends AbstractHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
         // Launch the AutoGsnMainView
-        //MessageDialog.openInformation(null, "", "Mode " + RackPreferencePage.getJavaFxPreference());
+        // MessageDialog.openInformation(null, "", "Mode " +
+        // RackPreferencePage.getJavaFxPreference());
         if (RackPreferencePage.getJavaFxPreference()) {
             JavaFXAppLaunchManager.autoGsnMainViewLaunch();
         } else {
