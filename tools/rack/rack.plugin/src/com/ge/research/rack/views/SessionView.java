@@ -165,7 +165,7 @@ public class SessionView extends ViewPart {
     public boolean displayXML(Document doc) {
         var top = doc.getDocumentElement();
         var name = top.getAttribute("workflow");
-        boolean result = false;
+        boolean complete = false;
         clearXMLDisplay();
         inputs = new java.util.LinkedList<>();
         outer = new Composite(parent, SWT.NONE);
@@ -280,7 +280,7 @@ public class SessionView extends ViewPart {
 
             if (top.hasAttribute("complete")) {
                 addLabel(outer, "Workflow is complete");
-                result = true;
+                complete = true;
             }
 
         } catch (Exception e) {
@@ -300,11 +300,11 @@ public class SessionView extends ViewPart {
         createButton(buttons, IDialogConstants.FINISH_ID, "Save",false);
         createButton(buttons, IDialogConstants.OPEN_ID, "Load", false);
         createButton(buttons, IDialogConstants.RETRY_ID, "Restart", false);
-        createButton(buttons, IDialogConstants.BACK_ID, "Back", false);
-        createButton(buttons, IDialogConstants.OK_ID, "Next", true).setEnabled(!result);
-
+        createButton(buttons, IDialogConstants.BACK_ID, "Back", false).setEnabled(handler.history.size() > 1);
+        createButton(buttons, IDialogConstants.OK_ID, "Next", true).setEnabled(!complete);
+        
         parent.getParent().layout(true, true);
-        return result;
+        return complete;
     }
 
     /**
@@ -394,6 +394,10 @@ public class SessionView extends ViewPart {
     
     public void enableButtons(boolean enable) {
     	for (var b: buttonList) b.setEnabled(enable);
+    	if (enable && handler.history.size() <= 1) {
+    		buttonList.get(5).setEnabled(false); // Back button disabled if no history
+    	}
+
     }
 
     /** Callback when a button is pressed */

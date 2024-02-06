@@ -78,6 +78,7 @@ public class RackPreferencePage extends FieldEditorPreferencePage
 
     private static final String JAVAFX_WINDOW = "rack_javafx";
     private static final String SHOW_CONSOLE = "rack_console";
+    private static final String BLOCKING_CANCEL = "rack_blocking_cancel";
 
     // singleton preference store
     private static ScopedPreferenceStore preferenceStore =
@@ -92,6 +93,7 @@ public class RackPreferencePage extends FieldEditorPreferencePage
     @Override
     public void init(IWorkbench workbench) {
         preferenceStore.setDefault(SHOW_CONSOLE, false);
+        preferenceStore.setDefault(BLOCKING_CANCEL, false);
         setDescription("SemTK Preference");
         preferenceStore.setDefault(PROTOCOL, "http");
         preferenceStore.setDefault(SERVER, "localhost");
@@ -115,6 +117,10 @@ public class RackPreferencePage extends FieldEditorPreferencePage
 
     public static boolean getShowConsole() {
         return preferenceStore.getBoolean(SHOW_CONSOLE);
+    }
+
+    public static boolean getUseBlockingCancel() {
+        return preferenceStore.getBoolean(BLOCKING_CANCEL);
     }
 
     public static String getProtocol() {
@@ -319,6 +325,13 @@ public class RackPreferencePage extends FieldEditorPreferencePage
                         "Show console when output is written to it",
                         getFieldEditorParent());
         addField(consolePref);
+
+        var blockingPref =
+                new BooleanFieldEditor(
+                        BLOCKING_CANCEL,
+                        "Use a blocking cancel dialog for workflow interaction",
+                        getFieldEditorParent());
+        addField(blockingPref);
     }
 
     @Override
