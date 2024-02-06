@@ -531,7 +531,10 @@ public class RunWorkflowHandler extends AbstractHandler {
 				};
             	dialog_[0] = dialog;
             	job.schedule(); // start as soon as possible 
-            	dialog.open();
+            	// It is possible the job will complete before the dialog ever is opened.
+            	// Even with the guard in the next statement, there could be a race in that the
+            	// job could complete (and close the dialog) before the dialog is opened.
+            	if (process_[0] != null) dialog.open();
            }
         } else {
         	job.schedule(); // start as soon as possible 
