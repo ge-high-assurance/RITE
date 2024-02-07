@@ -372,7 +372,7 @@ public class RunWorkflowHandler extends AbstractHandler {
             view.collectXML(currentDisplayedDoc);
             currentXML = getStringFromDocument(currentDisplayedDoc);
         }
-        // MessageDialog.openInformation(null, "Sending", currentXML);
+        //MessageDialog.openInformation(null, "Sending", currentXML);
 
         final var output = new String[1];
         final var process_ = new Process[1];

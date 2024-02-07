@@ -350,23 +350,20 @@ public class SessionView extends ViewPart {
         }
         var top = currentDisplayedDoc.getDocumentElement();
         var connections = top.getElementsByTagName("connection");
-        Node connection;
-        if (connections.getLength() == 0) {
-            connection = currentDisplayedDoc.createElement("connection");
+        if (connections.getLength() > 0) currentDisplayedDoc.removeChild(connections.item(0));
+        {
+            Element connection = currentDisplayedDoc.createElement("connection");
             top.appendChild(connection);
-        } else {
-            connection = connections.item(0);
+            var e = currentDisplayedDoc.createElement("data-graph");
+            e.setTextContent(RackPreferencePage.getDefaultDataGraph());
+            connection.appendChild(e);
+            e = currentDisplayedDoc.createElement("model-graph");
+            e.setTextContent(RackPreferencePage.getDefaultModelGraph());
+            connection.appendChild(e);
+            e = currentDisplayedDoc.createElement("url");
+            e.setTextContent(RackPreferencePage.getConnURL());
+            connection.appendChild(e);
         }
-        Element element = (Element) connection;
-        var e = currentDisplayedDoc.createElement("data-graph");
-        e.setTextContent(RackPreferencePage.getDefaultDataGraph());
-        element.appendChild(e);
-        e = currentDisplayedDoc.createElement("model-graph");
-        e.setTextContent(RackPreferencePage.getDefaultModelGraph());
-        element.appendChild(e);
-        e = currentDisplayedDoc.createElement("url");
-        e.setTextContent(RackPreferencePage.getConnURL());
-        element.appendChild(e);
     }
 
     public List<Button> buttonList = new LinkedList<>();
