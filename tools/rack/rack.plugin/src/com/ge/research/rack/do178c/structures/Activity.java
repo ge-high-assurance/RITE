@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  * 
- * Copyright (c) 2023, General Electric Company and Galois, Inc.
+ * Copyright (c) 2024, General Electric Company and Galois, Inc.
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -29,99 +29,90 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.ge.research.rack.arp4754.structures;
+package com.ge.research.rack.do178c.structures;
 
-import com.ge.research.rack.analysis.structures.AnalysisNode;
-import com.ge.research.rack.analysis.structures.PlanObjective;
-import com.ge.research.rack.analysis.structures.PlanTable;
+import com.ge.research.rack.analysis.structures.PlanGraph;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Saswata Paul
- *     <p>A class representing Development Assurance Plans for ARP4754
- */
-public class DAPlan extends AnalysisNode {
+public class Activity extends PlanGraph {
 
-    private String desc = "";
-    private String system = "";
-    private String sysDAL = "";
-    private List<PlanTable<PlanObjective>> processes = new ArrayList<PlanTable<PlanObjective>>();
-    private double complianceStatus = 0.0;
+    private String id;
+    private String description;
+
+    private Boolean passed = false; // by default
+    private Boolean noData = true; // by default
+
+    private List<Activity> performs = new ArrayList<Activity>();
 
     /**
-     * @return the desc
+     * @return the performs
      */
-    public String getDesc() {
-        return desc;
+    public List<Activity> getPerforms() {
+        return performs;
     }
 
     /**
-     * @param desc the desc to set
+     * @param performs the performs to set
      */
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setPerforms(List<Activity> performs) {
+        this.performs = performs;
     }
 
     /**
-     * @return the system
+     * @return the id
      */
-    public String getSystem() {
-        return system;
+    public String getId() {
+        return id;
     }
 
     /**
-     * @param system the system to set
+     * @param id the id to set
      */
-    public void setSystem(String system) {
-        this.system = system;
-    }
-
-    @Override
-    protected String swLabel() {
-        return system;
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**
-     * @return the sysDAL
+     * @return the description
      */
-    public String getSysDAL() {
-        return sysDAL;
+    public String getDescription() {
+        return description;
     }
 
     /**
-     * @param sysDAL the sysDAL to set
+     * @param description the description to set
      */
-    public void setSysDAL(String sysDAL) {
-        this.sysDAL = sysDAL;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     /**
-     * @return the process
+     * @return the passed
      */
-    public List<PlanTable<PlanObjective>> getProcesses() {
-        return processes;
+    public Boolean getPassed() {
+        return passed;
     }
 
     /**
-     * @param process the process to set
+     * @param passed the passed to set
      */
-    public void setProcesses(List<PlanTable<PlanObjective>> process) {
-        processes = process;
+    public void setPassed(Boolean passed) {
+        this.passed = passed;
     }
 
     /**
-     * @return the complianceStatus
+     * @return the noData
      */
-    public double getComplianceStatus() {
-        return complianceStatus;
+    public Boolean getNoData() {
+        return noData;
     }
 
     /**
-     * @param complianceStatus the complianceStatus to set
+     * @param noData the noData to set
      */
-    public void setComplianceStatus(double complianceStatus) {
-        this.complianceStatus = complianceStatus;
+    public void setNoData(Boolean noData) {
+        this.noData = noData;
     }
 }

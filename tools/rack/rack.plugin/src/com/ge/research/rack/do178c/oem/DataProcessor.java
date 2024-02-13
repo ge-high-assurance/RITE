@@ -32,11 +32,16 @@
 package com.ge.research.rack.do178c.oem;
 
 import com.ge.research.rack.analysis.structures.AnalysisNode;
+import com.ge.research.rack.analysis.structures.PlanObjective;
+import com.ge.research.rack.analysis.structures.PlanTable;
 import com.ge.research.rack.analysis.structures.SparqlConnectionInfo;
 import com.ge.research.rack.analysis.utils.CustomStringUtils;
 import com.ge.research.rack.analysis.utils.RackQueryUtils;
 import com.ge.research.rack.do178c.constants.DO178CQueries;
+import com.ge.research.rack.do178c.structures.Activity;
 import com.ge.research.rack.do178c.structures.DataItem;
+import com.ge.research.rack.do178c.structures.Objective;
+import com.ge.research.rack.do178c.structures.Output;
 import com.ge.research.rack.do178c.structures.PsacNode;
 import com.ge.research.rack.do178c.structures.Requirement;
 import com.ge.research.rack.do178c.structures.ReviewLog;
@@ -137,11 +142,11 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
     // ----------------------------------------------------------------------
 
-    private PsacNode.Table processTableDummy(PsacNode.Table tabObj, int numNoData) {
+    private PlanTable<Objective> processTableDummy(PlanTable<Objective> tabObj, int numNoData) {
         // TODO : dummy for now
         tabObj.setNoData(true);
         tabObj.setNumObjComplete(0);
-        tabObj.setNumObjNodata(numNoData);
+        tabObj.setNumObjNoData(numNoData);
         tabObj.setNumObjPartial(0);
         tabObj.setNumObjPassed(0);
         tabObj.setNumObjFailed(0);
@@ -149,7 +154,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         return tabObj;
     }
 
-    private PsacNode.Objective processObjectiveDummy(PsacNode.Objective objObj) {
+    private Objective processObjectiveDummy(Objective objObj) {
 
         objObj.setNoData(true);
         objObj.setPartialData(false);
@@ -190,7 +195,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
      * @param tabObj
      * @return
      */
-    public static PsacNode.Table fillTableStatus(PsacNode.Table tabObj) {
+    public static PlanTable<Objective> fillTableStatus(PlanTable<Objective> tabObj) {
         boolean failFlag = false;
         int partialCounter = 0; // count the number of objectives that have reported partial data
         int nullCounter = 0; // count the number of objectives that have reported no data
@@ -199,21 +204,21 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
         //        System.out.println("Table analysis: " + tabObj.getId());
 
-        for (PsacNode.Objective objective : tabObj.getTabObjectives()) {
-            if (objective.getNoData()) {
+        for (PlanObjective objective : tabObj.getTabObjectives()) {
+            if (objective.isNoData()) {
                 //                System.out.println("Table object nodata" + tabObj.getId() +
                 // objective.getId());
                 nullCounter = nullCounter + 1;
-            } else if (objective.getPartialData()) {
+            } else if (objective.isPartialData()) {
                 //                System.out.println("Table object partialdata" + tabObj.getId() +
                 // objective.getId());
                 partialCounter = partialCounter + 1;
-            } else if (!objective.getPassed()) {
+            } else if (!objective.isPassed()) {
                 //                System.out.println("Table object failed" + tabObj.getId() +
                 // objective.getId());
                 failFlag = true;
                 failCounter = failCounter + 1;
-            } else if (objective.getPassed()) {
+            } else if (objective.isPassed()) {
                 //                System.out.println("Table object passed" + tabObj.getId() +
                 // objective.getId());
                 passCounter = passCounter + 1;
@@ -221,12 +226,12 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         }
 
         tabObj.setNumObjComplete(tabObj.getTabObjectives().size() - nullCounter - partialCounter);
-        tabObj.setNumObjNodata(nullCounter);
+        tabObj.setNumObjNoData(nullCounter);
         tabObj.setNumObjPartial(partialCounter);
         tabObj.setNumObjPassed(passCounter);
         tabObj.setNumObjFailed(failCounter);
 
-        System.out.println("Table nullcounter" + tabObj.getNumObjNodata());
+        System.out.println("Table nullcounter" + tabObj.getNumObjNoData());
         System.out.println("Table partialCOunter" + tabObj.getNumObjPartial());
         System.out.println("Table failcounter" + tabObj.getNumObjFailed());
         System.out.println("Table passcounter" + tabObj.getNumObjPassed());
@@ -280,7 +285,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
         // ----- Table A1
 
-        PsacNode.Table tableA1CompNode = new PsacNode().new Table();
+        PlanTable<Objective> tableA1CompNode = new PlanTable<Objective>();
         tableA1CompNode.setId(PsacNodeUtils.getTableById(psacNode, "A1").getId());
         tableA1CompNode.setDescription(PsacNodeUtils.getTableById(psacNode, "A1").getDescription());
 
@@ -322,7 +327,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
         // ----- Table A2
 
-        PsacNode.Table tableA2CompNode = new PsacNode().new Table();
+        PlanTable<Objective> tableA2CompNode = new PlanTable<Objective>();
         tableA2CompNode.setId(PsacNodeUtils.getTableById(psacNode, "A2").getId());
         tableA2CompNode.setDescription(PsacNodeUtils.getTableById(psacNode, "A2").getDescription());
         // adding the procesed objectives for this table
@@ -360,7 +365,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
         // ----- Table A3
 
-        PsacNode.Table tableA3CompNode = new PsacNode().new Table();
+        PlanTable<Objective> tableA3CompNode = new PlanTable<Objective>();
         tableA3CompNode.setId(PsacNodeUtils.getTableById(psacNode, "A3").getId());
         tableA3CompNode.setDescription(PsacNodeUtils.getTableById(psacNode, "A3").getDescription());
         tableA3CompNode
@@ -401,7 +406,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
         // ----- Table A4
 
-        PsacNode.Table tableA4CompNode = new PsacNode().new Table();
+        PlanTable<Objective> tableA4CompNode = new PlanTable<Objective>();
         tableA4CompNode.setId(PsacNodeUtils.getTableById(psacNode, "A4").getId());
         tableA4CompNode.setDescription(PsacNodeUtils.getTableById(psacNode, "A4").getDescription());
         tableA4CompNode
@@ -468,7 +473,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
         // ----- Table A5
 
-        PsacNode.Table tableA5CompNode = new PsacNode().new Table();
+        PlanTable<Objective> tableA5CompNode = new PlanTable<Objective>();
         tableA5CompNode.setId(PsacNodeUtils.getTableById(psacNode, "A5").getId());
         tableA5CompNode.setDescription(PsacNodeUtils.getTableById(psacNode, "A5").getDescription());
 
@@ -517,13 +522,13 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
         // ----- Table A6
 
-        PsacNode.Table tableA6CompNode = new PsacNode().new Table();
+        PlanTable<Objective> tableA6CompNode = new PlanTable<Objective>();
         // just addding the raw tables for this table
         tableA6CompNode = PsacNodeUtils.getTableById(psacNode, "A6");
 
         // ----- Table A7
 
-        PsacNode.Table tableA7CompNode = new PsacNode().new Table();
+        PlanTable<Objective> tableA7CompNode = new PlanTable<Objective>();
         tableA7CompNode.setId(PsacNodeUtils.getTableById(psacNode, "A7").getId());
         tableA7CompNode.setDescription(PsacNodeUtils.getTableById(psacNode, "A7").getDescription());
 
@@ -566,19 +571,19 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
         // ----- Table A8
 
-        PsacNode.Table tableA8CompNode = new PsacNode().new Table();
+        PlanTable<Objective> tableA8CompNode = new PlanTable<Objective>();
         // just addding the raw tables for this table
         tableA8CompNode = PsacNodeUtils.getTableById(psacNode, "A8");
 
         // ----- Table A9
 
-        PsacNode.Table tableA9CompNode = new PsacNode().new Table();
+        PlanTable<Objective> tableA9CompNode = new PlanTable<Objective>();
         // just addding the raw tables for this table
         tableA9CompNode = PsacNodeUtils.getTableById(psacNode, "A9");
 
         // ----- Table A10
 
-        PsacNode.Table tableA10CompNode = new PsacNode().new Table();
+        PlanTable<Objective> tableA10CompNode = new PlanTable<Objective>();
         // just addding the raw tables for this table
         tableA10CompNode = PsacNodeUtils.getTableById(psacNode, "A10");
 
@@ -622,10 +627,10 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         System.out.println("Connecting relevant outputs to PSAC objectives ...\n");
 
         if (psacNode.getReportTables().size() > 0) {
-            for (PsacNode.Table tableObj : psacNode.getReportTables()) {
+            for (PlanTable<Objective> tableObj : psacNode.getReportTables()) {
 
                 if (tableObj.getTabObjectives().size() > 0) {
-                    for (PsacNode.Objective objectiveObj : tableObj.getTabObjectives()) {
+                    for (PlanObjective objectiveObj : tableObj.getTabObjectives()) {
 
                         // Attach Docs to A1-1, A1-2. A1-3, and A1-4
                         if (objectiveObj.getId().equalsIgnoreCase("A1-1")
@@ -634,7 +639,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                                 || objectiveObj.getId().equalsIgnoreCase("A1-4")) {
                             for (DataItem doc : allDataItemObjs) {
                                 if (doc.getObjectiveId().equals(objectiveObj.getId())) {
-                                    objectiveObj.getObjOutputs().getDocuments().add(doc);
+                                    ((Output) objectiveObj.getOutputs()).getDocuments().add(doc);
                                 }
                             }
                         }
@@ -642,37 +647,37 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                         // Attach SRS to A2-1
                         if (objectiveObj.getId().equalsIgnoreCase("A2-1")) {
                             for (Requirement req : allSRSObjs) {
-                                objectiveObj.getObjOutputs().getRequirements().add(req);
+                                ((Output) objectiveObj.getOutputs()).getRequirements().add(req);
                             }
                         }
 
                         // Attach Derived SRS to A2-2
                         if (objectiveObj.getId().equalsIgnoreCase("A2-2")) {
                             for (Requirement req : allDerSRSObjs) {
-                                objectiveObj.getObjOutputs().getRequirements().add(req);
+                                ((Output) objectiveObj.getOutputs()).getRequirements().add(req);
                             }
                         }
 
                         // Attach SubDD to A2-4
                         if (objectiveObj.getId().equalsIgnoreCase("A2-4")) {
                             for (Requirement req : allSUBDDObjs) {
-                                objectiveObj.getObjOutputs().getRequirements().add(req);
+                                ((Output) objectiveObj.getOutputs()).getRequirements().add(req);
                             }
                         }
 
                         // Attach Derived SubDD to A2-5
                         if (objectiveObj.getId().equalsIgnoreCase("A2-5")) {
                             for (Requirement req : allDerSUBDDObjs) {
-                                objectiveObj.getObjOutputs().getRequirements().add(req);
+                                ((Output) objectiveObj.getOutputs()).getRequirements().add(req);
                             }
                         }
                         // Attach SRS and relevant logs to A3-1
                         if (objectiveObj.getId().equalsIgnoreCase("A3-1")) {
                             for (Requirement req : allSRSObjs) {
-                                objectiveObj.getObjOutputs().getRequirements().add(req);
+                                ((Output) objectiveObj.getOutputs()).getRequirements().add(req);
                                 if (req.getLogs() != null) {
                                     for (ReviewLog log : req.getLogs()) {
-                                        objectiveObj.getObjOutputs().getLogs().add(log);
+                                        ((Output) objectiveObj.getOutputs()).getLogs().add(log);
                                     }
                                 }
                             }
@@ -680,10 +685,10 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                         // Attach SRS and relevant logs to A3-2
                         if (objectiveObj.getId().equalsIgnoreCase("A3-2")) {
                             for (Requirement req : allSRSObjs) {
-                                objectiveObj.getObjOutputs().getRequirements().add(req);
+                                ((Output) objectiveObj.getOutputs()).getRequirements().add(req);
                                 if (req.getLogs() != null) {
                                     for (ReviewLog log : req.getLogs()) {
-                                        objectiveObj.getObjOutputs().getLogs().add(log);
+                                        ((Output) objectiveObj.getOutputs()).getLogs().add(log);
                                     }
                                 }
                             }
@@ -691,10 +696,10 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                         // Attach SRS and relevant logs to A3-3
                         if (objectiveObj.getId().equalsIgnoreCase("A3-3")) {
                             for (Requirement req : allSRSObjs) {
-                                objectiveObj.getObjOutputs().getRequirements().add(req);
+                                ((Output) objectiveObj.getOutputs()).getRequirements().add(req);
                                 if (req.getLogs() != null) {
                                     for (ReviewLog log : req.getLogs()) {
-                                        objectiveObj.getObjOutputs().getLogs().add(log);
+                                        ((Output) objectiveObj.getOutputs()).getLogs().add(log);
                                     }
                                 }
                             }
@@ -702,10 +707,10 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                         // Attach SRS and relevant logs to A3-4
                         if (objectiveObj.getId().equalsIgnoreCase("A3-4")) {
                             for (Requirement req : allSRSObjs) {
-                                objectiveObj.getObjOutputs().getRequirements().add(req);
+                                ((Output) objectiveObj.getOutputs()).getRequirements().add(req);
                                 if (req.getLogs() != null) {
                                     for (ReviewLog log : req.getLogs()) {
-                                        objectiveObj.getObjOutputs().getLogs().add(log);
+                                        ((Output) objectiveObj.getOutputs()).getLogs().add(log);
                                     }
                                 }
                             }
@@ -714,10 +719,10 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                         // Attach SRS and relevant logs to A3-5
                         if (objectiveObj.getId().equalsIgnoreCase("A3-5")) {
                             for (Requirement req : allSRSObjs) {
-                                objectiveObj.getObjOutputs().getRequirements().add(req);
+                                ((Output) objectiveObj.getOutputs()).getRequirements().add(req);
                                 if (req.getLogs() != null) {
                                     for (ReviewLog log : req.getLogs()) {
-                                        objectiveObj.getObjOutputs().getLogs().add(log);
+                                        ((Output) objectiveObj.getOutputs()).getLogs().add(log);
                                     }
                                 }
                             }
@@ -725,10 +730,10 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                         // Attach SRS and relevant logs to A3-6
                         if (objectiveObj.getId().equalsIgnoreCase("A3-6")) {
                             for (Requirement req : allSRSObjs) {
-                                objectiveObj.getObjOutputs().getRequirements().add(req);
+                                ((Output) objectiveObj.getOutputs()).getRequirements().add(req);
                                 if (req.getLogs() != null) {
                                     for (ReviewLog log : req.getLogs()) {
-                                        objectiveObj.getObjOutputs().getLogs().add(log);
+                                        ((Output) objectiveObj.getOutputs()).getLogs().add(log);
                                     }
                                 }
                             }
@@ -737,10 +742,10 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                         // Attach SUBDD and relevant logs to A4-1
                         if (objectiveObj.getId().equalsIgnoreCase("A4-1")) {
                             for (Requirement req : allSUBDDObjs) {
-                                objectiveObj.getObjOutputs().getRequirements().add(req);
+                                ((Output) objectiveObj.getOutputs()).getRequirements().add(req);
                                 if (req.getLogs() != null) {
                                     for (ReviewLog log : req.getLogs()) {
-                                        objectiveObj.getObjOutputs().getLogs().add(log);
+                                        ((Output) objectiveObj.getOutputs()).getLogs().add(log);
                                     }
                                 }
                             }
@@ -748,10 +753,10 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                         // Attach SUBDD and relevant logs to A4-2
                         if (objectiveObj.getId().equalsIgnoreCase("A4-2")) {
                             for (Requirement req : allSUBDDObjs) {
-                                objectiveObj.getObjOutputs().getRequirements().add(req);
+                                ((Output) objectiveObj.getOutputs()).getRequirements().add(req);
                                 if (req.getLogs() != null) {
                                     for (ReviewLog log : req.getLogs()) {
-                                        objectiveObj.getObjOutputs().getLogs().add(log);
+                                        ((Output) objectiveObj.getOutputs()).getLogs().add(log);
                                     }
                                 }
                             }
@@ -759,10 +764,10 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                         // Attach SUBDD and relevant logs to A4-3
                         if (objectiveObj.getId().equalsIgnoreCase("A4-3")) {
                             for (Requirement req : allSUBDDObjs) {
-                                objectiveObj.getObjOutputs().getRequirements().add(req);
+                                ((Output) objectiveObj.getOutputs()).getRequirements().add(req);
                                 if (req.getLogs() != null) {
                                     for (ReviewLog log : req.getLogs()) {
-                                        objectiveObj.getObjOutputs().getLogs().add(log);
+                                        ((Output) objectiveObj.getOutputs()).getLogs().add(log);
                                     }
                                 }
                             }
@@ -770,10 +775,10 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                         // Attach SUBDD and relevant logs to A4-4
                         if (objectiveObj.getId().equalsIgnoreCase("A4-4")) {
                             for (Requirement req : allSUBDDObjs) {
-                                objectiveObj.getObjOutputs().getRequirements().add(req);
+                                ((Output) objectiveObj.getOutputs()).getRequirements().add(req);
                                 if (req.getLogs() != null) {
                                     for (ReviewLog log : req.getLogs()) {
-                                        objectiveObj.getObjOutputs().getLogs().add(log);
+                                        ((Output) objectiveObj.getOutputs()).getLogs().add(log);
                                     }
                                 }
                             }
@@ -781,10 +786,10 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                         // Attach SUBDD and relevant logs to A4-4
                         if (objectiveObj.getId().equalsIgnoreCase("A4-5")) {
                             for (Requirement req : allSUBDDObjs) {
-                                objectiveObj.getObjOutputs().getRequirements().add(req);
+                                ((Output) objectiveObj.getOutputs()).getRequirements().add(req);
                                 if (req.getLogs() != null) {
                                     for (ReviewLog log : req.getLogs()) {
-                                        objectiveObj.getObjOutputs().getLogs().add(log);
+                                        ((Output) objectiveObj.getOutputs()).getLogs().add(log);
                                     }
                                 }
                             }
@@ -792,10 +797,10 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                         // Attach SUBDD and relevant logs to A4-4
                         if (objectiveObj.getId().equalsIgnoreCase("A4-6")) {
                             for (Requirement req : allSUBDDObjs) {
-                                objectiveObj.getObjOutputs().getRequirements().add(req);
+                                ((Output) objectiveObj.getOutputs()).getRequirements().add(req);
                                 if (req.getLogs() != null) {
                                     for (ReviewLog log : req.getLogs()) {
-                                        objectiveObj.getObjOutputs().getLogs().add(log);
+                                        ((Output) objectiveObj.getOutputs()).getLogs().add(log);
                                     }
                                 }
                             }
@@ -809,25 +814,25 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                                 || objectiveObj.getId().equalsIgnoreCase("A5-4")
                                 || objectiveObj.getId().equalsIgnoreCase("A5-5")) {
                             for (Requirement req : allSUBDDObjs) {
-                                objectiveObj.getObjOutputs().getRequirements().add(req);
+                                ((Output) objectiveObj.getOutputs()).getRequirements().add(req);
                                 if (req.getLogs() != null) {
                                     for (ReviewLog log : req.getLogs()) {
-                                        objectiveObj.getObjOutputs().getLogs().add(log);
+                                        ((Output) objectiveObj.getOutputs()).getLogs().add(log);
                                     }
                                 }
                             }
                             for (SwComponent swComp : allSwCompObjs) {
-                                objectiveObj.getObjOutputs().getSwComponents().add(swComp);
+                                ((Output) objectiveObj.getOutputs()).getSwComponents().add(swComp);
                             }
                         }
 
                         // Attach SBVT and logs to A7-1
                         if (objectiveObj.getId().equalsIgnoreCase("A7-1")) {
                             for (Test tst : allSBVTObjs) {
-                                objectiveObj.getObjOutputs().getTests().add(tst);
+                                ((Output) objectiveObj.getOutputs()).getTests().add(tst);
                                 if (tst.getLogs() != null) {
                                     for (ReviewLog log : tst.getLogs()) {
-                                        objectiveObj.getObjOutputs().getLogs().add(log);
+                                        ((Output) objectiveObj.getOutputs()).getLogs().add(log);
                                     }
                                 }
                             }
@@ -835,17 +840,20 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                         // Attach SRS and relevant SBVT to A7-3
                         if (objectiveObj.getId().equalsIgnoreCase("A7-3")) {
                             for (Requirement req : allSRSObjs) {
-                                objectiveObj.getObjOutputs().getRequirements().add(req);
+                                ((Output) objectiveObj.getOutputs()).getRequirements().add(req);
                                 if (req.getTests() != null) {
                                     for (Test tst : req.getTests()) {
                                         // check if the test was already added from another
                                         // requirement
                                         Integer existingIndex =
                                                 LogicUtils.alreadyCreatedTest(
-                                                        objectiveObj.getObjOutputs().getTests(),
+                                                        ((Output) objectiveObj.getOutputs())
+                                                                .getTests(),
                                                         tst.getId());
                                         if (existingIndex == null) {
-                                            objectiveObj.getObjOutputs().getTests().add(tst);
+                                            ((Output) objectiveObj.getOutputs())
+                                                    .getTests()
+                                                    .add(tst);
                                         }
                                     }
                                 }
@@ -854,17 +862,20 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                         // Attach SubDD and relevant SBVT to A7-4
                         if (objectiveObj.getId().equalsIgnoreCase("A7-4")) {
                             for (Requirement req : allSUBDDObjs) {
-                                objectiveObj.getObjOutputs().getRequirements().add(req);
+                                ((Output) objectiveObj.getOutputs()).getRequirements().add(req);
                                 if (req.getTests() != null) {
                                     for (Test tst : req.getTests()) {
                                         // check if the test was already added from another
                                         // requirement
                                         Integer existingIndex =
                                                 LogicUtils.alreadyCreatedTest(
-                                                        objectiveObj.getObjOutputs().getTests(),
+                                                        ((Output) objectiveObj.getOutputs())
+                                                                .getTests(),
                                                         tst.getId());
                                         if (existingIndex == null) {
-                                            objectiveObj.getObjOutputs().getTests().add(tst);
+                                            ((Output) objectiveObj.getOutputs())
+                                                    .getTests()
+                                                    .add(tst);
                                         }
                                     }
                                 }
@@ -941,7 +952,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
                 if (indexofExistingTable == null) { // not yet created
                     // create a new table object, add its id
-                    PsacNode.Table newTableObj = new PsacNode().new Table();
+                    PlanTable<Objective> newTableObj = new PlanTable<Objective>();
                     newTableObj.setId(tableId);
                     newTableObj.setDescription(row[tableDescCol]);
 
@@ -956,7 +967,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
                         if (indexofExistingObjective == null) { // not yet created
                             // create a new objective obect, add its id
-                            PsacNode.Objective newObjectiveObj = new PsacNode().new Objective();
+                            Objective newObjectiveObj = new Objective();
                             newObjectiveObj.setId(objectiveId);
                             newObjectiveObj.setDescription(row[objectiveDescCol]);
 
@@ -972,8 +983,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
                                 if (indexofExistingActivity == null) { // not yet created
                                     // Create a new activity object
-                                    PsacNode.Activity newActivityObj =
-                                            new PsacNode().new Activity();
+                                    Activity newActivityObj = new Activity();
                                     newActivityObj.setId(activityId);
                                     newActivityObj.setDescription(row[activityDescCol]);
 
@@ -989,8 +999,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
                                         if (indexOfExistingPerforms == null) { // not yet created
                                             // Create a new activity object for the performs
-                                            PsacNode.Activity newPerformsObj =
-                                                    new PsacNode().new Activity();
+                                            Activity newPerformsObj = new Activity();
                                             newPerformsObj.setId(
                                                     performsId.replace("Activity-", ""));
                                             newPerformsObj.setDescription(row[performsDescCol]);
@@ -1021,8 +1030,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
                                         if (indexOfExistingPerforms == null) { // not yet created
                                             // Create a new activity object for the performs
-                                            PsacNode.Activity newPerformsObj =
-                                                    new PsacNode().new Activity();
+                                            Activity newPerformsObj = new Activity();
                                             newPerformsObj.setId(
                                                     performsId.replace("Activity-", ""));
                                             newPerformsObj.setDescription(row[performsDescCol]);
@@ -1047,16 +1055,17 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
                                 Integer indexofExistingActivity =
                                         PsacNodeUtils.alreadyCreatedActivity(
-                                                newTableObj
-                                                        .getTabObjectives()
-                                                        .get(indexofExistingObjective)
+                                                ((Objective)
+                                                                newTableObj
+                                                                        .getTabObjectives()
+                                                                        .get(
+                                                                                indexofExistingObjective))
                                                         .getObjActivities(),
                                                 activityId);
 
                                 if (indexofExistingActivity == null) { // not yet created
                                     // Create a new activity object
-                                    PsacNode.Activity newActivityObj =
-                                            new PsacNode().new Activity();
+                                    Activity newActivityObj = new Activity();
                                     newActivityObj.setId(activityId);
                                     newActivityObj.setDescription(row[activityDescCol]);
 
@@ -1072,8 +1081,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
                                         if (indexOfExistingPerforms == null) { // not yet created
                                             // Create a new activity object for the performs
-                                            PsacNode.Activity newPerformsObj =
-                                                    new PsacNode().new Activity();
+                                            Activity newPerformsObj = new Activity();
                                             newPerformsObj.setId(
                                                     performsId.replace("Activity-", ""));
                                             newPerformsObj.setDescription(row[performsDescCol]);
@@ -1085,9 +1093,10 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
                                     // add the activity object to the objective objects list of
                                     // activities
-                                    newTableObj
-                                            .getTabObjectives()
-                                            .get(indexofExistingObjective)
+                                    ((Objective)
+                                                    newTableObj
+                                                            .getTabObjectives()
+                                                            .get(indexofExistingObjective))
                                             .getObjActivities()
                                             .add(newActivityObj);
                                 } else {
@@ -1099,9 +1108,11 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
                                         Integer indexOfExistingPerforms =
                                                 PsacNodeUtils.alreadyCreatedActivity(
-                                                        newTableObj
-                                                                .getTabObjectives()
-                                                                .get(indexofExistingObjective)
+                                                        ((Objective)
+                                                                        newTableObj
+                                                                                .getTabObjectives()
+                                                                                .get(
+                                                                                        indexofExistingObjective))
                                                                 .getObjActivities()
                                                                 .get(indexofExistingActivity)
                                                                 .getPerforms(),
@@ -1109,16 +1120,16 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
                                         if (indexOfExistingPerforms == null) { // not yet created
                                             // Create a new activity object for the performs
-                                            PsacNode.Activity newPerformsObj =
-                                                    new PsacNode().new Activity();
+                                            Activity newPerformsObj = new Activity();
                                             newPerformsObj.setId(
                                                     performsId.replace("Activity-", ""));
                                             newPerformsObj.setDescription(row[performsDescCol]);
 
                                             // add to activity
-                                            newTableObj
-                                                    .getTabObjectives()
-                                                    .get(indexofExistingObjective)
+                                            ((Objective)
+                                                            newTableObj
+                                                                    .getTabObjectives()
+                                                                    .get(indexofExistingObjective))
                                                     .getObjActivities()
                                                     .get(indexofExistingActivity)
                                                     .getPerforms()
@@ -1146,7 +1157,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
                         if (indexofExistingObjective == null) { // not yet created
                             // create a new objective obect, add its id
-                            PsacNode.Objective newObjectiveObj = new PsacNode().new Objective();
+                            Objective newObjectiveObj = new Objective();
                             newObjectiveObj.setId(objectiveId);
                             newObjectiveObj.setDescription(row[objectiveDescCol]);
 
@@ -1162,8 +1173,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
                                 if (indexofExistingActivity == null) { // not yet created
                                     // Create a new activity object
-                                    PsacNode.Activity newActivityObj =
-                                            new PsacNode().new Activity();
+                                    Activity newActivityObj = new Activity();
                                     newActivityObj.setId(activityId);
                                     newActivityObj.setDescription(row[activityDescCol]);
 
@@ -1179,8 +1189,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
                                         if (indexOfExistingPerforms == null) { // not yet created
                                             // Create a new activity object for the performs
-                                            PsacNode.Activity newPerformsObj =
-                                                    new PsacNode().new Activity();
+                                            Activity newPerformsObj = new Activity();
                                             newPerformsObj.setId(
                                                     performsId.replace("Activity-", ""));
                                             newPerformsObj.setDescription(row[performsDescCol]);
@@ -1202,10 +1211,12 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
                                         Integer indexOfExistingPerforms =
                                                 PsacNodeUtils.alreadyCreatedActivity(
-                                                        psacNode.getReportTables()
-                                                                .get(indexofExistingTable)
-                                                                .getTabObjectives()
-                                                                .get(indexofExistingObjective)
+                                                        ((Objective)
+                                                                        psacNode.getReportTables()
+                                                                                .get(
+                                                                                        indexofExistingTable)
+                                                                                .getTabObjectives()
+                                                                                .get(indexofExistingObjective))
                                                                 .getObjActivities()
                                                                 .get(indexofExistingActivity)
                                                                 .getPerforms(),
@@ -1213,17 +1224,17 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
                                         if (indexOfExistingPerforms == null) { // not yet created
                                             // Create a new activity object for the performs
-                                            PsacNode.Activity newPerformsObj =
-                                                    new PsacNode().new Activity();
+                                            Activity newPerformsObj = new Activity();
                                             newPerformsObj.setId(
                                                     performsId.replace("Activity-", ""));
                                             newPerformsObj.setDescription(row[performsDescCol]);
 
                                             // add to activity
-                                            psacNode.getReportTables()
-                                                    .get(indexofExistingTable)
-                                                    .getTabObjectives()
-                                                    .get(indexofExistingObjective)
+                                            ((Objective)
+                                                            psacNode.getReportTables()
+                                                                    .get(indexofExistingTable)
+                                                                    .getTabObjectives()
+                                                                    .get(indexofExistingObjective))
                                                     .getObjActivities()
                                                     .get(indexofExistingActivity)
                                                     .getPerforms()
@@ -1245,17 +1256,18 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
                                 Integer indexofExistingActivity =
                                         PsacNodeUtils.alreadyCreatedActivity(
-                                                psacNode.getReportTables()
-                                                        .get(indexofExistingTable)
-                                                        .getTabObjectives()
-                                                        .get(indexofExistingObjective)
+                                                ((Objective)
+                                                                psacNode.getReportTables()
+                                                                        .get(indexofExistingTable)
+                                                                        .getTabObjectives()
+                                                                        .get(
+                                                                                indexofExistingObjective))
                                                         .getObjActivities(),
                                                 activityId);
 
                                 if (indexofExistingActivity == null) { // not yet created
                                     // Create a new activity object
-                                    PsacNode.Activity newActivityObj =
-                                            new PsacNode().new Activity();
+                                    Activity newActivityObj = new Activity();
                                     newActivityObj.setId(activityId);
                                     newActivityObj.setDescription(row[activityDescCol]);
 
@@ -1271,8 +1283,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
                                         if (indexOfExistingPerforms == null) { // not yet created
                                             // Create a new activity object for the performs
-                                            PsacNode.Activity newPerformsObj =
-                                                    new PsacNode().new Activity();
+                                            Activity newPerformsObj = new Activity();
                                             newPerformsObj.setId(
                                                     performsId.replace("Activity-", ""));
                                             newPerformsObj.setDescription(row[performsDescCol]);
@@ -1284,10 +1295,11 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
                                     // add the activity object to the objective objects list of
                                     // activities
-                                    psacNode.getReportTables()
-                                            .get(indexofExistingTable)
-                                            .getTabObjectives()
-                                            .get(indexofExistingObjective)
+                                    ((Objective)
+                                                    psacNode.getReportTables()
+                                                            .get(indexofExistingTable)
+                                                            .getTabObjectives()
+                                                            .get(indexofExistingObjective))
                                             .getObjActivities()
                                             .add(newActivityObj);
                                 } else {
@@ -1299,10 +1311,13 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
                                         Integer indexOfExistingPerforms =
                                                 PsacNodeUtils.alreadyCreatedActivity(
-                                                        psacNode.getReportTables()
-                                                                .get(indexofExistingTable)
-                                                                .getTabObjectives()
-                                                                .get(indexofExistingObjective)
+                                                        ((Objective)
+                                                                        psacNode.getReportTables()
+                                                                                .get(
+                                                                                        indexofExistingTable)
+                                                                                .getTabObjectives()
+                                                                                .get(
+                                                                                        indexofExistingObjective))
                                                                 .getObjActivities()
                                                                 .get(indexofExistingActivity)
                                                                 .getPerforms(),
@@ -1310,17 +1325,17 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
                                         if (indexOfExistingPerforms == null) { // not yet created
                                             // Create a new activity object for the performs
-                                            PsacNode.Activity newPerformsObj =
-                                                    new PsacNode().new Activity();
+                                            Activity newPerformsObj = new Activity();
                                             newPerformsObj.setId(
                                                     performsId.replace("Activity-", ""));
                                             newPerformsObj.setDescription(row[performsDescCol]);
 
                                             // add to activity
-                                            psacNode.getReportTables()
-                                                    .get(indexofExistingTable)
-                                                    .getTabObjectives()
-                                                    .get(indexofExistingObjective)
+                                            ((Objective)
+                                                            psacNode.getReportTables()
+                                                                    .get(indexofExistingTable)
+                                                                    .getTabObjectives()
+                                                                    .get(indexofExistingObjective))
                                                     .getObjActivities()
                                                     .get(indexofExistingActivity)
                                                     .getPerforms()
@@ -1683,7 +1698,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                 CustomStringUtils.getCSVColumnIndex(subddtToSrdCols, "identifier_subdd_req");
         int srsIdCol = CustomStringUtils.getCSVColumnIndex(subddtToSrdCols, "identifier_srs_req");
 
-        int counter = 1;
+        //int counter = 1;
 
         for (String[] row : allSUBDD) {
             if (row[subddIdCol] != null) {
@@ -1716,7 +1731,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                     if ((row2.length > subddIdCol2) && (row2.length > srsIdCol)) {
                         //        				System.out.println("Finding object for " + row2[srsIdCol] + "
                         // iteration number: " + counter);
-                        counter++;
+                        //counter++;
 
                         if (row2[subddIdCol2].equals(row[subddIdCol])) { // if relevant to the req
 
@@ -1761,8 +1776,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         int reqCol =
                 CustomStringUtils.getCSVColumnIndex(swcomponentToReqCols, "identifier_requirement");
 
-        int counter = 1;
-
+        //int counter = 1;
         for (String[] row : allSWCOMPS) {
             if (row[swcompIdCol] != null
                     && (LogicUtils.findSwCompObjById(allSwCompObjs, row[swcompIdCol])
@@ -1781,7 +1795,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                     if ((row2.length > swcompIdCol) && (row2.length > reqCol)) {
                         //                         System.out.println("Finding wasimpactedby for " +
                         // row2[swcompIdCol] + "iteration number: " + counter);
-                        counter++;
+                        //counter++;
 
                         if (row2[swcompIdCol].equals(
                                 row[swcompIdCol])) { // if relevant to the swComp in question
@@ -2062,7 +2076,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         // Get the PSAC data from RACK
         PsacNode psacNode = getPsacFromRack();
 
-        //        PsacNodeUtils.printPsacNode(psacNode);
+        // PsacNodeUtils.printPsacNode(psacNode);
 
         // Attach the relevant outputs to the PSAC objectives for analysis
         PsacNode psacNodeWithOutputs = attachOutputsToObjectives(psacNode);

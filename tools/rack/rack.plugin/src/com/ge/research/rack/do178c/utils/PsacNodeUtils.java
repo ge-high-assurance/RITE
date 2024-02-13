@@ -31,6 +31,10 @@
  */
 package com.ge.research.rack.do178c.utils;
 
+import com.ge.research.rack.analysis.structures.PlanObjective;
+import com.ge.research.rack.analysis.structures.PlanTable;
+import com.ge.research.rack.do178c.structures.Activity;
+import com.ge.research.rack.do178c.structures.Objective;
 import com.ge.research.rack.do178c.structures.PsacNode;
 
 import java.util.List;
@@ -47,7 +51,7 @@ public class PsacNodeUtils {
      * @param tableId
      * @return
      */
-    public static Integer alreadyCreatedTable(List<PsacNode.Table> tableList, String tableId) {
+    public static Integer alreadyCreatedTable(List<PlanTable<Objective>> tableList, String tableId) {
 
         if (tableList.size() > 0) {
             for (int i = 0; i < tableList.size(); i++) {
@@ -69,7 +73,7 @@ public class PsacNodeUtils {
      * @return
      */
     public static Integer alreadyCreatedObjective(
-            List<PsacNode.Objective> objectiveList, String objectiveId) {
+            List<Objective> objectiveList, String objectiveId) {
 
         if (objectiveList.size() > 0) {
             for (int i = 0; i < objectiveList.size(); i++) {
@@ -90,8 +94,7 @@ public class PsacNodeUtils {
      * @param activityId
      * @return
      */
-    public static Integer alreadyCreatedActivity(
-            List<PsacNode.Activity> activityList, String activityId) {
+    public static Integer alreadyCreatedActivity(List<Activity> activityList, String activityId) {
 
         if (activityList.size() > 0) {
             for (int i = 0; i < activityList.size(); i++) {
@@ -113,22 +116,22 @@ public class PsacNodeUtils {
     public static void printPsacNode(PsacNode node) {
 
         if (node.getReportTables().size() > 0) {
-            for (PsacNode.Table table : node.getReportTables()) {
+            for (PlanTable<Objective> table : node.getReportTables()) {
 
                 System.out.println("- " + table.getId());
 
                 if (table.getTabObjectives().size() > 0) {
-                    for (PsacNode.Objective objective : table.getTabObjectives()) {
+                    for (PlanObjective objective : table.getTabObjectives()) {
 
                         System.out.println("-- " + objective.getId());
 
-                        if (objective.getObjActivities().size() > 0) {
-                            for (PsacNode.Activity activity : objective.getObjActivities()) {
+                        if (((Objective) objective).getObjActivities().size() > 0) {
+                            for (Activity activity : ((Objective) objective).getObjActivities()) {
 
                                 System.out.println("--- " + activity.getId());
 
                                 if (activity.getPerforms().size() > 0) {
-                                    for (PsacNode.Activity performs : activity.getPerforms()) {
+                                    for (Activity performs : activity.getPerforms()) {
                                         System.out.println("---- " + performs.getId());
                                     }
                                 }
@@ -147,9 +150,9 @@ public class PsacNodeUtils {
      * @param tableId
      * @return
      */
-    public static PsacNode.Table getTableById(PsacNode reportData, String tableId) {
+    public static PlanTable<Objective> getTableById(PsacNode reportData, String tableId) {
 
-        for (PsacNode.Table tabObj : reportData.getReportTables()) {
+        for (PlanTable<Objective> tabObj : reportData.getReportTables()) {
             if (tabObj.getId().equalsIgnoreCase(tableId)) {
                 return tabObj;
             }
@@ -166,15 +169,14 @@ public class PsacNodeUtils {
      * @param objId
      * @return
      */
-    public static PsacNode.Objective getObjectiveById(
-            PsacNode reportData, String tableId, String objId) {
+    public static Objective getObjectiveById(PsacNode reportData, String tableId, String objId) {
         if (reportData.getReportTables() != null) {
-            for (PsacNode.Table tabObj : reportData.getReportTables()) {
+            for (PlanTable<Objective> tabObj : reportData.getReportTables()) {
                 if (tabObj.getId().equalsIgnoreCase(tableId)) {
                     if (tabObj.getTabObjectives() != null) {
-                        for (PsacNode.Objective objObj : tabObj.getTabObjectives()) {
+                        for (PlanObjective objObj : tabObj.getTabObjectives()) {
                             if (objObj.getId().equalsIgnoreCase(objId)) {
-                                return objObj;
+                                return (Objective) objObj;
                             }
                         }
                     }
@@ -194,16 +196,17 @@ public class PsacNodeUtils {
      * @param actId
      * @return
      */
-    public static PsacNode.Activity getActivityById(
+    public static Activity getActivityById(
             PsacNode reportData, String tableId, String objId, String actId) {
         if (reportData.getReportTables() != null) {
-            for (PsacNode.Table tabObj : reportData.getReportTables()) {
+            for (PlanTable<Objective> tabObj : reportData.getReportTables()) {
                 if (tabObj.getId().equalsIgnoreCase(tableId)) {
                     if (tabObj.getTabObjectives() != null) {
-                        for (PsacNode.Objective objObj : tabObj.getTabObjectives()) {
+                        for (PlanObjective objObj : tabObj.getTabObjectives()) {
                             if (objObj.getId().equalsIgnoreCase(objId)) {
-                                if (objObj.getObjActivities() != null) {
-                                    for (PsacNode.Activity actObj : objObj.getObjActivities()) {
+                                if (((Objective) objObj).getObjActivities() != null) {
+                                    for (Activity actObj :
+                                            ((Objective) objObj).getObjActivities()) {
                                         if (actObj.getId().equalsIgnoreCase(actId)) {
                                             return actObj;
                                         }
@@ -226,10 +229,10 @@ public class PsacNodeUtils {
      * @param actId
      * @return
      */
-    public static PsacNode.Activity getActivityById(PsacNode.Objective objectiveObj, String actId) {
+    public static Activity getActivityById(Objective objectiveObj, String actId) {
 
         if (objectiveObj.getObjActivities().size() > 0) {
-            for (PsacNode.Activity actObj : objectiveObj.getObjActivities()) {
+            for (Activity actObj : objectiveObj.getObjActivities()) {
                 if (actObj.getId().equalsIgnoreCase(actId)) {
                     return actObj;
                 }

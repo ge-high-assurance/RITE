@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  * 
- * Copyright (c) 2023, General Electric Company and Galois, Inc.
+ * Copyright (c) 2024, General Electric Company and Galois, Inc.
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -29,24 +29,34 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.ge.research.rack.arp4754.logic;
+package com.ge.research.rack.analysis.handlers;
 
-import com.ge.research.rack.analysis.structures.PlanObjective;
-import com.ge.research.rack.analysis.structures.PlanTable;
+import javafx.fxml.FXML;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 
-/**
- * @author Saswata Paul
- */
-public class ComplianceProcess6 {
+public class TableViewHandler {
+    private String currentProcessId;
 
-    /**
-     * Computes the compliance status of the DAPlan.process object
-     *
-     * @param process
-     * @return
-     */
-    public static PlanTable<PlanObjective> computeProcess(PlanTable<PlanObjective> process) {
+    //    private PlanTable<PlanObjective> currentProcessObject;
 
-        return process;
-    }
+    // -------- FXML GUI variables below --------------
+    @FXML private Label headerLabel;
+
+    @FXML private Label labelProcessInfo;
+
+    @FXML private Button btnHome;
+    @FXML private Button btnFontInc;
+    @FXML private Button btnFontDec;
+
+    @FXML private ListView<Label> listObjectives;
+
+    @FXML private ComboBox comboFilter;
+
+    @FXML private BarChart<String, Integer> chartObjStatus;
+    @FXML private NumberAxis yAxisChartObjStatus;
 }

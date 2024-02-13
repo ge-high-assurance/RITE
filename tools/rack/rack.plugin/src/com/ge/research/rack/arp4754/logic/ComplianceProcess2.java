@@ -31,14 +31,17 @@
  */
 package com.ge.research.rack.arp4754.logic;
 
+import com.ge.research.rack.analysis.structures.PlanObjective;
+import com.ge.research.rack.analysis.structures.PlanTable;
 import com.ge.research.rack.arp4754.structures.Category;
-import com.ge.research.rack.arp4754.structures.DAPlan;
 import com.ge.research.rack.arp4754.structures.Evidence;
+import com.ge.research.rack.arp4754.structures.Output;
+import com.ge.research.rack.arp4754.structures.Graph;
 import com.ge.research.rack.arp4754.utils.ComplianceUtils;
 
 public class ComplianceProcess2 {
 
-    private static DAPlan.Objective computeObjective1(DAPlan.Objective objective) {
+    private static PlanObjective computeObjective1(PlanObjective objective) {
 
         return objective;
     }
@@ -57,13 +60,13 @@ public class ComplianceProcess2 {
      * @param objective
      * @return
      */
-    private static DAPlan.Objective computeObjective2(DAPlan.Objective objective) {
+    private static PlanObjective computeObjective2(PlanObjective objective) {
 
         int numSysReqsWithInterface = 0;
 
-        if (objective.getOutputs().getSysReqObjs() != null
-                && objective.getOutputs().getSysReqObjs().size() > 0) {
-            for (Evidence sysReq : objective.getOutputs().getSysReqObjs()) {
+        if (((Output)objective.getOutputs()).getSysReqObjs() != null
+                && ((Output)objective.getOutputs()).getSysReqObjs().size() > 0) {
+            for (Evidence sysReq : ((Output)objective.getOutputs()).getSysReqObjs()) {
                 System.out.println("-------- " + sysReq.getId());
                 if (sysReq.getAllocatedTo() != null && sysReq.getAllocatedTo().size() > 0) {
                     for (Evidence system : sysReq.getAllocatedTo()) {
@@ -84,11 +87,11 @@ public class ComplianceProcess2 {
             if (numSysReqsWithInterface > 0.0) {
                 objective.setComplianceStatus(
                         (double) numSysReqsWithInterface
-                                / objective.getOutputs().getSysReqObjs().size()
+                                / ((Output)objective.getOutputs()).getSysReqObjs().size()
                                 * 100.00);
             }
-            if (numSysReqsWithInterface == objective.getOutputs().getSysReqObjs().size()
-                    && objective.getOutputs().getSysReqObjs().size() > 0) {
+            if (numSysReqsWithInterface == ((Output)objective.getOutputs()).getSysReqObjs().size()
+                    && ((Output)objective.getOutputs()).getSysReqObjs().size() > 0) {
                 objective.setNoData(false);
                 objective.setPartialData(false);
                 objective.setPassed(true);
@@ -100,10 +103,10 @@ public class ComplianceProcess2 {
             Category sysReqWithoutInterface =
                     new Category(
                             "No Interface",
-                            (objective.getOutputs().getSysReqObjs().size()
+                            (((Output)objective.getOutputs()).getSysReqObjs().size()
                                     - numSysReqsWithInterface));
-            objective.getGraphs().getSysReqGraphData().getBuckets().add(sysyReqWithInterface);
-            objective.getGraphs().getSysReqGraphData().getBuckets().add(sysReqWithoutInterface);
+            ((Graph)objective.getGraphs()).getSysReqGraphData().getBuckets().add(sysyReqWithInterface);
+            ((Graph)objective.getGraphs()).getSysReqGraphData().getBuckets().add(sysReqWithoutInterface);
 
         } else {
             objective.setNoData(true);
@@ -113,16 +116,16 @@ public class ComplianceProcess2 {
 
         // --- Extra graphData (TODO: Find more context to make meaningful extra graphs)
         int numSystemsWithInterface = 0;
-        for (Evidence system : objective.getOutputs().getSystemObjs()) {
+        for (Evidence system : ((Output)objective.getOutputs()).getSystemObjs()) {
             if (system.getHasInterfaces().size() > 0) {
                 numSystemsWithInterface++;
             }
         }
         Category systemWithInterface = new Category("Has Interface", numSystemsWithInterface);
-        objective.getGraphs().getSystemGraphData().getBuckets().add(systemWithInterface);
+        ((Graph)objective.getGraphs()).getSystemGraphData().getBuckets().add(systemWithInterface);
         int numInterfaceWithInput = 0;
         int numInterfaceWithOutput = 0;
-        for (Evidence intrface : objective.getOutputs().getInterfaceObjs()) {
+        for (Evidence intrface : ((Output)objective.getOutputs()).getInterfaceObjs()) {
             if (intrface.getHasInputs().size() > 0) {
                 numInterfaceWithInput++;
             }
@@ -132,14 +135,14 @@ public class ComplianceProcess2 {
         }
         Category intrfaceWithInput = new Category("Has Input", numInterfaceWithInput);
         Category intrfaceWithOutput = new Category("Has Output", numInterfaceWithOutput);
-        objective.getGraphs().getInterfaceGraphData().getBuckets().add(intrfaceWithInput);
-        objective.getGraphs().getInterfaceGraphData().getBuckets().add(intrfaceWithOutput);
+        ((Graph)objective.getGraphs()).getInterfaceGraphData().getBuckets().add(intrfaceWithInput);
+        ((Graph)objective.getGraphs()).getInterfaceGraphData().getBuckets().add(intrfaceWithOutput);
 
         objective.setMetrics("");
         return objective;
     }
 
-    private static DAPlan.Objective computeObjective3(DAPlan.Objective objective) {
+    private static PlanObjective computeObjective3(PlanObjective objective) {
 
         return objective;
     }
@@ -153,11 +156,11 @@ public class ComplianceProcess2 {
      * @param objective
      * @return
      */
-    private static DAPlan.Objective computeObjective4(DAPlan.Objective objective) {
+    private static PlanObjective computeObjective4(PlanObjective objective) {
 
-        if (objective.getOutputs().getDerSysReqObjs() != null
-                && objective.getOutputs().getDerSysReqObjs().size() > 0) {
-            if (objective.getOutputs().getDerSysReqObjs().size() > 0) {
+        if (((Output)objective.getOutputs()).getDerSysReqObjs() != null
+                && ((Output)objective.getOutputs()).getDerSysReqObjs().size() > 0) {
+            if (((Output)objective.getOutputs()).getDerSysReqObjs().size() > 0) {
                 objective.setComplianceStatus(100.0);
                 objective.setNoData(false);
                 objective.setPartialData(false);
@@ -173,11 +176,11 @@ public class ComplianceProcess2 {
         return objective;
     }
 
-    private static DAPlan.Objective computeObjective5(DAPlan.Objective objective) {
+    private static PlanObjective computeObjective5(PlanObjective objective) {
 
-        if (objective.getOutputs().getSystemDesignDescriptionObjs() != null
-                && objective.getOutputs().getSystemDesignDescriptionObjs().size() > 0) {
-            for (Evidence sysDesDesc : objective.getOutputs().getSystemDesignDescriptionObjs()) {
+        if (((Output)objective.getOutputs()).getSystemDesignDescriptionObjs() != null
+                && ((Output)objective.getOutputs()).getSystemDesignDescriptionObjs().size() > 0) {
+            for (Evidence sysDesDesc : ((Output)objective.getOutputs()).getSystemDesignDescriptionObjs()) {
                 System.out.println(sysDesDesc.getId() + " " + sysDesDesc.getURL());
             }
             objective.setNoData(false);
@@ -204,15 +207,15 @@ public class ComplianceProcess2 {
      * @param objective
      * @return
      */
-    private static DAPlan.Objective computeObjective6(DAPlan.Objective objective) {
+    private static PlanObjective computeObjective6(PlanObjective objective) {
 
         int numItemReqsWithTrace = 0;
         int numItemReqsWithAllocation = 0;
         int numItemReqsWithTraceAndAllocation = 0;
 
-        if (objective.getOutputs().getItemReqObjs() != null
-                && objective.getOutputs().getItemReqObjs().size() > 0) {
-            for (Evidence itemReq : objective.getOutputs().getItemReqObjs()) {
+        if (((Output)objective.getOutputs()).getItemReqObjs() != null
+                && ((Output)objective.getOutputs()).getItemReqObjs().size() > 0) {
+            for (Evidence itemReq : ((Output)objective.getOutputs()).getItemReqObjs()) {
                 boolean trace = false;
                 boolean allocation = false;
                 if (itemReq.getTracesUp().size() > 0) {
@@ -233,12 +236,12 @@ public class ComplianceProcess2 {
             Category withAllocation = new Category("Has Allocation", numItemReqsWithAllocation);
             Category withTraceAndAllocation =
                     new Category("Has Both", numItemReqsWithTraceAndAllocation);
-            objective.getGraphs().getItemReqGraphData().getBuckets().add(withTrace);
-            objective.getGraphs().getItemReqGraphData().getBuckets().add(withAllocation);
-            objective.getGraphs().getItemReqGraphData().getBuckets().add(withTraceAndAllocation);
+            ((Graph)objective.getGraphs()).getItemReqGraphData().getBuckets().add(withTrace);
+            ((Graph)objective.getGraphs()).getItemReqGraphData().getBuckets().add(withAllocation);
+            ((Graph)objective.getGraphs()).getItemReqGraphData().getBuckets().add(withTraceAndAllocation);
 
             if (numItemReqsWithTraceAndAllocation
-                    == objective.getOutputs().getItemReqObjs().size()) {
+                    == ((Output)objective.getOutputs()).getItemReqObjs().size()) {
                 objective.setNoData(false);
                 objective.setPartialData(false);
                 objective.setPassed(true);
@@ -250,7 +253,7 @@ public class ComplianceProcess2 {
             if (numItemReqsWithTraceAndAllocation > 0.0) {
                 objective.setComplianceStatus(
                         (double) numItemReqsWithTraceAndAllocation
-                                / objective.getOutputs().getItemReqObjs().size()
+                                / ((Output)objective.getOutputs()).getItemReqObjs().size()
                                 * 100.00);
             }
         } else {
@@ -263,7 +266,7 @@ public class ComplianceProcess2 {
         return objective;
     }
 
-    private static DAPlan.Objective computeObjective7(DAPlan.Objective objective) {
+    private static PlanObjective computeObjective7(PlanObjective objective) {
 
         return objective;
     }
@@ -274,17 +277,17 @@ public class ComplianceProcess2 {
      * @param process
      * @return
      */
-    public static DAPlan.Process computeProcess(DAPlan.Process process) {
+    public static PlanTable<PlanObjective> computeProcess(PlanTable<PlanObjective> process) {
 
         int numPassed = 0;
         int numNoData = 0;
         int numPartialData = 0;
 
-        for (int i = 0; i < process.getObjectives().size(); i++) {
+        for (int i = 0; i < process.getTabObjectives().size(); i++) {
 
-            DAPlan.Objective objective = process.getObjectives().get(i);
+            PlanObjective objective = process.getTabObjectives().get(i);
 
-            DAPlan.Objective updatedObjective = new DAPlan().new Objective();
+            PlanObjective updatedObjective = new PlanObjective();
 
             switch (objective.getId()) {
                 case "Objective-2-1":
@@ -341,13 +344,13 @@ public class ComplianceProcess2 {
                             + updatedObjective.isPassed());
 
             // replace old objective node with new node
-            process.getObjectives().set(i, updatedObjective);
+            process.getTabObjectives().set(i, updatedObjective);
         }
 
         // add metrics to process
-        process.setNumObjectivesNoData(numNoData);
-        process.setNumObjectivesPartialData(numPartialData);
-        process.setNumObjectivesPassed(numPassed);
+        process.setNumObjNoData(numNoData);
+        process.setNumObjPartial(numPartialData);
+        process.setNumObjPassed(numPassed);
 
         // set process status metrics
         process = ComplianceUtils.getProcessStatus(process);

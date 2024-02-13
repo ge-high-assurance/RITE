@@ -31,8 +31,10 @@
  */
 package com.ge.research.rack.do178c.viewHandlers;
 
+import com.ge.research.rack.analysis.structures.PlanObjective;
+import com.ge.research.rack.analysis.structures.PlanTable;
 import com.ge.research.rack.analysis.utils.CustomStringUtils;
-import com.ge.research.rack.do178c.structures.PsacNode;
+import com.ge.research.rack.do178c.structures.Objective;
 import com.ge.research.rack.do178c.utils.PsacNodeUtils;
 import com.ge.research.rack.do178c.utils.ReportViewUtils;
 import com.ge.research.rack.do178c.viewManagers.ReportViewsManager;
@@ -62,7 +64,7 @@ public class ReportTableViewHandlerNew {
 
     private String currentTableId;
 
-    private PsacNode.Table currentTableObject;
+    private PlanTable<Objective> currentTableObject;
 
     // -------- FXML GUI variables below --------------
     @FXML private Label headerLabel;
@@ -88,13 +90,13 @@ public class ReportTableViewHandlerNew {
      * @param objObj
      * @return
      */
-    public Label getObjectiveLabel(PsacNode.Objective objObj) {
+    public Label getObjectiveLabel(PlanObjective objObj) {
 
         double passPercent =
-                ((double) objObj.getNumActPassed()
-                                / (objObj.getNumActPassed()
-                                        + objObj.getNumActFailed()
-                                        + objObj.getNumActNoData()))
+                ((double) objObj.getNumPassed()
+                                / (objObj.getNumPassed()
+                                        + objObj.getNumFailed()
+                                        + objObj.getNumNoData()))
                         * 100.00;
 
         Label objLabel = new Label();
@@ -107,7 +109,7 @@ public class ReportTableViewHandlerNew {
                         + " ("
                         + objObj.getMetrics()
                         + ")");
-        objLabel.setTextFill(ReportViewUtils.getObjectiveColor(objObj));
+        objLabel.setTextFill(ReportViewUtils.getObjectiveColor((Objective) objObj));
         return objLabel;
     }
 
@@ -123,7 +125,7 @@ public class ReportTableViewHandlerNew {
         if ((currentTableObject.getTabObjectives() != null)
                 && (currentTableObject.getTabObjectives().size() > 0)) {
 
-            for (PsacNode.Objective objObj : currentTableObject.getTabObjectives()) {
+            for (PlanObjective objObj : currentTableObject.getTabObjectives()) {
                 //                Label objLabel = new Label();
                 //                objLabel.setStyle("-fx-font-weight: bold;");
                 //
@@ -134,23 +136,16 @@ public class ReportTableViewHandlerNew {
 
                 if (filterKey.equalsIgnoreCase("All")) {
                     listObjectives.getItems().add(objLabel);
-                } else if (filterKey.equalsIgnoreCase("Passed")
-                        && (objObj.getPassed() != null)
-                        && objObj.getPassed()) {
+                } else if (filterKey.equalsIgnoreCase("Passed") && objObj.isPassed()) {
                     listObjectives.getItems().add(objLabel);
                 } else if (filterKey.equalsIgnoreCase("Failed")
-                        && (objObj.getPassed() != null)
-                        && !objObj.getPassed()
-                        && !objObj.getNoData()
-                        && !objObj.getPartialData()) {
+                        && !objObj.isPassed()
+                        && !objObj.isNoData()
+                        && !objObj.isPartialData()) {
                     listObjectives.getItems().add(objLabel);
-                } else if (filterKey.equalsIgnoreCase("Partial")
-                        && (objObj.getPartialData() != null)
-                        && objObj.getPartialData()) {
+                } else if (filterKey.equalsIgnoreCase("Partial") && objObj.isPartialData()) {
                     listObjectives.getItems().add(objLabel);
-                } else if (filterKey.equalsIgnoreCase("No data")
-                        && (objObj.getNoData() != null)
-                        && objObj.getNoData()) {
+                } else if (filterKey.equalsIgnoreCase("No data") && objObj.isNoData()) {
                     listObjectives.getItems().add(objLabel);
                 }
             }
@@ -310,7 +305,7 @@ public class ReportTableViewHandlerNew {
             // switch to objective view only if the objective has some data
             if (!PsacNodeUtils.getObjectiveById(
                             ReportViewsManager.reportDataObj, currentTableId, selectedObjective)
-                    .getNoData()) {
+                    .isNoData()) {
                 // Set the stage with the other fxml
                 FXMLLoader objectiveViewLoader =
                         ReportViewsManager.setNewFxmlToStage(

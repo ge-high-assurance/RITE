@@ -31,7 +31,8 @@
  */
 package com.ge.research.rack.do178c.oem;
 
-import com.ge.research.rack.do178c.structures.PsacNode;
+import com.ge.research.rack.do178c.structures.Objective;
+import com.ge.research.rack.do178c.structures.Output;
 import com.ge.research.rack.do178c.utils.LogicUtils;
 
 /**
@@ -47,7 +48,7 @@ public class ComplianceTable4 {
      * @param objective
      * @return
      */
-    public static PsacNode.Objective processObjectiveA4_Common(PsacNode.Objective objective) {
+    public static Objective processObjectiveA4_Common(Objective objective) {
         /**
          * This objective will pass if 1. There are some associated SubDD_Req 2. all the associated
          * SubDD_Req in the output have review log
@@ -79,9 +80,9 @@ public class ComplianceTable4 {
         //            objective.setNoData(true);
         //        }
 
-        int numSubDD = objective.getObjOutputs().getRequirements().size();
+        int numSubDD = ((Output) objective.getOutputs()).getRequirements().size();
         int numSubDDWithLogs =
-                LogicUtils.getNumReqsWithLogs(objective.getObjOutputs().getRequirements());
+                LogicUtils.getNumReqsWithLogs(((Output) objective.getOutputs()).getRequirements());
         ;
 
         // TODO: decide no data case
@@ -113,7 +114,7 @@ public class ComplianceTable4 {
         }
 
         System.out.println(
-                "Objective " + objective.getId() + " has passed = " + objective.getPassed());
+                "Objective " + objective.getId() + " has passed = " + objective.isPassed());
 
         return objective;
     }

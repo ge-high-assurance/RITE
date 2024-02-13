@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  * 
- * Copyright (c) 2023, General Electric Company and Galois, Inc.
+ * Copyright (c) 2024, General Electric Company and Galois, Inc.
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -29,24 +29,6 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.ge.research.rack.arp4754.logic;
+package com.ge.research.rack.analysis.structures;
 
-import com.ge.research.rack.analysis.structures.PlanObjective;
-import com.ge.research.rack.analysis.structures.PlanTable;
-
-/**
- * @author Saswata Paul
- */
-public class ComplianceProcess6 {
-
-    /**
-     * Computes the compliance status of the DAPlan.process object
-     *
-     * @param process
-     * @return
-     */
-    public static PlanTable<PlanObjective> computeProcess(PlanTable<PlanObjective> process) {
-
-        return process;
-    }
-}
+public class PlanGraph {}

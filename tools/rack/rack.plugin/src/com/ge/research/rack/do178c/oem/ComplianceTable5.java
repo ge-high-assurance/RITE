@@ -31,7 +31,8 @@
  */
 package com.ge.research.rack.do178c.oem;
 
-import com.ge.research.rack.do178c.structures.PsacNode;
+import com.ge.research.rack.do178c.structures.Objective;
+import com.ge.research.rack.do178c.structures.Output;
 import com.ge.research.rack.do178c.structures.Requirement;
 import com.ge.research.rack.do178c.structures.SwComponent;
 
@@ -48,7 +49,7 @@ public class ComplianceTable5 {
      * @param objective
      * @return
      */
-    public static PsacNode.Objective processObjectiveA5_1_2_3_4(PsacNode.Objective objective) {
+    public static Objective processObjectiveA5_1_2_3_4(Objective objective) {
 
         objective.setPassed(false);
         objective.setPartialData(false);
@@ -56,21 +57,21 @@ public class ComplianceTable5 {
         objective.setMetrics("0.0% tests have review logs");
 
         System.out.println(
-                "Objective " + objective.getId() + " has passed = " + objective.getPassed());
+                "Objective " + objective.getId() + " has passed = " + objective.isPassed());
 
         return objective;
     }
 
-    public static PsacNode.Objective processObjectiveA5_5(PsacNode.Objective objective) {
+    public static Objective processObjectiveA5_5(Objective objective) {
         /**
          * This objective will pass if 1. There are some associated SwComponent 2. all the
          * associated SwComponents in the output have some SubDD requirement trace
          */
-        int numSwComp = objective.getObjOutputs().getSwComponents().size();
+        int numSwComp = ((Output) objective.getOutputs()).getSwComponents().size();
         int numSwCompWithSubDDTrace = 0;
         int numSwCompWithNoSubDDTrace = 0;
 
-        for (SwComponent swComp : objective.getObjOutputs().getSwComponents()) {
+        for (SwComponent swComp : ((Output) objective.getOutputs()).getSwComponents()) {
             if (swComp.getWasImpactedBy().size() < 1) { // no trace
                 numSwCompWithNoSubDDTrace = numSwCompWithNoSubDDTrace + 1;
             } else { // some trace
@@ -119,7 +120,7 @@ public class ComplianceTable5 {
         }
 
         System.out.println(
-                "Objective " + objective.getId() + " has passed = " + objective.getPassed());
+                "Objective " + objective.getId() + " has passed = " + objective.isPassed());
 
         return objective;
     }

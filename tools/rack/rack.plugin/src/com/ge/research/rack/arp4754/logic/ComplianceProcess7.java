@@ -31,7 +31,8 @@
  */
 package com.ge.research.rack.arp4754.logic;
 
-import com.ge.research.rack.arp4754.structures.DAPlan;
+import com.ge.research.rack.analysis.structures.PlanObjective;
+import com.ge.research.rack.analysis.structures.PlanTable;
 
 /**
  * @author Saswata Paul
@@ -44,7 +45,7 @@ public class ComplianceProcess7 {
      * @param process
      * @return
      */
-    public static DAPlan.Process computeProcess(DAPlan.Process process) {
+    public static PlanTable<PlanObjective> computeProcess(PlanTable<PlanObjective> process) {
 
         return process;
     }

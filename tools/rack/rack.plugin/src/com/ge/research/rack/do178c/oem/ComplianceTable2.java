@@ -31,7 +31,8 @@
  */
 package com.ge.research.rack.do178c.oem;
 
-import com.ge.research.rack.do178c.structures.PsacNode;
+import com.ge.research.rack.do178c.structures.Objective;
+import com.ge.research.rack.do178c.structures.Output;
 import com.ge.research.rack.do178c.utils.LogicUtils;
 
 /**
@@ -39,7 +40,7 @@ import com.ge.research.rack.do178c.utils.LogicUtils;
  */
 public class ComplianceTable2 {
 
-    public static PsacNode.Objective processObjectiveA2_1(PsacNode.Objective objective) {
+    public static Objective processObjectiveA2_1(Objective objective) {
         /**
          * This objective will pass if 1. There are some associated SRS_Req 2. all the associated
          * SRS_Req in the output have some trace
@@ -71,9 +72,9 @@ public class ComplianceTable2 {
         //            objective.setNoData(true);
         //        }
 
-        int numSRS = objective.getObjOutputs().getRequirements().size();
+        int numSRS = ((Output) objective.getOutputs()).getRequirements().size();
         int numSRSWithTrace =
-                LogicUtils.getNumReqsWithTrace(objective.getObjOutputs().getRequirements());
+                LogicUtils.getNumReqsWithTrace(((Output) objective.getOutputs()).getRequirements());
         ;
 
         // TODO: decide no data case
@@ -103,12 +104,12 @@ public class ComplianceTable2 {
         }
 
         System.out.println(
-                "Objective " + objective.getId() + " has passed = " + objective.getPassed());
+                "Objective " + objective.getId() + " has passed = " + objective.isPassed());
 
         return objective;
     }
 
-    public static PsacNode.Objective processObjectiveA2_2(PsacNode.Objective objective) {
+    public static Objective processObjectiveA2_2(Objective objective) {
         /**
          * This objective will pass if 1. There are some associated DerSRS_Req 2. No associated
          * DerSRS_Req in the output has a trace to some other req
@@ -148,9 +149,9 @@ public class ComplianceTable2 {
         //            objective.setNoData(false);
         //        }
 
-        int numDerSRS = objective.getObjOutputs().getRequirements().size();
+        int numDerSRS = ((Output) objective.getOutputs()).getRequirements().size();
         int numDerSRSWithTrace =
-                LogicUtils.getNumReqsWithTrace(objective.getObjOutputs().getRequirements());
+                LogicUtils.getNumReqsWithTrace(((Output) objective.getOutputs()).getRequirements());
         ;
 
         // TODO: decide no data case
@@ -176,12 +177,12 @@ public class ComplianceTable2 {
         }
 
         System.out.println(
-                "Objective " + objective.getId() + " has passed = " + objective.getPassed());
+                "Objective " + objective.getId() + " has passed = " + objective.isPassed());
 
         return objective;
     }
 
-    public static PsacNode.Objective processObjectiveA2_4(PsacNode.Objective objective) {
+    public static Objective processObjectiveA2_4(Objective objective) {
         /**
          * This objective will pass if 1. There are some associated SubDD_Req 2. all the associated
          * SubDD_Req in the output have some trace
@@ -213,9 +214,9 @@ public class ComplianceTable2 {
         //            objective.setNoData(true);
         //        }
 
-        int numSubDD = objective.getObjOutputs().getRequirements().size();
+        int numSubDD = ((Output) objective.getOutputs()).getRequirements().size();
         int numSubDDWithTrace =
-                LogicUtils.getNumReqsWithTrace(objective.getObjOutputs().getRequirements());
+                LogicUtils.getNumReqsWithTrace(((Output) objective.getOutputs()).getRequirements());
         ;
 
         // TODO: decide no data case
@@ -246,12 +247,12 @@ public class ComplianceTable2 {
         }
 
         System.out.println(
-                "Objective " + objective.getId() + " has passed = " + objective.getPassed());
+                "Objective " + objective.getId() + " has passed = " + objective.isPassed());
 
         return objective;
     }
 
-    public static PsacNode.Objective processObjectiveA2_5(PsacNode.Objective objective) {
+    public static Objective processObjectiveA2_5(Objective objective) {
         /**
          * This objective will pass if 1. There are some associated DerSubDD_Req 2. No associated
          * DerSubDD_Req in the output has a trace to some other req
@@ -291,9 +292,9 @@ public class ComplianceTable2 {
         //            objective.setNoData(false);
         //        }
 
-        int numDerSubDD = objective.getObjOutputs().getRequirements().size();
+        int numDerSubDD = ((Output) objective.getOutputs()).getRequirements().size();
         int numDerSubDDWithTrace =
-                LogicUtils.getNumReqsWithTrace(objective.getObjOutputs().getRequirements());
+                LogicUtils.getNumReqsWithTrace(((Output) objective.getOutputs()).getRequirements());
         ;
 
         // TODO: decide no data case
@@ -320,7 +321,7 @@ public class ComplianceTable2 {
         }
 
         System.out.println(
-                "Objective " + objective.getId() + " has passed = " + objective.getPassed());
+                "Objective " + objective.getId() + " has passed = " + objective.isPassed());
 
         return objective;
     }

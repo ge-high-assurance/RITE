@@ -31,7 +31,8 @@
  */
 package com.ge.research.rack.do178c.oem;
 
-import com.ge.research.rack.do178c.structures.PsacNode;
+import com.ge.research.rack.do178c.structures.Objective;
+import com.ge.research.rack.do178c.structures.Output;
 import com.ge.research.rack.do178c.utils.LogicUtils;
 
 /**
@@ -47,7 +48,7 @@ public class ComplianceTable3 {
      * @param objective
      * @return
      */
-    public static PsacNode.Objective processObjectiveA3_Common(PsacNode.Objective objective) {
+    public static Objective processObjectiveA3_Common(Objective objective) {
         /**
          * This objective will pass if 1. There are some associated SRS_Req 2. all the associated
          * SRS_Req in the output have review log
@@ -79,9 +80,9 @@ public class ComplianceTable3 {
         //            objective.setNoData(true);
         //        }
 
-        int numSRS = objective.getObjOutputs().getRequirements().size();
+        int numSRS = ((Output) objective.getOutputs()).getRequirements().size();
         int numSRSWithLogs =
-                LogicUtils.getNumReqsWithLogs(objective.getObjOutputs().getRequirements());
+                LogicUtils.getNumReqsWithLogs(((Output) objective.getOutputs()).getRequirements());
         ;
 
         // TODO: decide no data case
@@ -112,7 +113,7 @@ public class ComplianceTable3 {
         }
 
         System.out.println(
-                "Objective " + objective.getId() + " has passed = " + objective.getPassed());
+                "Objective " + objective.getId() + " has passed = " + objective.isPassed());
 
         return objective;
     }

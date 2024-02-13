@@ -31,7 +31,8 @@
  */
 package com.ge.research.rack.do178c.oem;
 
-import com.ge.research.rack.do178c.structures.PsacNode;
+import com.ge.research.rack.do178c.structures.Objective;
+import com.ge.research.rack.do178c.structures.Output;
 import com.ge.research.rack.do178c.structures.Requirement;
 import com.ge.research.rack.do178c.structures.Test;
 import com.ge.research.rack.do178c.utils.LogicUtils;
@@ -49,7 +50,7 @@ public class ComplianceTable7 {
      * @param objective
      * @return
      */
-    public static PsacNode.Objective processObjectiveA7_1(PsacNode.Objective objective) {
+    public static Objective processObjectiveA7_1(Objective objective) {
         /**
          * This objective will pass if 1. There are some associated SBVT tests 2. all the associated
          * SBVT tests in the output have review log
@@ -81,9 +82,9 @@ public class ComplianceTable7 {
         //            objective.setNoData(true);
         //        }
 
-        int numSBVTTests = objective.getObjOutputs().getTests().size();
+        int numSBVTTests = ((Output) objective.getOutputs()).getTests().size();
         int numSBVTTestsWithLogs =
-                LogicUtils.getNumTestsWithLogs(objective.getObjOutputs().getTests());
+                LogicUtils.getNumTestsWithLogs(((Output) objective.getOutputs()).getTests());
         ;
 
         // TODO: decide no data case
@@ -114,12 +115,12 @@ public class ComplianceTable7 {
         }
 
         System.out.println(
-                "Objective " + objective.getId() + " has passed = " + objective.getPassed());
+                "Objective " + objective.getId() + " has passed = " + objective.isPassed());
 
         return objective;
     }
 
-    public static PsacNode.Objective processObjectiveA7_3(PsacNode.Objective objective) {
+    public static Objective processObjectiveA7_3(Objective objective) {
         /**
          * This objective will pass if 1. There are some associated SRS_Req 2. all the associated
          * SRS_Req in the output have some test 3. All tests have passed for each requirement
@@ -201,11 +202,11 @@ public class ComplianceTable7 {
         //        	}
         //        }
 
-        int numSRS = objective.getObjOutputs().getRequirements().size();
+        int numSRS = ((Output) objective.getOutputs()).getRequirements().size();
         int numSRSWithAllPassedTests = 0;
         int numSRSWithNoTests = 0;
 
-        for (Requirement req : objective.getObjOutputs().getRequirements()) {
+        for (Requirement req : ((Output) objective.getOutputs()).getRequirements()) {
             if (req.getTests().size() < 1) { // no test
                 numSRSWithNoTests = numSRSWithNoTests + 1;
             } else {
@@ -264,12 +265,12 @@ public class ComplianceTable7 {
         }
 
         System.out.println(
-                "Objective " + objective.getId() + " has passed = " + objective.getPassed());
+                "Objective " + objective.getId() + " has passed = " + objective.isPassed());
 
         return objective;
     }
 
-    public static PsacNode.Objective processObjectiveA7_4(PsacNode.Objective objective) {
+    public static Objective processObjectiveA7_4(Objective objective) {
         /**
          * This objective will pass if 1. There are some associated SubDD_Req 2. all the associated
          * SubDD_Req in the output have some test 3. All tests have passed for each requirement
@@ -351,11 +352,11 @@ public class ComplianceTable7 {
         //        	}
         //        }
 
-        int numSubDD = objective.getObjOutputs().getRequirements().size();
+        int numSubDD = ((Output) objective.getOutputs()).getRequirements().size();
         int numSubDDWithAllPassedTests = 0;
         int numSubDDWithNoTests = 0;
 
-        for (Requirement req : objective.getObjOutputs().getRequirements()) {
+        for (Requirement req : ((Output) objective.getOutputs()).getRequirements()) {
             if (req.getTests().size() < 1) { // no test
                 numSubDDWithNoTests = numSubDDWithNoTests + 1;
             } else {
@@ -413,7 +414,7 @@ public class ComplianceTable7 {
         }
 
         System.out.println(
-                "Objective " + objective.getId() + " has passed = " + objective.getPassed());
+                "Objective " + objective.getId() + " has passed = " + objective.isPassed());
 
         return objective;
     }

@@ -31,7 +31,8 @@
  */
 package com.ge.research.rack.arp4754.utils;
 
-import com.ge.research.rack.arp4754.structures.DAPlan;
+import com.ge.research.rack.analysis.structures.PlanObjective;
+import com.ge.research.rack.analysis.structures.PlanTable;
 
 /**
  * @author Saswata Paul
@@ -64,26 +65,26 @@ public class ComplianceUtils {
      * @param procObj
      * @return
      */
-    public static DAPlan.Process getProcessStatus(DAPlan.Process procObj) {
+    public static PlanTable<PlanObjective> getProcessStatus(PlanTable<PlanObjective> procObj) {
         System.out.println(
                 procObj.getId()
                         + " ob no: "
-                        + procObj.getNumObjectivesNoData()
+                        + procObj.getNumObjNoData()
                         + " ob partial:"
-                        + procObj.getNumObjectivesPartialData()
+                        + procObj.getNumObjPartial()
                         + " ob pass:"
-                        + procObj.getNumObjectivesPassed()
+                        + procObj.getNumObjPassed()
                         + " numobjs:"
-                        + procObj.getObjectives().size());
+                        + procObj.getTabObjectives().size());
 
         // set the data flags
-        if (procObj.getNumObjectivesNoData() == procObj.getObjectives().size()) {
+        if (procObj.getNumObjNoData() == procObj.getTabObjectives().size()) {
             procObj.setNoData(true);
             procObj.setPartialData(false);
             procObj.setPassed(false);
         } else {
             procObj.setNoData(false);
-            if (procObj.getNumObjectivesPassed() == procObj.getObjectives().size()) {
+            if (procObj.getNumObjPassed() == procObj.getTabObjectives().size()) {
                 procObj.setPartialData(false);
                 procObj.setPassed(true);
             } else {
@@ -104,10 +105,10 @@ public class ComplianceUtils {
         // compute process compliance
         procObj.setComplianceStatus(
                 ComplianceUtils.processComplianceValue(
-                        procObj.getNumObjectivesPassed(),
-                        procObj.getNumObjectivesPartialData(),
-                        procObj.getNumObjectivesNoData(),
-                        procObj.getObjectives().size()));
+                        procObj.getNumObjPassed(),
+                        procObj.getNumObjPartial(),
+                        procObj.getNumObjNoData(),
+                        procObj.getTabObjectives().size()));
 
         return procObj;
     }

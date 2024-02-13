@@ -31,6 +31,9 @@
  */
 package com.ge.research.rack.do178c.utils;
 
+import com.ge.research.rack.analysis.structures.PlanObjective;
+import com.ge.research.rack.analysis.structures.PlanTable;
+import com.ge.research.rack.do178c.structures.Objective;
 import com.ge.research.rack.do178c.structures.PsacNode;
 import com.ge.research.rack.do178c.structures.Requirement;
 import com.ge.research.rack.do178c.structures.ReviewLog;
@@ -418,8 +421,8 @@ public class LogicUtils {
      */
     public static PsacNode filterNonRelevantObjectives(PsacNode psacNode) {
 
-        for (PsacNode.Table tab : psacNode.getReportTables()) {
-            for (PsacNode.Objective obj : tab.getTabObjectives()) {
+        for (PlanTable<Objective> tab : psacNode.getReportTables()) {
+            for (PlanObjective obj : tab.getTabObjectives()) {
                 // level C filters
                 if (StringUtils.substringBetween(psacNode.getMainOFP(), "(", ")")
                         .equals("Level C")) {

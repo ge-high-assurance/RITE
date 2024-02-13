@@ -31,6 +31,8 @@
  */
 package com.ge.research.rack.arp4754.viewHandlers;
 
+import com.ge.research.rack.analysis.structures.PlanObjective;
+import com.ge.research.rack.analysis.structures.PlanTable;
 import com.ge.research.rack.analysis.utils.CustomFileUtils;
 import com.ge.research.rack.analysis.utils.CustomStringUtils;
 import com.ge.research.rack.arp4754.logic.DataProcessor;
@@ -74,7 +76,7 @@ public class MainViewHandler extends com.ge.research.rack.analysis.handlers.Main
      * @param procObj
      * @return
      */
-    private Label getProcessLabel(DAPlan.Process procObj) {
+    protected Label getProcessLabel(PlanTable<PlanObjective> procObj) {
 
         Label procLabel = new Label();
         procLabel.setStyle("-fx-font-weight: bold;");
@@ -83,7 +85,7 @@ public class MainViewHandler extends com.ge.research.rack.analysis.handlers.Main
             procLabel.setText(
                     procObj.getId()
                             + ": "
-                            + procObj.getDesc().replace("\"", "")
+                            + procObj.getDescription().replace("\"", "")
                             + " ("
                             + procObj.getMetrics()
                             + ")");
@@ -92,7 +94,7 @@ public class MainViewHandler extends com.ge.research.rack.analysis.handlers.Main
             procLabel.setText(
                     procObj.getId()
                             + ": "
-                            + procObj.getDesc().replace("\"", "")
+                            + procObj.getDescription().replace("\"", "")
                             + " ("
                             + String.format("%.2f", procObj.getComplianceStatus())
                             + "% objectives passed)");
@@ -132,46 +134,46 @@ public class MainViewHandler extends com.ge.research.rack.analysis.handlers.Main
         int high = -1;
 
         // get list of processes
-        List<DAPlan.Process> allProcessObjs =
+        List<PlanTable<PlanObjective>> allProcessObjs =
                 DAPlanUtils.sortProcessList(Arp4754ViewsManager.reportDataObj.getProcesses());
 
         // Group bars by table id
         XYChart.Series<String, Integer> passData = new XYChart.Series<String, Integer>();
         passData.setName("Complete");
         List<Data<String, Integer>> passBars = new ArrayList<Data<String, Integer>>();
-        for (DAPlan.Process procObj : allProcessObjs) {
+        for (PlanTable<PlanObjective> procObj : allProcessObjs) {
             Data<String, Integer> passBar =
-                    ViewUtils.createIntDataBar(procObj.getId(), procObj.getNumObjectivesPassed());
+                    ViewUtils.createIntDataBar(procObj.getId(), procObj.getNumObjPassed());
             passData.getData().add(passBar);
             passBars.add(passBar);
-            if (high < procObj.getNumObjectivesPassed()) {
-                high = procObj.getNumObjectivesPassed() + 1;
+            if (high < procObj.getNumObjPassed()) {
+                high = procObj.getNumObjPassed() + 1;
             }
         }
 
         XYChart.Series<String, Integer> failData = new XYChart.Series<String, Integer>();
         failData.setName("Complete");
         List<Data<String, Integer>> failBars = new ArrayList<Data<String, Integer>>();
-        for (DAPlan.Process procObj : allProcessObjs) {
+        for (PlanTable<PlanObjective> procObj : allProcessObjs) {
             Data<String, Integer> failBar =
                     ViewUtils.createIntDataBar(
                             procObj.getId(),
-                            (procObj.getObjectives().size()
-                                    - procObj.getNumObjectivesPassed()
-                                    - procObj.getNumObjectivesPartialData()
-                                    - procObj.getNumObjectivesNoData()));
+                            (procObj.getTabObjectives().size()
+                                    - procObj.getNumObjPassed()
+                                    - procObj.getNumObjPartial()
+                                    - procObj.getNumObjNoData()));
             failData.getData().add(failBar);
             failBars.add(failBar);
             if (high
-                    < (procObj.getObjectives().size()
-                            - procObj.getNumObjectivesPassed()
-                            - procObj.getNumObjectivesPartialData()
-                            - procObj.getNumObjectivesNoData())) {
+                    < (procObj.getTabObjectives().size()
+                            - procObj.getNumObjPassed()
+                            - procObj.getNumObjPartial()
+                            - procObj.getNumObjNoData())) {
                 high =
-                        (procObj.getObjectives().size()
-                                        - procObj.getNumObjectivesPassed()
-                                        - procObj.getNumObjectivesPartialData()
-                                        - procObj.getNumObjectivesNoData())
+                        (procObj.getTabObjectives().size()
+                                        - procObj.getNumObjPassed()
+                                        - procObj.getNumObjPartial()
+                                        - procObj.getNumObjNoData())
                                 + 1;
             }
         }
@@ -179,27 +181,27 @@ public class MainViewHandler extends com.ge.research.rack.analysis.handlers.Main
         XYChart.Series<String, Integer> partialData = new XYChart.Series<String, Integer>();
         partialData.setName("Partial Data");
         List<Data<String, Integer>> partialBars = new ArrayList<Data<String, Integer>>();
-        for (DAPlan.Process procObj : allProcessObjs) {
+        for (PlanTable<PlanObjective> procObj : allProcessObjs) {
             Data<String, Integer> partialBar =
                     ViewUtils.createIntDataBar(
-                            procObj.getId(), procObj.getNumObjectivesPartialData());
+                            procObj.getId(), procObj.getNumObjPartial());
             partialData.getData().add(partialBar);
             partialBars.add(partialBar);
-            if (high < procObj.getNumObjectivesPartialData()) {
-                high = procObj.getNumObjectivesPartialData() + 1;
+            if (high < procObj.getNumObjPartial()) {
+                high = procObj.getNumObjPartial() + 1;
             }
         }
 
         XYChart.Series<String, Integer> noData = new XYChart.Series<String, Integer>();
         noData.setName("No Data");
         List<Data<String, Integer>> noBars = new ArrayList<Data<String, Integer>>();
-        for (DAPlan.Process procObj : allProcessObjs) {
+        for (PlanTable<PlanObjective> procObj : allProcessObjs) {
             Data<String, Integer> noBar =
-                    ViewUtils.createIntDataBar(procObj.getId(), procObj.getNumObjectivesNoData());
+                    ViewUtils.createIntDataBar(procObj.getId(), procObj.getNumObjNoData());
             noData.getData().add(noBar);
             noBars.add(noBar);
-            if (high < procObj.getNumObjectivesNoData()) {
-                high = procObj.getNumObjectivesNoData() + 1;
+            if (high < procObj.getNumObjNoData()) {
+                high = procObj.getNumObjNoData() + 1;
             }
         }
 
@@ -245,10 +247,10 @@ public class MainViewHandler extends com.ge.research.rack.analysis.handlers.Main
         // List<Label> sortedLabelList = new ArrayList<Label>();
 
         // get list of processes
-        List<DAPlan.Process> allProcessObjs =
+        List<PlanTable<PlanObjective>> allProcessObjs =
                 DAPlanUtils.sortProcessList(Arp4754ViewsManager.reportDataObj.getProcesses());
 
-        for (DAPlan.Process procObj : allProcessObjs) {
+        for (PlanTable<PlanObjective> procObj : allProcessObjs) {
             Label procLabel = getProcessLabel(procObj);
             int position = Integer.parseInt(getBucketIdFromLabelText(procLabel.getText())) - 1;
             System.out.println("Position " + position + "->" + procLabel.getText());

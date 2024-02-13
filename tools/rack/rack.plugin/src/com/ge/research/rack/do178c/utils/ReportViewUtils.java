@@ -31,10 +31,13 @@
  */
 package com.ge.research.rack.do178c.utils;
 
+import com.ge.research.rack.analysis.structures.PlanObjective;
+import com.ge.research.rack.analysis.structures.PlanTable;
 import com.ge.research.rack.do178c.structures.Analysis;
 import com.ge.research.rack.do178c.structures.DataItem;
 import com.ge.research.rack.do178c.structures.Hazard;
-import com.ge.research.rack.do178c.structures.PsacNode;
+import com.ge.research.rack.do178c.structures.Objective;
+import com.ge.research.rack.do178c.structures.Output;
 import com.ge.research.rack.do178c.structures.Requirement;
 import com.ge.research.rack.do178c.structures.ReviewLog;
 import com.ge.research.rack.do178c.structures.Test;
@@ -88,38 +91,38 @@ public class ReportViewUtils {
     }
 
     /** Returns javafx color for a given objective object */
-    public static Color getObjectiveColor(final PsacNode.Objective objective) {
+    public static Color getObjectiveColor(final Objective objective) {
 
-        if (objective.getNoData()) {
+        if (objective.isNoData()) {
             return objective.getMetrics().equals("TBD") ? Color.GRAY : Color.LIGHTGREY;
         }
 
-        if (objective.getPartialData()) {
+        if (objective.isPartialData()) {
             return Color.ORANGE;
         }
 
-        return objective.getPassed() ? Color.GREEN : Color.RED;
+        return objective.isPassed() ? Color.GREEN : Color.RED;
     }
 
     /** Returns javafx color for a table object */
-    public static Color getTableColor(final PsacNode.Table table) {
+    public static Color getTableColor(final PlanTable<Objective> table) {
 
-        if (table.getNoData()) {
+        if (table.isNoData()) {
             return Color.GRAY; // if no data, then GRAY
         }
-        if (table.getPartialData()) {
+        if (table.isPartialData()) {
             return Color.ORANGE;
         }
 
-        return table.getPassed() ? Color.GREEN : Color.RED;
+        return table.isPassed() ? Color.GREEN : Color.RED;
     }
 
     /** Given a table object, returns a list of doubles containing the objective metrics in order */
-    public static List<Double> getObjectiveOrder(PsacNode.Table table) {
+    public static List<Double> getObjectiveOrder(PlanTable<Objective> table) {
 
         final List<Double> objStats = new ArrayList<Double>();
 
-        for (final PsacNode.Objective obj : table.getTabObjectives()) {
+        for (final PlanObjective obj : table.getTabObjectives()) {
             if (obj.getMetrics().contains("%")) { // if there is a numeric value
                 objStats.add(Double.parseDouble(obj.getMetrics().split("%")[0]));
             } else { // if no numeric value, use -1.0 to differentiate later
@@ -137,7 +140,7 @@ public class ReportViewUtils {
      * Given a table, returns the combined total number of associated artifacts for all objectives
      * in the table
      */
-    public static List<Integer> getTableArtifactStats(PsacNode.Table table) {
+    public static List<Integer> getTableArtifactStats(PlanTable<Objective> table) {
 
         final Set<String> docIds = new HashSet<String>();
         final Set<String> reqIds = new HashSet<String>();
@@ -147,25 +150,25 @@ public class ReportViewUtils {
         final Set<String> anlsIds = new HashSet<String>();
 
         table.getTabObjectives().stream()
-                .map(PsacNode.Objective::getObjOutputs)
+                .map(PlanObjective::getOutputs)
                 .forEach(
                         objective -> {
-                            for (final DataItem doc : objective.getDocuments()) {
+                            for (final DataItem doc : ((Output) objective).getDocuments()) {
                                 docIds.add(doc.getId());
                             }
-                            for (final Requirement req : objective.getRequirements()) {
+                            for (final Requirement req : ((Output) objective).getRequirements()) {
                                 reqIds.add(req.getId());
                             }
-                            for (final Hazard hzrd : objective.getHazards()) {
+                            for (final Hazard hzrd : ((Output) objective).getHazards()) {
                                 hzrdIds.add(hzrd.getId());
                             }
-                            for (final Test tst : objective.getTests()) {
+                            for (final Test tst : ((Output) objective).getTests()) {
                                 tstIds.add(tst.getId());
                             }
-                            for (final ReviewLog log : objective.getLogs()) {
+                            for (final ReviewLog log : ((Output) objective).getLogs()) {
                                 logIds.add(log.getId());
                             }
-                            for (final Analysis anls : objective.getAnalyses()) {
+                            for (final Analysis anls : ((Output) objective).getAnalyses()) {
                                 anlsIds.add(anls.getId());
                             }
                         });

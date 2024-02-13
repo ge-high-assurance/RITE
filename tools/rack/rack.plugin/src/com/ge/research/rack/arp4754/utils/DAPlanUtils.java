@@ -31,7 +31,8 @@
  */
 package com.ge.research.rack.arp4754.utils;
 
-import com.ge.research.rack.arp4754.structures.DAPlan;
+import com.ge.research.rack.analysis.structures.PlanObjective;
+import com.ge.research.rack.analysis.structures.PlanTable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,10 +50,10 @@ public class DAPlanUtils {
      * @return
      */
     public static Integer getObjectivePositionFromList(
-            List<DAPlan.Objective> objectives, String id) {
+            List<PlanObjective> objectives, String id) {
 
         for (int i = 0; i < objectives.size(); i++) {
-            DAPlan.Objective objective = objectives.get(i);
+            PlanObjective objective = objectives.get(i);
             if (objective.getId().equalsIgnoreCase(id)) {
                 return i;
             }
@@ -67,11 +68,11 @@ public class DAPlanUtils {
      * @param id
      * @return
      */
-    public static DAPlan.Objective getObjectiveObjectFromList(
-            List<DAPlan.Objective> objectives, String id) {
+    public static PlanObjective getObjectiveObjectFromList(
+            List<PlanObjective> objectives, String id) {
 
         for (int i = 0; i < objectives.size(); i++) {
-            DAPlan.Objective objective = objectives.get(i);
+            PlanObjective objective = objectives.get(i);
             if (objective.getId().equalsIgnoreCase(id)) {
                 return objective;
             }
@@ -86,10 +87,10 @@ public class DAPlanUtils {
      * @param id
      * @return
      */
-    public static Integer getProcessPositionFromList(List<DAPlan.Process> processes, String id) {
+    public static Integer getProcessPositionFromList(List<PlanTable<PlanObjective>> processes, String id) {
 
         for (int i = 0; i < processes.size(); i++) {
-            DAPlan.Process process = processes.get(i);
+            PlanTable<PlanObjective> process = processes.get(i);
             if (process.getId().equalsIgnoreCase(id)) {
                 return i;
             }
@@ -104,11 +105,11 @@ public class DAPlanUtils {
      * @param id
      * @return
      */
-    public static DAPlan.Process getProcessObjectFromList(
-            List<DAPlan.Process> processes, String id) {
+    public static PlanTable<PlanObjective> getProcessObjectFromList(
+            List<PlanTable<PlanObjective>> processes, String id) {
 
         for (int i = 0; i < processes.size(); i++) {
-            DAPlan.Process process = processes.get(i);
+            PlanTable<PlanObjective> process = processes.get(i);
             if (process.getId().equalsIgnoreCase(id)) {
                 return process;
             }
@@ -121,12 +122,12 @@ public class DAPlanUtils {
      *
      * @return
      */
-    public static List<DAPlan.Process> sortProcessList(List<DAPlan.Process> list) {
-        List<DAPlan.Process> newList = new ArrayList<DAPlan.Process>();
+    public static List<PlanTable<PlanObjective>> sortProcessList(List<PlanTable<PlanObjective>> list) {
+        List<PlanTable<PlanObjective>> newList = new ArrayList<PlanTable<PlanObjective>>();
 
         if (list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
-                for (DAPlan.Process process : list) {
+                for (PlanTable<PlanObjective> process : list) {
                     if ((Integer.parseInt(process.getId().replace("Process-", "")) - 1) == i) {
                         newList.add(process);
 
@@ -145,7 +146,7 @@ public class DAPlanUtils {
      * @param objective
      * @return
      */
-    public static int getObjectiveNumber(DAPlan.Objective objective) {
+    public static int getObjectiveNumber(PlanObjective objective) {
 
         System.out.println("Objective ID to get position from: " + objective.getId());
 
@@ -160,13 +161,13 @@ public class DAPlanUtils {
      *
      * @return
      */
-    public static List<DAPlan.Objective> sortObjectiveList(List<DAPlan.Objective> list) {
+    public static List<PlanObjective> sortObjectiveList(List<PlanObjective> list) {
 
         // -- approach 1 (assumes continuous objective positions)
-        //        List<DAPlan.Objective> newList = new ArrayList<DAPlan.Objective>();
+        //        List<PlanObjective> newList = new ArrayList<PlanObjective>();
         //        if (list.size() > 0) {
         //            for (int i = 0; i < list.size(); i++) {
-        //                for (DAPlan.Objective objective : list) {
+        //                for (PlanObjective objective : list) {
         //                    String[] objIdParts = objective.getId().split("-"); // "Objective-2-2"
         //                    String objNum = objIdParts[objIdParts.length - 1];
         //                    if ((Integer.parseInt(objNum) - 1) == i) {
@@ -186,7 +187,7 @@ public class DAPlanUtils {
                 int jNum = getObjectiveNumber(list.get(j));
                 int j1Num = getObjectiveNumber(list.get(j + 1));
                 if (jNum > j1Num) {
-                    DAPlan.Objective tempObjective = list.get(j);
+                    PlanObjective tempObjective = list.get(j);
                     list.set(j, list.get(j + 1));
                     list.set(j + 1, tempObjective);
                     swapped = true;

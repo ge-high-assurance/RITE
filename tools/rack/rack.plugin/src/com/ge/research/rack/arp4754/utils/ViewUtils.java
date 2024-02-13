@@ -31,8 +31,10 @@
  */
 package com.ge.research.rack.arp4754.utils;
 
-import com.ge.research.rack.arp4754.structures.DAPlan;
+import com.ge.research.rack.analysis.structures.PlanObjective;
+import com.ge.research.rack.analysis.structures.PlanTable;
 import com.ge.research.rack.arp4754.structures.Evidence;
+import com.ge.research.rack.arp4754.structures.Output;
 import com.ge.research.rack.arp4754.viewManagers.Arp4754ViewsManager;
 
 import javafx.geometry.Pos;
@@ -102,7 +104,7 @@ public class ViewUtils {
     }
 
     /** Returns javafx color for a process object */
-    public static Color getProcessColor(final DAPlan.Process procObj) {
+    public static Color getProcessColor(final PlanTable<PlanObjective> procObj) {
 
         if (procObj.isNoData()) {
             return Color.GRAY; // if no data, then GRAY
@@ -115,7 +117,7 @@ public class ViewUtils {
     }
 
     /** Returns javafx color for an objective object */
-    public static Color getObjectiveColor(final DAPlan.Objective objObj) {
+    public static Color getObjectiveColor(final PlanObjective objObj) {
 
         if (objObj.isNoData()) {
             return Color.GRAY; // if no data, then GRAY
@@ -144,7 +146,7 @@ public class ViewUtils {
      * @param procObj
      * @return
      */
-    public static List<Integer> getProcessArtifactStats(DAPlan.Process procObj) {
+    public static List<Integer> getProcessArtifactStats(PlanTable<PlanObjective> procObj) {
 
         // some generic types of elemnts in ARP4754
         final Set<String> docIds = new HashSet<String>();
@@ -158,44 +160,44 @@ public class ViewUtils {
         final Set<String> reviewIds = new HashSet<String>();
         final Set<String> analysisIds = new HashSet<String>();
 
-        procObj.getObjectives().stream()
-                .map(DAPlan.Objective::getOutputs)
+        procObj.getTabObjectives().stream()
+                .map(PlanObjective::getOutputs)
                 .forEach(
                         objective -> {
-                            for (final Evidence doc : objective.getDocumentObjs()) {
+                            for (final Evidence doc : ((Output)objective).getDocumentObjs()) {
                                 docIds.add(doc.getId());
                             }
-                            for (final Evidence derItemReq : objective.getDerItemReqObjs()) {
+                            for (final Evidence derItemReq : ((Output)objective).getDerItemReqObjs()) {
                                 reqIds.add(derItemReq.getId());
                             }
-                            for (final Evidence derSysReq : objective.getDerSysReqObjs()) {
+                            for (final Evidence derSysReq : ((Output)objective).getDerSysReqObjs()) {
                                 reqIds.add(derSysReq.getId());
                             }
-                            for (final Evidence itemReq : objective.getItemReqObjs()) {
+                            for (final Evidence itemReq : ((Output)objective).getItemReqObjs()) {
                                 reqIds.add(itemReq.getId());
                             }
-                            for (final Evidence sysReq : objective.getSysReqObjs()) {
+                            for (final Evidence sysReq : ((Output)objective).getSysReqObjs()) {
                                 reqIds.add(sysReq.getId());
                             }
-                            for (final Evidence item : objective.getItemObjs()) {
+                            for (final Evidence item : ((Output)objective).getItemObjs()) {
                                 itemIds.add(item.getId());
                             }
-                            for (final Evidence interfce : objective.getInterfaceObjs()) {
+                            for (final Evidence interfce : ((Output)objective).getInterfaceObjs()) {
                                 interfaceIds.add(interfce.getId());
                             }
-                            for (final Evidence system : objective.getSystemObjs()) {
+                            for (final Evidence system : ((Output)objective).getSystemObjs()) {
                                 systemIds.add(system.getId());
                             }
-                            for (final Evidence verification : objective.getVerificationObjs()) {
+                            for (final Evidence verification : ((Output)objective).getVerificationObjs()) {
                                 verificationIds.add(verification.getId());
                             }
-                            for (final Evidence test : objective.getTestObjs()) {
+                            for (final Evidence test : ((Output)objective).getTestObjs()) {
                                 testIds.add(test.getId());
                             }
-                            for (final Evidence review : objective.getReviewObjs()) {
+                            for (final Evidence review : ((Output)objective).getReviewObjs()) {
                                 reviewIds.add(review.getId());
                             }
-                            for (final Evidence analysis : objective.getAnalysisObjs()) {
+                            for (final Evidence analysis : ((Output)objective).getAnalysisObjs()) {
                                 analysisIds.add(analysis.getId());
                             }
                         });

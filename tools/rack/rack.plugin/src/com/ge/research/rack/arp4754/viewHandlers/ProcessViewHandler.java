@@ -31,8 +31,9 @@
  */
 package com.ge.research.rack.arp4754.viewHandlers;
 
+import com.ge.research.rack.analysis.structures.PlanObjective;
+import com.ge.research.rack.analysis.structures.PlanTable;
 import com.ge.research.rack.analysis.utils.CustomStringUtils;
-import com.ge.research.rack.arp4754.structures.DAPlan;
 import com.ge.research.rack.arp4754.utils.DAPlanUtils;
 import com.ge.research.rack.arp4754.utils.ViewUtils;
 import com.ge.research.rack.arp4754.viewManagers.Arp4754ViewsManager;
@@ -63,7 +64,7 @@ public class ProcessViewHandler {
 
     private String currentProcessId;
 
-    private DAPlan.Process currentProcessObject;
+    private PlanTable<PlanObjective> currentProcessObject;
 
     // -------- FXML GUI variables below --------------
     @FXML private Label headerLabel;
@@ -89,7 +90,7 @@ public class ProcessViewHandler {
      * @param objObj
      * @return
      */
-    public Label getObjectiveLabel(DAPlan.Objective objObj) {
+    public Label getObjectiveLabel(PlanObjective objObj) {
 
         Label objLabel = new Label();
         objLabel.setStyle("-fx-font-weight: bold;");
@@ -98,7 +99,7 @@ public class ProcessViewHandler {
             objLabel.setText(
                     objObj.getId()
                             + ": "
-                            + objObj.getDesc().replace("\"", "")
+                            + objObj.getDescription().replace("\"", "")
                             + " ("
                             + objObj.getMetrics()
                             + ")");
@@ -107,7 +108,7 @@ public class ProcessViewHandler {
             objLabel.setText(
                     objObj.getId()
                             + ": "
-                            + objObj.getDesc().replace("\"", "")
+                            + objObj.getDescription().replace("\"", "")
                             + " ("
                             + String.format("%.2f", objObj.getComplianceStatus())
                             + "% complete)");
@@ -190,16 +191,16 @@ public class ProcessViewHandler {
         // clear old data
         listObjectives.getItems().clear();
 
-        if ((currentProcessObject.getObjectives() != null)
-                && (currentProcessObject.getObjectives().size() > 0)) {
+        if ((currentProcessObject.getTabObjectives() != null)
+                && (currentProcessObject.getTabObjectives().size() > 0)) {
 
             // sort the objective list
-            List<DAPlan.Objective> allObjectiveObjs =
-                    DAPlanUtils.sortObjectiveList(currentProcessObject.getObjectives());
-            //            List<DAPlan.Objective> allObjectiveObjs =
+            List<PlanObjective> allObjectiveObjs =
+                    DAPlanUtils.sortObjectiveList(currentProcessObject.getTabObjectives());
+            //            List<PlanObjective> allObjectiveObjs =
             // currentProcessObject.getObjectives();
 
-            for (DAPlan.Objective objObj : allObjectiveObjs) {
+            for (PlanObjective objObj : allObjectiveObjs) {
 
                 Label objLabel = getObjectiveLabel(objObj);
 
@@ -242,7 +243,7 @@ public class ProcessViewHandler {
         populateObjStatusChart();
 
         // Set the label text
-        labelProcessInfo.setText(currentProcessId + ": " + currentProcessObject.getDesc());
+        labelProcessInfo.setText(currentProcessId + ": " + currentProcessObject.getDescription());
 
         // set the label color
         labelProcessInfo.setTextFill(ViewUtils.getProcessColor(currentProcessObject));
@@ -308,7 +309,7 @@ public class ProcessViewHandler {
 
             // switch to objective view only if the objective has some data
             if (!DAPlanUtils.getObjectiveObjectFromList(
-                            currentProcessObject.getObjectives(), selectedObjective)
+                            currentProcessObject.getTabObjectives(), selectedObjective)
                     .isNoData()) {
                 // Set the stage with the other fxml
                 FXMLLoader objectiveViewLoader =

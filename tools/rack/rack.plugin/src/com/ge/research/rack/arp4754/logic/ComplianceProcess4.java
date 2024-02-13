@@ -31,17 +31,20 @@
  */
 package com.ge.research.rack.arp4754.logic;
 
+import com.ge.research.rack.analysis.structures.PlanObjective;
+import com.ge.research.rack.analysis.structures.PlanTable;
 import com.ge.research.rack.arp4754.structures.Category;
 import com.ge.research.rack.arp4754.structures.DAPlan;
-import com.ge.research.rack.arp4754.structures.DAPlan.Objective;
 import com.ge.research.rack.arp4754.utils.ComplianceUtils;
+import com.ge.research.rack.arp4754.structures.Graph;
+import com.ge.research.rack.arp4754.structures.Output;
 
 /**
  * @author Saswata Paul
  */
 public class ComplianceProcess4 {
 
-    private static DAPlan.Objective computeObjective1(DAPlan.Objective objective) {
+    private static PlanObjective computeObjective1(PlanObjective objective) {
 
         // TODO: write logic
 
@@ -51,26 +54,26 @@ public class ComplianceProcess4 {
 
         // create and add appropriate graphdata (//TODO: add actual code, hardcoded now)
         Category reqWithNoReviews =
-                new Category("No Review", objective.getOutputs().getItemReqObjs().size());
+                new Category("No Review", ((Output)objective.getOutputs()).getItemReqObjs().size());
         Category reqWithPassedReviews = new Category("Passed Review", 0);
         Category reqWithFailedReviews = new Category("Failed Review", 0);
-        objective.getGraphs().getItemReqGraphData().getBuckets().add(reqWithNoReviews);
-        objective.getGraphs().getItemReqGraphData().getBuckets().add(reqWithPassedReviews);
-        objective.getGraphs().getItemReqGraphData().getBuckets().add(reqWithFailedReviews);
+        ((Graph)objective.getGraphs()).getItemReqGraphData().getBuckets().add(reqWithNoReviews);
+        ((Graph)objective.getGraphs()).getItemReqGraphData().getBuckets().add(reqWithPassedReviews);
+        ((Graph)objective.getGraphs()).getItemReqGraphData().getBuckets().add(reqWithFailedReviews);
 
         objective.setMetrics("");
         return objective;
     }
 
-    private static DAPlan.Objective computeObjective2(DAPlan.Objective objective) {
+    private static PlanObjective computeObjective2(PlanObjective objective) {
         return objective;
     }
 
-    private static DAPlan.Objective computeObjective3(DAPlan.Objective objective) {
+    private static PlanObjective computeObjective3(PlanObjective objective) {
         return objective;
     }
 
-    private static DAPlan.Objective computeObjective4(DAPlan.Objective objective) {
+    private static PlanObjective computeObjective4(PlanObjective objective) {
 
         // TODO: write logic
 
@@ -80,18 +83,18 @@ public class ComplianceProcess4 {
 
         // create and add appropriate graphdata (//TODO: add actual code, hardcoded now)
         Category reqWithNoReviews =
-                new Category("No Review", objective.getOutputs().getItemReqObjs().size());
+                new Category("No Review", ((Output)objective.getOutputs()).getItemReqObjs().size());
         Category reqWithPassedReviews = new Category("Passed Review", 0);
         Category reqWithFailedReviews = new Category("Failed Review", 0);
-        objective.getGraphs().getItemReqGraphData().getBuckets().add(reqWithNoReviews);
-        objective.getGraphs().getItemReqGraphData().getBuckets().add(reqWithPassedReviews);
-        objective.getGraphs().getItemReqGraphData().getBuckets().add(reqWithFailedReviews);
+        ((Graph)objective.getGraphs()).getItemReqGraphData().getBuckets().add(reqWithNoReviews);
+        ((Graph)objective.getGraphs()).getItemReqGraphData().getBuckets().add(reqWithPassedReviews);
+        ((Graph)objective.getGraphs()).getItemReqGraphData().getBuckets().add(reqWithFailedReviews);
 
         objective.setMetrics("");
         return objective;
     }
 
-    private static DAPlan.Objective computeObjective6(DAPlan.Objective objective) {
+    private static PlanObjective computeObjective6(PlanObjective objective) {
         return objective;
     }
 
@@ -101,17 +104,17 @@ public class ComplianceProcess4 {
      * @param process
      * @return
      */
-    public static DAPlan.Process computeProcess(DAPlan.Process process) {
+    public static PlanTable<PlanObjective> computeProcess(PlanTable<PlanObjective> process) {
 
         int numPassed = 0;
         int numNoData = 0;
         int numPartialData = 0;
 
-        for (int i = 0; i < process.getObjectives().size(); i++) {
+        for (int i = 0; i < process.getTabObjectives().size(); i++) {
 
-            DAPlan.Objective objective = process.getObjectives().get(i);
+            PlanObjective objective = process.getTabObjectives().get(i);
 
-            DAPlan.Objective updatedObjective = new DAPlan().new Objective();
+            PlanObjective updatedObjective = new PlanObjective();
 
             switch (objective.getId()) {
                 case "Objective-4-1":
@@ -162,13 +165,13 @@ public class ComplianceProcess4 {
                             + updatedObjective.isPassed());
 
             // replace old objective node with new node
-            process.getObjectives().set(i, updatedObjective);
+            process.getTabObjectives().set(i, updatedObjective);
         }
 
         // add metrics to process
-        process.setNumObjectivesNoData(numNoData);
-        process.setNumObjectivesPartialData(numPartialData);
-        process.setNumObjectivesPassed(numPassed);
+        process.setNumObjNoData(numNoData);
+        process.setNumObjPartial(numPartialData);
+        process.setNumObjPassed(numPassed);
 
         // set process status metrics
         process = ComplianceUtils.getProcessStatus(process);

@@ -32,15 +32,15 @@
 package com.ge.research.rack.do178c.oem;
 
 import com.ge.research.rack.do178c.structures.DataItem;
-import com.ge.research.rack.do178c.structures.PsacNode;
+import com.ge.research.rack.do178c.structures.Objective;
+import com.ge.research.rack.do178c.structures.Output;
 
 /**
  * @author Saswata Paul
  */
 public class ComplianceTable1 {
 
-    public static PsacNode.Objective processObjectiveA1_1and2and3and4(
-            PsacNode.Objective objective) {
+    public static Objective processObjectiveA1_1and2and3and4(Objective objective) {
         /**
          * This objective will pass if 1. The outputs contain avatars of PSAC, SDP, SVP, SCM, and
          * SQA
@@ -51,7 +51,7 @@ public class ComplianceTable1 {
         Boolean sqaPresenceFlag = false;
         Boolean scmPresenceFlag = false;
 
-        for (DataItem doc : objective.getObjOutputs().getDocuments()) {
+        for (DataItem doc : ((Output) objective.getOutputs()).getDocuments()) {
             if (doc.getId().equals("BoeingTextPSAQ")) {
                 psacPresenceFlag = true;
             }
@@ -104,7 +104,7 @@ public class ComplianceTable1 {
         objective.setMetrics(String.format("%.2f", percent) + "% documents available");
 
         System.out.println(
-                "Objective " + objective.getId() + " has passed = " + objective.getPassed());
+                "Objective " + objective.getId() + " has passed = " + objective.isPassed());
 
         return objective;
     }

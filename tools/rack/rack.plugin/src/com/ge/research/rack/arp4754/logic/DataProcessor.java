@@ -32,12 +32,15 @@
 package com.ge.research.rack.arp4754.logic;
 
 import com.ge.research.rack.analysis.structures.AnalysisNode;
+import com.ge.research.rack.analysis.structures.PlanObjective;
+import com.ge.research.rack.analysis.structures.PlanTable;
 import com.ge.research.rack.analysis.utils.CustomFileUtils;
 import com.ge.research.rack.analysis.utils.CustomStringUtils;
 import com.ge.research.rack.analysis.utils.RackQueryUtils;
 import com.ge.research.rack.arp4754.structures.Configuration;
 import com.ge.research.rack.arp4754.structures.DAPlan;
 import com.ge.research.rack.arp4754.structures.Evidence;
+import com.ge.research.rack.arp4754.structures.Output;
 import com.ge.research.rack.arp4754.utils.DAPlanUtils;
 import com.ge.research.rack.arp4754.utils.DataProcessorUtils;
 import com.ge.research.rack.arp4754.utils.EvidenceUtils;
@@ -112,7 +115,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
     private DAPlan planNode = new DAPlan();
 
     // ARP4754 Element Objects
-    private DAPlan.Output Artifacts = new DAPlan().new Output();
+    private Output Artifacts = new Output();
 
     /** Passes the Plan Object to the appropriate functions to get the compliance status */
     private void getPlanCompliance() {
@@ -152,19 +155,19 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                 planIdCol + " " + sysIdCol + " " + dalCol + " " + procIdCol + " " + objIdCol);
 
         // Create a list of Objective objects
-        List<DAPlan.Objective> objectives = new ArrayList<DAPlan.Objective>();
+        List<PlanObjective> objectives = new ArrayList<PlanObjective>();
 
         for (String[] row : planData) {
             if ((row[objIdCol] != null)) {
                 // if objective does not already exist then create a new objective
                 if (DAPlanUtils.getObjectivePositionFromList(objectives, row[objIdCol]) == null) {
-                    DAPlan.Objective newObjective = new DAPlan().new Objective();
+                    PlanObjective newObjective = new PlanObjective();
 
                     System.out.println("Created Objective object for " + row[objIdCol]);
 
                     newObjective.setId(row[objIdCol]);
                     if (row[objDescCol] != null) {
-                        newObjective.setDesc(row[objDescCol]);
+                        newObjective.setDescription(row[objDescCol]);
                     }
                     // connect the artifacts to objectives
                     newObjective.setOutputs(Artifacts);
@@ -175,19 +178,19 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         }
 
         // Create a list of Process objects
-        List<DAPlan.Process> processes = new ArrayList<DAPlan.Process>();
+        List<PlanTable<PlanObjective>> processes = new ArrayList<PlanTable<PlanObjective>>();
 
         for (String[] row : planData) {
             if ((row[procIdCol] != null)) {
                 // if process does not already exist then create a new process
                 if (DAPlanUtils.getProcessPositionFromList(processes, row[procIdCol]) == null) {
-                    DAPlan.Process newProcess = new DAPlan().new Process();
+                    PlanTable<PlanObjective> newProcess = new PlanTable<PlanObjective>();
 
                     System.out.println("Created Process object for " + row[procIdCol]);
 
                     newProcess.setId(row[procIdCol]);
                     if (row[procDescCol] != null) {
-                        newProcess.setDesc(row[procDescCol]);
+                        newProcess.setDescription(row[procDescCol]);
                     }
                     processes.add(newProcess);
                 }
@@ -199,14 +202,14 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                     int existingProcessIndx =
                             DAPlanUtils.getProcessPositionFromList(processes, row[procIdCol]);
                     if (DAPlanUtils.getObjectivePositionFromList(
-                                    processes.get(existingProcessIndx).getObjectives(),
+                                    processes.get(existingProcessIndx).getTabObjectives(),
                                     row[objIdCol])
                             == null) {
                         int existingObjectiveIndx =
                                 DAPlanUtils.getObjectivePositionFromList(objectives, row[objIdCol]);
                         processes
                                 .get(existingProcessIndx)
-                                .getObjectives()
+                                .getTabObjectives()
                                 .add(objectives.get(existingObjectiveIndx));
 
                         System.out.println(

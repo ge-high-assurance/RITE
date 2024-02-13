@@ -31,9 +31,11 @@
  */
 package com.ge.research.rack.do178c.viewHandlers;
 
+import com.ge.research.rack.analysis.structures.PlanTable;
+import com.ge.research.rack.do178c.structures.Activity;
 import com.ge.research.rack.do178c.structures.DataItem;
-import com.ge.research.rack.do178c.structures.PsacNode;
-import com.ge.research.rack.do178c.structures.PsacNode.Activity;
+import com.ge.research.rack.do178c.structures.Objective;
+import com.ge.research.rack.do178c.structures.Output;
 import com.ge.research.rack.do178c.structures.Requirement;
 import com.ge.research.rack.do178c.structures.ReviewLog;
 import com.ge.research.rack.do178c.structures.SwComponent;
@@ -72,11 +74,11 @@ public class ReportObjectiveViewHandlerNew {
 
     private String currentTableId;
 
-    private PsacNode.Table currentTableObject;
+    private PlanTable<Objective> currentTableObject;
 
     private String currentObjId;
 
-    private PsacNode.Objective currentObjObject;
+    private Objective currentObjObject;
 
     private String reqChildrenRelation;
 
@@ -182,7 +184,7 @@ public class ReportObjectiveViewHandlerNew {
             deactivateReqChildren(false);
             reqChildrenLabel.setText("Satisfies:");
 
-            for (Requirement reqObj : currentObjObject.getObjOutputs().getRequirements()) {
+            for (Requirement reqObj : ((Output) currentObjObject.getOutputs()).getRequirements()) {
                 if (reqObj.getId().equalsIgnoreCase(reqId)) { // find the requirement object
 
                     //                	// add source
@@ -203,7 +205,7 @@ public class ReportObjectiveViewHandlerNew {
             deactivateReqChildren(false);
             reqChildrenLabel.setText("Logs:");
 
-            for (Requirement reqObj : currentObjObject.getObjOutputs().getRequirements()) {
+            for (Requirement reqObj : ((Output) currentObjObject.getOutputs()).getRequirements()) {
 
                 if (reqObj.getId().equalsIgnoreCase(reqId)) { // find the requirement object
 
@@ -225,7 +227,7 @@ public class ReportObjectiveViewHandlerNew {
             deactivateReqChildren(false);
             reqChildrenLabel.setText("Tests:");
 
-            for (Requirement reqObj : currentObjObject.getObjOutputs().getRequirements()) {
+            for (Requirement reqObj : ((Output) currentObjObject.getOutputs()).getRequirements()) {
 
                 if (reqObj.getId().equalsIgnoreCase(reqId)) { // find the requirement object
 
@@ -260,7 +262,7 @@ public class ReportObjectiveViewHandlerNew {
             deactivateTstChildren(false);
             tstChildrenLabel.setText("Verifies:");
 
-            for (Test tstObj : currentObjObject.getObjOutputs().getTests()) {
+            for (Test tstObj : ((Output) currentObjObject.getOutputs()).getTests()) {
                 if (tstObj.getId().equalsIgnoreCase(tstId)) { // find the Test object
 
                     //                	// add source
@@ -281,7 +283,7 @@ public class ReportObjectiveViewHandlerNew {
             deactivateTstChildren(false);
             tstChildrenLabel.setText("Logs:");
 
-            for (Test tstObj : currentObjObject.getObjOutputs().getTests()) {
+            for (Test tstObj : ((Output) currentObjObject.getOutputs()).getTests()) {
                 if (tstObj.getId().equalsIgnoreCase(tstId)) { // find the test object
 
                     //                	// add source
@@ -310,7 +312,8 @@ public class ReportObjectiveViewHandlerNew {
             deactivateSwCompChildren(false);
             swCompChildrenLabel.setText("wasImpactedBy:");
 
-            for (SwComponent swCompObj : currentObjObject.getObjOutputs().getSwComponents()) {
+            for (SwComponent swCompObj :
+                    ((Output) currentObjObject.getOutputs()).getSwComponents()) {
                 if (swCompObj.getId().equalsIgnoreCase(swCompId)) { // find the swComp object
 
                     //                	// add source
@@ -721,8 +724,8 @@ public class ReportObjectiveViewHandlerNew {
         // TODO: write logic for other objectives
         if (currentObjId.equals("A2-1") || currentObjId.equals("A2-4")) {
 
-            if ((currentObjObject.getObjOutputs().getRequirements() != null)
-                    && (currentObjObject.getObjOutputs().getRequirements().size() > 0)) {
+            if ((((Output) currentObjObject.getOutputs()).getRequirements() != null)
+                    && (((Output) currentObjObject.getOutputs()).getRequirements().size() > 0)) {
                 tabReq.setDisable(false);
 
                 // clear the list and chart
@@ -733,9 +736,9 @@ public class ReportObjectiveViewHandlerNew {
                 reqChildrenRelation = "Satisfies";
 
                 // populate the chart
-                populateReqChart(currentObjObject.getObjOutputs().getRequirements());
+                populateReqChart(((Output) currentObjObject.getOutputs()).getRequirements());
 
-                for (Requirement req : currentObjObject.getObjOutputs().getRequirements()) {
+                for (Requirement req : ((Output) currentObjObject.getOutputs()).getRequirements()) {
                     String reqText = req.getId() + " | Satisfies: ";
                     if (req.getSatisfies().size() > 0) {
                         for (Requirement satisfies : req.getSatisfies()) {
@@ -787,8 +790,8 @@ public class ReportObjectiveViewHandlerNew {
 
         if (currentObjId.equals("A7-3") || currentObjId.equals("A7-4")) {
 
-            if ((currentObjObject.getObjOutputs().getRequirements() != null)
-                    && (currentObjObject.getObjOutputs().getRequirements().size() > 0)) {
+            if ((((Output) currentObjObject.getOutputs()).getRequirements() != null)
+                    && ((Output) currentObjObject.getOutputs()).getRequirements().size() > 0) {
                 tabReq.setDisable(false);
 
                 // clear the list and chart
@@ -799,9 +802,9 @@ public class ReportObjectiveViewHandlerNew {
                 reqChildrenRelation = "Tests";
 
                 // populate the chart
-                populateReqChart(currentObjObject.getObjOutputs().getRequirements());
+                populateReqChart(((Output) currentObjObject.getOutputs()).getRequirements());
 
-                for (Requirement req : currentObjObject.getObjOutputs().getRequirements()) {
+                for (Requirement req : ((Output) currentObjObject.getOutputs()).getRequirements()) {
                     if (filterKey.equalsIgnoreCase("All")
                             && ((searchKey == null) || (req.getId().contains(searchKey)))) {
                         Label reqLabel = new Label();
@@ -887,8 +890,8 @@ public class ReportObjectiveViewHandlerNew {
                 || currentObjId.equals("A4-5")
                 || currentObjId.equals("A4-6")) {
 
-            if ((currentObjObject.getObjOutputs().getRequirements() != null)
-                    && (currentObjObject.getObjOutputs().getRequirements().size() > 0)) {
+            if ((((Output) currentObjObject.getOutputs()).getRequirements() != null)
+                    && (((Output) currentObjObject.getOutputs()).getRequirements().size() > 0)) {
                 tabReq.setDisable(false);
 
                 // clear the list and chart
@@ -899,9 +902,9 @@ public class ReportObjectiveViewHandlerNew {
                 reqChildrenRelation = "Logs";
 
                 // populate the chart
-                populateReqChart(currentObjObject.getObjOutputs().getRequirements());
+                populateReqChart(((Output) currentObjObject.getOutputs()).getRequirements());
 
-                for (Requirement req : currentObjObject.getObjOutputs().getRequirements()) {
+                for (Requirement req : ((Output) currentObjObject.getOutputs()).getRequirements()) {
                     if (filterKey.equalsIgnoreCase("All")
                             && ((searchKey == null) || (req.getId().contains(searchKey)))) {
                         Label reqLabel = new Label();
@@ -959,8 +962,8 @@ public class ReportObjectiveViewHandlerNew {
     public void populateListSwComp(String filterKey, String searchKey) {
         if (currentObjId.equals("A5-5")) {
 
-            if ((currentObjObject.getObjOutputs().getSwComponents() != null)
-                    & (currentObjObject.getObjOutputs().getSwComponents().size() > 0)) {
+            if ((((Output) currentObjObject.getOutputs()).getSwComponents() != null)
+                    & (((Output) currentObjObject.getOutputs()).getSwComponents().size() > 0)) {
                 tabSwComp.setDisable(false);
 
                 // clear the list and chart
@@ -970,9 +973,10 @@ public class ReportObjectiveViewHandlerNew {
                 swCompChildrenRelation = "wasImpactedBy";
 
                 // TODO: Populate the chart
-                populateSwCompChart(currentObjObject.getObjOutputs().getSwComponents());
+                populateSwCompChart(((Output) currentObjObject.getOutputs()).getSwComponents());
 
-                for (SwComponent swComp : currentObjObject.getObjOutputs().getSwComponents()) {
+                for (SwComponent swComp :
+                        ((Output) currentObjObject.getOutputs()).getSwComponents()) {
                     if (filterKey.equalsIgnoreCase("All")
                             && ((searchKey == null)
                                     || (swComp.getId().contains(searchKey)))) { // All
@@ -1035,8 +1039,8 @@ public class ReportObjectiveViewHandlerNew {
                 || currentObjId.equals("A5-3")
                 || currentObjId.equals("A5-4")) {
 
-            if ((currentObjObject.getObjOutputs().getSwComponents() != null)
-                    & (currentObjObject.getObjOutputs().getSwComponents().size() > 0)) {
+            if ((((Output) currentObjObject.getOutputs()).getSwComponents() != null)
+                    & (((Output) currentObjObject.getOutputs()).getSwComponents().size() > 0)) {
                 tabSwComp.setDisable(false);
 
                 // clear the list and chart
@@ -1046,9 +1050,10 @@ public class ReportObjectiveViewHandlerNew {
                 swCompChildrenRelation = "wasImpactedBy";
 
                 // TODO: Populate the chart
-                populateSwCompChart(currentObjObject.getObjOutputs().getSwComponents());
+                populateSwCompChart(((Output) currentObjObject.getOutputs()).getSwComponents());
 
-                for (SwComponent swComp : currentObjObject.getObjOutputs().getSwComponents()) {
+                for (SwComponent swComp :
+                        ((Output) currentObjObject.getOutputs()).getSwComponents()) {
                     if (filterKey.equalsIgnoreCase("All")
                             && ((searchKey == null)
                                     || (swComp.getId().contains(searchKey)))) { // All
@@ -1076,8 +1081,8 @@ public class ReportObjectiveViewHandlerNew {
     public void populateListTst(String filterKey, String searchKey) {
         if (currentObjId.equals("A7-3") || currentObjId.equals("A7-4")) {
 
-            if ((currentObjObject.getObjOutputs().getTests() != null)
-                    && (currentObjObject.getObjOutputs().getTests().size() > 0)) {
+            if ((((Output) currentObjObject.getOutputs()).getTests() != null)
+                    && (((Output) currentObjObject.getOutputs()).getTests().size() > 0)) {
                 tabTest.setDisable(false);
 
                 // clear the list and chart
@@ -1088,9 +1093,9 @@ public class ReportObjectiveViewHandlerNew {
                 tstChildrenRelation = "Verifies";
 
                 // populate the chart
-                populateTstChart(currentObjObject.getObjOutputs().getTests());
+                populateTstChart(((Output) currentObjObject.getOutputs()).getTests());
 
-                for (Test tst : currentObjObject.getObjOutputs().getTests()) {
+                for (Test tst : ((Output) currentObjObject.getOutputs()).getTests()) {
                     if (filterKey.equalsIgnoreCase("All")
                             && ((searchKey == null) || (tst.getId().contains(searchKey)))) {
                         Label tstLabel = new Label();
@@ -1134,8 +1139,8 @@ public class ReportObjectiveViewHandlerNew {
 
         if (currentObjId.equals("A7-1")) {
 
-            if ((currentObjObject.getObjOutputs().getTests() != null)
-                    && (currentObjObject.getObjOutputs().getTests().size() > 0)) {
+            if ((((Output) currentObjObject.getOutputs()).getTests() != null)
+                    && (((Output) currentObjObject.getOutputs()).getTests().size() > 0)) {
                 tabTest.setDisable(false);
 
                 // clear the list and chart
@@ -1146,9 +1151,9 @@ public class ReportObjectiveViewHandlerNew {
                 tstChildrenRelation = "Logs";
 
                 // populate the chart
-                populateTstChart(currentObjObject.getObjOutputs().getTests());
+                populateTstChart(((Output) currentObjObject.getOutputs()).getTests());
 
-                for (Test tst : currentObjObject.getObjOutputs().getTests()) {
+                for (Test tst : ((Output) currentObjObject.getOutputs()).getTests()) {
                     if (filterKey.equalsIgnoreCase("All")
                             && ((searchKey == null) || (tst.getId().contains(searchKey)))) {
                         Label tstLabel = new Label();
@@ -1203,8 +1208,8 @@ public class ReportObjectiveViewHandlerNew {
                 || currentObjId.equals("A4-5")
                 || currentObjId.equals("A4-6")) {
 
-            if ((currentObjObject.getObjOutputs().getTests() != null)
-                    && (currentObjObject.getObjOutputs().getTests().size() > 0)) {
+            if (((Output) currentObjObject.getOutputs()).getTests() != null
+                    && (((Output) currentObjObject.getOutputs()).getTests().size() > 0)) {
                 tabRev.setDisable(false);
 
                 // TDOD: enter code here
@@ -1213,8 +1218,8 @@ public class ReportObjectiveViewHandlerNew {
     }
 
     public void populateListAct() {
-        if ((currentObjObject.getObjActivities() != null)
-                && (currentObjObject.getObjActivities().size() > 0)) {
+        if (currentObjObject.getObjActivities() != null
+                && currentObjObject.getObjActivities().size() > 0) {
             tabAct.setDisable(false);
 
             // clear the list
@@ -1241,14 +1246,14 @@ public class ReportObjectiveViewHandlerNew {
     }
 
     public void populateListDoc() {
-        if ((currentObjObject.getObjOutputs().getDocuments() != null)
-                && (currentObjObject.getObjOutputs().getDocuments().size() > 0)) {
+        if ((((Output) currentObjObject.getOutputs()).getDocuments() != null)
+                && (((Output) currentObjObject.getOutputs()).getDocuments().size() > 0)) {
             tabDoc.setDisable(false);
 
             // clear the list
             docList.getItems().clear();
 
-            for (DataItem doc : currentObjObject.getObjOutputs().getDocuments()) {
+            for (DataItem doc : ((Output) currentObjObject.getOutputs()).getDocuments()) {
                 Label docLabel = new Label();
                 docLabel.setText(doc.getId());
                 docList.getItems().add(docLabel);
@@ -1274,7 +1279,9 @@ public class ReportObjectiveViewHandlerNew {
 
         // set the current objective object
         currentObjObject =
-                PsacNodeUtils.getObjectiveById(ReportViewsManager.reportDataObj, tableId, objId);
+                (Objective)
+                        PsacNodeUtils.getObjectiveById(
+                                ReportViewsManager.reportDataObj, tableId, objId);
 
         // Set the label text
         labelTableInfo.setText(
@@ -1481,7 +1488,7 @@ public class ReportObjectiveViewHandlerNew {
 
                         // find the requirement object
                         for (Requirement reqObj :
-                                currentObjObject.getObjOutputs().getRequirements()) {
+                                ((Output) currentObjObject.getOutputs()).getRequirements()) {
                             // set children list to the sources, if any exist
                             if (reqObj.getId().equals(reqId)
                                     && reqObj.getSourceDocument() != null) {
@@ -1503,7 +1510,7 @@ public class ReportObjectiveViewHandlerNew {
 
                         // find the requirement object
                         for (Requirement reqObj :
-                                currentObjObject.getObjOutputs().getRequirements()) {
+                                ((Output) currentObjObject.getOutputs()).getRequirements()) {
                             // set children list to the sources, if any exist
                             if (reqObj.getId().equals(reqId) && reqObj.getDescription() != null) {
                                 reqChildrenList.getItems().add(reqObj.getDescription());
@@ -1566,7 +1573,7 @@ public class ReportObjectiveViewHandlerNew {
                         tstChildrenLabel.setText("Test Source:");
 
                         // find the requirement object
-                        for (Test tstObj : currentObjObject.getObjOutputs().getTests()) {
+                        for (Test tstObj : ((Output) currentObjObject.getOutputs()).getTests()) {
                             // set children list to the sources, if any exist
                             if (tstObj.getId().equals(tstId)
                                     && tstObj.getSourceDocument() != null) {
@@ -1631,7 +1638,7 @@ public class ReportObjectiveViewHandlerNew {
 
                         // find the requirement object
                         for (SwComponent swCompObj :
-                                currentObjObject.getObjOutputs().getSwComponents()) {
+                                ((Output) currentObjObject.getOutputs()).getSwComponents()) {
                             // set children list to the sources, if any exist
                             if (swCompObj.getId().equals(swCompId)
                                     && swCompObj.getSourceDocument() != null) {
