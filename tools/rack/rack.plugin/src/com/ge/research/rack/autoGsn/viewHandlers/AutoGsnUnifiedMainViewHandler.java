@@ -35,6 +35,7 @@ import com.ge.research.rack.analysis.structures.SparqlConnectionInfo;
 import com.ge.research.rack.analysis.utils.CustomFileUtils;
 import com.ge.research.rack.analysis.utils.CustomStringUtils;
 import com.ge.research.rack.analysis.utils.RackQueryUtils;
+import com.ge.research.rack.analysis.utils.ReportViewUtils;
 import com.ge.research.rack.autoGsn.logic.DataProcessor;
 import com.ge.research.rack.autoGsn.logic.GsnPathInferenceEngine;
 import com.ge.research.rack.autoGsn.structures.GsnNode;
@@ -42,7 +43,6 @@ import com.ge.research.rack.autoGsn.structures.MultiClassPackets.GoalIdAndClass;
 import com.ge.research.rack.autoGsn.utils.AutoGsnGuiUtils;
 import com.ge.research.rack.autoGsn.utils.QueryResultUtils;
 import com.ge.research.rack.autoGsn.viewManagers.AutoGsnViewsManager;
-import com.ge.research.rack.do178c.utils.ReportViewUtils;
 import com.ge.research.rack.views.RackPreferencePage;
 
 import javafx.collections.ObservableList;

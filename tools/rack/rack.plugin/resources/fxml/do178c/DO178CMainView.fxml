@@ -104,7 +104,7 @@
 
                         </GridPane>
 
-                        <BarChart fx:id="chartTableStatus" animated="false" barGap="2.0" categoryGap="4.0" 
+                        <BarChart fx:id="chartStatus" animated="false" barGap="2.0" categoryGap="4.0" 
                                   horizontalGridLinesVisible="false" legendVisible="false" style="-fx-font-size: .8em" 
                                   title="Table Compliance Status" titleSide="BOTTOM" verticalGridLinesVisible="false" 
                                   GridPane.columnIndex="1">
@@ -114,7 +114,7 @@
                             </xAxis>
 
                             <yAxis>
-                                <NumberAxis fx:id="yAxisChartTableStatus" animated="false" 
+                                <NumberAxis fx:id="yAxisChartStatus" animated="false" 
                                             autoRanging="false" label="Objectives" 
                                             minorTickVisible="false" side="LEFT" />
                             </yAxis>
@@ -126,7 +126,7 @@
                 </GridPane>
 
                 <!-- DATA TABLE -->
-                <ListView fx:id="listTables" onMouseClicked="#listTableSelectionAction" GridPane.rowIndex="3" />
+                <ListView fx:id="listBuckets" onMouseClicked="#listTableSelectionAction" GridPane.rowIndex="3" />
 
                 <!-- FETCH BUTTON & LOADING LABEL  -->
                 <VBox GridPane.rowIndex="4">

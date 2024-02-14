@@ -32,17 +32,18 @@
 package com.ge.research.rack.do178c.viewHandlers;
 
 import com.ge.research.rack.analysis.structures.PlanTable;
+import com.ge.research.rack.analysis.utils.ReportViewUtils;
 import com.ge.research.rack.do178c.structures.Activity;
 import com.ge.research.rack.do178c.structures.DataItem;
 import com.ge.research.rack.do178c.structures.Objective;
 import com.ge.research.rack.do178c.structures.Output;
+import com.ge.research.rack.do178c.structures.PsacNode;
 import com.ge.research.rack.do178c.structures.Requirement;
 import com.ge.research.rack.do178c.structures.ReviewLog;
 import com.ge.research.rack.do178c.structures.SwComponent;
 import com.ge.research.rack.do178c.structures.Test;
 import com.ge.research.rack.do178c.utils.LogicUtils;
 import com.ge.research.rack.do178c.utils.PsacNodeUtils;
-import com.ge.research.rack.do178c.utils.ReportViewUtils;
 import com.ge.research.rack.do178c.viewManagers.ReportViewsManager;
 
 import javafx.beans.value.ChangeListener;
@@ -1272,7 +1273,8 @@ public class ReportObjectiveViewHandlerNew {
         currentTableId = tableId;
 
         // set the current table object
-        currentTableObject = PsacNodeUtils.getTableById(ReportViewsManager.reportDataObj, tableId);
+        currentTableObject =
+                PsacNodeUtils.getTableById((PsacNode) ReportViewsManager.reportDataObj, tableId);
 
         // set the current objective ID
         currentObjId = objId;
@@ -1281,7 +1283,7 @@ public class ReportObjectiveViewHandlerNew {
         currentObjObject =
                 (Objective)
                         PsacNodeUtils.getObjectiveById(
-                                ReportViewsManager.reportDataObj, tableId, objId);
+                                (PsacNode) ReportViewsManager.reportDataObj, tableId, objId);
 
         // Set the label text
         labelTableInfo.setText(

@@ -34,10 +34,9 @@ package com.ge.research.rack.arp4754.logic;
 import com.ge.research.rack.analysis.structures.PlanObjective;
 import com.ge.research.rack.analysis.structures.PlanTable;
 import com.ge.research.rack.arp4754.structures.Category;
-import com.ge.research.rack.arp4754.structures.DAPlan;
-import com.ge.research.rack.arp4754.utils.ComplianceUtils;
 import com.ge.research.rack.arp4754.structures.Graph;
 import com.ge.research.rack.arp4754.structures.Output;
+import com.ge.research.rack.arp4754.utils.ComplianceUtils;
 
 /**
  * @author Saswata Paul
@@ -54,12 +53,24 @@ public class ComplianceProcess4 {
 
         // create and add appropriate graphdata (//TODO: add actual code, hardcoded now)
         Category reqWithNoReviews =
-                new Category("No Review", ((Output)objective.getOutputs()).getItemReqObjs().size());
+                new Category(
+                        "No Review", ((Output) objective.getOutputs()).getItemReqObjs().size());
         Category reqWithPassedReviews = new Category("Passed Review", 0);
         Category reqWithFailedReviews = new Category("Failed Review", 0);
-        ((Graph)objective.getGraphs()).getItemReqGraphData().getBuckets().add(reqWithNoReviews);
-        ((Graph)objective.getGraphs()).getItemReqGraphData().getBuckets().add(reqWithPassedReviews);
-        ((Graph)objective.getGraphs()).getItemReqGraphData().getBuckets().add(reqWithFailedReviews);
+
+        if (objective.getGraphs() == null) {
+            objective.setGraphs(new Graph());
+        }
+
+        ((Graph) objective.getGraphs()).getItemReqGraphData().getBuckets().add(reqWithNoReviews);
+        ((Graph) objective.getGraphs())
+                .getItemReqGraphData()
+                .getBuckets()
+                .add(reqWithPassedReviews);
+        ((Graph) objective.getGraphs())
+                .getItemReqGraphData()
+                .getBuckets()
+                .add(reqWithFailedReviews);
 
         objective.setMetrics("");
         return objective;
@@ -83,12 +94,24 @@ public class ComplianceProcess4 {
 
         // create and add appropriate graphdata (//TODO: add actual code, hardcoded now)
         Category reqWithNoReviews =
-                new Category("No Review", ((Output)objective.getOutputs()).getItemReqObjs().size());
+                new Category(
+                        "No Review", ((Output) objective.getOutputs()).getItemReqObjs().size());
         Category reqWithPassedReviews = new Category("Passed Review", 0);
         Category reqWithFailedReviews = new Category("Failed Review", 0);
-        ((Graph)objective.getGraphs()).getItemReqGraphData().getBuckets().add(reqWithNoReviews);
-        ((Graph)objective.getGraphs()).getItemReqGraphData().getBuckets().add(reqWithPassedReviews);
-        ((Graph)objective.getGraphs()).getItemReqGraphData().getBuckets().add(reqWithFailedReviews);
+
+        if (objective.getGraphs() == null) {
+            objective.setGraphs(new Graph());
+        }
+
+        ((Graph) objective.getGraphs()).getItemReqGraphData().getBuckets().add(reqWithNoReviews);
+        ((Graph) objective.getGraphs())
+                .getItemReqGraphData()
+                .getBuckets()
+                .add(reqWithPassedReviews);
+        ((Graph) objective.getGraphs())
+                .getItemReqGraphData()
+                .getBuckets()
+                .add(reqWithFailedReviews);
 
         objective.setMetrics("");
         return objective;
@@ -111,9 +134,7 @@ public class ComplianceProcess4 {
         int numPartialData = 0;
 
         for (int i = 0; i < process.getTabObjectives().size(); i++) {
-
             PlanObjective objective = process.getTabObjectives().get(i);
-
             PlanObjective updatedObjective = new PlanObjective();
 
             switch (objective.getId()) {

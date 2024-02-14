@@ -31,27 +31,20 @@
  */
 package com.ge.research.rack.arp4754.viewHandlers;
 
+import com.ge.research.rack.analysis.handlers.TableViewHandler;
 import com.ge.research.rack.analysis.structures.PlanObjective;
 import com.ge.research.rack.analysis.structures.PlanTable;
 import com.ge.research.rack.analysis.utils.CustomStringUtils;
+import com.ge.research.rack.arp4754.structures.DAPlan;
 import com.ge.research.rack.arp4754.utils.DAPlanUtils;
 import com.ge.research.rack.arp4754.utils.ViewUtils;
 import com.ge.research.rack.arp4754.viewManagers.Arp4754ViewsManager;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.NumberAxis;
+import javafx.fxml.Initializable;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 import java.util.Collections;
@@ -60,29 +53,7 @@ import java.util.List;
 /**
  * @author Saswata Paul
  */
-public class ProcessViewHandler {
-
-    private String currentProcessId;
-
-    private PlanTable<PlanObjective> currentProcessObject;
-
-    // -------- FXML GUI variables below --------------
-    @FXML private Label headerLabel;
-
-    @FXML private Label labelProcessInfo;
-
-    @FXML private Button btnHome;
-    @FXML private Button btnFontInc;
-    @FXML private Button btnFontDec;
-
-    @FXML private ListView<Label> listObjectives;
-
-    @FXML private ComboBox comboFilter;
-
-    @FXML private BarChart<String, Integer> chartObjStatus;
-    @FXML private NumberAxis yAxisChartObjStatus;
-
-    // --------------------------------
+public class ProcessViewHandler extends TableViewHandler<PlanObjective> implements Initializable {
 
     /**
      * Creates and returns a label for the objective lists
@@ -90,11 +61,10 @@ public class ProcessViewHandler {
      * @param objObj
      * @return
      */
+    @Override
     public Label getObjectiveLabel(PlanObjective objObj) {
 
-        Label objLabel = new Label();
-        objLabel.setStyle("-fx-font-weight: bold;");
-
+        Label objLabel = super.getObjectiveLabel(objObj);
         if (objObj.getMetrics().equalsIgnoreCase("TBD")) {
             objLabel.setText(
                     objObj.getId()
@@ -119,15 +89,11 @@ public class ProcessViewHandler {
     }
 
     /** Populates the ojective status chart */
+    @Override
     public void populateObjStatusChart() {
-        // clear the chart
-        chartObjStatus.getData().clear();
+        super.populateObjStatusChart();
 
-        // enable the chart
-        chartObjStatus.setDisable(false);
-        yAxisChartObjStatus.setDisable(false);
-
-        List<Integer> artStats = ViewUtils.getProcessArtifactStats(currentProcessObject);
+        List<Integer> artStats = ViewUtils.getProcessArtifactStats(currentTableObject);
 
         Data<String, Integer> docBar = ViewUtils.createIntDataBar("Documents", artStats.get(0));
         Data<String, Integer> reqBar = ViewUtils.createIntDataBar("Requirements", artStats.get(1));
@@ -182,145 +148,57 @@ public class ProcessViewHandler {
         yAxisChartObjStatus.setTickUnit(1);
     }
 
-    /**
-     * Populates the list of objectives
-     *
-     * @param filterKey
-     */
-    public void populateListObjectives(String filterKey) {
-        // clear old data
-        listObjectives.getItems().clear();
+    @Override
+    protected List<PlanObjective> getCurrentTableObjectives() {
+        return DAPlanUtils.sortObjectiveList(currentTableObject.getTabObjectives());
+    }
 
-        if ((currentProcessObject.getTabObjectives() != null)
-                && (currentProcessObject.getTabObjectives().size() > 0)) {
+    @Override
+    protected PlanTable<PlanObjective> getCurrentTableObject(String tableID) {
+        return DAPlanUtils.getProcessObjectFromList(
+                ((DAPlan) Arp4754ViewsManager.reportDataObj).getProcesses(), tableID);
+    }
 
-            // sort the objective list
-            List<PlanObjective> allObjectiveObjs =
-                    DAPlanUtils.sortObjectiveList(currentProcessObject.getTabObjectives());
-            //            List<PlanObjective> allObjectiveObjs =
-            // currentProcessObject.getObjectives();
+    @Override
+    protected Color getTableInfoFillColor() {
+        return ViewUtils.getProcessColor(currentTableObject);
+    }
 
-            for (PlanObjective objObj : allObjectiveObjs) {
+    @Override
+    protected String getMainViewPath() {
+        return "resources/fxml/arp4754/MainView.fxml";
+    }
 
-                Label objLabel = getObjectiveLabel(objObj);
+    @Override
+    protected void switchObjectiveView(Label selectedLabel) {
+        // get selection
+        String selectedObjective =
+                CustomStringUtils.separateElementIdFromDescription(selectedLabel.getText());
+        System.out.println("The selected Objective: " + selectedObjective);
 
-                if (filterKey.equalsIgnoreCase("All")) {
-                    listObjectives.getItems().add(objLabel);
-                } else if (filterKey.equalsIgnoreCase("Passed") && objObj.isPassed()) {
-                    listObjectives.getItems().add(objLabel);
-                } else if (filterKey.equalsIgnoreCase("Failed")
-                        && !objObj.isPassed()
-                        && !objObj.isNoData()
-                        && !objObj.isPartialData()) {
-                    listObjectives.getItems().add(objLabel);
-                } else if (filterKey.equalsIgnoreCase("Partial") && objObj.isPartialData()) {
-                    listObjectives.getItems().add(objLabel);
-                } else if (filterKey.equalsIgnoreCase("No data") && objObj.isNoData()) {
-                    listObjectives.getItems().add(objLabel);
-                }
-            }
+        // switch to objective view only if the objective has some data
+        if (!DAPlanUtils.getObjectiveObjectFromList(
+                        currentTableObject.getTabObjectives(), selectedObjective)
+                .isNoData()) {
+            // Set the stage with the other fxml
+            FXMLLoader objectiveViewLoader =
+                    Arp4754ViewsManager.setNewFxmlToStage(
+                            "resources/fxml/arp4754/ObjectiveView.fxml");
+
+            // initialize variables in the ReportTableView page
+            ObjectiveViewHandler objectiveViewLoaderClassObj = objectiveViewLoader.getController();
+            objectiveViewLoaderClassObj.prepareView(currentTableId, selectedObjective);
         }
     }
 
-    /**
-     * Used to initialize the variables from the caller view's fxml controller
-     *
-     * @param procId
-     */
-    public void prepareView(String procId) {
-        // set the current table ID
-        currentProcessId = procId;
-
-        // set the current table object
-        currentProcessObject =
-                DAPlanUtils.getProcessObjectFromList(
-                        Arp4754ViewsManager.reportDataObj.getProcesses(), procId);
-
-        // populate objectives list
-        populateListObjectives("All");
-
-        // populate the chart
-        populateObjStatusChart();
-
-        // Set the label text
-        labelProcessInfo.setText(currentProcessId + ": " + currentProcessObject.getDescription());
-
-        // set the label color
-        labelProcessInfo.setTextFill(ViewUtils.getProcessColor(currentProcessObject));
+    @Override
+    protected void setNewFxmlToStage(String path) {
+        Arp4754ViewsManager.setNewFxmlToStage(path);
     }
 
-    @FXML
-    private void initialize() {
-        try {
-            final ImageView icon = ViewUtils.loadGeIcon();
-            icon.setPreserveRatio(true);
-            headerLabel.setGraphic(icon);
-        } catch (Exception e) {
-        }
-
-        // set SINGLE Selection Model for ListView of Goals
-        listObjectives.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-
-        // add the categories to the combo
-        comboFilter.getItems().add("All");
-        comboFilter.getItems().add("Passed");
-        comboFilter.getItems().add("Failed");
-        comboFilter.getItems().add("No Data");
-        comboFilter.getItems().add("Partial");
-    }
-
-    @FXML
-    private void btnHomeAction(ActionEvent event) throws Exception {
-        // Set the stage with the other fxml
-        Arp4754ViewsManager.setNewFxmlToStage("resources/fxml/arp4754/MainView.fxml");
-    }
-
-    @FXML
-    private void btnFontIncAction(ActionEvent event) throws Exception {
+    @Override
+    protected void increaseGlobalFontSize(boolean enable) {
         System.out.println("increase font btn pressed");
-        Arp4754ViewsManager.increaseGlobalFontSize(true);
-    }
-
-    @FXML
-    private void btnFontDecAction(ActionEvent event) throws Exception {
-        System.out.println("decrease font btn pressed");
-        Arp4754ViewsManager.increaseGlobalFontSize(false);
-    }
-
-    @FXML
-    private void comboFilterAction(ActionEvent event) throws Exception {
-        String key = (String) comboFilter.getValue();
-
-        // Clear and repopulate the listObjectives depending on key
-        populateListObjectives(key);
-    }
-
-    @FXML
-    private void listObjectivesSelectionAction(MouseEvent event) {
-        // The selected label
-        Label selectedLabel = listObjectives.getSelectionModel().getSelectedItem();
-
-        if (selectedLabel != null) {
-
-            // get selection
-            String selectedObjective =
-                    CustomStringUtils.separateElementIdFromDescription(selectedLabel.getText());
-            System.out.println("The selected Objective: " + selectedObjective);
-
-            // switch to objective view only if the objective has some data
-            if (!DAPlanUtils.getObjectiveObjectFromList(
-                            currentProcessObject.getTabObjectives(), selectedObjective)
-                    .isNoData()) {
-                // Set the stage with the other fxml
-                FXMLLoader objectiveViewLoader =
-                        Arp4754ViewsManager.setNewFxmlToStage(
-                                "resources/fxml/arp4754/ObjectiveView.fxml");
-
-                // initialize variables in the ReportTableView page
-                ObjectiveViewHandler objectiveViewLoaderClassObj =
-                        objectiveViewLoader.getController();
-                objectiveViewLoaderClassObj.prepareView(currentProcessId, selectedObjective);
-            }
-        }
+        Arp4754ViewsManager.increaseGlobalFontSize(enable);
     }
 }

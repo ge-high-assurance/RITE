@@ -31,28 +31,21 @@
  */
 package com.ge.research.rack.do178c.viewHandlers;
 
-import com.ge.research.rack.analysis.structures.PlanObjective;
+import com.ge.research.rack.analysis.handlers.TableViewHandler;
 import com.ge.research.rack.analysis.structures.PlanTable;
 import com.ge.research.rack.analysis.utils.CustomStringUtils;
+import com.ge.research.rack.analysis.utils.ReportViewUtils;
 import com.ge.research.rack.do178c.structures.Objective;
+import com.ge.research.rack.do178c.structures.PsacNode;
 import com.ge.research.rack.do178c.utils.PsacNodeUtils;
-import com.ge.research.rack.do178c.utils.ReportViewUtils;
 import com.ge.research.rack.do178c.viewManagers.ReportViewsManager;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.NumberAxis;
+import javafx.fxml.Initializable;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 import java.util.Collections;
 import java.util.List;
@@ -60,29 +53,8 @@ import java.util.List;
 /**
  * @author Saswata Paul
  */
-public class ReportTableViewHandlerNew {
-
-    private String currentTableId;
-
-    private PlanTable<Objective> currentTableObject;
-
-    // -------- FXML GUI variables below --------------
-    @FXML private Label headerLabel;
-
-    @FXML private Label labelTableInfo;
-
-    @FXML private Button btnHome;
-    @FXML private Button btnFontInc;
-    @FXML private Button btnFontDec;
-
-    @FXML private ListView<Label> listObjectives;
-
-    @FXML private ComboBox comboFilter;
-
-    @FXML private BarChart<String, Integer> chartObjStatus;
-    @FXML private NumberAxis yAxisChartObjStatus;
-
-    // --------------------------------
+public class ReportTableViewHandlerNew extends TableViewHandler<Objective>
+        implements Initializable {
 
     /**
      * Creates and returns a label for the objective lists
@@ -90,17 +62,17 @@ public class ReportTableViewHandlerNew {
      * @param objObj
      * @return
      */
-    public Label getObjectiveLabel(PlanObjective objObj) {
+    @Override
+    public Label getObjectiveLabel(Objective objObj) {
 
-        double passPercent =
-                ((double) objObj.getNumPassed()
-                                / (objObj.getNumPassed()
-                                        + objObj.getNumFailed()
-                                        + objObj.getNumNoData()))
-                        * 100.00;
+        Label objLabel = super.getObjectiveLabel(objObj);
 
-        Label objLabel = new Label();
-        objLabel.setStyle("-fx-font-weight: bold;");
+        // double passPercent =
+        //        ((double) objObj.getNumPassed()
+        //                        / (objObj.getNumPassed()
+        //                                + objObj.getNumFailed()
+        //                                + objObj.getNumNoData()))
+        //                * 100.00;
 
         objLabel.setText(
                 objObj.getId()
@@ -109,57 +81,14 @@ public class ReportTableViewHandlerNew {
                         + " ("
                         + objObj.getMetrics()
                         + ")");
-        objLabel.setTextFill(ReportViewUtils.getObjectiveColor((Objective) objObj));
+        objLabel.setTextFill(ReportViewUtils.getObjectiveColor(objObj));
         return objLabel;
     }
 
-    /**
-     * Populates the list of objectives
-     *
-     * @param filterKey
-     */
-    public void populateListObjectives(String filterKey) {
-        // clear old data
-        listObjectives.getItems().clear();
-
-        if ((currentTableObject.getTabObjectives() != null)
-                && (currentTableObject.getTabObjectives().size() > 0)) {
-
-            for (PlanObjective objObj : currentTableObject.getTabObjectives()) {
-                //                Label objLabel = new Label();
-                //                objLabel.setStyle("-fx-font-weight: bold;");
-                //
-                //                objLabel.setText(objObj.getId() + ": " + objObj.getDescription());
-                //                objLabel.setTextFill(getObjectiveColor(objObj));
-
-                Label objLabel = getObjectiveLabel(objObj);
-
-                if (filterKey.equalsIgnoreCase("All")) {
-                    listObjectives.getItems().add(objLabel);
-                } else if (filterKey.equalsIgnoreCase("Passed") && objObj.isPassed()) {
-                    listObjectives.getItems().add(objLabel);
-                } else if (filterKey.equalsIgnoreCase("Failed")
-                        && !objObj.isPassed()
-                        && !objObj.isNoData()
-                        && !objObj.isPartialData()) {
-                    listObjectives.getItems().add(objLabel);
-                } else if (filterKey.equalsIgnoreCase("Partial") && objObj.isPartialData()) {
-                    listObjectives.getItems().add(objLabel);
-                } else if (filterKey.equalsIgnoreCase("No data") && objObj.isNoData()) {
-                    listObjectives.getItems().add(objLabel);
-                }
-            }
-        }
-    }
-
-    /** Populates the ojective status chart */
+    /** Populates the objective status chart */
+    @Override
     public void populateObjStatusChart() {
-        // clear the chart
-        chartObjStatus.getData().clear();
-
-        // enable the chart
-        chartObjStatus.setDisable(false);
-        yAxisChartObjStatus.setDisable(false);
+        super.populateObjStatusChart();
 
         List<Integer> artStats = ReportViewUtils.getTableArtifactStats(currentTableObject);
 
@@ -215,107 +144,54 @@ public class ReportTableViewHandlerNew {
         yAxisChartObjStatus.setTickUnit(1);
     }
 
-    /**
-     * Used to initialize the variables from the caller view's fxml controller
-     *
-     * @param tableId
-     */
-    public void prepareView(String tableId) {
-        // set the current table ID
-        currentTableId = tableId;
-
-        // set the current table object
-        currentTableObject = PsacNodeUtils.getTableById(ReportViewsManager.reportDataObj, tableId);
-
-        // populate objectives list
-        populateListObjectives("All");
-
-        // populate the chart
-        populateObjStatusChart();
-
-        // Set the label text
-        labelTableInfo.setText(
-                "Table " + currentTableId + ": " + currentTableObject.getDescription());
-
-        // set the label color
-        labelTableInfo.setTextFill(ReportViewUtils.getTableColor(currentTableObject));
+    @Override
+    protected PlanTable<Objective> getCurrentTableObject(String tableID) {
+        return PsacNodeUtils.getTableById((PsacNode) ReportViewsManager.reportDataObj, tableID);
     }
 
-    @FXML
-    private void initialize() {
-        try {
-            final ImageView icon = ReportViewUtils.loadGeIcon();
-            icon.setPreserveRatio(true);
-            headerLabel.setGraphic(icon);
-        } catch (Exception e) {
+    @Override
+    protected Color getTableInfoFillColor() {
+        return ReportViewUtils.getTableColor(currentTableObject);
+    }
+
+    @Override
+    protected String getMainViewPath() {
+        return "resources/fxml/do178c/DO178CMainView.fxml";
+    }
+
+    @Override
+    protected void switchObjectiveView(Label selectedLabel) {
+        // get selection
+        String selectedObjective =
+                CustomStringUtils.separateElementIdFromDescription(selectedLabel.getText());
+        System.out.println("The selected Objective: " + selectedObjective);
+
+        // switch to objective view only if the objective has some data
+        if (!PsacNodeUtils.getObjectiveById(
+                        (PsacNode) ReportViewsManager.reportDataObj,
+                        currentTableId,
+                        selectedObjective)
+                .isNoData()) {
+            // Set the stage with the other fxml
+            FXMLLoader objectiveViewLoader =
+                    ReportViewsManager.setNewFxmlToStage(
+                            "resources/fxml/do178c/DO178CObjectiveView.fxml");
+
+            // initialize variables in the ReportTableView page
+            ReportObjectiveViewHandlerNew objectiveViewLoaderClassObj =
+                    objectiveViewLoader.getController();
+            objectiveViewLoaderClassObj.prepareView(currentTableId, selectedObjective);
         }
-
-        // set SINGLE Selection Model for ListView of Goals
-        listObjectives.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-
-        // add the categories to the combo
-        comboFilter.getItems().add("All");
-        comboFilter.getItems().add("Passed");
-        comboFilter.getItems().add("Failed");
-        comboFilter.getItems().add("No Data");
-        comboFilter.getItems().add("Partial");
     }
 
-    @FXML
-    private void btnHomeAction(ActionEvent event) throws Exception {
-
-        // Set the stage with the other fxml
-        ReportViewsManager.setNewFxmlToStage("resources/fxml/do178c/DO178CMainView.fxml");
+    @Override
+    protected void setNewFxmlToStage(String path) {
+        ReportViewsManager.setNewFxmlToStage(path);
     }
 
-    @FXML
-    private void btnFontIncAction(ActionEvent event) throws Exception {
+    @Override
+    protected void increaseGlobalFontSize(boolean enable) {
         System.out.println("increase font btn pressed");
-        ReportViewsManager.increaseGlobalFontSize(true);
-    }
-
-    @FXML
-    private void btnFontDecAction(ActionEvent event) throws Exception {
-        System.out.println("decrease font btn pressed");
-        ReportViewsManager.increaseGlobalFontSize(false);
-    }
-
-    @FXML
-    private void comboFilterAction(ActionEvent event) throws Exception {
-
-        String key = (String) comboFilter.getValue();
-
-        // Clear and repopulate the listObjectives depending on key
-        populateListObjectives(key);
-    }
-
-    @FXML
-    private void listObjectivesSelectionAction(MouseEvent event) {
-
-        // The selected label
-        Label selectedLabel = listObjectives.getSelectionModel().getSelectedItem();
-
-        if (selectedLabel != null) {
-
-            // get selection
-            String selectedObjective =
-                    CustomStringUtils.separateElementIdFromDescription(selectedLabel.getText());
-            System.out.println("The selected Objective: " + selectedObjective);
-
-            // switch to objective view only if the objective has some data
-            if (!PsacNodeUtils.getObjectiveById(
-                            ReportViewsManager.reportDataObj, currentTableId, selectedObjective)
-                    .isNoData()) {
-                // Set the stage with the other fxml
-                FXMLLoader objectiveViewLoader =
-                        ReportViewsManager.setNewFxmlToStage(
-                                "resources/fxml/do178c/DO178CObjectiveView.fxml");
-
-                // initialize variables in the ReportTableView page
-                ReportObjectiveViewHandlerNew objectiveViewLoaderClassObj =
-                        objectiveViewLoader.getController();
-                objectiveViewLoaderClassObj.prepareView(currentTableId, selectedObjective);
-            }
-        }
+        ReportViewsManager.increaseGlobalFontSize(enable);
     }
 }

@@ -67,7 +67,7 @@ public class MainViewHandler extends com.ge.research.rack.analysis.handlers.Main
 
     @Override
     protected String bucketLabel() {
-        return new String("Process-");
+        return new String(DAPlanUtils.PROCESS_LABEL);
     }
 
     /**
@@ -122,7 +122,7 @@ public class MainViewHandler extends com.ge.research.rack.analysis.handlers.Main
     @Override
     protected String swLabel() {
         // default value; Subclass to override
-        return "System ID: " + Arp4754ViewsManager.reportDataObj.getSystem();
+        return "System ID: " + ((DAPlan) Arp4754ViewsManager.reportDataObj).getSystem();
     }
 
     /** populates the chart */
@@ -132,10 +132,10 @@ public class MainViewHandler extends com.ge.research.rack.analysis.handlers.Main
 
         // to store the highest value for scaling
         int high = -1;
-
         // get list of processes
         List<PlanTable<PlanObjective>> allProcessObjs =
-                DAPlanUtils.sortProcessList(Arp4754ViewsManager.reportDataObj.getProcesses());
+                DAPlanUtils.sortProcessList(
+                        ((DAPlan) Arp4754ViewsManager.reportDataObj).getProcesses());
 
         // Group bars by table id
         XYChart.Series<String, Integer> passData = new XYChart.Series<String, Integer>();
@@ -183,8 +183,7 @@ public class MainViewHandler extends com.ge.research.rack.analysis.handlers.Main
         List<Data<String, Integer>> partialBars = new ArrayList<Data<String, Integer>>();
         for (PlanTable<PlanObjective> procObj : allProcessObjs) {
             Data<String, Integer> partialBar =
-                    ViewUtils.createIntDataBar(
-                            procObj.getId(), procObj.getNumObjPartial());
+                    ViewUtils.createIntDataBar(procObj.getId(), procObj.getNumObjPartial());
             partialData.getData().add(partialBar);
             partialBars.add(partialBar);
             if (high < procObj.getNumObjPartial()) {
@@ -248,7 +247,8 @@ public class MainViewHandler extends com.ge.research.rack.analysis.handlers.Main
 
         // get list of processes
         List<PlanTable<PlanObjective>> allProcessObjs =
-                DAPlanUtils.sortProcessList(Arp4754ViewsManager.reportDataObj.getProcesses());
+                DAPlanUtils.sortProcessList(
+                        ((DAPlan) Arp4754ViewsManager.reportDataObj).getProcesses());
 
         for (PlanTable<PlanObjective> procObj : allProcessObjs) {
             Label procLabel = getProcessLabel(procObj);
@@ -316,7 +316,7 @@ public class MainViewHandler extends com.ge.research.rack.analysis.handlers.Main
 
         // If the report variables have already been initialized
         if (Arp4754ViewsManager.reportDataObj != null
-                && Arp4754ViewsManager.reportDataObj.getProcesses() != null) {
+                && ((DAPlan) Arp4754ViewsManager.reportDataObj).getProcesses() != null) {
             populateViewElements();
         } else {
             // Initialize the variables
@@ -402,7 +402,8 @@ public class MainViewHandler extends com.ge.research.rack.analysis.handlers.Main
             System.out.println("The selected Table: " + selectedProc);
 
             if (!DAPlanUtils.getProcessObjectFromList(
-                            Arp4754ViewsManager.reportDataObj.getProcesses(), selectedProc)
+                            ((DAPlan) Arp4754ViewsManager.reportDataObj).getProcesses(),
+                            selectedProc)
                     .isNoData()) {
                 // Set the stage with the other fxml
                 FXMLLoader processViewLoader =

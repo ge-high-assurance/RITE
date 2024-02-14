@@ -35,9 +35,9 @@ import com.ge.research.rack.analysis.structures.PlanObjective;
 import com.ge.research.rack.analysis.structures.PlanTable;
 import com.ge.research.rack.arp4754.structures.Category;
 import com.ge.research.rack.arp4754.structures.DAPlan;
+import com.ge.research.rack.arp4754.structures.Evidence;
 import com.ge.research.rack.arp4754.structures.Graph;
 import com.ge.research.rack.arp4754.structures.Output;
-import com.ge.research.rack.arp4754.structures.Evidence;
 import com.ge.research.rack.arp4754.utils.DAPlanUtils;
 import com.ge.research.rack.arp4754.utils.ViewUtils;
 import com.ge.research.rack.arp4754.viewManagers.Arp4754ViewsManager;
@@ -65,21 +65,15 @@ import javafx.scene.input.MouseEvent;
  * @author Saswata Paul
  */
 public class ObjectiveViewHandler {
-    private String currentProcessId;
+    protected String currentProcessId;
+    protected PlanTable<PlanObjective> currentProcessObject;
 
-    private PlanTable<PlanObjective> currentProcessObject;
-
-    private String currentObjId;
-
-    private PlanObjective currentObjObject;
-
-    private String interfaceChildrenRelation;
-
-    private String itemChildrenRelation;
-
-    private String requirementChildrenRelation;
-
-    private String systemChildrenRelation;
+    protected String currentObjId;
+    protected PlanObjective currentObjObject;
+    protected String interfaceChildrenRelation;
+    protected String itemChildrenRelation;
+    protected String requirementChildrenRelation;
+    protected String systemChildrenRelation;
 
     // -------- FXML GUI variables below --------------
     @FXML private Label headerLabel;
@@ -127,11 +121,8 @@ public class ObjectiveViewHandler {
     @FXML private ListView systemChildrenList;
 
     @FXML private Tab tabTest;
-
     @FXML private Tab tabReview;
-
     @FXML private Tab tabAnalysis;
-
     @FXML private Tab tabVerification;
 
     // -------------------------------------------------------------------
@@ -165,7 +156,7 @@ public class ObjectiveViewHandler {
 
         System.out.println("Objective " + currentObjObject.getId());
 
-        if (((Graph)currentObjObject.getGraphs()).getSysReqGraphData().getBuckets().size() > 0) {
+        if (((Graph) currentObjObject.getGraphs()).getSysReqGraphData().getBuckets().size() > 0) {
 
             requirementChart.getData().clear();
             requirementChart.setVisible(true);
@@ -173,7 +164,8 @@ public class ObjectiveViewHandler {
             XYChart.Series<String, Integer> stat = new XYChart.Series<String, Integer>();
             int maxVal = 0;
 
-            for (Category bucket : ((Graph)currentObjObject.getGraphs()).getSysReqGraphData().getBuckets()) {
+            for (Category bucket :
+                    ((Graph) currentObjObject.getGraphs()).getSysReqGraphData().getBuckets()) {
 
                 System.out.println(bucket.getName());
 
@@ -188,7 +180,7 @@ public class ObjectiveViewHandler {
             requirementChart.getData().add(stat);
 
             requirementChart.setTitle(
-            		((Graph)currentObjObject.getGraphs()).getSysReqGraphData().getGraphTitle());
+                    ((Graph) currentObjObject.getGraphs()).getSysReqGraphData().getGraphTitle());
             // scaling
             // *** This can help make integral ticks on Y axis ***
             yAxisRequirementChart.setLowerBound(0);
@@ -196,7 +188,7 @@ public class ObjectiveViewHandler {
             yAxisRequirementChart.setTickUnit(1);
         }
 
-        if (((Graph)currentObjObject.getGraphs()).getSystemGraphData().getBuckets().size() > 0) {
+        if (((Graph) currentObjObject.getGraphs()).getSystemGraphData().getBuckets().size() > 0) {
 
             systemChart.getData().clear();
             systemChart.setVisible(true);
@@ -204,7 +196,8 @@ public class ObjectiveViewHandler {
             XYChart.Series<String, Integer> stat = new XYChart.Series<String, Integer>();
             int maxVal = 0;
 
-            for (Category bucket : ((Graph)currentObjObject.getGraphs()).getSystemGraphData().getBuckets()) {
+            for (Category bucket :
+                    ((Graph) currentObjObject.getGraphs()).getSystemGraphData().getBuckets()) {
 
                 System.out.println(bucket.getName());
 
@@ -218,7 +211,8 @@ public class ObjectiveViewHandler {
 
             systemChart.getData().add(stat);
 
-            systemChart.setTitle(((Graph)currentObjObject.getGraphs()).getSystemGraphData().getGraphTitle());
+            systemChart.setTitle(
+                    ((Graph) currentObjObject.getGraphs()).getSystemGraphData().getGraphTitle());
             // scaling
             // *** This can help make integral ticks on Y axis ***
             yAxisSystemChart.setLowerBound(0);
@@ -226,7 +220,8 @@ public class ObjectiveViewHandler {
             yAxisSystemChart.setTickUnit(1);
         }
 
-        if (((Graph)currentObjObject.getGraphs()).getInterfaceGraphData().getBuckets().size() > 0) {
+        if (((Graph) currentObjObject.getGraphs()).getInterfaceGraphData().getBuckets().size()
+                > 0) {
 
             interfaceChart.getData().clear();
             interfaceChart.setVisible(true);
@@ -235,7 +230,7 @@ public class ObjectiveViewHandler {
             int maxVal = 0;
 
             for (Category bucket :
-            	((Graph)currentObjObject.getGraphs()).getInterfaceGraphData().getBuckets()) {
+                    ((Graph) currentObjObject.getGraphs()).getInterfaceGraphData().getBuckets()) {
 
                 System.out.println(bucket.getName());
 
@@ -250,7 +245,7 @@ public class ObjectiveViewHandler {
             interfaceChart.getData().add(stat);
 
             interfaceChart.setTitle(
-            		((Graph)currentObjObject.getGraphs()).getInterfaceGraphData().getGraphTitle());
+                    ((Graph) currentObjObject.getGraphs()).getInterfaceGraphData().getGraphTitle());
             // scaling
             // *** This can help make integral ticks on Y axis ***
             yAxisInterfaceChart.setLowerBound(0);
@@ -258,7 +253,7 @@ public class ObjectiveViewHandler {
             yAxisInterfaceChart.setTickUnit(1);
         }
 
-        if (((Graph)currentObjObject.getGraphs()).getItemReqGraphData().getBuckets().size() > 0) {
+        if (((Graph) currentObjObject.getGraphs()).getItemReqGraphData().getBuckets().size() > 0) {
 
             requirementChart.getData().clear();
             requirementChart.setVisible(true);
@@ -267,7 +262,7 @@ public class ObjectiveViewHandler {
             int maxVal = 0;
 
             for (Category bucket :
-            	((Graph)currentObjObject.getGraphs()).getItemReqGraphData().getBuckets()) {
+                    ((Graph) currentObjObject.getGraphs()).getItemReqGraphData().getBuckets()) {
 
                 System.out.println(bucket.getName());
 
@@ -282,7 +277,7 @@ public class ObjectiveViewHandler {
             requirementChart.getData().add(stat);
 
             requirementChart.setTitle(
-            		((Graph)currentObjObject.getGraphs()).getItemReqGraphData().getGraphTitle());
+                    ((Graph) currentObjObject.getGraphs()).getItemReqGraphData().getGraphTitle());
             // scaling
             // *** This can help make integral ticks on Y axis ***
             yAxisRequirementChart.setLowerBound(0);
@@ -335,7 +330,7 @@ public class ObjectiveViewHandler {
 
         if (currentObjObject.getId().equalsIgnoreCase("objective-2-5")) {
             for (Evidence sysDesDesc :
-                    ((Output)currentObjObject.getOutputs()).getSystemDesignDescriptionObjs()) {
+                    ((Output) currentObjObject.getOutputs()).getSystemDesignDescriptionObjs()) {
                 Label evidenceLabel = new Label();
 
                 String evidenceText = sysDesDesc.getId() + " | " + sysDesDesc.getURL();
@@ -346,7 +341,7 @@ public class ObjectiveViewHandler {
         }
 
         if (currentObjObject.getId().equalsIgnoreCase("objective-1-1")) {
-            for (Evidence document : ((Output)currentObjObject.getOutputs()).getDocumentObjs()) {
+            for (Evidence document : ((Output) currentObjObject.getOutputs()).getDocumentObjs()) {
                 System.out.println(document.getId());
                 if (document.getId().equalsIgnoreCase("CertificationPlan")
                         || document.getId().equalsIgnoreCase("SafetyProgramPlan")
@@ -376,7 +371,7 @@ public class ObjectiveViewHandler {
         interfaceChildrenRelation = "I/O";
 
         // TODO: objective-based setting of children
-        for (Evidence intrface : ((Output)currentObjObject.getOutputs()).getInterfaceObjs()) {
+        for (Evidence intrface : ((Output) currentObjObject.getOutputs()).getInterfaceObjs()) {
             if (filterKey.equalsIgnoreCase("All")
                     && ((searchKey == null) || (intrface.getId().contains(searchKey)))) {
                 Label evidenceLabel = new Label();
@@ -410,7 +405,7 @@ public class ObjectiveViewHandler {
         // store children releationship for this objective
         itemChildrenRelation = "";
 
-        for (Evidence item : ((Output)currentObjObject.getOutputs()).getItemObjs()) {
+        for (Evidence item : ((Output) currentObjObject.getOutputs()).getItemObjs()) {
             if (filterKey.equalsIgnoreCase("All")
                     && ((searchKey == null) || (item.getId().contains(searchKey)))) {
                 Label evidenceLabel = new Label();
@@ -433,7 +428,7 @@ public class ObjectiveViewHandler {
             // store children releationship for this objective
             requirementChildrenRelation = "AllocatedToSystem";
 
-            for (Evidence sysReq : ((Output)currentObjObject.getOutputs()).getSysReqObjs()) {
+            for (Evidence sysReq : ((Output) currentObjObject.getOutputs()).getSysReqObjs()) {
                 if (filterKey.equalsIgnoreCase("All")
                         && ((searchKey == null) || (sysReq.getId().contains(searchKey)))) {
                     Label evidenceLabel = new Label();
@@ -457,7 +452,7 @@ public class ObjectiveViewHandler {
             // store children releationship for this objective
             requirementChildrenRelation = "Allocated To Item";
 
-            for (Evidence itemReq : ((Output)currentObjObject.getOutputs()).getItemReqObjs()) {
+            for (Evidence itemReq : ((Output) currentObjObject.getOutputs()).getItemReqObjs()) {
                 if (filterKey.equalsIgnoreCase("All")
                         && ((searchKey == null) || (itemReq.getId().contains(searchKey)))) {
                     Label evidenceLabel = new Label();
@@ -572,7 +567,7 @@ public class ObjectiveViewHandler {
             // store children releationship for this objective
             requirementChildrenRelation = "Reviews";
 
-            for (Evidence itemReq : ((Output)currentObjObject.getOutputs()).getItemReqObjs()) {
+            for (Evidence itemReq : ((Output) currentObjObject.getOutputs()).getItemReqObjs()) {
                 if (filterKey.equalsIgnoreCase("All")
                         && ((searchKey == null) || (itemReq.getId().contains(searchKey)))) {
                     Label evidenceLabel = new Label();
@@ -605,7 +600,7 @@ public class ObjectiveViewHandler {
         systemChildrenRelation = "Interfaces";
 
         // TODO: objective-based setting of children
-        for (Evidence system : ((Output)currentObjObject.getOutputs()).getSystemObjs()) {
+        for (Evidence system : ((Output) currentObjObject.getOutputs()).getSystemObjs()) {
             if (filterKey.equalsIgnoreCase("All")
                     && ((searchKey == null) || (system.getId().contains(searchKey)))) {
                 if (system.getType().equalsIgnoreCase("System")) { // exclude items
@@ -626,7 +621,8 @@ public class ObjectiveViewHandler {
 
     public void populateTabDocument() {
         if (currentObjObject.getId().equalsIgnoreCase("objective-2-5")) {
-            if (((Output)currentObjObject.getOutputs()).getSystemDesignDescriptionObjs().size() > 0) {
+            if (((Output) currentObjObject.getOutputs()).getSystemDesignDescriptionObjs().size()
+                    > 0) {
                 tabDocument.setDisable(false);
                 populateListDocument();
             }
@@ -641,7 +637,7 @@ public class ObjectiveViewHandler {
 
     public void populateTabInterface() {
         if (currentObjObject.getId().equalsIgnoreCase("objective-2-2")) {
-            if (((Output)currentObjObject.getOutputs()).getInterfaceObjs().size() > 0) {
+            if (((Output) currentObjObject.getOutputs()).getInterfaceObjs().size() > 0) {
                 tabInterface.setDisable(false);
                 populateListInterface("All", null);
             }
@@ -650,7 +646,7 @@ public class ObjectiveViewHandler {
 
     public void populateTabItem() {
         if (currentObjObject.getId().equalsIgnoreCase("objective-2-6")) {
-            if (((Output)currentObjObject.getOutputs()).getItemObjs().size() > 0) {
+            if (((Output) currentObjObject.getOutputs()).getItemObjs().size() > 0) {
                 tabItem.setDisable(false);
                 populateListItem("All", null);
             }
@@ -663,10 +659,10 @@ public class ObjectiveViewHandler {
                 || currentObjObject.getId().equalsIgnoreCase("objective-2-6")
                 || currentObjObject.getId().equalsIgnoreCase("objective-4-1")
                 || currentObjObject.getId().equalsIgnoreCase("objective-4-4")) {
-            if ((((Output)currentObjObject.getOutputs()).getDerItemReqObjs().size() > 0)
-                    || (((Output)currentObjObject.getOutputs()).getDerSysReqObjs().size() > 0)
-                    || (((Output)currentObjObject.getOutputs()).getItemReqObjs().size() > 0)
-                    || (((Output)currentObjObject.getOutputs()).getSysReqObjs().size() > 0)) {
+            if ((((Output) currentObjObject.getOutputs()).getDerItemReqObjs().size() > 0)
+                    || (((Output) currentObjObject.getOutputs()).getDerSysReqObjs().size() > 0)
+                    || (((Output) currentObjObject.getOutputs()).getItemReqObjs().size() > 0)
+                    || (((Output) currentObjObject.getOutputs()).getSysReqObjs().size() > 0)) {
                 tabRequirement.setDisable(false);
 
                 populateListRequirement("All", null);
@@ -678,7 +674,7 @@ public class ObjectiveViewHandler {
 
     public void populateTabSystem() {
         if (currentObjObject.getId().equalsIgnoreCase("objective-2-2")) {
-            if (((Output)currentObjObject.getOutputs()).getSystemObjs().size() > 0) {
+            if (((Output) currentObjObject.getOutputs()).getSystemObjs().size() > 0) {
                 tabSystem.setDisable(false);
                 populateListSystem("All", null);
             }
@@ -708,9 +704,10 @@ public class ObjectiveViewHandler {
         currentObjId = objId;
         currentProcessObject =
                 DAPlanUtils.getProcessObjectFromList(
-                        Arp4754ViewsManager.reportDataObj.getProcesses(), procId);
+                        ((DAPlan) Arp4754ViewsManager.reportDataObj).getProcesses(), procId);
         currentObjObject =
-                DAPlanUtils.getObjectiveObjectFromList(currentProcessObject.getTabObjectives(), objId);
+                DAPlanUtils.getObjectiveObjectFromList(
+                        currentProcessObject.getTabObjectives(), objId);
 
         // Set the label text
         labelProcessInfo.setText(
@@ -721,7 +718,10 @@ public class ObjectiveViewHandler {
 
         // Set the info label
         labelObjInfo.setText(
-                "Objective " + currentObjId + ": " + currentObjObject.getDescription().replace("\"", ""));
+                "Objective "
+                        + currentObjId
+                        + ": "
+                        + currentObjObject.getDescription().replace("\"", ""));
 
         // set the label color
         labelObjInfo.setTextFill(ViewUtils.getObjectiveColor(currentObjObject));
@@ -846,7 +846,8 @@ public class ObjectiveViewHandler {
                             requirementChildrenLabel.setText("Traces:");
 
                             // find the requirement object
-                            for (Evidence reqObj : ((Output)currentObjObject.getOutputs()).getItemReqObjs()) {
+                            for (Evidence reqObj :
+                                    ((Output) currentObjObject.getOutputs()).getItemReqObjs()) {
                                 // set children list to the sources, if any exist
                                 if (reqObj.getId().equals(reqId) && reqObj.getTracesUp() != null) {
                                     for (Evidence trace : reqObj.getTracesUp()) {
@@ -866,7 +867,8 @@ public class ObjectiveViewHandler {
                             requirementChildrenLabel.setText("Allocations:");
 
                             // find the requirement object
-                            for (Evidence reqObj : ((Output)currentObjObject.getOutputs()).getItemReqObjs()) {
+                            for (Evidence reqObj :
+                                    ((Output) currentObjObject.getOutputs()).getItemReqObjs()) {
                                 // set children list to the sources, if any exist
                                 if (reqObj.getId().equals(reqId) && reqObj.getTracesUp() != null) {
                                     for (Evidence allocation : reqObj.getAllocatedTo()) {

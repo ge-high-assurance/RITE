@@ -1216,7 +1216,8 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                                                                                 .get(
                                                                                         indexofExistingTable)
                                                                                 .getTabObjectives()
-                                                                                .get(indexofExistingObjective))
+                                                                                .get(
+                                                                                        indexofExistingObjective))
                                                                 .getObjActivities()
                                                                 .get(indexofExistingActivity)
                                                                 .getPerforms(),
@@ -1698,7 +1699,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                 CustomStringUtils.getCSVColumnIndex(subddtToSrdCols, "identifier_subdd_req");
         int srsIdCol = CustomStringUtils.getCSVColumnIndex(subddtToSrdCols, "identifier_srs_req");
 
-        //int counter = 1;
+        // int counter = 1;
 
         for (String[] row : allSUBDD) {
             if (row[subddIdCol] != null) {
@@ -1731,7 +1732,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                     if ((row2.length > subddIdCol2) && (row2.length > srsIdCol)) {
                         //        				System.out.println("Finding object for " + row2[srsIdCol] + "
                         // iteration number: " + counter);
-                        //counter++;
+                        // counter++;
 
                         if (row2[subddIdCol2].equals(row[subddIdCol])) { // if relevant to the req
 
@@ -1776,7 +1777,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         int reqCol =
                 CustomStringUtils.getCSVColumnIndex(swcomponentToReqCols, "identifier_requirement");
 
-        //int counter = 1;
+        // int counter = 1;
         for (String[] row : allSWCOMPS) {
             if (row[swcompIdCol] != null
                     && (LogicUtils.findSwCompObjById(allSwCompObjs, row[swcompIdCol])
@@ -1795,7 +1796,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                     if ((row2.length > swcompIdCol) && (row2.length > reqCol)) {
                         //                         System.out.println("Finding wasimpactedby for " +
                         // row2[swcompIdCol] + "iteration number: " + counter);
-                        //counter++;
+                        // counter++;
 
                         if (row2[swcompIdCol].equals(
                                 row[swcompIdCol])) { // if relevant to the swComp in question

@@ -31,17 +31,15 @@
  */
 package com.ge.research.rack.arp4754.viewManagers;
 
+import com.ge.research.rack.analysis.managers.ViewsManager;
 import com.ge.research.rack.arp4754.structures.DAPlan;
 
-import javafx.application.Application;
-import javafx.application.HostServices;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
@@ -53,48 +51,15 @@ import java.net.URL;
 /**
  * @author Saswata Paul
  */
-public class Arp4754ViewsManager extends Application {
+public class Arp4754ViewsManager extends ViewsManager {
 
     private static final String FXML_FILE_PATH = "resources/fxml/arp4754/MainView.fxml";
     private static final String REPORT_TITLE = "ARP-4754 Compliance Report";
-    private static double DEFAULT_FONT_SIZE_PX = 20;
-    private static final double MIN_HEIGHT_PX = 600;
-    private static final double MIN_WIDTH_PX = 800;
 
-    // Stores the stage where all main scenes for the application will be staged
-    public static Stage stage;
-
-    // These variables will store data for all views in all instances of Report Application
-    public static DAPlan reportDataObj;
-
-    // stores the current font size at any time
-    public static double currentFontSize;
-
-    // This will be used for opening external browser where required
-    public static HostServices hostServices;
-
-    /**
-     * function to increase the global fontsize if tre is passed, else decrease it
-     *
-     * @param increase
-     */
-    public static void increaseGlobalFontSize(boolean increase) {
-        // increase default font if true, else decrease
-        if (increase) {
-            if (DEFAULT_FONT_SIZE_PX < 30) {
-                DEFAULT_FONT_SIZE_PX = DEFAULT_FONT_SIZE_PX + 2.0;
-            }
-        } else {
-            if (DEFAULT_FONT_SIZE_PX > 8.0) {
-                DEFAULT_FONT_SIZE_PX = DEFAULT_FONT_SIZE_PX - 2.0;
-            }
-        }
-        System.out.println("New global font size = " + DEFAULT_FONT_SIZE_PX);
-        final Scene scene = stage.getScene();
-        final DoubleProperty fontSize = new SimpleDoubleProperty(DEFAULT_FONT_SIZE_PX);
-        scene.getRoot()
-                .styleProperty()
-                .bind(Bindings.concat("-fx-font-size: ", fontSize.asString()));
+    @Override
+    protected void startInitialize() {
+        initializeViewVariables();
+        setNewFxmlToStage(FXML_FILE_PATH);
     }
 
     /**
@@ -155,24 +120,5 @@ public class Arp4754ViewsManager extends Application {
 
         System.out.println("Here");
         return null;
-    }
-
-    @Override
-    public void start(Stage primaryStage) {
-        // sets the hostServices (only works here, no idea why)
-        hostServices = getHostServices();
-
-        try {
-            // Set stage as the new stage sent by caller
-            stage = primaryStage;
-
-            /* Comment out to cache values from previous launch.
-             * Initializes the variables for this application launch. */
-            initializeViewVariables();
-
-            setNewFxmlToStage(FXML_FILE_PATH);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
 }

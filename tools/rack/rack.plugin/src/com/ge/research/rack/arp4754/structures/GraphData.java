@@ -41,7 +41,6 @@ import java.util.List;
 public class GraphData {
 
     private String graphTitle = "";
-
     private List<Category> buckets = new ArrayList<Category>();
 
     /**

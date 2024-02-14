@@ -41,12 +41,12 @@ public class ComplianceProcess1 {
 
     private static PlanObjective computeObjective1(PlanObjective objective) {
 
-        if (((Output)objective.getOutputs()).getDocumentObjs() != null
-                && ((Output)objective.getOutputs()).getDocumentObjs().size() > 0) {
+        if (((Output) objective.getOutputs()).getDocumentObjs() != null
+                && ((Output) objective.getOutputs()).getDocumentObjs().size() > 0) {
 
             int numRequiredDocs = 0;
 
-            for (Evidence document : ((Output)objective.getOutputs()).getDocumentObjs()) {
+            for (Evidence document : ((Output) objective.getOutputs()).getDocumentObjs()) {
                 System.out.println(document.getId());
                 if (document.getId().equalsIgnoreCase("CertificationPlan")
                         || document.getId().equalsIgnoreCase("SafetyProgramPlan")

@@ -51,7 +51,8 @@ public class PsacNodeUtils {
      * @param tableId
      * @return
      */
-    public static Integer alreadyCreatedTable(List<PlanTable<Objective>> tableList, String tableId) {
+    public static Integer alreadyCreatedTable(
+            List<PlanTable<Objective>> tableList, String tableId) {
 
         if (tableList.size() > 0) {
             for (int i = 0; i < tableList.size(); i++) {

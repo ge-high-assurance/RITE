@@ -33,11 +33,11 @@ package com.ge.research.rack.do178c.viewHandlers;
 
 import com.ge.research.rack.analysis.structures.PlanTable;
 import com.ge.research.rack.analysis.utils.CustomFileUtils;
+import com.ge.research.rack.analysis.utils.ReportViewUtils;
 import com.ge.research.rack.do178c.oem.DataProcessor;
 import com.ge.research.rack.do178c.structures.Objective;
 import com.ge.research.rack.do178c.structures.PsacNode;
 import com.ge.research.rack.do178c.utils.PsacNodeUtils;
-import com.ge.research.rack.do178c.utils.ReportViewUtils;
 import com.ge.research.rack.do178c.viewManagers.ReportViewsManager;
 
 import javafx.concurrent.Task;
@@ -60,8 +60,8 @@ import java.util.ResourceBundle;
 /**
  * @author Saswata Paul
  */
-public class ReportMainViewHandlerNew extends com.ge.research.rack.analysis.handlers.MainViewHandler 
-	implements Initializable {
+public class ReportMainViewHandlerNew extends com.ge.research.rack.analysis.handlers.MainViewHandler
+        implements Initializable {
 
     @Override
     protected String bucketLabel() {
@@ -131,7 +131,7 @@ public class ReportMainViewHandlerNew extends com.ge.research.rack.analysis.hand
     /** populates the chart */
     @Override
     protected void populateChartStatus() {
-    	super.populateChartStatus();
+        super.populateChartStatus();
 
         // to store the highest value for scaling
         int high = -1;
@@ -141,7 +141,8 @@ public class ReportMainViewHandlerNew extends com.ge.research.rack.analysis.hand
         XYChart.Series<String, Integer> passData = new XYChart.Series<String, Integer>();
         passData.setName("Complete");
         List<Data<String, Integer>> passBars = new ArrayList<Data<String, Integer>>();
-        for (PlanTable<Objective> tabObj : ReportViewsManager.reportDataObj.getReportTables()) {
+        for (PlanTable<Objective> tabObj :
+                ((PsacNode) ReportViewsManager.reportDataObj).getReportTables()) {
             //            Data passBar = new XYChart.Data(tabObj.getId(), tabObj.getNumObjPassed());
             Data<String, Integer> passBar =
                     ReportViewUtils.createIntDataBar(tabObj.getId(), tabObj.getNumObjPassed());
@@ -155,7 +156,8 @@ public class ReportMainViewHandlerNew extends com.ge.research.rack.analysis.hand
         XYChart.Series<String, Integer> failData = new XYChart.Series<String, Integer>();
         failData.setName("Complete");
         List<Data<String, Integer>> failBars = new ArrayList<Data<String, Integer>>();
-        for (PlanTable<Objective> tabObj : ReportViewsManager.reportDataObj.getReportTables()) {
+        for (PlanTable<Objective> tabObj :
+                ((PsacNode) ReportViewsManager.reportDataObj).getReportTables()) {
             //            Data failBar = new XYChart.Data(tabObj.getId(), tabObj.getNumObjFailed());
             Data<String, Integer> failBar =
                     ReportViewUtils.createIntDataBar(tabObj.getId(), tabObj.getNumObjFailed());
@@ -169,7 +171,8 @@ public class ReportMainViewHandlerNew extends com.ge.research.rack.analysis.hand
         XYChart.Series<String, Integer> partialData = new XYChart.Series<String, Integer>();
         partialData.setName("Partial Data");
         List<Data<String, Integer>> partialBars = new ArrayList<Data<String, Integer>>();
-        for (PlanTable<Objective> tabObj : ReportViewsManager.reportDataObj.getReportTables()) {
+        for (PlanTable<Objective> tabObj :
+                ((PsacNode) ReportViewsManager.reportDataObj).getReportTables()) {
             //            Data partialBar = new XYChart.Data(tabObj.getId(),
             // tabObj.getNumObjPartial());
             Data<String, Integer> partialBar =
@@ -184,7 +187,8 @@ public class ReportMainViewHandlerNew extends com.ge.research.rack.analysis.hand
         XYChart.Series<String, Integer> noData = new XYChart.Series<String, Integer>();
         noData.setName("No Data");
         List<Data<String, Integer>> noBars = new ArrayList<Data<String, Integer>>();
-        for (PlanTable<Objective> tabObj : ReportViewsManager.reportDataObj.getReportTables()) {
+        for (PlanTable<Objective> tabObj :
+                ((PsacNode) ReportViewsManager.reportDataObj).getReportTables()) {
             //            Data noBar = new XYChart.Data(tabObj.getId(), tabObj.getNumObjNodata());
             Data<String, Integer> noBar =
                     ReportViewUtils.createIntDataBar(tabObj.getId(), tabObj.getNumObjNoData());
@@ -231,22 +235,20 @@ public class ReportMainViewHandlerNew extends com.ge.research.rack.analysis.hand
      */
     @Override
     protected void populateLists(String key) {
-    	super.populateLists(key);
+        super.populateLists(key);
 
-        for (PlanTable<Objective> tabObj : ReportViewsManager.reportDataObj.getReportTables()) {
+        for (PlanTable<Objective> tabObj :
+                ((PsacNode) ReportViewsManager.reportDataObj).getReportTables()) {
             Label tabLabel = getTableLabel(tabObj);
             if (key.equalsIgnoreCase("All")) {
-            	listBuckets.getItems().add(tabLabel);
-            } else if (key.equalsIgnoreCase("Passed")
-                    && tabObj.isPassed()) {
-            	listBuckets.getItems().add(tabLabel);
-            } else if (key.equalsIgnoreCase("Failed")
-                    && !tabObj.isPassed()) {
-            	listBuckets.getItems().add(tabLabel);
-            } else if (key.equalsIgnoreCase("Inconclusive")
-                    && tabObj.isNoData()) {
+                listBuckets.getItems().add(tabLabel);
+            } else if (key.equalsIgnoreCase("Passed") && tabObj.isPassed()) {
+                listBuckets.getItems().add(tabLabel);
+            } else if (key.equalsIgnoreCase("Failed") && !tabObj.isPassed()) {
+                listBuckets.getItems().add(tabLabel);
+            } else if (key.equalsIgnoreCase("Inconclusive") && tabObj.isNoData()) {
                 //    				actLabel.setVisible(true);
-            	listBuckets.getItems().add(tabLabel);
+                listBuckets.getItems().add(tabLabel);
             }
         }
     }
@@ -274,7 +276,7 @@ public class ReportMainViewHandlerNew extends com.ge.research.rack.analysis.hand
         listBuckets.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         // If the report variables have already been initialized
-        if (ReportViewsManager.reportDataObj.getReportTables() != null) {
+        if (((PsacNode) ReportViewsManager.reportDataObj).getReportTables() != null) {
             populateViewElements();
 
         } else {
@@ -360,7 +362,8 @@ public class ReportMainViewHandlerNew extends com.ge.research.rack.analysis.hand
             String selectedTable = getBucketIdFromLabelText(selectedLabel.getText());
             System.out.println("The selected Table: " + selectedTable);
 
-            if (!PsacNodeUtils.getTableById(ReportViewsManager.reportDataObj, selectedTable)
+            if (!PsacNodeUtils.getTableById(
+                            (PsacNode) ReportViewsManager.reportDataObj, selectedTable)
                     .isNoData()) {
                 // Set the stage with the other fxml
                 FXMLLoader tableViewLoader =

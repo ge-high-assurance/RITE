@@ -164,40 +164,44 @@ public class ViewUtils {
                 .map(PlanObjective::getOutputs)
                 .forEach(
                         objective -> {
-                            for (final Evidence doc : ((Output)objective).getDocumentObjs()) {
+                            for (final Evidence doc : ((Output) objective).getDocumentObjs()) {
                                 docIds.add(doc.getId());
                             }
-                            for (final Evidence derItemReq : ((Output)objective).getDerItemReqObjs()) {
+                            for (final Evidence derItemReq :
+                                    ((Output) objective).getDerItemReqObjs()) {
                                 reqIds.add(derItemReq.getId());
                             }
-                            for (final Evidence derSysReq : ((Output)objective).getDerSysReqObjs()) {
+                            for (final Evidence derSysReq :
+                                    ((Output) objective).getDerSysReqObjs()) {
                                 reqIds.add(derSysReq.getId());
                             }
-                            for (final Evidence itemReq : ((Output)objective).getItemReqObjs()) {
+                            for (final Evidence itemReq : ((Output) objective).getItemReqObjs()) {
                                 reqIds.add(itemReq.getId());
                             }
-                            for (final Evidence sysReq : ((Output)objective).getSysReqObjs()) {
+                            for (final Evidence sysReq : ((Output) objective).getSysReqObjs()) {
                                 reqIds.add(sysReq.getId());
                             }
-                            for (final Evidence item : ((Output)objective).getItemObjs()) {
+                            for (final Evidence item : ((Output) objective).getItemObjs()) {
                                 itemIds.add(item.getId());
                             }
-                            for (final Evidence interfce : ((Output)objective).getInterfaceObjs()) {
+                            for (final Evidence interfce :
+                                    ((Output) objective).getInterfaceObjs()) {
                                 interfaceIds.add(interfce.getId());
                             }
-                            for (final Evidence system : ((Output)objective).getSystemObjs()) {
+                            for (final Evidence system : ((Output) objective).getSystemObjs()) {
                                 systemIds.add(system.getId());
                             }
-                            for (final Evidence verification : ((Output)objective).getVerificationObjs()) {
+                            for (final Evidence verification :
+                                    ((Output) objective).getVerificationObjs()) {
                                 verificationIds.add(verification.getId());
                             }
-                            for (final Evidence test : ((Output)objective).getTestObjs()) {
+                            for (final Evidence test : ((Output) objective).getTestObjs()) {
                                 testIds.add(test.getId());
                             }
-                            for (final Evidence review : ((Output)objective).getReviewObjs()) {
+                            for (final Evidence review : ((Output) objective).getReviewObjs()) {
                                 reviewIds.add(review.getId());
                             }
-                            for (final Evidence analysis : ((Output)objective).getAnalysisObjs()) {
+                            for (final Evidence analysis : ((Output) objective).getAnalysisObjs()) {
                                 analysisIds.add(analysis.getId());
                             }
                         });

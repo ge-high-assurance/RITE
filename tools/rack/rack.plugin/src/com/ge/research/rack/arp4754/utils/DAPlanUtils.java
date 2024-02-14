@@ -42,6 +42,8 @@ import java.util.List;
  */
 public class DAPlanUtils {
 
+    public static final String PROCESS_LABEL = "Process-";
+
     /**
      * Takes a list of objective objects and an id and returns the object with the id
      *
@@ -49,8 +51,7 @@ public class DAPlanUtils {
      * @param id
      * @return
      */
-    public static Integer getObjectivePositionFromList(
-            List<PlanObjective> objectives, String id) {
+    public static Integer getObjectivePositionFromList(List<PlanObjective> objectives, String id) {
 
         for (int i = 0; i < objectives.size(); i++) {
             PlanObjective objective = objectives.get(i);
@@ -87,7 +88,8 @@ public class DAPlanUtils {
      * @param id
      * @return
      */
-    public static Integer getProcessPositionFromList(List<PlanTable<PlanObjective>> processes, String id) {
+    public static Integer getProcessPositionFromList(
+            List<PlanTable<PlanObjective>> processes, String id) {
 
         for (int i = 0; i < processes.size(); i++) {
             PlanTable<PlanObjective> process = processes.get(i);
@@ -122,17 +124,18 @@ public class DAPlanUtils {
      *
      * @return
      */
-    public static List<PlanTable<PlanObjective>> sortProcessList(List<PlanTable<PlanObjective>> list) {
+    public static List<PlanTable<PlanObjective>> sortProcessList(
+            List<PlanTable<PlanObjective>> list) {
         List<PlanTable<PlanObjective>> newList = new ArrayList<PlanTable<PlanObjective>>();
-
-        if (list.size() > 0) {
-            for (int i = 0; i < list.size(); i++) {
-                for (PlanTable<PlanObjective> process : list) {
-                    if ((Integer.parseInt(process.getId().replace("Process-", "")) - 1) == i) {
+        for (int i = 0; i < list.size(); i++) {
+            for (PlanTable<PlanObjective> process : list) {
+                try {
+                    if ((Integer.parseInt(process.getId().replace(PROCESS_LABEL, "")) - 1) == i) {
                         newList.add(process);
-
                         System.out.println(process.getId() + " -> " + i);
                     }
+                } catch (Exception ex) {
+                    System.out.println("Process skipped -> " + i);
                 }
             }
         }

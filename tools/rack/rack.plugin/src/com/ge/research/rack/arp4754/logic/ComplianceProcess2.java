@@ -35,14 +35,13 @@ import com.ge.research.rack.analysis.structures.PlanObjective;
 import com.ge.research.rack.analysis.structures.PlanTable;
 import com.ge.research.rack.arp4754.structures.Category;
 import com.ge.research.rack.arp4754.structures.Evidence;
-import com.ge.research.rack.arp4754.structures.Output;
 import com.ge.research.rack.arp4754.structures.Graph;
+import com.ge.research.rack.arp4754.structures.Output;
 import com.ge.research.rack.arp4754.utils.ComplianceUtils;
 
 public class ComplianceProcess2 {
 
     private static PlanObjective computeObjective1(PlanObjective objective) {
-
         return objective;
     }
 
@@ -63,10 +62,13 @@ public class ComplianceProcess2 {
     private static PlanObjective computeObjective2(PlanObjective objective) {
 
         int numSysReqsWithInterface = 0;
+        if (objective.getOutputs() == null) {
+            objective.setOutputs(new Output());
+        }
 
-        if (((Output)objective.getOutputs()).getSysReqObjs() != null
-                && ((Output)objective.getOutputs()).getSysReqObjs().size() > 0) {
-            for (Evidence sysReq : ((Output)objective.getOutputs()).getSysReqObjs()) {
+        if (((Output) objective.getOutputs()).getSysReqObjs() != null
+                && ((Output) objective.getOutputs()).getSysReqObjs().size() > 0) {
+            for (Evidence sysReq : ((Output) objective.getOutputs()).getSysReqObjs()) {
                 System.out.println("-------- " + sysReq.getId());
                 if (sysReq.getAllocatedTo() != null && sysReq.getAllocatedTo().size() > 0) {
                     for (Evidence system : sysReq.getAllocatedTo()) {
@@ -84,30 +86,41 @@ public class ComplianceProcess2 {
                     objective.setPassed(false);
                 }
             }
+
             if (numSysReqsWithInterface > 0.0) {
                 objective.setComplianceStatus(
                         (double) numSysReqsWithInterface
-                                / ((Output)objective.getOutputs()).getSysReqObjs().size()
+                                / ((Output) objective.getOutputs()).getSysReqObjs().size()
                                 * 100.00);
             }
-            if (numSysReqsWithInterface == ((Output)objective.getOutputs()).getSysReqObjs().size()
-                    && ((Output)objective.getOutputs()).getSysReqObjs().size() > 0) {
+
+            if (numSysReqsWithInterface == ((Output) objective.getOutputs()).getSysReqObjs().size()
+                    && ((Output) objective.getOutputs()).getSysReqObjs().size() > 0) {
                 objective.setNoData(false);
                 objective.setPartialData(false);
                 objective.setPassed(true);
             }
 
             // create and add appropriate graphdata
-
             Category sysyReqWithInterface = new Category("Has Interface", numSysReqsWithInterface);
             Category sysReqWithoutInterface =
                     new Category(
                             "No Interface",
-                            (((Output)objective.getOutputs()).getSysReqObjs().size()
+                            (((Output) objective.getOutputs()).getSysReqObjs().size()
                                     - numSysReqsWithInterface));
-            ((Graph)objective.getGraphs()).getSysReqGraphData().getBuckets().add(sysyReqWithInterface);
-            ((Graph)objective.getGraphs()).getSysReqGraphData().getBuckets().add(sysReqWithoutInterface);
 
+            if (objective.getGraphs() == null) {
+                objective.setGraphs(new Graph());
+            }
+
+            ((Graph) objective.getGraphs())
+                    .getSysReqGraphData()
+                    .getBuckets()
+                    .add(sysyReqWithInterface);
+            ((Graph) objective.getGraphs())
+                    .getSysReqGraphData()
+                    .getBuckets()
+                    .add(sysReqWithoutInterface);
         } else {
             objective.setNoData(true);
             objective.setPartialData(false);
@@ -116,34 +129,39 @@ public class ComplianceProcess2 {
 
         // --- Extra graphData (TODO: Find more context to make meaningful extra graphs)
         int numSystemsWithInterface = 0;
-        for (Evidence system : ((Output)objective.getOutputs()).getSystemObjs()) {
+        for (Evidence system : ((Output) objective.getOutputs()).getSystemObjs()) {
             if (system.getHasInterfaces().size() > 0) {
                 numSystemsWithInterface++;
             }
         }
+
         Category systemWithInterface = new Category("Has Interface", numSystemsWithInterface);
-        ((Graph)objective.getGraphs()).getSystemGraphData().getBuckets().add(systemWithInterface);
+        ((Graph) objective.getGraphs()).getSystemGraphData().getBuckets().add(systemWithInterface);
         int numInterfaceWithInput = 0;
         int numInterfaceWithOutput = 0;
-        for (Evidence intrface : ((Output)objective.getOutputs()).getInterfaceObjs()) {
+        for (Evidence intrface : ((Output) objective.getOutputs()).getInterfaceObjs()) {
             if (intrface.getHasInputs().size() > 0) {
                 numInterfaceWithInput++;
             }
+
             if (intrface.getHasOutputs().size() > 0) {
                 numInterfaceWithOutput++;
             }
         }
+
         Category intrfaceWithInput = new Category("Has Input", numInterfaceWithInput);
         Category intrfaceWithOutput = new Category("Has Output", numInterfaceWithOutput);
-        ((Graph)objective.getGraphs()).getInterfaceGraphData().getBuckets().add(intrfaceWithInput);
-        ((Graph)objective.getGraphs()).getInterfaceGraphData().getBuckets().add(intrfaceWithOutput);
+        ((Graph) objective.getGraphs()).getInterfaceGraphData().getBuckets().add(intrfaceWithInput);
+        ((Graph) objective.getGraphs())
+                .getInterfaceGraphData()
+                .getBuckets()
+                .add(intrfaceWithOutput);
 
         objective.setMetrics("");
         return objective;
     }
 
     private static PlanObjective computeObjective3(PlanObjective objective) {
-
         return objective;
     }
 
@@ -158,9 +176,13 @@ public class ComplianceProcess2 {
      */
     private static PlanObjective computeObjective4(PlanObjective objective) {
 
-        if (((Output)objective.getOutputs()).getDerSysReqObjs() != null
-                && ((Output)objective.getOutputs()).getDerSysReqObjs().size() > 0) {
-            if (((Output)objective.getOutputs()).getDerSysReqObjs().size() > 0) {
+        if (objective.getOutputs() == null) {
+            objective.setOutputs(new Output());
+        }
+
+        if (((Output) objective.getOutputs()).getDerSysReqObjs() != null
+                && ((Output) objective.getOutputs()).getDerSysReqObjs().size() > 0) {
+            if (((Output) objective.getOutputs()).getDerSysReqObjs().size() > 0) {
                 objective.setComplianceStatus(100.0);
                 objective.setNoData(false);
                 objective.setPartialData(false);
@@ -178,11 +200,17 @@ public class ComplianceProcess2 {
 
     private static PlanObjective computeObjective5(PlanObjective objective) {
 
-        if (((Output)objective.getOutputs()).getSystemDesignDescriptionObjs() != null
-                && ((Output)objective.getOutputs()).getSystemDesignDescriptionObjs().size() > 0) {
-            for (Evidence sysDesDesc : ((Output)objective.getOutputs()).getSystemDesignDescriptionObjs()) {
+        if (objective.getOutputs() == null) {
+            objective.setOutputs(new Output());
+        }
+
+        if (((Output) objective.getOutputs()).getSystemDesignDescriptionObjs() != null
+                && ((Output) objective.getOutputs()).getSystemDesignDescriptionObjs().size() > 0) {
+            for (Evidence sysDesDesc :
+                    ((Output) objective.getOutputs()).getSystemDesignDescriptionObjs()) {
                 System.out.println(sysDesDesc.getId() + " " + sysDesDesc.getURL());
             }
+
             objective.setNoData(false);
             objective.setPartialData(false);
             objective.setPassed(true);
@@ -213,9 +241,13 @@ public class ComplianceProcess2 {
         int numItemReqsWithAllocation = 0;
         int numItemReqsWithTraceAndAllocation = 0;
 
-        if (((Output)objective.getOutputs()).getItemReqObjs() != null
-                && ((Output)objective.getOutputs()).getItemReqObjs().size() > 0) {
-            for (Evidence itemReq : ((Output)objective.getOutputs()).getItemReqObjs()) {
+        if (objective.getOutputs() == null) {
+            objective.setOutputs(new Output());
+        }
+
+        if (((Output) objective.getOutputs()).getItemReqObjs() != null
+                && ((Output) objective.getOutputs()).getItemReqObjs().size() > 0) {
+            for (Evidence itemReq : ((Output) objective.getOutputs()).getItemReqObjs()) {
                 boolean trace = false;
                 boolean allocation = false;
                 if (itemReq.getTracesUp().size() > 0) {
@@ -236,12 +268,20 @@ public class ComplianceProcess2 {
             Category withAllocation = new Category("Has Allocation", numItemReqsWithAllocation);
             Category withTraceAndAllocation =
                     new Category("Has Both", numItemReqsWithTraceAndAllocation);
-            ((Graph)objective.getGraphs()).getItemReqGraphData().getBuckets().add(withTrace);
-            ((Graph)objective.getGraphs()).getItemReqGraphData().getBuckets().add(withAllocation);
-            ((Graph)objective.getGraphs()).getItemReqGraphData().getBuckets().add(withTraceAndAllocation);
+
+            if (objective.getGraphs() == null) {
+                objective.setGraphs(new Graph());
+            }
+
+            ((Graph) objective.getGraphs()).getItemReqGraphData().getBuckets().add(withTrace);
+            ((Graph) objective.getGraphs()).getItemReqGraphData().getBuckets().add(withAllocation);
+            ((Graph) objective.getGraphs())
+                    .getItemReqGraphData()
+                    .getBuckets()
+                    .add(withTraceAndAllocation);
 
             if (numItemReqsWithTraceAndAllocation
-                    == ((Output)objective.getOutputs()).getItemReqObjs().size()) {
+                    == ((Output) objective.getOutputs()).getItemReqObjs().size()) {
                 objective.setNoData(false);
                 objective.setPartialData(false);
                 objective.setPassed(true);
@@ -250,10 +290,11 @@ public class ComplianceProcess2 {
                 objective.setPartialData(true);
                 objective.setPassed(false);
             }
+
             if (numItemReqsWithTraceAndAllocation > 0.0) {
                 objective.setComplianceStatus(
                         (double) numItemReqsWithTraceAndAllocation
-                                / ((Output)objective.getOutputs()).getItemReqObjs().size()
+                                / ((Output) objective.getOutputs()).getItemReqObjs().size()
                                 * 100.00);
             }
         } else {
@@ -284,9 +325,7 @@ public class ComplianceProcess2 {
         int numPartialData = 0;
 
         for (int i = 0; i < process.getTabObjectives().size(); i++) {
-
             PlanObjective objective = process.getTabObjectives().get(i);
-
             PlanObjective updatedObjective = new PlanObjective();
 
             switch (objective.getId()) {

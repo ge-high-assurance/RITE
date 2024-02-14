@@ -32,6 +32,7 @@
 package com.ge.research.rack.autoGsn.viewHandlers;
 
 import com.ge.research.rack.JavaFXAppLaunchManager;
+import com.ge.research.rack.analysis.utils.ReportViewUtils;
 import com.ge.research.rack.autoGsn.constants.GsnCoreElements;
 import com.ge.research.rack.autoGsn.structures.GsnNode;
 import com.ge.research.rack.autoGsn.structures.MultiClassPackets;
@@ -40,7 +41,6 @@ import com.ge.research.rack.autoGsn.utils.AutoGsnGuiUtils;
 import com.ge.research.rack.autoGsn.utils.GsnNodeUtils;
 import com.ge.research.rack.autoGsn.viewManagers.AutoGsnViewsManager;
 import com.ge.research.rack.autoGsn.viewManagers.GsnTreeViewManager;
-import com.ge.research.rack.do178c.utils.ReportViewUtils;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
