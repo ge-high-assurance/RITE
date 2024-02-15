@@ -36,7 +36,6 @@ import com.ge.research.rack.analysis.structures.PlanTable;
 import com.ge.research.rack.do178c.structures.Analysis;
 import com.ge.research.rack.do178c.structures.DataItem;
 import com.ge.research.rack.do178c.structures.Hazard;
-import com.ge.research.rack.do178c.structures.Objective;
 import com.ge.research.rack.do178c.structures.Output;
 import com.ge.research.rack.do178c.structures.Requirement;
 import com.ge.research.rack.do178c.structures.ReviewLog;
@@ -91,7 +90,7 @@ public class ReportViewUtils {
     }
 
     /** Returns javafx color for a given objective object */
-    public static Color getObjectiveColor(final Objective objective) {
+    public static Color getObjectiveColor(final PlanObjective objective) {
 
         if (objective.isNoData()) {
             return objective.getMetrics().equals("TBD") ? Color.GRAY : Color.LIGHTGREY;
@@ -105,7 +104,7 @@ public class ReportViewUtils {
     }
 
     /** Returns javafx color for a table object */
-    public static Color getTableColor(final PlanTable<Objective> table) {
+    public static Color getTableColor(final PlanTable table) {
 
         if (table.isNoData()) {
             return Color.GRAY; // if no data, then GRAY
@@ -118,7 +117,7 @@ public class ReportViewUtils {
     }
 
     /** Given a table object, returns a list of doubles containing the objective metrics in order */
-    public static List<Double> getObjectiveOrder(PlanTable<Objective> table) {
+    public static List<Double> getObjectiveOrder(PlanTable table) {
 
         final List<Double> objStats = new ArrayList<Double>();
 
@@ -140,7 +139,7 @@ public class ReportViewUtils {
      * Given a table, returns the combined total number of associated artifacts for all objectives
      * in the table
      */
-    public static List<Integer> getTableArtifactStats(PlanTable<Objective> table) {
+    public static List<Integer> getTableArtifactStats(PlanTable table) {
 
         final Set<String> docIds = new HashSet<String>();
         final Set<String> reqIds = new HashSet<String>();

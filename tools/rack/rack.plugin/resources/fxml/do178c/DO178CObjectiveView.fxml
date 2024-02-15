@@ -225,7 +225,7 @@
                                                         <ComboBox fx:id="comboRev" promptText="Filter" />
                                                     </children>
                                                 </HBox>
-                                                <ListView fx:id="reviList" VBox.vgrow="ALWAYS" />
+                                                <ListView fx:id="revList" VBox.vgrow="ALWAYS" />
                                             </children>
                                         </VBox>
 

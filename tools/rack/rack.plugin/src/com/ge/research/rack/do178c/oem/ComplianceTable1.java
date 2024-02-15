@@ -31,8 +31,8 @@
  */
 package com.ge.research.rack.do178c.oem;
 
+import com.ge.research.rack.analysis.structures.PlanObjective;
 import com.ge.research.rack.do178c.structures.DataItem;
-import com.ge.research.rack.do178c.structures.Objective;
 import com.ge.research.rack.do178c.structures.Output;
 
 /**
@@ -40,7 +40,7 @@ import com.ge.research.rack.do178c.structures.Output;
  */
 public class ComplianceTable1 {
 
-    public static Objective processObjectiveA1_1and2and3and4(Objective objective) {
+    public static PlanObjective processObjectiveA1_1and2and3and4(PlanObjective objective) {
         /**
          * This objective will pass if 1. The outputs contain avatars of PSAC, SDP, SVP, SCM, and
          * SQA

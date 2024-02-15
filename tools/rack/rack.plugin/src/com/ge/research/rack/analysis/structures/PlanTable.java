@@ -39,10 +39,10 @@ import java.util.List;
  *
  * @author Saswata Paul
  */
-public class PlanTable<T> {
+public class PlanTable {
     protected String id = "";
     protected String description = "";
-    protected List<T> objectives = new ArrayList<T>();
+    protected List<PlanObjective> objectives = new ArrayList<PlanObjective>();
 
     protected boolean passed = false;
     protected boolean noData = true;
@@ -186,14 +186,14 @@ public class PlanTable<T> {
     /**
      * @return the tabObjectives
      */
-    public List<T> getTabObjectives() {
+    public List<PlanObjective> getTabObjectives() {
         return objectives;
     }
 
     /**
      * @param tabObjectives the tabObjectives to set
      */
-    public void setTabObjectives(List<T> tabObjectives) {
+    public void setTabObjectives(List<PlanObjective> tabObjectives) {
         this.objectives = tabObjectives;
     }
 

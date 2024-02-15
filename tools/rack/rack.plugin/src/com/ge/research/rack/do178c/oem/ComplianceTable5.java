@@ -31,7 +31,7 @@
  */
 package com.ge.research.rack.do178c.oem;
 
-import com.ge.research.rack.do178c.structures.Objective;
+import com.ge.research.rack.analysis.structures.PlanObjective;
 import com.ge.research.rack.do178c.structures.Output;
 import com.ge.research.rack.do178c.structures.Requirement;
 import com.ge.research.rack.do178c.structures.SwComponent;
@@ -49,7 +49,7 @@ public class ComplianceTable5 {
      * @param objective
      * @return
      */
-    public static Objective processObjectiveA5_1_2_3_4(Objective objective) {
+    public static PlanObjective processObjectiveA5_1_2_3_4(PlanObjective objective) {
 
         objective.setPassed(false);
         objective.setPartialData(false);
@@ -62,7 +62,7 @@ public class ComplianceTable5 {
         return objective;
     }
 
-    public static Objective processObjectiveA5_5(Objective objective) {
+    public static PlanObjective processObjectiveA5_5(PlanObjective objective) {
         /**
          * This objective will pass if 1. There are some associated SwComponent 2. all the
          * associated SwComponents in the output have some SubDD requirement trace

@@ -31,7 +31,6 @@
  */
 package com.ge.research.rack.arp4754.logic;
 
-import com.ge.research.rack.analysis.structures.PlanObjective;
 import com.ge.research.rack.analysis.structures.PlanTable;
 
 /**
@@ -45,7 +44,7 @@ public class ComplianceProcess3 {
      * @param process
      * @return
      */
-    public static PlanTable<PlanObjective> computeProcess(PlanTable<PlanObjective> process) {
+    public static PlanTable computeProcess(PlanTable process) {
 
         return process;
     }

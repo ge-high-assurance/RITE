@@ -31,7 +31,7 @@
  */
 package com.ge.research.rack.do178c.oem;
 
-import com.ge.research.rack.do178c.structures.Objective;
+import com.ge.research.rack.analysis.structures.PlanObjective;
 import com.ge.research.rack.do178c.structures.Output;
 import com.ge.research.rack.do178c.utils.LogicUtils;
 
@@ -48,7 +48,7 @@ public class ComplianceTable4 {
      * @param objective
      * @return
      */
-    public static Objective processObjectiveA4_Common(Objective objective) {
+    public static PlanObjective processObjectiveA4_Common(PlanObjective objective) {
         /**
          * This objective will pass if 1. There are some associated SubDD_Req 2. all the associated
          * SubDD_Req in the output have review log

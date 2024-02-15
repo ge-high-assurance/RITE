@@ -32,10 +32,10 @@
 package com.ge.research.rack.do178c.viewHandlers;
 
 import com.ge.research.rack.analysis.handlers.TableViewHandler;
+import com.ge.research.rack.analysis.structures.PlanObjective;
 import com.ge.research.rack.analysis.structures.PlanTable;
 import com.ge.research.rack.analysis.utils.CustomStringUtils;
 import com.ge.research.rack.analysis.utils.ReportViewUtils;
-import com.ge.research.rack.do178c.structures.Objective;
 import com.ge.research.rack.do178c.structures.PsacNode;
 import com.ge.research.rack.do178c.utils.PsacNodeUtils;
 import com.ge.research.rack.do178c.viewManagers.ReportViewsManager;
@@ -53,8 +53,7 @@ import java.util.List;
 /**
  * @author Saswata Paul
  */
-public class ReportTableViewHandlerNew extends TableViewHandler<Objective>
-        implements Initializable {
+public class ReportTableViewHandlerNew extends TableViewHandler implements Initializable {
 
     /**
      * Creates and returns a label for the objective lists
@@ -63,7 +62,7 @@ public class ReportTableViewHandlerNew extends TableViewHandler<Objective>
      * @return
      */
     @Override
-    public Label getObjectiveLabel(Objective objObj) {
+    public Label getObjectiveLabel(PlanObjective objObj) {
 
         Label objLabel = super.getObjectiveLabel(objObj);
 
@@ -145,7 +144,7 @@ public class ReportTableViewHandlerNew extends TableViewHandler<Objective>
     }
 
     @Override
-    protected PlanTable<Objective> getCurrentTableObject(String tableID) {
+    protected PlanTable getCurrentTableObject(String tableID) {
         return PsacNodeUtils.getTableById((PsacNode) ReportViewsManager.reportDataObj, tableID);
     }
 

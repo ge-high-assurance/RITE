@@ -31,7 +31,7 @@
  */
 package com.ge.research.rack.arp4754.logic;
 
-import com.ge.research.rack.analysis.structures.AnalysisNode;
+import com.ge.research.rack.analysis.structures.Plan;
 import com.ge.research.rack.analysis.structures.PlanObjective;
 import com.ge.research.rack.analysis.structures.PlanTable;
 import com.ge.research.rack.analysis.utils.CustomFileUtils;
@@ -178,13 +178,13 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         }
 
         // Create a list of Process objects
-        List<PlanTable<PlanObjective>> processes = new ArrayList<PlanTable<PlanObjective>>();
+        List<PlanTable> processes = new ArrayList<PlanTable>();
 
         for (String[] row : planData) {
             if ((row[procIdCol] != null)) {
                 // if process does not already exist then create a new process
                 if (DAPlanUtils.getProcessPositionFromList(processes, row[procIdCol]) == null) {
-                    PlanTable<PlanObjective> newProcess = new PlanTable<PlanObjective>();
+                    PlanTable newProcess = new PlanTable();
 
                     System.out.println("Created Process object for " + row[procIdCol]);
 
@@ -232,7 +232,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         if (planData.get(0)[sysIdCol] != null) {
             planNode.setSystem(planData.get(0)[sysIdCol]);
         }
-        planNode.setProcesses(processes);
+        planNode.setTables(processes);
     }
 
     /**
@@ -923,7 +923,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
     // Entry point that does sequence of operations
     @Override
-    public AnalysisNode getData(String outDir) {
+    public Plan getData(String outDir) {
 
         // clear the rack directory
         CustomFileUtils.clearDirectory(outDir);

@@ -93,7 +93,7 @@ public class ComplianceProcess1 {
      * @param process
      * @return
      */
-    public static PlanTable<PlanObjective> computeProcess(PlanTable<PlanObjective> process) {
+    public static PlanTable computeProcess(PlanTable process) {
 
         int numPassed = 0;
         int numNoData = 0;
@@ -102,7 +102,6 @@ public class ComplianceProcess1 {
         for (int i = 0; i < process.getTabObjectives().size(); i++) {
 
             PlanObjective objective = process.getTabObjectives().get(i);
-
             PlanObjective updatedObjective = new PlanObjective();
 
             switch (objective.getId()) {

@@ -104,7 +104,7 @@ public class ViewUtils {
     }
 
     /** Returns javafx color for a process object */
-    public static Color getProcessColor(final PlanTable<PlanObjective> procObj) {
+    public static Color getProcessColor(final PlanTable procObj) {
 
         if (procObj.isNoData()) {
             return Color.GRAY; // if no data, then GRAY
@@ -146,7 +146,7 @@ public class ViewUtils {
      * @param procObj
      * @return
      */
-    public static List<Integer> getProcessArtifactStats(PlanTable<PlanObjective> procObj) {
+    public static List<Integer> getProcessArtifactStats(PlanTable procObj) {
 
         // some generic types of elemnts in ARP4754
         final Set<String> docIds = new HashSet<String>();

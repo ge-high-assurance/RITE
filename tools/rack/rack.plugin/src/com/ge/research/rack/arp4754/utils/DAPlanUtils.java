@@ -88,11 +88,10 @@ public class DAPlanUtils {
      * @param id
      * @return
      */
-    public static Integer getProcessPositionFromList(
-            List<PlanTable<PlanObjective>> processes, String id) {
+    public static Integer getProcessPositionFromList(List<PlanTable> processes, String id) {
 
         for (int i = 0; i < processes.size(); i++) {
-            PlanTable<PlanObjective> process = processes.get(i);
+            PlanTable process = processes.get(i);
             if (process.getId().equalsIgnoreCase(id)) {
                 return i;
             }
@@ -107,11 +106,10 @@ public class DAPlanUtils {
      * @param id
      * @return
      */
-    public static PlanTable<PlanObjective> getProcessObjectFromList(
-            List<PlanTable<PlanObjective>> processes, String id) {
+    public static PlanTable getProcessObjectFromList(List<PlanTable> processes, String id) {
 
         for (int i = 0; i < processes.size(); i++) {
-            PlanTable<PlanObjective> process = processes.get(i);
+            PlanTable process = processes.get(i);
             if (process.getId().equalsIgnoreCase(id)) {
                 return process;
             }
@@ -124,11 +122,10 @@ public class DAPlanUtils {
      *
      * @return
      */
-    public static List<PlanTable<PlanObjective>> sortProcessList(
-            List<PlanTable<PlanObjective>> list) {
-        List<PlanTable<PlanObjective>> newList = new ArrayList<PlanTable<PlanObjective>>();
+    public static List<PlanTable> sortProcessList(List<PlanTable> list) {
+        List<PlanTable> newList = new ArrayList<PlanTable>();
         for (int i = 0; i < list.size(); i++) {
-            for (PlanTable<PlanObjective> process : list) {
+            for (PlanTable process : list) {
                 try {
                     if ((Integer.parseInt(process.getId().replace(PROCESS_LABEL, "")) - 1) == i) {
                         newList.add(process);
@@ -167,7 +164,7 @@ public class DAPlanUtils {
     public static List<PlanObjective> sortObjectiveList(List<PlanObjective> list) {
 
         // -- approach 1 (assumes continuous objective positions)
-        //        List<PlanObjective> newList = new ArrayList<PlanObjective>();
+        //        List newList = new ArrayList();
         //        if (list.size() > 0) {
         //            for (int i = 0; i < list.size(); i++) {
         //                for (PlanObjective objective : list) {

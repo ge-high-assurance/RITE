@@ -31,7 +31,7 @@
  */
 package com.ge.research.rack.analysis.managers;
 
-import com.ge.research.rack.analysis.structures.AnalysisNode;
+import com.ge.research.rack.analysis.structures.Plan;
 
 import javafx.application.Application;
 import javafx.application.HostServices;
@@ -51,7 +51,7 @@ public class ViewsManager extends Application {
     public static Stage stage;
 
     // These variables will store data for all views in all instances of Report Application
-    public static AnalysisNode reportDataObj;
+    public static Plan reportDataObj;
 
     // stores the current font size at any time
     public static double currentFontSize;

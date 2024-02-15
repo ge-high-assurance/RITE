@@ -53,10 +53,10 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class TableViewHandler<T> implements Initializable {
+public class TableViewHandler implements Initializable {
 
     protected String currentTableId;
-    protected PlanTable<T> currentTableObject;
+    protected PlanTable currentTableObject;
 
     //    private PlanTable<PlanObjective> currentProcessObject;
 
@@ -71,7 +71,7 @@ public class TableViewHandler<T> implements Initializable {
 
     @FXML protected ListView<Label> listObjectives;
 
-    @FXML protected ComboBox comboFilter;
+    @FXML protected ComboBox<String> comboFilter;
 
     @FXML protected BarChart<String, Integer> chartObjStatus;
     @FXML protected NumberAxis yAxisChartObjStatus;
@@ -82,7 +82,7 @@ public class TableViewHandler<T> implements Initializable {
      * @param objObj
      * @return
      */
-    public Label getObjectiveLabel(T objObj) {
+    public Label getObjectiveLabel(PlanObjective objObj) {
         // Subclass to refine
         Label objLabel = new Label();
         objLabel.setStyle("-fx-font-weight: bold;");
@@ -102,7 +102,7 @@ public class TableViewHandler<T> implements Initializable {
         yAxisChartObjStatus.setDisable(false);
     }
 
-    protected List<T> getCurrentTableObjectives() {
+    protected List<PlanObjective> getCurrentTableObjectives() {
         // Default value; Subclass may refine
         return currentTableObject.getTabObjectives();
     }
@@ -119,7 +119,7 @@ public class TableViewHandler<T> implements Initializable {
         if ((currentTableObject.getTabObjectives() != null)
                 && (currentTableObject.getTabObjectives().size() > 0)) {
 
-            for (T objObj : getCurrentTableObjectives()) {
+            for (PlanObjective objObj : getCurrentTableObjectives()) {
                 // Label objLabel = new Label();
                 // objLabel.setStyle("-fx-font-weight: bold;");
                 //
@@ -149,9 +149,9 @@ public class TableViewHandler<T> implements Initializable {
         }
     }
 
-    protected PlanTable<T> getCurrentTableObject(String tableID) {
+    protected PlanTable getCurrentTableObject(String tableID) {
         // Default value; Subclass should override
-        return new PlanTable<T>();
+        return new PlanTable();
     }
 
     protected String tableInfoLabel() {

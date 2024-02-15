@@ -53,7 +53,7 @@ import java.util.List;
 /**
  * @author Saswata Paul
  */
-public class ProcessViewHandler extends TableViewHandler<PlanObjective> implements Initializable {
+public class ProcessViewHandler extends TableViewHandler implements Initializable {
 
     /**
      * Creates and returns a label for the objective lists
@@ -88,7 +88,7 @@ public class ProcessViewHandler extends TableViewHandler<PlanObjective> implemen
         return objLabel;
     }
 
-    /** Populates the ojective status chart */
+    /** Populates the objective status chart */
     @Override
     public void populateObjStatusChart() {
         super.populateObjStatusChart();
@@ -154,9 +154,9 @@ public class ProcessViewHandler extends TableViewHandler<PlanObjective> implemen
     }
 
     @Override
-    protected PlanTable<PlanObjective> getCurrentTableObject(String tableID) {
+    protected PlanTable getCurrentTableObject(String tableID) {
         return DAPlanUtils.getProcessObjectFromList(
-                ((DAPlan) Arp4754ViewsManager.reportDataObj).getProcesses(), tableID);
+                ((DAPlan) Arp4754ViewsManager.reportDataObj).getTables(), tableID);
     }
 
     @Override

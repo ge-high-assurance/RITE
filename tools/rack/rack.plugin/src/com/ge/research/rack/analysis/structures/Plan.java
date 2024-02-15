@@ -29,22 +29,49 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.ge.research.rack.do178c.structures;
-
-import com.ge.research.rack.analysis.structures.PlanObjective;
+package com.ge.research.rack.analysis.structures;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Objective extends PlanObjective {
+public class Plan {
 
-    private List<Activity> objActivities = new ArrayList<Activity>();
+    // Most basic node for single query or analysis.
+    // Each analysis tool should extend this class
 
-    public List<Activity> getObjActivities() {
-        return objActivities;
+    protected List<PlanTable> tables = new ArrayList<PlanTable>();
+
+    protected String id = "";
+
+    /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
+    }
+    /**
+     * @param id the id to set
+     */
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setObjActivities(List<Activity> objActivities) {
-        this.objActivities = objActivities;
+    /**
+     * @return the reportTables
+     */
+    public List<PlanTable> getTables() {
+        return this.tables;
+    }
+
+    /**
+     * @param reportTables the reportTables to set
+     */
+    public void setTables(List<PlanTable> reportTables) {
+        this.tables = reportTables;
+    }
+
+    protected String swLabel() {
+        // Subclasses to overwrite
+        return new String("Software");
     }
 }

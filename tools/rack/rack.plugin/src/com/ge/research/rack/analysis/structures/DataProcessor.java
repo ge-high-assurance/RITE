@@ -33,5 +33,5 @@ package com.ge.research.rack.analysis.structures;
 
 public abstract class DataProcessor {
 
-    protected abstract AnalysisNode getData(String outDir);
+    protected abstract Plan getData(String outDir);
 }

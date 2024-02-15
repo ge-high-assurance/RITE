@@ -66,10 +66,11 @@ import javafx.scene.input.MouseEvent;
  */
 public class ObjectiveViewHandler {
     protected String currentProcessId;
-    protected PlanTable<PlanObjective> currentProcessObject;
+    protected PlanTable currentProcessObject;
 
     protected String currentObjId;
     protected PlanObjective currentObjObject;
+
     protected String interfaceChildrenRelation;
     protected String itemChildrenRelation;
     protected String requirementChildrenRelation;
@@ -86,21 +87,21 @@ public class ObjectiveViewHandler {
 
     @FXML private Tab tabInterface;
     @FXML private ListView<Label> interfaceList;
-    @FXML private ComboBox comboInterface;
+    @FXML private ComboBox<String> comboInterface;
     @FXML private TextField searchInterface;
     @FXML private BarChart<String, Integer> interfaceChart;
     @FXML private NumberAxis yAxisInterfaceChart;
     @FXML private Label interfaceChildrenLabel;
-    @FXML private ListView interfaceChildrenList;
+    @FXML private ListView<String> interfaceChildrenList;
 
     @FXML private Tab tabItem;
     @FXML private ListView<Label> itemList;
-    @FXML private ComboBox comboItem;
+    @FXML private ComboBox<String> comboItem;
     @FXML private TextField searchItem;
     @FXML private BarChart<String, Integer> itemChart;
     @FXML private NumberAxis yAxisItemChart;
     @FXML private Label itemChildrenLabel;
-    @FXML private ListView itemChildrenList;
+    @FXML private ListView<String> itemChildrenList;
 
     @FXML private Tab tabRequirement;
     @FXML private ListView<Label> requirementList;
@@ -113,12 +114,12 @@ public class ObjectiveViewHandler {
 
     @FXML private Tab tabSystem;
     @FXML private ListView<Label> systemList;
-    @FXML private ComboBox comboSystem;
+    @FXML private ComboBox<String> comboSystem;
     @FXML private TextField searchSystem;
     @FXML private BarChart<String, Integer> systemChart;
     @FXML private NumberAxis yAxisSystemChart;
     @FXML private Label systemChildrenLabel;
-    @FXML private ListView systemChildrenList;
+    @FXML private ListView<String> systemChildrenList;
 
     @FXML private Tab tabTest;
     @FXML private Tab tabReview;
@@ -704,7 +705,7 @@ public class ObjectiveViewHandler {
         currentObjId = objId;
         currentProcessObject =
                 DAPlanUtils.getProcessObjectFromList(
-                        ((DAPlan) Arp4754ViewsManager.reportDataObj).getProcesses(), procId);
+                        ((DAPlan) Arp4754ViewsManager.reportDataObj).getTables(), procId);
         currentObjObject =
                 DAPlanUtils.getObjectiveObjectFromList(
                         currentProcessObject.getTabObjectives(), objId);

@@ -31,40 +31,19 @@
  */
 package com.ge.research.rack.do178c.structures;
 
-import com.ge.research.rack.analysis.structures.AnalysisNode;
-import com.ge.research.rack.analysis.structures.PlanTable;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.ge.research.rack.analysis.structures.Plan;
 
 /**
  * @author Saswata Paul
  *     <p>A collection of hierarchical data structures to store a PSAC and associated RACK data
  */
-public class PsacNode extends AnalysisNode {
+public class PsacNode extends Plan {
 
     // The ID and level of the main software
     private String mainOFP = "";
 
-    // List of tables in psac
-    private List<PlanTable<Objective>> reportTables = new ArrayList<PlanTable<Objective>>();
-
     // report status
     private Boolean passed;
-
-    /**
-     * @return the reportTables
-     */
-    public List<PlanTable<Objective>> getReportTables() {
-        return this.reportTables;
-    }
-
-    /**
-     * @param reportTables the reportTables to set
-     */
-    public void setReportTables(List<PlanTable<Objective>> reportTables) {
-        this.reportTables = reportTables;
-    }
 
     /**
      * @return the passed

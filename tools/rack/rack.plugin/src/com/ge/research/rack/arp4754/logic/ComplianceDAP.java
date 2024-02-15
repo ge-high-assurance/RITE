@@ -31,7 +31,6 @@
  */
 package com.ge.research.rack.arp4754.logic;
 
-import com.ge.research.rack.analysis.structures.PlanObjective;
 import com.ge.research.rack.analysis.structures.PlanTable;
 import com.ge.research.rack.arp4754.structures.DAPlan;
 
@@ -52,11 +51,11 @@ public class ComplianceDAP {
 
         // for every process in the plan, send the process to the appropriate function and replace
         // the result in the appropriate position of the plan
-        for (int i = 0; i < plan.getProcesses().size(); i++) {
-            PlanTable<PlanObjective> process = plan.getProcesses().get(i);
+        for (int i = 0; i < plan.getTables().size(); i++) {
+            PlanTable process = plan.getTables().get(i);
 
             // Compute the process compliance
-            PlanTable<PlanObjective> updatedProcess = new PlanTable<PlanObjective>();
+            PlanTable updatedProcess = new PlanTable();
             switch (process.getId()) {
                 case "Process-1":
                     updatedProcess = ComplianceProcess1.computeProcess(process);
@@ -98,12 +97,11 @@ public class ComplianceDAP {
                             + updatedProcess.getComplianceStatus());
 
             // replace old process object with updated object
-            plan.getProcesses().set(i, updatedProcess);
+            plan.getTables().set(i, updatedProcess);
         }
 
         // Compute the compliance status of plan
-        plan.setComplianceStatus(
-                (double) passedProcessCounter / plan.getProcesses().size() * 100.00);
+        plan.setComplianceStatus((double) passedProcessCounter / plan.getTables().size() * 100.00);
 
         return plan;
     }

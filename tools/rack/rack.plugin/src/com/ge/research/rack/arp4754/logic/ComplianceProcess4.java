@@ -127,7 +127,7 @@ public class ComplianceProcess4 {
      * @param process
      * @return
      */
-    public static PlanTable<PlanObjective> computeProcess(PlanTable<PlanObjective> process) {
+    public static PlanTable computeProcess(PlanTable process) {
 
         int numPassed = 0;
         int numNoData = 0;

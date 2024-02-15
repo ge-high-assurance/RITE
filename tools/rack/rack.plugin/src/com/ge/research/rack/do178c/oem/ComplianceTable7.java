@@ -31,7 +31,7 @@
  */
 package com.ge.research.rack.do178c.oem;
 
-import com.ge.research.rack.do178c.structures.Objective;
+import com.ge.research.rack.analysis.structures.PlanObjective;
 import com.ge.research.rack.do178c.structures.Output;
 import com.ge.research.rack.do178c.structures.Requirement;
 import com.ge.research.rack.do178c.structures.Test;
@@ -50,7 +50,7 @@ public class ComplianceTable7 {
      * @param objective
      * @return
      */
-    public static Objective processObjectiveA7_1(Objective objective) {
+    public static PlanObjective processObjectiveA7_1(PlanObjective objective) {
         /**
          * This objective will pass if 1. There are some associated SBVT tests 2. all the associated
          * SBVT tests in the output have review log
@@ -120,7 +120,7 @@ public class ComplianceTable7 {
         return objective;
     }
 
-    public static Objective processObjectiveA7_3(Objective objective) {
+    public static PlanObjective processObjectiveA7_3(PlanObjective objective) {
         /**
          * This objective will pass if 1. There are some associated SRS_Req 2. all the associated
          * SRS_Req in the output have some test 3. All tests have passed for each requirement
@@ -270,7 +270,7 @@ public class ComplianceTable7 {
         return objective;
     }
 
-    public static Objective processObjectiveA7_4(Objective objective) {
+    public static PlanObjective processObjectiveA7_4(PlanObjective objective) {
         /**
          * This objective will pass if 1. There are some associated SubDD_Req 2. all the associated
          * SubDD_Req in the output have some test 3. All tests have passed for each requirement

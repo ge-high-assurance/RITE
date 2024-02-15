@@ -31,23 +31,17 @@
  */
 package com.ge.research.rack.arp4754.structures;
 
-import com.ge.research.rack.analysis.structures.AnalysisNode;
-import com.ge.research.rack.analysis.structures.PlanObjective;
-import com.ge.research.rack.analysis.structures.PlanTable;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.ge.research.rack.analysis.structures.Plan;
 
 /**
  * @author Saswata Paul
  *     <p>A class representing Development Assurance Plans for ARP4754
  */
-public class DAPlan extends AnalysisNode {
+public class DAPlan extends Plan {
 
     private String desc = "";
     private String system = "";
     private String sysDAL = "";
-    private List<PlanTable<PlanObjective>> processes = new ArrayList<PlanTable<PlanObjective>>();
     private double complianceStatus = 0.0;
 
     /**
@@ -95,20 +89,6 @@ public class DAPlan extends AnalysisNode {
      */
     public void setSysDAL(String sysDAL) {
         this.sysDAL = sysDAL;
-    }
-
-    /**
-     * @return the process
-     */
-    public List<PlanTable<PlanObjective>> getProcesses() {
-        return processes;
-    }
-
-    /**
-     * @param process the process to set
-     */
-    public void setProcesses(List<PlanTable<PlanObjective>> process) {
-        processes = process;
     }
 
     /**

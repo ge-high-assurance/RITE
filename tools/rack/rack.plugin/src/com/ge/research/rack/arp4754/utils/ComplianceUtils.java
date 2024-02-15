@@ -31,7 +31,6 @@
  */
 package com.ge.research.rack.arp4754.utils;
 
-import com.ge.research.rack.analysis.structures.PlanObjective;
 import com.ge.research.rack.analysis.structures.PlanTable;
 
 /**
@@ -65,7 +64,7 @@ public class ComplianceUtils {
      * @param procObj
      * @return
      */
-    public static PlanTable<PlanObjective> getProcessStatus(PlanTable<PlanObjective> procObj) {
+    public static PlanTable getProcessStatus(PlanTable procObj) {
         System.out.println(
                 procObj.getId()
                         + " ob no: "
