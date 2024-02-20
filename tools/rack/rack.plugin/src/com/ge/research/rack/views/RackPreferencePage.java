@@ -49,6 +49,7 @@ import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.preference.FieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.FileFieldEditor;
+import org.eclipse.jface.preference.RadioGroupFieldEditor;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
@@ -78,7 +79,7 @@ public class RackPreferencePage extends FieldEditorPreferencePage
 
     private static final String JAVAFX_WINDOW = "rack_javafx";
     private static final String SHOW_CONSOLE = "rack_console";
-    private static final String BLOCKING_CANCEL = "rack_blocking_cancel";
+    private static final String CANCEL_DIALOG = "rack_workflow_cancel";
 
     // singleton preference store
     private static ScopedPreferenceStore preferenceStore =
@@ -93,7 +94,7 @@ public class RackPreferencePage extends FieldEditorPreferencePage
     @Override
     public void init(IWorkbench workbench) {
         preferenceStore.setDefault(SHOW_CONSOLE, false);
-        preferenceStore.setDefault(BLOCKING_CANCEL, false);
+        preferenceStore.setDefault(CANCEL_DIALOG, false);
         setDescription("SemTK Preference");
         preferenceStore.setDefault(PROTOCOL, "http");
         preferenceStore.setDefault(SERVER, "localhost");
@@ -119,8 +120,8 @@ public class RackPreferencePage extends FieldEditorPreferencePage
         return preferenceStore.getBoolean(SHOW_CONSOLE);
     }
 
-    public static boolean getUseBlockingCancel() {
-        return preferenceStore.getBoolean(BLOCKING_CANCEL);
+    public static String getCancelBehavior() {
+        return preferenceStore.getString(CANCEL_DIALOG);
     }
 
     public static String getProtocol() {
@@ -327,9 +328,11 @@ public class RackPreferencePage extends FieldEditorPreferencePage
         addField(consolePref);
 
         var blockingPref =
-                new BooleanFieldEditor(
-                        BLOCKING_CANCEL,
-                        "Use a blocking cancel dialog for workflow interaction",
+                new RadioGroupFieldEditor(
+                        CANCEL_DIALOG,
+                        "Workflow cancel dialog behavior",
+                        1,
+                        new String[][] {{"Non-blocking dialog", "noblock"}, {"Blocking dialog", "block"}, {"No dialog", "none"}},
                         getFieldEditorParent());
         addField(blockingPref);
     }

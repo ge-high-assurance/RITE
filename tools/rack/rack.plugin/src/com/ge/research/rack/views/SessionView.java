@@ -350,19 +350,27 @@ public class SessionView extends ViewPart {
         }
         var top = currentDisplayedDoc.getDocumentElement();
         var connections = top.getElementsByTagName("connection");
-        if (connections.getLength() > 0) currentDisplayedDoc.removeChild(connections.item(0));
-        {
-            Element connection = currentDisplayedDoc.createElement("connection");
-            top.appendChild(connection);
-            var e = currentDisplayedDoc.createElement("data-graph");
-            e.setTextContent(RackPreferencePage.getDefaultDataGraph());
-            connection.appendChild(e);
-            e = currentDisplayedDoc.createElement("model-graph");
-            e.setTextContent(RackPreferencePage.getDefaultModelGraph());
-            connection.appendChild(e);
-            e = currentDisplayedDoc.createElement("url");
-            e.setTextContent(RackPreferencePage.getConnURL());
-            connection.appendChild(e);
+        if (connections.getLength() > 0) {
+        	try {
+        		currentDisplayedDoc.removeChild(connections.item(0));
+                Element connection = currentDisplayedDoc.createElement("connection");
+                top.appendChild(connection);
+                var e = currentDisplayedDoc.createElement("data-graph");
+                e.setTextContent(RackPreferencePage.getDefaultDataGraph());
+                connection.appendChild(e);
+                e = currentDisplayedDoc.createElement("model-graph");
+                e.setTextContent(RackPreferencePage.getDefaultModelGraph());
+                connection.appendChild(e);
+                e = currentDisplayedDoc.createElement("url");
+                e.setTextContent(RackPreferencePage.getConnURL());
+                connection.appendChild(e);
+        	} catch (Exception e) {
+        		// Not sure why this exception can happen after canceling a job 
+        		// It complains it cannot remove the child, although the child appears to be there.
+        		// It is possible that the document is corrupted and a Restart or Abort is necessary
+//        		System.out.println(handler.getStringFromDocument(currentDisplayedDoc));
+//        		System.out.println("CONNECTIONS " + connections.getLength());
+        	}
         }
     }
 
