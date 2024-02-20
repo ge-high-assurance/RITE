@@ -29,10 +29,22 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.ge.research.rack.analysis.structures;
+package com.ge.research.rack.do178c.structures;
 
-// This class is used to abstract the data processing from RACK
-public abstract class DataProcessor {
+import com.ge.research.rack.analysis.structures.PlanGraph;
 
-    protected abstract Plan getData(String outDir);
+import java.util.ArrayList;
+import java.util.List;
+
+public class ActivityList extends PlanGraph {
+
+    private List<Activity> objActivities = new ArrayList<Activity>();
+
+    public List<Activity> getObjActivities() {
+        return objActivities;
+    }
+
+    public void setObjActivities(List<Activity> objActivities) {
+        this.objActivities = objActivities;
+    }
 }

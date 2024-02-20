@@ -117,6 +117,7 @@ public class ComplianceProcess2 {
                     .getSysReqGraphData()
                     .getBuckets()
                     .add(sysyReqWithInterface);
+
             ((Graph) objective.getGraphs())
                     .getSysReqGraphData()
                     .getBuckets()

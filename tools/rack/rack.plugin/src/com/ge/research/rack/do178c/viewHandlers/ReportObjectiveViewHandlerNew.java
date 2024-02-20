@@ -747,8 +747,9 @@ public class ReportObjectiveViewHandlerNew {
                             && ((searchKey == null) || (reqText.contains(searchKey)))) {
                         Label reqLabel = new Label();
 
-                        //String onHover =
-                        //        "(" + req.getType() + ") " + req.getDescription().replace("\"", "");
+                        // String onHover =
+                        //        "(" + req.getType() + ") " + req.getDescription().replace("\"",
+                        // "");
                         reqLabel.setText(reqText);
                         //                        reqLabel.setTooltip(new Tooltip(onHover));
                         reqList.getItems().add(reqLabel);
@@ -758,7 +759,7 @@ public class ReportObjectiveViewHandlerNew {
                         if (req.getSatisfies().size() > 0) {
                             Label reqLabel = new Label();
 
-                            //String onHover =
+                            // String onHover =
                             //        "("
                             //                + req.getType()
                             //                + ") "
@@ -772,7 +773,7 @@ public class ReportObjectiveViewHandlerNew {
                         if (req.getSatisfies().size() < 1) {
                             Label reqLabel = new Label();
 
-                            //String onHover =
+                            // String onHover =
                             //        "("
                             //                + req.getType()
                             //                + ") "
@@ -812,8 +813,9 @@ public class ReportObjectiveViewHandlerNew {
                                 reqText = reqText + tst.getId() + ", ";
                             }
                         }
-                        //String onHover =
-                        //        "(" + req.getType() + ") " + req.getDescription().replace("\"", "");
+                        // String onHover =
+                        //        "(" + req.getType() + ") " + req.getDescription().replace("\"",
+                        // "");
                         reqLabel.setText(reqText);
                         //                        reqLabel.setTooltip(new Tooltip(onHover));
                         reqList.getItems().add(reqLabel);
@@ -833,7 +835,7 @@ public class ReportObjectiveViewHandlerNew {
                                 }
                             }
                             if (failFlag && filterKey.equalsIgnoreCase("Failed Coverage")) {
-                                //String onHover =
+                                // String onHover =
                                 //        "("
                                 //                + req.getType()
                                 //                + ") "
@@ -844,7 +846,7 @@ public class ReportObjectiveViewHandlerNew {
                                 reqList.getItems().add(reqLabel);
                             }
                             if (!failFlag && filterKey.equalsIgnoreCase("Passed Coverage")) {
-                                //String onHover =
+                                // String onHover =
                                 //        "("
                                 //                + req.getType()
                                 //                + ") "
@@ -861,7 +863,7 @@ public class ReportObjectiveViewHandlerNew {
                             Label reqLabel = new Label();
                             String reqText = req.getId() + " | Tests: ";
 
-                            //String onHover =
+                            // String onHover =
                             //        "("
                             //                + req.getType()
                             //                + ") "
@@ -912,8 +914,9 @@ public class ReportObjectiveViewHandlerNew {
                                 reqText = reqText + tst.getId() + ", ";
                             }
                         }
-                        //String onHover =
-                        //        "(" + req.getType() + ") " + req.getDescription().replace("\"", "");
+                        // String onHover =
+                        //        "(" + req.getType() + ") " + req.getDescription().replace("\"",
+                        // "");
                         reqLabel.setText(reqText);
                         //                        reqLabel.setTooltip(new Tooltip(onHover));
                         reqList.getItems().add(reqLabel);
@@ -927,7 +930,7 @@ public class ReportObjectiveViewHandlerNew {
                             for (ReviewLog tst : req.getLogs()) {
                                 reqText = reqText + tst.getId() + ", ";
                             }
-                            //String onHover =
+                            // String onHover =
                             //        "("
                             //                + req.getType()
                             //                + ") "
@@ -942,7 +945,7 @@ public class ReportObjectiveViewHandlerNew {
                             Label reqLabel = new Label();
                             String reqText = req.getId() + " | Logs: ";
 
-                            //String onHover =
+                            // String onHover =
                             //        "("
                             //                + req.getType()
                             //                + ") "

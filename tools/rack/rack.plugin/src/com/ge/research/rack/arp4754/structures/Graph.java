@@ -35,15 +35,14 @@ import com.ge.research.rack.analysis.structures.PlanGraph;
 
 public class Graph extends PlanGraph {
 
-    private GraphData derItemReqGraphData =
-            new GraphData(""); // TODO: might need to create a separate graph element for each
-    // objective
-    private GraphData derSysReqData = new GraphData("");
-    private GraphData interfaceGraphData = new GraphData("");
-    private GraphData itemGraphData = new GraphData("");
-    private GraphData itemReqGraphData = new GraphData("");
-    private GraphData sysReqGraphData = new GraphData("");
-    private GraphData systemGraphData = new GraphData("");
+    // TODO: might need to create a separate graph element for each objective
+    private GraphData derItemReqGraphData = new GraphData(""); // not currently used
+    private GraphData derSysReqData = new GraphData(""); // not currently used
+    private GraphData interfaceGraphData = new GraphData(""); // Interfaces
+    private GraphData itemGraphData = new GraphData(""); // not currently used
+    private GraphData itemReqGraphData = new GraphData(""); // Items
+    private GraphData sysReqGraphData = new GraphData(""); // Requirements
+    private GraphData systemGraphData = new GraphData(""); // Systems
 
     /**
      * @return the derItemReqGraphData

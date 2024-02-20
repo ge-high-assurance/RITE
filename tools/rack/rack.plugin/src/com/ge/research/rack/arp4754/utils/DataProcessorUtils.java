@@ -42,85 +42,40 @@ import java.util.List;
  */
 public class DataProcessorUtils {
 
+    public static String PLAN_DATA = "getDAP";
+
     /**
      * Takes a key that represents a variable name and a config file and returns the CSV/query ID
      * for that variable name
      *
      * @param key
      * @param config
-     * @return TODO: COmplete for all possible variables/verbiage in arp4754
+     * @return TODO: COmplete for all possible variables/verbiage in arp4754 public static String
+     *     getVarCSVID(String key, Configuration config) { String id = ""; switch (key) { case
+     *     "planData": id = "getDAP"; break; case "allDerivedItemRequirement": id =
+     *     config.getDerivedItemReq(); break; case "allDerivedSystemRequirement": id =
+     *     config.getDerivedSysReq(); break; case "allInterface": id = config.getIntrface(); break;
+     *     case "allInterfaceInput": id = config.getIntrfaceInput(); break; case
+     *     "allInterfaceOutput": id = config.getIntrfaceOutput(); break; case "allItem": id =
+     *     config.getItem(); break; case "allSystem": id = config.getSystem(); break; case
+     *     "allSystemDesignDescription": id = config.getSystemDesignDescription(); break; case
+     *     "allItemRequirement": id = config.getItemReq(); break; case "allSystemRequirement": id =
+     *     config.getSysReq(); break; case "allInterfaceWithInputOutput": id = config.getIntrface()
+     *     + "_with_IO"; break; case "allItemRequirementWIthItem": id = config.getItemReq() +
+     *     "_with_" + config.getItem(); break; case "allSystemRequirementWIthSystem": id =
+     *     config.getSysReq() + "_with_" + config.getSystem(); break; case "allSystemWIthInterface":
+     *     id = config.getSystem() + "_with_" + config.getIntrface(); break; case
+     *     "allItemRequirementWIthSystemRequirement": id = config.getItemReq() + "_with_" +
+     *     config.getSysReq(); break; case "allRequirementCompleteCorrectReview": id =
+     *     config.getRequirementCompleteCorrectReview(); break; case
+     *     "allRequirementTraceableReview": id = config.getRequirementTraceableReview(); break; case
+     *     "allRequirementWithCompleteCorrectReview": // TODO: Item rqe needs to be turned to
+     *     Generic requirements id = config.getItemReq() + "_with_" +
+     *     config.getRequirementCompleteCorrectReview(); break; case
+     *     "allRequirementWithTraceableReview": id = config.getItemReq() + "_with_" +
+     *     config.getRequirementTraceableReview(); break;
+     *     <p>default: id = ""; break; } return id; }
      */
-    public static String getVarCSVID(String key, Configuration config) {
-        String id = "";
-        switch (key) {
-            case "planData":
-                id = "getDAP";
-                break;
-            case "allDerivedItemRequirement":
-                id = config.getDerivedItemReq();
-                break;
-            case "allDerivedSystemRequirement":
-                id = config.getDerivedSysReq();
-                break;
-            case "allInterface":
-                id = config.getIntrface();
-                break;
-            case "allInterfaceInput":
-                id = config.getIntrfaceInput();
-                break;
-            case "allInterfaceOutput":
-                id = config.getIntrfaceOutput();
-                break;
-            case "allItem":
-                id = config.getItem();
-                break;
-            case "allSystem":
-                id = config.getSystem();
-                break;
-            case "allSystemDesignDescription":
-                id = config.getSystemDesignDescription();
-                break;
-            case "allItemRequirement":
-                id = config.getItemReq();
-                break;
-            case "allSystemRequirement":
-                id = config.getSysReq();
-                break;
-            case "allInterfaceWithInputOutput":
-                id = config.getIntrface() + "_with_IO";
-                break;
-            case "allItemRequirementWIthItem":
-                id = config.getItemReq() + "_with_" + config.getItem();
-                break;
-            case "allSystemRequirementWIthSystem":
-                id = config.getSysReq() + "_with_" + config.getSystem();
-                break;
-            case "allSystemWIthInterface":
-                id = config.getSystem() + "_with_" + config.getIntrface();
-                break;
-            case "allItemRequirementWIthSystemRequirement":
-                id = config.getItemReq() + "_with_" + config.getSysReq();
-                break;
-            case "allRequirementCompleteCorrectReview":
-                id = config.getRequirementCompleteCorrectReview();
-                break;
-            case "allRequirementTraceableReview":
-                id = config.getRequirementTraceableReview();
-                break;
-            case "allRequirementWithCompleteCorrectReview": // TODO: Itemrqe needs to be turned to
-                // Generic rquirements
-                id = config.getItemReq() + "_with_" + config.getRequirementCompleteCorrectReview();
-                break;
-            case "allRequirementWithTraceableReview":
-                id = config.getItemReq() + "_with_" + config.getRequirementTraceableReview();
-                break;
-
-            default:
-                id = "";
-                break;
-        }
-        return id;
-    }
 
     /**
      * This function uses the config to create the IDs for all the queries needed to get the data
@@ -134,26 +89,26 @@ public class DataProcessorUtils {
         // Create all required query IDs
         List<String> allQueryIds = new ArrayList<String>();
 
-        allQueryIds.add(getVarCSVID("planData", config));
-        allQueryIds.add(getVarCSVID("allDerivedItemRequirement", config));
-        allQueryIds.add(getVarCSVID("allDerivedSystemRequirement", config));
-        allQueryIds.add(getVarCSVID("allInterface", config));
-        allQueryIds.add(getVarCSVID("allInterfaceInput", config));
-        allQueryIds.add(getVarCSVID("allInterfaceOutput", config));
-        allQueryIds.add(getVarCSVID("allItem", config));
-        allQueryIds.add(getVarCSVID("allItemRequirement", config));
-        allQueryIds.add(getVarCSVID("allSystem", config));
-        allQueryIds.add(getVarCSVID("allSystemRequirement", config));
-        allQueryIds.add(getVarCSVID("allSystemDesignDescription", config));
-        allQueryIds.add(getVarCSVID("allInterfaceWithInputOutput", config));
-        allQueryIds.add(getVarCSVID("allItemRequirementWIthItem", config));
-        allQueryIds.add(getVarCSVID("allSystemRequirementWIthSystem", config));
-        allQueryIds.add(getVarCSVID("allSystemWIthInterface", config));
-        allQueryIds.add(getVarCSVID("allItemRequirementWIthSystemRequirement", config));
-        allQueryIds.add(getVarCSVID("allRequirementCompleteCorrectReview", config));
-        allQueryIds.add(getVarCSVID("allRequirementTraceableReview", config));
-        allQueryIds.add(getVarCSVID("allRequirementWithCompleteCorrectReview", config));
-        allQueryIds.add(getVarCSVID("allRequirementWithTraceableReview", config));
+        allQueryIds.add(PLAN_DATA);
+        allQueryIds.add(config.get("derivedItemRequirement"));
+        allQueryIds.add(config.get("derivedSystemRequirement"));
+        allQueryIds.add(config.get("interface"));
+        allQueryIds.add(config.get("interfaceInput"));
+        allQueryIds.add(config.get("interfaceOutput"));
+        allQueryIds.add(config.get("item"));
+        allQueryIds.add(config.get("itemRequirement"));
+        allQueryIds.add(config.get("system"));
+        allQueryIds.add(config.get("systemRequirement"));
+        allQueryIds.add(config.get("systemDesignDescription"));
+        allQueryIds.add(config.getWithIO("interface"));
+        allQueryIds.add(config.get("itemRequirement", "item"));
+        allQueryIds.add(config.get("systemRequirement", "system"));
+        allQueryIds.add(config.get("system", "interface"));
+        allQueryIds.add(config.get("itemRequirement", "systemRequirement"));
+        allQueryIds.add(config.get("requirementCompleteCorrectReview"));
+        allQueryIds.add(config.get("requirementTraceableReview"));
+        allQueryIds.add(config.get("itemRequirement", "requirementCompleteCorrectReview"));
+        allQueryIds.add(config.get("itemRequirement", "requirementTraceableReview"));
         allQueryIds.add("DOCUMENT");
 
         // Execute each predefined query

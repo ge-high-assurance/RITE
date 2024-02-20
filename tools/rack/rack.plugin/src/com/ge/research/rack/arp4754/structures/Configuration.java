@@ -31,6 +31,8 @@
  */
 package com.ge.research.rack.arp4754.structures;
 
+import java.util.HashMap;
+
 /**
  * @author Saswata Paul
  *     <p>This class stores the configuration data read from project-specific configurations that
@@ -38,161 +40,26 @@ package com.ge.research.rack.arp4754.structures;
  */
 public class Configuration {
 
-    private String derivedItemReq = "";
-    private String derivedSysReq = "";
-    private String intrface = "";
-    private String intrfaceInput = "";
-    private String intrfaceOutput = "";
-    private String item = "";
-    private String itemReq = "";
-    private String sysReq = "";
-    private String system = "";
-    private String systemDesignDescription = "";
-    private String requirementCompleteCorrectReview = "";
-    private String requirementTraceableReview = "";
+    private HashMap<String, String> queries = new HashMap<String, String>();
 
-    /**
-     * @return the derivedItemReq
-     */
-    public String getDerivedItemReq() {
-        return derivedItemReq;
+    public void put(String alias, String lookupStr) {
+        queries.put(alias, lookupStr);
     }
-    /**
-     * @param derivedItemReq the derivedItemReq to set
-     */
-    public void setDerivedItemReq(String derivedItemReq) {
-        this.derivedItemReq = derivedItemReq;
+
+    public String get(String alias) {
+        String str = queries.get(alias);
+        if (str == null) {
+            return "";
+        }
+
+        return str;
     }
-    /**
-     * @return the derivedSysReq
-     */
-    public String getDerivedSysReq() {
-        return derivedSysReq;
+
+    public String get(String alias1, String alias2) {
+        return queries.get(alias1) + "_with_" + queries.get(alias2);
     }
-    /**
-     * @param derivedSysReq the derivedSysReq to set
-     */
-    public void setDerivedSysReq(String derivedSysReq) {
-        this.derivedSysReq = derivedSysReq;
-    }
-    /**
-     * @return the intrface
-     */
-    public String getIntrface() {
-        return intrface;
-    }
-    /**
-     * @param intrface the intrface to set
-     */
-    public void setIntrface(String intrface) {
-        this.intrface = intrface;
-    }
-    /**
-     * @return the intrfaceInput
-     */
-    public String getIntrfaceInput() {
-        return intrfaceInput;
-    }
-    /**
-     * @param intrfaceInput the intrfaceInput to set
-     */
-    public void setIntrfaceInput(String intrfaceInput) {
-        this.intrfaceInput = intrfaceInput;
-    }
-    /**
-     * @return the intrfaceOutput
-     */
-    public String getIntrfaceOutput() {
-        return intrfaceOutput;
-    }
-    /**
-     * @param intrfaceOutput the intrfaceOutput to set
-     */
-    public void setIntrfaceOutput(String intrfaceOutput) {
-        this.intrfaceOutput = intrfaceOutput;
-    }
-    /**
-     * @return the item
-     */
-    public String getItem() {
-        return item;
-    }
-    /**
-     * @param item the item to set
-     */
-    public void setItem(String item) {
-        this.item = item;
-    }
-    /**
-     * @return the itemReq
-     */
-    public String getItemReq() {
-        return itemReq;
-    }
-    /**
-     * @param itemReq the itemReq to set
-     */
-    public void setItemReq(String itemReq) {
-        this.itemReq = itemReq;
-    }
-    /**
-     * @return the sysReq
-     */
-    public String getSysReq() {
-        return sysReq;
-    }
-    /**
-     * @param sysReq the sysReq to set
-     */
-    public void setSysReq(String sysReq) {
-        this.sysReq = sysReq;
-    }
-    /**
-     * @return the system
-     */
-    public String getSystem() {
-        return system;
-    }
-    /**
-     * @param system the system to set
-     */
-    public void setSystem(String system) {
-        this.system = system;
-    }
-    /**
-     * @return the systemDesignDescription
-     */
-    public String getSystemDesignDescription() {
-        return systemDesignDescription;
-    }
-    /**
-     * @param systemDesignDescription the systemDesignDescription to set
-     */
-    public void setSystemDesignDescription(String systemDesignDescription) {
-        this.systemDesignDescription = systemDesignDescription;
-    }
-    /**
-     * @return the requirementCompleteCorrectReview
-     */
-    public String getRequirementCompleteCorrectReview() {
-        return requirementCompleteCorrectReview;
-    }
-    /**
-     * @param requirementCompleteCorrectReview the requirementCompleteCorrectReview to set
-     */
-    public void setRequirementCompleteCorrectReview(String requirementCompleteCorrectReview) {
-        this.requirementCompleteCorrectReview = requirementCompleteCorrectReview;
-    }
-    /**
-     * @return the requirementTraceableReview
-     */
-    public String getRequirementTraceableReview() {
-        return requirementTraceableReview;
-    }
-    /**
-     * @param requirementTraceableReview the requirementTraceableReview to set
-     */
-    public void setRequirementTraceableReview(String requirementTraceableReview) {
-        this.requirementTraceableReview = requirementTraceableReview;
+
+    public String getWithIO(String alias) {
+        return queries.get(alias) + "_with_IO";
     }
 }

@@ -57,64 +57,56 @@ public class ConfigReader {
      */
     public static Configuration getConfigFromFile(String configFilePath) {
 
-        Configuration projectConfig = new Configuration();
+        String queries[] = {
+            "derivedItemRequirement",
+            "derivedSystemRequirement",
+            "interface",
+            "interfaceInput",
+            "interfaceOutput",
+            "item",
+            "itemRequirement",
+            "systemRequirement",
+            "system",
+            "systemDesignDescription"
+        };
 
+        Configuration projectConfig = new Configuration();
         System.out.println(configFilePath);
 
         try {
             File file = new File(configFilePath); // creates a new file instance
             FileReader fr = new FileReader(file); // reads the file
-            BufferedReader br =
-                    new BufferedReader(fr); // creates a buffering character input stream
-            String line;
+            try (BufferedReader br = new BufferedReader(fr)) {
+                // Read a file line
+                String line;
+                while ((line = br.readLine()) != null) {
+                    // System.out.println(line);
+                    String content = line.trim();
+                    // Extract and store info in appropriate field
+                    String[] config = content.split("\\::");
 
-            // Read a file line
-            while ((line = br.readLine()) != null) {
-                //            	System.out.println(line);
-                String content = line.trim();
-                // Extract and store info in appropriate field
-                String[] config = content.split("\\::");
+                    if (config.length != 2) { // ill formed
+                        System.out.println("ERROR: Ill-formed .config file at " + configFilePath);
+                        return projectConfig;
+                    }
+                    // System.out.println(config[0] + "--" +config[1]);
 
-                if (config.length != 2) { // ill formed
-                    System.out.println("ERROR: Ill-formed .config file at " + configFilePath);
-                    return projectConfig;
-                }
-                //                System.out.println(config[0] + "--" +config[1]);
+                    boolean notfound = true;
+                    int index = 0;
+                    while (notfound && index < queries.length) {
+                        if (config[0].equalsIgnoreCase(queries[index])) {
+                            notfound = false;
+                            projectConfig.put(queries[index], config[1]);
+                        }
 
-                if (config[0].equalsIgnoreCase("SystemRequirement")) {
-                    projectConfig.setSysReq(config[1]);
+                        index++;
+                    }
                 }
-                if (config[0].equalsIgnoreCase("ItemRequirement")) {
-                    projectConfig.setItemReq(config[1]);
-                }
-                if (config[0].equalsIgnoreCase("DerivedSystemRequirement")) {
-                    projectConfig.setDerivedSysReq(config[1]);
-                }
-                if (config[0].equalsIgnoreCase("DerivedItemRequirement")) {
-                    projectConfig.setDerivedItemReq(config[1]);
-                }
-                if (config[0].equalsIgnoreCase("Interface")) {
-                    projectConfig.setIntrface(config[1]);
-                }
-                if (config[0].equalsIgnoreCase("InterfaceInput")) {
-                    projectConfig.setIntrfaceInput(config[1]);
-                }
-                if (config[0].equalsIgnoreCase("InterfaceOutput")) {
-                    projectConfig.setIntrfaceOutput(config[1]);
-                }
-                if (config[0].equalsIgnoreCase("Item")) {
-                    projectConfig.setItem(config[1]);
-                }
-                if (config[0].equalsIgnoreCase("System")) {
-                    projectConfig.setSystem(config[1]);
-                }
-                if (config[0].equalsIgnoreCase("SystemDesignDescription")) {
-                    projectConfig.setSystemDesignDescription(config[1]);
-                }
+
+                br.close();
             }
-            br.close();
-            fr.close(); // closes the stream and release the resources
 
+            fr.close(); // closes the stream and release the resources
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -128,6 +120,21 @@ public class ConfigReader {
      * @return
      */
     public static Configuration getConfigFromRACK(String rackDir) {
+
+        String queries[] = {
+            "derivedItemRequirement",
+            "derivedSystemRequirement",
+            "interface",
+            "interfaceInput",
+            "interfaceOutput",
+            "item",
+            "itemRequirement",
+            "systemRequirement",
+            "system",
+            "systemDesignDescription",
+            "requirementCompleteCorrectReview",
+            "requirementTraceableReview"
+        };
 
         Configuration projectConfig = new Configuration();
 
@@ -145,47 +152,16 @@ public class ConfigReader {
                 CSVUtil.getColumnInfo(
                         RackQueryUtils.createCsvFilePath(
                                 ARP4754Queries.All.GET_CONFIG.getQId(), rackDir));
-        int configIdCol = CustomStringUtils.getCSVColumnIndex(configCols, "Configuration");
-        int derItemReqIdCol =
-                CustomStringUtils.getCSVColumnIndex(configCols, "derivedItemRequirementAlias");
-        int derSysReqIdCol =
-                CustomStringUtils.getCSVColumnIndex(configCols, "derivedSystemRequirementAlias");
-        int interfaceIdCol = CustomStringUtils.getCSVColumnIndex(configCols, "interfaceAlias");
-        int interfaceInputIdCol =
-                CustomStringUtils.getCSVColumnIndex(configCols, "interfaceInputAlias");
-        int interfaceOutputIdCol =
-                CustomStringUtils.getCSVColumnIndex(configCols, "interfaceOutputAlias");
-        int itemIdCol = CustomStringUtils.getCSVColumnIndex(configCols, "itemAlias");
-        int itemReqIdCol = CustomStringUtils.getCSVColumnIndex(configCols, "itemRequirementAlias");
-        int sysReqIdCol = CustomStringUtils.getCSVColumnIndex(configCols, "systemRequirementAlias");
-        int systemIdCol = CustomStringUtils.getCSVColumnIndex(configCols, "systemAlias");
-        int systemDesignDescriptionIdCol =
-                CustomStringUtils.getCSVColumnIndex(configCols, "systemDesignDescriptionAlias");
-        int requirementCompleteCorrectReviewIdCol =
-                CustomStringUtils.getCSVColumnIndex(
-                        configCols, "requirementCompleteCorrectReviewAlias");
-        int requirementTraceableReviewIdCol =
-                CustomStringUtils.getCSVColumnIndex(configCols, "requirementTraceableReviewAlias");
 
-        projectConfig.setDerivedItemReq(configData.get(0)[derItemReqIdCol]);
-        projectConfig.setDerivedSysReq(configData.get(0)[derSysReqIdCol]);
-        projectConfig.setIntrface(configData.get(0)[interfaceIdCol]);
-        projectConfig.setIntrfaceInput(configData.get(0)[interfaceInputIdCol]);
-        projectConfig.setIntrfaceOutput(configData.get(0)[interfaceOutputIdCol]);
-        projectConfig.setItem(configData.get(0)[itemIdCol]);
-        projectConfig.setItemReq(configData.get(0)[itemReqIdCol]);
-        projectConfig.setSysReq(configData.get(0)[sysReqIdCol]);
-        projectConfig.setSystem(configData.get(0)[systemIdCol]);
-        projectConfig.setSystemDesignDescription(configData.get(0)[systemDesignDescriptionIdCol]);
-        projectConfig.setRequirementCompleteCorrectReview(
-                configData.get(0)[requirementCompleteCorrectReviewIdCol]);
-        projectConfig.setRequirementTraceableReview(
-                configData.get(0)[requirementTraceableReviewIdCol]);
+        for (String str : queries) {
+            int idCol = CustomStringUtils.getCSVColumnIndex(configCols, str + "Alias");
+            projectConfig.put(str, configData.get(0)[idCol]);
+        }
 
         return projectConfig;
     }
 
-    /** Queries RACK for the COnfiguration data */
+    /** Queries RACK for the Configuration data */
     private static void queryRackForARP4754Config(String rackDir) {
 
         try {
