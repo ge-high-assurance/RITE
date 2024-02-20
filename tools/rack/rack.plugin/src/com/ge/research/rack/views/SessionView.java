@@ -69,12 +69,12 @@ import org.w3c.dom.NodeList;
 // FIXME - check and document whether Save saves the current contents of the user-modifiable
 // controls
 // FIXME - there are still some race conditions that can happen between job execution and canceling
+// FIXME - understand and compensate for the exception that happens sometimes on removeChild
 
 // Nice to have:
 // FIXME - handle stderr
 // FIXME - a workflow path listing candidate folders for workflows
-// FIXME - add a combo control
-// FIXME - disable the back button when there is no history to revert to
+// FIXME - add a combo control (for what?)
 // FIXME - be able to go forward after a back
 
 // Future:
