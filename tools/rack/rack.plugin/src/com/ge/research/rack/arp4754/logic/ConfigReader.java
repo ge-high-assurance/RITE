@@ -55,21 +55,8 @@ public class ConfigReader {
      *
      * @return
      */
-    public static Configuration getConfigFromFile(String configFilePath) {
-
-        String queries[] = {
-            "derivedItemRequirement",
-            "derivedSystemRequirement",
-            "interface",
-            "interfaceInput",
-            "interfaceOutput",
-            "item",
-            "itemRequirement",
-            "systemRequirement",
-            "system",
-            "systemDesignDescription"
-        };
-
+    public static Configuration getConfigFromFile(QueryList queries, String configFilePath) {
+        List<String> strs = queries.getBaseConfiguration();
         Configuration projectConfig = new Configuration();
         System.out.println(configFilePath);
 
@@ -93,10 +80,10 @@ public class ConfigReader {
 
                     boolean notfound = true;
                     int index = 0;
-                    while (notfound && index < queries.length) {
-                        if (config[0].equalsIgnoreCase(queries[index])) {
+                    while (notfound && index < strs.size()) {
+                        if (config[0].equalsIgnoreCase(strs.get(index))) {
                             notfound = false;
-                            projectConfig.put(queries[index], config[1]);
+                            projectConfig.put(strs.get(index), config[1]);
                         }
 
                         index++;
@@ -119,24 +106,9 @@ public class ConfigReader {
      *
      * @return
      */
-    public static Configuration getConfigFromRACK(String rackDir) {
-
-        String queries[] = {
-            "derivedItemRequirement",
-            "derivedSystemRequirement",
-            "interface",
-            "interfaceInput",
-            "interfaceOutput",
-            "item",
-            "itemRequirement",
-            "systemRequirement",
-            "system",
-            "systemDesignDescription",
-            "requirementCompleteCorrectReview",
-            "requirementTraceableReview"
-        };
-
+    public static Configuration getConfigFromRACK(QueryList queries, String rackDir) {
         Configuration projectConfig = new Configuration();
+        List<String> strs = queries.getBaseConfiguration();
 
         // Query RACK
         queryRackForARP4754Config(rackDir);
@@ -153,7 +125,7 @@ public class ConfigReader {
                         RackQueryUtils.createCsvFilePath(
                                 ARP4754Queries.All.GET_CONFIG.getQId(), rackDir));
 
-        for (String str : queries) {
+        for (String str : strs) {
             int idCol = CustomStringUtils.getCSVColumnIndex(configCols, str + "Alias");
             projectConfig.put(str, configData.get(0)[idCol]);
         }

@@ -54,6 +54,9 @@ import java.util.List;
  */
 public class DataProcessor extends com.ge.research.rack.analysis.structures.DataProcessor {
 
+    public static String PLAN_DATA = "getDAP";
+    public static String PLAN_DOCUMENT = "DOCUMENT";
+
     /**
      * Class variables to store the raw data fetched from CSV files
      *
@@ -117,6 +120,8 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
     // ARP4754 Element Objects
     private Output Artifacts = new Output();
 
+    private QueryList queries = new QueryList();
+
     /** Passes the Plan Object to the appropriate functions to get the compliance status */
     private void getPlanCompliance() {
         DAPlan newPlanNode = new DAPlan();
@@ -138,7 +143,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         // get all headers for the csv file
         String[] allCols =
                 CSVUtil.getColumnInfo(
-                        RackQueryUtils.createCsvFilePath(DataProcessorUtils.PLAN_DATA, rackDir));
+                        RackQueryUtils.createCsvFilePath(PLAN_DATA, rackDir));
 
         int planIdCol = CustomStringUtils.getCSVColumnIndex(allCols, "Plan_id");
         int sysIdCol = CustomStringUtils.getCSVColumnIndex(allCols, "System_id");
@@ -827,10 +832,13 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                         RackQueryUtils.createCsvFilePath(
                                 config.get("itemRequirement", "requirementTraceableReview"),
                                 rackDir));
-        allDOCUMENT = CSVUtil.getRows(RackQueryUtils.createCsvFilePath("DOCUMENT", rackDir));
+
+        allDOCUMENT = 
+        		CSVUtil.getRows(RackQueryUtils.createCsvFilePath(PLAN_DOCUMENT, rackDir));
+
         planData =
                 CSVUtil.getRows(
-                        RackQueryUtils.createCsvFilePath(DataProcessorUtils.PLAN_DATA, rackDir));
+                        RackQueryUtils.createCsvFilePath(PLAN_DATA, rackDir));
     }
 
     /**
@@ -841,7 +849,32 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
      */
     private void getConfig(String rackDir) {
         // Get configuration
-        config = ConfigReader.getConfigFromRACK(rackDir);
+        config = ConfigReader.getConfigFromRACK(queries, rackDir);
+    }
+
+    private void addDefaultQueries() {
+        // Populate the default queries; Must be called before getConfig
+        queries.addDirect(PLAN_DATA);
+        queries.addConfigLookup("derivedItemRequirement");
+        queries.addConfigLookup("derivedSystemRequirement");
+        queries.addConfigLookup("interface");
+        queries.addConfigLookup("interfaceInput");
+        queries.addConfigLookup("interfaceOutput");
+        queries.addConfigLookup("item");
+        queries.addConfigLookup("itemRequirement");
+        queries.addConfigLookup("system");
+        queries.addConfigLookup("systemRequirement");
+        queries.addConfigLookup("systemDesignDescription");
+        queries.addConfigLookupWithIO("interface");
+        queries.addConfigLookup("itemRequirement", "item");
+        queries.addConfigLookup("systemRequirement", "system");
+        queries.addConfigLookup("system", "interface");
+        queries.addConfigLookup("itemRequirement", "systemRequirement");
+        queries.addConfigLookup("requirementCompleteCorrectReview");
+        queries.addConfigLookup("requirementTraceableReview");
+        queries.addConfigLookup("itemRequirement", "requirementCompleteCorrectReview");
+        queries.addConfigLookup("itemRequirement", "requirementTraceableReview");
+        queries.addDirect(PLAN_DOCUMENT);
     }
 
     // Entry point that does sequence of operations
@@ -852,10 +885,11 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         CustomFileUtils.clearDirectory(rackDir);
 
         // read project config from RACK
+        addDefaultQueries();
         // getConfig(rackDir, configPath);
 
         // fetch the evidence from RACK as csv files by executing queries
-        DataProcessorUtils.createAndExecuteDataQueries(config, rackDir);
+        DataProcessorUtils.createAndExecuteDataQueries(config, queries, rackDir);
 
         // load csv data into class variables
         readEvidenceCSVs(rackDir);
@@ -878,10 +912,11 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         CustomFileUtils.clearDirectory(outDir);
 
         // read project config from RACK
+        addDefaultQueries();
         getConfig(outDir);
 
         // fetch the evidence from RACK as csv files by executing queries
-        DataProcessorUtils.createAndExecuteDataQueries(config, outDir);
+        DataProcessorUtils.createAndExecuteDataQueries(config, queries, outDir);
 
         // load csv data into class variables
         readEvidenceCSVs(outDir);

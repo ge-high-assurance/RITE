@@ -29,37 +29,68 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.ge.research.rack.arp4754.structures;
+package com.ge.research.rack.arp4754.logic;
 
-import java.util.HashMap;
+import com.ge.research.rack.arp4754.structures.Configuration;
 
-/**
- * @author Saswata Paul
- *     <p>This class stores the configuration data read from project-specific configurations that
- *     maps project classes to ARP4754 terminologies
- */
-public class Configuration {
+public class QueryItem {
 
-    private HashMap<String, String> queries = new HashMap<String, String>();
+    public enum QueryStringType {
+        DIRECT,
+        CONFIG_LOOKUP,
+        CONFIG_LOOKUP_PAIR,
+        CONFIG_LOOKUP_WITH_IO
+    };
 
-    public void put(String alias, String lookupStr) {
-        queries.put(alias, lookupStr);
+    private String _label;
+    private String _label2;
+    private QueryStringType _type;
+
+    public QueryItem(String str) {
+        _label = str;
+        _label2 = "";
+        _type = QueryStringType.CONFIG_LOOKUP;
     }
 
-    public String get(String alias) {
-        String str = queries.get(alias);
-        if (str == null) {
-            return "";
+    public QueryItem(String str, QueryStringType t) {
+        _label = str;
+        _label2 = "";
+        _type = t;
+    }
+
+    public QueryItem(String str1, String str2) {
+        _label = str1;
+        _label2 = str2;
+        _type = QueryStringType.CONFIG_LOOKUP_PAIR;
+    }
+
+    public boolean isDirect() {
+        return _type == QueryStringType.DIRECT;
+    }
+
+    public String toString(Configuration config) {
+        switch (_type) {
+            case CONFIG_LOOKUP:
+                return config.get(_label);
+            case CONFIG_LOOKUP_PAIR:
+                return config.get(_label, _label2);
+            case CONFIG_LOOKUP_WITH_IO:
+                return config.getWithIO(_label);
+            default:
+                break;
         }
-
-        return str;
+        return _label;
     }
 
-    public String get(String alias1, String alias2) {
-        return get(alias1) + "_with_" + get(alias2);
+    public String toStringDirect() {
+        return _label;
     }
 
-    public String getWithIO(String alias) {
-        return get(alias) + "_with_IO";
+    public boolean hasPairLookup() {
+        return !_label2.isEmpty();
+    }
+
+    public String toStringDirectPair() {
+        return _label2;
     }
 }

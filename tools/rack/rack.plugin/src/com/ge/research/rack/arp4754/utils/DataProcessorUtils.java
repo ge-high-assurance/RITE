@@ -32,6 +32,7 @@
 package com.ge.research.rack.arp4754.utils;
 
 import com.ge.research.rack.analysis.utils.RackQueryUtils;
+import com.ge.research.rack.arp4754.logic.QueryList;
 import com.ge.research.rack.arp4754.structures.Configuration;
 
 import java.util.ArrayList;
@@ -41,8 +42,6 @@ import java.util.List;
  * @author Saswata Paul
  */
 public class DataProcessorUtils {
-
-    public static String PLAN_DATA = "getDAP";
 
     /**
      * Takes a key that represents a variable name and a config file and returns the CSV/query ID
@@ -84,32 +83,14 @@ public class DataProcessorUtils {
      * <p>NOTE: Currently, the queries are manually created and stored on RACK. In future, the
      * queries themselves must also be synthesized
      */
-    public static void createAndExecuteDataQueries(Configuration config, String rackDir) {
+    public static void createAndExecuteDataQueries(
+            Configuration config, QueryList queries, String rackDir) {
 
         // Create all required query IDs
         List<String> allQueryIds = new ArrayList<String>();
-
-        allQueryIds.add(PLAN_DATA);
-        allQueryIds.add(config.get("derivedItemRequirement"));
-        allQueryIds.add(config.get("derivedSystemRequirement"));
-        allQueryIds.add(config.get("interface"));
-        allQueryIds.add(config.get("interfaceInput"));
-        allQueryIds.add(config.get("interfaceOutput"));
-        allQueryIds.add(config.get("item"));
-        allQueryIds.add(config.get("itemRequirement"));
-        allQueryIds.add(config.get("system"));
-        allQueryIds.add(config.get("systemRequirement"));
-        allQueryIds.add(config.get("systemDesignDescription"));
-        allQueryIds.add(config.getWithIO("interface"));
-        allQueryIds.add(config.get("itemRequirement", "item"));
-        allQueryIds.add(config.get("systemRequirement", "system"));
-        allQueryIds.add(config.get("system", "interface"));
-        allQueryIds.add(config.get("itemRequirement", "systemRequirement"));
-        allQueryIds.add(config.get("requirementCompleteCorrectReview"));
-        allQueryIds.add(config.get("requirementTraceableReview"));
-        allQueryIds.add(config.get("itemRequirement", "requirementCompleteCorrectReview"));
-        allQueryIds.add(config.get("itemRequirement", "requirementTraceableReview"));
-        allQueryIds.add("DOCUMENT");
+        for (String str : queries.getAllQueries(config)) {
+            allQueryIds.add(str);
+        }
 
         // Execute each predefined query
         RackQueryUtils.createConnectionAndExecuteMultiQueriesFromStore(allQueryIds, rackDir);
