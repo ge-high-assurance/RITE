@@ -1,23 +1,23 @@
 /*
  * BSD 3-Clause License
- * 
+ *
  * Copyright (c) 2023, General Electric Company and Galois, Inc.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -35,6 +35,7 @@ import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
 import com.ge.research.rack.report.structures.SparqlConnectionInfo;
 import com.ge.research.rack.utils.ConnectionUtil;
 import com.ge.research.rack.utils.Core;
+import com.ge.research.rack.utils.ErrorMessageUtil;
 import com.ge.research.rack.views.RackPreferencePage;
 import com.ge.research.semtk.api.nodeGroupExecution.client.NodeGroupExecutionClient;
 import com.ge.research.semtk.api.nodeGroupExecution.client.NodeGroupExecutionClientConfig;
@@ -43,21 +44,18 @@ import com.ge.research.semtk.nodeGroupStore.client.NodeGroupStoreConfig;
 import com.ge.research.semtk.nodeGroupStore.client.NodeGroupStoreRestClient;
 import com.ge.research.semtk.sparqlX.SparqlConnection;
 import com.ge.research.semtk.sparqlX.SparqlEndpointInterface;
-
-import org.apache.commons.io.FileUtils;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.io.FileUtils;
 
 /**
  * @author Saswata Paul
@@ -117,9 +115,9 @@ public class RackQueryUtils {
 
             return newConnPars;
         } catch (Exception e) {
-            System.out.println(
-                    "ERROR: Was unable to create SparQlGraph connection using user preferences!!");
-            e.printStackTrace();
+            ErrorMessageUtil.error(
+                    "ERROR: Was unable to create SparQlGraph connection using user preferences!!",
+                    e);
             return null;
         }
     }
@@ -176,8 +174,8 @@ public class RackQueryUtils {
 
             return newConnPars;
         } catch (Exception e) {
-            System.out.println("ERROR: Was unable to create hardcoded SparQlGraph connection!!");
-            e.printStackTrace();
+            ErrorMessageUtil.error(
+                    "ERROR: Was unable to create hardcoded SparQlGraph connection!!", e);
             return null;
         }
     }
@@ -249,13 +247,11 @@ public class RackQueryUtils {
                 myWriter.close();
                 System.out.println("Successfully created and wrote data to CSV files.\n");
             } catch (Exception e) {
-                System.out.println("ERROR: Could not create and write data to CSV files.\n");
-                e.printStackTrace();
+                ErrorMessageUtil.error("ERROR: Could not create and write data to CSV files.\n", e);
             }
         } catch (Exception e) {
-            System.out.println(
-                    "ERROR: Could not execute query " + queryId + " successfully on RACK!!\n");
-            e.printStackTrace();
+            ErrorMessageUtil.error(
+                    "ERROR: Could not execute query " + queryId + " successfully on RACK!!\n", e);
         }
     }
 
@@ -312,7 +308,7 @@ public class RackQueryUtils {
         // to store the csv data as a list of lists
         List<String[]> fileArray = new ArrayList<String[]>();
 
-        try (BufferedReader reader = Files.newBufferedReader(filePath, StandardCharsets.US_ASCII)) {
+        try (BufferedReader reader = Files.newBufferedReader(filePath, Charset.defaultCharset())) {
 
             // read the first line from the csv file
             String csvLine = reader.readLine();
@@ -334,9 +330,8 @@ public class RackQueryUtils {
             }
 
         } catch (IOException ioe) {
-            System.out.println(
-                    "ERROR: Was unable to read the CSV files created by querying RACK!!\n");
-            ioe.printStackTrace();
+            ErrorMessageUtil.error(
+                    "ERROR: Was unable to read the CSV files created by querying RACK!!\n", ioe);
         }
 
         return fileArray;
@@ -360,7 +355,7 @@ public class RackQueryUtils {
         // get entire file as a string object
         String fileString =
                 com.ge.research.rack.autoGsn.utils.CustomFileUtils.readFile(
-                        flPth, StandardCharsets.US_ASCII);
+                        flPth, Charset.defaultCharset());
 
         // replace all commas and newlines inside quote
         String cleanString = CustomStringUtils.removeCommasAndNewlinesInQuotes(fileString);
@@ -369,7 +364,7 @@ public class RackQueryUtils {
         try (BufferedReader reader = new BufferedReader(new StringReader(cleanString))) {
 
             // read the second line from the csv file
-            String columnHeadersLine = reader.readLine();
+            // String columnHeadersLine = reader.readLine();
 
             // read the second line
             String csvLine = reader.readLine();
@@ -388,9 +383,8 @@ public class RackQueryUtils {
             }
 
         } catch (IOException ioe) {
-            System.out.println(
-                    "ERROR: Was unable to read the CSV files created by querying RACK!!\n");
-            ioe.printStackTrace();
+            ErrorMessageUtil.error(
+                    "ERROR: Was unable to read the CSV files created by querying RACK!!\n", ioe);
         }
 
         return fileArray;
@@ -414,7 +408,7 @@ public class RackQueryUtils {
         // get entire file as a string object
         String fileString =
                 com.ge.research.rack.autoGsn.utils.CustomFileUtils.readFile(
-                        flPth, StandardCharsets.US_ASCII);
+                        flPth, Charset.defaultCharset());
 
         // replace all commmas and newlines inside quote
         String cleanString = CustomStringUtils.removeCommasAndNewlinesInQuotes(fileString);
@@ -439,9 +433,8 @@ public class RackQueryUtils {
             }
 
         } catch (IOException ioe) {
-            System.out.println(
-                    "ERROR: Was unable to read the CSV files created by querying RACK!!\n");
-            ioe.printStackTrace();
+            ErrorMessageUtil.error(
+                    "ERROR: Was unable to read the CSV files created by querying RACK!!\n", ioe);
         }
 
         return fileArray;
@@ -461,7 +454,7 @@ public class RackQueryUtils {
         // get entire file as a string object
         String fileString =
                 com.ge.research.rack.autoGsn.utils.CustomFileUtils.readFile(
-                        flPth, StandardCharsets.US_ASCII);
+                        flPth, Charset.defaultCharset());
 
         // replace all commmas and newlines inside quote
         String cleanString = CustomStringUtils.removeCommasAndNewlinesInQuotes(fileString);
@@ -472,15 +465,18 @@ public class RackQueryUtils {
             // read the first line from the csv file
             String csvLine = reader.readLine();
 
+            if (csvLine == null) {
+                String[] arr = {};
+                return arr;
+            }
             // This helps ignore commas within quotes
             String[] row = csvLine.split(",(?=([^\"]|\"[^\"]*\")*$)");
 
             return row;
 
         } catch (IOException ioe) {
-            System.out.println(
-                    "ERROR: Was unable to read the CSV files created by querying RACK!!\n");
-            ioe.printStackTrace();
+            ErrorMessageUtil.error(
+                    "ERROR: Was unable to read the CSV files created by querying RACK!!\n", ioe);
         }
 
         return null;
@@ -528,19 +524,17 @@ public class RackQueryUtils {
                                 Core.NODEGROUP_INGEST_COMMENT,
                                 System.getProperty("user.name"),
                                 json.getJson());
-                System.out.println("Successfully uploaded nodegroup to RACK store!\n");
+                ErrorMessageUtil.println("Successfully uploaded nodegroup to RACK store!\n");
                 return true;
 
             } catch (Exception e) {
-                System.out.println(
-                        "ERROR: Upload of nodegroup: " + queryId + ".json " + "failed!\n");
-                e.printStackTrace();
+                ErrorMessageUtil.error(
+                        "ERROR: Upload of nodegroup: " + queryId + ".json " + "failed!\n", e);
                 return false;
             }
         } catch (Exception e) {
-            System.out.println(
-                    "ERROR: Could not use json string from filePath to create nodegroup!\n");
-            e.printStackTrace();
+            ErrorMessageUtil.error(
+                    "ERROR: Could not use json string from filePath to create nodegroup!\n", e);
             return false;
         }
     }

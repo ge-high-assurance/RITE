@@ -1,23 +1,23 @@
 /*
  * BSD 3-Clause License
- * 
+ *
  * Copyright (c) 2023, General Electric Company and Galois, Inc.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -33,18 +33,22 @@ package com.ge.research.rack.views;
 
 import com.ge.research.rack.RefreshHandler;
 import com.ge.research.rack.utils.ConnectionUtil;
+import com.ge.research.rack.utils.ErrorMessageUtil;
 import com.ge.research.rack.utils.NodegroupUtil;
-import com.ge.research.rack.utils.RackConsole;
 import com.google.inject.*;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.*;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
@@ -63,12 +67,6 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.*;
 import org.eclipse.ui.part.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 public class NodegroupsView extends ViewPart implements INodegroupView {
 
     /** The ID of the view as specified by the extension. */
@@ -80,7 +78,7 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
     private static final String NODEGROUP_DELETE_SUCCESS = "Deleted selected nodegroup %s";
 
     private static final String VIEW_CSV_ACTION = "View CSV Ingestion Templates";
-    private static final String QUERY_NODEGROUP_ACTION = "Query Nodegroup(s)";
+    private static final String QUERY_NODEGROUP_ACTION = "Query Nodegroup";
     private static final String DELETE_NODEGROUP_ACTION = "Delete Nodegroup(s)";
 
     private static final String SEARCH_NODEGROUPS_TEXT = "Search nodegroups";
@@ -118,7 +116,10 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
 
         final Display display = Display.getCurrent();
 
-        final Composite composite = new Composite(parent, SWT.NONE);
+        final ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+        final Composite composite = new Composite(sc, SWT.NONE);
+        sc.setContent(composite);
+
         GridLayout layout = new GridLayout();
         layout.numColumns = 1;
         layout.verticalSpacing = 10;
@@ -186,7 +187,7 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
         tableFloatPosition.right = new FormAttachment(100);
         tableFloatPosition.bottom = new FormAttachment(100);
 
-        table = new Table(floatContainer, SWT.CHECK | SWT.H_SCROLL | SWT.V_SCROLL);
+        table = new Table(floatContainer, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
         table.removeAll();
         table.setSize(1130, 600);
         table.setHeaderVisible(true);
@@ -197,16 +198,16 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
 
         table.setFocus();
         table.setLayoutData(tableFloatPosition);
-        table.addSelectionListener(new NodegroupSelectionListener());
+        //        table.addSelectionListener(new NodegroupSelectionListener());
 
-        final FormData selectAllButtonPosition = new FormData();
-        selectAllButtonPosition.left = new FormAttachment(table, 1, SWT.LEFT);
-        selectAllButtonPosition.top = new FormAttachment(table, 2, SWT.TOP);
-
-        selectAllButton = new Button(floatContainer, SWT.CHECK);
-        selectAllButton.setLayoutData(selectAllButtonPosition);
-        selectAllButton.moveAbove(table);
-        selectAllButton.addSelectionListener(new NodegroupSelectAllListener());
+        //        final FormData selectAllButtonPosition = new FormData();
+        //        selectAllButtonPosition.left = new FormAttachment(table, 1, SWT.LEFT);
+        //        selectAllButtonPosition.top = new FormAttachment(table, 2, SWT.TOP);
+        //
+        //        selectAllButton = new Button(floatContainer, SWT.CHECK);
+        //        selectAllButton.setLayoutData(selectAllButtonPosition);
+        //        selectAllButton.moveAbove(table);
+        //        selectAllButton.addSelectionListener(new NodegroupSelectAllListener());
 
         makeActions();
         hookContextMenu();
@@ -253,7 +254,7 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
             table.pack();
 
         } catch (final Exception e) {
-            RackConsole.getConsole().warning(UPDATE_NODEGROUP_LIST_ERROR);
+            ErrorMessageUtil.warning(UPDATE_NODEGROUP_LIST_ERROR);
         }
     }
 
@@ -287,7 +288,7 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
             // table.pack();
 
         } catch (final Exception e) {
-            RackConsole.getConsole().warning(UPDATE_NODEGROUP_LIST_ERROR);
+            ErrorMessageUtil.warning(UPDATE_NODEGROUP_LIST_ERROR);
         }
     }
 
@@ -325,18 +326,32 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
     }
 
     public ArrayList<String> getSelectedNodegroups() {
-        return Arrays.stream(table.getItems())
-                .filter(ng -> ng.getChecked())
+        return Arrays.stream(table.getSelection())
                 .map(ng -> (List<?>) ng.getData())
                 .filter(d -> !d.isEmpty())
                 .map(d -> (String) d.get(0))
                 .collect(Collectors.toCollection(ArrayList::new));
+
+        //        return Arrays.stream(table.getItems())
+        //                .filter(ng -> ng.getChecked())
+        //                .map(ng -> (List<?>) ng.getData())
+        //                .filter(d -> !d.isEmpty())
+        //                .map(d -> (String) d.get(0))
+        //                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     private class DeleteSelectedNodeGroupsAction extends Action {
 
         @Override
         public void run() {
+
+            int n = table.getSelectionCount();
+            if (!MessageDialog.openConfirm(
+                    null,
+                    "Delete Nodegroups",
+                    "Deleting " + n + " nodegroup" + (n == 1 ? "" : "s"))) {
+                return;
+            }
 
             try {
                 getSelectedNodegroups().stream()
@@ -347,12 +362,12 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
                                         thr.schedule();
                                         thr.join();
                                     } catch (final InterruptedException e) {
-                                        RackConsole.getConsole().error(NODEGROUP_DELETE_ERROR, e);
+                                        ErrorMessageUtil.error(NODEGROUP_DELETE_ERROR, e);
                                     }
                                 });
 
             } catch (final Exception e) {
-                RackConsole.getConsole().error(NODEGROUP_DELETE_ERROR, e);
+                ErrorMessageUtil.error(NODEGROUP_DELETE_ERROR, e);
             }
 
             refreshNodegroupList();
@@ -364,6 +379,13 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
         @Override
         public void run() {
             try {
+                if (table.getSelectionCount() != 1) {
+                    MessageDialog.openError(
+                            null,
+                            "RITE Error",
+                            "View action is permitted only for exactly one selection");
+                    return;
+                }
                 NodegroupTemplateView.selectedNodegroups = getSelectedNodegroups();
                 final IWorkbenchWindow window =
                         PlatformUI.getWorkbench().getActiveWorkbenchWindow();
@@ -374,7 +396,7 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
                 window.getActivePage().showView(NodegroupTemplateView.ID);
 
             } catch (final Exception e) {
-                RackConsole.getConsole().error(TEMPLATE_VIEW_ERROR, e);
+                ErrorMessageUtil.error(TEMPLATE_VIEW_ERROR, e);
             }
         }
     }
@@ -392,51 +414,50 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
         @Override
         protected IStatus run(IProgressMonitor monitor) {
             try {
-                RackConsole.getConsole().print("Deleting nodegroup: " + nodegroupId + " ... ");
+                ErrorMessageUtil.println("Deleting nodegroup: " + nodegroupId + " ... ");
                 NodegroupUtil.client.deleteStoredNodeGroup(nodegroupId);
-                RackConsole.getConsole().printOK();
+                ErrorMessageUtil.printOK();
 
             } catch (final Exception e) {
-                RackConsole.getConsole().printFAIL();
-                RackConsole.getConsole()
-                        .error(String.format(NODEGROUP_DELETE_ERROR, nodegroupId), e);
+                ErrorMessageUtil.printFAIL();
+                ErrorMessageUtil.error(String.format(NODEGROUP_DELETE_ERROR, nodegroupId), e);
 
                 return Status.CANCEL_STATUS;
             }
 
-            RackConsole.getConsole().println(String.format(NODEGROUP_DELETE_SUCCESS, nodegroupId));
+            ErrorMessageUtil.println(String.format(NODEGROUP_DELETE_SUCCESS, nodegroupId));
 
             return Status.OK_STATUS;
         }
     }
 
-    private class NodegroupSelectAllListener implements SelectionListener {
-
-        @Override
-        public void widgetSelected(final SelectionEvent e) {
-            if (null == table) {
-                return;
-            }
-            final boolean selectAll = ((Button) e.getSource()).getSelection();
-            Arrays.stream(table.getItems()).forEach(i -> i.setChecked(selectAll));
-        }
-
-        @Override
-        public void widgetDefaultSelected(final SelectionEvent e) {}
-    }
-
-    private class NodegroupSelectionListener implements SelectionListener {
-
-        @Override
-        public void widgetSelected(final SelectionEvent e) {
-            if (null == selectAllButton) {
-                return;
-            }
-            selectAllButton.setSelection(
-                    Arrays.stream(table.getItems()).allMatch(p -> p.getChecked()));
-        }
-
-        @Override
-        public void widgetDefaultSelected(final SelectionEvent e) {}
-    }
+    //    private class NodegroupSelectAllListener implements SelectionListener {
+    //
+    //        @Override
+    //        public void widgetSelected(final SelectionEvent e) {
+    //            if (null == table) {
+    //                return;
+    //            }
+    //            final boolean selectAll = ((Button) e.getSource()).getSelection();
+    //            Arrays.stream(table.getItems()).forEach(i -> i.setChecked(selectAll));
+    //        }
+    //
+    //        @Override
+    //        public void widgetDefaultSelected(final SelectionEvent e) {}
+    //    }
+    //
+    //    private class NodegroupSelectionListener implements SelectionListener {
+    //
+    //        @Override
+    //        public void widgetSelected(final SelectionEvent e) {
+    //            if (null == selectAllButton) {
+    //                return;
+    //            }
+    //            selectAllButton.setSelection(
+    //                    Arrays.stream(table.getItems()).allMatch(p -> p.getChecked()));
+    //        }
+    //
+    //        @Override
+    //        public void widgetDefaultSelected(final SelectionEvent e) {}
+    //    }
 }

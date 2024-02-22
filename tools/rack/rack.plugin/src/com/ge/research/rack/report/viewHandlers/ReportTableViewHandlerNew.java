@@ -1,23 +1,23 @@
 /*
  * BSD 3-Clause License
- * 
+ *
  * Copyright (c) 2023, General Electric Company and Galois, Inc.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -36,14 +36,17 @@ import com.ge.research.rack.report.structures.PsacNode;
 import com.ge.research.rack.report.utils.PsacNodeUtils;
 import com.ge.research.rack.report.utils.ReportViewUtils;
 import com.ge.research.rack.report.viewManagers.ReportViewsManager;
-
+import java.io.File;
+import java.io.FileInputStream;
+import java.net.URL;
+import java.util.Collections;
+import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -52,17 +55,10 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.net.URL;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author Saswata Paul
@@ -84,9 +80,9 @@ public class ReportTableViewHandlerNew {
 
     @FXML private ListView<Label> listObjectives;
 
-    @FXML private ComboBox comboFilter;
+    @FXML private ComboBox<String> comboFilter;
 
-    @FXML private BarChart chartObjStatus;
+    @FXML private BarChart<String, Integer> chartObjStatus;
     @FXML private NumberAxis yAxisChartObjStatus;
 
     // --------------------------------
@@ -99,12 +95,12 @@ public class ReportTableViewHandlerNew {
      */
     public Label getObjectiveLabel(PsacNode.Objective objObj) {
 
-        double passPercent =
-                ((double) objObj.getNumActPassed()
-                                / (objObj.getNumActPassed()
-                                        + objObj.getNumActFailed()
-                                        + objObj.getNumActNoData()))
-                        * 100.00;
+        // double passPercent =
+        //        ((double) objObj.getNumActPassed()
+        //                        / (objObj.getNumActPassed()
+        //                                + objObj.getNumActFailed()
+        //                                + objObj.getNumActNoData()))
+        //                * 100.00;
 
         Label objLabel = new Label();
         objLabel.setStyle("-fx-font-weight: bold;");
@@ -191,14 +187,14 @@ public class ReportTableViewHandlerNew {
         //        Data logBar = new XYChart.Data("Review Logs", artStats.get(4));
         //        Data anlsBar = new XYChart.Data("Analyses", artStats.get(5));
 
-        Data docBar = ReportViewUtils.createIntDataBar("Documents", artStats.get(0));
-        Data reqBar = ReportViewUtils.createIntDataBar("Requirements", artStats.get(1));
-        Data hzrdBar = ReportViewUtils.createIntDataBar("Hazards", artStats.get(2));
-        Data tstBar = ReportViewUtils.createIntDataBar("Test Results", artStats.get(3));
-        Data logBar = ReportViewUtils.createIntDataBar("Review Logs", artStats.get(4));
-        Data anlsBar = ReportViewUtils.createIntDataBar("Analyses", artStats.get(5));
+        var docBar = ReportViewUtils.createIntDataBar("Documents", artStats.get(0));
+        var reqBar = ReportViewUtils.createIntDataBar("Requirements", artStats.get(1));
+        var hzrdBar = ReportViewUtils.createIntDataBar("Hazards", artStats.get(2));
+        var tstBar = ReportViewUtils.createIntDataBar("Test Results", artStats.get(3));
+        var logBar = ReportViewUtils.createIntDataBar("Review Logs", artStats.get(4));
+        var anlsBar = ReportViewUtils.createIntDataBar("Analyses", artStats.get(5));
 
-        XYChart.Series tableStat = new XYChart.Series();
+        XYChart.Series<String, Integer> tableStat = new XYChart.Series<>();
 
         tableStat.getData().add(docBar);
         tableStat.getData().add(reqBar);

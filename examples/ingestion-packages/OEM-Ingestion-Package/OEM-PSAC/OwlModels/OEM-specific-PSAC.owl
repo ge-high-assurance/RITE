@@ -1,0 +1,589 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:j.0="http://arcos.rack/DO178C-PSAC-CORE.sadl#"
+    xmlns:bsppsac="http://arcos.rack/OEM-specific-PSAC.sadl#"
+    xmlns:builtinfunctions="http://sadl.org/builtinfunctions#"
+    xmlns:sadlimplicitmodel="http://sadl.org/sadlimplicitmodel#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:j.1="http://arcos.rack/REVIEW#"
+    xmlns:sadlbasemodel="http://sadl.org/sadlbasemodel#"
+    xmlns:j.2="http://arcos.rack/OEM#"
+    xmlns:j.3="http://arcos.rack/SOFTWARE#"
+    xmlns:j.4="http://arcos.rack/PROV-S#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:j.5="http://arcos.rack/FILE#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+  <owl:Ontology rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl">
+    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA1.sadl"/>
+    <rdfs:comment xml:lang="en">This ontology was created from a SADL file 'OEM-specific-PSAC.sadl' and should not be directly edited.</rdfs:comment>
+    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA8.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA10.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA2.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlimplicitmodel"/>
+    <owl:imports rdf:resource="http://sadl.org/builtinfunctions"/>
+    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA9.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl"/>
+    <owl:imports rdf:resource="http://arcos.rack/OEM"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlbasemodel"/>
+    <owl:imports rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA6.sadl"/>
+  </owl:Ontology>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-6">
+    <j.0:query>Objective-A4-6-query-OEM-subdd-Trace-Review-logs</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A4-6-1">
+        <j.0:performs>
+          <j.1:REVIEW rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-subdd-Trace-Review">
+            <j.4:description>Review if subdd are traceable to srs </j.4:description>
+            <j.4:identifier>OEM-subdd-Trace-Review</j.4:identifier>
+          </j.1:REVIEW>
+        </j.0:performs>
+        <j.4:description>Review if low-level requirements are traceable to high-level requirements</j.4:description>
+        <j.4:identifier>Activity-A4-6-1</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-2">
+    <j.0:query>Objective-A5-2-query-OEM-swcomponent-architecture-review-logs</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A5-1-2">
+        <j.0:performs>
+          <j.1:REVIEW rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-source-code-architecture-compliance-Review">
+            <j.4:description>Review if source code complies with sw architecture</j.4:description>
+            <j.4:identifier>OEM-source-code-architecture-compliance-Review</j.4:identifier>
+          </j.1:REVIEW>
+        </j.0:performs>
+        <j.4:description>Review if source code complies with software architecture</j.4:description>
+        <j.4:identifier>Activity-A5-1-2</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl#Objective-A7-3">
+    <j.0:query>Objective-A7-3-query-OEM-SRS-Test-Coverage</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A7-3-1">
+        <j.0:performs>
+          <j.4:ACTIVITY rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-SRS-Test-Coverage">
+            <j.4:description>Test coverage of SRS is achieved</j.4:description>
+            <j.4:identifier>OEM-SRS-Test-Coverage</j.4:identifier>
+          </j.4:ACTIVITY>
+        </j.0:performs>
+        <j.4:description>Test coverage of high-level requirements is achieved</j.4:description>
+        <j.4:identifier>Activity-A7-3-1</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl#Objective-A3-2">
+    <j.0:query>Objective-A3-2-query-OEM-SRS-Accuracy-Review-logs</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A3-2-1">
+        <j.0:performs>
+          <j.1:REVIEW rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-SRS-Accuracy-Review">
+            <j.4:description>Review if SRS are accurate and consistent</j.4:description>
+            <j.4:identifier>OEM-SRS-Accuracy-Review</j.4:identifier>
+          </j.1:REVIEW>
+        </j.0:performs>
+        <j.4:description>Review if High-level requirements are accurate and consistent</j.4:description>
+        <j.4:identifier>Activity-A3-2-1</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-5">
+    <j.0:query>Objective-A4-5-query-OEM-subdd-Standard-Review-logs</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A4-5-1">
+        <j.0:performs>
+          <j.1:REVIEW rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-subdd-Standard-Review">
+            <j.4:description>Review if subdd conform to standards</j.4:description>
+            <j.4:identifier>OEM-subdd-Standard-Review</j.4:identifier>
+          </j.1:REVIEW>
+        </j.0:performs>
+        <j.4:description>Review if low-level requirements conform to standards</j.4:description>
+        <j.4:identifier>Activity-A4-5-1</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-1">
+    <j.0:query>Objective-A5-1-query-OEM-swcomponent-subDD-review-logs</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A5-1-1">
+        <j.0:performs>
+          <j.1:REVIEW rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-source-code-low-level-Compliance-Review">
+            <j.4:description>Review if source code complies with subDD</j.4:description>
+            <j.4:identifier>OEM-source-code-low-level-Compliance-Review</j.4:identifier>
+          </j.1:REVIEW>
+        </j.0:performs>
+        <j.4:description>Review if source code complies with low-level requirements</j.4:description>
+        <j.4:identifier>Activity-A5-1-1</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl#Objective-A7-4">
+    <j.0:query>Objective-A7-4-query-OEM-SubDD-Test-Coverage</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A7-4-1">
+        <j.0:performs>
+          <j.4:ACTIVITY rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-SubDD-Test-Coverage">
+            <j.4:description>Test coverage of SubDD is achieved</j.4:description>
+            <j.4:identifier>OEM-SubDD-Test-Coverage</j.4:identifier>
+          </j.4:ACTIVITY>
+        </j.0:performs>
+        <j.4:description>Test coverage of low-level requirements is achieved</j.4:description>
+        <j.4:identifier>Activity-A7-4-1</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl#Objective-A3-1">
+    <j.0:query>Objective-A3-1-query-OEM-SRS-Compliance-Review-logs</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A3-1-1">
+        <j.0:performs>
+          <j.1:REVIEW rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-SRS-Compliance-Review">
+            <j.4:description>Review if SRS comply with PIDS and CSID</j.4:description>
+            <j.4:identifier>OEM-SRS-Compliance-Review</j.4:identifier>
+          </j.1:REVIEW>
+        </j.0:performs>
+        <j.4:description>Review if High-level requirements comply with system requirements</j.4:description>
+        <j.4:identifier>Activity-A3-1-1</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA1.sadl#Objective-A1-1">
+    <j.0:query>Objective-A1-1-query-check-output-for-PSAC-SDP-SVP-SCMPlan-SQAPlan</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A1-1-1">
+        <j.0:performs>
+          <j.5:FILE_CREATION rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A1-1-1-SQA-Plan">
+            <j.4:description>Defining the activities of the software life cycle processes in the SQA-Plan textfile</j.4:description>
+            <j.4:identifier>Activity-A1-1-1-SQA-Plan</j.4:identifier>
+          </j.5:FILE_CREATION>
+        </j.0:performs>
+        <j.0:performs>
+          <j.5:FILE_CREATION rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A1-1-1-SCM-Plan">
+            <j.4:description>Defining the activities of the software life cycle processes in the SCM-Plan textfile</j.4:description>
+            <j.4:identifier>Activity-A1-1-1-SCM-Plan</j.4:identifier>
+          </j.5:FILE_CREATION>
+        </j.0:performs>
+        <j.0:performs>
+          <j.5:FILE_CREATION rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A1-1-1-SVP">
+            <j.4:description>Defining the activities of the software life cycle processes in the SVP textfile</j.4:description>
+            <j.4:identifier>Activity-A1-1-1-SVP</j.4:identifier>
+          </j.5:FILE_CREATION>
+        </j.0:performs>
+        <j.0:performs>
+          <j.5:FILE_CREATION rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A1-1-1-SDP">
+            <j.4:description>Defining the activities of the software life cycle processes in the SDP textfile</j.4:description>
+            <j.4:identifier>Activity-A1-1-1-SDP</j.4:identifier>
+          </j.5:FILE_CREATION>
+        </j.0:performs>
+        <j.0:performs>
+          <j.5:FILE_CREATION rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A1-1-1-PSAC">
+            <j.4:description>Defining the activities of the software life cycle processes in the PSAC textfile</j.4:description>
+            <j.4:identifier>Activity-A1-1-1-PSAC</j.4:identifier>
+          </j.5:FILE_CREATION>
+        </j.0:performs>
+        <j.4:description>A custom activity for Table 1, Objective 1 that is concerned with defining the activities of the software life cycle processes in the PSAC, SDP, SVP, SCM Plan, and SQA Plan textfiles</j.4:description>
+        <j.4:identifier>Activity-A1-1-1</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA2.sadl#Objective-A2-5">
+    <j.0:query>Objective-A2-5-query-count-all-Derived-SubDD-Reqs-that-satisfy-some-req</j.0:query>
+    <j.0:query>Objective-A2-5-query-count-all-Derived-SubDD-Reqs</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A2-5-1">
+        <j.0:performs>
+          <j.2:SoftwareHighLevelRequirementsDefinition rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-Derived-SubDD-Development">
+            <j.4:description>The OEM ontology activity concerned with derived SubDD req development</j.4:description>
+            <j.4:identifier>OEM-Derived-SubDD-Development</j.4:identifier>
+          </j.2:SoftwareHighLevelRequirementsDefinition>
+        </j.0:performs>
+        <j.4:description>A custom Do178C activity concerned with derived subDD req development</j.4:description>
+        <j.4:identifier>Activity-A2-5-1</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-4">
+    <j.0:query>Objective-A4-4-query-OEM-subdd-Verifiability-Review-logs</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A4-4-1">
+        <j.0:performs>
+          <j.1:REVIEW rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-subdd-Verifiability-Review">
+            <j.4:description>Review if subdd are verifiable</j.4:description>
+            <j.4:identifier>OEM-subdd-Verifiability-Review</j.4:identifier>
+          </j.1:REVIEW>
+        </j.0:performs>
+        <j.4:description>Review if low-level requirements are verifiable</j.4:description>
+        <j.4:identifier>Activity-A4-4-1</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA2.sadl#Objective-A2-4">
+    <j.0:query>Objective-A2-4-query-count-all-SubDD-Reqs-that-satisfy-SRS_Reqs</j.0:query>
+    <j.0:query>Objective-A2-4-query-count-all-SubDD-Reqs</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A2-4-1">
+        <j.0:performs>
+          <j.2:SoftwareHighLevelRequirementsDefinition rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-SubDD-Development">
+            <j.4:description>The OEM ontology activity concerned with SubDD req development</j.4:description>
+            <j.4:identifier>OEM-SubDD-Development</j.4:identifier>
+          </j.2:SoftwareHighLevelRequirementsDefinition>
+        </j.0:performs>
+        <j.4:description>A custom Do178C activity concerned with subDD req development</j.4:description>
+        <j.4:identifier>Activity-A2-4-1</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-3">
+    <j.0:query>Objective-A4-3-query-OEM-subdd-Computer-Review-logs</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A4-3-1">
+        <j.0:performs>
+          <j.1:REVIEW rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-subdd-Computer-Review">
+            <j.4:description>Review if subdd are compatible with target computer</j.4:description>
+            <j.4:identifier>OEM-subdd-Computer-Review</j.4:identifier>
+          </j.1:REVIEW>
+        </j.0:performs>
+        <j.4:description>Review if low-level requirements are compatible with target computer</j.4:description>
+        <j.4:identifier>Activity-A4-3-1</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-6">
+    <j.0:query>Objective-A5-6-query-OEM-swcomponent-accuracy-review-logs</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A5-1-6">
+        <j.0:performs>
+          <j.1:REVIEW rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-source-code-accuracy-Review">
+            <j.4:description>Review is Source code is accurate and consistent</j.4:description>
+            <j.4:identifier>OEM-source-code-accuracy-Review</j.4:identifier>
+          </j.1:REVIEW>
+        </j.0:performs>
+        <j.4:description>Review if source code is accurate and consistent</j.4:description>
+        <j.4:identifier>Activity-A5-1-6</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-2">
+    <j.0:query>Objective-A4-2-query-OEM-subdd-Accuracy-Review-logs</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A4-2-1">
+        <j.0:performs>
+          <j.1:REVIEW rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-subdd-Accuracy-Review">
+            <j.4:description>Review if subdd are accurate and consistent</j.4:description>
+            <j.4:identifier>OEM-subdd-Accuracy-Review</j.4:identifier>
+          </j.1:REVIEW>
+        </j.0:performs>
+        <j.4:description>Review if low-level requirements are accurate and consistent</j.4:description>
+        <j.4:identifier>Activity-A4-2-1</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl#Objective-A3-6">
+    <j.0:query>Objective-A3-6-query-OEM-SRS-Trace-Review-logs</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A3-6-1">
+        <j.0:performs>
+          <j.1:REVIEW rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-SRS-Trace-Review">
+            <j.4:description>Review if SRS are traceable to system requirements</j.4:description>
+            <j.4:identifier>OEM-SRS-Trace-Review</j.4:identifier>
+          </j.1:REVIEW>
+        </j.0:performs>
+        <j.4:description>Review if High-level requirements are traceable to system requirements</j.4:description>
+        <j.4:identifier>Activity-A3-6-1</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA2.sadl#Objective-A2-2">
+    <j.0:query>Objective-A2-2-query-count-all-Derived-SRS-Reqs-that-satisfy-some-req</j.0:query>
+    <j.0:query>Objective-A2-2-query-count-all-Derived-SRS-Reqs</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A2-2-1">
+        <j.0:performs>
+          <j.2:SoftwareHighLevelRequirementsDefinition rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-Derived-SRS-Development">
+            <j.4:description>The OEM ontology activity concerned with derived SRS req development</j.4:description>
+            <j.4:identifier>OEM-Derived-SRS-Development</j.4:identifier>
+          </j.2:SoftwareHighLevelRequirementsDefinition>
+        </j.0:performs>
+        <j.4:description>A custom Do178C activity concerned with developing the derived HL Reqs</j.4:description>
+        <j.4:identifier>Activity-A2-2-1</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-5">
+    <j.0:query>Objective-A5-5-query-OEM-swcomponent-subDD-trace</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A5-1-5">
+        <j.0:performs>
+          <j.4:ACTIVITY rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-source-code-subDD-trace">
+            <j.4:description>Source code is traceable to subDDs</j.4:description>
+            <j.4:identifier>OEM-source-code-subDD-trace</j.4:identifier>
+          </j.4:ACTIVITY>
+        </j.0:performs>
+        <j.4:description>If source code is traceable to low-level requirements</j.4:description>
+        <j.4:identifier>Activity-A5-1-5</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-1">
+    <j.0:query>Objective-A4-1-query-OEM-subdd-Compliance-Review-logs</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A4-1-1">
+        <j.0:performs>
+          <j.1:REVIEW rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-subdd-Compliance-Review">
+            <j.4:description>Review if subdd comply with srs</j.4:description>
+            <j.4:identifier>OEM-subdd-Compliance-Review</j.4:identifier>
+          </j.1:REVIEW>
+        </j.0:performs>
+        <j.4:description>Review if low-level requirements comply with high-level requirements</j.4:description>
+        <j.4:identifier>Activity-A4-1-1</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl#Objective-A3-5">
+    <j.0:query>Objective-A3-5-query-OEM-SRS-Standard-Review-logs</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A3-5-1">
+        <j.0:performs>
+          <j.1:REVIEW rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-SRS-Standard-Review">
+            <j.4:description>Review if SRS conform to standards</j.4:description>
+            <j.4:identifier>OEM-SRS-Standard-Review</j.4:identifier>
+          </j.1:REVIEW>
+        </j.0:performs>
+        <j.4:description>Review if High-level requirements conform to standards</j.4:description>
+        <j.4:identifier>Activity-A3-5-1</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA2.sadl#Objective-A2-1">
+    <j.0:query>Objective-A2-1-query-count-all-SRS-Reqs-that-satisfy-CSID_Reqs</j.0:query>
+    <j.0:query>Objective-A2-1-query-count-all-SRS-Reqs-that-satisfy-PIDS_Reqs</j.0:query>
+    <j.0:query>Objective-A2-1-query-count-all-SRS-Reqs</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A2-1-1">
+        <j.0:performs>
+          <j.2:SoftwareHighLevelRequirementsDefinition rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-SRS-Development">
+            <j.4:description>The OEM ontology activity concerned with SRS requirement development</j.4:description>
+            <j.4:identifier>OEM-SRS-Development</j.4:identifier>
+          </j.2:SoftwareHighLevelRequirementsDefinition>
+        </j.0:performs>
+        <j.4:description>A custom DO178C activity concerned with developing all the High-Level requirements</j.4:description>
+        <j.4:identifier>Activity-A2-1-1</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA1.sadl#Objective-A1-3">
+    <j.0:query>Objective-A1-3-query-check-output-for-PSAC-SDP-SVP-SCMPlan-SQAPlan</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A1-3-1">
+        <j.0:performs>
+          <j.5:FILE_CREATION rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A1-3-1-SQA-Plan">
+            <j.4:description>Defining software life cycle environment in the SQA-Plan textfile</j.4:description>
+            <j.4:identifier>Activity-A1-3-1-SQA-Plan</j.4:identifier>
+          </j.5:FILE_CREATION>
+        </j.0:performs>
+        <j.0:performs>
+          <j.5:FILE_CREATION rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A1-3-1-SCM-Plan">
+            <j.4:description>Defining the software life cycle environment in the SCM-Plan textfile</j.4:description>
+            <j.4:identifier>Activity-A1-3-1-SCM-Plan</j.4:identifier>
+          </j.5:FILE_CREATION>
+        </j.0:performs>
+        <j.0:performs>
+          <j.5:FILE_CREATION rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A1-3-1-SVP">
+            <j.4:description>Defining the software life cycle environment in the SVP textfile</j.4:description>
+            <j.4:identifier>Activity-A1-3-1-SVP</j.4:identifier>
+          </j.5:FILE_CREATION>
+        </j.0:performs>
+        <j.0:performs>
+          <j.5:FILE_CREATION rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A1-3-1-SDP">
+            <j.4:description>Defining the software life cycle environment in the SDP textfile</j.4:description>
+            <j.4:identifier>Activity-A1-3-1-SDP</j.4:identifier>
+          </j.5:FILE_CREATION>
+        </j.0:performs>
+        <j.0:performs>
+          <j.5:FILE_CREATION rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A1-3-1-PSAC">
+            <j.4:description>Defining Software life cycle environment in the PSAC textfile</j.4:description>
+            <j.4:identifier>Activity-A1-3-1-PSAC</j.4:identifier>
+          </j.5:FILE_CREATION>
+        </j.0:performs>
+        <j.4:description>A custom activity for Table 1, Objective 1 that is concerned with selecting and defining the Software life cycle environment in the PSAC, SDP, SVP, SCM Plan and SQA Plan</j.4:description>
+        <j.4:identifier>Activity-A1-3-1</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-4">
+    <j.0:query>Objective-A5-4-query-OEM-swcomponent-standards-review-logs</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A5-1-4">
+        <j.0:performs>
+          <j.1:REVIEW rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-source-code-standards-Review">
+            <j.4:description>Review if source code conforms to standards</j.4:description>
+            <j.4:identifier>OEM-source-code-standards-Review</j.4:identifier>
+          </j.1:REVIEW>
+        </j.0:performs>
+        <j.4:description>Review if source code conforms to standards</j.4:description>
+        <j.4:identifier>Activity-A5-1-4</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CPSAC rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-SP-PSAC">
+    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA6.sadl#Table-A6"/>
+    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl#Table-A7"/>
+    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA8.sadl#Table-A8"/>
+    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA2.sadl#Table-A2"/>
+    <j.4:identifier>OEM-SP-PSAC</j.4:identifier>
+    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Table-A5"/>
+    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Table-A4"/>
+    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA10.sadl#Table-A10"/>
+    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA1.sadl#Table-A1"/>
+    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl#Table-A3"/>
+    <j.0:software>
+      <j.3:SWCOMPONENT rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-SP-SW">
+        <j.0:softwareLevel rdf:resource="http://arcos.rack/DO178C-PSAC-CORE.sadl#LevelC"/>
+        <j.4:description>The system processor for OEM Aircraft</j.4:description>
+        <j.4:identifier>OEM-SP-SW</j.4:identifier>
+      </j.3:SWCOMPONENT>
+    </j.0:software>
+    <j.0:tables rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA9.sadl#Table-A9"/>
+  </j.0:DO178CPSAC>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl#Objective-A3-4">
+    <j.0:query>Objective-A3-4-query-OEM-SRS-Verifiability-Review-logs</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A3-4-1">
+        <j.0:performs>
+          <j.1:REVIEW rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-SRS-Verifiability-Review">
+            <j.4:description>Review if SRS are verifiable</j.4:description>
+            <j.4:identifier>OEM-SRS-Verifiability-Review</j.4:identifier>
+          </j.1:REVIEW>
+        </j.0:performs>
+        <j.4:description>Review if High-level requirements are verifiable</j.4:description>
+        <j.4:identifier>Activity-A3-4-1</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl#Objective-A7-1">
+    <j.0:query>Objective-A7-1-query-OEM-Test-Procedure-Correctness-Review-logs</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A7-1-1">
+        <j.0:performs>
+          <j.1:REVIEW rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-Test-Procedure-Correctness-Review">
+            <j.4:description>Review if SBVT Tests are correct</j.4:description>
+            <j.4:identifier>OEM-Test-Procedure-Correctness-Review</j.4:identifier>
+          </j.1:REVIEW>
+        </j.0:performs>
+        <j.4:description>Review if test procedures are correct</j.4:description>
+        <j.4:identifier>Activity-A7-1-1</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA1.sadl#Objective-A1-2">
+    <j.0:query>Objective-A1-2-query-check-output-for-PSAC-SDP-SVP-SCMPlan-SQAPlan</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A1-2-1">
+        <j.0:performs>
+          <j.5:FILE_CREATION rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A1-2-1-SQA-Plan">
+            <j.4:description>Defining the software life cycles, including the inter-relationships between the processes, their sequencing, feedback mechanisms, and translation criteria in the SQA-Plan textfile</j.4:description>
+            <j.4:identifier>Activity-A1-2-1-SQA-Plan</j.4:identifier>
+          </j.5:FILE_CREATION>
+        </j.0:performs>
+        <j.0:performs>
+          <j.5:FILE_CREATION rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A1-2-1-SCM-Plan">
+            <j.4:description>Defining the software life cycles, including the inter-relationships between the processes, their sequencing, feedback mechanisms, and translation criteria in the SCM-Plan textfile</j.4:description>
+            <j.4:identifier>Activity-A1-2-1-SCM-Plan</j.4:identifier>
+          </j.5:FILE_CREATION>
+        </j.0:performs>
+        <j.0:performs>
+          <j.5:FILE_CREATION rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A1-2-1-SVP">
+            <j.4:description>Defining the software life cycles, including the inter-relationships between the processes, their sequencing, feedback mechanisms, and translation criteria  in the SVP textfile</j.4:description>
+            <j.4:identifier>Activity-A1-2-1-SVP</j.4:identifier>
+          </j.5:FILE_CREATION>
+        </j.0:performs>
+        <j.0:performs>
+          <j.5:FILE_CREATION rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A1-2-1-SDP">
+            <j.4:description>Defining the software life cycles, including the inter-relationships between the processes, their sequencing, feedback mechanisms, and translation criteria in the SDP textfile</j.4:description>
+            <j.4:identifier>Activity-A1-2-1-SDP</j.4:identifier>
+          </j.5:FILE_CREATION>
+        </j.0:performs>
+        <j.0:performs>
+          <j.5:FILE_CREATION rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A1-2-1-PSAC">
+            <j.4:description>Defining the software life cycles, including the inter-relationships between the processes, their sequencing, feedback mechanisms, and translation criteria in the PSAC textfile</j.4:description>
+            <j.4:identifier>Activity-A1-2-1-PSAC</j.4:identifier>
+          </j.5:FILE_CREATION>
+        </j.0:performs>
+        <j.4:description>A custom activity for Table 1, Objective 1 that is concerned with defining the software life cycles, including the inter-relationships between the processes, their sequencing, feedback mechanisms, and translation criteria in the PSAC, SDP, SVP, SCM Plan and SQA Plan</j.4:description>
+        <j.4:identifier>Activity-A1-2-1</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA1.sadl#Objective-A1-4">
+    <j.0:query>Objective-A1-4-query-check-output-for-PSAC-SDP-SVP-SCMPlan-SQAPlan</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A1-4-1">
+        <j.0:performs>
+          <j.5:FILE_CREATION rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A1-4-1-SQA-Plan">
+            <j.4:description>Addressing additional considerations in the SQA-Plan textfile</j.4:description>
+            <j.4:identifier>Activity-A1-4-1-SQA-Plan</j.4:identifier>
+          </j.5:FILE_CREATION>
+        </j.0:performs>
+        <j.0:performs>
+          <j.5:FILE_CREATION rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A1-4-1-SCM-Plan">
+            <j.4:description>Addressing additional considerations  in the SCM-Plan textfile</j.4:description>
+            <j.4:identifier>Activity-A1-4-1-SCM-Plan</j.4:identifier>
+          </j.5:FILE_CREATION>
+        </j.0:performs>
+        <j.0:performs>
+          <j.5:FILE_CREATION rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A1-4-1-SVP">
+            <j.4:description>Addressing additional considerations  in the SVP textfile</j.4:description>
+            <j.4:identifier>Activity-A1-4-1-SVP</j.4:identifier>
+          </j.5:FILE_CREATION>
+        </j.0:performs>
+        <j.0:performs>
+          <j.5:FILE_CREATION rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A1-4-1-SDP">
+            <j.4:description>Addressing additional considerations  in the SDP textfile</j.4:description>
+            <j.4:identifier>Activity-A1-4-1-SDP</j.4:identifier>
+          </j.5:FILE_CREATION>
+        </j.0:performs>
+        <j.0:performs>
+          <j.5:FILE_CREATION rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A1-4-1-PSAC">
+            <j.4:description>Addressing additional considerations in the PSAC textfile</j.4:description>
+            <j.4:identifier>Activity-A1-4-1-PSAC</j.4:identifier>
+          </j.5:FILE_CREATION>
+        </j.0:performs>
+        <j.4:description>A custom activity for Table 1, Objective 1 that is concerned with addressing additional considerations in the PSAC, SDP, SVP, SCM Plan and SQA Plan</j.4:description>
+        <j.4:identifier>Activity-A1-4-1</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl#Objective-A5-3">
+    <j.0:query>Objective-A5-3-query-OEM-swcomponent-verifiable-review-logs</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A5-1-3">
+        <j.0:performs>
+          <j.1:REVIEW rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-source-code-verifiable-Review">
+            <j.4:description>Review if source code is verifiable</j.4:description>
+            <j.4:identifier>OEM-source-code-verifiable-Review</j.4:identifier>
+          </j.1:REVIEW>
+        </j.0:performs>
+        <j.4:description>Review if source code is verifiable</j.4:description>
+        <j.4:identifier>Activity-A5-1-3</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+  <j.0:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl#Objective-A3-3">
+    <j.0:query>Objective-A3-3-query-OEM-SRS-Computer-Review-logs</j.0:query>
+    <j.0:activity>
+      <j.0:DO178CActivity rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#Activity-A3-3-1">
+        <j.0:performs>
+          <j.1:REVIEW rdf:about="http://arcos.rack/OEM-specific-PSAC.sadl#OEM-SRS-Computer-Review">
+            <j.4:description>Review if SRS are compatible with target computer</j.4:description>
+            <j.4:identifier>OEM-SRS-Computer-Review</j.4:identifier>
+          </j.1:REVIEW>
+        </j.0:performs>
+        <j.4:description>Review if High-level requirements are compatible with target computer</j.4:description>
+        <j.4:identifier>Activity-A3-3-1</j.4:identifier>
+      </j.0:DO178CActivity>
+    </j.0:activity>
+  </j.0:DO178CObjective>
+</rdf:RDF>

@@ -1,23 +1,23 @@
 /*
  * BSD 3-Clause License
- * 
+ *
  * Copyright (c) 2023, General Electric Company and Galois, Inc.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -32,7 +32,12 @@
 package com.ge.research.rack.views;
 
 import com.ge.research.rack.utils.RackConsole;
-
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
@@ -42,17 +47,11 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.preference.FieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.jface.preference.FileFieldEditor;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 
 public class RackPreferencePage extends FieldEditorPreferencePage
         implements IWorkbenchPreferencePage {
@@ -287,20 +286,23 @@ public class RackPreferencePage extends FieldEditorPreferencePage
 
         addField(rackPassword);
 
-        /*
-         * ACP-195: Rack Core Features - disables any non-essential (non-ingestion) rack
-         * features LabelFieldEditor separatorCredentialsGSN = new LabelFieldEditor(
-         * "   --- Automatic GSN Inference Settings ---   ", getFieldEditorParent());
-         * addField(separatorCredentialsGSN);
-         *
-         * FileFieldEditor gsnProjectOverlay = new FileFieldEditor(
-         * GSN_PROJECT_OVERLAY_SADL, "GSN Project Overlay .sadl Path:",
-         * getFieldEditorParent()); addField(gsnProjectOverlay);
-         *
-         * FileFieldEditor gsnProjectPattern = new FileFieldEditor(
-         * GSN_PROJECT_PATTERN_SADL, "GSN Project Pattern .sadl Path:",
-         * getFieldEditorParent()); addField(gsnProjectPattern);
-         */
+        LabelFieldEditor separatorCredentialsGSN =
+                new LabelFieldEditor(
+                        "   --- Automatic GSN Inference Settings ---   ", getFieldEditorParent());
+        addField(separatorCredentialsGSN);
+        FileFieldEditor gsnProjectOverlay =
+                new FileFieldEditor(
+                        GSN_PROJECT_OVERLAY_SADL,
+                        "GSN Project Overlay .sadl Path:",
+                        getFieldEditorParent());
+        addField(gsnProjectOverlay);
+
+        FileFieldEditor gsnProjectPattern =
+                new FileFieldEditor(
+                        GSN_PROJECT_PATTERN_SADL,
+                        "GSN Project Pattern .sadl Path:",
+                        getFieldEditorParent());
+        addField(gsnProjectPattern);
     }
 
     @Override

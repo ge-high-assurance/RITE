@@ -1,23 +1,23 @@
 /*
  * BSD 3-Clause License
- * 
+ *
  * Copyright (c) 2023, General Electric Company and Galois, Inc.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -35,7 +35,6 @@ import com.ge.research.rack.views.RackPreferencePage;
 import com.ge.research.semtk.nodeGroupStore.client.NodeGroupStoreConfig;
 import com.ge.research.semtk.nodeGroupStore.client.NodeGroupStoreRestClient;
 import com.ge.research.semtk.resultSet.TableResultSet;
-
 import java.util.*;
 
 public class NodegroupUtil {
@@ -74,8 +73,7 @@ public class NodegroupUtil {
             ProjectUtils.writeYaml(yamlMap, yamlPath);
         } catch (Exception e) {
             String prj = RackPreferencePage.getInstanceDataFolder();
-            RackConsole.getConsole()
-                    .error("Cannot write back to " + prj + " project's metadata.yaml");
+            ErrorMessageUtil.error("Cannot write back to " + prj + " project's metadata.yaml");
         }
     }
 
@@ -84,9 +82,8 @@ public class NodegroupUtil {
         if (!ProjectUtils.validateInstanceDataFolder()) {
             return;
         }
-        Map<String, Object> yamlMap = null;
         String yamlPath = "";
-        yamlMap = (Map<String, Object>) ingestionNodegroupMapping;
+        Map<String, Object> yamlMap = (Map<String, Object>) ingestionNodegroupMapping;
         yamlPath = /*ProjectUtils.getOverlayProjectPath()*/
                 RackPreferencePage.getInstanceDataFolder() + "/nodegroups/metadata.yaml";
 
@@ -104,16 +101,14 @@ public class NodegroupUtil {
     }
 
     public static ArrayList<String> getLocalNodegroupsCore() {
-        Map<String, Object> yamlMap = null;
-        yamlMap = (Map<String, Object>) ingestionNodegroupMapping;
+        Map<String, Object> yamlMap = (Map<String, Object>) ingestionNodegroupMapping;
         Object oYamlNodegroups = yamlMap.get("nodegroups");
         ArrayList<String> yamlNodegroups = (ArrayList<String>) oYamlNodegroups;
         return yamlNodegroups;
     }
 
     public static ArrayList<String> getLocalNodegroupsOverlay() {
-        Map<String, Object> yamlMap = null;
-        yamlMap = (Map<String, Object>) ingestionNodegroupMapping;
+        Map<String, Object> yamlMap = (Map<String, Object>) ingestionNodegroupMapping;
         Object oYamlNodegroups = yamlMap.get("nodegroups");
         ArrayList<String> yamlNodegroups = (ArrayList<String>) oYamlNodegroups;
         return yamlNodegroups;

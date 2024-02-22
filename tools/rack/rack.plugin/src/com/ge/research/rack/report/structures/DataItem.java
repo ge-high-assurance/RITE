@@ -1,23 +1,23 @@
 /*
  * BSD 3-Clause License
- * 
+ *
  * Copyright (c) 2023, General Electric Company and Galois, Inc.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -48,54 +48,63 @@ public class DataItem {
     public String getFormat() {
         return format;
     }
+
     /**
      * @param format the format to set
      */
     public void setFormat(String format) {
         this.format = format;
     }
+
     /**
      * @return the id
      */
     public String getId() {
         return id;
     }
+
     /**
      * @param id the id to set
      */
     public void setId(String id) {
         this.id = id;
     }
+
     /**
      * @return the description
      */
     public String getDescription() {
         return description;
     }
+
     /**
      * @param description the description to set
      */
     public void setDescription(String description) {
         this.description = description;
     }
+
     /**
      * @return the content
      */
     public String getContent() {
         return content;
     }
+
     /**
      * @param content the content to set
      */
     public void setContent(String content) {
         this.content = content;
     }
+
     /**
      * @return the objectiveId
      */
     public String getObjectiveId() {
         return objectiveId;
     }
+
     /**
      * @param objectiveId the objectiveId to set
      */

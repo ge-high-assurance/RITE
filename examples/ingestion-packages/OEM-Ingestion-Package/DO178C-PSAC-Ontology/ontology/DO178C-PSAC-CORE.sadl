@@ -1,0 +1,142 @@
+/* Copyright (c) 2022, General Electric Company, Galois, Inc.
+ *
+ * All Rights Reserved
+ *
+ * This material is based upon work supported by the Defense Advanced Research
+ * Projects Agency (DARPA) under Contract No. FA8750-20-C-0203.
+ *
+ * Any opinions, findings and conclusions or recommendations expressed in this
+ * material are those of the author(s) and do not necessarily reflect the views
+ * of the Defense Advanced Research Projects Agency (DARPA).
+ */
+
+ //-- Author: Saswata Paul
+ //-- An ontology to specify the different tables, objectives, activities, and their related properties in DO178C  
+   
+ uri "http://arcos.rack/DO178C-PSAC-CORE.sadl" alias do178cPsacCore.
+ 
+ import "http://arcos.rack/PROV-S".
+ import "http://arcos.rack/DOCUMENT".
+ import "http://arcos.rack/SYSTEM".
+ import "http://arcos.rack/SECURITY".
+ import "http://arcos.rack/SOFTWARE".
+ import "http://arcos.rack/HARDWARE".
+ import "http://arcos.rack/REQUIREMENTS".
+ import "http://arcos.rack/REVIEW".
+ import "http://arcos.rack/TESTING".
+ import "http://arcos.rack/HAZARD".
+ import "http://arcos.rack/ANALYSIS".
+ import "http://arcos.rack/PROCESS".
+ import "http://arcos.rack/AGENTS".
+ import "http://arcos.rack/CONFIDENCE".
+ 
+
+ //****************************************************************************************** 
+ //-- Some new classes and properties to support the DO178C verbiage in RACK 
+ //******************************************************************************************  
+ 
+ SoftwareLevel (note "The software level is a property of a software") is a type of THING,
+ 	must be one of {LevelA (note "Level A"),  // Cannot use 'A' since it is a keyword in SADL, so using LevelA instead
+ 					LevelB (note "Level B"), 
+ 					LevelC (note "Level C"), 
+ 					LevelD (note "Level D")}.
+ 					
+ softwareLevel describes SWCOMPONENT with a single value of type SoftwareLevel.					
+  
+ Applicability (note "The values that can be taken by applicability by software level property of objectives") is a type of THING,
+ 	must be one of {SatisfyObjective (note "The objective should be satisfied."), 
+ 					SatisfyObjectiveWithIndependence  (note "The objective should be satisfied with independence., i.e., with reviews by different persons"),
+ 					NA (note "Not Applicable")}.
+ 
+ ApplicabilityBySoftwareLevel (note "Applicability by software level is a property of DO-178C objectives") is a type of THING,
+ 	described by levelA (note "The value for level A") with a single value of type Applicability
+ 	described by levelB (note "The value for level B") with a single value of type Applicability
+ 	described by levelC (note "The value for level C") with a single value of type Applicability
+ 	described by levelD (note "The value for level D") with a single value of type Applicability.
+
+ DataItem (note "Data items that are outputs of DO-178C objectives") is a type of ENTITY
+ 	described by itemFormat (note "The format of the data item") with a single value of type FORMAT
+ 	described by itemContent (note "Information contained in the data item") with values of type ENTITY
+  	described by controlCategory (note "Values of the Control Category By Software Level columns") with a single value of type ControlCategoryBySoftwareLevel.
+ 
+ ControlCategory (note "The values that can be taken by the Control category property of DO-178C objective output Data Items") is a type of THING,
+ 	must be one of {Category1 (note "Control category 1"), 
+ 					Category2 (note "Control category 2"),
+ 					NA (note "Not Applicable")}.
+ 
+ ControlCategoryBySoftwareLevel (note "Control category by software level is a property of DO-178C output Data Items") is a type of THING,
+ 	described by levelA (note "The value for level A") with a single value of type ControlCategory
+ 	described by levelB (note "The value for level B") with a single value of type ControlCategory
+ 	described by levelC (note "The value for level C") with a single value of type ControlCategory
+ 	described by levelD (note "The value for level D") with a single value of type ControlCategory.
+ 
+ 
+ //****************************************************************************************** 
+ //-- Ontology to represent a DO178C PSAC hierarchy 
+ //******************************************************************************************  
+ 
+ 
+ /**
+  * A formal representation of DO178C PSAC has the following hierarchy:
+  * 	PSAC
+  * 		- Software
+  * 		- Table
+  * 			   -- Objective
+  * 						   --- Activity
+  * 									   ---- Evidences 	
+  * 						   --- applicability
+  * 						   --- output
+  *                                        ---- Data Item
+  *                                                       ----- Control Category By Software Level
+  *                          
+  * 				           
+  * 
+  * NOTE: All DO178C PSAC elements should somehow be connected to the RACK core 
+  */
+
+ //-- A class for DO178C PSAC
+ DO178CPSAC (note "A class for DO178C PSACs") is a type of PLAN
+  	described by software (note "The software being developed") with a single value of type SWCOMPONENT
+ 	described by tables (note "The tables in the PSAC") with values of type DO178CTable.
+ 	
+ 
+ //-- A class for DO-178C tables
+ DO178CTable (note "A generic class for DO-178C tables") is a type of PLAN
+ 	described by objective (note "The objectives associated with the table") with values of type OBJECTIVE.
+ 
+ 
+ //-- A class for DO-178C objectives
+ DO178CObjective (note "A generic class for DO-178C objectives") is a type of OBJECTIVE
+  	described by activity (note "Content of the Activity column") with values of type DO178CActivity
+  	described by applicability (note "Values of the Applicability by Software Level columns") with values of type ApplicabilityBySoftwareLevel
+  	described by output (note "Values of the Output column") with values of type DataItem
+  	described by query (note "One or more query IDs that will be required to determine if this objective has passed or failed") with values of type string.
+
+ 
+ //-- A class for DO-178C activities 	
+ /**
+  * The activities are where the different evidences and other specific details will be connected
+  * 
+  * NOTE: The activity details is where instances created by different users for different software
+  *       will vary the most. 
+  * 
+  *       The only generic aspect of the DO178C activities are the activity Ids and activity descriptions
+  *
+  *       A Do178C activity may include one or more different types of ACTIVITY instances from the RACK core 
+  * 	  such as HAZARD_IDENTIFICATION, REQUIREMENT_DEVELOPMENT, SYSTEM_DEVELOPMENT, FILE_CREATION, etc
+  * 	  Almost ALL other RACK classes can be directly or indirectly traced back to one of these ACTIVITY types using relationships already in the core
+  * 	  	     
+  * 
+  */ 	
+ DO178CActivity (note "A generic class for DO-178C activities") is a type of ACTIVITY
+ 	described by performs (note "The type(s) of RACK ACTIVITYs performed in a DO-178C activity") with values of type {SYSTEM_DEVELOPMENT
+ 																													 or FILE_CREATION
+ 																													 or ASSESSING_CONFIDENCE
+																													 or HAZARD_IDENTIFICATION
+																													 or REQUIREMENT_DEVELOPMENT
+																													 or TEST_DEVELOPMENT
+																													 or TEST_EXECUTION
+																													 or THREAT_IDENTIFICATION
+																													 or ANALYSIS
+																													 or REVIEW
+																													 or ACTIVITY}.
