@@ -54,14 +54,17 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
@@ -74,6 +77,8 @@ import org.yaml.snakeyaml.Yaml;
 // TODO:
 
 // Page needs an overall scrollbar
+// Figure out defaultWidgetSelected
+// Make custom SelectionListener
 // Lists of steps (2 places) needs scrollbars
 // remove multiple selected items from lists
 // Write out edited data
@@ -649,10 +654,84 @@ public class DataPropertyPage extends PropertyPage {
         addLabel(subComposite, "count:", WIDTH2);
         addText(subComposite, Integer.toString(count), 5);
         addLabel(subComposite, "nodegroup:", WIDTH2);
-        addText(subComposite, nodegroup, TEXT_FIELD_WIDTH/2);
+        addText(subComposite, nodegroup, TEXT_FIELD_WIDTH/3);
         addLabel(subComposite, "comment:", WIDTH2);
-        addText(subComposite, comment, TEXT_FIELD_WIDTH/2);
+        addText(subComposite, comment, TEXT_FIELD_WIDTH/3);
+        var constraintsButton = new Button(subComposite, SWT.PUSH);
+        constraintsButton.setText("Constraints");
+        constraintsButton.addSelectionListener( new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				new ConstraintDialog(shell).open();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
+        	
+        });
         return subComposite;
+    }
+    
+    public class ConstraintDialog extends org.eclipse.jface.dialogs.Dialog {
+
+        public ConstraintDialog(Shell parentShell) {
+            super(parentShell);
+        }
+
+        @Override
+        protected Control createDialogArea(Composite parent) {
+            Composite container = (Composite) super.createDialogArea(parent);
+            var buttonComposite = addComposite(parent, 3);
+            var addButton = new Button(buttonComposite, SWT.PUSH);
+            addButton.setText("Add");
+            addButton.addSelectionListener(new SelectionListener() {
+
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					addLine(container);
+				}
+
+				@Override
+				public void widgetDefaultSelected(SelectionEvent e) {
+					widgetSelected(e);
+				}
+            	
+            });
+            var editButton = new Button(buttonComposite, SWT.PUSH);
+            editButton.setText("Edit");
+            var removeButton = new Button(buttonComposite, SWT.PUSH);
+            removeButton.setText("Remove");
+            return container;
+        }
+        
+        public void addLine(Composite container) {
+			var comp = addCompositeUnequal(container, 3);
+			addText(comp, "", 50);
+			addText(comp, "", 6);
+			addText(comp, "", 50);
+			container.layout(true,true);
+        }
+
+        // overriding this methods allows you to set the
+        // title of the custom dialog
+        @Override
+        protected void configureShell(Shell newShell) {
+            super.configureShell(newShell);
+            newShell.setText("Constraints");
+        }
+
+        @Override
+        protected Point getInitialSize() {
+            return new Point(600, 500);
+        }
+
+    	protected boolean isResizable() {
+    		return true;
+    	}
+
     }
         
     static HashMap<String, Object> readYaml(String file) {
