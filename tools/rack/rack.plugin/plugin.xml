@@ -36,7 +36,7 @@
     </command>
 
     <command categoryId="rackplugin.commands"
-      id="rackplugin.commands.newManifestPropertyPage" name="New Manifest Property Page">
+      id="rackplugin.commands.newYamlPropertyPage" name="New Manifest Property Page">
     </command>
    
     <!-- <command categoryId="rackplugin.commands" id="rackplugin.commands.gsnCommand"
@@ -151,7 +151,7 @@
 
     <handler
       class="com.ge.research.rack.properties.NewPropertyPageHandler"
-      commandId="rackplugin.commands.newManifestPropertyPage">
+      commandId="rackplugin.commands.newYamlPropertyPage">
     </handler>
 
     <handler
@@ -232,8 +232,8 @@
           id="rackplugin.menus.ingestInstanceData" label="Manifest Import"
           mnemonic="S">
         </command>
-        <command commandId="rackplugin.commands.newManifestPropertyPage"
-          id="rackplugin.menus.newManifestPropertyPage" label="New Manifest"
+        <command commandId="rackplugin.commands.newYamlPropertyPage"
+          id="rackplugin.menus.newYamlPropertyPage" label="New yaml file"
           mnemonic="N">
         </command>
         

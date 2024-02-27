@@ -50,8 +50,7 @@ public class NewPropertyPageHandler extends AbstractHandler {
     	var shell = org.eclipse.swt.widgets.Display.getCurrent().getActiveShell();
     	IProject project = null;
     	var window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-    	if (window != null)
-    	{
+    	if (window != null) {
     		var sel = window.getSelectionService().getSelection();
     		if (sel instanceof IStructuredSelection selection) {
     			Object firstElement = selection.getFirstElement();
@@ -63,7 +62,7 @@ public class NewPropertyPageHandler extends AbstractHandler {
     		}
     	}
     	if (project == null) {
-    		MessageDialog.openError(shell, "", "Select a project in which to put the new manifest");
+    		MessageDialog.openError(shell, "", "Select a project in which to put the new yaml file");
     		return null;
     	}
     	var path = project.getFile("temp.yaml").getFullPath();
