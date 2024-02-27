@@ -155,12 +155,12 @@ public class DataPropertyPage extends PropertyPage {
 
         addLabel(kindComposite, KIND_TITLE, LABEL_WIDTH);
 
-        var kindCombo = new Combo(kindComposite, SWT.DROP_DOWN);
+        var kindCombo = new Combo(kindComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
         kindCombo.add("");
         kindCombo.add("Manifest");
         kindCombo.add("Data");
         kindCombo.add("Model");
-        kindCombo.setText("");
+        kindCombo.select(0);
         if (kind != null) kindCombo.setText(kind);
         kindCombo.addSelectionListener(new SelectionListener() {
 
