@@ -40,14 +40,23 @@ import java.io.ByteArrayInputStream;
 import java.io.CharArrayWriter;
 import java.io.File;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
+
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.internal.resources.WorkspaceRoot;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -69,6 +78,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.dialogs.PropertyPage;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.DumperOptions.FlowStyle;
@@ -106,6 +116,10 @@ public class DataPropertyPage extends PropertyPage {
     
     private Map<String, Object> yamlMap = new HashMap<>();
     
+    private Combo kindCombo;
+    private Text pathText;
+    private Map<String, Widget> yamlWidgets = new HashMap<>();
+    
     private Composite currentSubcomposite = null;
 
     /** Constructor for DataPropertyPage. */
@@ -124,22 +138,35 @@ public class DataPropertyPage extends PropertyPage {
         }
         
         var composite = addComposite(parent, 1);
-        
-        if (file != null && file.getLocation() != null) {
-            yamlMap = readYaml(file.getLocation().toString());
-        }
+        try {
 
-        if (yamlMap == null) yamlMap = new HashMap<>(); // Already gave an error message
-        var kind = autoDetectYamlKind(yamlMap);
-        
-        addPathSection(composite);
-        addYamlSelectorSection(composite, kind);
-        addSeparator(composite);
-        
-        //var scrolled = new ScrolledComposite(composite, SWT.V_SCROLL|SWT.H_SCROLL);
-        currentSubcomposite = addKindSubcomposite(composite, kind);
-        //scrolled.setContent(currentSubcomposite);
-        return composite;
+        	if (file != null && file.getLocation() != null) {
+        		yamlMap = readYaml(file.getLocation().toString());
+        	}
+
+        	if (yamlMap == null) yamlMap = new HashMap<>(); // Already gave an error message
+        	var kind = autoDetectYamlKind(yamlMap);
+
+        	addPathSection(composite);
+        	addYamlSelectorSection(composite, kind);
+        	addSeparator(composite);
+
+        	//var scrolled = new ScrolledComposite(composite, SWT.V_SCROLL|SWT.H_SCROLL);
+        	currentSubcomposite = addKindSubcomposite(composite, kind);
+        	//scrolled.setContent(currentSubcomposite);
+
+        	// This is some unit testing that retrieved yaml from the bunch of widgets is the same as what went in
+        	var newYamlMap = collectYaml();
+        	boolean b = Objects.equals(yamlMap, newYamlMap);
+        	String diffs = compareYaml(yamlMap, newYamlMap);
+        	if (!b || !diffs.isEmpty()) MessageDialog.openInformation(shell, "Compare", "Maps are " + (b?"":"NOT ") + "the same\n" + diffs);
+
+        } catch (Exception e) {
+        	
+        	MessageDialog.openError(shell,  "Exception", 
+        			"Exception during createContents\n"+ e.getMessage() + "\n" + getStack(e));
+        }
+    	return composite;
     }
     
     private void addPathSection(Composite parent) {
@@ -147,7 +174,7 @@ public class DataPropertyPage extends PropertyPage {
         // Label for path field
         addLabel(composite, PATH_TITLE, LABEL_WIDTH);
         // Path text field
-        addText(composite, ((IResource) getElement()).getFullPath().toString(), TEXT_FIELD_WIDTH);
+        pathText = addText(composite, ((IResource) getElement()).getFullPath().toString(), TEXT_FIELD_WIDTH);
     }
     
     private void addYamlSelectorSection(Composite parent, String kind) {
@@ -155,7 +182,7 @@ public class DataPropertyPage extends PropertyPage {
 
         addLabel(kindComposite, KIND_TITLE, LABEL_WIDTH);
 
-        var kindCombo = new Combo(kindComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
+        kindCombo = new Combo(kindComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
         kindCombo.add("");
         kindCombo.add("Manifest");
         kindCombo.add("Data");
@@ -266,19 +293,23 @@ public class DataPropertyPage extends PropertyPage {
         int WIDTH3 = 20;
         addLabel(composite, NAME_TITLE, WIDTH3);
         String value = (yamlMap.get("name") instanceof String n) ? n : "";
-        addText(composite, value, TEXT_FIELD_WIDTH);
+        Text t = addText(composite, value, TEXT_FIELD_WIDTH);
+        yamlWidgets.put("name", t);
 
         addLabel(composite, "Description:", WIDTH3);
         value = (yamlMap.get("description") instanceof String n) ? n : "";
         addText(composite, value, TEXT_FIELD_WIDTH);
+        yamlWidgets.put("description", t);
 
         addLabel(composite, "Copy-to-graph:", WIDTH3);
-        value = (yamlMap.get("description") instanceof String n) ? n : "";
+        value = (yamlMap.get("copy-to-graph") instanceof String n) ? n : "";
         addText(composite, value, TEXT_FIELD_WIDTH);
+        yamlWidgets.put("copy-to-graph", t);
 
         addLabel(composite, "Perform resolution:", WIDTH3);
-        value = (yamlMap.get("description") instanceof String n) ? n : "";
+        value = (yamlMap.get("perform-entity-resolution") instanceof String n) ? n : "";
         addText(composite, value, TEXT_FIELD_WIDTH);
+        yamlWidgets.put("perform-entity-resolution", t);
     }
 					
     private void addManifestStepsSection(Composite parent) {
@@ -420,6 +451,7 @@ public class DataPropertyPage extends PropertyPage {
         gridData.widthHint = 200;
         gridData.heightHint = 200;
         list.setLayoutData(gridData);
+        yamlWidgets.put(sectionName,  list);
         
         switch (kind) {
         case "Manifest":
@@ -436,6 +468,7 @@ public class DataPropertyPage extends PropertyPage {
         				for (var item: items) list.add(item);
         			}
         		}
+        		yamlWidgets.put("footprint:" + sectionName, list);
         	}
         	break;
         case "Model":
@@ -446,8 +479,9 @@ public class DataPropertyPage extends PropertyPage {
         			var items = (List<String>) yamlMap.get(sectionName);
         			for (var item: items) list.add(item);
         		}
+        		yamlWidgets.put("files", list);
         	} else { // model-graphs
-        		Object o = yamlMap.containsKey(sectionName);
+        		Object o = yamlMap.get(sectionName);
         		if (o instanceof String item) {
         			list.add(item);
         		} else if (o instanceof List<?> array) {
@@ -455,6 +489,7 @@ public class DataPropertyPage extends PropertyPage {
         			var items = (List<String>) array;
         			for (var item: items) list.add(item);
         		}
+        		yamlWidgets.put(sectionName, list);
         	}
         	break;
         default:
@@ -733,8 +768,16 @@ public class DataPropertyPage extends PropertyPage {
     	}
 
     }
-        
-    static HashMap<String, Object> readYaml(String file) {
+ 
+    // Return null, "Manifest", "Data", "Model", or "" if unknown
+    static String autoDetectYamlKind(Map<String,Object> yamlMap) {
+    	if (yamlMap.get("ingestion-steps") != null) return "Data";
+    	if (yamlMap.get("footprint") != null) return "Manifest";
+    	if (yamlMap.get("files") != null) return "Model";
+    	return "";
+    }
+
+    public static HashMap<String, Object> readYaml(String file) {
         File ingestionYaml = new File(file);
         if (!ingestionYaml.exists()) {
             ErrorMessageUtil.warning("No file found, nothing to read");
@@ -762,16 +805,74 @@ public class DataPropertyPage extends PropertyPage {
         return yamlMap;
     }
     
-    // Return null, "Manifest", "Data", "Model", or "" if unknown
-    static String autoDetectYamlKind(Map<String,Object> yamlMap) {
-    	if (yamlMap.get("ingestion-steps") != null) return "Data";
-    	if (yamlMap.get("footprint") != null) return "Manifest";
-    	if (yamlMap.get("files") != null) return "Model";
-    	return "";
+    /** Gives a message about the difference rather than just a boolean compare */
+    public static String compareYaml(Map<String, Object> a, Map<String, Object> b) {
+    	return compareYaml(a, b, "");
     }
+    
+    @SuppressWarnings("unchecked")
+	private static String compareYaml(Map<String, Object> a, Map<String, Object> b, String level) {
+    	String diffs = "";
+    	var akeys = a.keySet();
+    	var bkeys = b.keySet();
+    	if (!akeys.equals(bkeys)) {
+    		diffs += "The keys are different (level " + level + "): "
+    				+ akeys.stream().collect(Collectors.joining(" "))
+    				+ " vs. "
+    				+ bkeys.stream().collect(Collectors.joining(" "))
+    				+ "\n";
+    	}
+    	for (var key: akeys) {
+    		var sa = a.get(key);
+    		var sb = b.get(key);
+    		var diff = compareYamlItems(sa, sb, level.isEmpty() ? key : (level + ":" + key));
+    		if (diff != null) diffs += diff;
+    	}
+    	return diffs;
+    }
+    		
+    private static String compareYamlItems(Object sa, Object sb, String level) {
+    	String diffs = "";
+		if (sa instanceof Map<?,?> mapa && sb instanceof Map<?,?> mapb) {
+			@SuppressWarnings("unchecked")
+			var diff = compareYaml((Map<String,Object>)mapa, (Map<String,Object>)mapb, level);
+			if (diff != null) diffs += diff;
+		} else if (sa instanceof String ssa && sb instanceof String ssb) {
+			if (!Objects.equals(ssa,  ssb)) {
+				diffs += "Values are different at " + level + " : " + ssa + " vs. " + ssb + ");\n";
+			}
+		} else if (sa instanceof List<?> lista && sb instanceof List<?> listb) {
+			if (lista.size() != listb.size()) {
+				diffs += "Lists at " + level + " have different lengths: " + lista.size() + " vs. " + listb.size() + "\n";
+			}
+			var itera = lista.iterator();
+			var iterb = listb.iterator();
+			while (itera.hasNext() && iterb.hasNext()) {
+				var diff = compareYamlItems(itera.next(), iterb.next(), level);
+				if (diff != null) diffs += diff;
+			}
+		} else if (sa instanceof List<?> lista && lista.size() == 1 && sb instanceof String s) {
+			if (lista.get(0) instanceof String ss && ss.equals(s)) {
+				// OK
+			} else {
+				diffs += "Single item array value differs from String: " + lista.get(0) + " vs. " + s;
+			}
+		} else if (sb instanceof List<?> listb && listb.size() == 1 && sa instanceof String s) {
+			if (listb.get(0) instanceof String ss && ss.equals(s)) {
+				// OK
+			} else {
+				diffs += "String differs from single item array value: " + s + " vs. " + listb.get(0);
+			}
 
-    // Replace the manifest.yaml for project using the Java object content.
-    static void writeDataYaml(IFile file, Object content) throws ExecutionException {
+		} else {
+			diffs += "Unknown or unequal item types (" + level + "): " + 
+					(sa == null ? "null" : sa.getClass().toString()) + " vs." + 
+					(sb == null ? "null" : sb.getClass().toString()) + "\n";
+		}
+		return diffs;
+    }
+    
+    static void writeYaml(IFile file, Object content) throws ExecutionException {
         // Write YAML to disk
         try {
             // Generate prettier, human readable YAML
@@ -783,11 +884,11 @@ public class DataPropertyPage extends PropertyPage {
             yaml.dump(content, writer);
 
             final InputStream source = new ByteArrayInputStream(writer.toString().getBytes());
-            final boolean force = false;
+            final boolean force = true;
             final boolean keep_history = true;
             file.setContents(source, force, keep_history, null);
         } catch (CoreException e) {
-            throw new ExecutionException("Failed writing final data.yaml output", e);
+            throw new ExecutionException("Failed writing yaml output: " + e.getMessage(), e);
         }
     }
     
@@ -796,95 +897,162 @@ public class DataPropertyPage extends PropertyPage {
     }
 
     public boolean performOk() {
+    	String newPath = null;
         try {
             final IFile thisFile = (IFile) getElement();
-            final String thisName = thisFile.getName();
-            final IFile dataYamlFile = thisFile.getParent().getFile(new Path("data.yaml"));
-
-            final Yaml yaml = new Yaml();
-            final InputStream contents = dataYamlFile.getContents();
-            final Object dataObj = yaml.load(contents);
-            final List<Map<String, String>> steps = getIngestionSteps(dataObj);
-
-            int existingIndex = -1;
-            for (int i = 0; i < steps.size(); i++) {
-                if (thisName.equals(steps.get(i).get("csv"))
-                        || thisName.equals(steps.get(i).get("owl"))) {
-                    existingIndex = i;
-                    break;
-                }
+            final String thisName = ((IResource) getElement()).getFullPath().toString();
+            
+            newPath = pathText.getText();
+            
+            boolean isNewFile = !newPath.trim().equals(thisName.trim());
+            IFile outFile = thisFile;
+            if (isNewFile) {
+            	IPath p = new Path(newPath);
+            	IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+            	outFile = root.getFile(p);
             }
+            
+            var outYaml = collectYaml();
 
-//            final int mode = modeCombo.getSelectionIndex();
-//
-//            // delete previously existing entry
-//            if (existingIndex != -1 && mode == 0) {
-//                steps.remove(existingIndex);
-//
-//            }
-//            // add or update a step
-//            else if (mode != 0) {
-//                // Either make a new step or reuse the previous one
-//                final Map<String, String> targetStep;
-//                if (existingIndex == -1) {
-//                    targetStep = new LinkedHashMap<>();
-//                    steps.add(targetStep);
-//                } else {
-//                    targetStep = steps.get(existingIndex);
-//                    targetStep.clear();
-//                }
-//
-//                switch (mode) {
-//                    case 1:
-//                        targetStep.put("class", detailText.getText());
-//                        targetStep.put("csv", thisName);
-//                        break;
-//                    case 2:
-//                        targetStep.put("nodegroup", detailText.getText());
-//                        targetStep.put("csv", thisName);
-//                        break;
-//                    case 3:
-//                        targetStep.put("owl", thisName);
-//                        break;
-//                }
-//            }
-//            writeDataYaml(dataYamlFile, dataObj);
-        } catch (CoreException e) {
-            RackConsole.getConsole().error(e.toString());
-//        } catch (ExecutionException e) {
-//            RackConsole.getConsole().error(e.toString());
+            if (outFile.exists() && isNewFile) {
+            	boolean ok = MessageDialog.openConfirm(shell, "", "OK to overwrite file " + newPath + " ?");
+            	if (!ok) return false;
+            }
+            if (!outFile.exists()) outFile.create(null,  true,  null);
+            writeYaml(outFile, outYaml);
+
+        } catch (Exception e) {
+        	MessageDialog.openError(shell,  "Error",  "Failed to write to file " + newPath);
+            RackConsole.getConsole().error(e.toString());        	
         }
-
+        // FIXME - should we call super.performOK()?
         return true;
     }
     
-    @SuppressWarnings("unchecked")
-    private static List<Map<String, String>> getIngestionSteps(Object obj) {
-        if (!(obj instanceof Map<?, ?> )) {
-            return null;
-        }
-        final Map<?, ?> dataMap = (Map<?, ?>) obj;
+//    @SuppressWarnings("unchecked")
+//    private static List<Map<String, String>> getIngestionSteps(Object obj) {
+//        if (!(obj instanceof Map<?, ?> )) {
+//            return null;
+//        }
+//        final Map<?, ?> dataMap = (Map<?, ?>) obj;
+//
+//        final Object ingestionStepsObj = dataMap.get("ingestion-steps");
+//        if (!(ingestionStepsObj instanceof List<?>)) {
+//            return null;
+//        }
+//        final List<?> ingestionStepsList = (List<?>) ingestionStepsObj;
+//
+//        for (final Object itemObj : ingestionStepsList) {
+//            if (!(itemObj instanceof Map<?, ?>)) {
+//                return null;
+//            }
+//            final Map<?, ?> itemMap = (Map<?, ?>) itemObj;
+//
+//            for (final Entry<?, ?> entry : itemMap.entrySet()) {
+//                if (!(entry.getKey() instanceof String) || !(entry.getValue() instanceof String)) {
+//                    return null;
+//                }
+//            }
+//        }
+//
+//        return (List<Map<String, String>>) ingestionStepsList;
+//    }
 
-        final Object ingestionStepsObj = dataMap.get("ingestion-steps");
-        if (!(ingestionStepsObj instanceof List<?>)) {
-            return null;
-        }
-        final List<?> ingestionStepsList = (List<?>) ingestionStepsObj;
-
-        for (final Object itemObj : ingestionStepsList) {
-            if (!(itemObj instanceof Map<?, ?>)) {
-                return null;
-            }
-            final Map<?, ?> itemMap = (Map<?, ?>) itemObj;
-
-            for (final Entry<?, ?> entry : itemMap.entrySet()) {
-                if (!(entry.getKey() instanceof String) || !(entry.getValue() instanceof String)) {
-                    return null;
-                }
-            }
-        }
-
-        return (List<Map<String, String>>) ingestionStepsList;
+    public Map<String,Object> collectYaml() {
+    	Map<String,Object> yaml = new HashMap<>();
+    	int k = kindCombo.getSelectionIndex();
+    	String kind = kindCombo.getItems()[k];
+    	switch (kind) {
+    	case "Manifest":
+    		collectManifestYaml(yaml);
+    		break;
+    	case "Data":
+    		collectDataYaml(yaml);
+    		break;
+    	case "Model":
+    		collectModelYaml(yaml);
+    		break;
+    	default:
+    		MessageDialog.openError(shell, "Error", "Unknown kind of Yaml to output");
+    		return null;
+    	}
+    	return yaml;
     }
-
+    
+    @SuppressWarnings("unchecked")
+	public void collectYaml(Map<String,Object> yaml, String[] keys) {
+		for (var key: keys) {
+			try {
+				String[] names = key.split(":");
+				Widget w = yamlWidgets.get(key);
+				if (w == null) {
+					MessageDialog.openError(shell,  "Error",  "No widget for " + key);
+					continue;
+				}
+				var y = yaml;
+				for (int i=0; i < names.length-1; i++) {
+					var yy = (Map<String,Object>)y.get(names[i]);
+					if (yy == null) y.put(keys[i], yy = new HashMap<String,Object>());
+					y = yy;
+				}
+				if (w instanceof Text text) {
+					String value = text.getText();
+					if (!value.isEmpty()) {
+						y.put(names[names.length-1], value);
+					}
+				} else if (w instanceof org.eclipse.swt.widgets.List list) {
+					List<String> newlist = new java.util.ArrayList<>(list.getItemCount());
+					for (String s: list.getItems()) newlist.add(s);
+					y.put(names[names.length-1], newlist);
+				} else {
+					MessageDialog.openError(shell,  "Error",  "Unknown value for " + keys[0] + ": " + w.getClass());
+				}
+			} catch (Exception e) {
+				MessageDialog.openError(shell, "Exception",
+						"Exception while collecting Yaml from UI for key " + key + "\n" + e.getMessage() + "\n" + e.getCause()
+						+ getStack(e));
+			}
+		}
+    }
+    
+    public static String getStack(Throwable e) {
+		StringWriter sw = new StringWriter();
+		e.printStackTrace(new PrintWriter(sw));
+		return sw.toString();
+    }
+    
+    public static final String[] manifestKeys = {
+    		"name",
+    		"description",
+    		"copy-to-graph",
+    		"perform-entity-resolution",
+    		"footprint:model-graphs",
+    		"footprint:data-graphs",
+    		"footprint:nodegroups",
+    		"steps"
+    };
+    
+    public void collectManifestYaml(Map<String,Object> yaml) {
+    	collectYaml(yaml, manifestKeys);
+    }
+    
+    public static final String[] dataKeys = {
+    		"ingestion-steps",  // FIXME - list of complex items
+    		"model-graphs",
+    		"data-graph",
+    		"extra-data-graphs",
+    };
+    
+    public void collectDataYaml(Map<String,Object> yaml) {
+    	collectYaml(yaml, dataKeys);
+    }
+    
+    public static final String[] modelKeys = {
+    		"files",
+    		"model-graphs"
+    };
+    
+    public void collectModelYaml(Map<String,Object> yaml) {
+    	collectYaml(yaml, modelKeys);
+    }
 }
