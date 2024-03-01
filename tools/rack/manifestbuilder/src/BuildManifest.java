@@ -11,7 +11,7 @@ public class BuildManifest{
 	public static void main (String args[]) throws Exception{
 		
 	     String manifestDir = args[0];
-	     String version = args[1];
+	     RackManifestIngestionBuilderUtil.version = args[1];
 	     Path target = Files.createTempFile("rack-ingestion-package", ".zip");
 	     zipIt((new File(manifestDir)).toPath(), target);
 		
@@ -26,8 +26,7 @@ public class BuildManifest{
 	        try (FileOutputStream fos = new FileOutputStream(zipFilepath.toFile());
 	                ZipOutputStream zipStream = new ZipOutputStream(fos)) {
 
-	           System.out.println("error building manifest");
-
+	          
 	            new RackManifestIngestionBuilderUtil().zipManifestResources(folder, zipStream);
 	        }
 

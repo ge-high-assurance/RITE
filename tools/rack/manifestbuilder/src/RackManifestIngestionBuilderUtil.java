@@ -42,6 +42,7 @@ import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -66,6 +67,7 @@ import org.yaml.snakeyaml.Yaml;
  */
 @SuppressWarnings("unchecked")
 public class RackManifestIngestionBuilderUtil {
+	public static String version = "";
 
     private static String FILES = "files";
     private static String INGESTION_STEPS = "ingestion-steps";
@@ -282,6 +284,61 @@ public class RackManifestIngestionBuilderUtil {
         Map<String, Object> oManifestYamlMap =
                 (Map<String, Object>) readYaml(physicalManifestFile.toString());
         // Handle multiple inclusions of the same manifest to simplify
+        
+        // update desired version in manifest hashmap
+        if(isTopLevelManifest && oManifestYamlMap.containsKey("footprint")) {
+        	 //rewrite
+        	 Object oFootprint = oManifestYamlMap.get("footprint");
+        	 if(oFootprint != null && oFootprint instanceof Map) {
+        		 if(((Map)oFootprint).containsKey("data-graphs")) {
+        			   Object datagraphs = ((Map)oFootprint).get("data-graphs");
+        			   if(datagraphs != null && datagraphs instanceof List) {
+        				    List<String> dGraphs = (List<String>)datagraphs;
+        				    List<String> dGraphsVersioned = new ArrayList<>();
+        				    for(String datagraph : dGraphs) {
+        				        dGraphsVersioned.add(datagraph + version);	
+        				    }
+        				    ((Map)oFootprint).put("data-graphs", dGraphsVersioned);
+        				    
+        			   }
+        		   }
+        		 
+        		 if(((Map)oFootprint).containsKey("model-graphs")) {
+      			   Object modelgraphs = ((Map)oFootprint).get("model-graphs");
+      			   if(modelgraphs != null && modelgraphs instanceof List) {
+      				    List<String> mGraphs = (List<String>)modelgraphs;
+      				    List<String> mGraphsVersioned = new ArrayList<>();
+      				    for(String modelgraph : mGraphs) {
+      				        mGraphsVersioned.add(modelgraph + version);	
+      				    }
+      				    ((Map)oFootprint).put("model-graphs", mGraphsVersioned);
+      			   }
+      		   }
+        		   
+        	 }
+        	 
+        	 oManifestYamlMap.put("footprint", oFootprint);
+        }
+        else {
+        	// if top level contains no footprint, add it
+           if(isTopLevelManifest) {
+        	   Map<String, Object> oFootprint = new HashMap<>();
+        	   List<String> datagraphs = Arrays.asList("http://rack001/data" + version);
+        	   List<String> modelraphs = Arrays.asList("http://rack001/model" + version);
+        	   oFootprint.put("data-graphs",datagraphs);
+        	   oFootprint.put("model-graphs", modelraphs);
+        	   oManifestYamlMap.put("footprint", oFootprint);
+        	  
+        	  
+           }
+           
+           else {
+        	   // TODO: non-toplevel manifest, either contains a data step or model step - rewrite
+        	 
+           }
+        }
+        
+        
         String manifestName = oManifestYamlMap.get(MANIFEST_NAME_KEY).toString();
 
         if (manifests.contains(manifestName)) {
