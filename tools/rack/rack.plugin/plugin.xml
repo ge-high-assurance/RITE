@@ -36,9 +36,10 @@
     </command>
 
     <command categoryId="rackplugin.commands"
-      id="rackplugin.commands.newYamlPropertyPage" name="New Manifest Property Page">
+      id="rackplugin.commands.newYamlPropertyPage"
+      name="New Manifest Property Page">
     </command>
-   
+
     <!-- <command categoryId="rackplugin.commands" id="rackplugin.commands.gsnCommand"
       name="Load Assurance Case"> </command> -->
     <command categoryId="rackplugin.commands"
@@ -236,7 +237,7 @@
           id="rackplugin.menus.newYamlPropertyPage" label="New yaml file"
           mnemonic="N">
         </command>
-        
+
         <command commandId="rackplugin.commands.clearAll"
           id="rackplugin.menus.clearAll" label="Clear RACK" mnemonic="S">
         </command>

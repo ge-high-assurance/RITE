@@ -38,7 +38,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.PlatformUI;
@@ -47,32 +46,30 @@ public class NewPropertyPageHandler extends AbstractHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-    	var shell = org.eclipse.swt.widgets.Display.getCurrent().getActiveShell();
-    	IProject project = null;
-    	var window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-    	if (window != null) {
-    		var sel = window.getSelectionService().getSelection();
-    		if (sel instanceof IStructuredSelection selection) {
-    			Object firstElement = selection.getFirstElement();
-    			if (firstElement instanceof IAdaptable adapt) {
-    				project = (IProject)adapt.getAdapter(IProject.class);
-    			}
-    		} else {
-    			System.out.println(sel.getClass());
-    		}
-    	}
-    	if (project == null) {
-    		MessageDialog.openError(shell, "", "Select a project in which to put the new yaml file");
-    		return null;
-    	}
-    	var path = project.getFile("temp.yaml").getFullPath();
-    	IFile f = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
-    	String ID = "com.ge.research.rack.properties.dataPropertyPage";
-    	org.eclipse.ui.dialogs.PreferencesUtil.createPropertyDialogOn(
-    			shell, 
-    			f,
-    			ID, null, null, 0)
-    	.open();
-    	return null;
+        var shell = org.eclipse.swt.widgets.Display.getCurrent().getActiveShell();
+        IProject project = null;
+        var window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+        if (window != null) {
+            var sel = window.getSelectionService().getSelection();
+            if (sel instanceof IStructuredSelection selection) {
+                Object firstElement = selection.getFirstElement();
+                if (firstElement instanceof IAdaptable adapt) {
+                    project = (IProject) adapt.getAdapter(IProject.class);
+                }
+            } else {
+                System.out.println(sel.getClass());
+            }
+        }
+        if (project == null) {
+            MessageDialog.openError(
+                    shell, "", "Select a project in which to put the new yaml file");
+            return null;
+        }
+        var path = project.getFile("temp.yaml").getFullPath();
+        IFile f = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+        String ID = "com.ge.research.rack.properties.dataPropertyPage";
+        org.eclipse.ui.dialogs.PreferencesUtil.createPropertyDialogOn(shell, f, ID, null, null, 0)
+                .open();
+        return null;
     }
 }
