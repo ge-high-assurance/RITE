@@ -85,7 +85,7 @@ import org.yaml.snakeyaml.Yaml;
 // Implement Remove buttons
 // Label alignments
 // Finish validation
-// Implement Discard changes
+// Add unit testing
 
 // Would like to change the label Apply & CLose
 // Figure out defaultWidgetSelected
