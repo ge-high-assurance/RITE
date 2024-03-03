@@ -731,7 +731,7 @@
   <extension point="org.eclipse.ui.propertyPages">
     <page class="com.ge.research.rack.properties.DataPropertyPage"
       id="com.ge.research.rack.properties.dataPropertyPage"
-      name="Data Settings" nameFilter="*.*">
+      name="Data Settings" nameFilter="*.yaml">
       <enabledWhen>
         <instanceof value="org.eclipse.core.resources.IFile">
         </instanceof>

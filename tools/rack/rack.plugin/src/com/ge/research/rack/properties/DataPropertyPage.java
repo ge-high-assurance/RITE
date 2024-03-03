@@ -40,12 +40,15 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -55,6 +58,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -77,38 +81,35 @@ import org.yaml.snakeyaml.Yaml;
 
 // TODO:
 
+// Page needs an overall scrollbar; steps, ingestion-steps and constraints composites also
+// Implement Remove buttons
 // Label alignments
-// Constraints
-
+// Finish validation
 // Implement Discard changes
-// Check implementation of "Save to file"
 
-// Would like to change the labels on the contributed buttons -- but they are created after createContents is called
-// Page needs an overall scrollbar
+// Would like to change the label Apply & CLose
 // Figure out defaultWidgetSelected
 // Make custom SelectionListener
 // Lists of steps (2 places) needs scrollbars
 // remove multiple selected items from lists
-// Write out edited data
-// Read/display other properties: name, steps
 // Adjust height, width of list widgets when needed
 // Adjust widgets to property window being enlarged, shrunk
 // Add file or other browsers for locations of things
 
-// Data style: datagraphs and model graphs
-// Data style: count/nodegroup/constraints
-// Data style: fill in ingestion steps from yaml -- for all styles
-
-// Manifest: needs steps
 
 public class DataPropertyPage extends PropertyPage {
-
+	
     private static final String NAME_TITLE = "Name:";
     private static final String PATH_TITLE = "Path:";
     private static final String KIND_TITLE = "Kind of yaml:";
 
     private static final int TEXT_FIELD_WIDTH = 100;
     private static final int LABEL_WIDTH = 12;
+    
+    // Names of kinds of files
+    public static final String MANIFEST = "Manifest";
+    public static final String DATA = "Data";
+    public static final String MODEL = "Model";
 
     private Shell shell;
 
@@ -131,6 +132,7 @@ public class DataPropertyPage extends PropertyPage {
 		getApplyButton().setText("Save to file");
 		getDefaultsButton().setText("Discard changes");
 	}
+	
 	
     /**
      * @see PreferencePage#createContents(Composite)
@@ -198,9 +200,9 @@ public class DataPropertyPage extends PropertyPage {
 
         kindCombo = new Combo(kindComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
         kindCombo.add("");
-        kindCombo.add("Manifest");
-        kindCombo.add("Data");
-        kindCombo.add("Model");
+        kindCombo.add(MANIFEST);
+        kindCombo.add(DATA);
+        kindCombo.add(MODEL);
         kindCombo.select(0);
         if (kind != null) kindCombo.setText(kind);
         kindCombo.addSelectionListener(
@@ -209,7 +211,7 @@ public class DataPropertyPage extends PropertyPage {
                     @Override
                     public void widgetSelected(SelectionEvent e) {
                         int k = kindCombo.getSelectionIndex();
-                        String kind = kindCombo.getItems()[k];
+                        String kind = kindCombo.getItem(k);
 
                         if (currentSubcomposite != null) currentSubcomposite.dispose();
 
@@ -237,13 +239,13 @@ public class DataPropertyPage extends PropertyPage {
                 subcomp = addComposite(parent, 1);
                 addLabel(subcomp, "Choose a kind of yaml file", 30);
                 break;
-            case "Manifest":
+            case MANIFEST:
                 subcomp = addManifestComposite(parent);
                 break;
-            case "Data":
+            case DATA:
                 subcomp = addDataComposite(parent);
                 break;
-            case "Model":
+            case MODEL:
                 subcomp = addModelComposite(parent);
                 break;
         }
@@ -256,9 +258,9 @@ public class DataPropertyPage extends PropertyPage {
         addSeparator(subcomp);
 
         final var subComposite = addComposite(subcomp, 3);
-        addContentSection(subComposite, "model-graphs", "Manifest");
-        addContentSection(subComposite, "data-graphs", "Manifest");
-        addContentSection(subComposite, "nodegroups", "Manifest");
+        addContentSection(subComposite, "model-graphs", MANIFEST);
+        addContentSection(subComposite, "data-graphs", MANIFEST);
+        addContentSection(subComposite, "nodegroups", MANIFEST);
 
         addManifestStepsSection(subcomp);
         return subcomp;
@@ -272,8 +274,8 @@ public class DataPropertyPage extends PropertyPage {
         Text t = addText(dg, value == null ? "" : value, TEXT_FIELD_WIDTH);
         yamlWidgets.put("data-graph", t);
         var cc = addCompositeUnequal(subcomp, 2);
-        addContentSection(cc, "extra-data-graphs", "Data");
-        addContentSection(cc, "model-graphs", "Data");
+        addContentSection(cc, "extra-data-graphs", DATA);
+        addContentSection(cc, "model-graphs", DATA);
         makeIngestionStepsComposite(subcomp);
         return subcomp;
     }
@@ -281,8 +283,8 @@ public class DataPropertyPage extends PropertyPage {
     public Composite addModelComposite(Composite parent) {
         var subcomp = addComposite(parent, 1);
         var dg = addCompositeUnequal(subcomp, 2);
-        addContentSection(dg, "files", "Model");
-        addContentSection(dg, "model-graphs", "Model");
+        addContentSection(dg, "files", MODEL);
+        addContentSection(dg, "model-graphs", MODEL);
         return subcomp;
     }
 
@@ -333,7 +335,7 @@ public class DataPropertyPage extends PropertyPage {
     public void addManifestStepsSection(Composite parent) {
         var comp = addCompositeUnequal(parent, 2);
         ((GridData) comp.getLayoutData()).grabExcessVerticalSpace = true;
-        ((GridData) comp.getLayoutData()).minimumHeight = convertHeightInCharsToPixels(50);
+        ((GridData) comp.getLayoutData()).minimumHeight = convertHeightInCharsToPixels(15);
 
         java.util.List<ManifestStepWidget> widgetList = new java.util.LinkedList<>();
         addLabel(comp, "Steps:", 12);
@@ -385,7 +387,6 @@ public class DataPropertyPage extends PropertyPage {
                                 widgetList.add(new ManifestStepWidget("manifest", t));
                                 break;
                             case 5:
-                                // FIXME - this needs improvement - from and to labels
                                 addLabel(comp, "copygraph:", 12);
                                 var sc = addCompositeUnequal(comp, 4);
                                 addLabel(sc, "from:", 4);
@@ -519,7 +520,7 @@ public class DataPropertyPage extends PropertyPage {
         yamlWidgets.put(sectionName, list);
 
         switch (kind) {
-            case "Manifest":
+            case MANIFEST:
                 if (yamlMap.containsKey("footprint")) {
 
                     Object oFootprint = yamlMap.get("footprint");
@@ -536,7 +537,7 @@ public class DataPropertyPage extends PropertyPage {
                     yamlWidgets.put("footprint:" + sectionName, list);
                 }
                 break;
-            case "Model":
+            case MODEL:
                 // The model-graphs section is optional
                 if (sectionName.equals("files")) {
                     if (yamlMap.containsKey(sectionName)) {
@@ -557,7 +558,7 @@ public class DataPropertyPage extends PropertyPage {
                     yamlWidgets.put(sectionName, list);
                 }
                 break;
-            case "Data":
+            case DATA:
                 // These sections are optional
                 if (sectionName.equals("extra-data-graphs") || sectionName.equals("model-graphs")) {
                     if (yamlMap.containsKey(sectionName)) {
@@ -688,10 +689,9 @@ public class DataPropertyPage extends PropertyPage {
                         widgetSelected(e);
                     }
                 });
-        final Button editButton = new Button(buttonComposite, SWT.PUSH);
-        editButton.setText("Edit");
         final Button removeButton = new Button(buttonComposite, SWT.PUSH);
         removeButton.setText("Remove");
+        addLabel(buttonComposite, "Text fields may be edited in place", 35);
 
         var array = (List) yamlMap.get("ingestion-steps");
         if (array != null)
@@ -720,11 +720,11 @@ public class DataPropertyPage extends PropertyPage {
                         			name, creator, nodegroup_json, comment);
                             continue;
                         }
-                        if (item.get("count") instanceof Integer count
+                        if (item.get("count") instanceof String count
                                 && item.get("nodegroup") instanceof String nodegroup) {
                         	java.util.List<String> constraints = (List<String>)item.get("constraints"); // optional - may be null
                         	makeNodegroupConstraintsComposite(ingestionStepsWidgets, stepsComposite,
-                        			count, nodegroup, constraints);
+                        			Integer.valueOf(count), nodegroup, constraints);
                             continue;
                         }
                         MessageDialog.openInformation(
@@ -889,9 +889,9 @@ public class DataPropertyPage extends PropertyPage {
 
     // Return null, "Manifest", "Data", "Model", or "" if unknown
     public static String autoDetectYamlKind(Map<String, Object> yamlMap) {
-        if (yamlMap.get("ingestion-steps") != null) return "Data";
-        if (yamlMap.get("footprint") != null) return "Manifest";
-        if (yamlMap.get("files") != null) return "Model";
+        if (yamlMap.get("ingestion-steps") != null) return DATA;
+        if (yamlMap.get("footprint") != null) return MANIFEST;
+        if (yamlMap.get("files") != null) return MODEL;
         return "";
     }
 
@@ -1041,11 +1041,14 @@ public class DataPropertyPage extends PropertyPage {
     	// FIXME - this is not refreshing
         var kind = autoDetectYamlKind(yamlMap);
         var parent = currentSubcomposite.getParent();
+        if (currentSubcomposite != null) currentSubcomposite.dispose();
         currentSubcomposite = addKindSubcomposite(parent, kind);
+        pathText.setText(((IResource) getElement()).getFullPath().toString());
         parent.layout(true, true);
         super.performDefaults();
     }
 
+    /** This is called for both the 'Save to file' button and the 'Apply & Close' button */
     public boolean performOk() {
         String newPath = null;
         try {
@@ -1062,6 +1065,13 @@ public class DataPropertyPage extends PropertyPage {
                 outFile = root.getFile(p);
             }
 
+            var diffs = validate();
+            if (diffs != null && !diffs.isEmpty()) {
+            	var ok = MessageDialog.openConfirm(shell,  "",
+            			"The edited yaml content has some errors. Save the content anyway?\n\n" + diffs);
+            	if (!ok) return false;
+            }
+
             var outYaml = collectYaml();
 
             if (outFile.exists() && isNewFile) {
@@ -1074,7 +1084,8 @@ public class DataPropertyPage extends PropertyPage {
             writeYaml(outFile, outYaml);
 
         } catch (Exception e) {
-            MessageDialog.openError(shell, "Error", "Failed to write to file " + newPath);
+            MessageDialog.openError(shell, "Error", "Failed to write to file " + newPath
+            		+ "\n" + e.getMessage());
             RackConsole.getConsole().error(e.toString());
         }
         // FIXME - should we call super.performOK()?
@@ -1086,13 +1097,13 @@ public class DataPropertyPage extends PropertyPage {
         int k = kindCombo.getSelectionIndex();
         String kind = kindCombo.getItems()[k];
         switch (kind) {
-            case "Manifest":
+            case MANIFEST:
                 collectManifestYaml(yaml);
                 break;
-            case "Data":
+            case DATA:
                 collectDataYaml(yaml);
                 break;
-            case "Model":
+            case MODEL:
                 collectModelYaml(yaml);
                 break;
             default:
@@ -1232,5 +1243,74 @@ public class DataPropertyPage extends PropertyPage {
 
     public void collectModelYaml(Map<String, Object> yaml) {
         collectYaml(yaml, modelKeys);
+    }
+    
+    public String validate() {
+        String newPath = pathText.getText();
+        IPath p = new Path(newPath);
+        IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+        IContainer outDir = root.getFile(p).getParent();
+        
+
+    	int k = kindCombo.getSelectionIndex();
+    	String kind = kindCombo.getItems()[k];
+    	switch (kind) {
+    	case MANIFEST: return validateManifest();
+    	case MODEL: return validateModel(outDir);
+    	case DATA: return validateData();
+    	}
+    	return "No such kind of yaml file: " + kind + "\n";
+    }
+    
+    public String validateManifest() {
+    	// FIXME - to do
+    	return "";
+    }
+    
+    public String validateModel(IContainer outDir) {
+    	String diffs = "";
+    	var list = (org.eclipse.swt.widgets.List)yamlWidgets.get("files");
+    	if (list != null) for (int k = 0; k < list.getItemCount(); k++) {
+    		var text = list.getItem(k);
+    		diffs += okFile(text, outDir);
+    	} else {
+    		diffs += "Required element 'files' is not present\n";
+    	}
+    	list = (org.eclipse.swt.widgets.List)yamlWidgets.get("model-graphs");
+    	if (list != null) for (int k = 0; k < list.getItemCount(); k++) {
+    		var text = list.getItem(k);
+    		diffs += okFile(text, outDir);
+    	}
+    	// FIXME - check for unexpected keys?
+    	return diffs;
+    }
+    
+    public String validateData() {
+    	// FIXME - to do
+    	return "";
+    }
+    
+    public String okFile(String text, IContainer outDir) {
+    	try {
+    		// Check if the text is a path in the workspace
+    		IPath p = new Path(text);
+    		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+    		if (outDir.getFile(p).exists()) return "";
+    		if (root.getFile(p).exists()) return "";
+
+    		// Check if the text is a file in the local file system
+    		// If it is local, it should be to the location of the yaml file it is in
+    		// FIXME - fix the relative reference
+    		if (new java.io.File(text).exists()) return "";
+
+    		// Check if the text is a valid URL
+    		URL u = new URL(text); 
+    		HttpURLConnection huc =  (HttpURLConnection)  u.openConnection();
+    		huc.setRequestMethod("HEAD");
+    		if (huc.getResponseCode() == HttpURLConnection.HTTP_OK) return "";
+    	} catch (Exception e) {
+    		return e.getMessage() + "\n";
+    	}
+        return "File or URL " + text + " does not exist\n";
     }
 }
