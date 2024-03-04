@@ -182,6 +182,15 @@ public class RackManifestIngestionBuilderUtil {
 
         Map<String, Object> oModelYamlMap =
                 (Map<String, Object>) readYaml(modelYamlFilepath.toString());
+        
+        if(((Map) oModelYamlMap).containsKey("model-graph")){
+ 		   Object modelgraph = ((Map) oModelYamlMap).get("model-graph");
+ 		   if(modelgraph != null && modelgraph instanceof String) {
+ 			    String mGraphVersioned = modelgraph + version;
+ 			    // update 
+ 			    ((Map) oModelYamlMap).put("model-graph", mGraphVersioned);
+ 		   }
+ 	   }
 
         List<String> loFiles = (List<String>) oModelYamlMap.get(FILES);
 
@@ -211,6 +220,14 @@ public class RackManifestIngestionBuilderUtil {
         Map<String, Object> oDataYamlMap =
                 (Map<String, Object>) readYaml(dataYamlFilepath.toString());
 
+        if(((Map) oDataYamlMap).containsKey("data-graph")){
+ 		   Object datagraph = ((Map) oDataYamlMap).get("data-graph");
+ 		   if(datagraph != null && datagraph instanceof String) {
+ 			    String dGraphVersioned = datagraph + version;
+ 			    // update 
+ 			    ((Map) oDataYamlMap).put("data-graph", dGraphVersioned);
+ 		   }
+ 	   }
         List<Map<String, String>> loIngestionSteps =
                 (List<Map<String, String>>) oDataYamlMap.get(INGESTION_STEPS);
 
@@ -334,7 +351,23 @@ public class RackManifestIngestionBuilderUtil {
            
            else {
         	   // TODO: non-toplevel manifest, either contains a data step or model step - rewrite
-        	 
+        	   if(((Map) oManifestYamlMap).containsKey("data-graph")){
+        		   Object datagraph = ((Map) oManifestYamlMap).get("data-graph");
+        		   if(datagraph != null && datagraph instanceof String) {
+        			    String dGraphVersioned = datagraph + version;
+        			    // update 
+        			    ((Map) oManifestYamlMap).put("data-graph", dGraphVersioned);
+        		   }
+        	   }
+        	   
+        	   if(((Map) oManifestYamlMap).containsKey("model-graph")){
+        		   Object modelgraph = ((Map) oManifestYamlMap).get("model-graph");
+        		   if(modelgraph != null && modelgraph instanceof String) {
+        			    String mGraphVersioned = modelgraph + version;
+        			    // update 
+        			    ((Map) oManifestYamlMap).put("model-graph", mGraphVersioned);
+        		   }
+        	   }
            }
         }
         
