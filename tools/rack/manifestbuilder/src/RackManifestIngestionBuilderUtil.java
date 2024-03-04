@@ -328,7 +328,8 @@ public class RackManifestIngestionBuilderUtil {
       				    for(String modelgraph : mGraphs) {
       				        mGraphsVersioned.add(modelgraph + version);	
       				    }
-      				    ((Map)oFootprint).put("model-graphs", mGraphsVersioned);
+      				    //TODO: re-visit re-writing model graphs
+      				    //  ((Map)oFootprint).put("model-graphs", mGraphsVersioned);
       			   }
       		   }
         		   
@@ -364,8 +365,8 @@ public class RackManifestIngestionBuilderUtil {
         		   Object modelgraph = ((Map) oManifestYamlMap).get("model-graph");
         		   if(modelgraph != null && modelgraph instanceof String) {
         			    String mGraphVersioned = modelgraph + version;
-        			    // update 
-        			    ((Map) oManifestYamlMap).put("model-graph", mGraphVersioned);
+        			    // TODO: re-visit rewriting model graphs 
+        			   // ((Map) oManifestYamlMap).put("model-graph", mGraphVersioned);
         		   }
         	   }
            }
