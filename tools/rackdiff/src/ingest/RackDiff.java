@@ -32,7 +32,65 @@ public class RackDiff {
 
         List<String> classUris = OntologyUtil.getClassNames();
         List<String> classNames = new ArrayList<>();
-        for (String classUri : classUris) {
+        
+        //custom classuris (specific to ingestion package)
+        
+        List<String> customClassUris = Arrays.asList(
+        	  "http://arcos.rack/SAFETY-SECURITY#THREAT",
+        	   "http://arcos.rack/SAFETY-SECURITY#CONTROL",
+        		"http://arcos.rack/PROV-S#ENTITY",
+        		"http://arcos.rack/CLAIM#THEORY",
+        		"http://arcos.rack/CLAIM#CONCERN_TYPE",
+        		"http://arcos.rack/PROCESS#PROPERTY_TYPE",
+        		"http://arcos.rack/PROV-S#ACTIVITY",
+        		"http://arcos.rack/ANALYSIS#ANALYSIS",
+        		"http://arcos.rack/SAFETY-SECURITY#ARCHITECTURE_TOUCHPOINTS",
+        		"http://arcos.rack/SAFETY-SECURITY#ATTACK_ACCESS_VECTORS",
+        		"http://arcos.rack/SAFETY-SECURITY#ATTACKER",
+        		"http://arcos.rack/SAFETY-SECURITY#ATTACK",
+        		"http://arcos.rack/CLAIM#CLAIM",
+        		"http://arcos.descert/SRI#ClearNotation",
+        		"http://arcos.rack/CLAIM#CONCERN",
+        		"http://arcos.rack/SAFETY-SECURITY#DATA_FLOW",
+        		"http://arcos.rack/CLAIM#DECISION_PROPERTY_RESULT",
+        		"http://arcos.descert/SRI#DesCert_Tool",
+        		"http://arcos.AH-64D/Boeing#DevelopSystemArchitecture",
+        		"http://arcos.AH-64D/Boeing#DevelopSystemConOps",
+        		"http://arcos.rack/DOCUMENT#DOCUMENT",
+        		"http://arcos.rack/CLAIM#ENVIRONMENT_RANGE",
+        		"http://arcos.rack/SAFETY-SECURITY#EXPLOITATION",
+        		"http://arcos.rack/FILE#FILE",
+        		"http://arcos.rack/SYSTEM#FUNCTION",
+        		"http://arcos.rack/PROCESS#PROPERTY",
+        		"http://arcos.rack/SAFETY-SECURITY#HWCOMPONENT_SS",
+        		"http://arcos.rack/AGENTS#ORGANIZATION",
+        		"http://arcos.rack/AGENTS#PERSON",
+        		"http://arcos.rack/SAFETY-SECURITY#PHYSICAL_INTERFACE",
+        		"http://arcos.rack/SAFETY-SECURITY#PORT",
+        		"http://arcos.descert/SRI#RadlArchitectureModel",
+        		"http://arcos.descert/SRI#RadlerArchitectureAnalysis",
+        		"http://arcos.descert/SRI#RadlNotation",
+        		"http://arcos.rack/CLAIM#COVERAGE_PROPERTY_RESULT",
+        		"http://arcos.rack/SAFETY-SECURITY#SAFETY_ACCIDENT",
+        		"http://arcos.descert/SRI#SallyModelChecking",
+        		"http://arcos.descert/SRI#SallyNotation",
+        		"http://arcos.rack/SAFETY-SECURITY#SECURITY_ENCLAVE",
+        		"http://arcos.rack/SAFETY-SECURITY#SECURITY_PERIMETER",
+        		"http://arcos.rack/SAFETY-SECURITY#SECURITY_VIOLATION",
+        		"http://arcos.rack/SAFETY-SECURITY#SWCOMPONENT_SS",
+        		"http://arcos.AH-64D/Boeing#SoftwareHighLevelRequirementsDefinition",
+        		"http://arcos.descert/SRI#SoftwareHighLevelRequirementSet",
+        		"http://arcos.AH-64D/Boeing#SystemArchitecture",
+        		"http://arcos.AH-64D/Boeing#SystemConOps",
+        		"http://arcos.rack/SYSTEM#SYSTEM",
+        		"http://arcos.rack/SAFETY-SECURITY#THREAT_CONDITION",
+        		"http://arcos.descert/SRI#ToolConfigurationInstance",
+        		"http://arcos.rack/SAFETY-SECURITY#VIRTUAL_CHANNEL",
+        		"http://arcos.rack/SAFETY-SECURITY#VULNERABILITY"
+);
+        
+        
+        for (String classUri : customClassUris) {
             // System.out.print(classUri);
             String className =
                     OntologyUtil.getoInfo()
