@@ -274,13 +274,13 @@ public class RackDiff {
         // emit the diff
         String diff = "{\n\"additions\":\n[";
         for(String addition  : additions) {
-        	diff += "\n\"" + addition + "\"\n";  
+        	diff += "\n\"" + addition + "\",\n";  
         }
         diff += "\n]\n";
         //diff += additions.toString();
         diff += ",\n\"deletions\":\n[";
         for(String deletion  : deletions) {
-        	diff += "\n\"" + deletion + "\"\n";  
+        	diff += "\n\"" + deletion + "\",\n";  
         }
         diff += "\n]\n";
         diff += ",\n\"modifications\":\n[";
@@ -295,8 +295,16 @@ public class RackDiff {
         }
         
         diff += "\n]\n}";
-        System.out.println(diff);
+        System.out.println(diff); 
         
+		copyGraph("http://rack002/datav22", "http://rack002/datav33");
+		
+	}
+	
+	public static void copyGraph(String sourceGraph, String targetGraph) throws Exception{
+		NodeGroupExecutionClient client = ConnectionUtil.getNGEClient();
+		String status = client.copyGraph("http://localhost:3030/RACK", "fuseki", sourceGraph, "http://localhost:3030/RACK", "fuseki", targetGraph);
+		System.out.println(status);
 	}
 
 	public static String getDefaultModelGraph() {
@@ -714,6 +722,7 @@ public class RackDiff {
 			final String jsonstr = FileUtils.readFileToString(ngJson, Charset.defaultCharset());
 			SparqlGraphJson json = new SparqlGraphJson(jsonstr);
 			NodeGroupStoreRestClient ngClient = ConnectionUtil.getNGSClient();
+		
 			SparqlConnection conn = ConnectionUtil.getSparqlConnection();
 			json.setSparqlConn(conn);
 			final SparqlGraphJson json2 = json;
