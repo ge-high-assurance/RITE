@@ -3,14 +3,19 @@ package ingest;
 import com.ge.research.semtk.api.nodeGroupExecution.client.NodeGroupExecutionClient;
 import com.ge.research.semtk.load.utility.SparqlGraphJson;
 import com.ge.research.semtk.nodeGroupStore.client.NodeGroupStoreRestClient;
+import com.ge.research.semtk.resultSet.TableResultSet;
 import com.ge.research.semtk.sparqlX.SparqlConnection;
 import com.ge.research.semtk.sparqlX.client.SparqlQueryClient;
 import com.opencsv.CSVReader;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,21 +27,61 @@ import org.yaml.snakeyaml.Yaml;
 import org.zeroturnaround.exec.ProcessExecutor;
 
 public class RackDiff {
+	
 	public static void main(String args[]) throws Exception{
 
-        String sourceDataGraph = args[0];
-        String targetDataGraph = args[1];
+		TableResultSet graphInfo = ConnectionUtil.getGraphInfo();
+        
+		int numGraphs = graphInfo.getResults().getNumRows();
+		boolean diffNeeded = false;
+		for(int i = 0; i < numGraphs; i++) {
+			String graph = graphInfo.getResults().getCell(i, "graph"); 
+			if(graph.contains("data")) {
+				String triples = graphInfo.getResults().getCell(i, "triples");
+				if(Integer.parseInt(triples) > 0) {
+					diffNeeded = true;
+					break;
+				}
+			}
+		}
+		
+		
+		String manifestPath = args[0];
+		Path modifiedIngestionZip = Files.createTempFile("rack-ingestion-package", ".zip");
+	    
+		RackManifestIngestionBuilderUtil.version = "v2";
+		//expect no errors here
+		BuildManifest.zipIt((new File(manifestPath)).toPath(), modifiedIngestionZip);
+		
+		//ingest new zip file
+		String ingestionErrors = runCMD0("rack manifest import --clear " + modifiedIngestionZip.toAbsolutePath());
+		
+		if(!ingestionErrors.isEmpty()) {
+			//failed ingestion
+			return;
+		}
+		
+		String sourceDataGraph = "http://rack002/data";
+        String targetDataGraph = "http://rack002/datav2";
 
-        List<String> classUris = OntologyUtil.getClassNames();
+		//check triples on sourceDataGraph (if none then ignore diff)
+		
+		if(!diffNeeded) {
+			copyGraph(targetDataGraph, sourceDataGraph);
+			return;
+		}
+			
+	   // List<String> classUris = OntologyUtil.getClassNames();
         List<String> classNames = new ArrayList<>();
         
         List<String> additions = new ArrayList<>();
         List<String> deletions = new ArrayList<>();
         List<Map<String, String>> modifications = new ArrayList<>();
         
+        List<String> customClassUris = RackManifestIngestionBuilderUtil.classUris;
         
         //custom classuris (specific to ingestion package)
-        List<String> customClassUris = Arrays.asList(
+       /* List<String> customClassUris = Arrays.asList(
         	  "http://arcos.rack/SAFETY-SECURITY#THREAT",
         	   "http://arcos.rack/SAFETY-SECURITY#CONTROL",
         		"http://arcos.rack/PROV-S#ENTITY",
@@ -88,7 +133,7 @@ public class RackDiff {
         		"http://arcos.descert/SRI#ToolConfigurationInstance",
         		"http://arcos.rack/SAFETY-SECURITY#VIRTUAL_CHANNEL",
         		"http://arcos.rack/SAFETY-SECURITY#VULNERABILITY"
-);
+);*/
         
         
         for (String classUri : customClassUris) {
@@ -297,14 +342,41 @@ public class RackDiff {
         diff += "\n]\n}";
         System.out.println(diff); 
         
-		copyGraph("http://rack002/datav22", "http://rack002/datav33");
+        ConnectionUtil.getDataGraphClient(sourceDataGraph).dropGraph();
+        copyGraph(targetDataGraph, sourceDataGraph);
+		
 		
 	}
+	
+	 private static String runCMD0(String cmd0) {
+		    Runtime run = Runtime.getRuntime();
+		    String resCMD = null;
+		    String error = "";
+		    try {
+		      String[] cmd = new String[]{"bash", "-l", "-c", cmd0};
+		      Process pr = run.exec(cmd);
+		      pr.waitFor();
+		      BufferedReader stdInput = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+		      String rline = null;
+		      while ((rline = stdInput.readLine()) != null) {
+		        System.out.println(rline);
+		        if (rline != null && rline.contains("FAIL")) {
+		          error += "\n" + rline;
+		        }
+		      }
+
+		    } catch (Exception ex) {
+		      ex.printStackTrace();
+		    }
+		    return error;
+		  }
+		
 	
 	public static void copyGraph(String sourceGraph, String targetGraph) throws Exception{
 		NodeGroupExecutionClient client = ConnectionUtil.getNGEClient();
 		String status = client.copyGraph("http://localhost:3030/RACK", "fuseki", sourceGraph, "http://localhost:3030/RACK", "fuseki", targetGraph);
-		System.out.println(status);
+		ConnectionUtil.getDataGraphClient(sourceGraph).dropGraph();
+        System.out.println(status);
 	}
 
 	public static String getDefaultModelGraph() {
