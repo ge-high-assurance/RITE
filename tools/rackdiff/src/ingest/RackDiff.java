@@ -24,17 +24,18 @@ import org.zeroturnaround.exec.ProcessExecutor;
 public class RackDiff {
 	public static void main(String args[]) throws Exception{
 
-
-          // IngestionTemplateUtil.buildCsvTemplates();
-       
         String sourceDataGraph = args[0];
         String targetDataGraph = args[1];
 
         List<String> classUris = OntologyUtil.getClassNames();
         List<String> classNames = new ArrayList<>();
         
-        //custom classuris (specific to ingestion package)
+        List<String> additions = new ArrayList<>();
+        List<String> deletions = new ArrayList<>();
+        List<Map<String, String>> modifications = new ArrayList<>();
         
+        
+        //custom classuris (specific to ingestion package)
         List<String> customClassUris = Arrays.asList(
         	  "http://arcos.rack/SAFETY-SECURITY#THREAT",
         	   "http://arcos.rack/SAFETY-SECURITY#CONTROL",
@@ -91,25 +92,20 @@ public class RackDiff {
         
         
         for (String classUri : customClassUris) {
-            // System.out.print(classUri);
             String className =
                     OntologyUtil.getoInfo()
                             .getClass(classUri)
                             .getNameString(true);
             classNames.add(className);
-            // System.out.print(className);
         
         String queryPrefix =
                 "prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"
                         + "prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>\n"
                         + "prefix PROV_S:<http://arcos.rack/PROV-S#>\n";
-        //queryPrefix += "prefix PROCESS:<http://arcos.rack/PROCESS#>\n";
-        //queryPrefix += "prefix DOCUMENT:<http://arcos.rack/DOCUMENT#>\n";
-
+      
         String querySelect =
                 "select distinct ?s ?sid ?p ?o ?oid FROM " + "<" + sourceDataGraph  + ">"+ "\n"
                         + "WHERE { ?s a"
-                        //+ " <http://arcos.rack/DOCUMENT#SPECIFICATION>.\n"
                         + "<" + classUri + ">" + ".\n"
                         + "	                ?s ?p ?o.\n"
                         + "minus { ?s PROV_S:identifier ?o } .\n"
@@ -122,7 +118,6 @@ public class RackDiff {
         String querySelectV2 =
                 "select distinct ?s ?sid ?p ?o ?oid FROM " +  "<" + targetDataGraph + ">" + "\n"
                         + "WHERE { ?s a"
-                        //+ " <http://arcos.rack/DOCUMENT#SPECIFICATION>.\n"
                         + "<" + classUri + ">" + ".\n" 
                         + "	                ?s ?p ?o.\n"
                         + "minus { ?s PROV_S:identifier ?o } .\n"
@@ -155,9 +150,6 @@ public class RackDiff {
         com.ge.research.semtk.resultSet.Table resultsV2 =
                 client.dispatchRawSparql(queryV2, connV2);
 
-        int a = 0;
-        a++;
-
         resultsV1.sortByColumnStr("sid");
         resultsV2.sortByColumnStr("sid");
 
@@ -166,13 +158,10 @@ public class RackDiff {
         int numRowsV1 = resultsV1.getNumRows();
         int numRowsV2 = resultsV2.getNumRows();
         
-        int prevV1 = headV1;
-        int prevV2 = headV2;
+        
         
         while (headV1 < numRowsV1
                 && headV2 < numRowsV2) {
-        	
-        	
         	
             String subjectV1 = resultsV1.getCell(headV1, "sid");
             String subjectV2 = resultsV2.getCell(headV2, "sid");
@@ -181,16 +170,23 @@ public class RackDiff {
             String predicateV2 = resultsV2.getCell(headV2, "p");
 
             String objectV1 = resultsV1.getCell(headV1, "o");
+            if(objectV1.contains("uri://semtk")) {
+            	objectV1 = resultsV1.getCell(headV1, "oid");
+            }
+            
             String objectV2 = resultsV2.getCell(headV2, "o");
-
+            
+            if(objectV2.contains("uri://semtk")) {
+            	objectV2 = resultsV2.getCell(headV2, "oid");
+            }
+            
             int comparison = subjectV1.compareTo(subjectV2);
 
             Triple tripleV1 = new Triple(subjectV1, predicateV1, objectV1);
             Triple tripleV2 = new Triple(subjectV2, predicateV2, objectV2);
-
+            
             if (comparison == 0) {
                 // check for diff
-
                 if (objectV1.contains("uri://semtk")
                         && objectV2.contains("uri://semtk")) {
                     headV1++;
@@ -199,48 +195,6 @@ public class RackDiff {
                 }
 
                 if (!objectV1.equals(objectV2)) {
-                	/*
-                    String sCSV =
-                            "identifier,previousVersion_identifier,obsolete\n"
-                                    + subjectV2
-                                    + "_V2"
-                                    + ","
-                                    + subjectV1
-                                    + ","
-                                    + "false"
-                                    + "\n";
-                    client.dispatchIngestFromCsvStringsByClassTemplateSync(
-                            "http://arcos.rack/DOCUMENT#SPECIFICATION",
-                            "identifier",
-                            sCSV,
-                            connV2);
-
-                    sCSV =
-                            "identifier,modifiedPropertiesFromPreviousVersion\n"
-                                    + subjectV2
-                                    + "_V2"
-                                    + ","
-                                    + "title"
-                                    + "\n";
-                    client.dispatchIngestFromCsvStringsByClassTemplateSync(
-                            "http://arcos.rack/DOCUMENT#SPECIFICATION",
-                            "identifier",
-                            sCSV,
-                            connV2);
-
-                    sCSV =
-                            "identifier,modifiedPropertiesFromPreviousVersion\n"
-                                    + subjectV2
-                                    + "_V2"
-                                    + ","
-                                    + "description"
-                                    + "\n";
-                    client.dispatchIngestFromCsvStringsByClassTemplateSync(
-                            "http://arcos.rack/DOCUMENT#SPECIFICATION",
-                            "identifier",
-                            sCSV,
-                            connV2);
-                 */
                     System.out
                             .println(
                                     "Diff found"
@@ -248,9 +202,16 @@ public class RackDiff {
                                             + tripleV1.toString()
                                             + "\nV2:"
                                             + tripleV2.toString());
-                   // return;
                     
-                }
+                    // modifications
+                    
+                    Map<String,String> mod = new HashMap<>();
+                    mod.put("before", tripleV1.toString());
+                    mod.put("after",  tripleV2.toString());
+                    
+                    modifications.add(mod);
+                    
+                   }
 
                 headV1++;
                 headV2++;
@@ -259,89 +220,83 @@ public class RackDiff {
             if (comparison < 0) {
                 System.out
                         .println("\nDeleted in V2: " + tripleV1.toString());
+                deletions.add(tripleV1.toString());
                 headV1++;
             }
 
             if (comparison > 0) {
                 System.out
                         .println("\nCreated in V2: " + tripleV2.toString());
+                additions.add(tripleV2.toString());
                 headV2++;
             }
             
-            
-            if(headV1 == prevV1 && headV2 == prevV2) {
-        	     int ba = 0;
-        	     ba++;
-        	     System.out.println("BUGGGG: " + classUri);
-        	     return;
-        	     
-        	}
-            
-            prevV1 = headV1;
-            prevV2 = headV2;
-            
-             
-            
-            System.out.println(classUri + ", v1: " + headV1  +",numV1: " + numRowsV1 + ",v2: " + headV2 + ",numV2:" + numRowsV2);
         }
 
-        /*
-         * for (String className : classUris) { NodeGroupExecutionClient client =
-         * ConnectionUtil.getNGEClient(); String nodegroupId =
-         * IngestionTemplateUtil.getIngestionNodegroupId(className); List<String>
-         * dataGraphsV1 = new ArrayList<String>(); dataGraphsV1.add(sourceDataGraph);
-         * SparqlConnection connV1 = ConnectionUtil.getSparqlConnection(
-         * RackPreferencePage.getDefaultModelGraph(), dataGraphsV1.get(0),
-         * dataGraphsV1); // run a query from the store by id
-         *
-         * com.ge.research.semtk.resultSet.Table resultsV1 =
-         * client.execDispatchSelectByIdToTable( nodegroupId, connV1, null, null);
-         *
-         * List<String> dataGraphsV2 = new ArrayList<String>();
-         * dataGraphsV2.add(targetDataGraph); SparqlConnection connV2 =
-         * ConnectionUtil.getSparqlConnection(
-         * RackPreferencePage.getDefaultModelGraph(), dataGraphsV2.get(0),
-         * dataGraphsV2); // run a query from the store by id
-         *
-         * com.ge.research.semtk.resultSet.Table resultsV2 =
-         * client.execDispatchSelectByIdToTable( nodegroupId, connV2, null, null);
-         *
-         * resultsV1.sortByColumnStr("identifier"); // diff here if
-         * (resultsV1.getNumRows() > 0 && resultsV2.getNumRows() > 0) { for (int i = 0;
-         * i < resultsV1.getNumRows(); i++) { for (int j = 0; j <
-         * resultsV2.getNumRows(); j++) { List<String> sourceRow = resultsV1.getRow(i);
-         * List<String> targetRow = resultsV2.getRow(j); if
-         * (!sourceRow.get(0).equals(targetRow.get(0))) { continue; } String csvTemplate
-         * = IngestionTemplateUtil.csvTemplates.get( nodegroupId); List<String>
-         * templateHeader = Arrays.asList(csvTemplate.split(","));
-         *
-         * int index = 0; boolean sameEntry = true;
-         *
-         * for (String entry : templateHeader) { if (entry.equals("identifier")) { //
-         * compare against all identifier fields if (!sourceRow .get(index)
-         * .equals(targetRow.get(index))) { sameEntry = false; break; } } index++; }
-         *
-         * if (sameEntry == false) { continue; }
-         *
-         * // we are now comparing same entry
-         *
-         * if (sourceRow.size() != targetRow.size()) { System.out .print(
-         * "Diff size: " + sourceRow.toString() + " ** " + targetRow.toString());
-         * continue; }
-         *
-         * for (int column = 0; column < sourceRow.size(); column++) { if (!sourceRow
-         * .get(column) .equals(targetRow.get(column))) { // diff found
-         * System.out.print("Diff found!"); System.out
-         * .print(sourceRow.toString()); System.out
-         * .print(targetRow.toString()); } } } } } // mainComposite.getShell().close();
-         * }
-         */
+        while(headV1 < numRowsV1) {
+        	//deleted triples
+        	
+        	String subjectV1 = resultsV1.getCell(headV1, "sid");
+            String predicateV1 = resultsV1.getCell(headV1, "p");
+            String objectV1 = resultsV1.getCell(headV1, "o");
+           
+            if(objectV1.contains("uri://semtk")) {
+            	objectV1 = resultsV1.getCell(headV1, "oid");
+            }
+            
+            Triple tripleV1 = new Triple(subjectV1, predicateV1, objectV1);
+            System.out.println("Deleted: " + tripleV1.toString());
+            deletions.add(tripleV1.toString());
+            headV1++;
+        }
+        
+        while(headV2 < numRowsV2) {
+        	//added triples
+        	
+            String subjectV2 = resultsV2.getCell(headV2, "sid");
+            String predicateV2 = resultsV2.getCell(headV2, "p");
+            String objectV2 = resultsV2.getCell(headV2, "o");
 
-       // mainComposite.getShell().close();
+            if(objectV2.contains("uri://semtk")) {
+            	objectV2 = resultsV2.getCell(headV2, "oid");
+            }
+            
+            Triple tripleV2 = new Triple(subjectV2, predicateV2, objectV2);
+            System.out.println("Added: " + tripleV2.toString());
+            additions.add(tripleV2.toString());
+            headV2++;
+        }
+        
         System.out.println("Done for " + classUri);
+        
     } 
     
-		
+        // emit the diff
+        String diff = "{\n\"additions\":\n[";
+        for(String addition  : additions) {
+        	diff += "\n\"" + addition + "\"\n";  
+        }
+        diff += "\n]\n";
+        //diff += additions.toString();
+        diff += ",\n\"deletions\":\n[";
+        for(String deletion  : deletions) {
+        	diff += "\n\"" + deletion + "\"\n";  
+        }
+        diff += "\n]\n";
+        diff += ",\n\"modifications\":\n[";
+        for(Map<String,String> mod : modifications) {
+        	  String sMod = "\n{";
+        	  sMod += "\"before\":";
+        	  sMod +=  "\"" + mod.get("before") + "\"" + "\n,";
+        	  sMod += "\"after\":";
+        	  sMod +=  "\"" + mod.get("after") + "\"" + "\n";
+        	  sMod += "},\n";
+        	  diff += sMod;
+        }
+        
+        diff += "\n]\n}";
+        System.out.println(diff);
+        
 	}
 
 	public static String getDefaultModelGraph() {
@@ -1028,13 +983,6 @@ public class RackDiff {
 		return IngestionStatus.DONE;
 	}
 	
-	private static boolean emptyRow(String [] entry) {
-		for(String e : entry) {
-			if(!e.trim().isEmpty()) {
-				return false;
-			}
-		}
-		return true;
-	}
+	
 
 }
