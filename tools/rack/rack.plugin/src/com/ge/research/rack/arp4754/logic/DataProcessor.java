@@ -56,6 +56,23 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
     public static String PLAN_DATA = "getDAP";
     public static String PLAN_DOCUMENT = "DOCUMENT";
+    public static String PLAN_REVIEW = "Review";
+    public static String PLAN_REQUIREMENT = "Requirement";
+
+    public static String PLAN_DERIVED_ITEM_REQ = "derivedItemRequirement";
+    public static String PLAN_DERIVED_SYS_REQ = "derivedSystemRequirement";
+    public static String PLAN_INTERFACE = "interface";
+    public static String PLAN_INTERFACE_INPUT = "interfaceInput";
+    public static String PLAN_ITERFACE_OUTPUT = "interfaceOutput";
+    public static String PLAN_ITEM = "item";
+    public static String PLAN_ITEM_REQ = "itemRequirement";
+    public static String PLAN_SYSTEM = "system";
+    public static String PLAN_SYSTEM_REQ = "systemRequirement";
+    public static String PLAN_SYSTEM_DESC = "systemDesignDescription";
+
+    public static String PLAN_ID_SUFFIX = "_id";
+    public static String PLAN_DESC_SUFFIX = "_desc";
+    public static String PLAN_URL_SUFFIX = "_url";
 
     /**
      * Class variables to store the raw data fetched from CSV files
@@ -142,8 +159,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
 
         // get all headers for the csv file
         String[] allCols =
-                CSVUtil.getColumnInfo(
-                        RackQueryUtils.createCsvFilePath(PLAN_DATA, rackDir));
+                CSVUtil.getColumnInfo(RackQueryUtils.createCsvFilePath(PLAN_DATA, rackDir));
 
         int planIdCol = CustomStringUtils.getCSVColumnIndex(allCols, "Plan_id");
         int sysIdCol = CustomStringUtils.getCSVColumnIndex(allCols, "System_id");
@@ -247,28 +263,25 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
      * which
      */
     private void createEvidenceObjects(String rackDir) {
-
         // ---- Create the element objects
         System.out.println("---- Creating Objects for SystemDesignDescription ----");
 
         String[] systemDesignDescriptionCols =
                 CSVUtil.getColumnInfo(
-                        RackQueryUtils.createCsvFilePath(
-                                config.get("systemDesignDescription"), rackDir));
+                        RackQueryUtils.createCsvFilePath(config.get(PLAN_SYSTEM_DESC), rackDir));
         int systemDesignDescriptionIdCol =
                 CustomStringUtils.getCSVColumnIndex(
-                        systemDesignDescriptionCols, config.get("systemDesignDescription") + "_id");
+                        systemDesignDescriptionCols, config.get(PLAN_SYSTEM_DESC) + PLAN_ID_SUFFIX);
 
         int systemDesignDescriptionURLCol =
                 CustomStringUtils.getCSVColumnIndex(
                         systemDesignDescriptionCols,
-                        config.get("systemDesignDescription") + "_url");
+                        config.get(PLAN_SYSTEM_DESC) + PLAN_URL_SUFFIX);
 
         for (String[] row : allSystemDesignDescription) {
-
             if ((systemDesignDescriptionIdCol >= 0) && row[systemDesignDescriptionIdCol] != null) {
                 Evidence newEvidenceObj = new Evidence();
-                newEvidenceObj.setType("Document");
+                newEvidenceObj.setType(PLAN_DOCUMENT);
                 newEvidenceObj.setId(row[systemDesignDescriptionIdCol]);
                 if ((systemDesignDescriptionURLCol >= 0)
                         && row[systemDesignDescriptionURLCol] != null) {
@@ -284,19 +297,19 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         String[] derivedItemReqCols =
                 CSVUtil.getColumnInfo(
                         RackQueryUtils.createCsvFilePath(
-                                config.get("derivedItemRequirement"), rackDir));
+                                config.get(PLAN_DERIVED_ITEM_REQ), rackDir));
         int derivedItemReqIdCol =
                 CustomStringUtils.getCSVColumnIndex(
-                        derivedItemReqCols, config.get("derivedItemRequirement") + "_id");
+                        derivedItemReqCols, config.get(PLAN_DERIVED_ITEM_REQ) + PLAN_ID_SUFFIX);
 
         int derivedItemReqDescCol =
                 CustomStringUtils.getCSVColumnIndex(
-                        derivedItemReqCols, config.get("derivedItemRequirement") + "_desc");
+                        derivedItemReqCols, config.get(PLAN_DERIVED_ITEM_REQ) + PLAN_DESC_SUFFIX);
 
         for (String[] row : allDerivedItemRequirement) {
             if ((derivedItemReqIdCol >= 0) && row[derivedItemReqIdCol] != null) {
                 Evidence newEvidenceObj = new Evidence();
-                newEvidenceObj.setType("Requirement");
+                newEvidenceObj.setType(PLAN_REQUIREMENT);
                 newEvidenceObj.setId(row[derivedItemReqIdCol]);
                 if ((derivedItemReqDescCol >= 0) && row[derivedItemReqDescCol] != null) {
                     newEvidenceObj.setDescription(row[derivedItemReqDescCol]);
@@ -310,20 +323,20 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         String[] derivedSystemReqCols =
                 CSVUtil.getColumnInfo(
                         RackQueryUtils.createCsvFilePath(
-                                config.get("derivedSystemRequirement"), rackDir));
+                                config.get(PLAN_DERIVED_SYS_REQ), rackDir));
         int derivedSystemReqIdCol =
                 CustomStringUtils.getCSVColumnIndex(
-                        derivedSystemReqCols, config.get("derivedSystemRequirement") + "_id");
+                        derivedSystemReqCols, config.get(PLAN_DERIVED_SYS_REQ) + PLAN_ID_SUFFIX);
 
         int derivedSystemReqDescCol =
                 CustomStringUtils.getCSVColumnIndex(
-                        derivedSystemReqCols, config.get("derivedSystemRequirement") + "_desc");
+                        derivedSystemReqCols, config.get(PLAN_DERIVED_SYS_REQ) + PLAN_DESC_SUFFIX);
 
         for (String[] row : allDerivedSystemRequirement) {
             if ((derivedSystemReqIdCol >= 0) && row[derivedSystemReqIdCol] != null) {
                 Evidence newEvidenceObj = new Evidence();
                 newEvidenceObj.setId(row[derivedSystemReqIdCol]);
-                newEvidenceObj.setType("Requirement");
+                newEvidenceObj.setType(PLAN_REQUIREMENT);
                 if ((derivedSystemReqDescCol >= 0) && row[derivedSystemReqDescCol] != null) {
                     newEvidenceObj.setDescription(row[derivedSystemReqDescCol]);
                 }
@@ -337,7 +350,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         for (String[] row : allInterface) {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
-            newEvidenceObj.setType("Interface");
+            newEvidenceObj.setType(PLAN_INTERFACE);
             Artifacts.getInterfaceObjs().add(newEvidenceObj);
             System.out.println("Created Object for " + newEvidenceObj.getId());
         }
@@ -347,7 +360,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         for (String[] row : allInterfaceInput) {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
-            newEvidenceObj.setType("InterfaceInput");
+            newEvidenceObj.setType(PLAN_INTERFACE_INPUT);
             Artifacts.getInterfaceInputObjs().add(newEvidenceObj);
             System.out.println("Created Object for " + newEvidenceObj.getId());
         }
@@ -357,7 +370,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         for (String[] row : allInterfaceOutput) {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
-            newEvidenceObj.setType("InterfaceOutput");
+            newEvidenceObj.setType(PLAN_ITERFACE_OUTPUT);
             Artifacts.getInterfaceOutputObjs().add(newEvidenceObj);
             System.out.println("Created Object for " + newEvidenceObj.getId());
         }
@@ -366,7 +379,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         for (String[] row : allItem) {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
-            newEvidenceObj.setType("Item");
+            newEvidenceObj.setType(PLAN_ITEM);
             Artifacts.getItemObjs().add(newEvidenceObj);
             System.out.println("Created Object for " + newEvidenceObj.getId());
         }
@@ -374,21 +387,21 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         System.out.println("---- Creating Objects for ItemRequirement ----");
         String[] itemReqCols =
                 CSVUtil.getColumnInfo(
-                        RackQueryUtils.createCsvFilePath(config.get("itemRequirement"), rackDir));
+                        RackQueryUtils.createCsvFilePath(config.get(PLAN_ITEM_REQ), rackDir));
         int itemReqIdCol =
                 CustomStringUtils.getCSVColumnIndex(
-                        itemReqCols, config.get("itemRequirement") + "_id");
+                        itemReqCols, config.get(PLAN_ITEM_REQ) + PLAN_ID_SUFFIX);
 
         int itemReqDescCol =
                 CustomStringUtils.getCSVColumnIndex(
-                        itemReqCols, config.get("itemRequirement") + "_desc");
+                        itemReqCols, config.get(PLAN_ITEM_REQ) + PLAN_DESC_SUFFIX);
 
         System.out.println(itemReqIdCol + " , " + itemReqDescCol);
 
         for (String[] row : allItemRequirement) {
             if ((itemReqIdCol >= 0) && row[itemReqIdCol] != null) {
                 Evidence newEvidenceObj = new Evidence();
-                newEvidenceObj.setType("Requirement");
+                newEvidenceObj.setType(PLAN_REQUIREMENT);
                 newEvidenceObj.setId(row[itemReqIdCol]);
                 if ((itemReqDescCol >= 0) && row[itemReqDescCol] != null) {
                     newEvidenceObj.setDescription(row[itemReqDescCol]);
@@ -404,7 +417,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         //        for (String[] row : allSystem) {
         //            Evidence newEvidenceObj = new Evidence();
         //            newEvidenceObj.setId(row[0]);
-        //            newEvidenceObj.setType("System");
+        //            newEvidenceObj.setType(PLAN_SYSTEM);
         //            Artifacts.getItemObjs().add(newEvidenceObj);
         //            System.out.println("Created Object for " + newEvidenceObj.getId());
         //        }
@@ -412,14 +425,14 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         System.out.println("---- Creating Objects for SystemRequirement ----");
         String[] systemReqCols =
                 CSVUtil.getColumnInfo(
-                        RackQueryUtils.createCsvFilePath(config.get("systemRequirement"), rackDir));
+                        RackQueryUtils.createCsvFilePath(config.get(PLAN_SYSTEM_REQ), rackDir));
         int systemReqIdCol =
                 CustomStringUtils.getCSVColumnIndex(
-                        systemReqCols, config.get("systemRequirement") + "_id");
+                        systemReqCols, config.get(PLAN_SYSTEM_REQ) + PLAN_ID_SUFFIX);
 
         int systemReqDescCol =
                 CustomStringUtils.getCSVColumnIndex(
-                        systemReqCols, config.get("systemRequirement") + "_desc");
+                        systemReqCols, config.get(PLAN_SYSTEM_REQ) + PLAN_DESC_SUFFIX);
 
         System.out.println(systemReqIdCol + " , " + systemReqDescCol);
 
@@ -427,7 +440,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
             if ((systemReqIdCol >= 0) && row[systemReqIdCol] != null) {
                 Evidence newEvidenceObj = new Evidence();
                 newEvidenceObj.setId(row[systemReqIdCol]);
-                newEvidenceObj.setType("Requirement");
+                newEvidenceObj.setType(PLAN_REQUIREMENT);
                 if ((systemReqDescCol >= 0) && row[systemReqDescCol] != null) {
                     newEvidenceObj.setDescription(row[systemReqDescCol]);
                 }
@@ -440,7 +453,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         for (String[] row : allSystem) {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
-            newEvidenceObj.setType("System");
+            newEvidenceObj.setType(PLAN_SYSTEM);
             Artifacts.getSystemObjs().add(newEvidenceObj);
             System.out.println("Created Object for " + newEvidenceObj.getId());
         }
@@ -450,7 +463,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         for (String[] row : allDOCUMENT) {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
-            newEvidenceObj.setType("DOCUMENT");
+            newEvidenceObj.setType(PLAN_DOCUMENT);
             Artifacts.getDocumentObjs().add(newEvidenceObj);
             System.out.println("Created Object for " + newEvidenceObj.getId());
         }
@@ -462,7 +475,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         for (String[] row : allRequirementCompleteCorrectReview) {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
-            newEvidenceObj.setType("Review");
+            newEvidenceObj.setType(PLAN_REVIEW);
             Artifacts.getRequirementCompleteCorrectReviewObjs().add(newEvidenceObj);
             System.out.println("Created Object for " + newEvidenceObj.getId());
         }
@@ -473,7 +486,7 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         for (String[] row : allRequirementTraceableReview) {
             Evidence newEvidenceObj = new Evidence();
             newEvidenceObj.setId(row[0]);
-            newEvidenceObj.setType("Review");
+            newEvidenceObj.setType(PLAN_REVIEW);
             Artifacts.getRequirementTraceableReviewObjs().add(newEvidenceObj);
             System.out.println("Created Object for " + newEvidenceObj.getId());
         }
@@ -483,16 +496,20 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         // get the header line for allInterfaceWithInputOutput csv file
         String[] allInterfaceWithInputOutputCols =
                 CSVUtil.getColumnInfo(
-                        RackQueryUtils.createCsvFilePath(config.getWithIO("interface"), rackDir));
+                        RackQueryUtils.createCsvFilePath(
+                                config.getWithIO(PLAN_INTERFACE), rackDir));
         int interfaceIdCol =
                 CustomStringUtils.getCSVColumnIndex(
-                        allInterfaceWithInputOutputCols, config.get("interface") + "_id");
+                        allInterfaceWithInputOutputCols,
+                        config.get(PLAN_INTERFACE) + PLAN_ID_SUFFIX);
         int inputIdCol =
                 CustomStringUtils.getCSVColumnIndex(
-                        allInterfaceWithInputOutputCols, config.get("interfaceInput") + "_id");
+                        allInterfaceWithInputOutputCols,
+                        config.get(PLAN_INTERFACE_INPUT) + PLAN_ID_SUFFIX);
         int outputIdCol =
                 CustomStringUtils.getCSVColumnIndex(
-                        allInterfaceWithInputOutputCols, config.get("interfaceOutput") + "_id");
+                        allInterfaceWithInputOutputCols,
+                        config.get(PLAN_ITERFACE_OUTPUT) + PLAN_ID_SUFFIX);
 
         for (String[] row : allInterfaceWithInputOutput) {
             if ((row[interfaceIdCol] != null)) {
@@ -531,13 +548,13 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         String[] allSystemWIthInterfaceCols =
                 CSVUtil.getColumnInfo(
                         RackQueryUtils.createCsvFilePath(
-                                config.get("system", "interface"), rackDir));
+                                config.get(PLAN_SYSTEM, PLAN_INTERFACE), rackDir));
         int systemIdCol =
                 CustomStringUtils.getCSVColumnIndex(
-                        allSystemWIthInterfaceCols, config.get("system") + "_id");
+                        allSystemWIthInterfaceCols, config.get(PLAN_SYSTEM) + PLAN_ID_SUFFIX);
         int interfaceIdCol2 =
                 CustomStringUtils.getCSVColumnIndex(
-                        allSystemWIthInterfaceCols, config.get("interface") + "_id");
+                        allSystemWIthInterfaceCols, config.get(PLAN_INTERFACE) + PLAN_ID_SUFFIX);
 
         System.out.println(systemIdCol + " , " + interfaceIdCol2);
 
@@ -565,16 +582,17 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         String[] allSystemRequirementWIthSystemCols =
                 CSVUtil.getColumnInfo(
                         RackQueryUtils.createCsvFilePath(
-                                config.get("systemRequirement", "system"), rackDir));
+                                config.get(PLAN_SYSTEM_REQ, PLAN_SYSTEM), rackDir));
         int sysReqIdCol =
                 CustomStringUtils.getCSVColumnIndex(
                         allSystemRequirementWIthSystemCols,
-                        config.get("systemRequirement") + "_id");
+                        config.get(PLAN_SYSTEM_REQ) + PLAN_ID_SUFFIX);
         int systemIdCol2 =
                 CustomStringUtils.getCSVColumnIndex(
-                        allSystemRequirementWIthSystemCols, config.get("system") + "_id");
+                        allSystemRequirementWIthSystemCols,
+                        config.get(PLAN_SYSTEM) + PLAN_ID_SUFFIX);
 
-        System.out.println(config.get("system"));
+        System.out.println(config.get(PLAN_SYSTEM));
         for (String[] row : allSystemRequirementWIthSystem) {
             if ((row[sysReqIdCol] != null)) {
                 System.out.println(row[sysReqIdCol]);
@@ -601,13 +619,13 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         String[] allItemRequirementWIthItemCols =
                 CSVUtil.getColumnInfo(
                         RackQueryUtils.createCsvFilePath(
-                                config.get("itemRequirement", "item"), rackDir));
+                                config.get(PLAN_ITEM_REQ, PLAN_ITEM), rackDir));
         int itemReqIdCol2 =
                 CustomStringUtils.getCSVColumnIndex(
-                        allItemRequirementWIthItemCols, config.get("itemRequirement") + "_id");
+                        allItemRequirementWIthItemCols, config.get(PLAN_ITEM_REQ) + PLAN_ID_SUFFIX);
         int itemIdCol =
                 CustomStringUtils.getCSVColumnIndex(
-                        allItemRequirementWIthItemCols, config.get("item") + "_id");
+                        allItemRequirementWIthItemCols, config.get(PLAN_ITEM) + PLAN_ID_SUFFIX);
 
         for (String[] row : allItemRequirementWIthItem) {
             if ((row[itemReqIdCol2] != null)) {
@@ -634,15 +652,15 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         String[] allItemRequirementWIthSystemRequirementCols =
                 CSVUtil.getColumnInfo(
                         RackQueryUtils.createCsvFilePath(
-                                config.get("itemRequirement", "systemRequirement"), rackDir));
+                                config.get(PLAN_ITEM_REQ, PLAN_SYSTEM_REQ), rackDir));
         int sysReqIdCol2 =
                 CustomStringUtils.getCSVColumnIndex(
                         allItemRequirementWIthSystemRequirementCols,
-                        config.get("systemRequirement") + "_id");
+                        config.get(PLAN_SYSTEM_REQ) + PLAN_ID_SUFFIX);
         int itemReqIdCol3 =
                 CustomStringUtils.getCSVColumnIndex(
                         allItemRequirementWIthSystemRequirementCols,
-                        config.get("itemRequirement") + "_id");
+                        config.get(PLAN_ITEM_REQ) + PLAN_ID_SUFFIX);
 
         for (String[] row : allItemRequirementWIthSystemRequirement) {
             if ((row[itemReqIdCol3] != null)) {
@@ -673,11 +691,11 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
                 // TODO: change to all requirements
                 CustomStringUtils.getCSVColumnIndex(
                         allRequirementCompleteCorrectReviewCols,
-                        config.get("itemRequirement") + "_id");
+                        config.get(PLAN_ITEM_REQ) + PLAN_ID_SUFFIX);
         int completeCorrectReviewIdCol =
                 CustomStringUtils.getCSVColumnIndex(
                         allRequirementCompleteCorrectReviewCols,
-                        config.get("requirementCompleteCorrectReview") + "_id");
+                        config.get("requirementCompleteCorrectReview") + PLAN_ID_SUFFIX);
 
         for (String[] row : allRequirementCompleteCorrectReview) {
             if ((row[reqIdCol] != null)) {
@@ -708,11 +726,12 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         int reqIdCol2 =
                 // TODO: change to all requirements
                 CustomStringUtils.getCSVColumnIndex(
-                        allRequirementTraceableReviewCols, config.get("itemRequirement") + "_id");
+                        allRequirementTraceableReviewCols,
+                        config.get(PLAN_ITEM_REQ) + PLAN_ID_SUFFIX);
         int traceableReviewIdCol =
                 CustomStringUtils.getCSVColumnIndex(
                         allRequirementTraceableReviewCols,
-                        config.get("requirementCompleteCorrectReview") + "_id");
+                        config.get("requirementCompleteCorrectReview") + PLAN_ID_SUFFIX);
 
         for (String[] row : allRequirementTraceableReview) {
             if ((row[reqIdCol2] != null)) {
@@ -751,65 +770,68 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         allDerivedItemRequirement =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                config.get("derivedItemRequirement"), rackDir));
+                                config.get(PLAN_DERIVED_ITEM_REQ), rackDir));
 
         allDerivedSystemRequirement =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                config.get("derivedSystemRequirement"), rackDir));
+                                config.get(PLAN_DERIVED_SYS_REQ), rackDir));
 
         allInterface =
-                CSVUtil.getRows(RackQueryUtils.createCsvFilePath(config.get("interface"), rackDir));
+                CSVUtil.getRows(
+                        RackQueryUtils.createCsvFilePath(config.get(PLAN_INTERFACE), rackDir));
 
         allInterfaceInput =
                 CSVUtil.getRows(
-                        RackQueryUtils.createCsvFilePath(config.get("interfaceInput"), rackDir));
+                        RackQueryUtils.createCsvFilePath(
+                                config.get(PLAN_INTERFACE_INPUT), rackDir));
 
         allInterfaceOutput =
                 CSVUtil.getRows(
-                        RackQueryUtils.createCsvFilePath(config.get("interfaceOutput"), rackDir));
+                        RackQueryUtils.createCsvFilePath(
+                                config.get(PLAN_ITERFACE_OUTPUT), rackDir));
 
-        allItem = CSVUtil.getRows(RackQueryUtils.createCsvFilePath(config.get("item"), rackDir));
+        allItem = CSVUtil.getRows(RackQueryUtils.createCsvFilePath(config.get(PLAN_ITEM), rackDir));
 
         allSystem =
-                CSVUtil.getRows(RackQueryUtils.createCsvFilePath(config.get("system"), rackDir));
+                CSVUtil.getRows(RackQueryUtils.createCsvFilePath(config.get(PLAN_SYSTEM), rackDir));
 
         allItemRequirement =
                 CSVUtil.getRows(
-                        RackQueryUtils.createCsvFilePath(config.get("itemRequirement"), rackDir));
+                        RackQueryUtils.createCsvFilePath(config.get(PLAN_ITEM_REQ), rackDir));
 
         allSystemRequirement =
                 CSVUtil.getRows(
-                        RackQueryUtils.createCsvFilePath(config.get("systemRequirement"), rackDir));
+                        RackQueryUtils.createCsvFilePath(config.get(PLAN_SYSTEM_REQ), rackDir));
 
         allSystemDesignDescription =
                 CSVUtil.getRows(
-                        RackQueryUtils.createCsvFilePath(
-                                config.get("systemDesignDescription"), rackDir));
+                        RackQueryUtils.createCsvFilePath(config.get(PLAN_SYSTEM_DESC), rackDir));
 
         allInterfaceWithInputOutput =
                 CSVUtil.getRows(
-                        RackQueryUtils.createCsvFilePath(config.getWithIO("interface"), rackDir));
+                        RackQueryUtils.createCsvFilePath(
+                                config.getWithIO(PLAN_INTERFACE), rackDir));
 
         allItemRequirementWIthItem =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                config.get("itemRequirement", "item"), rackDir));
+                                config.get(PLAN_ITEM_REQ, PLAN_ITEM), rackDir));
 
         allSystemRequirementWIthSystem =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                config.get("systemRequirement", "system"), rackDir));
+                                config.get(PLAN_SYSTEM_REQ, PLAN_SYSTEM), rackDir));
 
         allSystemWIthInterface =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                config.get("system", "interface"), rackDir));
+                                config.get(PLAN_SYSTEM, PLAN_INTERFACE), rackDir));
 
         allItemRequirementWIthSystemRequirement =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                config.get("itemRequirement", "systemRequirement"), rackDir));
+                                config.get(PLAN_ITEM_REQ, PLAN_SYSTEM_REQ), rackDir));
 
         allRequirementCompleteCorrectReview =
                 CSVUtil.getRows(
@@ -824,21 +846,17 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
         allRequirementWithCompleteCorrectReview =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                config.get("itemRequirement", "requirementCompleteCorrectReview"),
+                                config.get(PLAN_ITEM_REQ, "requirementCompleteCorrectReview"),
                                 rackDir));
 
         allRequirementWithTraceableReview =
                 CSVUtil.getRows(
                         RackQueryUtils.createCsvFilePath(
-                                config.get("itemRequirement", "requirementTraceableReview"),
-                                rackDir));
+                                config.get(PLAN_ITEM_REQ, "requirementTraceableReview"), rackDir));
 
-        allDOCUMENT = 
-        		CSVUtil.getRows(RackQueryUtils.createCsvFilePath(PLAN_DOCUMENT, rackDir));
+        allDOCUMENT = CSVUtil.getRows(RackQueryUtils.createCsvFilePath(PLAN_DOCUMENT, rackDir));
 
-        planData =
-                CSVUtil.getRows(
-                        RackQueryUtils.createCsvFilePath(PLAN_DATA, rackDir));
+        planData = CSVUtil.getRows(RackQueryUtils.createCsvFilePath(PLAN_DATA, rackDir));
     }
 
     /**
@@ -855,25 +873,25 @@ public class DataProcessor extends com.ge.research.rack.analysis.structures.Data
     private void addDefaultQueries() {
         // Populate the default queries; Must be called before getConfig
         queries.addDirect(PLAN_DATA);
-        queries.addConfigLookup("derivedItemRequirement");
-        queries.addConfigLookup("derivedSystemRequirement");
-        queries.addConfigLookup("interface");
-        queries.addConfigLookup("interfaceInput");
-        queries.addConfigLookup("interfaceOutput");
-        queries.addConfigLookup("item");
-        queries.addConfigLookup("itemRequirement");
-        queries.addConfigLookup("system");
-        queries.addConfigLookup("systemRequirement");
-        queries.addConfigLookup("systemDesignDescription");
-        queries.addConfigLookupWithIO("interface");
-        queries.addConfigLookup("itemRequirement", "item");
-        queries.addConfigLookup("systemRequirement", "system");
-        queries.addConfigLookup("system", "interface");
-        queries.addConfigLookup("itemRequirement", "systemRequirement");
+        queries.addConfigLookup(PLAN_DERIVED_ITEM_REQ);
+        queries.addConfigLookup(PLAN_DERIVED_SYS_REQ);
+        queries.addConfigLookup(PLAN_INTERFACE);
+        queries.addConfigLookup(PLAN_INTERFACE_INPUT);
+        queries.addConfigLookup(PLAN_ITERFACE_OUTPUT);
+        queries.addConfigLookup(PLAN_ITEM);
+        queries.addConfigLookup(PLAN_ITEM_REQ);
+        queries.addConfigLookup(PLAN_SYSTEM);
+        queries.addConfigLookup(PLAN_SYSTEM_REQ);
+        queries.addConfigLookup(PLAN_SYSTEM_DESC);
+        queries.addConfigLookupWithIO(PLAN_INTERFACE);
+        queries.addConfigLookup(PLAN_ITEM_REQ, PLAN_ITEM);
+        queries.addConfigLookup(PLAN_SYSTEM_REQ, PLAN_SYSTEM);
+        queries.addConfigLookup(PLAN_SYSTEM, PLAN_INTERFACE);
+        queries.addConfigLookup(PLAN_ITEM_REQ, PLAN_SYSTEM_REQ);
         queries.addConfigLookup("requirementCompleteCorrectReview");
         queries.addConfigLookup("requirementTraceableReview");
-        queries.addConfigLookup("itemRequirement", "requirementCompleteCorrectReview");
-        queries.addConfigLookup("itemRequirement", "requirementTraceableReview");
+        queries.addConfigLookup(PLAN_ITEM_REQ, "requirementCompleteCorrectReview");
+        queries.addConfigLookup(PLAN_ITEM_REQ, "requirementTraceableReview");
         queries.addDirect(PLAN_DOCUMENT);
     }
 
