@@ -31,6 +31,7 @@
  */
 package com.ge.research.rack;
 
+import com.ge.research.rack.arp4754.wireframe.ui.Arp4754WireframeMainViewManager;
 import com.ge.research.rack.autoGsn.viewManagers.AutoGsnViewsManager;
 import com.ge.research.rack.autoGsn.viewManagers.GsnTreeViewManager;
 import com.ge.research.rack.report.viewManagers.ReportViewsManager;
@@ -75,6 +76,30 @@ public class JavaFXAppLaunchManager {
                     () -> {
                         try {
                             Application application = new RibView();
+                            Stage primaryStage = new Stage();
+                            application.start(primaryStage);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+        }
+    }
+
+    /**
+     * Used to launch different Javafx AutoGsnMainView applications by consulting the flag
+     *
+     * <p>Sets the flag to true on the first launch.
+     */
+    public static void arp4754MainViewLaunch() {
+        if (!launchFlag) {
+            Platform.setImplicitExit(false);
+            new Thread(() -> Application.launch(Arp4754WireframeMainViewManager.class)).start();
+            launchFlag = true;
+        } else {
+            Platform.runLater(
+                    () -> {
+                        try {
+                            Application application = new Arp4754WireframeMainViewManager();
                             Stage primaryStage = new Stage();
                             application.start(primaryStage);
                         } catch (Exception e) {

@@ -63,6 +63,12 @@
       name="Generate DO178C Reports">
     </command>
 
+    <!-- ARP-4754A Plan Creation -->
+    <command categoryId="rackplugin.commands"
+      id="rackplugin.commands.arp4754PlanCommand"
+      name="Create ARP-4754A Plan">
+    </command>
+
     <!-- For auto Gsn -->
     <command categoryId="rackplugin.commands"
       id="rackplugin.commands.autoGsnCommand"
@@ -182,6 +188,10 @@
     <handler class="com.ge.research.rack.ReportButtonHandler"
       commandId="rackplugin.commands.reportsCommand">
     </handler>
+    <!-- For ARP-4754A Plans -->
+    <handler class="com.ge.research.rack.Arp4754MainHandler"
+      commandId="rackplugin.commands.arp4754PlanCommand">
+    </handler>
     <!-- For auto Gsn -->
     <handler class="com.ge.research.rack.AutoGsnButtonHandler"
       commandId="rackplugin.commands.autoGsnCommand">
@@ -236,6 +246,12 @@
           label="Load Query Nodegroups from Disk" mnemonic="S"> </command> <command
           commandId="rackplugin.commands.reportsCommand" id="rackplugin.menus.reports"
           label="DO-178C Compliance Report" mnemonic="S" style="push"> </command> -->
+
+        <!-- For ARP-4754A Plans -->
+        <command commandId="rackplugin.commands.arp4754PlanCommand"
+          id="rackplugin.menus.arp4754Plan" label="Create ARP-4754A Plan"
+          mnemonic="A" style="push">
+        </command>
 
         <!-- For auto Gsn -->
         <command commandId="rackplugin.commands.autoGsnCommand"
