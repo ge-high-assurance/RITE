@@ -86,15 +86,17 @@ import org.yaml.snakeyaml.Yaml;
 // Label alignments
 // Finish validation
 // Add unit testing
+// Add file browsers?
 
 // Would like to change the label Apply & CLose
 // Figure out defaultWidgetSelected
 // Make custom SelectionListener
-// Lists of steps (2 places) needs scrollbars
+// Lists of steps (2 places) and constraints needs scrollbars
 // remove multiple selected items from lists
 // Adjust height, width of list widgets when needed
 // Adjust widgets to property window being enlarged, shrunk
 // Add file or other browsers for locations of things
+// Many aspects of the yaml schemas are hard-coded here — could some of that be driven by the schema itself?
 
 
 public class DataPropertyPage extends PropertyPage {
@@ -809,8 +811,6 @@ public class DataPropertyPage extends PropertyPage {
                         widgetSelected(e);
                     }
                 });
-        
-        // FIXME - need to record widgets for contraints
         widgets.add(new DataStepWidget("count#nodegroup", t1, t2, constraints));
         return subComposite;
     }
@@ -1257,13 +1257,51 @@ public class DataPropertyPage extends PropertyPage {
     	switch (kind) {
     	case MANIFEST: return validateManifest();
     	case MODEL: return validateModel(outDir);
-    	case DATA: return validateData();
+    	case DATA: return validateData(outDir);
     	}
     	return "No such kind of yaml file: " + kind + "\n";
     }
     
     public String validateManifest() {
+    	String diffs = "";
+    	var list = (org.eclipse.swt.widgets.List)yamlWidgets.get("footprint:model-graphs");
+    	if (list != null) for (int k = 0; k < list.getItemCount(); k++) {
+    		var text = list.getItem(k);
+    		diffs += okURL(text);
+    	}
+    	list = (org.eclipse.swt.widgets.List)yamlWidgets.get("footprint:data-graphs");
+    	if (list != null) for (int k = 0; k < list.getItemCount(); k++) {
+    		var text = list.getItem(k);
+    		diffs += okURL(text);
+    	}
+    	String text = (String)yamlWidgets.get("copy-to-graph");
+    	if (text != null) diffs += okURL(text);
+    	text = (String)yamlWidgets.get("perform-entity-resolution");
+    	if (text != null) diffs += okURL(text);
     	// FIXME - to do
+        //"footprint:nodegroups",
+    	
+        Object w = yamlWidgets.get("steps");
+        if (!(w instanceof java.util.List<?> wlist)) {
+            MessageDialog.openError(shell, "Error", "No widget for " + "steps");
+        } else {
+        	var wsteps = (java.util.List<ManifestStepWidget>) wlist;
+        	java.util.List<Object> yamlList = new java.util.ArrayList<>(wsteps.size());
+        	for (var step : wsteps) {
+        		if (step.value2 != null) {
+        			diffs += okURL(step.value.getText());
+        			diffs += okURL(step.value2.getText());
+        		} else if (step.key.equals("data")) {
+        		} else if (step.key.equals("model")) { // path to file in current project
+        		} else if (step.key.equals("nodegroups")) { // opaque identifiers
+        		} else if (step.key.equals("manifest")) {
+        			
+        		}
+        	}
+        }
+
+        //"steps"
+    	// FIXME - check for unexpected keys?
     	return "";
     }
     
@@ -1272,22 +1310,131 @@ public class DataPropertyPage extends PropertyPage {
     	var list = (org.eclipse.swt.widgets.List)yamlWidgets.get("files");
     	if (list != null) for (int k = 0; k < list.getItemCount(); k++) {
     		var text = list.getItem(k);
-    		diffs += okFile(text, outDir);
+    		diffs += okFileOrURL(text, outDir); // FIXME - change to checking just files
     	} else {
     		diffs += "Required element 'files' is not present\n";
     	}
     	list = (org.eclipse.swt.widgets.List)yamlWidgets.get("model-graphs");
     	if (list != null) for (int k = 0; k < list.getItemCount(); k++) {
     		var text = list.getItem(k);
-    		diffs += okFile(text, outDir);
+    		diffs += okURL(text);
     	}
     	// FIXME - check for unexpected keys?
+    	// FIXME - check required elements
     	return diffs;
     }
     
-    public String validateData() {
+    public String validateData(IContainer outDir) {
+    	String diffs = "";
+    	String text = (String)yamlWidgets.get("data-graph");
+    	if (text != null) diffs += okURL(text);
+    	
+    	var list = (org.eclipse.swt.widgets.List)yamlWidgets.get("model-graphs");
+    	if (list != null) for (int k = 0; k < list.getItemCount(); k++) {
+    		text = list.getItem(k);
+    		diffs += okURL(text);
+    	}
+    	list = (org.eclipse.swt.widgets.List)yamlWidgets.get("extra-data-graphs");
+    	if (list != null) for (int k = 0; k < list.getItemCount(); k++) {
+    		text = list.getItem(k);
+    		diffs += okURL(text);
+    	}
+        var array = (List) yamlWidgets.get("ingestion-steps");
+        if (array != null) {
+            for (var obj : array) {
+                try {
+                    if (obj instanceof Map<?, ?> item) {
+                    	Object o = item.get("class#csv");
+                    	if (o instanceof DataStepWidget d) {
+                    		diffs += okURL(((Text)d.values[0]).getText()); // class
+                    		diffs += okFile(((Text)d.values[1]).getText(), outDir); // csv
+                    		continue;
+                    	}
+                    	o = item.get("owl");
+                    	if (o instanceof DataStepWidget d) {
+                    		diffs += okURL(((Text)d.values[0]).getText()); // owl
+                    		continue;
+                    	}
+                    	o = item.get("nodegroup#csv");
+                    	if (o instanceof DataStepWidget d) {
+                    		diffs += okNodegroup(((Text)d.values[0]).getText()); // nodegroup
+                    		diffs += okFile(((Text)d.values[1]).getText(), outDir); // csv
+                    		continue;
+                    	}
+                    	o = item.get("name#creator#nodegroup_json#comment");
+                    	if (o instanceof DataStepWidget d) {
+                        	// Nop checks of these
+                    		continue;
+                    	}
+                    	o = item.get("count#nodegroup");
+                    	if (o instanceof DataStepWidget d) {
+                    		var numtext = ((Text)d.values[0]).getText().trim();
+                    		if (!numtext.isEmpty()) {
+                    			try {
+                    				int count = Integer.valueOf(numtext.trim());
+                    				if (count < 0) diffs += "The 'count' field is negative\n";
+                    			} catch (Exception e) {
+                    				diffs += "The 'count' field does not contain a number\n";
+                    			}
+                    		} else {
+                    			// FIXME - OK or error
+                    		}
+                    		diffs += okNodegroup(((Text)d.values[1]).getText());
+                    		// FIXME - not checking d.constraints
+                    		continue;
+                    	}
+                    	diffs += "Invalid item in the ingestion-steps list; keys: " 
+                    			+ item.keySet() 
+                    			+ "\n"; // FIXME - this does not print out properly
+                    }
+                } catch (Exception e) {
+                	diffs += "Badly constructed ingestion-step\n";
+                }
+            }
+        }
+
     	// FIXME - to do
+//        "ingestion-steps",
+    	// FIXME - check for unexpected keys?
+    	// FIXME - check required elements
     	return "";
+    }
+    
+    public String okURL(String text) {
+    	try {
+    		// Check if the text is a valid URL
+    		text = text.trim();
+    		if (text.isEmpty()) return "";
+    		URL u = new URL(text); 
+    		HttpURLConnection huc =  (HttpURLConnection)  u.openConnection();
+    		huc.setRequestMethod("HEAD");
+    		if (huc.getResponseCode() == HttpURLConnection.HTTP_OK) return "";
+    	} catch (Exception e) {
+    		return e.getMessage() + "\n";
+    	}
+        return "URL " + text + " does not exist\n";
+    }
+    
+    public String okFileOrURL(String text, IContainer outDir) {
+    	try {
+    		// Check if the text is a path in the workspace
+    		IPath p = new Path(text.trim());
+    		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+    		if (outDir.getFile(p).exists()) return "";
+    		if (root.getFile(p).exists()) return "";
+
+    		// Check if the text is a file in the local file system
+    		// If it is local, it should be to the location of the yaml file it is in
+    		// FIXME - fix the relative reference
+    		if (new java.io.File(text).exists()) return "";
+
+    		// Check if the text is a valid URL
+    		String s = okURL(text);
+    		if (s.isEmpty()) return s;
+    	} catch (Exception e) {
+    		return e.getMessage() + "\n";
+    	}
+        return "File or URL " + text + " does not exist\n";
     }
     
     public String okFile(String text, IContainer outDir) {
@@ -1303,14 +1450,27 @@ public class DataPropertyPage extends PropertyPage {
     		// FIXME - fix the relative reference
     		if (new java.io.File(text).exists()) return "";
 
-    		// Check if the text is a valid URL
-    		URL u = new URL(text); 
-    		HttpURLConnection huc =  (HttpURLConnection)  u.openConnection();
-    		huc.setRequestMethod("HEAD");
-    		if (huc.getResponseCode() == HttpURLConnection.HTTP_OK) return "";
     	} catch (Exception e) {
     		return e.getMessage() + "\n";
     	}
-        return "File or URL " + text + " does not exist\n";
+        return "File " + text + " does not exist\n";
+    }
+    
+    public String okFileInCurrentProject(String text, IContainer outDir) {
+    	try {
+    		// Check if the text is a path in the workspace
+    		IPath p = new Path(text);
+    		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+    		if (outDir.getFile(p).exists()) return "";
+    		if (root.getFile(p).exists()) return "";
+    	} catch (Exception e) {
+    		return e.getMessage() + "\n";
+    	}
+        return "File " + text + " does not exist\n";
+    }
+    
+    public String okNodegroup(String text) {
+    	// FIXME - check that this is a simple identifier
+    	return "";
     }
 }
