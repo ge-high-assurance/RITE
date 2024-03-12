@@ -140,7 +140,13 @@ public class DataPropertyPage extends PropertyPage {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				var yaml = collectYaml(false);
+		        int k = kindCombo.getSelectionIndex();
+		        if (k == 0) {
+					MessageDialog.openInformation(shell, "Validate", 
+							"No kind of yaml file selected");
+					return;
+		        }
+				var yaml = collectYaml(false, false);
 				String diffs = validate(yaml);
 				if (diffs.isEmpty()) {
 					MessageDialog.openInformation(shell, "Validate", 
@@ -182,28 +188,28 @@ public class DataPropertyPage extends PropertyPage {
             addPathSection(composite);
             addYamlSelectorSection(composite, kind);
             addSeparator(composite);
-            var ncomp = addComposite(composite, 1);
+//            var sc = addComposite(composite, 1);
 
-            ScrolledComposite sc = new ScrolledComposite(ncomp, SWT.H_SCROLL | SWT.V_SCROLL);
-            sc.setLayoutData(
-                    new GridData(
-                            GridData.FILL_HORIZONTAL | GridData.FILL_VERTICAL,
-                            SWT.TOP,
-                            true,
-                            true));
-            sc.setLayoutData(new GridData(GridData.FILL, SWT.TOP, true, true));
-            sc.setExpandHorizontal(true);
-            sc.setExpandVertical(true);
-            sc.setAlwaysShowScrollBars(false);
+//            ScrolledComposite sc = new ScrolledComposite(ncomp, SWT.H_SCROLL | SWT.V_SCROLL);
+//            sc.setLayoutData(
+//                    new GridData(
+//                            GridData.FILL_HORIZONTAL | GridData.FILL_VERTICAL,
+//                            SWT.TOP,
+//                            true,
+//                            true));
+//            sc.setLayoutData(new GridData(GridData.FILL, SWT.TOP, true, true));
+//            sc.setExpandHorizontal(true);
+//            sc.setExpandVertical(true);
+//            sc.setAlwaysShowScrollBars(false);
 
-            currentSubcomposite = addKindSubcomposite(sc, kind);
-            sc.setContent(currentSubcomposite);
-            sc.layout(true, true);
+            currentSubcomposite = addKindSubcomposite(composite, kind);
+//            sc.setContent(currentSubcomposite);
+//            sc.layout(true, true);
 
             // This is some unit testing that retrieved yaml from the bunch of widgets is the same
             // as what went in
-            var newYamlMap = collectYaml(isNewFile);
             if (!isNewFile) {
+                var newYamlMap = collectYaml(isNewFile, false);
                 boolean b = Objects.equals(yamlMap, newYamlMap);
                 String diffs = compareYaml(yamlMap, newYamlMap);
                 if (!b || !diffs.isEmpty()) {
@@ -1192,7 +1198,7 @@ public class DataPropertyPage extends PropertyPage {
                 outFile = root.getFile(p);
             }
 
-            var outYaml = collectYaml(false);
+            var outYaml = collectYaml(false, true);
 
             var diffs = validate(outYaml);
             if (diffs != null && !diffs.isEmpty()) {
@@ -1223,36 +1229,37 @@ public class DataPropertyPage extends PropertyPage {
         return true;
     }
 
-    public Map<String, Object> collectYaml(boolean isNewFile) {
+    public Map<String, Object> collectYaml(boolean isNewFile, boolean showErrors) {
         Map<String, Object> yaml = new HashMap<>();
         int k = kindCombo.getSelectionIndex();
         String kind = kindCombo.getItems()[k];
+        String diffs;
         switch (kind) {
             case MANIFEST:
-                collectManifestYaml(yaml);
+                diffs = collectManifestYaml(yaml);
                 break;
             case DATA:
-                collectDataYaml(yaml);
+            	diffs = collectDataYaml(yaml);
                 break;
             case MODEL:
-                collectModelYaml(yaml);
+            	diffs = collectModelYaml(yaml);
                 break;
             default:
-                if (!isNewFile)
-                    MessageDialog.openError(shell, "Error", "Unknown kind of Yaml to output");
+                if (!isNewFile) diffs = "Unknown kind of Yaml to output";
                 return null;
         }
         return yaml;
     }
 
     @SuppressWarnings("unchecked")
-    public void collectYaml(Map<String, Object> yaml, String[] keys) {
+    public String collectYaml(Map<String, Object> yaml, String[] keys) {
+    	String diffs = "";
         for (var key : keys) {
             try {
                 String[] names = key.split(":");
                 Object w = yamlWidgets.get(key);
                 if (w == null) {
-                    MessageDialog.openError(shell, "Error", "No widget for " + key);
+                    diffs += "No widget for " + key;
                     continue;
                 }
                 var y = yaml;
@@ -1273,8 +1280,7 @@ public class DataPropertyPage extends PropertyPage {
                         y.put(names[names.length - 1], newlist);
                     }
                 } else if (w instanceof java.util.List<?> wlist
-                        && wlist.size() > 0
-                        && wlist.get(0) instanceof ManifestStepWidget) {
+                        && (wlist.size() == 0 || wlist.get(0) instanceof ManifestStepWidget)) {
                     var wsteps = (java.util.List<ManifestStepWidget>) wlist;
                     java.util.List<Object> yamlList = new java.util.ArrayList<>(wsteps.size());
                     for (var step : wsteps) {
@@ -1293,8 +1299,7 @@ public class DataPropertyPage extends PropertyPage {
                     }
                     yaml.put(names[names.length - 1], yamlList);
                 } else if (w instanceof java.util.List<?> wlist
-                        && wlist.size() > 0
-                        && wlist.get(0) instanceof DataStepWidget) {
+                        && (wlist.size() == 0 || wlist.get(0) instanceof DataStepWidget)) {
                     var wsteps = (java.util.List<DataStepWidget>) wlist;
                     java.util.List<Object> yamlList = new java.util.ArrayList<>(wsteps.size());
                     for (var step : wsteps) {
@@ -1321,8 +1326,7 @@ public class DataPropertyPage extends PropertyPage {
                     }
                     yaml.put(names[names.length - 1], yamlList);
                 } else {
-                    MessageDialog.openError(
-                            shell, "Error", "Unknown value for " + keys[0] + ": " + w.getClass());
+                    diffs += "Unknown value for " + keys[0] + ": " + w.getClass();
                 }
             } catch (Exception e) {
                 MessageDialog.openError(
@@ -1335,8 +1339,15 @@ public class DataPropertyPage extends PropertyPage {
                                 + "\n"
                                 + e.getCause()
                                 + getStack(e));
+                diffs += "Exception while collecting Yaml from UI for key "
+                        + key
+                        + "\n"
+                        + e.getMessage()
+                        + "\n"
+                        + e.getCause();
             }
         }
+        return diffs;
     }
 
     public static String getStack(Throwable e) {
@@ -1356,22 +1367,22 @@ public class DataPropertyPage extends PropertyPage {
         "steps"
     };
 
-    public void collectManifestYaml(Map<String, Object> yaml) {
-        collectYaml(yaml, manifestKeys);
+    public String collectManifestYaml(Map<String, Object> yaml) {
+        return collectYaml(yaml, manifestKeys);
     }
 
     public static final String[] dataKeys = {
         "ingestion-steps", "model-graphs", "data-graph", "extra-data-graphs",
     };
 
-    public void collectDataYaml(Map<String, Object> yaml) {
-        collectYaml(yaml, dataKeys);
+    public String collectDataYaml(Map<String, Object> yaml) {
+        return collectYaml(yaml, dataKeys);
     }
 
     public static final String[] modelKeys = {"files", "model-graphs"};
 
-    public void collectModelYaml(Map<String, Object> yaml) {
-        collectYaml(yaml, modelKeys);
+    public String collectModelYaml(Map<String, Object> yaml) {
+        return collectYaml(yaml, modelKeys);
     }
 
     public String validate(Map<String,Object> yamlToCheck) {
@@ -1417,7 +1428,9 @@ public class DataPropertyPage extends PropertyPage {
         if (w == null) {
         	// Not required
         } else if (w instanceof java.util.List<?> wlist) {
-        	for (var step : wlist) {
+        	if (wlist.size() == 0) {
+        		diffs += "There are no steps in the manifest yaml\n";
+        	} else for (var step : wlist) {
         		if (step == null) {
         			diffs += "An item in the 'steps' list is null\n";
         		} else if (step instanceof Map<?,?> stepm) {
@@ -1481,7 +1494,9 @@ public class DataPropertyPage extends PropertyPage {
         if (value == null) {
             // Not required
         } else if (value instanceof List<?> steps) {
-            for (var item: steps) {
+        	if (steps.size() == 0) {
+        		diffs += "There are no ingestions-steps in the data yaml\n";
+        	} else for (var item: steps) {
                 if (item instanceof Map<?,?> step) {
                 	@SuppressWarnings("unchecked")
 					var map = (Map<String,Object>)item;
@@ -1546,7 +1561,7 @@ public class DataPropertyPage extends PropertyPage {
     	String diffs = "";
     	var value = yamlToCheck.get(key);
     	if (value == null) {
-    		if (nonEmpty) diffs += "The value for required key '" + key + "' may not be null\n";
+    		if (nonEmpty) diffs += "The value for required key '" + key + "' may not be null or empty\n";
     	} else if (value instanceof String text) {
     		if (nonEmpty && text.trim().isEmpty()) diffs += "The value for required key '" + key + "' may not be an empty String\n";
     		// Just a string
