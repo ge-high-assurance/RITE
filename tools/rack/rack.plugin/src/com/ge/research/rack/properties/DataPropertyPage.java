@@ -58,9 +58,9 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
@@ -98,16 +98,15 @@ import org.yaml.snakeyaml.Yaml;
 // Add file or other browsers for locations of things
 // Many aspects of the yaml schemas are hard-coded here — could some of that be driven by the schema itself?
 
-
 public class DataPropertyPage extends PropertyPage {
-	
+
     private static final String NAME_TITLE = "Name:";
     private static final String PATH_TITLE = "Path:";
     private static final String KIND_TITLE = "Kind of yaml:";
 
     private static final int TEXT_FIELD_WIDTH = 100;
     private static final int LABEL_WIDTH = 12;
-    
+
     // Names of kinds of files
     public static final String MANIFEST = "Manifest";
     public static final String DATA = "Data";
@@ -128,14 +127,40 @@ public class DataPropertyPage extends PropertyPage {
         super();
     }
 
-	@Override
-	public void createControl(Composite parent){
-		super.createControl(parent);
-		getApplyButton().setText("Save to file");
-		getDefaultsButton().setText("Discard changes");
-	}
-	
-	
+    @Override
+    public void createControl(Composite parent) {
+        super.createControl(parent);
+        getApplyButton().setText("Save to file");
+        getDefaultsButton().setText("Discard changes");
+    }
+    @Override
+    public void contributeButtons(Composite buttonBar) {
+    	((GridLayout) buttonBar.getLayout()).numColumns++;
+    	var validateButton = new Button(buttonBar, SWT.PUSH);
+    	validateButton.setText("Validate");
+    	validateButton.addSelectionListener( new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				var yaml = collectYaml(false);
+				String diffs = validate(yaml);
+				if (diffs.isEmpty()) {
+					MessageDialog.openInformation(shell, "Validate", 
+							"No errors found");
+				} else {
+					MessageDialog.openInformation(shell, "Validate", 
+						"Errors found:\n\n" + diffs);
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				widgetSelected(e);
+			}
+    		
+    	});
+    }
+
     /**
      * @see PreferencePage#createContents(Composite)
      */
@@ -153,25 +178,48 @@ public class DataPropertyPage extends PropertyPage {
                 yamlMap = readYaml(file.getLocation().toString());
             }
 
-            if (yamlMap == null) yamlMap = new HashMap<>(); // Already gave an error message
-            var kind = autoDetectYamlKind(yamlMap);
+            String kind;
+            boolean isNewFile = yamlMap == null;
+            if (yamlMap == null) {
+                yamlMap = new HashMap<>(); // Already gave an error message
+                kind = "";
+            } else {
+                kind = autoDetectYamlKind(yamlMap);
+            }
 
             addPathSection(composite);
             addYamlSelectorSection(composite, kind);
             addSeparator(composite);
+            var ncomp = addComposite(composite, 1);
 
-            // var scrolled = new ScrolledComposite(composite, SWT.V_SCROLL|SWT.H_SCROLL);
-            currentSubcomposite = addKindSubcomposite(composite, kind);
-            // scrolled.setContent(currentSubcomposite);
+            ScrolledComposite sc = new ScrolledComposite(ncomp, SWT.H_SCROLL | SWT.V_SCROLL);
+            sc.setLayoutData(
+                    new GridData(
+                            GridData.FILL_HORIZONTAL | GridData.FILL_VERTICAL,
+                            SWT.TOP,
+                            true,
+                            true));
+            sc.setLayoutData(new GridData(GridData.FILL, SWT.TOP, true, true));
+            sc.setExpandHorizontal(true);
+            sc.setExpandVertical(true);
+            sc.setAlwaysShowScrollBars(false);
+
+            currentSubcomposite = addKindSubcomposite(sc, kind);
+            sc.setContent(currentSubcomposite);
+            sc.layout(true, true);
 
             // This is some unit testing that retrieved yaml from the bunch of widgets is the same
             // as what went in
-            var newYamlMap = collectYaml();
-            boolean b = Objects.equals(yamlMap, newYamlMap);
-            String diffs = compareYaml(yamlMap, newYamlMap);
-            if (!b || !diffs.isEmpty()) {
-                MessageDialog.openInformation(
-                        shell, "Compare", "Maps are " + (b ? "" : "NOT ") + "the same\n" + diffs);
+            var newYamlMap = collectYaml(isNewFile);
+            if (!isNewFile) {
+                boolean b = Objects.equals(yamlMap, newYamlMap);
+                String diffs = compareYaml(yamlMap, newYamlMap);
+                if (!b || !diffs.isEmpty()) {
+                    MessageDialog.openInformation(
+                            shell,
+                            "Compare",
+                            "Maps are " + (b ? "" : "NOT ") + "the same\n" + diffs);
+                }
             }
         } catch (Exception e) {
 
@@ -215,13 +263,15 @@ public class DataPropertyPage extends PropertyPage {
                         int k = kindCombo.getSelectionIndex();
                         String kind = kindCombo.getItem(k);
 
-                        if (currentSubcomposite != null) currentSubcomposite.dispose();
+                        Composite p = parent;
+                        if (currentSubcomposite != null) {
+                            p = currentSubcomposite.getParent();
+                            currentSubcomposite.dispose();
+                        }
 
-                        // var scrolled = new ScrolledComposite(parent, SWT.V_SCROLL|SWT.H_SCROLL);
-                        currentSubcomposite = addKindSubcomposite(parent, kind);
-                        // scrolled.setContent(currentSubcomposite);
+                        currentSubcomposite = addKindSubcomposite(p, kind);
 
-                        parent.layout(true, true);
+                        p.layout(true, true);
                     }
 
                     @Override
@@ -231,8 +281,8 @@ public class DataPropertyPage extends PropertyPage {
                 });
     }
 
-    /** Creates a UI widget structure for the yamlMap, which must be empty or be of the
-     * correct kind.
+    /**
+     * Creates a UI widget structure for the yamlMap, which must be empty or be of the correct kind.
      */
     public Composite addKindSubcomposite(Composite parent, String kind) {
         Composite subcomp = null;
@@ -337,7 +387,7 @@ public class DataPropertyPage extends PropertyPage {
     public void addManifestStepsSection(Composite parent) {
         var comp = addCompositeUnequal(parent, 2);
         ((GridData) comp.getLayoutData()).grabExcessVerticalSpace = true;
-        ((GridData) comp.getLayoutData()).minimumHeight = convertHeightInCharsToPixels(15);
+        //     ((GridData) comp.getLayoutData()).minimumHeight = convertHeightInCharsToPixels(15);
 
         java.util.List<ManifestStepWidget> widgetList = new java.util.LinkedList<>();
         addLabel(comp, "Steps:", 12);
@@ -364,7 +414,7 @@ public class DataPropertyPage extends PropertyPage {
                                         "Manifest",
                                         "Copy");
                         switch (id) {
-                        	// FIXME - this widget creation duplicates material below
+                                // FIXME - this widget creation duplicates material below
                             default:
                             case 0: // Cancel
                                 break;
@@ -399,6 +449,9 @@ public class DataPropertyPage extends PropertyPage {
                                 break;
                         }
                         yamlWidgets.put("steps", widgetList);
+                        ((GridData) comp.getLayoutData()).minimumHeight =
+                                convertHeightInCharsToPixels(5 + 2 * widgetList.size());
+                        comp.layout(true, true);
                         currentSubcomposite.layout(true, true);
                     }
 
@@ -437,9 +490,13 @@ public class DataPropertyPage extends PropertyPage {
                         addLabel(comp, "copygraph:", 10);
                         var sc = addCompositeUnequal(comp, 4);
                         addLabel(sc, "from:", 4);
-                        t = addText(sc, (String)cgmap.get("from-graph"), TEXT_FIELD_WIDTH / 2 - 5);
+                        t = addText(sc, (String) cgmap.get("from-graph"), TEXT_FIELD_WIDTH / 2 - 5);
                         addLabel(sc, "to:", 3);
-                        Text tt = addText(sc, (String)cgmap.get("to-graph"), TEXT_FIELD_WIDTH / 2 - 5);
+                        Text tt =
+                                addText(
+                                        sc,
+                                        (String) cgmap.get("to-graph"),
+                                        TEXT_FIELD_WIDTH / 2 - 5);
                         widgetList.add(new ManifestStepWidget("copygraph", t, tt));
                     }
                 }
@@ -455,14 +512,14 @@ public class DataPropertyPage extends PropertyPage {
     }
 
     public record DataStepWidget(String key, Text[] values, java.util.List<String> constraints) {
-    	
-    	public DataStepWidget(String key, Text... values) {
-    		this(key, values, null);
-    	}
-    	
-    	public DataStepWidget(String key, Text t1, Text t2, java.util.List<String> constraints) {
-    		this(key, new Text[] {t1, t2}, constraints);
-    	}
+
+        public DataStepWidget(String key, Text... values) {
+            this(key, values, null);
+        }
+
+        public DataStepWidget(String key, Text t1, Text t2, java.util.List<String> constraints) {
+            this(key, new Text[] {t1, t2}, constraints);
+        }
     }
 
     public void addSeparator(Composite parent) {
@@ -514,7 +571,7 @@ public class DataPropertyPage extends PropertyPage {
 
         final var list =
                 new org.eclipse.swt.widgets.List(
-                        contentComposite, SWT.BORDER | SWT.SINGLE | SWT.V_SCROLL);
+                        contentComposite, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
         GridData gridData = new GridData();
         gridData.widthHint = 200;
         gridData.heightHint = 200;
@@ -580,8 +637,8 @@ public class DataPropertyPage extends PropertyPage {
 
                     @Override
                     public void widgetSelected(SelectionEvent e) {
-                        int k = list.getSelectionIndex();
-                        if (k != -1) list.remove(k);
+                        int[] sel = list.getSelectionIndices();
+                        list.remove(sel);
                     }
 
                     @Override
@@ -633,15 +690,14 @@ public class DataPropertyPage extends PropertyPage {
         var subcomp = addComposite(parent, 1);
         var ingestionStepsWidgets = new java.util.ArrayList<DataStepWidget>(10);
         yamlWidgets.put("ingestion-steps", ingestionStepsWidgets);
-        
+
         addLabel(subcomp, "Ingestion steps", LABEL_WIDTH);
-        final Composite buttonComposite = addComposite(subcomp, 3);
+        final Composite buttonComposite = addCompositeUnequal(subcomp, 3);
         final Composite stepsComposite = addComposite(subcomp, 1);
         ((GridData) stepsComposite.getLayoutData()).grabExcessVerticalSpace = true;
         ((GridData) stepsComposite.getLayoutData()).minimumHeight =
                 convertHeightInCharsToPixels(15);
 
-       
         final Button addButton = new Button(buttonComposite, SWT.PUSH);
         addButton.setText("Add");
         addButton.addSelectionListener(
@@ -667,20 +723,27 @@ public class DataPropertyPage extends PropertyPage {
                             case 0: // Cancel
                                 break;
                             case 1:
-                                makeNodegroupConstraintsComposite(ingestionStepsWidgets, 
-                                        stepsComposite, 0, "", new java.util.ArrayList<String>());
+                                makeNodegroupConstraintsComposite(
+                                        ingestionStepsWidgets,
+                                        stepsComposite,
+                                        0,
+                                        "",
+                                        new java.util.ArrayList<String>());
                                 break;
                             case 2:
-                                makeJsonComposite(ingestionStepsWidgets, stepsComposite, "", "", "", "");
+                                makeJsonComposite(
+                                        ingestionStepsWidgets, stepsComposite, "", "", "", "");
                                 break;
                             case 3:
-                                makeClassCsvComposite(ingestionStepsWidgets, stepsComposite, "", "");
+                                makeClassCsvComposite(
+                                        ingestionStepsWidgets, stepsComposite, "", "");
                                 break;
                             case 4:
                                 makeOwlComposite(ingestionStepsWidgets, stepsComposite, "");
                                 break;
                             case 5:
-                                makeNodegroupCsvComposite(ingestionStepsWidgets, stepsComposite, "", "");
+                                makeNodegroupCsvComposite(
+                                        ingestionStepsWidgets, stepsComposite, "", "");
                                 break;
                         }
                         currentSubcomposite.layout(true, true);
@@ -702,12 +765,14 @@ public class DataPropertyPage extends PropertyPage {
                     if (obj instanceof Map<?, ?> item) {
                         if (item.get("class") instanceof String className
                                 && item.get("csv") instanceof String csv) {
-                            makeClassCsvComposite(ingestionStepsWidgets, stepsComposite, className, csv);
+                            makeClassCsvComposite(
+                                    ingestionStepsWidgets, stepsComposite, className, csv);
                             continue;
                         }
                         if (item.get("nodegroup") instanceof String nodegroup
                                 && item.get("csv") instanceof String csv) {
-                            makeNodegroupCsvComposite(ingestionStepsWidgets, stepsComposite, nodegroup, csv);
+                            makeNodegroupCsvComposite(
+                                    ingestionStepsWidgets, stepsComposite, nodegroup, csv);
                             continue;
                         }
                         if (item.get("owl") instanceof String owl) {
@@ -717,16 +782,27 @@ public class DataPropertyPage extends PropertyPage {
                         if (item.get("name") instanceof String name
                                 && item.get("creator") instanceof String creator
                                 && item.get("nodegroup_json") instanceof String nodegroup_json) {
-                        	var comment = (String)item.get("comment"); // optional - may be null
-                        	makeJsonComposite(ingestionStepsWidgets, stepsComposite,
-                        			name, creator, nodegroup_json, comment);
+                            var comment = (String) item.get("comment"); // optional - may be null
+                            makeJsonComposite(
+                                    ingestionStepsWidgets,
+                                    stepsComposite,
+                                    name,
+                                    creator,
+                                    nodegroup_json,
+                                    comment);
                             continue;
                         }
                         if (item.get("count") instanceof String count
                                 && item.get("nodegroup") instanceof String nodegroup) {
-                        	java.util.List<String> constraints = (List<String>)item.get("constraints"); // optional - may be null
-                        	makeNodegroupConstraintsComposite(ingestionStepsWidgets, stepsComposite,
-                        			Integer.valueOf(count), nodegroup, constraints);
+                            java.util.List<String> constraints =
+                                    (List<String>)
+                                            item.get("constraints"); // optional - may be null
+                            makeNodegroupConstraintsComposite(
+                                    ingestionStepsWidgets,
+                                    stepsComposite,
+                                    Integer.valueOf(count),
+                                    nodegroup,
+                                    constraints);
                             continue;
                         }
                         MessageDialog.openInformation(
@@ -742,7 +818,11 @@ public class DataPropertyPage extends PropertyPage {
 
     public static final int WIDTH2 = 10;
 
-    public Composite makeClassCsvComposite(java.util.List<DataStepWidget> widgets, Composite parent, String className, String csv) {
+    public Composite makeClassCsvComposite(
+            java.util.List<DataStepWidget> widgets,
+            Composite parent,
+            String className,
+            String csv) {
         final Composite subComposite = addCompositeUnequal(parent, 4);
         addLabel(subComposite, "  class:", WIDTH2);
         Text t1 = addText(subComposite, className, TEXT_FIELD_WIDTH / 2);
@@ -752,7 +832,11 @@ public class DataPropertyPage extends PropertyPage {
         return subComposite;
     }
 
-    public Composite makeNodegroupCsvComposite(java.util.List<DataStepWidget> widgets, Composite parent, String nodegroup, String csv) {
+    public Composite makeNodegroupCsvComposite(
+            java.util.List<DataStepWidget> widgets,
+            Composite parent,
+            String nodegroup,
+            String csv) {
         final Composite subComposite = addCompositeUnequal(parent, 4);
 
         addLabel(subComposite, "nodegroup:", WIDTH2);
@@ -763,7 +847,8 @@ public class DataPropertyPage extends PropertyPage {
         return subComposite;
     }
 
-    public Composite makeOwlComposite(java.util.List<DataStepWidget> widgets, Composite parent, String owl) {
+    public Composite makeOwlComposite(
+            java.util.List<DataStepWidget> widgets, Composite parent, String owl) {
         final Composite subComposite = addCompositeUnequal(parent, 4);
 
         addLabel(subComposite, "owl:", WIDTH2);
@@ -772,8 +857,13 @@ public class DataPropertyPage extends PropertyPage {
         return subComposite;
     }
 
-    public Composite makeJsonComposite(java.util.List<DataStepWidget> widgets, 
-            Composite parent, String name, String creator, String json, String comment) {
+    public Composite makeJsonComposite(
+            java.util.List<DataStepWidget> widgets,
+            Composite parent,
+            String name,
+            String creator,
+            String json,
+            String comment) {
         final Composite subComposite = addCompositeUnequal(parent, 8);
 
         addLabel(subComposite, "name:", WIDTH2);
@@ -788,8 +878,12 @@ public class DataPropertyPage extends PropertyPage {
         return subComposite;
     }
 
-    public Composite makeNodegroupConstraintsComposite(java.util.List<DataStepWidget> widgets, 
-            Composite parent, int count, String nodegroup, java.util.List<String> constraints) {
+    public Composite makeNodegroupConstraintsComposite(
+            java.util.List<DataStepWidget> widgets,
+            Composite parent,
+            int count,
+            String nodegroup,
+            java.util.List<String> constraints) {
         final Composite subComposite = addCompositeUnequal(parent, 5);
 
         addLabel(subComposite, "count:", WIDTH2);
@@ -811,15 +905,16 @@ public class DataPropertyPage extends PropertyPage {
                         widgetSelected(e);
                     }
                 });
+
+        // FIXME - need to record widgets for contraints
         widgets.add(new DataStepWidget("count#nodegroup", t1, t2, constraints));
         return subComposite;
     }
-    
 
     public class ConstraintDialog extends org.eclipse.jface.dialogs.Dialog {
-    	public java.util.List<String> constraints;
-    	public java.util.List<Text> textFields = new java.util.LinkedList<Text>();
-    	
+        public java.util.List<String> constraints;
+        public java.util.List<Text> textFields = new java.util.LinkedList<Text>();
+
         public ConstraintDialog(Shell parentShell, java.util.List<String> constraints) {
             super(parentShell);
             this.constraints = constraints;
@@ -847,8 +942,8 @@ public class DataPropertyPage extends PropertyPage {
                     });
             var removeButton = new Button(buttonComposite, SWT.PUSH);
             removeButton.setText("Remove");
-            for (var constraint: constraints) {
-            	textFields.add(addLine(container, constraint));
+            for (var constraint : constraints) {
+                textFields.add(addLine(container, constraint));
             }
             return container;
         }
@@ -875,15 +970,15 @@ public class DataPropertyPage extends PropertyPage {
         protected boolean isResizable() {
             return true;
         }
-        
+
         @Override
         protected void okPressed() {
-        	constraints.clear();
-        	for (var t: textFields) {
-        		String v = t.getText().trim();
-        		if (!v.isEmpty()) constraints.add(v);
-        	}
-        	super.okPressed();
+            constraints.clear();
+            for (var t : textFields) {
+                String v = t.getText().trim();
+                if (!v.isEmpty()) constraints.add(v);
+            }
+            super.okPressed();
         }
     }
 
@@ -964,7 +1059,14 @@ public class DataPropertyPage extends PropertyPage {
             }
         } else if (sa instanceof Integer ia && sb instanceof Integer ib) {
             if (!Objects.equals(ia, ib)) {
-                diffs += "Integer values are different at " + level + " : " + ia + " vs. " + ib + ");\n";
+                diffs +=
+                        "Integer values are different at "
+                                + level
+                                + " : "
+                                + ia
+                                + " vs. "
+                                + ib
+                                + ");\n";
             }
         } else if (sa instanceof List<?> lista && sb instanceof List<?> listb) {
             if (lista.size() != listb.size()) {
@@ -1038,7 +1140,7 @@ public class DataPropertyPage extends PropertyPage {
     }
 
     public void performDefaults() {
-    	// FIXME - this is not refreshing
+        // FIXME - this is not refreshing
         var kind = autoDetectYamlKind(yamlMap);
         var parent = currentSubcomposite.getParent();
         if (currentSubcomposite != null) currentSubcomposite.dispose();
@@ -1065,14 +1167,18 @@ public class DataPropertyPage extends PropertyPage {
                 outFile = root.getFile(p);
             }
 
-            var diffs = validate();
-            if (diffs != null && !diffs.isEmpty()) {
-            	var ok = MessageDialog.openConfirm(shell,  "",
-            			"The edited yaml content has some errors. Save the content anyway?\n\n" + diffs);
-            	if (!ok) return false;
-            }
+            var outYaml = collectYaml(false);
 
-            var outYaml = collectYaml();
+            var diffs = validate(outYaml);
+            if (diffs != null && !diffs.isEmpty()) {
+                var ok =
+                        MessageDialog.openConfirm(
+                                shell,
+                                "",
+                                "The edited yaml content has some errors. Save the content anyway?\n\n"
+                                        + diffs);
+                if (!ok) return false;
+            }
 
             if (outFile.exists() && isNewFile) {
                 boolean ok =
@@ -1084,15 +1190,15 @@ public class DataPropertyPage extends PropertyPage {
             writeYaml(outFile, outYaml);
 
         } catch (Exception e) {
-            MessageDialog.openError(shell, "Error", "Failed to write to file " + newPath
-            		+ "\n" + e.getMessage());
+            MessageDialog.openError(
+                    shell, "Error", "Failed to write to file " + newPath + "\n" + e.getMessage());
             RackConsole.getConsole().error(e.toString());
         }
         // FIXME - should we call super.performOK()?
         return true;
     }
 
-    public Map<String, Object> collectYaml() {
+    public Map<String, Object> collectYaml(boolean isNewFile) {
         Map<String, Object> yaml = new HashMap<>();
         int k = kindCombo.getSelectionIndex();
         String kind = kindCombo.getItems()[k];
@@ -1107,7 +1213,8 @@ public class DataPropertyPage extends PropertyPage {
                 collectModelYaml(yaml);
                 break;
             default:
-                MessageDialog.openError(shell, "Error", "Unknown kind of Yaml to output");
+                if (!isNewFile)
+                    MessageDialog.openError(shell, "Error", "Unknown kind of Yaml to output");
                 return null;
         }
         return yaml;
@@ -1146,18 +1253,18 @@ public class DataPropertyPage extends PropertyPage {
                     var wsteps = (java.util.List<ManifestStepWidget>) wlist;
                     java.util.List<Object> yamlList = new java.util.ArrayList<>(wsteps.size());
                     for (var step : wsteps) {
-                    	if (step.value2 == null) {
-                    		var mp = new HashMap<String, Object>();
-                    		mp.put(step.key(), step.value.getText());
-                    		yamlList.add(mp);
-                    	} else {
-                    		var mp1 = new HashMap<String, Object>();
-                    		mp1.put("from-graph", step.value.getText());
-                    		mp1.put("to-graph", step.value2.getText());
-                    		var mp = new HashMap<String, Object>();
-                    		mp.put(step.key(), mp1);
-                    		yamlList.add(mp);
-                    	}
+                        if (step.value2 == null) {
+                            var mp = new HashMap<String, Object>();
+                            mp.put(step.key(), step.value.getText());
+                            yamlList.add(mp);
+                        } else {
+                            var mp1 = new HashMap<String, Object>();
+                            mp1.put("from-graph", step.value.getText());
+                            mp1.put("to-graph", step.value2.getText());
+                            var mp = new HashMap<String, Object>();
+                            mp.put(step.key(), mp1);
+                            yamlList.add(mp);
+                        }
                     }
                     yaml.put(names[names.length - 1], yamlList);
                 } else if (w instanceof java.util.List<?> wlist
@@ -1166,24 +1273,24 @@ public class DataPropertyPage extends PropertyPage {
                     var wsteps = (java.util.List<DataStepWidget>) wlist;
                     java.util.List<Object> yamlList = new java.util.ArrayList<>(wsteps.size());
                     for (var step : wsteps) {
-                    	var snames = step.key().split("#");
+                        var snames = step.key().split("#");
                         var mp = new HashMap<String, Object>();
                         int k = 0;
-                        for (var sname: snames) {
-                        	var text = step.values()[k];
-                        	if (text != null) {
-                        		String v = text.getText();
-                        		if (sname.equals("count")) {
-                        			// count is a special case where the yaml expects an Integer
-                        			mp.put(sname,  Integer.valueOf(v)); // FIXME - catch exception
-                        		} else {
-                        			mp.put(sname, v);
-                        		}
-                        	}
-                        	k++;
+                        for (var sname : snames) {
+                            var text = step.values()[k];
+                            if (text != null) {
+                                String v = text.getText();
+                                if (sname.equals("count")) {
+                                    // count is a special case where the yaml expects an Integer
+                                    mp.put(sname, Integer.valueOf(v)); // FIXME - catch exception
+                                } else {
+                                    mp.put(sname, v);
+                                }
+                            }
+                            k++;
                         }
                         if (step.constraints != null && step.constraints.size() > 0) {
-                        	mp.put("constraints", step.constraints);
+                            mp.put("constraints", step.constraints);
                         }
                         yamlList.add(mp);
                     }
@@ -1229,10 +1336,7 @@ public class DataPropertyPage extends PropertyPage {
     }
 
     public static final String[] dataKeys = {
-        "ingestion-steps",
-        "model-graphs",
-        "data-graph",
-        "extra-data-graphs",
+        "ingestion-steps", "model-graphs", "data-graph", "extra-data-graphs",
     };
 
     public void collectDataYaml(Map<String, Object> yaml) {
@@ -1244,167 +1348,220 @@ public class DataPropertyPage extends PropertyPage {
     public void collectModelYaml(Map<String, Object> yaml) {
         collectYaml(yaml, modelKeys);
     }
-    
-    public String validate() {
+
+    public String validate(Map<String,Object> yamlToCheck) {
         String newPath = pathText.getText();
         IPath p = new Path(newPath);
         IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-        IContainer outDir = root.getFile(p).getParent();
-        
+        IContainer currentDir = root.getFile(p).getParent();
 
-    	int k = kindCombo.getSelectionIndex();
-    	String kind = kindCombo.getItems()[k];
-    	switch (kind) {
-    	case MANIFEST: return validateManifest();
-    	case MODEL: return validateModel(outDir);
-    	case DATA: return validateData(outDir);
-    	}
-    	return "No such kind of yaml file: " + kind + "\n";
+        int k = kindCombo.getSelectionIndex();
+        String kind = kindCombo.getItems()[k];
+        switch (kind) {
+            case MANIFEST:
+                return validateManifest(yamlToCheck, currentDir);
+            case MODEL:
+                return validateModel(yamlToCheck, currentDir);
+            case DATA:
+                return validateData(yamlToCheck, currentDir);
+        }
+        return "No such kind of yaml file: " + kind + "\n";
     }
     
-    public String validateManifest() {
+    public String validateManifest(Map<String,Object> yamlToCheck, IContainer currentDir) {
     	String diffs = "";
-    	var list = (org.eclipse.swt.widgets.List)yamlWidgets.get("footprint:model-graphs");
-    	if (list != null) for (int k = 0; k < list.getItemCount(); k++) {
-    		var text = list.getItem(k);
-    		diffs += okURL(text);
+    	diffs += okKeys(yamlToCheck, "name", null, "description", "copy-to-graph", "perform-entity-resolution", "footprint", "steps");
+    	diffs += okString(yamlToCheck, "name", true);
+    	diffs += okString(yamlToCheck, "description", false);
+    	diffs += okURL(yamlToCheck, "copy-to-graph");
+    	diffs += okURL(yamlToCheck, "perform-entity-resuolution");
+
+    	var footprint = yamlToCheck.get("footprint");
+    	if (footprint instanceof Map<?,?> ofootprint) {
+    		@SuppressWarnings("unchecked")
+			var mfootprint = (Map<String,Object>)ofootprint;
+    		diffs += okKeys(mfootprint, null, "model-graphs", "data-graphs", "nodegroups");
+    		diffs += okListOfURL(mfootprint, "model-graphs", false);
+    		diffs += okListOfURL(mfootprint, "data-graphs", false);
+    		diffs += okListOfNodegroup(mfootprint, "nodegroups", currentDir);
+    	} else if (footprint != null) {
+    		diffs += "The yaml map has a 'footprint' key whose value is not a map: " + footprint.getClass() + "\n";
     	}
-    	list = (org.eclipse.swt.widgets.List)yamlWidgets.get("footprint:data-graphs");
-    	if (list != null) for (int k = 0; k < list.getItemCount(); k++) {
-    		var text = list.getItem(k);
-    		diffs += okURL(text);
-    	}
-    	String text = (String)yamlWidgets.get("copy-to-graph");
-    	if (text != null) diffs += okURL(text);
-    	text = (String)yamlWidgets.get("perform-entity-resolution");
-    	if (text != null) diffs += okURL(text);
-    	// FIXME - to do
-        //"footprint:nodegroups",
     	
-        Object w = yamlWidgets.get("steps");
-        if (!(w instanceof java.util.List<?> wlist)) {
-            MessageDialog.openError(shell, "Error", "No widget for " + "steps");
-        } else {
-        	var wsteps = (java.util.List<ManifestStepWidget>) wlist;
-        	java.util.List<Object> yamlList = new java.util.ArrayList<>(wsteps.size());
-        	for (var step : wsteps) {
-        		if (step.value2 != null) {
-        			diffs += okURL(step.value.getText());
-        			diffs += okURL(step.value2.getText());
-        		} else if (step.key.equals("data")) {
-        		} else if (step.key.equals("model")) { // path to file in current project
-        		} else if (step.key.equals("nodegroups")) { // opaque identifiers
-        		} else if (step.key.equals("manifest")) {
-        			
+        Object w = yamlToCheck.get("steps");
+        if (w == null) {
+        	// Not required
+        } else if (w instanceof java.util.List<?> wlist) {
+        	for (var step : wlist) {
+        		if (step == null) {
+        			diffs += "An item in the 'steps' list is null\n";
+        		} else if (step instanceof Map<?,?> stepm) {
+        			@SuppressWarnings("unchecked")
+					var stepmap = (Map<String,Object>)stepm;
+        			if (stepmap.get("data") != null) {
+        				diffs += okKeys(stepmap, "data", null);
+        				diffs += okFile(stepmap, "data", currentDir); // FIXME what is this?
+        			} else if (stepmap.get("model") != null) {
+        				diffs += okKeys(stepmap, "model", null);
+        				diffs += okFile(stepmap, "model", currentDir); // FIXME what is this?
+        			} else if (stepmap.get("nodegroups") != null) {
+        				diffs += okKeys(stepmap, "nodegroups", null);
+        				diffs += okNodegroup(stepmap, "nodegroups", currentDir);
+        			} else if (stepmap.get("manifest") != null) {
+        				diffs += okKeys(stepmap, "manifest", null);
+        				diffs += okFile(stepmap, "manifest", currentDir);
+        			} else if (stepmap.get("copygraph") != null) {
+        				diffs += okKeys(stepmap, "copygraph", null);
+        				var o = stepmap.get("copygraph");
+        				if (o == null) {
+        		    		diffs += "The yaml map has a 'copygraph' key whose value is null\n";
+        				} else if (o instanceof Map<?,?> m) {
+                			@SuppressWarnings("unchecked")
+        					var map = (Map<String,Object>)m;
+                			diffs += okKeys(map, "from-graph", "to-graph", null);
+                			diffs += okURL(map, "from-graph");
+                			diffs += okURL(map, "to-graph");
+        				} else {
+        		    		diffs += "The yaml map has a 'copygraph' key whose value is not a map: " + footprint.getClass() + "\n";
+        				}
+        			}
+        		} else {
+        			diffs += "An item in the 'steps' list is not a Map: " + step.getClass() + "\n";
         		}
         	}
+        } else {
+    		diffs += "The yaml map has a 'steps' key whose value is not a list: " + w.getClass() + "\n";
         }
-
-        //"steps"
-    	// FIXME - check for unexpected keys?
-    	return "";
-    }
-    
-    public String validateModel(IContainer outDir) {
-    	String diffs = "";
-    	var list = (org.eclipse.swt.widgets.List)yamlWidgets.get("files");
-    	if (list != null) for (int k = 0; k < list.getItemCount(); k++) {
-    		var text = list.getItem(k);
-    		diffs += okFileOrURL(text, outDir); // FIXME - change to checking just files
-    	} else {
-    		diffs += "Required element 'files' is not present\n";
-    	}
-    	list = (org.eclipse.swt.widgets.List)yamlWidgets.get("model-graphs");
-    	if (list != null) for (int k = 0; k < list.getItemCount(); k++) {
-    		var text = list.getItem(k);
-    		diffs += okURL(text);
-    	}
-    	// FIXME - check for unexpected keys?
-    	// FIXME - check required elements
     	return diffs;
     }
     
-    public String validateData(IContainer outDir) {
+    public String validateModel(Map<String,Object> yamlToCheck, IContainer currentDir) {
+        String diffs = "";
+        diffs += okKeys(yamlToCheck, "files", null, "model-graphs");
+        diffs += okListOfFile(yamlToCheck, "files", currentDir);
+        diffs += okListOfURL(yamlToCheck, "model-graphs", true);
+        return diffs;
+    }
+
+    public String validateData(Map<String,Object> yamlToCheck, IContainer currentDir) {
     	String diffs = "";
-    	String text = (String)yamlWidgets.get("data-graph");
-    	if (text != null) diffs += okURL(text);
-    	
-    	var list = (org.eclipse.swt.widgets.List)yamlWidgets.get("model-graphs");
-    	if (list != null) for (int k = 0; k < list.getItemCount(); k++) {
-    		text = list.getItem(k);
-    		diffs += okURL(text);
-    	}
-    	list = (org.eclipse.swt.widgets.List)yamlWidgets.get("extra-data-graphs");
-    	if (list != null) for (int k = 0; k < list.getItemCount(); k++) {
-    		text = list.getItem(k);
-    		diffs += okURL(text);
-    	}
-        var array = (List) yamlWidgets.get("ingestion-steps");
-        if (array != null) {
-            for (var obj : array) {
-                try {
-                    if (obj instanceof Map<?, ?> item) {
-                    	Object o = item.get("class#csv");
-                    	if (o instanceof DataStepWidget d) {
-                    		diffs += okURL(((Text)d.values[0]).getText()); // class
-                    		diffs += okFile(((Text)d.values[1]).getText(), outDir); // csv
-                    		continue;
-                    	}
-                    	o = item.get("owl");
-                    	if (o instanceof DataStepWidget d) {
-                    		diffs += okURL(((Text)d.values[0]).getText()); // owl
-                    		continue;
-                    	}
-                    	o = item.get("nodegroup#csv");
-                    	if (o instanceof DataStepWidget d) {
-                    		diffs += okNodegroup(((Text)d.values[0]).getText()); // nodegroup
-                    		diffs += okFile(((Text)d.values[1]).getText(), outDir); // csv
-                    		continue;
-                    	}
-                    	o = item.get("name#creator#nodegroup_json#comment");
-                    	if (o instanceof DataStepWidget d) {
-                        	// Nop checks of these
-                    		continue;
-                    	}
-                    	o = item.get("count#nodegroup");
-                    	if (o instanceof DataStepWidget d) {
-                    		var numtext = ((Text)d.values[0]).getText().trim();
-                    		if (!numtext.isEmpty()) {
-                    			try {
-                    				int count = Integer.valueOf(numtext.trim());
-                    				if (count < 0) diffs += "The 'count' field is negative\n";
-                    			} catch (Exception e) {
-                    				diffs += "The 'count' field does not contain a number\n";
-                    			}
-                    		} else {
-                    			// FIXME - OK or error
-                    		}
-                    		diffs += okNodegroup(((Text)d.values[1]).getText());
-                    		// FIXME - not checking d.constraints
-                    		continue;
-                    	}
-                    	diffs += "Invalid item in the ingestion-steps list; keys: " 
-                    			+ item.keySet() 
-                    			+ "\n"; // FIXME - this does not print out properly
-                    }
-                } catch (Exception e) {
-                	diffs += "Badly constructed ingestion-step\n";
+    	diffs += okKeys(yamlToCheck, "ingestion-steps",null,"data-graph","extra-data-graphs","model-graphs");
+    	diffs += okURL(yamlToCheck, "data-graph");
+        diffs += okListOfURL(yamlToCheck, "extra-data-graphs", false);
+        diffs += okListOfURL(yamlToCheck, "model-graphs", true);
+
+        // Check ingestion-steps
+        String key = "ingestion-steps";
+        var value = yamlToCheck.get(key);
+        if (value == null) {
+            // Not required
+        } else if (value instanceof List<?> steps) {
+            for (var item: steps) {
+                if (item instanceof Map<?,?> step) {
+                	@SuppressWarnings("unchecked")
+					var map = (Map<String,Object>)item;
+                			
+                	if (map.get("nodegroup") != null && map.get("csv") != null) {
+                		diffs += okKeys(map, "nodegroup", "csv", null);
+                		diffs += okNodegroup(map, "nodegroup", currentDir);
+                		diffs += okFile(map, "csv", currentDir);
+                	} else if (map.get("class") != null && map.get("csv") != null) {
+                		diffs += okKeys(map, "class", "csv", null);
+                		diffs += okURL(map, "class");
+                		diffs += okFile(map, "csv", currentDir);
+                	} else if (map.get("owl") != null) {
+                		diffs += okKeys(map, "owl", null);
+                		diffs += okURL(map, "owl");  // FIXME - what is this
+                	} else if (map.get("name") != null && map.get("creator") != null && map.get("nodegroup_json") != null) {
+                		diffs += okKeys(map, "name", "creator", "nodegroup_json", null, "comment");
+                		diffs += okString(map, "name", true);
+                		diffs += okString(map, "creator", true);
+                		diffs += okString(map, "comment", false);
+                		diffs += okString(map, "nodegroup_json", true); // FIXME - should be legitimate json?
+                	} else if (map.get("count") != null && map.get("nodegroup") != null ) {
+                		diffs += okKeys(map, "count", "nodegroup", null, "constraints");
+                		diffs += okNumber(map, "count");
+                		diffs += okNodegroup(map, "nodegroup", currentDir);
+                		diffs += okListOfString(map, "constraints");
+                	} else {
+                		diffs += "A step does not have the required keys to be a correct step; has just";
+                		for (var k: map.keySet()) diffs += " " + k;
+                		diffs += "\n";
+                	}
+                } else {
+                	diffs += "Element of '" + key + "' list is not a Map: " + item.getClass() + "\n";
                 }
             }
+        } else {
+            diffs += "Element '" + key + "' has the wrong type: " + value.getClass() + "\n";
         }
-
-    	// FIXME - to do
-//        "ingestion-steps",
-    	// FIXME - check for unexpected keys?
-    	// FIXME - check required elements
-    	return "";
+        
+        return diffs;
     }
     
-    public String okURL(String text) {
+    // The array of Strings is expected to contain the required keys, then a null, then optional keys
+    public String okKeys(Map<String,Object> yamlToCheck, String ... keys) {
+    	String diffs = "";
+    	var keyset = new java.util.HashSet<String>();
+    	keyset.addAll(yamlToCheck.keySet());
+    	boolean required = true;
+    	for (String key: keys) {
+    		if (key == null) { required = false; continue; }
+    		if (!keyset.remove(key)) if (required) diffs += "Required key '" + key + "' is not present\n";
+    	}
+    	if (keyset.size() > 0) {
+        	diffs += "The model yaml has excess keys:";
+        	for (var item: keyset) { diffs += " " + item; }
+        	diffs += "\n";
+    	}
+    	return diffs;
+    }
+    
+    public String okString(Map<String,Object> yamlToCheck, String key, boolean nonEmpty) {
+    	String diffs = "";
+    	var value = yamlToCheck.get(key);
+    	if (value == null) {
+    		if (nonEmpty) diffs += "The value for required key '" + key + "' may not be null\n";
+    	} else if (value instanceof String text) {
+    		if (nonEmpty && text.trim().isEmpty()) diffs += "The value for required key '" + key + "' may not be an empty String\n";
+    		// Just a string
+    	} else {
+    		diffs += "Value for '" + key + "' key is expected to be a String: " + value.getClass() + "\n";
+    	}
+    	return diffs;
+    }
+    
+    public String okNumber(Map<String,Object> yamlToCheck, String key) {
+    	String diffs = "";
+    	var value = yamlToCheck.get(key);
+    	if (value == null) {
+    		diffs += "The value for required key '" + key + "' may not be null\n";
+    	} else if (value instanceof Integer n) {
+    		if (n < 0) diffs += "The value for required key '" + key + "' may not be negative\n";
+    	} else {
+    		diffs += "Value for '" + key + "' key is expected to be an Integer: " + value.getClass() + "\n";
+    	}
+    	return diffs;
+    }
+    
+    public String okURL(Map<String,Object> yamlToCheck, String key) {
+    	String diffs = "";
+    	var value = yamlToCheck.get(key);
+    	if (value == null) {
+    		// Not required
+    	} else if (value instanceof String text) {
+    		diffs += okURL(text);
+    	} else {
+    		diffs += "Value for '" + key + "' key is expected to be a String: " + value.getClass() + "\n";
+    	}
+    	return diffs;
+    }
+    
+    public String okURL(String text) { // FIXME - are empty elements allowed in lists?
     	try {
     		// Check if the text is a valid URL
     		text = text.trim();
-    		if (text.isEmpty()) return "";
+    		if (text.isEmpty() || true) return ""; // FIXME - unable to text URLs for now
     		URL u = new URL(text); 
     		HttpURLConnection huc =  (HttpURLConnection)  u.openConnection();
     		huc.setRequestMethod("HEAD");
@@ -1415,62 +1572,137 @@ public class DataPropertyPage extends PropertyPage {
         return "URL " + text + " does not exist\n";
     }
     
-    public String okFileOrURL(String text, IContainer outDir) {
+    public String okListOfURL(Map<String,Object> yamlToCheck, String key, boolean allowSingleton) {
+    	String diffs = "";
+        var value = yamlToCheck.get(key);
+        if (value == null) {
+            // Not required
+        } else if (allowSingleton && value instanceof String s) {
+        	diffs += okURL(s);
+        } else if (value instanceof List<?> list) {
+            for (var text: list) {
+                if (text instanceof String s) diffs += okURL(s);
+                else diffs += "Element of '" + key + "' list is not a String: " + text.toString() + " is a " + text.getClass() + "\n";
+            }
+        } else {
+            diffs += "Element '" + key + "' has the wrong type: " + value.getClass() + "\n";
+        }
+    	return diffs;
+    }
+    
+    public String okListOfString(Map<String,Object> yamlToCheck, String key) {
+    	String diffs = "";
+        var value = yamlToCheck.get(key);
+        if (value == null) {
+            // Not required
+        } else if (value instanceof List<?> list) {
+            for (var text: list) {
+                if (text instanceof String s) {} // FIXME  - allowed to be empty? or null?
+                else diffs += "Element of '" + key + "' list is not a String: " + text.toString() + " is a " + text.getClass() + "\n";
+            }
+        } else {
+            diffs += "Element '" + key + "' has the wrong type: " + value.getClass() + "\n";
+        }
+    	return diffs;
+    }
+    
+    public String okFile(Map<String,Object> yamlToCheck, String key, IContainer currentDir) {
+    	String diffs = "";
+        var value = yamlToCheck.get(key);
+        if (value == null) {
+            // Not required
+        } else if (value instanceof String text) {
+            diffs += okFile(text, currentDir);
+        } else {
+            diffs += "Element '" + key + "' has the wrong type: " + value.getClass() + "\n";
+        }
+    	return diffs;
+    }
+
+    public String okFile(String text, IContainer currentDir) {
+        try {
+            // Check if the text is a path in the workspace
+            IPath p = new Path(text);
+            IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+            if (currentDir.getFile(p).exists()) return "";
+            try {
+                if (root.getFile(p).exists()) return "";
+            } catch (Exception e) {
+            	// Just skip -- throws exception if p does not contain a project name
+            }
+    	} catch (Exception e) {
+    		return e.getMessage() + "\n";
+    	}
+        return "File " + text + " does not exist\n";
+    }
+    
+    public String okListOfFile(Map<String,Object> yamlToCheck, String key, IContainer currentDir) {
+    	String diffs = "";
+        var value = yamlToCheck.get(key);
+        if (value == null) {
+            // Not required
+        } else if (value instanceof List<?> list) {
+            for (var text: list) {
+                if (text instanceof String s) diffs += okFile(s, currentDir);
+                else diffs += "Element of '" + key + "' list is not a String: " + text.toString() + " is a " + text.getClass() + "\n";
+            }
+        } else {
+            diffs += "Element '" + key + "' has the wrong type: " + value.getClass() + "\n";
+        }
+    	return diffs;
+    }
+    
+//    public String okFileInCurrentProject(String text, IContainer outDir) {
+//    	try {
+//    		// Check if the text is a path in the workspace
+//    		IPath p = new Path(text);
+//    		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+//    		if (outDir.getFile(p).exists()) return "";
+//    		if (root.getFile(p).exists()) return "";
+//    	} catch (Exception e) {
+//    		return e.getMessage() + "\n";
+//    	}
+//        return "File " + text + " does not exist\n";
+//    }
+        
+    public String okListOfNodegroup(Map<String,Object> yamlToCheck, String key, IContainer currentDir) {
+    	String diffs = "";
+        var value = yamlToCheck.get(key);
+        if (value == null) {
+            // Not required
+        } else if (value instanceof List<?> list) {
+            for (var text: list) {
+                if (text instanceof String s) diffs += okNodegroup(s, currentDir);
+                else diffs += "Element of '" + key + "' list is not a String: " + text.toString() + " is a " + text.getClass() + "\n";
+            }
+        } else {
+            diffs += "Element '" + key + "' has the wrong type: " + value.getClass() + "\n";
+        }
+    	return diffs;
+    }
+    
+    public String okNodegroup(Map<String,Object> yamlToCheck, String key, IContainer currentDir) {
+    	String diffs = "";
+        var value = yamlToCheck.get(key);
+        if (value == null) {
+            // Not required
+        } else if (value instanceof String s) {
+            diffs += okNodegroup(s, currentDir);
+        } else {
+            diffs += "Element '" + key + "' has the wrong type: " + value.getClass() + "\n";
+        }
+    	return diffs;
+    }
+    
+    public String okNodegroup(String text, IContainer currentDir) {
+    	// check that this is a relative path to a folder holding a store.csv file
     	try {
     		// Check if the text is a path in the workspace
     		IPath p = new Path(text.trim());
-    		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-    		if (outDir.getFile(p).exists()) return "";
-    		if (root.getFile(p).exists()) return "";
-
-    		// Check if the text is a file in the local file system
-    		// If it is local, it should be to the location of the yaml file it is in
-    		// FIXME - fix the relative reference
-    		if (new java.io.File(text).exists()) return "";
-
-    		// Check if the text is a valid URL
-    		String s = okURL(text);
-    		if (s.isEmpty()) return s;
+    		if (currentDir.getFolder(p).getFile("store.csv").exists()) return "";
     	} catch (Exception e) {
     		return e.getMessage() + "\n";
     	}
-        return "File or URL " + text + " does not exist\n";
-    }
-    
-    public String okFile(String text, IContainer outDir) {
-    	try {
-    		// Check if the text is a path in the workspace
-    		IPath p = new Path(text);
-    		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-    		if (outDir.getFile(p).exists()) return "";
-    		if (root.getFile(p).exists()) return "";
-
-    		// Check if the text is a file in the local file system
-    		// If it is local, it should be to the location of the yaml file it is in
-    		// FIXME - fix the relative reference
-    		if (new java.io.File(text).exists()) return "";
-
-    	} catch (Exception e) {
-    		return e.getMessage() + "\n";
-    	}
-        return "File " + text + " does not exist\n";
-    }
-    
-    public String okFileInCurrentProject(String text, IContainer outDir) {
-    	try {
-    		// Check if the text is a path in the workspace
-    		IPath p = new Path(text);
-    		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-    		if (outDir.getFile(p).exists()) return "";
-    		if (root.getFile(p).exists()) return "";
-    	} catch (Exception e) {
-    		return e.getMessage() + "\n";
-    	}
-        return "File " + text + " does not exist\n";
-    }
-    
-    public String okNodegroup(String text) {
-    	// FIXME - check that this is a simple identifier
-    	return "";
+        return "File " + text + " is not a nodegroup folder\n";
     }
 }
