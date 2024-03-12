@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.chart.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox prefHeight="200.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ge.research.rack.arp4754.wireframe.ui.Arp4754WireframeObjectivesViewHandler" >
+  <children>
+
+    <GridPane>
+      <columnConstraints>
+        <ColumnConstraints hgrow="ALWAYS" prefWidth="5" />
+        <ColumnConstraints hgrow="ALWAYS" />
+      </columnConstraints>
+
+      <rowConstraints>
+        <!-- MENU -->
+        <RowConstraints vgrow="SOMETIMES" prefHeight="50" />
+
+        <!-- DESCRIPTION -->
+        <RowConstraints vgrow="SOMETIMES" prefHeight="80" />
+
+        <!-- QUERY -->
+        <RowConstraints vgrow="SOMETIMES" prefHeight="50" />
+
+        <!-- BUTTONS -->
+        <RowConstraints vgrow="SOMETIMES" prefHeight="60" />
+      </rowConstraints>
+
+      <children>
+
+        <!-- MENU -->
+        <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.columnIndex="1" alignment="CENTER_LEFT" spacing="10" >
+          <children>
+            <Label style="-fx-font-size: 16px; -fx-font-weight: bold" mnemonicParsing="false" text="Objective" />
+            <MenuButton fx:id="menuObjective" prefWidth="300.0" style="-fx-font-size: 16px;" >
+              <items>
+                <MenuItem mnemonicParsing="false" text="Objective-1-1" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-1-2" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-2-1" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-2-2" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-2-3" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-2-4" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-2-5" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-2-6" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-2-7" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-3-1" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-3-2" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-3-3" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-3-4" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-3-5" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-3-6" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-3-7" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-4-1" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-4-2" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-4-3" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-4-4" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-4-6" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-5-1" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-5-2" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-5-3" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-5-4" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-5-5" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-5-6" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-6-1" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-6-2" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-6-3" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-6-4" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-7-1" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-7-2" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-7-1" onAction="#objectiveMenuAction" />
+                <MenuItem mnemonicParsing="false" text="Objective-8-1" onAction="#objectiveMenuAction" />
+              </items>
+            </MenuButton>
+          </children>
+        </HBox>
+
+        <!-- DESCRIPTION -->
+        <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.columnIndex="1" spacing="10" >
+          <children>
+            <Label fx:id="txtObjectiveDescription" wrapText="true" style="-fx-font-size: 16px; -fx-font-weight: bold" prefWidth="400.0" text="" />
+          </children>
+        </HBox>
+
+        <!-- QUERY -->
+        <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.columnIndex="1" alignment="CENTER_LEFT" spacing="10" >
+          <children>
+            <Label style="-fx-font-size: 16px; -fx-font-weight: bold" text="Query Name" />
+            <TextField fx:id="txtObjectiveQuery" style="-fx-font-size: 16px;" prefWidth="300.0" />
+          </children>
+        </HBox>
+
+        <!-- BUTTONS -->
+        <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="3" spacing="20" GridPane.columnIndex="1" alignment="CENTER_LEFT" >
+          <children>
+            <Button fx:id="btnObjectiveCancel" onAction="#btnObectiveCancelAction" prefWidth="120.0" style="-fx-font-size: 16px; -fx-font-weight: bold" text="Cancel" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+            <Button fx:id="btnObjectiveDone" onAction="#btnObjectiveDoneAction" prefWidth="120.0" style="-fx-font-size: 16px; -fx-font-weight: bold" text="Done" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+          </children>
+        </HBox>
+
+      </children>
+    </GridPane>
+  </children>
+</VBox>

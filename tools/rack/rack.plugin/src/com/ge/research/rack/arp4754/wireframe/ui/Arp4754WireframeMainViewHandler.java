@@ -39,9 +39,13 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+
+import com.ge.research.rack.arp4754.wireframe.Arp4754AWireframeDAPWriter;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -119,28 +123,97 @@ public class Arp4754WireframeMainViewHandler {
     private void assuranceLevelAction(ActionEvent event) throws Exception {
         menuAssuranceLevel.setText(((MenuItem) event.getSource()).getText());
     }
+    
+    private boolean checkField(String str, String field, String tab) {
+    	if (str != null && !str.isEmpty() && !str.isBlank()) {
+    		return true;
+    	}
+
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Validate Input");
+        alert.setHeaderText("Missing the " + field + " entry in the " + tab + " tab.");
+        alert.showAndWait();
+    	return false;
+    }
+    
+    private boolean checkObjectives() {
+    	if (lvQueries.getItems().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Validate Objectives");
+            alert.setHeaderText("No objectives are defined in the Objectives tab.");
+            alert.showAndWait();
+        	return false;
+    	}
+
+    	return true;
+    }
 
     @FXML
     private void btnCompleteAction(ActionEvent event) throws Exception {
         // Check all items and generate DAP and configuration SADL files
+    	boolean check =
+    		checkField(txtUseCaseLabel.getText(), "Use Case", "Plan") &&
+    		checkField(txtUseCaseDescription.getText(), "Description", "Plan") &&
+    		checkField(menuAssuranceLevel.getText(), "Assurance Level", "Plan") &&
+    		checkObjectives() &&
+    		checkField(txtID.getText(), "ID", "Configuration") &&
+    		checkField(menuDerivedItemReqs.getText(), "Derived Item Requirements", "Configuration") &&
+    		checkField(menuDerivedSystemReqs.getText(), "Derived System Requirements", "Configuration") &&
+    		checkField(menuInterface.getText(), "Interface", "Configuration") &&
+    		checkField(menuInterfaceInput.getText(), "Interface Input", "Configuration") &&
+    		checkField(menuInterfaceOutput.getText(), "Interface Output", "Configuration") &&
+    		checkField(menuItem.getText(), "Item", "Configuration") &&
+    		checkField(menuItemReqs.getText(), "Item Requirements", "Configuration") &&
+    		checkField(menuSystemReqs.getText(), "System Requirements", "Configuration") &&
+    		checkField(menuSystem.getText(), "System", "Configuration") &&
+    		checkField(menuSystemDesignDesc.getText(), "System Design Description", "Configuration") &&
+    		checkField(menuReqCompleteReview.getText(), "Requirements Complete Review", "Configuration") &&
+    		checkField(menuReqTraceabilityReview.getText(), "Requirements Traceability Review", "Configuration");
+    		
+    		if (check) {
+    			DirectoryChooser dc = new DirectoryChooser();
+    			File directory = dc.showDialog(Arp4754WireframeMainViewManager.stage);
+    			if (directory == null) {
+    				return;
+    			}
+    			
+    			Arp4754AWireframeDAPWriter writer = new Arp4754AWireframeDAPWriter(directory, menuSystem.getText());
+    			writer.setID(txtUseCaseLabel.getText());
+    			writer.setDescription(txtUseCaseDescription.getText());
+    			writer.setLevel(menuAssuranceLevel.getText());
+    			writer.setObjectives(lvQueries.getItems());
+    			if (writer.write()) {
+    	            Alert alert = new Alert(Alert.AlertType.ERROR);
+    	            alert.setTitle("Writing SADL Files");
+    	            alert.setHeaderText(writer.getError());
+    	            alert.showAndWait();
+    			}
+    		}
     }
 
     @FXML
     private void btnAddQueryAction(ActionEvent event) throws Exception {
         // Add a new objective query
-        TextInputDialog td = new TextInputDialog("Objective-");
-        td.setTitle("New Query");
-        td.setHeaderText("Enter Query Name");
-        Optional<String> txt = td.showAndWait();
-        if (!txt.isPresent() || txt.get().isBlank() || txt.get().isEmpty()) {
-            return;
+        // Set the stage with the other fxml
+        FXMLLoader objViewLoader =
+        		Arp4754WireframeObjectivesViewManager.setNewFxmlToStage(
+                        "resources/fxml/arp4754/WireframeObjectivesView.fxml");
+
+        // initialize variables in the objectives query page
+        Arp4754WireframeObjectivesViewHandler handler =
+        		objViewLoader.getController();
+        
+        Arp4754WireframeObjectivesViewManager.show();
+        String txt = handler.getText();
+        if (txt == null) {
+        	return;
         }
 
         boolean notdone = true;
         int index = 0;
         List<String> list = lvQueries.getItems();
         while (notdone && index < list.size()) {
-            if (txt.get().compareTo(list.get(index)) <= 0) {
+            if (txt.compareTo(list.get(index)) <= 0) {
                 notdone = false;
             } else {
                 index++;
@@ -148,9 +221,9 @@ public class Arp4754WireframeMainViewHandler {
         }
 
         if (notdone) {
-            lvQueries.getItems().add(txt.get());
+            lvQueries.getItems().add(txt);
         } else {
-            lvQueries.getItems().add(index, txt.get());
+            lvQueries.getItems().add(index, txt);
         }
     }
 

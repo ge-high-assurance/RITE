@@ -98,10 +98,6 @@ public class Arp4754WireframeMainViewManager extends Application {
             // Set stage as the new stage sent by caller
             stage = primaryStage;
 
-            // initialize the variables for this application launch
-            // initializeViewVariables(); // Comment out if you want the values from previous launch
-            // to
-
             // set the initial fxml to stage
             setNewFxmlToStage("resources/fxml/arp4754/WireframeMainView.fxml");
 
