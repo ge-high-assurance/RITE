@@ -321,7 +321,7 @@ public class DataPropertyPage extends PropertyPage {
         var cc = addCompositeUnequal(subcomp, 2);
         addContentSection(cc, "extra-data-graphs", DATA);
         addContentSection(cc, "model-graphs", DATA);
-        makeIngestionStepsComposite(subcomp);
+        addIngestionStepsComposite(subcomp);
         return subcomp;
     }
 
@@ -686,8 +686,9 @@ public class DataPropertyPage extends PropertyPage {
     //
     //        return composite;
     //    }
+    
 
-    public Composite makeIngestionStepsComposite(Composite parent) {
+    public Composite addIngestionStepsComposite(Composite parent) {
         var subcomp = addComposite(parent, 1);
         var ingestionStepsWidgets = new java.util.ArrayList<DataStepWidget>(10);
         yamlWidgets.put("ingestion-steps", ingestionStepsWidgets);
@@ -724,7 +725,7 @@ public class DataPropertyPage extends PropertyPage {
                             case 0: // Cancel
                                 break;
                             case 1:
-                                makeNodegroupConstraintsComposite(
+                                addNodegroupConstraintsComposite(
                                         ingestionStepsWidgets,
                                         stepsComposite,
                                         0,
@@ -732,53 +733,53 @@ public class DataPropertyPage extends PropertyPage {
                                         new java.util.ArrayList<String>());
                                 break;
                             case 2:
-                                makeJsonComposite(
+                                addJsonComposite(
                                         ingestionStepsWidgets, stepsComposite, "", "", "", "");
                                 break;
                             case 3:
-                                makeClassCsvComposite(
+                                addClassCsvComposite(
                                         ingestionStepsWidgets, stepsComposite, "", "");
                                 break;
                             case 4:
-                                makeOwlComposite(ingestionStepsWidgets, stepsComposite, "");
+                                addOwlComposite(ingestionStepsWidgets, stepsComposite, "");
                                 break;
                             case 5:
-                                makeNodegroupCsvComposite(
+                                addNodegroupCsvComposite(
                                         ingestionStepsWidgets, stepsComposite, "", "");
                                 break;
                         }
-                        currentSubcomposite.layout(true, true);
+                        currentSubcomposite.getParent().getParent().getParent().layout(true, true);
                     }
                 });
         addLabel(buttonComposite, "Remove a step by clicking '-'", 35);
         addLabel(buttonComposite, "Text fields may be edited in place", 35);
 
-        var array = (List) yamlMap.get("ingestion-steps");
-        if (array != null)
+        var array = (List<?>) yamlMap.get("ingestion-steps");
+        if (array != null) {
             for (var obj : array) {
                 try {
                     if (obj instanceof Map<?, ?> item) {
                         if (item.get("class") instanceof String className
                                 && item.get("csv") instanceof String csv) {
-                            makeClassCsvComposite(
+                            addClassCsvComposite(
                                     ingestionStepsWidgets, stepsComposite, className, csv);
                             continue;
                         }
                         if (item.get("nodegroup") instanceof String nodegroup
                                 && item.get("csv") instanceof String csv) {
-                            makeNodegroupCsvComposite(
+                            addNodegroupCsvComposite(
                                     ingestionStepsWidgets, stepsComposite, nodegroup, csv);
                             continue;
                         }
                         if (item.get("owl") instanceof String owl) {
-                            makeOwlComposite(ingestionStepsWidgets, stepsComposite, owl);
+                            addOwlComposite(ingestionStepsWidgets, stepsComposite, owl);
                             continue;
                         }
                         if (item.get("name") instanceof String name
                                 && item.get("creator") instanceof String creator
                                 && item.get("nodegroup_json") instanceof String nodegroup_json) {
                             var comment = (String) item.get("comment"); // optional - may be null
-                            makeJsonComposite(
+                            addJsonComposite(
                                     ingestionStepsWidgets,
                                     stepsComposite,
                                     name,
@@ -792,7 +793,7 @@ public class DataPropertyPage extends PropertyPage {
                             java.util.List<String> constraints =
                                     (List<String>)
                                             item.get("constraints"); // optional - may be null
-                            makeNodegroupConstraintsComposite(
+                            addNodegroupConstraintsComposite(
                                     ingestionStepsWidgets,
                                     stepsComposite,
                                     Integer.valueOf(count),
@@ -807,7 +808,7 @@ public class DataPropertyPage extends PropertyPage {
                     System.out.println(obj.getClass() + " " + obj);
                 }
             }
-
+        }
         return subcomp;
     }
 
@@ -829,7 +830,7 @@ public class DataPropertyPage extends PropertyPage {
     		
     	});
     }
-    public Composite makeClassCsvComposite(
+    public Composite addClassCsvComposite(
             java.util.List<DataStepWidget> widgets,
             Composite parent,
             String className,
@@ -844,7 +845,7 @@ public class DataPropertyPage extends PropertyPage {
         return subComposite;
     }
 
-    public Composite makeNodegroupCsvComposite(
+    public Composite addNodegroupCsvComposite(
             java.util.List<DataStepWidget> widgets,
             Composite parent,
             String nodegroup,
@@ -859,7 +860,7 @@ public class DataPropertyPage extends PropertyPage {
         return subComposite;
     }
 
-    public Composite makeOwlComposite(
+    public Composite addOwlComposite(
             java.util.List<DataStepWidget> widgets, Composite parent, String owl) {
         final Composite subComposite = addCompositeUnequal(parent, 5);
         addRemoveButton(subComposite, widgets);
@@ -869,7 +870,7 @@ public class DataPropertyPage extends PropertyPage {
         return subComposite;
     }
 
-    public Composite makeJsonComposite(
+    public Composite addJsonComposite(
             java.util.List<DataStepWidget> widgets,
             Composite parent,
             String name,
@@ -890,7 +891,7 @@ public class DataPropertyPage extends PropertyPage {
         return subComposite;
     }
 
-    public Composite makeNodegroupConstraintsComposite(
+    public Composite addNodegroupConstraintsComposite(
             java.util.List<DataStepWidget> widgets,
             Composite parent,
             int count,
@@ -905,16 +906,11 @@ public class DataPropertyPage extends PropertyPage {
         var constraintsButton = new Button(subComposite, SWT.PUSH);
         constraintsButton.setText("Constraints");
         constraintsButton.addSelectionListener(
-                new SelectionListener() {
+                new SelectionAdapter() {
 
                     @Override
                     public void widgetSelected(SelectionEvent e) {
                         new ConstraintDialog(shell, constraints).open();
-                    }
-
-                    @Override
-                    public void widgetDefaultSelected(SelectionEvent e) {
-                        widgetSelected(e);
                     }
                 });
 
@@ -938,17 +934,12 @@ public class DataPropertyPage extends PropertyPage {
             var addButton = new Button(buttonComposite, SWT.PUSH);
             addButton.setText("Add");
             addButton.addSelectionListener(
-                    new SelectionListener() {
+                    new SelectionAdapter() {
 
                         @Override
                         public void widgetSelected(SelectionEvent e) {
                             textFields.add(addConstraintLine(container, ""));
                             parent.layout(true, true);
-                        }
-
-                        @Override
-                        public void widgetDefaultSelected(SelectionEvent e) {
-                            widgetSelected(e);
                         }
                     });
             addLabel(buttonComposite, "Click '-' to remove line.  Edit text in place.", 40);
@@ -962,7 +953,7 @@ public class DataPropertyPage extends PropertyPage {
         	var c = addCompositeUnequal(parent, 2);
         	var b = new Button(c, SWT.PUSH);
         	b.setText("-");
-        	b.addSelectionListener( new SelectionListener() {
+        	b.addSelectionListener( new SelectionAdapter() {
 
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -973,12 +964,6 @@ public class DataPropertyPage extends PropertyPage {
 					p.dispose();
 					pp.layout(true, true);
 				}
-
-				@Override
-				public void widgetDefaultSelected(SelectionEvent e) {
-					widgetSelected(e);
-				}
-        		
         	});
             var t = addText(c, content, TEXT_FIELD_WIDTH);
             return t;
