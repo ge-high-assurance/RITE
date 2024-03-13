@@ -71,6 +71,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -88,9 +89,9 @@ import org.yaml.snakeyaml.Yaml;
 
 // Would like to change the label Apply & CLose
 // It seems that label text cannot be right-aligned
+// Would like the '-' buttons to be smaller
 // Figure out defaultWidgetSelected
 // Lists of steps (2 places) and constraints needs scrollbars
-// remove multiple selected items from lists
 // Adjust height, width of list widgets when needed
 // Adjust widgets to property window being enlarged, shrunk
 // Add file or other browsers for locations of things
@@ -303,9 +304,9 @@ public class DataPropertyPage extends PropertyPage {
         addSeparator(subcomp);
 
         final var subComposite = addComposite(subcomp, 3);
-        addContentSection(subComposite, "model-graphs", MANIFEST);
-        addContentSection(subComposite, "data-graphs", MANIFEST);
-        addContentSection(subComposite, "nodegroups", MANIFEST);
+        addContentSection(subComposite, "model-graphs", MANIFEST, false);
+        addContentSection(subComposite, "data-graphs", MANIFEST, false);
+        addContentSection(subComposite, "nodegroups", MANIFEST, false);
 
         addManifestStepsSection(subcomp);
         return subcomp;
@@ -319,8 +320,8 @@ public class DataPropertyPage extends PropertyPage {
         Text t = addText(dg, value == null ? "" : value, TEXT_FIELD_WIDTH);
         yamlWidgets.put("data-graph", t);
         var cc = addCompositeUnequal(subcomp, 2);
-        addContentSection(cc, "extra-data-graphs", DATA);
-        addContentSection(cc, "model-graphs", DATA);
+        addContentSection(cc, "extra-data-graphs", DATA, false);
+        addContentSection(cc, "model-graphs", DATA, false);
         addIngestionStepsComposite(subcomp);
         return subcomp;
     }
@@ -328,8 +329,8 @@ public class DataPropertyPage extends PropertyPage {
     public Composite addModelComposite(Composite parent) {
         var subcomp = addComposite(parent, 1);
         var dg = addCompositeUnequal(subcomp, 2);
-        addContentSection(dg, "files", MODEL);
-        addContentSection(dg, "model-graphs", MODEL);
+        addContentSection(dg, "files", MODEL, true);
+        addContentSection(dg, "model-graphs", MODEL, false);
         return subcomp;
     }
 
@@ -384,7 +385,7 @@ public class DataPropertyPage extends PropertyPage {
 
         java.util.List<ManifestStepWidget> widgetList = new java.util.LinkedList<>();
         addLabel(comp, "Steps:", 12);
-        var buttonComposite = addCompositeUnequal(comp, 3);
+        var buttonComposite = addCompositeUnequal(comp, 2);
         var addButton = new Button(buttonComposite, SWT.PUSH);
         addButton.setText("Add");
         addButton.addSelectionListener(
@@ -392,7 +393,6 @@ public class DataPropertyPage extends PropertyPage {
 
                     @Override
                     public void widgetSelected(SelectionEvent e) {
-                        Text t;
                         int id =
                                 MessageDialog.open(
                                         MessageDialog.QUESTION,
@@ -407,49 +407,48 @@ public class DataPropertyPage extends PropertyPage {
                                         "Manifest",
                                         "Copy");
                         switch (id) {
-                                // FIXME - this widget creation duplicates material below
+                        // Note similarity to the initial setup code below
                             default:
                             case 0: // Cancel
                                 break;
                             case 1:
-                            	addSimpleStep(comp, "data", "", widgetList);
+                            	addSimpleStep(comp, "data", "", widgetList, true);
                                 break;
                             case 2:
-                            	addSimpleStep(comp, "model", "", widgetList);
+                            	addSimpleStep(comp, "model", "", widgetList, true);
                                 break;
                             case 3:
-                            	addSimpleStep(comp, "nodegroups", "", widgetList);
+                            	addSimpleStep(comp, "nodegroups", "", widgetList, false);
                                 break;
                             case 4:
-                            	addSimpleStep(comp, "manifest", "", widgetList);
+                            	addSimpleStep(comp, "manifest", "", widgetList, true);
                                 break;
                             case 5:
                             	addCopygraphStep(comp, "copygraph", null, widgetList);
                                 break;
                         }
                         yamlWidgets.put("steps", widgetList);
-                        ((GridData) comp.getLayoutData()).minimumHeight =
-                                convertHeightInCharsToPixels(5 + 2 * widgetList.size());
+                        ((GridData) comp.getLayoutData()).grabExcessVerticalSpace = true;
                         comp.layout(true, true);
                         currentSubcomposite.layout(true, true);
+                        currentSubcomposite.getParent().getParent().getParent().layout(true, true);
                     }
                 });
-        addLabel(buttonComposite, "Press '-' button to remove line.", 35);
-        addLabel(buttonComposite, "Text fields may be edited in place", 35);
+        addLabel(buttonComposite, "Press '-' button to remove line.  Press 'B' for file browser.  Text fields may be edited in place.", 70);
 
         if (yamlMap.get("steps") instanceof List<?> list) {
             if (list.size() > 0) yamlWidgets.put("steps", widgetList);
             for (var step : list) {
-                Text t;
                 if (step instanceof Map<?, ?> item) {
+                	// Note similarity to the selection listener code above
                     if (item.get("data") instanceof String value) {
-                    	addSimpleStep(comp, "data", value, widgetList);
+                    	addSimpleStep(comp, "data", value, widgetList, true);
                     } else if (item.get("model") instanceof String value) {
-                    	addSimpleStep(comp, "model", value, widgetList);
+                    	addSimpleStep(comp, "model", value, widgetList, true);
                     } else if (item.get("nodegroups") instanceof String value) {
-                    	addSimpleStep(comp, "nodegroups", value, widgetList);
+                    	addSimpleStep(comp, "nodegroups", value, widgetList, false);
                     } else if (item.get("manifest") instanceof String value) {
-                    	addSimpleStep(comp, "manifest", value, widgetList);
+                    	addSimpleStep(comp, "manifest", value, widgetList, true);
                     } else if (item.get("copygraph") instanceof Map<?, ?> cgmap) {
                     	addCopygraphStep(comp, "copygraph", cgmap, widgetList);
                     }
@@ -458,8 +457,8 @@ public class DataPropertyPage extends PropertyPage {
         }
     }
     
-    public void addSimpleStep(Composite comp, String name, String value, java.util.List<ManifestStepWidget> widgetList) {
-        Composite x = addCompositeUnequal(comp, 3);
+    public void addSimpleStep(Composite comp, String name, String value, java.util.List<ManifestStepWidget> widgetList, boolean fileBrowser) {
+        Composite x = addCompositeUnequal(comp, fileBrowser ? 4 : 3);
         var b = new Button(x, SWT.PUSH);
         b.setText("-");
         GridData buttonLayoutData = new GridData();
@@ -477,7 +476,8 @@ public class DataPropertyPage extends PropertyPage {
 			}
         });
         addLabel(x, name + ":", 10);
-        Text t = addText(x, value, TEXT_FIELD_WIDTH);
+        Text t = addText(x, value, TEXT_FIELD_WIDTH - 5);
+        if (fileBrowser) addFileBrowseButton(x, t);
         widgetList.add(new ManifestStepWidget(name, t));
     }
 
@@ -567,24 +567,29 @@ public class DataPropertyPage extends PropertyPage {
      * slightly different for different keys, so there is various customization within this overall
      * general routine.
      */
-    public void addContentSection(Composite parent, String sectionName, String kind) {
+    public void addContentSection(Composite parent, String sectionName, String kind, boolean fileBrowser) {
         final Composite contentComposite = addComposite(parent, 1);
 
         final Label titleLabel = new Label(contentComposite, SWT.NONE);
         titleLabel.setText("Content sources for the " + sectionName);
 
-        final Composite buttonComposite = addComposite(contentComposite, 2);
+        final Composite buttonComposite = addCompositeUnequal(contentComposite, fileBrowser ? 3 : 2);
 
-        final Button addButton = new Button(buttonComposite, SWT.PUSH);
-        addButton.setText("Add");
-        final Button removeButton = new Button(buttonComposite, SWT.PUSH);
-        removeButton.setText("Remove");
-
+        // list must be declared before browseButton
         final var list =
                 new org.eclipse.swt.widgets.List(
                         contentComposite, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
+
+        final Button addButton = new Button(buttonComposite, SWT.PUSH);
+        addButton.setText("Add");
+        if (fileBrowser) {
+        	addFileBrowseButton(buttonComposite, list::add, true);
+        }
+        final Button removeButton = new Button(buttonComposite, SWT.PUSH);
+        removeButton.setText("Remove");
+
         GridData gridData = new GridData();
-        gridData.widthHint = 200;
+        gridData.widthHint = 250;
         gridData.heightHint = 200;
         list.setLayoutData(gridData);
         yamlWidgets.put(sectionName, list);
@@ -694,11 +699,9 @@ public class DataPropertyPage extends PropertyPage {
         yamlWidgets.put("ingestion-steps", ingestionStepsWidgets);
 
         addLabel(subcomp, "Ingestion steps", LABEL_WIDTH);
-        final Composite buttonComposite = addCompositeUnequal(subcomp, 3);
+        final Composite buttonComposite = addCompositeUnequal(subcomp, 2);
         final Composite stepsComposite = addComposite(subcomp, 1);
-        ((GridData) stepsComposite.getLayoutData()).grabExcessVerticalSpace = true;
-        ((GridData) stepsComposite.getLayoutData()).minimumHeight =
-                convertHeightInCharsToPixels(15);
+//        ((GridData) stepsComposite.getLayoutData()).grabExcessVerticalSpace = true;
 
         final Button addButton = new Button(buttonComposite, SWT.PUSH);
         addButton.setText("Add");
@@ -751,8 +754,7 @@ public class DataPropertyPage extends PropertyPage {
                         currentSubcomposite.getParent().getParent().getParent().layout(true, true);
                     }
                 });
-        addLabel(buttonComposite, "Remove a step by clicking '-'", 35);
-        addLabel(buttonComposite, "Text fields may be edited in place", 35);
+        addLabel(buttonComposite, "Click '-' to remove line.  Click 'B' for file browser.  Edit text in place.", 70);
 
         var array = (List<?>) yamlMap.get("ingestion-steps");
         if (array != null) {
@@ -813,6 +815,7 @@ public class DataPropertyPage extends PropertyPage {
     }
 
     public static final int WIDTH2 = 10;
+    public static final int WIDTH3 = 6;
 
     public void addRemoveButton(Composite parent, List<DataStepWidget> widgets) {
     	var b = new Button(parent, SWT.PUSH);
@@ -835,12 +838,13 @@ public class DataPropertyPage extends PropertyPage {
             Composite parent,
             String className,
             String csv) {
-        final Composite subComposite = addCompositeUnequal(parent, 5);
+        final Composite subComposite = addCompositeUnequal(parent, 6);
         addRemoveButton(subComposite, widgets);
         addLabel(subComposite, "class:", WIDTH2);
         Text t1 = addText(subComposite, className, TEXT_FIELD_WIDTH / 2);
-        addLabel(subComposite, "    csv:", WIDTH2);
+        addLabel(subComposite, "csv:", 4);
         Text t2 = addText(subComposite, csv, TEXT_FIELD_WIDTH / 2);
+        addFileBrowseButton(subComposite, t2);
         widgets.add(new DataStepWidget("class#csv", t1, t2));
         return subComposite;
     }
@@ -850,12 +854,13 @@ public class DataPropertyPage extends PropertyPage {
             Composite parent,
             String nodegroup,
             String csv) {
-        final Composite subComposite = addCompositeUnequal(parent, 5);
+        final Composite subComposite = addCompositeUnequal(parent, 6);
         addRemoveButton(subComposite, widgets);
         addLabel(subComposite, "nodegroup:", WIDTH2);
         Text t1 = addText(subComposite, nodegroup, TEXT_FIELD_WIDTH / 2);
-        addLabel(subComposite, "      csv:", WIDTH2);
+        addLabel(subComposite, "csv:", 4);
         Text t2 = addText(subComposite, csv, TEXT_FIELD_WIDTH / 2);
+        addFileBrowseButton(subComposite, t2);
         widgets.add(new DataStepWidget("nodegroup#csv", t1, t2));
         return subComposite;
     }
@@ -866,6 +871,7 @@ public class DataPropertyPage extends PropertyPage {
         addRemoveButton(subComposite, widgets);
         addLabel(subComposite, "owl:", WIDTH2);
         Text t1 = addText(subComposite, owl, TEXT_FIELD_WIDTH / 2);
+        addFileBrowseButton(subComposite, t1);
         widgets.add(new DataStepWidget("owl", t1, null));
         return subComposite;
     }
@@ -881,11 +887,11 @@ public class DataPropertyPage extends PropertyPage {
         addRemoveButton(subComposite, widgets);
         addLabel(subComposite, "name:", WIDTH2);
         Text t1 = addText(subComposite, name, TEXT_FIELD_WIDTH / 4);
-        addLabel(subComposite, "creator:", WIDTH2);
+        addLabel(subComposite, "creator:", 6);
         Text t2 = addText(subComposite, creator, TEXT_FIELD_WIDTH / 4);
-        addLabel(subComposite, "json:", WIDTH2);
+        addLabel(subComposite, "json:", 4);
         Text t3 = addText(subComposite, json, TEXT_FIELD_WIDTH / 4);
-        addLabel(subComposite, "comment:", WIDTH2);
+        addLabel(subComposite, "comment:", 8);
         Text t4 = addText(subComposite, comment, TEXT_FIELD_WIDTH / 4);
         widgets.add(new DataStepWidget("name#creator#nodegroup_json#comment", t1, t2, t3, t4));
         return subComposite;
@@ -917,6 +923,36 @@ public class DataPropertyPage extends PropertyPage {
         widgets.add(new DataStepWidget("count#nodegroup", t1, t2, constraints));
         return subComposite;
     }
+    
+    public static interface Setter {
+    	void apply(String text);
+    }
+
+    public void addFileBrowseButton(Composite parent, Text textfield) {
+    	addFileBrowseButton(parent, textfield::setText, false);
+    }
+    
+    public void addFileBrowseButton(Composite parent, Setter setter, boolean longName) {
+    	var b = new Button(parent, SWT.PUSH);
+    	b.setText(longName ? "Browse" : "B");
+    	b.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				var fd = new FileDialog(shell, SWT.OPEN);
+				IPath currentDir;
+		        if (DataPropertyPage.this.getElement() instanceof IFile f) {
+		        	currentDir = f.getParent().getLocation();
+		        } else {
+		        	currentDir = new Path(".");
+		        }
+				fd.setFilterPath(currentDir.toOSString());
+				String file = fd.open();
+				var relativePath = new Path(file).makeRelativeTo(currentDir);
+				setter.apply(relativePath.toOSString());
+			}
+    	});
+    }
 
     public class ConstraintDialog extends org.eclipse.jface.dialogs.Dialog {
         public java.util.List<String> constraints;
@@ -933,19 +969,27 @@ public class DataPropertyPage extends PropertyPage {
             var buttonComposite = addCompositeUnequal(container, 2);
             var addButton = new Button(buttonComposite, SWT.PUSH);
             addButton.setText("Add");
+            addLabel(buttonComposite, "Click '-' to remove line.  Click 'B' for file browser.  Edit text in place.", 40);
+            var sc = addComposite(container, 1);
+//            ScrolledComposite sc = new ScrolledComposite(container, SWT.V_SCROLL);
+//            sc.setLayoutData(new GridData(GridData.FILL, SWT.TOP, true, true));
+//            sc.setAlwaysShowScrollBars(false);
+            var comp = addComposite(sc, 1);
+            ((GridData)comp.getLayoutData()).grabExcessVerticalSpace = true;
+            for (var constraint : constraints) {
+                textFields.add(addConstraintLine(comp, constraint));
+            }
+//            sc.setContent(comp);
             addButton.addSelectionListener(
                     new SelectionAdapter() {
 
                         @Override
                         public void widgetSelected(SelectionEvent e) {
-                            textFields.add(addConstraintLine(container, ""));
+                            textFields.add(addConstraintLine(comp, ""));
                             parent.layout(true, true);
                         }
                     });
-            addLabel(buttonComposite, "Click '-' to remove line.  Edit text in place.", 40);
-            for (var constraint : constraints) {
-                textFields.add(addConstraintLine(container, constraint));
-            }
+            parent.layout(true, true);
             return container;
         }
 
@@ -1156,7 +1200,6 @@ public class DataPropertyPage extends PropertyPage {
     }
 
     public void performDefaults() {
-        // FIXME - this is not refreshing
         var kind = autoDetectYamlKind(yamlMap);
         var parent = currentSubcomposite.getParent();
         if (currentSubcomposite != null) currentSubcomposite.dispose();
@@ -1210,7 +1253,6 @@ public class DataPropertyPage extends PropertyPage {
                     shell, "Error", "Failed to write to file " + newPath + "\n" + e.getMessage());
             RackConsole.getConsole().error(e.toString());
         }
-        // FIXME - should we call super.performOK()?
         return true;
     }
 
@@ -1232,6 +1274,9 @@ public class DataPropertyPage extends PropertyPage {
             default:
                 if (!isNewFile) diffs = "Unknown kind of Yaml to output";
                 return null;
+        }
+        if (showErrors && !diffs.isEmpty()) {
+        	MessageDialog.openError(shell,  "Error", diffs);
         }
         return yaml;
     }
@@ -1297,7 +1342,11 @@ public class DataPropertyPage extends PropertyPage {
                                 String v = text.getText();
                                 if (sname.equals("count")) {
                                     // count is a special case where the yaml expects an Integer
-                                    mp.put(sname, Integer.valueOf(v)); // FIXME - catch exception
+                                	try {
+                                		mp.put(sname, Integer.valueOf(v));
+                                	} catch (NumberFormatException e) {
+                                		diffs += "Value for 'count' is not a String representation of a non-negative integer: " + v + "\n";
+                                	}
                                 } else {
                                     mp.put(sname, v);
                                 }
@@ -1426,7 +1475,7 @@ public class DataPropertyPage extends PropertyPage {
         				diffs += okFile(stepmap, "data", currentDir); // FIXME what is this?
         			} else if (stepmap.get("model") != null) {
         				diffs += okKeys(stepmap, "model", null);
-        				diffs += okFile(stepmap, "model", currentDir); // FIXME what is this?
+        				diffs += okFile(stepmap, "model", currentDir);
         			} else if (stepmap.get("nodegroups") != null) {
         				diffs += okKeys(stepmap, "nodegroups", null);
         				diffs += okNodegroup(stepmap, "nodegroups", currentDir);
@@ -1496,7 +1545,7 @@ public class DataPropertyPage extends PropertyPage {
                 		diffs += okFile(map, "csv", currentDir);
                 	} else if (map.get("owl") != null) {
                 		diffs += okKeys(map, "owl", null);
-                		diffs += okURL(map, "owl");  // FIXME - what is this
+                		diffs += okFile(map, "owl", currentDir);
                 	} else if (map.get("name") != null && map.get("creator") != null && map.get("nodegroup_json") != null) {
                 		diffs += okKeys(map, "name", "creator", "nodegroup_json", null, "comment");
                 		diffs += okString(map, "name", true);
@@ -1586,11 +1635,11 @@ public class DataPropertyPage extends PropertyPage {
     	try {
     		// Check if the text is a valid URL
     		text = text.trim();
-    		if (text.isEmpty() || true) return ""; // FIXME - unable to text URLs for now
+    		if (text.isEmpty()) return "";
     		URL u = new URL(text); 
     		HttpURLConnection huc =  (HttpURLConnection)  u.openConnection();
     		huc.setRequestMethod("HEAD");
-    		if (huc.getResponseCode() == HttpURLConnection.HTTP_OK) return "";
+    		if (true || huc.getResponseCode() == HttpURLConnection.HTTP_OK) return "";  // FIXME - unable to test URLs for now
     	} catch (Exception e) {
     		return e.getMessage() + "\n";
     	}
@@ -1677,19 +1726,6 @@ public class DataPropertyPage extends PropertyPage {
     	return diffs;
     }
     
-//    public String okFileInCurrentProject(String text, IContainer outDir) {
-//    	try {
-//    		// Check if the text is a path in the workspace
-//    		IPath p = new Path(text);
-//    		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-//    		if (outDir.getFile(p).exists()) return "";
-//    		if (root.getFile(p).exists()) return "";
-//    	} catch (Exception e) {
-//    		return e.getMessage() + "\n";
-//    	}
-//        return "File " + text + " does not exist\n";
-//    }
-        
     public String okListOfNodegroup(Map<String,Object> yamlToCheck, String key, IContainer currentDir) {
     	String diffs = "";
         var value = yamlToCheck.get(key);
