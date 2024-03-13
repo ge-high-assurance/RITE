@@ -64,7 +64,7 @@
     <version.javafx>21.0.2</version.javafx>
     <version.rack>${project.version}</version.rack>
     <version.surefire>3.2.5</version.surefire>
-    <version.tycho>4.0.5</version.tycho>
+    <version.tycho>4.0.6</version.tycho>
   </properties>
 
   <!-- Set all dependency versions in one place -->
@@ -305,7 +305,7 @@
         <plugin>
           <groupId>com.github.ekryd.sortpom</groupId>
           <artifactId>sortpom-maven-plugin</artifactId>
-          <version>3.3.0</version>
+          <version>3.4.1</version>
           <configuration>
             <createBackupFile>false</createBackupFile>
             <indentSchemaLocation>true</indentSchemaLocation>
