@@ -980,7 +980,7 @@ public class DataPropertyPage extends PropertyPage {
             var buttonComposite = addCompositeUnequal(container, 2);
             var addButton = new Button(buttonComposite, SWT.PUSH);
             addButton.setText("Add");
-            addLabel(buttonComposite, "Click '-' to remove line.  Click 'B' for file browser.  Edit text in place.", 55);
+            addLabel(buttonComposite, "Click '-' to remove line.  Edit text in place.", 40);
 //           var sc = addComposite(container, 1);
             ScrolledComposite sc = new ScrolledComposite(container, SWT.H_SCROLL|SWT.V_SCROLL);
             sc.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
