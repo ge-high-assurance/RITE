@@ -85,7 +85,7 @@ import org.yaml.snakeyaml.Yaml;
 // Page needs an overall scrollbar; steps, ingestion-steps and constraints composites also
 // Finish validation
 // Add unit testing
-// Add file browsers?
+// Can't get text fields to expand, e.g. in Constraint Dialog
 
 // Would like to change the label Apply & CLose
 // It seems that label text cannot be right-aligned
@@ -350,6 +350,17 @@ public class DataPropertyPage extends PropertyPage {
 
         final GridData gridData = new GridData();
         gridData.widthHint = convertWidthInCharsToPixels(fieldWidth);
+        text.setLayoutData(gridData);
+        return text;
+    }
+
+    // FIXME - the hope is that the text field created here expands to fill its parent, but does not work
+    public Text addTextExpandable(Composite parent, String initialText, int fieldWidth) {
+        Text text = new Text(parent, SWT.WRAP);
+        text.setText(initialText);
+
+        final GridData gridData = new GridData(GridData.FILL, SWT.CENTER, true, false);
+        gridData.minimumWidth = convertWidthInCharsToPixels(fieldWidth);
         text.setLayoutData(gridData);
         return text;
     }
@@ -969,14 +980,17 @@ public class DataPropertyPage extends PropertyPage {
             var buttonComposite = addCompositeUnequal(container, 2);
             var addButton = new Button(buttonComposite, SWT.PUSH);
             addButton.setText("Add");
-            addLabel(buttonComposite, "Click '-' to remove line.  Click 'B' for file browser.  Edit text in place.", 40);
+            addLabel(buttonComposite, "Click '-' to remove line.  Click 'B' for file browser.  Edit text in place.", 55);
 //           var sc = addComposite(container, 1);
             ScrolledComposite sc = new ScrolledComposite(container, SWT.H_SCROLL|SWT.V_SCROLL);
-            sc.setLayoutData(new GridData(GridData.FILL_HORIZONTAL, SWT.TOP, true, true));
+            sc.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
             sc.setExpandHorizontal(true);
             sc.setExpandVertical(true);
             sc.setAlwaysShowScrollBars(false);
             var comp = addComposite(sc, 1);
+            ((GridData)comp.getLayoutData()).horizontalAlignment = SWT.FILL;
+            ((GridData)comp.getLayoutData()).verticalAlignment = SWT.FILL;
+            ((GridData)comp.getLayoutData()).grabExcessHorizontalSpace = true;
             ((GridData)comp.getLayoutData()).grabExcessVerticalSpace = true;
             sc.setContent(comp);
 
@@ -1002,6 +1016,8 @@ public class DataPropertyPage extends PropertyPage {
 
         public Text addConstraintLine(Composite parent, String content) {
         	var c = addCompositeUnequal(parent, 2);
+        	((GridData)c.getLayoutData()).horizontalAlignment = GridData.FILL;
+        	((GridData)c.getLayoutData()).grabExcessHorizontalSpace = true;
         	var b = new Button(c, SWT.PUSH);
         	b.setText("-");
         	b.addSelectionListener( new SelectionAdapter() {
@@ -1017,7 +1033,7 @@ public class DataPropertyPage extends PropertyPage {
 					pp.getParent().layout(true, true);
 				}
         	});
-            var t = addText(c, content, TEXT_FIELD_WIDTH);
+            var t = addTextExpandable(c, content, TEXT_FIELD_WIDTH);
             return t;
         }
 
