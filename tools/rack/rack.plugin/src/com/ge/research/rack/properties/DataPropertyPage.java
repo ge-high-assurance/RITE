@@ -112,6 +112,8 @@ public class DataPropertyPage extends PropertyPage {
     public static final String MODEL = "Model";
 
     private Shell shell;
+    private Composite topParent;
+    private ScrolledComposite topScrolled;
 
     private Map<String, Object> yamlMap = new HashMap<>();
 
@@ -129,9 +131,11 @@ public class DataPropertyPage extends PropertyPage {
     @Override
     public void createControl(Composite parent) {
         super.createControl(parent);
+        topScrolled = (ScrolledComposite)parent.getParent();
         getApplyButton().setText("Save to file");
         getDefaultsButton().setText("Discard changes");
     }
+    
     @Override
     public void contributeButtons(Composite buttonBar) {
     	((GridLayout) buttonBar.getLayout()).numColumns++;
@@ -164,6 +168,7 @@ public class DataPropertyPage extends PropertyPage {
      * @see PreferencePage#createContents(Composite)
      */
     protected Control createContents(Composite parent) {
+    	this.topParent = parent;
         shell = org.eclipse.swt.widgets.Display.getCurrent().getActiveShell();
         IFile file = null;
         if (this.getElement() instanceof IFile f) {
@@ -171,6 +176,7 @@ public class DataPropertyPage extends PropertyPage {
         }
 
         var composite = addComposite(parent, 1);
+        extendVertically(composite);
         try {
 
             if (file != null && file.getLocation() != null) {
@@ -270,7 +276,7 @@ public class DataPropertyPage extends PropertyPage {
 
                         currentSubcomposite = addKindSubcomposite(p, kind);
 
-                        p.layout(true, true);
+                        relayout();
                     }
                 });
     }
@@ -314,6 +320,7 @@ public class DataPropertyPage extends PropertyPage {
 
     public Composite addDataComposite(Composite parent) {
         var subcomp = addComposite(parent, 1);
+        extendVertically(subcomp);
         var dg = addCompositeUnequal(subcomp, 2);
         addLabel(dg, "data-graph", LABEL_WIDTH);
         var value = (String) yamlMap.get("data-graph");
@@ -391,8 +398,7 @@ public class DataPropertyPage extends PropertyPage {
 
     public void addManifestStepsSection(Composite parent) {
         var comp = addComposite(parent, 1);
-        ((GridData) comp.getLayoutData()).grabExcessVerticalSpace = true;
-        //     ((GridData) comp.getLayoutData()).minimumHeight = convertHeightInCharsToPixels(15);
+        extendVertically(comp);
 
         java.util.List<ManifestStepWidget> widgetList = new java.util.LinkedList<>();
         addLabel(comp, "Steps:", 12);
@@ -439,10 +445,7 @@ public class DataPropertyPage extends PropertyPage {
                                 break;
                         }
                         yamlWidgets.put("steps", widgetList);
-                        ((GridData) comp.getLayoutData()).grabExcessVerticalSpace = true;
-                        comp.layout(true, true);
-                        currentSubcomposite.layout(true, true);
-                        currentSubcomposite.getParent().getParent().getParent().layout(true, true);
+                        relayout();
                     }
                 });
         addLabel(buttonComposite, "Press '-' button to remove line.  Press 'B' for file browser.  Text fields may be edited in place.", 70);
@@ -689,30 +692,39 @@ public class DataPropertyPage extends PropertyPage {
                 });
     }
 
-    //    private Composite createDefaultComposite(Composite parent) {
-    //        Composite composite = new Composite(parent, SWT.NULL);
-    //        GridLayout layout = new GridLayout(2, false);
-    //        composite.setLayout(layout);
-    //
-    ////        GridData data = new GridData();
-    ////        data.grabExcessHorizontalSpace = false;
-    ////        data.verticalAlignment = GridData.FILL;
-    ////        data.horizontalAlignment = GridData.FILL;
-    ////        composite.setLayoutData(data);
-    //
-    //        return composite;
-    //    }
+    public void extendVertically(Composite composite) {
+        ((GridData)composite.getLayoutData()).verticalAlignment = SWT.FILL;
+        ((GridData)composite.getLayoutData()).grabExcessVerticalSpace = true;
+    }
     
-
+    public ScrolledComposite addScrolledComposite(Composite parent) {
+        ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL|SWT.V_SCROLL);
+        sc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        sc.setExpandHorizontal(true);
+        sc.setExpandVertical(true);
+        sc.setAlwaysShowScrollBars(false);
+        return sc;
+    }
+    
+    public void relayout() {
+        topScrolled.setMinSize(topScrolled.getChildren()[0].computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        topParent.layout(true, true);
+    }
+    
     public Composite addIngestionStepsComposite(Composite parent) {
         var subcomp = addComposite(parent, 1);
+        extendVertically(subcomp);
         var ingestionStepsWidgets = new java.util.ArrayList<DataStepWidget>(10);
         yamlWidgets.put("ingestion-steps", ingestionStepsWidgets);
 
         addLabel(subcomp, "Ingestion steps", LABEL_WIDTH);
         final Composite buttonComposite = addCompositeUnequal(subcomp, 2);
-        final Composite stepsComposite = addComposite(subcomp, 1);
-//        ((GridData) stepsComposite.getLayoutData()).grabExcessVerticalSpace = true;
+        
+        var sc = subcomp;
+//        final var sc = addScrolledComposite(subcomp);
+        final Composite stepsComposite = addComposite(sc, 1);
+        extendVertically(stepsComposite);
+//        sc.setContent(stepsComposite);
 
         final Button addButton = new Button(buttonComposite, SWT.PUSH);
         addButton.setText("Add");
@@ -762,7 +774,7 @@ public class DataPropertyPage extends PropertyPage {
                                         ingestionStepsWidgets, stepsComposite, "", "");
                                 break;
                         }
-                        currentSubcomposite.getParent().getParent().getParent().layout(true, true);
+                        relayout();
                     }
                 });
         addLabel(buttonComposite, "Click '-' to remove line.  Click 'B' for file browser.  Edit text in place.", 70);
@@ -822,6 +834,7 @@ public class DataPropertyPage extends PropertyPage {
                 }
             }
         }
+        //sc.setMinSize(stepsComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         return subcomp;
     }
 
@@ -981,7 +994,6 @@ public class DataPropertyPage extends PropertyPage {
             var addButton = new Button(buttonComposite, SWT.PUSH);
             addButton.setText("Add");
             addLabel(buttonComposite, "Click '-' to remove line.  Edit text in place.", 40);
-//           var sc = addComposite(container, 1);
             ScrolledComposite sc = new ScrolledComposite(container, SWT.H_SCROLL|SWT.V_SCROLL);
             sc.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
             sc.setExpandHorizontal(true);
