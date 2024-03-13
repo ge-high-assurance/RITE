@@ -970,25 +970,32 @@ public class DataPropertyPage extends PropertyPage {
             var addButton = new Button(buttonComposite, SWT.PUSH);
             addButton.setText("Add");
             addLabel(buttonComposite, "Click '-' to remove line.  Click 'B' for file browser.  Edit text in place.", 40);
-            var sc = addComposite(container, 1);
-//            ScrolledComposite sc = new ScrolledComposite(container, SWT.V_SCROLL);
-//            sc.setLayoutData(new GridData(GridData.FILL, SWT.TOP, true, true));
-//            sc.setAlwaysShowScrollBars(false);
+//           var sc = addComposite(container, 1);
+            ScrolledComposite sc = new ScrolledComposite(container, SWT.H_SCROLL|SWT.V_SCROLL);
+            sc.setLayoutData(new GridData(GridData.FILL_HORIZONTAL, SWT.TOP, true, true));
+            sc.setExpandHorizontal(true);
+            sc.setExpandVertical(true);
+            sc.setAlwaysShowScrollBars(false);
             var comp = addComposite(sc, 1);
             ((GridData)comp.getLayoutData()).grabExcessVerticalSpace = true;
-            for (var constraint : constraints) {
-                textFields.add(addConstraintLine(comp, constraint));
+            sc.setContent(comp);
+
+            if (constraints != null) {
+            	for (var constraint : constraints) {
+                    textFields.add(addConstraintLine(comp, constraint));
+                }
             }
-//            sc.setContent(comp);
             addButton.addSelectionListener(
                     new SelectionAdapter() {
 
                         @Override
                         public void widgetSelected(SelectionEvent e) {
                             textFields.add(addConstraintLine(comp, ""));
+                            sc.setMinSize(comp.computeSize(SWT.DEFAULT, SWT.DEFAULT));
                             parent.layout(true, true);
                         }
                     });
+            sc.setMinSize(comp.computeSize(SWT.DEFAULT, SWT.DEFAULT));
             parent.layout(true, true);
             return container;
         }
@@ -1006,7 +1013,8 @@ public class DataPropertyPage extends PropertyPage {
 					Object o = p.getChildren()[1]; // the sibling text field
 					textFields.removeIf(tf -> tf == o);
 					p.dispose();
-					pp.layout(true, true);
+					((ScrolledComposite)pp.getParent()).setMinSize(pp.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+					pp.getParent().layout(true, true);
 				}
         	});
             var t = addText(c, content, TEXT_FIELD_WIDTH);
