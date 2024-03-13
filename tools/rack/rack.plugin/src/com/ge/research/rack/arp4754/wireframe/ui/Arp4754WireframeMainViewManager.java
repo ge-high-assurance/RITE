@@ -88,6 +88,10 @@ public class Arp4754WireframeMainViewManager extends Application {
 
         return null;
     }
+    
+    public static void close() {
+    	stage.close();
+    }
 
     @Override
     public void start(Stage primaryStage) {

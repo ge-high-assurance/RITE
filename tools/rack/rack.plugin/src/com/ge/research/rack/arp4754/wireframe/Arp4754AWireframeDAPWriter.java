@@ -18,6 +18,18 @@ public class Arp4754AWireframeDAPWriter {
 	private List<String> objectives = new LinkedList<String>();
 	
 	// Config SADL parameters
+	private String configID;
+	private String derivedItemReqs;
+	private String derivedSysReqs;
+	private String interfaceField;
+	private String interfaceInput;
+	private String interfaceOutput;
+	private String item;
+	private String itemReqs;
+	private String sysReqs;
+	private String sysDesignDesc;
+	private String reqCompleteReview;
+	private String reqTraceabilityReview;
 
 	// General parameters
 	private String system;
@@ -45,6 +57,54 @@ public class Arp4754AWireframeDAPWriter {
 		objectives = strs;
 	}
 	
+	public void setConfigID(String str) {
+		configID = str;
+	}
+
+	public void setDerivedItemReqs(String str) {
+		derivedItemReqs = str;
+	}
+
+	public void setDerivedSysReqs(String str) {
+		derivedSysReqs = str;
+	}
+
+	public void setInterface(String str) {
+		interfaceField = str;
+	}
+
+	public void setInterfaceInput(String str) {
+		interfaceInput = str;
+	}
+
+	public void setInterfaceOutput(String str) {
+		interfaceOutput = str;
+	}
+
+	public void setItem(String str) {
+		item = str;
+	}
+
+	public void setItemReqs(String str) {
+		itemReqs = str;
+	}
+
+	public void setSysReqs(String str) {
+		sysReqs = str;
+	}
+
+	public void setSystemDesignDescription(String str) {
+		sysDesignDesc = str;
+	}
+
+	public void setReqCompleteReview(String str) {
+		reqCompleteReview = str;
+	}
+
+	public void setReqTraceabilityReview(String str) {
+		reqTraceabilityReview = str;
+	}
+
 	private String getObjective(String objective) {
 		if (objective.matches("Objective-[1-8]-[1-8]-.*")) {
 			return objective.substring(0, 13);
@@ -60,6 +120,20 @@ public class Arp4754AWireframeDAPWriter {
 	private String writeConfig(String fn) {
 		String dap = 
 			"uri \"http://sadl.org/" + fn + "\" alias " + system.toLowerCase() + "config.\n\n";
+		dap += configID + " is a CONFIGURATION\n";
+		dap += "    with identifier \"" + configID +"\"\n";
+		dap += "    with derivedItemRequirementAlias \"" + derivedItemReqs + "\"\n";
+		dap += "    with derivedsystemRequirementAlias \"" + derivedSysReqs + "\"\n";
+		dap += "    with interfaceAlias \"" + interfaceField + "\"\n";
+		dap += "    with interfaceInputAlias \"" + interfaceInput + "\"\n";
+		dap += "    with interfaceOutputAlias \"" + interfaceOutput + "\"\n";
+		dap += "    with itemAlias \"" + item + "\"\n";
+		dap += "    with itemRequirementAlias \"" + itemReqs + "\"\n";
+		dap += "    with systemRequirementAlias \"" + sysReqs + "\"\n";
+		dap += "    with systemAlias \"" + system + "\"\n";
+		dap += "    with systemDesignDescriptionAlias \"" + sysDesignDesc + "\"\n";
+		dap += "    with requirementCompleteCorrectReviewAlias \"" + reqCompleteReview + "\"\n";
+		dap += "    with requirementTraceableReviewAlias \"" + reqTraceabilityReview + "\".\n";
 
 		return dap;
 	}

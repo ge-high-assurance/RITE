@@ -182,11 +182,27 @@ public class Arp4754WireframeMainViewHandler {
     			writer.setDescription(txtUseCaseDescription.getText());
     			writer.setLevel(menuAssuranceLevel.getText());
     			writer.setObjectives(lvQueries.getItems());
+    			
+    			writer.setConfigID(txtID.getText());
+    			writer.setDerivedItemReqs(menuDerivedItemReqs.getText());
+    			writer.setDerivedSysReqs(menuDerivedSystemReqs.getText());
+    			writer.setInterface(menuInterface.getText());
+    			writer.setInterfaceInput(menuInterfaceInput.getText());
+    			writer.setInterfaceOutput(menuInterfaceOutput.getText());
+    			writer.setItem(menuItem.getText());
+    			writer.setItemReqs(menuItemReqs.getText());
+    			writer.setSysReqs(menuSystemReqs.getText());
+    			writer.setSystemDesignDescription(menuSystemDesignDesc.getText());
+    			writer.setReqCompleteReview(menuReqCompleteReview.getText());
+    			writer.setReqTraceabilityReview(menuReqTraceabilityReview.getText());
+
     			if (writer.write()) {
     	            Alert alert = new Alert(Alert.AlertType.ERROR);
     	            alert.setTitle("Writing SADL Files");
     	            alert.setHeaderText(writer.getError());
     	            alert.showAndWait();
+    			} else {
+    				Arp4754WireframeMainViewManager.close();
     			}
     		}
     }
