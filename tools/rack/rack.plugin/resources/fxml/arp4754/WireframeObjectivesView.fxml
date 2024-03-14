@@ -97,7 +97,7 @@
         <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="3" spacing="20" GridPane.columnIndex="1" alignment="CENTER_LEFT" >
           <children>
             <Button fx:id="btnObjectiveCancel" onAction="#btnObectiveCancelAction" prefWidth="120.0" style="-fx-font-size: 16px; -fx-font-weight: bold" text="Cancel" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
-            <Button fx:id="btnObjectiveDone" onAction="#btnObjectiveDoneAction" prefWidth="120.0" style="-fx-font-size: 16px; -fx-font-weight: bold" text="Done" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+            <Button fx:id="btnObjectiveDone" onAction="#btnObjectiveDoneAction" prefWidth="120.0" style="-fx-font-size: 16px; -fx-font-weight: bold" text="OK" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
           </children>
         </HBox>
 

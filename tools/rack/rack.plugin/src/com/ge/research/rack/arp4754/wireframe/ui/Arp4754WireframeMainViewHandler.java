@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.HashMap;
 
 import com.ge.research.rack.arp4754.wireframe.Arp4754AWireframeDAPWriter;
 
@@ -58,6 +59,12 @@ import javafx.scene.control.TextInputDialog;
 import javafx.stage.DirectoryChooser;
 
 public class Arp4754WireframeMainViewHandler {
+	
+	private static final String REQUIREMENT = "REQUIREMENT";
+	private static final String SYSTEM = "SYSTEM";
+	private static final String REVIEW = "REVIEW";
+	private static final String DOCUMENT = "DOCUMENT";
+	private static final String INTERFACE = "INTERFACE";
 
     // MAIN PLAN TAB
     @FXML private Tab tabMain;
@@ -104,19 +111,33 @@ public class Arp4754WireframeMainViewHandler {
     @FXML private MenuItem menuReqCompleteReviewCustom;
     @FXML private MenuItem menuReqTraceabilityReviewCustom;
 
-    List<String> requirements = new LinkedList<String>();
-    List<String> systems = new LinkedList<String>();
-    List<String> documents = new LinkedList<String>();
-    List<String> reviews = new LinkedList<String>();
-    List<String> interfaces = new LinkedList<String>();
+    private List<String> requirements = new LinkedList<String>();
+    private List<String> systems = new LinkedList<String>();
+    private List<String> documents = new LinkedList<String>();
+    private List<String> reviews = new LinkedList<String>();
+    private List<String> interfaces = new LinkedList<String>();
+    private HashMap<String, String> objectiveMap = new HashMap<String, String>();
 
     @FXML
     private void initialize() {
         // Default item values
         menuAssuranceLevel.setText("LEVEL A");
-        menuInterface.setText("INTERFACE");
+
+        clearMenus();
+        resetBasicMenus();
+
+        menuDerivedItemReqs.setText(REQUIREMENT);
+        menuDerivedSystemReqs.setText(REQUIREMENT);
+        menuInterface.setText(INTERFACE);
         menuInterfaceInput.setText("Input");
         menuInterfaceOutput.setText("Output");
+        menuItemReqs.setText(REQUIREMENT);
+        menuSystemReqs.setText(REQUIREMENT);
+        menuSystem.setText(SYSTEM);
+        menuItem.setText(SYSTEM);
+        menuSystemDesignDesc.setText(DOCUMENT);
+        menuReqCompleteReview.setText(REVIEW);
+        menuReqTraceabilityReview.setText(REVIEW);
     }
 
     @FXML
@@ -178,10 +199,11 @@ public class Arp4754WireframeMainViewHandler {
     			}
     			
     			Arp4754AWireframeDAPWriter writer = new Arp4754AWireframeDAPWriter(directory, menuSystem.getText());
+    			writer.setGeneral(txtCompany.getText(), txtCreator.getText());
     			writer.setID(txtUseCaseLabel.getText());
     			writer.setDescription(txtUseCaseDescription.getText());
     			writer.setLevel(menuAssuranceLevel.getText());
-    			writer.setObjectives(lvQueries.getItems());
+    			writer.setObjectives(lvQueries.getItems(), objectiveMap);
     			
     			writer.setConfigID(txtID.getText());
     			writer.setDerivedItemReqs(menuDerivedItemReqs.getText());
@@ -241,6 +263,8 @@ public class Arp4754WireframeMainViewHandler {
         } else {
             lvQueries.getItems().add(index, txt);
         }
+        
+        objectiveMap.put(txt, handler.getObjective());
     }
 
     @FXML
@@ -255,6 +279,7 @@ public class Arp4754WireframeMainViewHandler {
             if (result.isPresent() && result.get().equals(ButtonType.OK)) {
                 for (String item : items) {
                     lvQueries.getItems().remove(item);
+                    objectiveMap.remove(item);
                 }
             }
         }
@@ -426,17 +451,34 @@ public class Arp4754WireframeMainViewHandler {
                 });
         return mi;
     }
+    
+    private void resetBasicMenus() {
+        menuDerivedItemReqs.getItems().add(newMenuItem(REQUIREMENT));
+        menuDerivedSystemReqs.getItems().add(newMenuItem(REQUIREMENT));
+        menuItemReqs.getItems().add(newMenuItem(REQUIREMENT));
+        menuSystemReqs.getItems().add(newMenuItem(REQUIREMENT));
+        menuSystemDesignDesc.getItems().add(newMenuItem(DOCUMENT));
+        menuItem.getItems().add(newMenuItem(SYSTEM));
+        menuSystem.getItems().add(newMenuItem(SYSTEM));
+        menuReqCompleteReview.getItems().add(newMenuItem(REVIEW));
+        menuReqTraceabilityReview.getItems().add(newMenuItem(REVIEW));
+        menuInterface.getItems().add(newMenuItem(INTERFACE));
 
-    private void resetMenus() {
-        // Fill in default Configuration name
-        if (txtID.getText().isEmpty() || txtID.getText().isBlank()) {
-            String cname = txtUseCaseLabel.getText();
-            if (cname != null && !cname.isEmpty() && !cname.isBlank()) {
-                txtID.setText(cname + "Config");
-            }
-        }
-
-        // Clear menus
+        menuDerivedItemReqs.getItems().add(menuDerivedItemReqsCustom);
+        menuDerivedSystemReqs.getItems().add(menuDerivedSystemReqsCustom);
+        menuInterface.getItems().add(menuInterfaceCustom);
+        // menuInterfaceInput.getItems().add(menuInterfaceInputCustom);
+        // menuInterfaceOutput.getItems().add(menuInterfaceOutputCustom);
+        menuItem.getItems().add(menuItemCustom);
+        menuItemReqs.getItems().add(menuItemReqsCustom);
+        menuSystemReqs.getItems().add(menuSystemReqsCustom);
+        menuSystem.getItems().add(menuSystemCustom);
+        menuSystemDesignDesc.getItems().add(menuSystemDesignDescCustom);
+        menuReqCompleteReview.getItems().add(menuReqCompleteReviewCustom);
+        menuReqTraceabilityReview.getItems().add(menuReqTraceabilityReviewCustom);
+    }
+    
+    private void clearMenus() {
         menuDerivedItemReqs.getItems().clear();
         menuDerivedSystemReqs.getItems().clear();
         menuInterface.getItems().clear();
@@ -449,6 +491,19 @@ public class Arp4754WireframeMainViewHandler {
         menuSystemDesignDesc.getItems().clear();
         menuReqCompleteReview.getItems().clear();
         menuReqTraceabilityReview.getItems().clear();
+    }
+
+    private void resetMenus() {
+        // Fill in default Configuration name
+        if (txtID.getText().isEmpty() || txtID.getText().isBlank()) {
+            String cname = txtUseCaseLabel.getText();
+            if (cname != null && !cname.isEmpty() && !cname.isBlank()) {
+                txtID.setText(cname + "Config");
+            }
+        }
+
+        // Clear menus
+        clearMenus();
 
         // Re-populate menus with updated object lists
         for (String str : requirements) {
@@ -472,23 +527,11 @@ public class Arp4754WireframeMainViewHandler {
             menuReqTraceabilityReview.getItems().add(newMenuItem(str));
         }
 
-        menuInterface.getItems().add(newMenuItem("INTERFACE"));
         for (String str : interfaces) {
             menuInterface.getItems().add(newMenuItem(str));
         }
 
-        menuDerivedItemReqs.getItems().add(menuDerivedItemReqsCustom);
-        menuDerivedSystemReqs.getItems().add(menuDerivedSystemReqsCustom);
-        menuInterface.getItems().add(menuInterfaceCustom);
-        // menuInterfaceInput.getItems().add(menuInterfaceInputCustom);
-        // menuInterfaceOutput.getItems().add(menuInterfaceOutputCustom);
-        menuItem.getItems().add(menuItemCustom);
-        menuItemReqs.getItems().add(menuItemReqsCustom);
-        menuSystemReqs.getItems().add(menuSystemReqsCustom);
-        menuSystem.getItems().add(menuSystemCustom);
-        menuSystemDesignDesc.getItems().add(menuSystemDesignDescCustom);
-        menuReqCompleteReview.getItems().add(menuReqCompleteReviewCustom);
-        menuReqTraceabilityReview.getItems().add(menuReqTraceabilityReviewCustom);
+        resetBasicMenus();
     }
 
     private String removeComments(String line) {
@@ -534,19 +577,19 @@ public class Arp4754WireframeMainViewHandler {
                     && toks[index + 2].compareToIgnoreCase("a") == 0
                     && toks[index + 3].compareToIgnoreCase("type") == 0
                     && toks[index + 4].compareToIgnoreCase("of") == 0) {
-                if (toks[index + 5].indexOf("REQUIREMENT") == 0) {
+                if (toks[index + 5].indexOf(REQUIREMENT) == 0) {
                     tempRequirements.add(toks[index]);
                     changed = true;
-                } else if (toks[index + 5].indexOf("SYSTEM") == 0) {
+                } else if (toks[index + 5].indexOf(SYSTEM) == 0) {
                     tempSystems.add(toks[index]);
                     changed = true;
-                } else if (toks[index + 5].indexOf("DOCUMENT") == 0) {
+                } else if (toks[index + 5].indexOf(DOCUMENT) == 0) {
                     tempDocuments.add(toks[index]);
                     changed = true;
-                } else if (toks[index + 5].indexOf("REVIEW") == 0) {
+                } else if (toks[index + 5].indexOf(REVIEW) == 0) {
                     tempReviews.add(toks[index]);
                     changed = true;
-                } else if (toks[index + 5].indexOf("INTERFACE") == 0) {
+                } else if (toks[index + 5].indexOf(INTERFACE) == 0) {
                     tempInterfaces.add(toks[index]);
                     changed = true;
                 }

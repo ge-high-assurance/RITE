@@ -121,5 +121,9 @@ public class Arp4754WireframeObjectivesViewHandler {
 
     	return null;
     }
+    
+    public String getObjective() {
+		return menuObjective.getText();
+    }
 
 }

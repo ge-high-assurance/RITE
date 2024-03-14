@@ -2,6 +2,7 @@ package com.ge.research.rack.arp4754.wireframe;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -10,12 +11,17 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
 public class Arp4754AWireframeDAPWriter {
+
+	// General parameters
+	private String company = "";
+	private String creator = "";
 	
 	// Plan SADL parameters
 	private String id = "";
 	private String desc = "";
 	private String level = "";
 	private List<String> objectives = new LinkedList<String>();
+	private HashMap<String, String> objectiveMap = new HashMap<String, String>();
 	
 	// Config SADL parameters
 	private String configID;
@@ -45,6 +51,11 @@ public class Arp4754AWireframeDAPWriter {
 		id = str;
 	}
 	
+	public void setGeneral(String s1, String s2) {
+		company = s1;
+		creator = s2;
+	}
+
 	public void setDescription(String str) {
 		desc = str;
 	}
@@ -53,8 +64,9 @@ public class Arp4754AWireframeDAPWriter {
 		level = str;
 	}
 	
-	public void setObjectives(List<String> strs) {
+	public void setObjectives(List<String> strs, HashMap<String, String> map) {
 		objectives = strs;
+		objectiveMap = map;
 	}
 	
 	public void setConfigID(String str) {
@@ -106,20 +118,32 @@ public class Arp4754AWireframeDAPWriter {
 	}
 
 	private String getObjective(String objective) {
-		if (objective.matches("Objective-[1-8]-[1-8]-.*")) {
-			return objective.substring(0, 13);
-		}
+		return objectiveMap.get(objective);
 		
-		return null;
+		//if (objective.matches("Objective-[1-8]-[1-8]-.*")) {
+		//	return objective.substring(0, 13);
+		//}
+		//
+		//return null;
 	}
 	
 	public String getError() {
 		return err;
 	}
 	
+	private String comments() {
+		return
+			"//-- Company: " + company +
+			"\n//-- Creator: " + creator +
+			"\n//-- Use Case: " + id + 
+			"\n//-- Description: " + desc + "\n\n";
+	}
+	
 	private String writeConfig(String fn) {
 		String dap = 
 			"uri \"http://sadl.org/" + fn + "\" alias " + system.toLowerCase() + "config.\n\n";
+
+		dap += comments();
 		dap += configID + " is a CONFIGURATION\n";
 		dap += "    with identifier \"" + configID +"\"\n";
 		dap += "    with derivedItemRequirementAlias \"" + derivedItemReqs + "\"\n";
@@ -142,6 +166,7 @@ public class Arp4754AWireframeDAPWriter {
 		String dap = 
 			"uri \"http://sadl.org/" + fn + "\" alias " + system.toLowerCase() + "dap.\n\n";
 		
+		dap += comments();
 		dap += "import \"http://sadl.org/PLAN-CORE-Process1.sadl\".\n";
 		dap += "import \"http://sadl.org/PLAN-CORE-Process2.sadl\".\n";
 		dap += "import \"http://sadl.org/PLAN-CORE-Process3.sadl\".\n";
