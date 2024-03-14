@@ -82,10 +82,8 @@ import org.yaml.snakeyaml.Yaml;
 
 // TODO:
 
-// Page needs an overall scrollbar; steps, ingestion-steps and constraints composites also
 // Finish validation
 // Add unit testing
-// Can't get text fields to expand, e.g. in Constraint Dialog
 
 // Would like to change the label Apply & CLose
 // It seems that label text cannot be right-aligned
@@ -94,7 +92,6 @@ import org.yaml.snakeyaml.Yaml;
 // Lists of steps (2 places) and constraints needs scrollbars
 // Adjust height, width of list widgets when needed
 // Adjust widgets to property window being enlarged, shrunk
-// Add file or other browsers for locations of things
 // Many aspects of the yaml schemas are hard-coded here — could some of that be driven by the schema itself?
 
 public class DataPropertyPage extends PropertyPage {
