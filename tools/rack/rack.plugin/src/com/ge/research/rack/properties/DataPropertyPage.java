@@ -118,6 +118,41 @@ import org.yaml.snakeyaml.Yaml;
  * @author davidcok
  *
  */
+
+/* Implementation notes and possible improvements:
+ * - the structure of the yaml maps is hard-coded here, making it tedious to change (and test any
+ * change) to that structure, or to add a new kind of map. One might drive the whole process from
+ * the yaml description (the links given above). This design would require a generic yaml-descriptor
+ * to UI implementation (and the reverse), but would be more flexible against changes.
+ * 
+ * - The property page has an overall scrollbar which kicks in if the internal content is too large.
+ * I originally wanted scrollbars just on the variable size aspects of the property page content, so that
+ * some of the header content, such as the file location, or even the buttons to add elements to lists,
+ * would not be scrolled.  Though I think the design question is still debatable, two points weighed in favor
+ * of just using the Eclipse-provided scrollbars. First, if only part of a page scrolled, the remaining might 
+ * still be too large for the display window, leaving some parts of the content inaccessible except by
+ * enlarging the window. When there is variable content managed by a ScrolledComposite, one has to tell
+ * ScrolledComposite to recalculate its sizes (and scrollbar positions) when its content changes. If the 
+ * content is programmed to fill up as much space as available (grabExcessVerticalSpace) and is inside a
+ * ScrolledComposite, there will always be enough space for it -- that is the content managed within a 
+ * ScrolledComposite is allowed to expand as much as it needs -- and therefore would never need any internal
+ * scrollbars of its own. It is certainly simpler to just use the top-level scrollbars provided by the 
+ * Eclipse Property Page.
+ * 
+ * - It is a pain that a scrollbar has to be manually told to recalculate its size. It seems that should be 
+ * part of the top-level layout(true, true) call. But as it is manual, the necessary action is abstracted 
+ * into the relayout() call.
+ * 
+ * - More could be done in semantic validation -- e.g. are the named files of the right type and suffix,
+ * are the nodegroups legitimate, do the URLs exist, etc.
+ * 
+ * - Possible appearance improvements:
+ * -- the - and B buttons should just be simple round buttons
+ * -- the vertical spacing between widgets could be reduced (e.g. in the lists of steps)
+ * -- The button label "Apply & Close" would be better named "Save & Close", but there is no principled 
+ * way I've found to get at this button
+ */
+
 // TODO:
 
 // Finish validation
@@ -127,11 +162,8 @@ import org.yaml.snakeyaml.Yaml;
 // It seems that label text cannot be right-aligned
 // Would like the '-' buttons to be smaller
 // Figure out defaultWidgetSelected
-// Lists of steps (2 places) and constraints needs scrollbars
 // Adjust height, width of list widgets when needed
 // Adjust widgets to property window being enlarged, shrunk
-// Many aspects of the yaml schemas are hard-coded here — could some of that be driven by the schema
-// itself?
 
 public class DataPropertyPage extends PropertyPage {
 
@@ -279,7 +311,7 @@ public class DataPropertyPage extends PropertyPage {
         addLabel(composite, PATH_TITLE, LABEL_WIDTH);
         // Path text field
         pathText =
-                addText(
+                addTextExpandable(
                         composite,
                         ((IResource) getElement()).getFullPath().toString(),
                         TEXT_FIELD_WIDTH);
@@ -347,9 +379,9 @@ public class DataPropertyPage extends PropertyPage {
         addSeparator(subcomp);
 
         final var subComposite = addComposite(subcomp, 3);
-        addContentSection(subComposite, "model-graphs", MANIFEST, false);
-        addContentSection(subComposite, "data-graphs", MANIFEST, false);
-        addContentSection(subComposite, "nodegroups", MANIFEST, false);
+        addListComposite(subComposite, "model-graphs", MANIFEST, false);
+        addListComposite(subComposite, "data-graphs", MANIFEST, false);
+        addListComposite(subComposite, "nodegroups", MANIFEST, false);
 
         addManifestStepsSection(subcomp);
         return subcomp;
@@ -359,13 +391,13 @@ public class DataPropertyPage extends PropertyPage {
         var subcomp = addComposite(parent, 1);
         extendVertically(subcomp);
         var dg = addCompositeUnequal(subcomp, 2);
-        addLabel(dg, "data-graph", LABEL_WIDTH);
+        addLabel(dg, "data-graph:", LABEL_WIDTH);
         var value = (String) yamlMap.get("data-graph");
-        Text t = addText(dg, value == null ? "" : value, TEXT_FIELD_WIDTH);
+        Text t = addTextExpandable(dg, value == null ? "" : value, TEXT_FIELD_WIDTH);
         yamlWidgets.put("data-graph", t);
         var cc = addCompositeUnequal(subcomp, 2);
-        addContentSection(cc, "extra-data-graphs", DATA, false);
-        addContentSection(cc, "model-graphs", DATA, false);
+        addListComposite(cc, "extra-data-graphs", DATA, false);
+        addListComposite(cc, "model-graphs", DATA, false);
         addIngestionStepsComposite(subcomp);
         return subcomp;
     }
@@ -373,8 +405,8 @@ public class DataPropertyPage extends PropertyPage {
     public Composite addModelComposite(Composite parent) {
         var subcomp = addComposite(parent, 1);
         var dg = addCompositeUnequal(subcomp, 2);
-        addContentSection(dg, "files", MODEL, true);
-        addContentSection(dg, "model-graphs", MODEL, false);
+        addListComposite(dg, "files", MODEL, true);
+        addListComposite(dg, "model-graphs", MODEL, false);
         return subcomp;
     }
 
@@ -415,22 +447,22 @@ public class DataPropertyPage extends PropertyPage {
         int WIDTH3 = 20;
         addLabel(composite, NAME_TITLE, WIDTH3);
         String value = (yamlMap.get("name") instanceof String n) ? n : "";
-        Text t = addText(composite, value, TEXT_FIELD_WIDTH);
+        Text t = addTextExpandable(composite, value, TEXT_FIELD_WIDTH);
         yamlWidgets.put("name", t);
 
         addLabel(composite, "Description:", WIDTH3);
         value = (yamlMap.get("description") instanceof String n) ? n : "";
-        t = addText(composite, value, TEXT_FIELD_WIDTH);
+        t = addTextExpandable(composite, value, TEXT_FIELD_WIDTH);
         yamlWidgets.put("description", t);
 
         addLabel(composite, "Copy-to-graph:", WIDTH3);
         value = (yamlMap.get("copy-to-graph") instanceof String n) ? n : "";
-        t = addText(composite, value, TEXT_FIELD_WIDTH);
+        t = addTextExpandable(composite, value, TEXT_FIELD_WIDTH);
         yamlWidgets.put("copy-to-graph", t);
 
         addLabel(composite, "Perform resolution:", WIDTH3);
         value = (yamlMap.get("perform-entity-resolution") instanceof String n) ? n : "";
-        t = addText(composite, value, TEXT_FIELD_WIDTH);
+        t = addTextExpandable(composite, value, TEXT_FIELD_WIDTH);
         yamlWidgets.put("perform-entity-resolution", t);
     }
 
@@ -617,8 +649,7 @@ public class DataPropertyPage extends PropertyPage {
         layout.marginTop = 0;
         layout.marginBottom = 0;
         subComposite.setLayout(layout);
-        var data = new GridData(GridData.FILL);
-        data.grabExcessHorizontalSpace = true;
+        var data = new GridData(SWT.FILL, SWT.CENTER, true, false);
         subComposite.setLayoutData(data);
         return subComposite;
     }
@@ -627,8 +658,7 @@ public class DataPropertyPage extends PropertyPage {
         final var subComposite = new Composite(parent, SWT.NONE);
         var layout = new GridLayout(numColumns, true);
         subComposite.setLayout(layout);
-        var data = new GridData(GridData.FILL);
-        data.grabExcessHorizontalSpace = true;
+        var data = new GridData(SWT.FILL, SWT.CENTER, true, false);
         subComposite.setLayoutData(data);
         return subComposite;
     }
@@ -638,7 +668,7 @@ public class DataPropertyPage extends PropertyPage {
      * slightly different for different keys, so there is various customization within this overall
      * general routine.
      */
-    public void addContentSection(
+    public void addListComposite(
             Composite parent, String sectionName, String kind, boolean fileBrowser) {
         final Composite contentComposite = addComposite(parent, 1);
 
