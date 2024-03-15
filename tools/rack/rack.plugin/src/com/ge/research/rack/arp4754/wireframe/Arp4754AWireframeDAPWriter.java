@@ -5,7 +5,11 @@ import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -22,6 +26,7 @@ public class Arp4754AWireframeDAPWriter {
 	private String level = "";
 	private List<String> objectives = new LinkedList<String>();
 	private HashMap<String, String> objectiveMap = new HashMap<String, String>();
+	private List<Boolean> processes = new LinkedList<Boolean>();;
 	
 	// Config SADL parameters
 	private String configID;
@@ -62,6 +67,10 @@ public class Arp4754AWireframeDAPWriter {
 	
 	public void setLevel(String str) {
 		level = str;
+	}
+	
+	public void setProcesses(List<Boolean> bools) {
+		processes = bools;
 	}
 	
 	public void setObjectives(List<String> strs, HashMap<String, String> map) {
@@ -144,6 +153,7 @@ public class Arp4754AWireframeDAPWriter {
 			"uri \"http://sadl.org/" + fn + "\" alias " + system.toLowerCase() + "config.\n\n";
 
 		dap += comments();
+		dap += "import \"http://sadl.org/PLAN-CORE.sadl\".\n\n";
 		dap += configID + " is a CONFIGURATION\n";
 		dap += "    with identifier \"" + configID +"\"\n";
 		dap += "    with derivedItemRequirementAlias \"" + derivedItemReqs + "\"\n";
@@ -167,16 +177,17 @@ public class Arp4754AWireframeDAPWriter {
 			"uri \"http://sadl.org/" + fn + "\" alias " + system.toLowerCase() + "dap.\n\n";
 		
 		dap += comments();
-		dap += "import \"http://sadl.org/PLAN-CORE-Process1.sadl\".\n";
-		dap += "import \"http://sadl.org/PLAN-CORE-Process2.sadl\".\n";
-		dap += "import \"http://sadl.org/PLAN-CORE-Process3.sadl\".\n";
-		dap += "import \"http://sadl.org/PLAN-CORE-Process4.sadl\".\n";
-		dap += "import \"http://sadl.org/PLAN-CORE-Process5.sadl\".\n";
-		dap += "import \"http://sadl.org/PLAN-CORE-Process6.sadl\".\n";
-		dap += "import \"http://sadl.org/PLAN-CORE-Process7.sadl\".\n";
-		dap += "import \"http://sadl.org/PLAN-CORE-Process8.sadl\".\n\n";
 		
-		dap += id + " is a SYSTEM\n";
+		int ii = 0;
+		while (ii < 8 && ii < processes.size()) {
+			if (processes.get(ii)) {
+				dap += "import \"http://sadl.org/PLAN-CORE-Process" + Integer.toString(ii + 1) + ".sadl\".\n";
+			}
+			
+			ii++;
+		}
+		
+		dap += "\n" + id + " is a SYSTEM\n";
 		dap += "    with identifier \"" + id + "\"\n";
 		dap += "    with description \"" + id + " Use Case\"\n";
 		dap += "    with developmentAssuranceLevel " + level.replaceAll("\s", "") + ".\n\n";
@@ -184,24 +195,117 @@ public class Arp4754AWireframeDAPWriter {
 		dap += "Adept-DAP is DevelopmentAssurancePlan\n";
 		dap += "    with identifier \"OEM-DAP\"\n";
 		dap += "    with description \"" + desc + "\"\n";
-		dap += "    with system " + id + "\n";
-		dap += "    with process Process-1\n";
-		dap += "    with process Process-2\n";
-		dap += "    with process Process-3\n";
-		dap += "    with process Process-4\n";
-		dap += "    with process Process-5\n";
-		dap += "    with process Process-6\n";
-		dap += "    with process Process-7\n";
-		dap += "    with process Process-8.\n\n";
+		dap += "    with system " + id;
+
+		ii = 0;
+		while (ii < 8 && ii < processes.size()) {
+			if (processes.get(ii)) {
+				dap += "\n    with process Process-" + Integer.toString(ii + 1);
+			}
+			
+			ii++;
+		}
+
+		dap += ".\n\n";
 		
 		for (String objective : objectives) {
 			String obj = getObjective(objective);
 			if (obj != null) {
-				dap += obj + " has query \"" + objective +"\".\n";
+				dap += obj + " has query \"" + objective + "\".\n";
 			}
 		}
 
 		return dap;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private String getJSON() {
+		JSONObject jo = new JSONObject();
+		
+		Map<String, JSONArray> map = new HashMap<String, JSONArray>();
+		for (String objective : objectives) {
+			String obj = getObjective(objective);
+			if (obj != null) {
+				JSONArray objlist = map.get(obj);
+				if (objlist == null) {
+					objlist = new JSONArray();
+					map.put(obj, objlist);
+				}
+				
+				objlist.add(objective);
+			}
+		}
+
+		for (String key : map.keySet()) {
+			jo.put(key, map.get(key));
+		}
+		
+		JSONArray bools = new JSONArray();
+		for (Boolean process : processes) {
+			bools.add(process);
+		}
+		
+		jo.put("processes", bools);
+		jo.put("reqTraceabilityReview", reqTraceabilityReview);
+		jo.put("reqCompleteReview", reqCompleteReview);
+		jo.put("sysDesignDesc", sysDesignDesc);
+		jo.put("sysReqs", sysReqs);
+		jo.put("system", system);
+		jo.put("itemReqs", itemReqs);
+		jo.put("item", item);
+		jo.put("interfaceOutput", interfaceOutput);
+		jo.put("interfaceInput", interfaceInput);
+		jo.put("interface", interfaceField);
+		jo.put("derivedSysReqs", derivedSysReqs);
+		jo.put("derivedItemReqs", derivedItemReqs);
+		jo.put("configID", configID);
+		jo.put("level", level);
+		jo.put("description", desc);
+		jo.put("id", id);
+		jo.put("creator", creator);
+		jo.put("company", company);
+
+		return jo.toJSONString();
+	}
+	
+	public boolean writeJSON() {
+		try {
+			if (!path.exists()) {
+				if (!path.mkdir()) {
+					err = "Unable to create directory " + path;
+					return true;
+				}
+			}
+
+			String full = new String(path.getAbsolutePath());
+			if (!full.endsWith(File.separator)) {
+				full += File.separator;
+			}
+			
+			String fn = system.toLowerCase() + "_arp4754.json";
+
+			File json = new File(full + fn);
+			
+			if (json.exists()) {
+	            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+	            alert.setTitle("Overwrite ");
+	            alert.setHeaderText("The DAP JSON file already exist. Overwrite?");
+	            Optional<ButtonType> result = alert.showAndWait();
+	            if (!result.isPresent() || !result.get().equals(ButtonType.OK)) {
+	            	return false;
+	            }
+			}
+			
+			FileWriter fw = new FileWriter(json);
+			fw.write(getJSON());
+			fw.flush();
+			fw.close();
+		} catch (Exception ex) {
+			err = "Error creating JSON file";
+			return true;
+		}
+
+		return false;
 	}
 	
 	public boolean write() {

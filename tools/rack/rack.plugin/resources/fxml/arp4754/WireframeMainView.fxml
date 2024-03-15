@@ -25,22 +25,25 @@
                 <RowConstraints vgrow="SOMETIMES" prefHeight="10" />
 
                 <!-- COMPANY -->
-                <RowConstraints vgrow="SOMETIMES" prefHeight="50" />
+                <RowConstraints vgrow="SOMETIMES" prefHeight="40" />
 
                 <!-- CREATOR -->
                 <RowConstraints vgrow="SOMETIMES" prefHeight="50" />
 
                 <!-- USE CASE -->
-                <RowConstraints vgrow="SOMETIMES" prefHeight="50" />
+                <RowConstraints vgrow="SOMETIMES" prefHeight="40" />
 
                 <!-- DESCRIPTION -->
-                <RowConstraints vgrow="SOMETIMES" prefHeight="50" />
+                <RowConstraints vgrow="SOMETIMES" prefHeight="40" />
 
                 <!-- ASSURANCE LEVEL -->
-                <RowConstraints vgrow="SOMETIMES" prefHeight="50" />
+                <RowConstraints vgrow="SOMETIMES" prefHeight="40" />
+
+                <!-- PROCESSES -->
+                <RowConstraints vgrow="SOMETIMES" prefHeight="40" />
 
                 <!-- BUTTONS -->
-                <RowConstraints vgrow="SOMETIMES" prefHeight="60" />
+                <RowConstraints vgrow="SOMETIMES" prefHeight="50" />
 
               </rowConstraints>
 
@@ -93,11 +96,29 @@
                     </MenuButton>
                   </children>
                 </HBox>
+                
+                <!--  PROCESSES -->
+                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.columnIndex="1" alignment="CENTER_LEFT" spacing="10" >
+                  <children>
+                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold" mnemonicParsing="false" text="Processes" />
+                    <CheckBox fx:id="check1" style="-fx-font-size: 16px; -fx-font-weight: bold" mnemonicParsing="false" text="1" />
+                    <CheckBox fx:id="check2" style="-fx-font-size: 16px; -fx-font-weight: bold" mnemonicParsing="false" text="2" />
+                    <CheckBox fx:id="check3" style="-fx-font-size: 16px; -fx-font-weight: bold" mnemonicParsing="false" text="3" />
+                    <CheckBox fx:id="check4" style="-fx-font-size: 16px; -fx-font-weight: bold" mnemonicParsing="false" text="4" />
+                    <CheckBox fx:id="check5" style="-fx-font-size: 16px; -fx-font-weight: bold" mnemonicParsing="false" text="5" />
+                    <CheckBox fx:id="check6" style="-fx-font-size: 16px; -fx-font-weight: bold" mnemonicParsing="false" text="6" />
+                    <CheckBox fx:id="check7" style="-fx-font-size: 16px; -fx-font-weight: bold" mnemonicParsing="false" text="7" />
+                    <CheckBox fx:id="check8" style="-fx-font-size: 16px; -fx-font-weight: bold" mnemonicParsing="false" text="8" />
+                  </children>
+                </HBox>
 
                 <!-- BUTTONS -->
-                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="6" spacing="20" GridPane.columnIndex="1" alignment="CENTER_LEFT" >
+                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="7" spacing="20" GridPane.columnIndex="1" alignment="CENTER_LEFT" >
                   <children>
-                    <Button fx:id="btnComplete" onAction="#btnCompleteAction" prefWidth="120.0" style="-fx-font-size: 16px; -fx-font-weight: bold" text="Complete" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+                    <Button fx:id="btnComplete" onAction="#btnCompleteAction" prefWidth="120.0" style="-fx-font-size: 16px; -fx-font-weight: bold" text="Write SADL" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM" />
+                    <Button fx:id="btnJSON" onAction="#btnJSONAction" prefWidth="120.0" style="-fx-font-size: 16px; -fx-font-weight: bold" text="Save JSON" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+                    <Button fx:id="btnJSONRead" onAction="#btnJSONReadAction" prefWidth="120.0" style="-fx-font-size: 16px; -fx-font-weight: bold" text="Read JSON" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+		            <Button fx:id="btnCancel" onAction="#btnCancelAction" prefWidth="120.0" style="-fx-font-size: 16px; -fx-font-weight: bold" text="Cancel" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM" />
                   </children>
                 </HBox>
 

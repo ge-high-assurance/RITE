@@ -50,6 +50,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -73,7 +74,18 @@ public class Arp4754WireframeMainViewHandler {
     @FXML private TextField txtUseCaseLabel;
     @FXML private TextField txtUseCaseDescription;
     @FXML private MenuButton menuAssuranceLevel;
+    @FXML private CheckBox check1;
+    @FXML private CheckBox check2;
+    @FXML private CheckBox check3;
+    @FXML private CheckBox check4;
+    @FXML private CheckBox check5;
+    @FXML private CheckBox check6;
+    @FXML private CheckBox check7;
+    @FXML private CheckBox check8;
     @FXML private Button btnComplete;
+    @FXML private Button btnJSON;
+    @FXML private Button btnJSONRead;
+    @FXML private Button btnCancel;
 
     // OBJECTIVES QUERIES TAB
     @FXML private Tab tabObjectives;
@@ -138,6 +150,15 @@ public class Arp4754WireframeMainViewHandler {
         menuSystemDesignDesc.setText(DOCUMENT);
         menuReqCompleteReview.setText(REVIEW);
         menuReqTraceabilityReview.setText(REVIEW);
+        
+        check1.setSelected(true);
+        check2.setSelected(true);
+        check3.setSelected(true);
+        check4.setSelected(true);
+        check5.setSelected(true);
+        check6.setSelected(true);
+        check7.setSelected(true);
+        check8.setSelected(true);
     }
 
     @FXML
@@ -168,6 +189,83 @@ public class Arp4754WireframeMainViewHandler {
 
     	return true;
     }
+    
+    private boolean checkProcesses() {
+    	if (check1.isSelected() || check2.isSelected() ||
+    			check3.isSelected() || check4.isSelected() ||
+    			check5.isSelected() || check6.isSelected() ||
+    			check7.isSelected() || check8.isSelected()) {
+    		return true;
+    	}
+    	
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Validate Processes");
+        alert.setHeaderText("At least one process must be selected.");
+        alert.showAndWait();
+    	return false;
+    }
+
+    @FXML
+    private void btnCancelAction(ActionEvent event) throws Exception {
+		Arp4754WireframeMainViewManager.close();
+    }
+    
+    private Arp4754AWireframeDAPWriter createWriter(File directory) {
+		Arp4754AWireframeDAPWriter writer = new Arp4754AWireframeDAPWriter(directory, menuSystem.getText());
+		writer.setGeneral(txtCompany.getText(), txtCreator.getText());
+		writer.setID(txtUseCaseLabel.getText());
+		writer.setDescription(txtUseCaseDescription.getText());
+		writer.setLevel(menuAssuranceLevel.getText());
+
+		List<Boolean> bools = new LinkedList<Boolean>();
+		bools.add(Boolean.valueOf(check1.isSelected()));
+		bools.add(Boolean.valueOf(check2.isSelected()));
+		bools.add(Boolean.valueOf(check3.isSelected()));
+		bools.add(Boolean.valueOf(check4.isSelected()));
+		bools.add(Boolean.valueOf(check5.isSelected()));
+		bools.add(Boolean.valueOf(check6.isSelected()));
+		bools.add(Boolean.valueOf(check7.isSelected()));
+		bools.add(Boolean.valueOf(check8.isSelected()));
+		writer.setProcesses(bools);
+
+		writer.setObjectives(lvQueries.getItems(), objectiveMap);
+
+		writer.setConfigID(txtID.getText());
+		writer.setDerivedItemReqs(menuDerivedItemReqs.getText());
+		writer.setDerivedSysReqs(menuDerivedSystemReqs.getText());
+		writer.setInterface(menuInterface.getText());
+		writer.setInterfaceInput(menuInterfaceInput.getText());
+		writer.setInterfaceOutput(menuInterfaceOutput.getText());
+		writer.setItem(menuItem.getText());
+		writer.setItemReqs(menuItemReqs.getText());
+		writer.setSysReqs(menuSystemReqs.getText());
+		writer.setSystemDesignDescription(menuSystemDesignDesc.getText());
+		writer.setReqCompleteReview(menuReqCompleteReview.getText());
+		writer.setReqTraceabilityReview(menuReqTraceabilityReview.getText());
+		return writer;
+    }
+
+    @FXML
+    private void btnJSONReadAction(ActionEvent event) throws Exception {
+    	
+    }
+
+    	@FXML
+    private void btnJSONAction(ActionEvent event) throws Exception {
+		DirectoryChooser dc = new DirectoryChooser();
+		File directory = dc.showDialog(Arp4754WireframeMainViewManager.stage);
+		if (directory == null) {
+			return;
+		}
+		
+		Arp4754AWireframeDAPWriter writer = createWriter(directory);
+		if (writer.writeJSON()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Writing JSON File");
+            alert.setHeaderText(writer.getError());
+            alert.showAndWait();
+		}
+    }
 
     @FXML
     private void btnCompleteAction(ActionEvent event) throws Exception {
@@ -189,7 +287,8 @@ public class Arp4754WireframeMainViewHandler {
     		checkField(menuSystem.getText(), "System", "Configuration") &&
     		checkField(menuSystemDesignDesc.getText(), "System Design Description", "Configuration") &&
     		checkField(menuReqCompleteReview.getText(), "Requirements Complete Review", "Configuration") &&
-    		checkField(menuReqTraceabilityReview.getText(), "Requirements Traceability Review", "Configuration");
+    		checkField(menuReqTraceabilityReview.getText(), "Requirements Traceability Review", "Configuration") &&
+    		checkProcesses();
     		
     		if (check) {
     			DirectoryChooser dc = new DirectoryChooser();
@@ -197,27 +296,8 @@ public class Arp4754WireframeMainViewHandler {
     			if (directory == null) {
     				return;
     			}
-    			
-    			Arp4754AWireframeDAPWriter writer = new Arp4754AWireframeDAPWriter(directory, menuSystem.getText());
-    			writer.setGeneral(txtCompany.getText(), txtCreator.getText());
-    			writer.setID(txtUseCaseLabel.getText());
-    			writer.setDescription(txtUseCaseDescription.getText());
-    			writer.setLevel(menuAssuranceLevel.getText());
-    			writer.setObjectives(lvQueries.getItems(), objectiveMap);
-    			
-    			writer.setConfigID(txtID.getText());
-    			writer.setDerivedItemReqs(menuDerivedItemReqs.getText());
-    			writer.setDerivedSysReqs(menuDerivedSystemReqs.getText());
-    			writer.setInterface(menuInterface.getText());
-    			writer.setInterfaceInput(menuInterfaceInput.getText());
-    			writer.setInterfaceOutput(menuInterfaceOutput.getText());
-    			writer.setItem(menuItem.getText());
-    			writer.setItemReqs(menuItemReqs.getText());
-    			writer.setSysReqs(menuSystemReqs.getText());
-    			writer.setSystemDesignDescription(menuSystemDesignDesc.getText());
-    			writer.setReqCompleteReview(menuReqCompleteReview.getText());
-    			writer.setReqTraceabilityReview(menuReqTraceabilityReview.getText());
 
+    			Arp4754AWireframeDAPWriter writer = createWriter(directory);
     			if (writer.write()) {
     	            Alert alert = new Alert(Alert.AlertType.ERROR);
     	            alert.setTitle("Writing SADL Files");
@@ -452,17 +532,25 @@ public class Arp4754WireframeMainViewHandler {
         return mi;
     }
     
+    private void resetBasicMenu(MenuButton menu) {
+    	menu.getItems().add(newMenuItem(REQUIREMENT));
+    	menu.getItems().add(newMenuItem(SYSTEM));
+    	menu.getItems().add(newMenuItem(DOCUMENT));
+    	menu.getItems().add(newMenuItem(REVIEW));
+    	menu.getItems().add(newMenuItem(INTERFACE));
+    }
+    
     private void resetBasicMenus() {
-        menuDerivedItemReqs.getItems().add(newMenuItem(REQUIREMENT));
-        menuDerivedSystemReqs.getItems().add(newMenuItem(REQUIREMENT));
-        menuItemReqs.getItems().add(newMenuItem(REQUIREMENT));
-        menuSystemReqs.getItems().add(newMenuItem(REQUIREMENT));
-        menuSystemDesignDesc.getItems().add(newMenuItem(DOCUMENT));
-        menuItem.getItems().add(newMenuItem(SYSTEM));
-        menuSystem.getItems().add(newMenuItem(SYSTEM));
-        menuReqCompleteReview.getItems().add(newMenuItem(REVIEW));
-        menuReqTraceabilityReview.getItems().add(newMenuItem(REVIEW));
-        menuInterface.getItems().add(newMenuItem(INTERFACE));
+    	resetBasicMenu(menuDerivedItemReqs);
+    	resetBasicMenu(menuDerivedSystemReqs);
+    	resetBasicMenu(menuItemReqs);
+    	resetBasicMenu(menuSystemReqs);
+    	resetBasicMenu(menuSystemDesignDesc);
+    	resetBasicMenu(menuItem);
+    	resetBasicMenu(menuSystem);
+    	resetBasicMenu(menuReqCompleteReview);
+    	resetBasicMenu(menuReqTraceabilityReview);
+    	resetBasicMenu(menuInterface);
 
         menuDerivedItemReqs.getItems().add(menuDerivedItemReqsCustom);
         menuDerivedSystemReqs.getItems().add(menuDerivedSystemReqsCustom);
