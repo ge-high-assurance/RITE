@@ -469,10 +469,12 @@ public class DataPropertyPage extends PropertyPage {
     public void addManifestStepsSection(Composite parent) {
         var comp = addComposite(parent, 1);
         extendVertically(comp);
+        ((GridLayout) comp.getLayout()).verticalSpacing = -5;
 
         java.util.List<ManifestStepWidget> widgetList = new java.util.LinkedList<>();
         addLabel(comp, "Steps:", 12);
         var buttonComposite = addCompositeUnequal(comp, 2);
+        ((GridLayout) buttonComposite.getLayout()).marginTop = 5;
         var addButton = new Button(buttonComposite, SWT.PUSH);
         addButton.setText("Add");
         addButton.addSelectionListener(
@@ -648,6 +650,7 @@ public class DataPropertyPage extends PropertyPage {
         layout.marginHeight = 0;
         layout.marginTop = 0;
         layout.marginBottom = 0;
+        layout.verticalSpacing = 0;
         subComposite.setLayout(layout);
         var data = new GridData(SWT.FILL, SWT.CENTER, true, false);
         subComposite.setLayoutData(data);
@@ -803,6 +806,8 @@ public class DataPropertyPage extends PropertyPage {
     public Composite addIngestionStepsComposite(Composite parent) {
         var subcomp = addComposite(parent, 1);
         extendVertically(subcomp);
+        ((GridLayout)subcomp.getLayout()).verticalSpacing = 0;
+
         var ingestionStepsWidgets = new java.util.ArrayList<DataStepWidget>(10);
         yamlWidgets.put("ingestion-steps", ingestionStepsWidgets);
 
@@ -810,10 +815,9 @@ public class DataPropertyPage extends PropertyPage {
         final Composite buttonComposite = addCompositeUnequal(subcomp, 2);
 
         var sc = subcomp;
-        //        final var sc = addScrolledComposite(subcomp);
         final Composite stepsComposite = addComposite(sc, 1);
         extendVertically(stepsComposite);
-        //        sc.setContent(stepsComposite);
+        ((GridLayout)stepsComposite.getLayout()).verticalSpacing = -5;
 
         final Button addButton = new Button(buttonComposite, SWT.PUSH);
         addButton.setText("Add");
@@ -1093,6 +1097,7 @@ public class DataPropertyPage extends PropertyPage {
             sc.setExpandVertical(true);
             sc.setAlwaysShowScrollBars(false);
             var comp = addComposite(sc, 1);
+            ((GridLayout) comp.getLayout()).verticalSpacing = -3;
             ((GridData) comp.getLayoutData()).horizontalAlignment = SWT.FILL;
             ((GridData) comp.getLayoutData()).verticalAlignment = SWT.FILL;
             ((GridData) comp.getLayoutData()).grabExcessHorizontalSpace = true;
