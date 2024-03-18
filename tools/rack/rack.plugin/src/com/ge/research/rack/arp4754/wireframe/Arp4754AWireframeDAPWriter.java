@@ -3,6 +3,7 @@ package com.ge.research.rack.arp4754.wireframe;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -218,26 +219,29 @@ public class Arp4754AWireframeDAPWriter {
 		return dap;
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked" })
 	private String getJSON() {
 		JSONObject jo = new JSONObject();
 		
 		Map<String, JSONArray> map = new HashMap<String, JSONArray>();
 		for (String objective : objectives) {
-			String obj = getObjective(objective);
-			if (obj != null) {
-				JSONArray objlist = map.get(obj);
+			String key = getObjective(objective);
+			if (key != null) {
+				JSONArray objlist = map.get(key);
 				if (objlist == null) {
 					objlist = new JSONArray();
-					map.put(obj, objlist);
+					map.put(key, objlist);
 				}
-				
+
 				objlist.add(objective);
 			}
 		}
 
-		for (String key : map.keySet()) {
-			jo.put(key, map.get(key));
+		Iterator<String> iter = map.keySet().iterator();
+		while (iter.hasNext()) {
+			String key = iter.next();
+			JSONArray jarray = map.get(key);
+			jo.put(key, jarray);
 		}
 		
 		JSONArray bools = new JSONArray();

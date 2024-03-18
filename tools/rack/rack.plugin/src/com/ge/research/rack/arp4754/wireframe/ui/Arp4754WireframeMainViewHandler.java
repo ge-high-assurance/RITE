@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.HashMap;
 
+import com.ge.research.rack.arp4754.wireframe.Arp4754AWireframeDAPReader;
 import com.ge.research.rack.arp4754.wireframe.Arp4754AWireframeDAPWriter;
 
 import javafx.event.ActionEvent;
@@ -58,6 +59,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 
 public class Arp4754WireframeMainViewHandler {
 	
@@ -244,10 +246,132 @@ public class Arp4754WireframeMainViewHandler {
 		writer.setReqTraceabilityReview(menuReqTraceabilityReview.getText());
 		return writer;
     }
+    
+    private void readJSON(Arp4754AWireframeDAPReader reader) {
+    	String str = reader.getCompany();
+    	if (str != null) {
+    		txtCompany.setText(str);
+    	}
+    	
+    	str = reader.getCreator();
+    	if (str != null) {
+    		txtCreator.setText(str);
+    	}
+
+    	str = reader.getID();
+    	if (str != null) {
+    		txtUseCaseLabel.setText(str);
+    	}
+
+    	str = reader.getDescription();
+    	if (str != null) {
+    		txtUseCaseDescription.setText(str);
+    	}
+
+    	str = reader.getLevel();
+    	if (str != null) {
+    		menuAssuranceLevel.setText(str);
+    	}
+
+    	str = reader.getConfigID();
+    	if (str != null) {
+    		txtID.setText(str);
+    	}
+
+    	str = reader.getDerivedItemReqs();
+    	if (str != null) {
+    		menuDerivedItemReqs.setText(str);
+    	}
+
+    	str = reader.getDerivedSysReqs();
+    	if (str != null) {
+    		menuDerivedSystemReqs.setText(str);
+    	}
+
+    	str = reader.getInterface();
+    	if (str != null) {
+    		menuInterface.setText(str);
+    	}
+
+    	str = reader.getInterfaceInput();
+    	if (str != null) {
+    		menuInterfaceInput.setText(str);
+    	}
+
+    	str = reader.getInterfaceOutput();
+    	if (str != null) {
+    		menuInterfaceOutput.setText(str);
+    	}
+
+    	str = reader.getItem();
+    	if (str != null) {
+    		menuItem.setText(str);
+    	}
+
+    	str = reader.getItemReqs();
+    	if (str != null) {
+    		menuItemReqs.setText(str);
+    	}
+    	
+    	str = reader.getSystem();
+    	if (str != null) {
+    		menuSystem.setText(str);
+    	}
+
+    	str = reader.getSysReqs();
+    	if (str != null) {
+    		menuSystemReqs.setText(str);
+    	}
+
+    	str = reader.getSystemDesignDescription();
+    	if (str != null) {
+    		menuSystemDesignDesc.setText(str);
+    	}
+
+    	str = reader.getReqCompleteReview();
+    	if (str != null) {
+    		menuReqCompleteReview.setText(str);
+    	}
+
+    	str = reader.getReqTraceabilityReview();
+    	if (str != null) {
+    		menuReqTraceabilityReview.setText(str);
+    	}
+    	
+    	List<Boolean> bools = reader.getProcesses();
+    	check1.setSelected(bools.get(0));
+    	check2.setSelected(bools.get(1));
+    	check3.setSelected(bools.get(2));
+    	check4.setSelected(bools.get(3));
+    	check5.setSelected(bools.get(4));
+    	check6.setSelected(bools.get(5));
+    	check7.setSelected(bools.get(6));
+    	check8.setSelected(bools.get(7));
+    	
+    	if (reader.hasObjectives()) {
+    		objectiveMap = reader.getObjectiveMap();
+    		lvQueries.getItems().clear();
+    		lvQueries.getItems().addAll(reader.getObjectives());
+    	}
+    }
 
     @FXML
     private void btnJSONReadAction(ActionEvent event) throws Exception {
-    	
+    	FileChooser fc = new FileChooser();
+		File ff = fc.showOpenDialog(Arp4754WireframeMainViewManager.stage);
+		if (ff == null) {
+			return;
+		}
+		
+		Arp4754AWireframeDAPReader reader = new Arp4754AWireframeDAPReader(ff);
+		if (reader.readJSON()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Reading JSON File");
+            alert.setHeaderText(reader.getError());
+            alert.showAndWait();
+		} else {
+			readJSON(reader);
+		}
     }
 
     	@FXML
@@ -344,6 +468,7 @@ public class Arp4754WireframeMainViewHandler {
             lvQueries.getItems().add(index, txt);
         }
         
+        lvQueries.getSelectionModel().clearAndSelect(index);
         objectiveMap.put(txt, handler.getObjective());
     }
 

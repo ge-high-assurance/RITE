@@ -71,7 +71,6 @@
                 <MenuItem mnemonicParsing="false" text="Objective-6-4" onAction="#objectiveMenuAction" />
                 <MenuItem mnemonicParsing="false" text="Objective-7-1" onAction="#objectiveMenuAction" />
                 <MenuItem mnemonicParsing="false" text="Objective-7-2" onAction="#objectiveMenuAction" />
-                <MenuItem mnemonicParsing="false" text="Objective-7-1" onAction="#objectiveMenuAction" />
                 <MenuItem mnemonicParsing="false" text="Objective-8-1" onAction="#objectiveMenuAction" />
               </items>
             </MenuButton>
