@@ -376,16 +376,16 @@ public class ObjectiveViewHandler {
 
                 String evidenceText = intrface.getId() + " | Inputs: ";
                 for (Evidence input : intrface.getHasInputs()) {
-                	if(input!=null) {
-                        evidenceText = evidenceText + input.getId() + ", ";                		
-                	}
+                    if (input != null) {
+                        evidenceText = evidenceText + input.getId() + ", ";
+                    }
                 }
                 evidenceText = evidenceText + " | Outputs: ";
 
                 for (Evidence output : intrface.getHasOutputs()) {
-                	if(output!=null) {
-                        evidenceText = evidenceText + output.getId() + ", ";                		
-                	}
+                    if (output != null) {
+                        evidenceText = evidenceText + output.getId() + ", ";
+                    }
                 }
 
                 evidenceLabel.setText(evidenceText);
@@ -601,7 +601,7 @@ public class ObjectiveViewHandler {
         for (Evidence system : currentObjObject.getOutputs().getSystemObjs()) {
             if (filterKey.equalsIgnoreCase("All")
                     && ((searchKey == null) || (system.getId().contains(searchKey)))) {
-            	if(system.getType().equalsIgnoreCase("System")) { // exclude items
+                if (system.getType().equalsIgnoreCase("System")) { // exclude items
                     Label evidenceLabel = new Label();
 
                     String evidenceText = system.getId() + " | Interfaces: ";
@@ -611,8 +611,7 @@ public class ObjectiveViewHandler {
 
                     evidenceLabel.setText(evidenceText);
                     systemList.getItems().add(evidenceLabel);
-            		
-            	}
+                }
             }
         }
     }
@@ -819,10 +818,17 @@ public class ObjectiveViewHandler {
             String selectedReqLine = selectedLabel.getText();
             System.out.println("The selected req line: " + selectedReqLine);
 
+            
+            // Contextmenu for reqList
+            ContextMenu reqListContext = new ContextMenu();
+            MenuItem menuItemGoToSource = new MenuItem("Go to Entity Source");
+            reqListContext.getItems().add(menuItemGoToSource);
+            requirementList.setContextMenu(reqListContext);
+            
             // TODO: below is ad hoc code. Make generic
             if (currentObjObject.getId().equalsIgnoreCase("objective-2-6")) {
                 // Contextmenu for reqList
-                ContextMenu reqListContext = new ContextMenu();
+//                ContextMenu reqListContext = new ContextMenu();
                 MenuItem menuItemShowTrace = new MenuItem("Show Traces");
                 MenuItem menuItemShowAllocation = new MenuItem("Show Allocations");
                 reqListContext.getItems().add(menuItemShowTrace);
@@ -870,18 +876,18 @@ public class ObjectiveViewHandler {
                             }
                         });
             }
-            
-            // Contextmenu for reqList
-            ContextMenu reqListContext = new ContextMenu();
-            MenuItem menuItemGoToSource = new MenuItem("Go to Entity Source");
-            reqListContext.getItems().add(menuItemGoToSource);
-            requirementList.setContextMenu(reqListContext);
+
+//            // Contextmenu for reqList
+//            ContextMenu reqListContext = new ContextMenu();
+//            MenuItem menuItemGoToSource = new MenuItem("Go to Entity Source");
+//            reqListContext.getItems().add(menuItemGoToSource);
+//            requirementList.setContextMenu(reqListContext);
             // show source of requirement in reqchildren if right click context selected
             menuItemGoToSource.setOnAction(
                     (rightClickEvent) -> {
                         // Open URL on browser
 
-                    	ViewUtils.openUrlInDefaultApp(
+                        ViewUtils.openUrlInDefaultApp(
                                 "https://github.com/ge-high-assurance/RITE/blob/arp4754/examples/ingestion-packages/OEM-Ingestion-Package-v2/data_source/requirements.pdf");
                     });
         }
@@ -902,16 +908,16 @@ public class ObjectiveViewHandler {
             MenuItem menuItemGoToSource = new MenuItem("Go to Entity Source");
             intrfaceListContext.getItems().add(menuItemGoToSource);
             interfaceList.setContextMenu(intrfaceListContext);
-             menuItemGoToSource.setOnAction(
+            menuItemGoToSource.setOnAction(
                     (rightClickEvent) -> {
                         // Open URL on browser
 
-                    	ViewUtils.openUrlInDefaultApp(
+                        ViewUtils.openUrlInDefaultApp(
                                 "https://github.com/ge-high-assurance/RITE/blob/arp4754/examples/ingestion-packages/OEM-Ingestion-Package-v2/data_source/interfaces.pdf");
                     });
         }
     }
-    
+
     @FXML
     private void itemListSelectionAction(MouseEvent event) {
 
@@ -927,16 +933,16 @@ public class ObjectiveViewHandler {
             MenuItem menuItemGoToSource = new MenuItem("Go to Entity Source");
             itemListContext.getItems().add(menuItemGoToSource);
             itemList.setContextMenu(itemListContext);
-             menuItemGoToSource.setOnAction(
+            menuItemGoToSource.setOnAction(
                     (rightClickEvent) -> {
                         // Open URL on browser
 
-                    	ViewUtils.openUrlInDefaultApp(
+                        ViewUtils.openUrlInDefaultApp(
                                 "https://github.com/ge-high-assurance/RITE/blob/arp4754/examples/ingestion-packages/OEM-Ingestion-Package-v2/data_source/systems.pdf");
                     });
         }
     }
-    
+
     @FXML
     private void systemListSelectionAction(MouseEvent event) {
 
@@ -952,16 +958,16 @@ public class ObjectiveViewHandler {
             MenuItem menuSystemGoToSource = new MenuItem("Go to Entity Source");
             systemListContext.getItems().add(menuSystemGoToSource);
             systemList.setContextMenu(systemListContext);
-             menuSystemGoToSource.setOnAction(
+            menuSystemGoToSource.setOnAction(
                     (rightClickEvent) -> {
                         // Open URL on browser
 
-                    	ViewUtils.openUrlInDefaultApp(
+                        ViewUtils.openUrlInDefaultApp(
                                 "https://github.com/ge-high-assurance/RITE/blob/arp4754/examples/ingestion-packages/OEM-Ingestion-Package-v2/data_source/systems.pdf");
                     });
         }
     }
-    
+
     @FXML
     private void docListSelectionAction(MouseEvent event) {
 
