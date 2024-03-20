@@ -120,6 +120,12 @@ public class ProjectUtils {
         return yaml.<HashMap<String, Object>>load(inputStream);
     }
 
+    public static Object readAnyYaml(String path) throws Exception {
+        FileInputStream inputStream = new FileInputStream(new File(path));
+        Yaml yaml = new Yaml();
+        return yaml.<Object>load(inputStream);
+    }
+
     public static DumperOptions getYamlDumperOptions() {
         final DumperOptions options = new DumperOptions();
         options.setIndent(1);

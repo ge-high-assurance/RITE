@@ -38,10 +38,19 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.IEditorInput;
+
+/** This is the action for the command associated with the 'New yaml file' menu action under the RACK 
+ * top-level menu item.
+ */
 public class NewPropertyPageHandler extends AbstractHandler {
 
     @Override
@@ -71,5 +80,36 @@ public class NewPropertyPageHandler extends AbstractHandler {
         org.eclipse.ui.dialogs.PreferencesUtil.createPropertyDialogOn(shell, f, ID, null, null, 0)
                 .open();
         return null;
+    }
+    
+    /** This is the handler for the context menu action 'Properties' in a Yaml Editor window */
+    public static class Editor extends AbstractHandler implements org.eclipse.ui.IEditorActionDelegate {
+
+        @Override
+        public Object execute(ExecutionEvent event) throws ExecutionException {
+            var shell = org.eclipse.swt.widgets.Display.getCurrent().getActiveShell();
+            IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+            IEditorInput input = window.getActivePage().getActiveEditor().getEditorInput();
+            IFile file = ((org.eclipse.ui.part.FileEditorInput)input).getFile();
+            String ID = "com.ge.research.rack.properties.dataPropertyPage";
+            org.eclipse.ui.dialogs.PreferencesUtil.createPropertyDialogOn(shell, file, ID, null, null, 0)
+                    .open();
+            return null;
+        }
+
+        // The following necessary implementations do not seem to be needed in practice
+        
+		@Override
+		public void run(IAction action) {
+		}
+
+		@Override
+		public void selectionChanged(IAction action, ISelection selection) {
+		}
+		
+		@Override
+		public void setActiveEditor(IAction action, IEditorPart targetEditor) {
+		}
+
     }
 }

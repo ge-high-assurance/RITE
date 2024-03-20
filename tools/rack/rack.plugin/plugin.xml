@@ -36,6 +36,11 @@
     </command>
 
     <command categoryId="rackplugin.commands"
+      id="rackplugin.commands.editorPropertyPage"
+      name="Properties">
+    </command>
+
+    <command categoryId="rackplugin.commands"
       id="rackplugin.commands.newYamlPropertyPage"
       name="New Manifest Property Page">
     </command>
@@ -153,6 +158,11 @@
     <handler
       class="com.ge.research.rack.properties.NewPropertyPageHandler"
       commandId="rackplugin.commands.newYamlPropertyPage">
+    </handler>
+
+    <handler
+      class="com.ge.research.rack.properties.NewPropertyPageHandler$Editor"
+      commandId="rackplugin.commands.editorPropertyPage">
     </handler>
 
     <handler
@@ -738,5 +748,15 @@
       </enabledWhen>
     </page>
   </extension>
+  
+  <extension point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:yamleditor.editors.YamlEditor.context?after=additions">
+         <command 
+               commandId="rackplugin.commands.editorPropertyPage"
+               >
+        </command>
+      </menuContribution>
+    </extension>
 
 </plugin>

@@ -42,10 +42,14 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.Stack;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IContainer;
@@ -61,6 +65,8 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
@@ -76,6 +82,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.PropertyPage;
+import org.eclipse.ui.forms.widgets.Twistie;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.DumperOptions.FlowStyle;
 import org.yaml.snakeyaml.Yaml;
@@ -165,6 +172,20 @@ import org.yaml.snakeyaml.Yaml;
 // Adjust height, width of list widgets when needed
 // Adjust widgets to property window being enlarged, shrunk
 
+// make properties window non-modal
+
+// General Yaml editor:
+//   + button with various kinds
+//   general left alignment
+//   general right alignment
+//   scraping for reconstituting yaml
+//   warn about duplicate keys in maps
+//   warn about ill-formatted integers
+//   add any other types?
+//   what happens with long keys
+//   support for multiple documents per file
+
+
 public class DataPropertyPage extends PropertyPage {
 
     private static final String NAME_TITLE = "Name:";
@@ -178,12 +199,14 @@ public class DataPropertyPage extends PropertyPage {
     public static final String MANIFEST = "Manifest";
     public static final String DATA = "Data";
     public static final String MODEL = "Model";
+    public static final String GENERAL = "General yaml";
 
     private Shell shell;
     private Composite topParent;
     private ScrolledComposite topScrolled;
 
-    private Map<String, Object> yamlMap = new HashMap<>();
+    private Object currentYaml = null;
+    private Stack<Object> yamlStack = new Stack<>();
 
     private Combo kindCombo;
     private Text pathText;
@@ -202,8 +225,12 @@ public class DataPropertyPage extends PropertyPage {
         topScrolled = (ScrolledComposite) parent.getParent();
         getApplyButton().setText("Save to file");
         getDefaultsButton().setText("Discard changes");
+        // I'd like to change the PropertyDialog button named 'Apply and Close' to 'Save and Close'
+        // One can get the PropertyDialog using this.getContainer(), but the buttons themselves are
+        // private and there appears no way to get a handle to them. Plus we'd want to change the
+        // label just for this DataPropertyPage tab of the overall PropertyDialog.
     }
-
+    
     @Override
     public void contributeButtons(Composite buttonBar) {
         ((GridLayout) buttonBar.getLayout()).numColumns++;
@@ -220,8 +247,9 @@ public class DataPropertyPage extends PropertyPage {
                                     shell, "Validate", "No kind of yaml file selected");
                             return;
                         }
-                        var yaml = collectYaml(false, false);
-                        String diffs = validate(yaml);
+                        String kind = kindCombo.getItems()[k];
+                        var yaml = collectYaml(false, kind, false);
+                        String diffs = validate(yaml, kind);
                         if (diffs.isEmpty()) {
                             MessageDialog.openInformation(shell, "Validate", "No errors found");
                         } else {
@@ -247,53 +275,57 @@ public class DataPropertyPage extends PropertyPage {
         extendVertically(composite);
         try {
 
-            if (file != null && file.getLocation() != null) {
-                yamlMap = readYaml(file.getLocation().toString());
+            boolean isNewOrIllformedFile;
+            if (file != null && file.getLocation() != null && file.exists()) {
+                currentYaml = readYaml(file.getLocation().toString());
+                isNewOrIllformedFile = currentYaml == null;
+            } else {
+            	currentYaml = null;
+            	isNewOrIllformedFile = true;
             }
 
             String kind;
-            boolean isNewFile = yamlMap == null;
-            if (yamlMap == null) {
-                yamlMap = new HashMap<>(); // Already gave an error message
+            if (currentYaml == null) {
+            	// Either a new file or errors on reading
+                currentYaml = new HashMap<>(); // Already gave an error message
                 kind = "";
             } else {
-                kind = autoDetectYamlKind(yamlMap);
+                kind = autoDetectYamlKind(currentYaml);
             }
+            
+            yamlStack.push(copyChecked(currentYaml));
 
             addPathSection(composite);
             addYamlSelectorSection(composite, kind);
             addSeparator(composite);
-            //            var sc = addComposite(composite, 1);
-
-            //            ScrolledComposite sc = new ScrolledComposite(ncomp, SWT.H_SCROLL |
-            // SWT.V_SCROLL);
-            //            sc.setLayoutData(
-            //                    new GridData(
-            //                            GridData.FILL_HORIZONTAL | GridData.FILL_VERTICAL,
-            //                            SWT.TOP,
-            //                            true,
-            //                            true));
-            //            sc.setLayoutData(new GridData(GridData.FILL, SWT.TOP, true, true));
-            //            sc.setExpandHorizontal(true);
-            //            sc.setExpandVertical(true);
-            //            sc.setAlwaysShowScrollBars(false);
-
             currentSubcomposite = addKindSubcomposite(composite, kind);
-            //            sc.setContent(currentSubcomposite);
-            //            sc.layout(true, true);
 
             // This is some unit testing that retrieved yaml from the bunch of widgets is the same
             // as what went in
-            if (!isNewFile) {
-                var newYamlMap = collectYaml(isNewFile, false);
-                boolean b = Objects.equals(yamlMap, newYamlMap);
-                String diffs = compareYaml(yamlMap, newYamlMap);
+            if (!isNewOrIllformedFile && kind != GENERAL) { // FIXME - don't have collection for GENERAL yet
+                var newYamlMap = collectYaml(isNewOrIllformedFile, kind, false);
+                boolean b = Objects.equals(currentYaml, newYamlMap);
+                String diffs = compareYaml(currentYaml, newYamlMap);
                 if (!b || !diffs.isEmpty()) {
-                    MessageDialog.openInformation(
+                    var dialog = new MessageDialog(
                             shell,
-                            "Compare",
-                            "Maps are " + (b ? "" : "NOT ") + "the same\n" + diffs);
+                            "",
+                            null,
+                            "The YAML file is similar to a " + kind + " yaml file but with extra or missing required content as listed below.\n"
+                            +"Do you want to continue editing the file as a " + kind + " file or switch to a general YAML editor?\n\n"
+                            +"Input and reread maps are " + (b ? "" : "NOT ") + "the same\n" + diffs,
+                    		MessageDialog.QUESTION,
+                    		new String[]{"Continue as " + kind,"Switch to YAML editor"},
+                    		0);
+                    int k = dialog.open();
+                    if (k == 1) {
+                    	kind = GENERAL;
+                    	kindCombo.select(4); // Be sure that item 4 is GENERAL
+                    	currentSubcomposite.dispose();
+                        currentSubcomposite = addKindSubcomposite(composite, kind);
+                    }
                 }
+
             }
         } catch (Exception e) {
 
@@ -327,6 +359,7 @@ public class DataPropertyPage extends PropertyPage {
         kindCombo.add(MANIFEST);
         kindCombo.add(DATA);
         kindCombo.add(MODEL);
+        kindCombo.add(GENERAL);
         kindCombo.select(0);
         if (kind != null) kindCombo.setText(kind);
         kindCombo.addSelectionListener(
@@ -359,6 +392,7 @@ public class DataPropertyPage extends PropertyPage {
             default:
                 subcomp = addComposite(parent, 1);
                 addLabel(subcomp, "Choose a kind of yaml file", 30);
+                addLabel(subcomp, "Current file is either new or not recognized as one of the supported types", 100);
                 break;
             case MANIFEST:
                 subcomp = addManifestComposite(parent);
@@ -368,6 +402,9 @@ public class DataPropertyPage extends PropertyPage {
                 break;
             case MODEL:
                 subcomp = addModelComposite(parent);
+                break;
+            case GENERAL:
+                subcomp = addGeneralComposite(parent);
                 break;
         }
         return subcomp;
@@ -388,6 +425,7 @@ public class DataPropertyPage extends PropertyPage {
     }
 
     public Composite addDataComposite(Composite parent) {
+    	Map<String,Object> yamlMap = (Map<String,Object>)currentYaml; // data yaml always has a top-level map
         var subcomp = addComposite(parent, 1);
         extendVertically(subcomp);
         var dg = addCompositeUnequal(subcomp, 2);
@@ -408,6 +446,233 @@ public class DataPropertyPage extends PropertyPage {
         addListComposite(dg, "files", MODEL, true);
         addListComposite(dg, "model-graphs", MODEL, false);
         return subcomp;
+    }
+
+    public static final int INDENT = 30;
+    
+    public class YamlItemKindDialog extends org.eclipse.jface.dialogs.Dialog {
+    	Object host; // adding to a map or to a list
+    	Class<?>[] output;
+    	
+        public YamlItemKindDialog(Shell parentShell, Object host, Class<?>[] output) {
+            super(parentShell);
+            this.host = host;
+            this.output = output;
+        }
+               
+        static String[] kinds = { "Map", "List", "String", "Integer" };
+        static Class<?>[] classes = { java.util.HashMap.class, java.util.ArrayList.class, java.lang.String.class, java.lang.Integer.class };
+        @Override
+        protected Control createDialogArea(Composite parent) {
+            Composite container = (Composite) super.createDialogArea(parent);
+        	int index = 0;
+            if (host instanceof Map<?,?> map) {
+            	
+            	int[] counts = new int[10];
+            	for (var entry: map.entrySet()) {
+            		Object v = entry.getValue();
+            		if (v instanceof Map<?,?>) counts[0]++;
+            		else if (v instanceof List<?>) counts[1]++;
+            		else if (v instanceof String) counts[2]++;
+            		else if (v instanceof Integer) counts[3]++;
+            	}
+            	int max = 0;
+            	for (int i=0; i < counts.length; i++) if (counts[i] > max) { max = counts[i]; index = i; }
+            	
+            	addLabel(container, "You are adding an key-object element to a Yaml map", 50);
+            	addLabel(container, "What kind of object should the value have?", 50);
+            	if (map.size() > 0) {
+            		addLabel(container, "The most common kind already in the map is a " + kinds[index], 50);
+            	}
+
+            } else if (host instanceof List<?> list) {
+
+            	int[] counts = new int[10];
+            	for (var v: list) {
+            		if (v instanceof Map<?,?>) counts[0]++;
+            		else if (v instanceof List<?>) counts[1]++;
+            		else if (v instanceof String) counts[2]++;
+            		else if (v instanceof Integer) counts[3]++;
+            	}
+            	int max = 0;
+            	for (int i=0; i < counts.length; i++) if (counts[i] > max) { max = counts[i]; index = i; }
+            	
+            	addLabel(container, "You are adding an element to a Yaml list", 50);
+            	addLabel(container, "What kind of object should this list element be?", 50);
+            	if (list.size() > 0) addLabel(container, "The most common kind already in the list is a " + kinds[index], 50);
+            	
+            }
+            
+            Composite c = addComposite(parent, 1);
+            setLeftMargin(c, 50);
+            for (int i=0; i < kinds.length; i++) {
+            	var b = new Button(c, SWT.RADIO);
+            	b.setText(kinds[i]);
+            	b.setSelection(i==index);
+            	if (i == index) output[0] = classes[i];
+            	b.setData(i);
+            	b.addSelectionListener( new SelectionAdapter() {
+
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						Button b = (Button)e.getSource();
+						if ( b.getSelection()) {
+							output[0] = classes[(int)b.getData()];
+						}
+					}
+            		
+            	});
+            }
+            return container;
+        }
+    }
+    
+    public Object getChosenObjectKind(Shell shell, Object o) {
+        var output = new Class<?>[1];
+		Object inst = null;
+		int k = new YamlItemKindDialog(shell, o, output).open();
+		if (k == 0) {
+			try {
+				inst = output[0].getConstructor().newInstance();
+			} catch (Exception ex) {
+				try {
+				    inst = output[0].getConstructor(int.class).newInstance(0);
+				} catch (Exception exx) {
+				}
+			}
+		}
+		return inst;
+    }
+    
+    public void addGeneralPlusButton(Composite parent, Object o, Consumer<Object>  action) {
+        addButton(parent, "+").addSelectionListener( new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+		        var inst = getChosenObjectKind(shell, o);
+				if (inst != null) {
+					action.accept(inst);
+					relayout();
+				}
+			}
+        	
+        });
+    }
+
+    
+    /** This is the top-level call for the general yaml editor */
+    public Composite addGeneralComposite(Composite parent) {
+    	var head = addComposite(parent, 1);
+    	String s = currentYaml.getClass().toString();
+    	s = s.replace(".class","");
+    	s = s.substring(s.lastIndexOf('.'));
+    	if (s.endsWith("List")) s = "List";
+    	if (s.endsWith("Map")) s = "Map";
+    	addLabel(head, "The top-level of this yaml is a " + s, 60);
+    	addLabel(head, "Use + to add elements. Use - to remove elements. Use twistie to fold.", 60);
+        addGeneralSubcomposite(head, currentYaml);
+        return head;
+    }
+    
+    public Composite addGeneralSubcomposite(Composite parent, Object value) {
+    	if (value instanceof Map<?,?> map) {
+    		return addGeneralMapSubcomposite(parent, (Map<String,Object>)map);
+    	} else if (value instanceof List<?> list) {
+    		return addGeneralListSubcomposite(parent, list);
+    	} else {
+    		addTextExpandable(parent, value.toString(), 20);  // FIXME
+    	}
+    	return null;
+    }
+    
+    public Composite addGeneralMapSubcomposite(Composite parent, Map<?,?> map) {
+        var head = addComposite(parent, 2);
+        var items = addComposite(parent.getParent(), 1);
+        setVerticalSpacing(items, -5);
+        setVerticalMargin(items,0);
+        if (map != currentYaml) setLeftMargin(items,INDENT); // No indent at top level
+        Set<Object> sorted = new java.util.TreeSet<>();
+        sorted.addAll(map.keySet());
+        for (var key: sorted) {
+        	Object value = map.get(key);
+        	addGeneralKeyAndItem(items, key.toString(), value);
+        } 
+        addGeneralPlusButton(head, map, (Object inst) -> { addGeneralKeyAndItem(items, "", inst); });
+        addTwistie(head, items);
+        return null;
+    }
+    
+    public Composite addGeneralListSubcomposite(Composite parent, List<?> list) {
+        var head = addComposite(parent, 2);
+        var wlist = addComposite(parent.getParent(), 1);
+        setLeftMargin(wlist, 10);
+        setVerticalMargin(wlist, 0);
+        setVerticalSpacing(wlist, -5);
+        Consumer<Object> addline = (Object inst) -> { 
+			Composite c = addCompositeUnequal(wlist, 3);
+			addLabel(c, "-", 1);
+			addGeneralRemoveButton(c);
+			addGeneralSubcomposite(c, inst); };
+        for (var item: list) {
+        	addline.accept(item);
+        }
+        addGeneralPlusButton(head, list, addline);
+        addTwistie(head, wlist);
+
+        return null;
+    }
+    
+    public Composite addGeneralKeyAndItem(Composite parent, String key, Object value) {
+        Composite subcomp;
+        subcomp = addCompositeUnequal(parent, 4);
+        addGeneralRemoveButton(subcomp, subcomp);
+        addText(subcomp, key, 25);
+        addLabel(subcomp, ":", 2);
+    	if (value instanceof Map<?,?> map) {
+    		subcomp = addGeneralMapSubcomposite(subcomp, map);
+
+    	} else if (value instanceof List<?> list) {
+    		subcomp = addGeneralListSubcomposite(subcomp, list);
+    		
+    	} else {
+    		// This option is appropriate for any datatype that has a simple string representation
+    		// The redundant 'subcomp' composite is to keep a parallel with the Map and List, so that 
+    		// alignment is easier.
+            addTextExpandable(subcomp, value.toString(), 20);
+    		
+    	}
+    	return subcomp;
+    }
+    
+    public Button addGeneralRemoveButton(Composite parent) {
+    	return addGeneralRemoveButton(parent, parent);
+    }
+    
+    public Button addGeneralRemoveButton(Composite parent, Composite widgetControlled) {
+    	var b = addDeleteButton(parent);
+    	b.addSelectionListener( new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				widgetControlled.dispose();
+				relayout();
+			}
+    	});
+    	return b;
+    }
+    
+    public Twistie addTwistie(Composite parent, Composite content) {
+    	var tw = new Twistie(parent, SWT.NONE);
+    	tw.setExpanded(true); // Initialize as 'down'
+    	tw.addMouseListener( new MouseAdapter() {
+    		@Override
+    		public void mouseUp(MouseEvent e) {
+    			boolean b = tw.isExpanded();
+    			content.setVisible(b);
+    			((GridData)content.getLayoutData()).exclude = !b;
+    			relayout();
+    		}
+    	});
+    	return tw;
     }
 
     public Label addLabel(Composite parent, String text, int width) {
@@ -443,25 +708,27 @@ public class DataPropertyPage extends PropertyPage {
     }
 
     public void addManifestNameSection(Composite parent) {
+    	var yamlAsMap= (Map<String,Object>)currentYaml; // manifest must have top-level map
         Composite composite = addCompositeUnequal(parent, 2);
+        setVerticalSpacing(composite, 3);
         int WIDTH3 = 20;
         addLabel(composite, NAME_TITLE, WIDTH3);
-        String value = (yamlMap.get("name") instanceof String n) ? n : "";
+        String value = (yamlAsMap.get("name") instanceof String n) ? n : "";
         Text t = addTextExpandable(composite, value, TEXT_FIELD_WIDTH);
         yamlWidgets.put("name", t);
 
         addLabel(composite, "Description:", WIDTH3);
-        value = (yamlMap.get("description") instanceof String n) ? n : "";
+        value = (yamlAsMap.get("description") instanceof String n) ? n : "";
         t = addTextExpandable(composite, value, TEXT_FIELD_WIDTH);
         yamlWidgets.put("description", t);
 
         addLabel(composite, "Copy-to-graph:", WIDTH3);
-        value = (yamlMap.get("copy-to-graph") instanceof String n) ? n : "";
+        value = (yamlAsMap.get("copy-to-graph") instanceof String n) ? n : "";
         t = addTextExpandable(composite, value, TEXT_FIELD_WIDTH);
         yamlWidgets.put("copy-to-graph", t);
 
         addLabel(composite, "Perform resolution:", WIDTH3);
-        value = (yamlMap.get("perform-entity-resolution") instanceof String n) ? n : "";
+        value = (yamlAsMap.get("perform-entity-resolution") instanceof String n) ? n : "";
         t = addTextExpandable(composite, value, TEXT_FIELD_WIDTH);
         yamlWidgets.put("perform-entity-resolution", t);
     }
@@ -469,7 +736,7 @@ public class DataPropertyPage extends PropertyPage {
     public void addManifestStepsSection(Composite parent) {
         var comp = addComposite(parent, 1);
         extendVertically(comp);
-        ((GridLayout) comp.getLayout()).verticalSpacing = -5;
+        setVerticalSpacing(comp, -5);
 
         java.util.List<ManifestStepWidget> widgetList = new java.util.LinkedList<>();
         addLabel(comp, "Steps:", 12);
@@ -525,7 +792,7 @@ public class DataPropertyPage extends PropertyPage {
                 "Press '-' button to remove line.  Press 'B' for file browser.  Text fields may be edited in place.",
                 70);
 
-        if (yamlMap.get("steps") instanceof List<?> list) {
+        if (((Map<?,?>)currentYaml).get("steps") instanceof List<?> list) {
             if (list.size() > 0) yamlWidgets.put("steps", widgetList);
             for (var step : list) {
                 if (step instanceof Map<?, ?> item) {
@@ -545,6 +812,15 @@ public class DataPropertyPage extends PropertyPage {
             }
         }
     }
+    
+    public Button addDeleteButton(Composite parent) {
+        var b = new Button(parent, SWT.PUSH);
+        b.setText("-");
+        GridData buttonLayoutData = new GridData();
+        buttonLayoutData.widthHint = 30;
+        b.setLayoutData(buttonLayoutData);
+        return b;
+    }
 
     public void addSimpleStep(
             Composite comp,
@@ -553,11 +829,7 @@ public class DataPropertyPage extends PropertyPage {
             java.util.List<ManifestStepWidget> widgetList,
             boolean fileBrowser) {
         Composite x = addCompositeUnequal(comp, fileBrowser ? 4 : 3);
-        var b = new Button(x, SWT.PUSH);
-        b.setText("-");
-        GridData buttonLayoutData = new GridData();
-        buttonLayoutData.widthHint = 30;
-        b.setLayoutData(buttonLayoutData);
+        var b = addDeleteButton(x);
         b.addSelectionListener(
                 new SelectionAdapter() {
 
@@ -582,12 +854,7 @@ public class DataPropertyPage extends PropertyPage {
             Map<?, ?> cgmap,
             java.util.List<ManifestStepWidget> widgetList) {
         Composite x = addCompositeUnequal(comp, 3);
-        var b = new Button(x, SWT.PUSH);
-        b.setText("-");
-        GridData buttonLayoutData = new GridData();
-        buttonLayoutData.widthHint = 30;
-        buttonLayoutData.horizontalAlignment = SWT.LEFT;
-        b.setLayoutData(buttonLayoutData);
+        var b = addDeleteButton(x);
         b.addSelectionListener(
                 new SelectionAdapter() {
 
@@ -699,12 +966,12 @@ public class DataPropertyPage extends PropertyPage {
         gridData.heightHint = 200;
         list.setLayoutData(gridData);
         yamlWidgets.put(sectionName, list);
-
+        var yamlAsMap = (Map<String,Object>)currentYaml;
         switch (kind) {
             case MANIFEST:
-                if (yamlMap.containsKey("footprint")) {
+                if (yamlAsMap.containsKey("footprint")) {
 
-                    Object oFootprint = yamlMap.get("footprint");
+                    Object oFootprint = yamlAsMap.get("footprint");
                     if (oFootprint instanceof Map) {
                         Map oFootprintMap = (Map) oFootprint;
                         if (!oFootprintMap.containsKey(sectionName)) {
@@ -721,14 +988,14 @@ public class DataPropertyPage extends PropertyPage {
             case MODEL:
                 // The model-graphs section is optional
                 if (sectionName.equals("files")) {
-                    if (yamlMap.containsKey(sectionName)) {
+                    if (yamlAsMap.containsKey(sectionName)) {
                         @SuppressWarnings("unchecked")
-                        var items = (List<String>) yamlMap.get(sectionName);
+                        var items = (List<String>) yamlAsMap.get(sectionName);
                         for (var item : items) list.add(item);
                     }
                     yamlWidgets.put("files", list);
                 } else { // model-graphs
-                    Object o = yamlMap.get(sectionName);
+                    Object o = yamlAsMap.get(sectionName);
                     if (o instanceof String item) {
                         list.add(item);
                     } else if (o instanceof List<?> array) {
@@ -742,9 +1009,9 @@ public class DataPropertyPage extends PropertyPage {
             case DATA:
                 // These sections are optional
                 if (sectionName.equals("extra-data-graphs") || sectionName.equals("model-graphs")) {
-                    if (yamlMap.containsKey(sectionName)) {
+                    if (yamlAsMap.containsKey(sectionName)) {
                         @SuppressWarnings("unchecked")
-                        var items = (List<String>) yamlMap.get(sectionName);
+                        var items = (List<String>) yamlAsMap.get(sectionName);
                         for (var item : items) list.add(item);
                     }
                     yamlWidgets.put(sectionName, list);
@@ -788,6 +1055,21 @@ public class DataPropertyPage extends PropertyPage {
         ((GridData) composite.getLayoutData()).verticalAlignment = SWT.FILL;
         ((GridData) composite.getLayoutData()).grabExcessVerticalSpace = true;
     }
+    
+    /** For a composite that is a GridLayout, this call sets the vertical spacing of the 
+     * rows in the grid; the value may be negative to remove more space than the default.
+     */
+    public void setVerticalSpacing(Composite composite, int space) {
+        ((GridLayout)composite.getLayout()).verticalSpacing = space;
+    }
+
+    public void setVerticalMargin(Composite composite, int space) {
+        ((GridLayout)composite.getLayout()).marginHeight = space;
+    }
+
+    public void setLeftMargin(Composite composite, int space) {
+        ((GridLayout)composite.getLayout()).marginLeft = space;
+    }
 
     public ScrolledComposite addScrolledComposite(Composite parent) {
         ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
@@ -806,7 +1088,7 @@ public class DataPropertyPage extends PropertyPage {
     public Composite addIngestionStepsComposite(Composite parent) {
         var subcomp = addComposite(parent, 1);
         extendVertically(subcomp);
-        ((GridLayout)subcomp.getLayout()).verticalSpacing = 0;
+        setVerticalSpacing(subcomp, 0);
 
         var ingestionStepsWidgets = new java.util.ArrayList<DataStepWidget>(10);
         yamlWidgets.put("ingestion-steps", ingestionStepsWidgets);
@@ -817,7 +1099,7 @@ public class DataPropertyPage extends PropertyPage {
         var sc = subcomp;
         final Composite stepsComposite = addComposite(sc, 1);
         extendVertically(stepsComposite);
-        ((GridLayout)stepsComposite.getLayout()).verticalSpacing = -5;
+        setVerticalSpacing(stepsComposite, -5);
 
         final Button addButton = new Button(buttonComposite, SWT.PUSH);
         addButton.setText("Add");
@@ -866,7 +1148,6 @@ public class DataPropertyPage extends PropertyPage {
                                         ingestionStepsWidgets, stepsComposite, "", "");
                                 break;
                         }
-                        relayout();
                     }
                 });
         addLabel(
@@ -874,7 +1155,7 @@ public class DataPropertyPage extends PropertyPage {
                 "Click '-' to remove line.  Click 'B' for file browser.  Edit text in place.",
                 70);
 
-        var array = (List<?>) yamlMap.get("ingestion-steps");
+        var array = (List<?>) ((Map<String,Object>)currentYaml).get("ingestion-steps");
         if (array != null) {
             for (var obj : array) {
                 try {
@@ -1048,13 +1329,19 @@ public class DataPropertyPage extends PropertyPage {
         void apply(String text);
     }
 
+    public Button addButton(Composite parent, String name) {
+        var b = new Button(parent, SWT.PUSH);
+        b.setText(name);
+        return b;
+    }
+    
     public void addFileBrowseButton(Composite parent, Text textfield) {
         addFileBrowseButton(parent, textfield::setText, false);
     }
 
     public void addFileBrowseButton(Composite parent, Setter setter, boolean longName) {
-        var b = new Button(parent, SWT.PUSH);
-        b.setText(longName ? "Browse" : "B");
+            var b = new Button(parent, SWT.PUSH);
+            b.setText(longName ? "Browse" : "B");
         b.addSelectionListener(
                 new SelectionAdapter() {
 
@@ -1088,8 +1375,7 @@ public class DataPropertyPage extends PropertyPage {
         protected Control createDialogArea(Composite parent) {
             Composite container = (Composite) super.createDialogArea(parent);
             var buttonComposite = addCompositeUnequal(container, 2);
-            var addButton = new Button(buttonComposite, SWT.PUSH);
-            addButton.setText("Add");
+            var addButton = addButton(buttonComposite, "Add");
             addLabel(buttonComposite, "Click '-' to remove line.  Edit text in place.", 40);
             ScrolledComposite sc = new ScrolledComposite(container, SWT.H_SCROLL | SWT.V_SCROLL);
             sc.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
@@ -1097,7 +1383,7 @@ public class DataPropertyPage extends PropertyPage {
             sc.setExpandVertical(true);
             sc.setAlwaysShowScrollBars(false);
             var comp = addComposite(sc, 1);
-            ((GridLayout) comp.getLayout()).verticalSpacing = -3;
+            setVerticalSpacing(comp, -3);
             ((GridData) comp.getLayoutData()).horizontalAlignment = SWT.FILL;
             ((GridData) comp.getLayoutData()).verticalAlignment = SWT.FILL;
             ((GridData) comp.getLayoutData()).grabExcessHorizontalSpace = true;
@@ -1178,15 +1464,19 @@ public class DataPropertyPage extends PropertyPage {
         }
     }
 
-    // Return null, "Manifest", "Data", "Model", or "" if unknown
-    public static String autoDetectYamlKind(Map<String, Object> yamlMap) {
-        if (yamlMap.get("ingestion-steps") != null) return DATA;
-        if (yamlMap.get("footprint") != null) return MANIFEST;
-        if (yamlMap.get("files") != null) return MODEL;
+    // Return null, "Manifest", "Data", "Model", "General" or "" if unknown
+    public static String autoDetectYamlKind(Object yaml) {
+    	if (yaml instanceof Map<?,?> yamlMap) {
+    		if (yamlMap.get("ingestion-steps") != null) return DATA;
+    		if (yamlMap.get("footprint") != null) return MANIFEST;
+    		if (yamlMap.get("files") != null) return MODEL;
+    	} else if (yaml instanceof List<?>) {
+    		return GENERAL;
+    	}
         return "";
     }
 
-    public static HashMap<String, Object> readYaml(String file) {
+    public static Object readYaml(String file) {
         File ingestionYaml = new File(file);
         if (!ingestionYaml.exists()) {
             ErrorMessageUtil.warning("No file found, nothing to read");
@@ -1194,14 +1484,14 @@ public class DataPropertyPage extends PropertyPage {
         }
 
         String dir = ingestionYaml.getParent();
-        HashMap<String, Object> yamlMap = null;
+        Object yamlAsRead = null;
         try {
-            yamlMap = ProjectUtils.readYaml(ingestionYaml.getAbsolutePath());
+            yamlAsRead = ProjectUtils.readAnyYaml(ingestionYaml.getAbsolutePath());
         } catch (Exception e) {
             ErrorMessageUtil.error("Unable to read " + dir + "/" + ingestionYaml.getName());
             return null;
         }
-        if (yamlMap == null) {
+        if (yamlAsRead == null) {
             ErrorMessageUtil.error(
                     "Ill formed manifest at "
                             + dir
@@ -1211,24 +1501,24 @@ public class DataPropertyPage extends PropertyPage {
             ErrorMessageUtil.error("Check YAML: " + ingestionYaml.getAbsolutePath());
             return null;
         }
-        return yamlMap;
+        return yamlAsRead;
     }
 
-    /** Gives a message about the difference rather than just a boolean compare */
-    public static String compareYaml(Map<String, Object> a, Map<String, Object> b) {
+    /** Returns a description of differences */
+    public static String compareYaml(Object a, Object b) {
         return compareYamlItems(a, b, "");
     }
 
     @SuppressWarnings("unchecked")
-    public static String compareYaml(Map<String, Object> a, Map<String, Object> b, String level) {
+    public static String compareYamlMaps(Map<String, Object> a, Map<String, Object> b, String level) {
         String diffs = "";
         var akeys = a.keySet();
         var bkeys = b.keySet();
         if (!akeys.equals(bkeys)) {
             diffs +=
-                    "The keys are different (level "
+                    "The keys are different (in '"
                             + level
-                            + "): "
+                            + "'): "
                             + akeys.stream().collect(Collectors.joining(" "))
                             + " vs. "
                             + bkeys.stream().collect(Collectors.joining(" "))
@@ -1247,7 +1537,7 @@ public class DataPropertyPage extends PropertyPage {
         String diffs = "";
         if (sa instanceof Map<?, ?> mapa && sb instanceof Map<?, ?> mapb) {
             @SuppressWarnings("unchecked")
-            var diff = compareYaml((Map<String, Object>) mapa, (Map<String, Object>) mapb, level);
+            var diff = compareYamlMaps((Map<String, Object>) mapa, (Map<String, Object>) mapb, level);
             if (diff != null) diffs += diff;
         } else if (sa instanceof String ssa && sb instanceof String ssb) {
             if (!Objects.equals(ssa, ssb)) {
@@ -1336,7 +1626,7 @@ public class DataPropertyPage extends PropertyPage {
     }
 
     public void performDefaults() {
-        var kind = autoDetectYamlKind(yamlMap);
+        var kind = autoDetectYamlKind(currentYaml);
         var parent = currentSubcomposite.getParent();
         if (currentSubcomposite != null) currentSubcomposite.dispose();
         currentSubcomposite = addKindSubcomposite(parent, kind);
@@ -1362,9 +1652,15 @@ public class DataPropertyPage extends PropertyPage {
                 outFile = root.getFile(p);
             }
 
-            var outYaml = collectYaml(false, true);
+            int k = kindCombo.getSelectionIndex();
+            String kind = kindCombo.getItems()[k];
+            if (kind.equals(GENERAL)) {
+            	MessageDialog.openInformation(shell, "", "Saving of general yaml not yet implemented");
+            	return false;
+            }
+            var outYaml = collectYaml(false, kind, true);
 
-            var diffs = validate(outYaml);
+            var diffs = validate(outYaml, kind);
             if (diffs != null && !diffs.isEmpty()) {
                 var ok =
                         MessageDialog.openConfirm(
@@ -1399,10 +1695,8 @@ public class DataPropertyPage extends PropertyPage {
         return true;
     }
 
-    public Map<String, Object> collectYaml(boolean isNewFile, boolean showErrors) {
+    public Map<String, Object> collectYaml(boolean isNewFile, String kind, boolean showErrors) {
         Map<String, Object> yaml = new HashMap<>();
-        int k = kindCombo.getSelectionIndex();
-        String kind = kindCombo.getItems()[k];
         String diffs;
         switch (kind) {
             case MANIFEST:
@@ -1566,14 +1860,12 @@ public class DataPropertyPage extends PropertyPage {
         return collectYaml(yaml, modelKeys);
     }
 
-    public String validate(Map<String, Object> yamlToCheck) {
+    public String validate(Map<String, Object> yamlToCheck, String kind) {
         String newPath = pathText.getText();
         IPath p = new Path(newPath);
         IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
         IContainer currentDir = root.getFile(p).getParent();
 
-        int k = kindCombo.getSelectionIndex();
-        String kind = kindCombo.getItems()[k];
         switch (kind) {
             case MANIFEST:
                 return validateManifest(yamlToCheck, currentDir);
@@ -2035,5 +2327,36 @@ public class DataPropertyPage extends PropertyPage {
         public default void widgetDefaultSelected(SelectionEvent e) {
             widgetSelected(e);
         }
+    }
+    
+    /** A copy sufficient for yaml purposes -- not a true clone. */
+    public Object copy(Object in) {
+    	if (in instanceof String) return in;
+    	if (in instanceof Integer) return in;
+    	if (in instanceof List<?> list) {
+    		var nlist = new java.util.ArrayList<Object>();
+    		for (var item: list) nlist.add(copy(item));
+    		return nlist;
+    	}
+    	if (in instanceof Map<?,?> map) {
+    		var nmap = new HashMap<>();
+    		for (var entry: map.entrySet()) {
+    			nmap.put(entry.getKey(), copy(entry.getValue()));
+    		}
+    		return nmap;
+    	}
+    	MessageDialog.openError(shell, "Error", "Unsupported type in copy: " + in.getClass());
+    	return null;
+    }
+    
+    /** A copy sufficient for yaml purposes -- not a true clone. */
+    public Object copyChecked(Object in) {
+    	@SuppressWarnings("unchecked")
+		var c = copy(in);
+    	var diffs = compareYaml(c, in);
+    	if (!diffs.isEmpty()) {
+        	MessageDialog.openError(shell, "Error", "Copy failed to produce a correct copy:\n" + diffs);
+    	}
+    	return c;
     }
 }
