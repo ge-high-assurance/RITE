@@ -37,6 +37,7 @@ import com.ge.research.rack.autoGsn.structures.GsnViewsStore;
 import com.ge.research.rack.autoGsn.structures.InstanceData;
 import com.ge.research.rack.autoGsn.structures.MultiClassPackets.GoalIdAndClass;
 import com.ge.research.rack.autoGsn.viewManagers.AutoGsnViewsManager;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
 import java.net.URL;
@@ -116,10 +117,7 @@ public class AutoGsnGuiUtils {
             URL imgUrl = FileLocator.find(bundle, new Path(imagePath), null);
             imgUrl = FileLocator.toFileURL(imgUrl);
 
-            // the imgURL starts with "file:/", so stripping it here
-            String imgUrlStr = imgUrl.toString().substring("file:/".length());
-
-            // System.out.println(imgUrl.toString());
+            String imgUrlStr = imgUrl.getFile();
 
             ImageView icon = new ImageView(new Image(new FileInputStream(new File(imgUrlStr))));
 
@@ -250,14 +248,55 @@ public class AutoGsnGuiUtils {
      *
      * @param url
      */
-    public static void openUrlInDefaultApp(String url) {
-        System.out.println("Trying to open generated GSN svg file in default app!");
+    public static void openUrlInDefaultApp(String path) {
+        // System.out.println("Trying to open generated GSN svg file in default app! " + path);
         try {
-            AutoGsnViewsManager.hostServices.showDocument(url);
+            if (AutoGsnViewsManager.hostServices != null) {
+                // Running a javafx application
+                AutoGsnViewsManager.hostServices.showDocument(path);
+            } else {
+                // Using Eclipse views
+                if (Desktop.isDesktopSupported()
+                        && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                    // Desktop.getDesktop().browse(new java.net.URI("data:image/svg+xml,/" +
+                    // url.replace("//","/")));
+
+                    open(path);
+                }
+            }
         } catch (Exception e) {
-            System.out.println("ERROR: Failed to open generated GSN svg file in default app!");
+            System.out.println(
+                    "ERROR: Failed to open generated GSN svg file in default app! " + path);
             e.printStackTrace();
         }
+    }
+
+    private static void open(final String path) throws java.net.MalformedURLException {
+        var url = new java.net.URL("file:" + path);
+        org.eclipse.swt.widgets.Display.getDefault().asyncExec(() -> internalOpen(url, true));
+    }
+
+    private static void internalOpen(final URL url, final boolean useExternalBrowser) {
+        org.eclipse.swt.custom.BusyIndicator.showWhile(
+                null,
+                () -> {
+                    URL helpSystemUrl =
+                            org.eclipse.ui.PlatformUI.getWorkbench()
+                                    .getHelpSystem()
+                                    .resolve(url.toExternalForm(), true);
+                    try {
+                        var browserSupport =
+                                org.eclipse.ui.PlatformUI.getWorkbench().getBrowserSupport();
+                        org.eclipse.ui.browser.IWebBrowser browser;
+                        if (useExternalBrowser) {
+                            browser = browserSupport.getExternalBrowser();
+                        } else {
+                            browser = browserSupport.createBrowser(null);
+                        }
+                        browser.openURL(helpSystemUrl);
+                    } catch (org.eclipse.ui.PartInitException ex) {
+                    }
+                });
     }
 
     /**

@@ -32,7 +32,6 @@
 package com.ge.research.rack.views;
 
 import com.ge.research.rack.utils.*;
-import com.google.inject.*;
 import java.awt.Frame;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -60,19 +59,18 @@ import org.eclipse.ui.part.ViewPart;
  *
  * <p>
  */
-public class AssuranceCaseTree extends ViewPart {
+public class AssuranceGoalView extends ViewPart {
 
     /** The ID of the view as specified by the extension. */
-    public static final String ID = "rackplugin.views.AssuranceCaseTree";
+    public static final String ID = "rackplugin.views.AssuranceGoalView";
 
     @Override
     public void createPartControl(Composite parent) {
-
         try {
 
             if (RackPreferencePage.getJavaFxPreference()) {
                 Composite composite = new Composite(parent, SWT.NONE);
-                // composite.setLayout(new RowLayout(SWT.VERTICAL));
+                //        		composite.setLayout(new RowLayout(SWT.VERTICAL)));
                 new org.eclipse.swt.widgets.Label(composite, SWT.LEFT)
                         .setText(
                                 "Using floating JavaFx windows rather than Eclipse views.\n"
@@ -82,7 +80,6 @@ public class AssuranceCaseTree extends ViewPart {
             }
 
             Composite composite = new Composite(parent, SWT.EMBEDDED | SWT.NO_BACKGROUND);
-
             final Frame frame = SWT_AWT.new_Frame(composite);
 
             final JScrollPane parentPanel = new JScrollPane();
@@ -96,7 +93,7 @@ public class AssuranceCaseTree extends ViewPart {
                     FXMLLoader.load(
                             getClass()
                                     .getResource(
-                                            "/resources/fxml/autoGsn/AutoGsnUnifiedMainView.fxml"));
+                                            "/resources/fxml/autoGsn/AutoGsnUnifiedDrillGoalView.fxml"));
             Platform.setImplicitExit(false);
             Platform.runLater(
                     new Runnable() {

@@ -65,14 +65,16 @@ public class ViewUtils {
         return null;
     }
 
-    public static void showView(String viewId) {
+    public static IViewPart showView(String viewId) {
         try {
             IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
             IViewPart view = window.getActivePage().findView(viewId);
             window.getActivePage().hideView(view);
             window.getActivePage().showView(viewId);
+            return view;
         } catch (Exception e) {
             RackConsole.getConsole().error("Unable to show view : " + viewId);
+            return null;
         }
     }
 
