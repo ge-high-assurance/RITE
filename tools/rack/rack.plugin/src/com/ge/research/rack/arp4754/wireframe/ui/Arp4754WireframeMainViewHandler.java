@@ -60,6 +60,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 public class Arp4754WireframeMainViewHandler {
 	
@@ -168,31 +169,122 @@ public class Arp4754WireframeMainViewHandler {
         menuAssuranceLevel.setText(((MenuItem) event.getSource()).getText());
     }
     
+    private void alertError(String title, String header) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.showAndWait();
+    }
+    
+    private Optional<ButtonType> alertConfirmation(String title, String header) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        return alert.showAndWait();
+    }
+    
     private boolean checkField(String str, String field, String tab) {
     	if (str != null && !str.isEmpty() && !str.isBlank()) {
     		return true;
     	}
 
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Validate Input");
-        alert.setHeaderText("Missing the " + field + " entry in the " + tab + " tab.");
-        alert.showAndWait();
+        alertError("Validate Input", "Missing the " + field + " entry in the " + tab + " tab.");
     	return false;
     }
     
     private boolean checkObjectives() {
     	if (lvQueries.getItems().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Validate Objectives");
-            alert.setHeaderText("No objectives are defined in the Objectives tab.");
-            alert.showAndWait();
-        	return false;
+    		Optional<ButtonType> result =
+    			alertConfirmation("Validate Objectives", "No objectives are defined in the Objectives tab. Continue?");
+            if (result.isPresent() && result.get().equals(ButtonType.OK)) {
+            	return true;
+            }
+
+            return false;
     	}
 
     	return true;
     }
     
+    private boolean hasProcess(int index) {
+    	String subvalue = "Objective-" + Integer.toString(index) + "-";
+    	for (String key : lvQueries.getItems()) {
+    		String value = objectiveMap.get(key);
+    		if (value != null && value.startsWith(subvalue)) {
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    }
+    
+    private boolean checkForProcess(int index) {
+    	if (hasProcess(index)) {
+            Optional<ButtonType> result = 
+                alertConfirmation("Validate Processes", 
+                	"Objective defined for Process " + Integer.toString(index) +
+                	" not included in plan. Continue?");
+            if (result.isPresent() && result.get().equals(ButtonType.OK)) {
+            	return false;
+            }
+            
+            return true;
+    	}
+
+        return false;
+    }
+    
     private boolean checkProcesses() {
+    	// Check for objectives defined for un-selected processes
+    	if (!check1.isSelected()) {
+    		if (checkForProcess(1)) {
+    			return false;
+    		}
+    	}
+
+    	if (!check2.isSelected()) {
+    		if (checkForProcess(2)) {
+    			return false;
+    		}
+    	}
+
+    	if (!check3.isSelected()) {
+    		if (checkForProcess(3)) {
+    			return false;
+    		}
+    	}
+
+    	if (!check4.isSelected()) {
+    		if (checkForProcess(4)) {
+    			return false;
+    		}
+    	}
+
+    	if (!check5.isSelected()) {
+    		if (checkForProcess(5)) {
+    			return false;
+    		}
+    	}
+
+    	if (!check6.isSelected()) {
+    		if (checkForProcess(6)) {
+    			return false;
+    		}
+    	}
+
+    	if (!check7.isSelected()) {
+    		if (checkForProcess(7)) {
+    			return false;
+    		}
+    	}
+
+    	if (!check8.isSelected()) {
+    		if (checkForProcess(8)) {
+    			return false;
+    		}
+    	}
+
+    	// Check for at least one process selected
     	if (check1.isSelected() || check2.isSelected() ||
     			check3.isSelected() || check4.isSelected() ||
     			check5.isSelected() || check6.isSelected() ||
@@ -200,10 +292,7 @@ public class Arp4754WireframeMainViewHandler {
     		return true;
     	}
     	
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Validate Processes");
-        alert.setHeaderText("At least one process must be selected.");
-        alert.showAndWait();
+    	alertError("Validate Processes", "At least one process must be selected.");
     	return false;
     }
 
@@ -358,6 +447,8 @@ public class Arp4754WireframeMainViewHandler {
     @FXML
     private void btnJSONReadAction(ActionEvent event) throws Exception {
     	FileChooser fc = new FileChooser();
+    	ExtensionFilter filter = new ExtensionFilter("JSON files (*.json)", "*.json");
+    	fc.getExtensionFilters().add(filter);
 		File ff = fc.showOpenDialog(Arp4754WireframeMainViewManager.stage);
 		if (ff == null) {
 			return;
@@ -365,10 +456,7 @@ public class Arp4754WireframeMainViewHandler {
 		
 		Arp4754AWireframeDAPReader reader = new Arp4754AWireframeDAPReader(ff);
 		if (reader.readJSON()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Reading JSON File");
-            alert.setHeaderText(reader.getError());
-            alert.showAndWait();
+			alertError("Reading JSON File", reader.getError());
 		} else {
 			readJSON(reader);
 		}
@@ -384,10 +472,7 @@ public class Arp4754WireframeMainViewHandler {
 		
 		Arp4754AWireframeDAPWriter writer = createWriter(directory);
 		if (writer.writeJSON()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Writing JSON File");
-            alert.setHeaderText(writer.getError());
-            alert.showAndWait();
+			alertError("Writing JSON File", writer.getError());
 		}
     }
 
@@ -423,10 +508,7 @@ public class Arp4754WireframeMainViewHandler {
 
     			Arp4754AWireframeDAPWriter writer = createWriter(directory);
     			if (writer.write()) {
-    	            Alert alert = new Alert(Alert.AlertType.ERROR);
-    	            alert.setTitle("Writing SADL Files");
-    	            alert.setHeaderText(writer.getError());
-    	            alert.showAndWait();
+    				alertError("Writing SADL Files", writer.getError());
     			} else {
     				Arp4754WireframeMainViewManager.close();
     			}
@@ -477,10 +559,8 @@ public class Arp4754WireframeMainViewHandler {
         // Remove the selected objective queries
         List<String> items = lvQueries.getSelectionModel().getSelectedItems();
         if (!items.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Remove Queries");
-            alert.setHeaderText("Are you sure you want to remove the selected queries?");
-            Optional<ButtonType> result = alert.showAndWait();
+            Optional<ButtonType> result = 
+            	alertConfirmation("Remove Queries", "Are you sure you want to remove the selected queries?");
             if (result.isPresent() && result.get().equals(ButtonType.OK)) {
                 for (String item : items) {
                     lvQueries.getItems().remove(item);
@@ -849,7 +929,7 @@ public class Arp4754WireframeMainViewHandler {
             str = stringBuilder.toString();
             reader.close();
         } catch (IOException e) {
-            System.out.println("Error reading SADL file " + sadlfile.getName());
+        	alertError("Read SADL File", "Error reading SADL file " + sadlfile.getName());
             return reset;
         }
 
@@ -869,6 +949,10 @@ public class Arp4754WireframeMainViewHandler {
                                     return name.toLowerCase().endsWith(".sadl");
                                 }
                             });
+            
+            if (sadlfiles.length == 0) {
+            	alertError("Fetch Project SADL Files", "No SADL files in the selected directory.");
+            }
 
             boolean reset = true;
             for (File fn : sadlfiles) {
