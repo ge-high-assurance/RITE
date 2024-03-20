@@ -376,6 +376,12 @@ public class DataPropertyPage extends PropertyPage {
                             currentSubcomposite.dispose();
                         }
 
+                        if (!compareYaml(currentYaml, yamlStack.peek()).isEmpty()) {
+                        	if (!MessageDialog.openQuestion(shell, "", "OK to discard edits?")) return;
+                        }
+                        currentYaml = new HashMap<String,Object>();
+                        
+                        yamlWidgets.clear();
                         currentSubcomposite = addKindSubcomposite(p, kind);
 
                         relayout();
@@ -792,8 +798,8 @@ public class DataPropertyPage extends PropertyPage {
                 "Press '-' button to remove line.  Press 'B' for file browser.  Text fields may be edited in place.",
                 70);
 
+        yamlWidgets.put("steps", widgetList);
         if (((Map<?,?>)currentYaml).get("steps") instanceof List<?> list) {
-            if (list.size() > 0) yamlWidgets.put("steps", widgetList);
             for (var step : list) {
                 if (step instanceof Map<?, ?> item) {
                     // Note similarity to the selection listener code above
@@ -982,8 +988,8 @@ public class DataPropertyPage extends PropertyPage {
                             for (var item : items) list.add(item);
                         }
                     }
-                    yamlWidgets.put("footprint:" + sectionName, list);
                 }
+                yamlWidgets.put("footprint:" + sectionName, list);
                 break;
             case MODEL:
                 // The model-graphs section is optional
@@ -1626,6 +1632,7 @@ public class DataPropertyPage extends PropertyPage {
     }
 
     public void performDefaults() {
+    	currentYaml = yamlStack.peek();
         var kind = autoDetectYamlKind(currentYaml);
         var parent = currentSubcomposite.getParent();
         if (currentSubcomposite != null) currentSubcomposite.dispose();
@@ -1726,7 +1733,7 @@ public class DataPropertyPage extends PropertyPage {
                 String[] names = key.split(":");
                 Object w = yamlWidgets.get(key);
                 if (w == null) {
-                    diffs += "No widget for " + key;
+                    diffs += "No widget for " + key + "\n";
                     continue;
                 }
                 var y = yaml;
