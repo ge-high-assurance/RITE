@@ -199,7 +199,7 @@ public class DataPropertyPage extends PropertyPage {
     public static final String MANIFEST = "Manifest";
     public static final String DATA = "Data";
     public static final String MODEL = "Model";
-    public static final String GENERAL = "General yaml";
+    public static final String GENERAL = "General";
 
     private Shell shell;
     private Composite topParent;
@@ -302,7 +302,7 @@ public class DataPropertyPage extends PropertyPage {
 
             // This is some unit testing that retrieved yaml from the bunch of widgets is the same
             // as what went in
-            if (!isNewOrIllformedFile && kind != GENERAL) { // FIXME - don't have collection for GENERAL yet
+            if (!isNewOrIllformedFile) { // FIXME - don't have collection for GENERAL yet
                 var newYamlMap = collectYaml(isNewOrIllformedFile, kind, false);
                 boolean b = Objects.equals(currentYaml, newYamlMap);
                 String diffs = compareYaml(currentYaml, newYamlMap);
@@ -376,10 +376,10 @@ public class DataPropertyPage extends PropertyPage {
                             currentSubcomposite.dispose();
                         }
 
-                        if (!compareYaml(currentYaml, yamlStack.peek()).isEmpty()) {
-                        	if (!MessageDialog.openQuestion(shell, "", "OK to discard edits?")) return;
-                        }
-                        currentYaml = new HashMap<String,Object>();
+                        //if (!compareYaml(currentYaml, yamlStack.peek()).isEmpty()) {
+                        //	if (!MessageDialog.openQuestion(shell, "", "OK to discard edits?")) return;
+                        //}
+                        //currentYaml = new HashMap<String,Object>();
                         
                         yamlWidgets.clear();
                         currentSubcomposite = addKindSubcomposite(p, kind);
@@ -568,7 +568,8 @@ public class DataPropertyPage extends PropertyPage {
     
     /** This is the top-level call for the general yaml editor */
     public Composite addGeneralComposite(Composite parent) {
-    	var head = addComposite(parent, 1);
+    	var subcomp = addComposite(parent, 1);
+    	var head = addComposite(subcomp, 1);
     	String s = currentYaml.getClass().toString();
     	s = s.replace(".class","");
     	s = s.substring(s.lastIndexOf('.'));
@@ -577,23 +578,25 @@ public class DataPropertyPage extends PropertyPage {
     	addLabel(head, "The top-level of this yaml is a " + s, 60);
     	addLabel(head, "Use + to add elements. Use - to remove elements. Use twistie to fold.", 60);
         addGeneralSubcomposite(head, currentYaml);
-        return head;
+        return subcomp;
     }
     
-    public Composite addGeneralSubcomposite(Composite parent, Object value) {
+    public Control addGeneralSubcomposite(Composite parent, Object value) {
     	if (value instanceof Map<?,?> map) {
     		return addGeneralMapSubcomposite(parent, (Map<String,Object>)map);
     	} else if (value instanceof List<?> list) {
     		return addGeneralListSubcomposite(parent, list);
     	} else {
-    		addTextExpandable(parent, value.toString(), 20);  // FIXME
+    		var t = addTextExpandable(parent, value.toString(), 20);
+    		t.setData(value.getClass());
+    		return t;
     	}
-    	return null;
     }
     
     public Composite addGeneralMapSubcomposite(Composite parent, Map<?,?> map) {
         var head = addComposite(parent, 2);
         var items = addComposite(parent.getParent(), 1);
+        items.setData(Map.class);
         setVerticalSpacing(items, -5);
         setVerticalMargin(items,0);
         if (map != currentYaml) setLeftMargin(items,INDENT); // No indent at top level
@@ -605,12 +608,13 @@ public class DataPropertyPage extends PropertyPage {
         } 
         addGeneralPlusButton(head, map, (Object inst) -> { addGeneralKeyAndItem(items, "", inst); });
         addTwistie(head, items);
-        return null;
+        return items;
     }
     
     public Composite addGeneralListSubcomposite(Composite parent, List<?> list) {
         var head = addComposite(parent, 2);
         var wlist = addComposite(parent.getParent(), 1);
+        wlist.setData(List.class);
         setLeftMargin(wlist, 10);
         setVerticalMargin(wlist, 0);
         setVerticalSpacing(wlist, -5);
@@ -618,7 +622,8 @@ public class DataPropertyPage extends PropertyPage {
 			Composite c = addCompositeUnequal(wlist, 3);
 			addLabel(c, "-", 1);
 			addGeneralRemoveButton(c);
-			addGeneralSubcomposite(c, inst); };
+			addGeneralSubcomposite(c, inst);
+			};
         for (var item: list) {
         	addline.accept(item);
         }
@@ -644,7 +649,8 @@ public class DataPropertyPage extends PropertyPage {
     		// This option is appropriate for any datatype that has a simple string representation
     		// The redundant 'subcomp' composite is to keep a parallel with the Map and List, so that 
     		// alignment is easier.
-            addTextExpandable(subcomp, value.toString(), 20);
+            var text = addTextExpandable(subcomp, value.toString(), 20);
+            text.setData(value.getClass());
     		
     	}
     	return subcomp;
@@ -701,8 +707,6 @@ public class DataPropertyPage extends PropertyPage {
         return text;
     }
 
-    // FIXME - the hope is that the text field created here expands to fill its parent, but does not
-    // work
     public Text addTextExpandable(Composite parent, String initialText, int fieldWidth) {
         Text text = new Text(parent, SWT.WRAP);
         text.setText(initialText);
@@ -1661,10 +1665,6 @@ public class DataPropertyPage extends PropertyPage {
 
             int k = kindCombo.getSelectionIndex();
             String kind = kindCombo.getItems()[k];
-            if (kind.equals(GENERAL)) {
-            	MessageDialog.openInformation(shell, "", "Saving of general yaml not yet implemented");
-            	return false;
-            }
             var outYaml = collectYaml(false, kind, true);
 
             var diffs = validate(outYaml, kind);
@@ -1702,27 +1702,38 @@ public class DataPropertyPage extends PropertyPage {
         return true;
     }
 
-    public Map<String, Object> collectYaml(boolean isNewFile, String kind, boolean showErrors) {
-        Map<String, Object> yaml = new HashMap<>();
+    public Object collectYaml(boolean isNewFile, String kind, boolean showErrors) {
         String diffs;
+        Object y = null;
         switch (kind) {
-            case MANIFEST:
+            case MANIFEST: {
+                Map<String, Object> yaml = new HashMap<>();
                 diffs = collectManifestYaml(yaml);
+                y = yaml;
                 break;
-            case DATA:
+            }
+            case DATA: {
+                Map<String, Object> yaml = new HashMap<>();
                 diffs = collectDataYaml(yaml);
+                y = yaml;
                 break;
-            case MODEL:
+            }
+            case MODEL: {
+                Map<String, Object> yaml = new HashMap<>();
                 diffs = collectModelYaml(yaml);
+                y = yaml;
                 break;
+            }
             default:
-                if (!isNewFile) diffs = "Unknown kind of Yaml to output";
-                return null;
+            	StringBuilder str = new StringBuilder();
+            	y = collectGeneralYaml(str);
+                diffs = str.toString();
+                break;
         }
         if (showErrors && !diffs.isEmpty()) {
             MessageDialog.openError(shell, "Error", diffs);
         }
-        return yaml;
+        return y;
     }
 
     @SuppressWarnings("unchecked")
@@ -1870,7 +1881,110 @@ public class DataPropertyPage extends PropertyPage {
         return collectYaml(yaml, modelKeys);
     }
 
-    public String validate(Map<String, Object> yamlToCheck, String kind) {
+    public Object collectGeneralYaml(StringBuilder str) {
+    	// The main content is the [1] child of the top composite -- presuming it is a list or map.
+    	var c = (Composite)currentSubcomposite.getChildren()[1];
+        return collectGeneralObject(c, str);
+    }
+    
+    public Object visitChildren(Composite comp, StringBuilder str) {
+    	System.out.println("NUM " + comp.getChildren().length);
+    	for (var c: comp.getChildren()) {
+    		System.out.println("VISITING " + (c instanceof Composite) + " " + c.getClass() + " " + c.getData() + " " + c.toString());
+    		var clazz = c.getData();
+    		if (c instanceof Composite cc) {
+    			if (clazz != null) {
+    				if (clazz == List.class) return collectGeneralList(cc, str); 
+    				if (clazz == Map.class) return collectGeneralMap(cc, str); 
+    				return collectGeneralObject(cc, str);
+    			} else {
+    				Object o = visitChildren(cc, str);
+    				if (o != null) return o;
+    			}
+    		}
+    	}
+    	return null;
+    }
+    
+    public List<Object> collectGeneralList(Composite listComp, StringBuilder str) {
+    	var list = new java.util.ArrayList<Object>();
+    	for (var c: listComp.getChildren()) {
+    		if (c instanceof Composite cc) {
+    			var children = cc.getChildren();
+    			if (children.length == 3 && children[2] instanceof Text t) {
+    				// scalar
+    	    		var item = collectGeneralObject(t, str);
+    	    		if (item != null) list.add(item);
+    			} else if (children.length > 0 && children[0] instanceof Composite) {
+    				// A map or list
+    				if (cc.getData() == Map.class) {
+    					list.add(collectGeneralMap(cc, str)); 
+    				} else if (cc.getData() == List.class) {
+    					list.add(collectGeneralList(cc, str)); 
+    				}
+    			} else {
+    				// skip -- should be a header for a map or list
+    			}
+    		}
+    	}
+    	return list;
+    }
+    
+    public Map<String,Object> collectGeneralMap(Composite mapComp, StringBuilder str) {
+    	// Each child of a Map is a Composite with a key at [1] and a value at [3]
+    	String key = null;
+    	var map = new java.util.HashMap<String,Object>();
+    	for (var c: mapComp.getChildren()) {
+    		var children = ((Composite)c).getChildren();
+    		if (key != null) {
+    			if (Map.class == c.getData()) {
+    				var m = collectGeneralMap((Composite)c, str);
+    				map.put(key, m);
+    				key = null;
+    			} else if (List.class == c.getData()) {
+    				var m = collectGeneralList((Composite)c, str);
+    				map.put(key, m);
+    				key = null;
+    			}
+    		} else if (children[1] instanceof Text t) {
+    			key = t.getText();
+        		Control valueComp = children[3];
+        		if (valueComp.getData() != null) {
+            		var item = collectGeneralObject(valueComp, str);
+            		map.put(key, item);
+            		key = null;
+        		}
+    		}
+    	}
+    	return map;
+    }
+    
+    public Object collectGeneralObject(Object obj, StringBuilder str) {
+    	if (obj instanceof Composite cc) {
+    		var clazz = cc.getData();
+    		if (clazz == Map.class) return collectGeneralMap(cc, str);
+    		if (clazz == List.class) return collectGeneralList(cc, str); 
+     	} else {
+			return collectGeneralScalar(obj, str);
+    	}
+    	return null ;
+    }
+    
+    public Object collectGeneralScalar(Object obj, StringBuilder str) {
+    	if (obj instanceof Text t) {
+			var clazz = t.getData();
+			var text = t.getText();
+			if (clazz == String.class) return text; 
+			if (clazz == Integer.class) return Integer.valueOf(text);
+    		str.append("Unknown data type: " + clazz + "\n");
+    	} else {
+    		str.append("Unknown kind of widget: " + obj.getClass() + "\n");
+    	}
+    	
+    	return null;
+    }
+
+    public String validate(Object yamlToCheck, String kind) {
         String newPath = pathText.getText();
         IPath p = new Path(newPath);
         IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
@@ -1878,11 +1992,13 @@ public class DataPropertyPage extends PropertyPage {
 
         switch (kind) {
             case MANIFEST:
-                return validateManifest(yamlToCheck, currentDir);
+                return validateManifest((Map<String, Object>)yamlToCheck, currentDir);
             case MODEL:
-                return validateModel(yamlToCheck, currentDir);
+                return validateModel((Map<String, Object>)yamlToCheck, currentDir);
             case DATA:
-                return validateData(yamlToCheck, currentDir);
+                return validateData((Map<String, Object>)yamlToCheck, currentDir);
+            case GENERAL:
+            	return "";
         }
         return "No such kind of yaml file: " + kind + "\n";
     }
