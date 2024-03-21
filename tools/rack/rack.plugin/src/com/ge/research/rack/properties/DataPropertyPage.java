@@ -1474,7 +1474,7 @@ public class DataPropertyPage extends PropertyPage {
     public static String autoDetectYamlKind(Object yaml) {
     	if (yaml instanceof Map<?,?> yamlMap) {
     		if (yamlMap.get("ingestion-steps") != null) return DATA;
-    		if (yamlMap.get("footprint") != null) return MANIFEST;
+    		if (yamlMap.get("name") != null) return MANIFEST;
     		if (yamlMap.get("files") != null) return MODEL;
     	} else if (yaml instanceof List<?>) {
     		return GENERAL;
@@ -1809,6 +1809,9 @@ public class DataPropertyPage extends PropertyPage {
                 } else {
                     diffs += "Unknown value for " + keys[0] + ": " + w.getClass();
                 }
+                // Patch up -- FIXME this is a hack
+                var f = (Map<?,?>)yaml.get("footprint");
+                if (f == null || f.size() == 0) yaml.remove("footprint");
             } catch (Exception e) {
                 MessageDialog.openError(
                         shell,
