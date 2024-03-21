@@ -57,6 +57,12 @@
             </commandParameter>
         </command>
 
+        <!-- ARP-4754A Plan Creation -->
+        <command categoryId="rackplugin.commands"
+            id="rackplugin.commands.arp4754PlanCommand"
+            name="Create ARP-4754A Plan">
+        </command>
+
         <!-- For reports -->
         <command categoryId="rackplugin.commands"
             id="rackplugin.commands.reportsCommand"
@@ -189,6 +195,10 @@
         <handler class="com.ge.research.rack.Arp4754ButtonHandler"
             commandId="rackplugin.commands.arp4754Command">
         </handler>
+        <!-- For ARP-4754A Plans -->
+        <handler class="com.ge.research.rack.Arp4754WireframeHandler"
+            commandId="rackplugin.commands.arp4754PlanCommand">
+        </handler>
         <!-- For auto Gsn -->
         <handler class="com.ge.research.rack.AutoGsnButtonHandler"
             commandId="rackplugin.commands.autoGsnCommand">
@@ -247,6 +257,12 @@
                 <command commandId="rackplugin.commands.arp4754Command"
                     id="rackplugin.menus.arp4754" label="ARP-4754A Compliance Report"
                     mnemonic="S" style="push">
+                </command>
+
+                <!-- For ARP-4754A Plans -->
+                <command commandId="rackplugin.commands.arp4754PlanCommand"
+                    id="rackplugin.menus.arp4754Plan" label="Create ARP-4754A Plan"
+                    mnemonic="A" style="push">
                 </command>
 
                 <!-- For auto Gsn -->

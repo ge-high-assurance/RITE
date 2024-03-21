@@ -32,6 +32,7 @@
 package com.ge.research.rack;
 
 import com.ge.research.rack.arp4754.viewManagers.Arp4754ViewsManager;
+import com.ge.research.rack.arp4754.wireframe.ui.Arp4754WireframeMainViewManager;
 import com.ge.research.rack.autoGsn.viewManagers.AutoGsnViewsManager;
 import com.ge.research.rack.autoGsn.viewManagers.GsnTreeViewManager;
 import com.ge.research.rack.do178c.viewManagers.ReportViewsManager;
@@ -173,6 +174,25 @@ public class JavaFXAppLaunchManager {
                     () -> {
                         try {
                             Application application = new Arp4754ViewsManager();
+                            Stage primaryStage = new Stage();
+                            application.start(primaryStage);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+        }
+    }
+
+    public static void arp4754WireframeViewLaunch() {
+        if (!launchFlag) {
+            Platform.setImplicitExit(false);
+            new Thread(() -> Application.launch(Arp4754WireframeMainViewManager.class)).start();
+            launchFlag = true;
+        } else {
+            Platform.runLater(
+                    () -> {
+                        try {
+                            Application application = new Arp4754WireframeMainViewManager();
                             Stage primaryStage = new Stage();
                             application.start(primaryStage);
                         } catch (Exception e) {
