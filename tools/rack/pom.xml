@@ -61,10 +61,10 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <!-- Versions of dependencies which share the same version -->
-    <version.javafx>21.0.2</version.javafx>
+    <version.javafx>22</version.javafx>
     <version.rack>${project.version}</version.rack>
     <version.surefire>3.2.5</version.surefire>
-    <version.tycho>4.0.5</version.tycho>
+    <version.tycho>4.0.6</version.tycho>
   </properties>
 
   <!-- Set all dependency versions in one place -->
@@ -305,7 +305,7 @@
         <plugin>
           <groupId>com.github.ekryd.sortpom</groupId>
           <artifactId>sortpom-maven-plugin</artifactId>
-          <version>3.3.0</version>
+          <version>3.4.1</version>
           <configuration>
             <createBackupFile>false</createBackupFile>
             <indentSchemaLocation>true</indentSchemaLocation>
@@ -334,7 +334,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.12.1</version>
+          <version>3.13.0</version>
           <configuration>
             <compilerArgs>
               <arg>-Xlint:all</arg>
