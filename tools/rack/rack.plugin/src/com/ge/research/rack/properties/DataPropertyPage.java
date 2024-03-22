@@ -328,6 +328,18 @@ public class DataPropertyPage extends PropertyPage {
                                     + diffs);
                 }
             }
+            
+            // Validate against schema
+            if (kind.equals(MANIFEST)) {
+            	String schema = "/Users/davidcok/projects/galois/RACK/RITE/tools/rack/rack.plugin/resources/schemas/manifest.json";
+            	File schemaFile = new File(schema);
+            	File source = new File(file.getLocation().toOSString());
+            	diffs = YamlValidator.validate(currentYaml, source, schemaFile);
+            	if (!diffs.isEmpty()) {
+            		MessageDialog.openInformation(shell, "Schema validation",
+            			"Differences against schema:\n\n" + diffs);
+            	}
+            }
 
         } catch (Exception e) {
 
