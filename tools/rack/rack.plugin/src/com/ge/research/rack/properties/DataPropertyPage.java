@@ -221,8 +221,8 @@ public class DataPropertyPage extends PropertyPage {
 
     @Override
     public void createControl(Composite parent) {
-        super.createControl(parent);
         topScrolled = (ScrolledComposite) parent.getParent();
+        super.createControl(parent);
         getApplyButton().setText("Save to file");
         getDefaultsButton().setText("Discard changes");
         relayout();
@@ -322,6 +322,7 @@ public class DataPropertyPage extends PropertyPage {
             addYamlSelectorSection(composite, kind);
             addSeparator(composite);
             currentSubcomposite = addKindSubcomposite(composite, kind);
+            topScrolled.pack();
             
             if (!isNewOrIllformedFile) {
             	// This is a unit-test of the composite creation and scraping functionality 
@@ -931,6 +932,8 @@ public class DataPropertyPage extends PropertyPage {
         final var subComposite = new Composite(parent, SWT.NONE);
         var layout = new GridLayout(numColumns, true);
         layout.makeColumnsEqualWidth = false;
+        layout.marginWidth = 0;
+        layout.marginRight = 0;
         layout.marginHeight = 0;
         layout.marginTop = 0;
         layout.marginBottom = 0;
@@ -944,6 +947,8 @@ public class DataPropertyPage extends PropertyPage {
     public Composite addComposite(Composite parent, int numColumns) {
         final var subComposite = new Composite(parent, SWT.NONE);
         var layout = new GridLayout(numColumns, true);
+        layout.marginWidth = 0;
+        layout.marginRight = 0;
         subComposite.setLayout(layout);
         var data = new GridData(SWT.FILL, SWT.CENTER, true, false);
         subComposite.setLayoutData(data);
