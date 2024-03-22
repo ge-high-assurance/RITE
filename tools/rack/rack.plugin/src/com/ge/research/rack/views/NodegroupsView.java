@@ -49,10 +49,13 @@ import org.eclipse.jface.action.*;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -92,7 +95,7 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
 
     private Table table;
     private Button selectAllButton;
-    private Composite topComposite;
+    private ScrolledComposite topComposite;
     private Composite composite;
     private Composite floatContainer;
 
@@ -117,20 +120,33 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
 
     @Override
     public void createPartControl(Composite parent) {
-
+    	
+    	// Notes:
+    	// The table starts with an extra column. This appears to be a known WON'T FIX.
+    	// The extra column can be resized to zero width.
+    	// The code below sets each of the nested composite to fill out horizontally.
+    	// Then the table does also. This appears to be necessary when there is an encapsulating ScrolledComposite.
+    	    	
         final Display display = Display.getCurrent();
 
         final ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
         sc.setLayout(new FillLayout());
         this.topComposite = sc;
         composite = new Composite(sc, SWT.NONE);
+        sc.setExpandHorizontal(true);
         sc.setContent(composite);
-        sc.setMinSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
         GridLayout layout = new GridLayout();
         layout.numColumns = 1;
         layout.verticalSpacing = 10;
+        var gdata = new GridData();
+        gdata.grabExcessHorizontalSpace = true;
+        gdata.grabExcessVerticalSpace = true;
+        gdata.horizontalAlignment = SWT.FILL;
+        gdata.verticalAlignment = SWT.FILL;
+        gdata.widthHint = SWT.FILL;
         composite.setLayout(layout);
+        composite.setLayoutData(gdata);
 
         if (!ConnectionUtil.ping()) {
             return;
@@ -184,33 +200,27 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
                 });
 
         floatContainer = new Composite(composite, SWT.NONE);
-        floatContainer.setLayout(new FormLayout());
-        final FormData tableFloatPosition = new FormData();
-        tableFloatPosition.top = new FormAttachment(0);
-        tableFloatPosition.left = new FormAttachment(0);
-        tableFloatPosition.right = new FormAttachment(100);
-        tableFloatPosition.bottom = new FormAttachment(100);
+        var floatLayout = new GridLayout(1, true);
+        var floatData = new GridData();
+        floatData.horizontalAlignment = SWT.FILL;
+        floatData.grabExcessHorizontalSpace = true;
+        floatContainer.setLayoutData(floatData);
+        floatContainer.setLayout(floatLayout);
 
-        table = new Table(floatContainer, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+        table = new Table(floatContainer, SWT.MULTI | SWT.NO_SCROLL);
         table.removeAll();
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
         table.setHeaderBackground(display.getSystemColor(SWT.COLOR_TITLE_BACKGROUND_GRADIENT));
-
         table.setHeaderForeground(display.getSystemColor(SWT.COLOR_TITLE_FOREGROUND));
-
         table.setFocus();
-        table.setLayoutData(tableFloatPosition);
-        //        table.addSelectionListener(new NodegroupSelectionListener());
-
-        //        final FormData selectAllButtonPosition = new FormData();
-        //        selectAllButtonPosition.left = new FormAttachment(table, 1, SWT.LEFT);
-        //        selectAllButtonPosition.top = new FormAttachment(table, 2, SWT.TOP);
-        //
-        //        selectAllButton = new Button(floatContainer, SWT.CHECK);
-        //        selectAllButton.setLayoutData(selectAllButtonPosition);
-        //        selectAllButton.moveAbove(table);
-        //        selectAllButton.addSelectionListener(new NodegroupSelectAllListener());
+        var tableData = new GridData();
+        tableData.horizontalAlignment = SWT.FILL;
+        // Setting FILL here allows the table to fill out the horizontal width of the view window.
+        // But it also makes the ScrolledComposite think horizontal scrollbars are never needed
+        // so we have to rely on the table's own scrollbars.
+        tableData.grabExcessHorizontalSpace = true;
+        table.setLayoutData(tableData);
 
         makeActions();
         hookContextMenu();
@@ -219,26 +229,25 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
                 .forEach(
                         header -> {
                             final TableColumn col = new TableColumn(table, SWT.LEFT);
-
                             col.setText(header);
                             table.showColumn(col);
+                            col.addControlListener( new ControlAdapter() {
+                            	@Override
+                            	public void controlResized(ControlEvent e) {
+                            		resetScrollbarSize();
+                            	}
+                            });
                         });
-
+        
         refreshNodegroupList();
 
-        // Initially show all columns for visibility / view reset
-        //        Arrays.stream(table.getColumns()).forEach(c -> c.setWidth(150));
+    }
+    
+    private void resetScrollbarSize() {
+        int minwidth = 20; // To account for margins 
+        for (int k=0; k< table.getColumnCount(); k++) minwidth += table.getColumn(k).getWidth();
 
-        parent.pack();
-        //        var cols = table.getColumns();
-        //        String s = "WIDTH " + parent.getSize().x + " " + topComposite.getSize().x + " " +
-        // composite.getSize().x + " " + floatContainer.getSize().x + " " + table.getSize().x;
-        //        for (var c: cols) s = s + " " + c.getWidth();
-        //        var sb = topComposite.getHorizontalBar();
-        //        s = s + " SB " + sb.getSelection() + " " + sb.getMinimum() + " " + sb.getMaximum()
-        // + " " + sb.getIncrement() + " " + sb.getPageIncrement() + " " + sb.getThumb();
-        //        s = s;
-
+        topComposite.setMinSize(composite.computeSize(minwidth, SWT.DEFAULT));
     }
 
     private void refreshNodegroupList() {
@@ -263,6 +272,7 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
             table.pack();
             floatContainer.pack();
             composite.pack();
+            resetScrollbarSize();
             topComposite.pack();
 
         } catch (final Exception e) {
@@ -298,7 +308,11 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
             table.setEnabled(table.getItemCount() > 0);
             // Arrays.stream(table.getColumns()).forEach(TableColumn::pack);
             table.pack();
-            topComposite.pack();
+            floatContainer.pack();
+            composite.pack();
+            resetScrollbarSize();
+            //topComposite.pack(); // With this pack, the scrollbars disappear when the filter is changed.
+                       // though they reappear if the view window is resized.
 
         } catch (final Exception e) {
             ErrorMessageUtil.warning(UPDATE_NODEGROUP_LIST_ERROR);
