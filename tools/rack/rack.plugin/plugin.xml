@@ -36,8 +36,7 @@
     </command>
 
     <command categoryId="rackplugin.commands"
-      id="rackplugin.commands.editorPropertyPage"
-      name="Properties">
+      id="rackplugin.commands.editorPropertyPage" name="Properties">
     </command>
 
     <command categoryId="rackplugin.commands"
@@ -748,15 +747,13 @@
       </enabledWhen>
     </page>
   </extension>
-  
+
   <extension point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="popup:yamleditor.editors.YamlEditor.context?after=additions">
-         <command 
-               commandId="rackplugin.commands.editorPropertyPage"
-               >
-        </command>
-      </menuContribution>
-    </extension>
+    <menuContribution
+      locationURI="popup:yamleditor.editors.YamlEditor.context?after=additions">
+      <command commandId="rackplugin.commands.editorPropertyPage">
+      </command>
+    </menuContribution>
+  </extension>
 
 </plugin>
