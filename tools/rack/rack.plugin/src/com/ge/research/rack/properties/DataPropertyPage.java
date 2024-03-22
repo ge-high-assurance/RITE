@@ -159,27 +159,19 @@ import org.yaml.snakeyaml.Yaml;
 
 // TODO:
 
-// Finish validation
 // Add unit testing
-
 // Would like to change the label Apply & CLose
-// It seems that label text cannot be right-aligned
 // Would like the '-' buttons to be smaller
 // Figure out defaultWidgetSelected
-// Adjust height, width of list widgets when needed
-// Adjust widgets to property window being enlarged, shrunk
-
 // make properties window non-modal
 
 // General Yaml editor:
-//   + button with various kinds
-//   general left alignment
-//   general right alignment
 //   warn about duplicate keys in maps
 //   warn about ill-formatted integers
 //   add any other types?
 //   what happens with long keys
 //   support for multiple documents per file
+//   add checking yaml against a schema
 
 public class DataPropertyPage extends PropertyPage {
 
