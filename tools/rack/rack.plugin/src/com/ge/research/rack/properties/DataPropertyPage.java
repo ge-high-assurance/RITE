@@ -175,7 +175,6 @@ import org.yaml.snakeyaml.Yaml;
 //   + button with various kinds
 //   general left alignment
 //   general right alignment
-//   scraping for reconstituting yaml
 //   warn about duplicate keys in maps
 //   warn about ill-formatted integers
 //   add any other types?
@@ -221,7 +220,6 @@ public class DataPropertyPage extends PropertyPage {
         super.createControl(parent);
         getApplyButton().setText("Save to file");
         getDefaultsButton().setText("Discard changes");
-        relayout();
         // I'd like to change the PropertyDialog button named 'Apply and Close' to 'Save and Close'
         // One can get the PropertyDialog using this.getContainer(), but the buttons themselves are
         // private and there appears no way to get a handle to them. Plus we'd want to change the
@@ -294,8 +292,6 @@ public class DataPropertyPage extends PropertyPage {
 
             String diffs = validate(currentYaml, kind);
 
-            // This is some unit testing that retrieved yaml from the bunch of widgets is the same
-            // as what went in
             if (!isNewOrIllformedFile && !diffs.isEmpty()) {
                 var dialog =
                         new MessageDialog(
@@ -323,7 +319,9 @@ public class DataPropertyPage extends PropertyPage {
             addYamlSelectorSection(composite, kind);
             addSeparator(composite);
             currentSubcomposite = addKindSubcomposite(composite, kind);
-            topScrolled.pack();
+            topScrolled.setMinSize(topScrolled.getChildren()[0].computeSize(SWT.DEFAULT, SWT.DEFAULT));
+            // Don't call topScrolled.pack() as it causes the scrollbars to disappear
+            // (I think it undoes the setMinSize above)
 
             if (!isNewOrIllformedFile) {
                 // This is a unit-test of the composite creation and scraping functionality
@@ -387,12 +385,6 @@ public class DataPropertyPage extends PropertyPage {
                             p = currentSubcomposite.getParent();
                             currentSubcomposite.dispose();
                         }
-
-                        // if (!compareYaml(currentYaml, yamlStack.peek()).isEmpty()) {
-                        //	if (!MessageDialog.openQuestion(shell, "", "OK to discard edits?"))
-                        // return;
-                        // }
-                        // currentYaml = new HashMap<String,Object>();
 
                         yamlWidgets.clear();
                         currentSubcomposite = addKindSubcomposite(p, kind);
@@ -1033,9 +1025,7 @@ public class DataPropertyPage extends PropertyPage {
                     Object oFootprint = yamlAsMap.get("footprint");
                     if (oFootprint instanceof Map) {
                         Map oFootprintMap = (Map) oFootprint;
-                        if (!oFootprintMap.containsKey(sectionName)) {
-                            // dGraphs.add(RackPreferencePage.getDefaultDataGraph());
-                        } else {
+                        if (oFootprintMap.containsKey(sectionName)) {
                             @SuppressWarnings("unchecked")
                             var items = (List<String>) oFootprintMap.get(sectionName);
                             for (var item : items) list.add(item);
@@ -1270,7 +1260,6 @@ public class DataPropertyPage extends PropertyPage {
                 }
             }
         }
-        // sc.setMinSize(stepsComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         return subcomp;
     }
 
@@ -2090,7 +2079,7 @@ public class DataPropertyPage extends PropertyPage {
                         var stepmap = (Map<String, Object>) stepm;
                         if (stepmap.get("data") != null) {
                             diffs += okKeys(stepmap, "data", null);
-                            diffs += okFile(stepmap, "data", currentDir); // FIXME what is this?
+                            diffs += okFile(stepmap, "data", currentDir);
                         } else if (stepmap.get("model") != null) {
                             diffs += okKeys(stepmap, "model", null);
                             diffs += okFile(stepmap, "model", currentDir);
@@ -2196,10 +2185,10 @@ public class DataPropertyPage extends PropertyPage {
                             diffs += okString(map, "creator", true);
                             diffs += okString(map, "comment", false);
                             diffs +=
-                                    okString(
+                                    okFile(
                                             map,
                                             "nodegroup_json",
-                                            true); // FIXME - should be legitimate json?
+                                            currentDir);
                         } else if (map.get("count") != null && map.get("nodegroup") != null) {
                             diffs += okKeys(map, "count", "nodegroup", null, "constraints");
                             diffs += okNumber(map, "count");
@@ -2473,7 +2462,8 @@ public class DataPropertyPage extends PropertyPage {
         try {
             // Check if the text is a path in the workspace
             IPath p = new Path(text.trim());
-            if (currentDir.getFolder(p).getFile("store.csv").exists()) return "";
+            if (currentDir.getFolder(p).getFile("store_data.csv").exists() ||
+            		currentDir.getFolder(p).getFile("store.csv").exists()) return "";
         } catch (Exception e) {
             return e.getMessage() + "\n";
         }
