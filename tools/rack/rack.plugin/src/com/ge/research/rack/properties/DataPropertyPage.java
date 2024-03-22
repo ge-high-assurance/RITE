@@ -225,6 +225,7 @@ public class DataPropertyPage extends PropertyPage {
         topScrolled = (ScrolledComposite) parent.getParent();
         getApplyButton().setText("Save to file");
         getDefaultsButton().setText("Discard changes");
+        relayout();
         // I'd like to change the PropertyDialog button named 'Apply and Close' to 'Save and Close'
         // One can get the PropertyDialog using this.getContainer(), but the buttons themselves are
         // private and there appears no way to get a handle to them. Plus we'd want to change the
@@ -295,38 +296,44 @@ public class DataPropertyPage extends PropertyPage {
             
             yamlStack.push(copyChecked(currentYaml));
 
+            
+            String diffs = validate(currentYaml, kind);
+            
+            // This is some unit testing that retrieved yaml from the bunch of widgets is the same
+            // as what went in
+            if (!isNewOrIllformedFile && !diffs.isEmpty()) {
+                var dialog = new MessageDialog(
+                        shell,
+                        "",
+                        null,
+                        "The YAML file is similar to a " + kind + " yaml file but with extra or missing required content as listed below.\n"
+                        +"Do you want to continue editing the file as a " + kind + " file or switch to a general YAML editor?\n\n"
+                        +"Input and reread maps are NOT the same\n" + diffs,
+                		MessageDialog.QUESTION,
+                		new String[]{"Continue as " + kind,"Switch to YAML editor"},
+                		0);
+                int k = dialog.open();
+                if (k == 1) {
+                	kind = GENERAL;
+                }
+            }
+            
             addPathSection(composite);
             addYamlSelectorSection(composite, kind);
             addSeparator(composite);
             currentSubcomposite = addKindSubcomposite(composite, kind);
-
-            // This is some unit testing that retrieved yaml from the bunch of widgets is the same
-            // as what went in
-            if (!isNewOrIllformedFile) { // FIXME - don't have collection for GENERAL yet
+            
+            if (!isNewOrIllformedFile) {
+            	// This is a unit-test of the composite creation and scraping functionality 
                 var newYamlMap = collectYaml(isNewOrIllformedFile, kind, false);
                 boolean b = Objects.equals(currentYaml, newYamlMap);
-                String diffs = compareYaml(currentYaml, newYamlMap);
+                diffs = compareYaml(currentYaml, newYamlMap);
                 if (!b || !diffs.isEmpty()) {
-                    var dialog = new MessageDialog(
-                            shell,
-                            "",
-                            null,
-                            "The YAML file is similar to a " + kind + " yaml file but with extra or missing required content as listed below.\n"
-                            +"Do you want to continue editing the file as a " + kind + " file or switch to a general YAML editor?\n\n"
-                            +"Input and reread maps are " + (b ? "" : "NOT ") + "the same\n" + diffs,
-                    		MessageDialog.QUESTION,
-                    		new String[]{"Continue as " + kind,"Switch to YAML editor"},
-                    		0);
-                    int k = dialog.open();
-                    if (k == 1) {
-                    	kind = GENERAL;
-                    	kindCombo.select(4); // Be sure that item 4 is GENERAL
-                    	currentSubcomposite.dispose();
-                        currentSubcomposite = addKindSubcomposite(composite, kind);
-                    }
+                	MessageDialog.openInformation(shell, "",
+                		"Reading and then writing the yaml produced different results -- possible bug or ill-formed file\n\n" + diffs);
                 }
-
             }
+
         } catch (Exception e) {
 
             MessageDialog.openError(
@@ -1886,26 +1893,7 @@ public class DataPropertyPage extends PropertyPage {
     	var c = (Composite)currentSubcomposite.getChildren()[1];
         return collectGeneralObject(c, str);
     }
-    
-    public Object visitChildren(Composite comp, StringBuilder str) {
-    	System.out.println("NUM " + comp.getChildren().length);
-    	for (var c: comp.getChildren()) {
-    		System.out.println("VISITING " + (c instanceof Composite) + " " + c.getClass() + " " + c.getData() + " " + c.toString());
-    		var clazz = c.getData();
-    		if (c instanceof Composite cc) {
-    			if (clazz != null) {
-    				if (clazz == List.class) return collectGeneralList(cc, str); 
-    				if (clazz == Map.class) return collectGeneralMap(cc, str); 
-    				return collectGeneralObject(cc, str);
-    			} else {
-    				Object o = visitChildren(cc, str);
-    				if (o != null) return o;
-    			}
-    		}
-    	}
-    	return null;
-    }
-    
+        
     public List<Object> collectGeneralList(Composite listComp, StringBuilder str) {
     	var list = new java.util.ArrayList<Object>();
     	for (var c: listComp.getChildren()) {
@@ -1985,7 +1973,7 @@ public class DataPropertyPage extends PropertyPage {
     }
 
     public String validate(Object yamlToCheck, String kind) {
-        String newPath = pathText.getText();
+    	String newPath = ((IResource) getElement()).getFullPath().toString();
         IPath p = new Path(newPath);
         IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
         IContainer currentDir = root.getFile(p).getParent();
