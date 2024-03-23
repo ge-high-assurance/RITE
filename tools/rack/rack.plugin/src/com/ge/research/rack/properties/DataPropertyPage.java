@@ -225,14 +225,14 @@ public class DataPropertyPage extends PropertyPage {
 
     @Override
     public void contributeButtons(Composite buttonBar) {
-    	if (GENERAL.equals(kind)) {
-    		((GridLayout) buttonBar.getLayout()).numColumns++;
-    		addLabel(buttonBar, "Schema:", 7);
-    		((GridLayout) buttonBar.getLayout()).numColumns++;
-    		schemaText = addText(buttonBar, "", 50);
-    		((GridLayout) buttonBar.getLayout()).numColumns++;
-    		addFileBrowseButton(buttonBar, schemaText::setText, false, false);
-    	}
+        if (GENERAL.equals(kind)) {
+            ((GridLayout) buttonBar.getLayout()).numColumns++;
+            addLabel(buttonBar, "Schema:", 7);
+            ((GridLayout) buttonBar.getLayout()).numColumns++;
+            schemaText = addText(buttonBar, "", 50);
+            ((GridLayout) buttonBar.getLayout()).numColumns++;
+            addFileBrowseButton(buttonBar, schemaText::setText, false, false);
+        }
         ((GridLayout) buttonBar.getLayout()).numColumns++;
         var validateButton = new Button(buttonBar, SWT.PUSH);
         validateButton.setText("Validate");
@@ -342,7 +342,7 @@ public class DataPropertyPage extends PropertyPage {
                                     + diffs);
                 }
             }
-            
+
         } catch (Exception e) {
 
             MessageDialog.openError(
@@ -352,30 +352,30 @@ public class DataPropertyPage extends PropertyPage {
         }
         return composite;
     }
-    
+
     public String validateAgainstSchema(Object yaml, String kind) {
         try {
-        	String schema = null;
-        	if (kind.equals(GENERAL)) {
-        		schema = schemaText.getText().trim();
-        		if (!schema.isEmpty() && !new File(schema).exists()) {
-        			return "Schema does not exist: " + schema;
-        		}
-        	} else if (!kind.isEmpty()) {
-        		Bundle bundle = Platform.getBundle("rack.plugin");
-        		String p = "resources/schemas/" + kind.toLowerCase() + ".json";
-        		URL url = FileLocator.find(bundle, new Path(p), null);
-        		if (url != null)  schema = FileLocator.toFileURL(url).getFile();
-        	}
-        	if (schema != null) {
-        		File schemaFile = new File(schema);
-        		if (schemaFile.exists()) {
-        			String diffs = YamlValidator.validate(currentYaml, schemaFile);
-        			return diffs;
-        		}
-        	}
+            String schema = null;
+            if (kind.equals(GENERAL)) {
+                schema = schemaText.getText().trim();
+                if (!schema.isEmpty() && !new File(schema).exists()) {
+                    return "Schema does not exist: " + schema;
+                }
+            } else if (!kind.isEmpty()) {
+                Bundle bundle = Platform.getBundle("rack.plugin");
+                String p = "resources/schemas/" + kind.toLowerCase() + ".json";
+                URL url = FileLocator.find(bundle, new Path(p), null);
+                if (url != null) schema = FileLocator.toFileURL(url).getFile();
+            }
+            if (schema != null) {
+                File schemaFile = new File(schema);
+                if (schemaFile.exists()) {
+                    String diffs = YamlValidator.validate(currentYaml, schemaFile);
+                    return diffs;
+                }
+            }
         } catch (Exception e) {
-        	return "Exception while attempting validation: " + e.getMessage();
+            return "Exception while attempting validation: " + e.getMessage();
         }
         return "";
     }
@@ -1424,7 +1424,8 @@ public class DataPropertyPage extends PropertyPage {
         addFileBrowseButton(parent, textfield::setText, false, true);
     }
 
-    public void addFileBrowseButton(Composite parent, Setter setter, boolean longName, boolean makeRelative) {
+    public void addFileBrowseButton(
+            Composite parent, Setter setter, boolean longName, boolean makeRelative) {
         var b = new Button(parent, SWT.PUSH);
         b.setText(longName ? "Browse" : "B");
         b.addSelectionListener(
@@ -1442,12 +1443,12 @@ public class DataPropertyPage extends PropertyPage {
                         fd.setFilterPath(currentDir.toOSString());
                         String file = fd.open();
                         if (setter == null) {
-                        	// skip
+                            // skip
                         } else if (makeRelative) {
-                        	var relativePath = new Path(file).makeRelativeTo(currentDir);
-                        	setter.apply(relativePath.toOSString());
+                            var relativePath = new Path(file).makeRelativeTo(currentDir);
+                            setter.apply(relativePath.toOSString());
                         } else {
-                        	setter.apply(file);
+                            setter.apply(file);
                         }
                     }
                 });
@@ -2053,22 +2054,22 @@ public class DataPropertyPage extends PropertyPage {
     }
 
     public Object collectGeneralScalar(Object obj, StringBuilder str) {
-    	Object clazz = null;
-    	String text = null;
-    	try {
-    		if (obj instanceof Text t) {
-    			clazz = t.getData();
-    			text = t.getText();
-    			if (clazz == String.class) return text;
-    			if (clazz == Integer.class) return Integer.valueOf(text);
-    			if (clazz == Boolean.class) return Boolean.valueOf(text);
-    			str.append("Unknown data type: " + clazz + "\n");
-    		} else {
-    			str.append("Unknown kind of widget: " + obj.getClass() + "\n");
-    		}
-    	} catch (Exception e) {
-    		str.append("Failed to convert text to " + clazz + ": " + text);
-    	}
+        Object clazz = null;
+        String text = null;
+        try {
+            if (obj instanceof Text t) {
+                clazz = t.getData();
+                text = t.getText();
+                if (clazz == String.class) return text;
+                if (clazz == Integer.class) return Integer.valueOf(text);
+                if (clazz == Boolean.class) return Boolean.valueOf(text);
+                str.append("Unknown data type: " + clazz + "\n");
+            } else {
+                str.append("Unknown kind of widget: " + obj.getClass() + "\n");
+            }
+        } catch (Exception e) {
+            str.append("Failed to convert text to " + clazz + ": " + text);
+        }
 
         return null;
     }
@@ -2093,12 +2094,13 @@ public class DataPropertyPage extends PropertyPage {
                 diffs = "";
                 break;
             default:
-            	diffs = "No such kind of yaml file: " + kind + "\n";;
-            	break;
+                diffs = "No such kind of yaml file: " + kind + "\n";
+                ;
+                break;
         }
         String diffs2 = validateAgainstSchema(yamlToCheck, kind);
         if (!diffs2.isEmpty()) {
-        	diffs += "\nDifferences compared to schema:\n\n" + diffs2;
+            diffs += "\nDifferences compared to schema:\n\n" + diffs2;
         }
         return diffs;
     }
@@ -2255,11 +2257,7 @@ public class DataPropertyPage extends PropertyPage {
                             diffs += okString(map, "name", true);
                             diffs += okString(map, "creator", true);
                             diffs += okString(map, "comment", false);
-                            diffs +=
-                                    okFile(
-                                            map,
-                                            "nodegroup_json",
-                                            currentDir);
+                            diffs += okFile(map, "nodegroup_json", currentDir);
                         } else if (map.get("count") != null && map.get("nodegroup") != null) {
                             diffs += okKeys(map, "count", "nodegroup", null, "constraints");
                             diffs += okNumber(map, "count");
@@ -2533,8 +2531,8 @@ public class DataPropertyPage extends PropertyPage {
         try {
             // Check if the text is a path in the workspace
             IPath p = new Path(text.trim());
-            if (currentDir.getFolder(p).getFile("store_data.csv").exists() ||
-            		currentDir.getFolder(p).getFile("store.csv").exists()) return "";
+            if (currentDir.getFolder(p).getFile("store_data.csv").exists()
+                    || currentDir.getFolder(p).getFile("store.csv").exists()) return "";
         } catch (Exception e) {
             return e.getMessage() + "\n";
         }
