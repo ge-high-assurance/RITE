@@ -171,7 +171,7 @@ import org.yaml.snakeyaml.Yaml;
 //   add any other types?
 //   what happens with long keys
 //   support for multiple documents per file
-//   add checking yaml against a schema
+//   put browser B before text field/ extend text field to right
 
 public class DataPropertyPage extends PropertyPage {
 
@@ -197,6 +197,7 @@ public class DataPropertyPage extends PropertyPage {
     private Stack<Object> yamlStack = new Stack<>();
 
     private Combo kindCombo;
+    private String kind;
     private Text pathText;
     private Map<String, Object> yamlWidgets = new HashMap<>();
 
@@ -221,12 +222,14 @@ public class DataPropertyPage extends PropertyPage {
 
     @Override
     public void contributeButtons(Composite buttonBar) {
-        ((GridLayout) buttonBar.getLayout()).numColumns++;
-        addLabel(buttonBar, "Schema:", 7);
-        ((GridLayout) buttonBar.getLayout()).numColumns++;
-        schemaText = addText(buttonBar, "", 50);
-        ((GridLayout) buttonBar.getLayout()).numColumns++;
-        addFileBrowseButton(buttonBar, schemaText::setText, false, false);
+    	if (GENERAL.equals(kind)) {
+    		((GridLayout) buttonBar.getLayout()).numColumns++;
+    		addLabel(buttonBar, "Schema:", 7);
+    		((GridLayout) buttonBar.getLayout()).numColumns++;
+    		schemaText = addText(buttonBar, "", 50);
+    		((GridLayout) buttonBar.getLayout()).numColumns++;
+    		addFileBrowseButton(buttonBar, schemaText::setText, false, false);
+    	}
         ((GridLayout) buttonBar.getLayout()).numColumns++;
         var validateButton = new Button(buttonBar, SWT.PUSH);
         validateButton.setText("Validate");
@@ -278,7 +281,6 @@ public class DataPropertyPage extends PropertyPage {
                 isNewOrIllformedFile = true;
             }
 
-            String kind;
             if (currentYaml == null) {
                 // Either a new file or errors on reading
                 currentYaml = new HashMap<>(); // Already gave an error message
@@ -318,7 +320,9 @@ public class DataPropertyPage extends PropertyPage {
             addYamlSelectorSection(composite, kind);
             addSeparator(composite);
             currentSubcomposite = addKindSubcomposite(composite, kind);
-            topScrolled.setMinSize(topScrolled.getChildren()[0].computeSize(SWT.DEFAULT, SWT.DEFAULT));
+            Point pt = topScrolled.getChildren()[0].computeSize(SWT.DEFAULT, SWT.DEFAULT);
+            pt.y += 20; // A hack because otherwise the buttonbar sometimes is not visible
+            topScrolled.setMinSize(pt);
             // Don't call topScrolled.pack() as it causes the scrollbars to disappear
             // (I think it undoes the setMinSize above)
 
@@ -513,12 +517,13 @@ public class DataPropertyPage extends PropertyPage {
             this.output = output;
         }
 
-        static String[] kinds = {"Map", "List", "String", "Integer"};
+        static String[] kinds = {"Map", "List", "String", "Integer", "Boolean"};
         static Class<?>[] classes = {
             java.util.HashMap.class,
             java.util.ArrayList.class,
             java.lang.String.class,
-            java.lang.Integer.class
+            java.lang.Integer.class,
+            java.lang.Boolean.class
         };
 
         @Override
@@ -534,6 +539,7 @@ public class DataPropertyPage extends PropertyPage {
                     else if (v instanceof List<?>) counts[1]++;
                     else if (v instanceof String) counts[2]++;
                     else if (v instanceof Integer) counts[3]++;
+                    else if (v instanceof Boolean) counts[4]++;
                 }
                 int max = 0;
                 for (int i = 0; i < counts.length; i++)
@@ -559,6 +565,7 @@ public class DataPropertyPage extends PropertyPage {
                     else if (v instanceof List<?>) counts[1]++;
                     else if (v instanceof String) counts[2]++;
                     else if (v instanceof Integer) counts[3]++;
+                    else if (v instanceof Boolean) counts[4]++;
                 }
                 int max = 0;
                 for (int i = 0; i < counts.length; i++)
@@ -1649,6 +1656,17 @@ public class DataPropertyPage extends PropertyPage {
                                 + ib
                                 + ");\n";
             }
+        } else if (sa instanceof Boolean ia && sb instanceof Boolean ib) {
+            if (!Objects.equals(ia, ib)) {
+                diffs +=
+                        "Boolean values are different at "
+                                + level
+                                + " : "
+                                + ia
+                                + " vs. "
+                                + ib
+                                + ");\n";
+            }
         } else if (sa instanceof List<?> lista && sb instanceof List<?> listb) {
             if (lista.size() != listb.size()) {
                 diffs +=
@@ -1984,7 +2002,7 @@ public class DataPropertyPage extends PropertyPage {
         for (var c : listComp.getChildren()) {
             if (c instanceof Composite cc) {
                 var children = cc.getChildren();
-                if (children.length == 3 && children[2] instanceof Text t) {
+                if (children.length >= 3 && children[2] instanceof Text t) {
                     // scalar
                     var item = collectGeneralObject(t, str);
                     if (item != null) list.add(item);
@@ -2044,15 +2062,22 @@ public class DataPropertyPage extends PropertyPage {
     }
 
     public Object collectGeneralScalar(Object obj, StringBuilder str) {
-        if (obj instanceof Text t) {
-            var clazz = t.getData();
-            var text = t.getText();
-            if (clazz == String.class) return text;
-            if (clazz == Integer.class) return Integer.valueOf(text);
-            str.append("Unknown data type: " + clazz + "\n");
-        } else {
-            str.append("Unknown kind of widget: " + obj.getClass() + "\n");
-        }
+    	Object clazz = null;
+    	String text = null;
+    	try {
+    		if (obj instanceof Text t) {
+    			clazz = t.getData();
+    			text = t.getText();
+    			if (clazz == String.class) return text;
+    			if (clazz == Integer.class) return Integer.valueOf(text);
+    			if (clazz == Boolean.class) return Boolean.valueOf(text);
+    			str.append("Unknown data type: " + clazz + "\n");
+    		} else {
+    			str.append("Unknown kind of widget: " + obj.getClass() + "\n");
+    		}
+    	} catch (Exception e) {
+    		str.append("Failed to convert text to " + clazz + ": " + text);
+    	}
 
         return null;
     }
@@ -2544,6 +2569,7 @@ public class DataPropertyPage extends PropertyPage {
     public Object copy(Object in) {
         if (in instanceof String) return in;
         if (in instanceof Integer) return in;
+        if (in instanceof Boolean) return in;
         if (in instanceof List<?> list) {
             var nlist = new java.util.ArrayList<Object>();
             for (var item : list) nlist.add(copy(item));
