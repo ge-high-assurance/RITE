@@ -157,6 +157,11 @@
       <groupId>org.webjars.npm</groupId>
       <artifactId>viz.js-graphviz-java</artifactId>
     </dependency>
+    <dependency>  
+        <groupId>com.networknt</groupId>  
+        <artifactId>json-schema-validator</artifactId>  
+        <version>1.4.0</version>  
+</dependency>  
   </dependencies>
 
   <build>

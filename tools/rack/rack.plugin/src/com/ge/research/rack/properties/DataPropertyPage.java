@@ -57,8 +57,10 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
@@ -82,6 +84,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.PropertyPage;
 import org.eclipse.ui.forms.widgets.Twistie;
+import org.osgi.framework.Bundle;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.DumperOptions.FlowStyle;
 import org.yaml.snakeyaml.Yaml;
@@ -171,7 +174,7 @@ import org.yaml.snakeyaml.Yaml;
 //   add any other types?
 //   what happens with long keys
 //   support for multiple documents per file
-//   add checking yaml against a schema
+//   put browser B before text field/ extend text field to right
 
 public class DataPropertyPage extends PropertyPage {
 
@@ -191,11 +194,13 @@ public class DataPropertyPage extends PropertyPage {
     private Shell shell;
     private Composite topParent;
     private ScrolledComposite topScrolled;
+    private Text schemaText;
 
     private Object currentYaml = null;
     private Stack<Object> yamlStack = new Stack<>();
 
     private Combo kindCombo;
+    private String kind;
     private Text pathText;
     private Map<String, Object> yamlWidgets = new HashMap<>();
 
@@ -220,6 +225,14 @@ public class DataPropertyPage extends PropertyPage {
 
     @Override
     public void contributeButtons(Composite buttonBar) {
+    	if (GENERAL.equals(kind)) {
+    		((GridLayout) buttonBar.getLayout()).numColumns++;
+    		addLabel(buttonBar, "Schema:", 7);
+    		((GridLayout) buttonBar.getLayout()).numColumns++;
+    		schemaText = addText(buttonBar, "", 50);
+    		((GridLayout) buttonBar.getLayout()).numColumns++;
+    		addFileBrowseButton(buttonBar, schemaText::setText, false, false);
+    	}
         ((GridLayout) buttonBar.getLayout()).numColumns++;
         var validateButton = new Button(buttonBar, SWT.PUSH);
         validateButton.setText("Validate");
@@ -271,7 +284,6 @@ public class DataPropertyPage extends PropertyPage {
                 isNewOrIllformedFile = true;
             }
 
-            String kind;
             if (currentYaml == null) {
                 // Either a new file or errors on reading
                 currentYaml = new HashMap<>(); // Already gave an error message
@@ -311,7 +323,9 @@ public class DataPropertyPage extends PropertyPage {
             addYamlSelectorSection(composite, kind);
             addSeparator(composite);
             currentSubcomposite = addKindSubcomposite(composite, kind);
-            topScrolled.setMinSize(topScrolled.getChildren()[0].computeSize(SWT.DEFAULT, SWT.DEFAULT));
+            Point pt = topScrolled.getChildren()[0].computeSize(SWT.DEFAULT, SWT.DEFAULT);
+            pt.y += 20; // A hack because otherwise the buttonbar sometimes is not visible
+            topScrolled.setMinSize(pt);
             // Don't call topScrolled.pack() as it causes the scrollbars to disappear
             // (I think it undoes the setMinSize above)
 
@@ -328,7 +342,7 @@ public class DataPropertyPage extends PropertyPage {
                                     + diffs);
                 }
             }
-
+            
         } catch (Exception e) {
 
             MessageDialog.openError(
@@ -337,6 +351,33 @@ public class DataPropertyPage extends PropertyPage {
                     "Exception during createContents\n" + e.getMessage() + "\n" + getStack(e));
         }
         return composite;
+    }
+    
+    public String validateAgainstSchema(Object yaml, String kind) {
+        try {
+        	String schema = null;
+        	if (kind.equals(GENERAL)) {
+        		schema = schemaText.getText().trim();
+        		if (!schema.isEmpty() && !new File(schema).exists()) {
+        			return "Schema does not exist: " + schema;
+        		}
+        	} else if (!kind.isEmpty()) {
+        		Bundle bundle = Platform.getBundle("rack.plugin");
+        		String p = "resources/schemas/" + kind.toLowerCase() + ".json";
+        		URL url = FileLocator.find(bundle, new Path(p), null);
+        		if (url != null)  schema = FileLocator.toFileURL(url).getFile();
+        	}
+        	if (schema != null) {
+        		File schemaFile = new File(schema);
+        		if (schemaFile.exists()) {
+        			String diffs = YamlValidator.validate(currentYaml, schemaFile);
+        			return diffs;
+        		}
+        	}
+        } catch (Exception e) {
+        	return "Exception while attempting validation: " + e.getMessage();
+        }
+        return "";
     }
 
     public void addPathSection(Composite parent) {
@@ -467,12 +508,13 @@ public class DataPropertyPage extends PropertyPage {
             this.output = output;
         }
 
-        static String[] kinds = {"Map", "List", "String", "Integer"};
+        static String[] kinds = {"Map", "List", "String", "Integer", "Boolean"};
         static Class<?>[] classes = {
             java.util.HashMap.class,
             java.util.ArrayList.class,
             java.lang.String.class,
-            java.lang.Integer.class
+            java.lang.Integer.class,
+            java.lang.Boolean.class
         };
 
         @Override
@@ -488,6 +530,7 @@ public class DataPropertyPage extends PropertyPage {
                     else if (v instanceof List<?>) counts[1]++;
                     else if (v instanceof String) counts[2]++;
                     else if (v instanceof Integer) counts[3]++;
+                    else if (v instanceof Boolean) counts[4]++;
                 }
                 int max = 0;
                 for (int i = 0; i < counts.length; i++)
@@ -513,6 +556,7 @@ public class DataPropertyPage extends PropertyPage {
                     else if (v instanceof List<?>) counts[1]++;
                     else if (v instanceof String) counts[2]++;
                     else if (v instanceof Integer) counts[3]++;
+                    else if (v instanceof Boolean) counts[4]++;
                 }
                 int max = 0;
                 for (int i = 0; i < counts.length; i++)
@@ -999,7 +1043,7 @@ public class DataPropertyPage extends PropertyPage {
         final Button addButton = new Button(buttonComposite, SWT.PUSH);
         addButton.setText("Add");
         if (fileBrowser) {
-            addFileBrowseButton(buttonComposite, list::add, true);
+            addFileBrowseButton(buttonComposite, list::add, true, true);
         }
         final Button removeButton = new Button(buttonComposite, SWT.PUSH);
         removeButton.setText("Remove");
@@ -1377,10 +1421,10 @@ public class DataPropertyPage extends PropertyPage {
     }
 
     public void addFileBrowseButton(Composite parent, Text textfield) {
-        addFileBrowseButton(parent, textfield::setText, false);
+        addFileBrowseButton(parent, textfield::setText, false, true);
     }
 
-    public void addFileBrowseButton(Composite parent, Setter setter, boolean longName) {
+    public void addFileBrowseButton(Composite parent, Setter setter, boolean longName, boolean makeRelative) {
         var b = new Button(parent, SWT.PUSH);
         b.setText(longName ? "Browse" : "B");
         b.addSelectionListener(
@@ -1397,8 +1441,14 @@ public class DataPropertyPage extends PropertyPage {
                         }
                         fd.setFilterPath(currentDir.toOSString());
                         String file = fd.open();
-                        var relativePath = new Path(file).makeRelativeTo(currentDir);
-                        setter.apply(relativePath.toOSString());
+                        if (setter == null) {
+                        	// skip
+                        } else if (makeRelative) {
+                        	var relativePath = new Path(file).makeRelativeTo(currentDir);
+                        	setter.apply(relativePath.toOSString());
+                        } else {
+                        	setter.apply(file);
+                        }
                     }
                 });
     }
@@ -1590,6 +1640,17 @@ public class DataPropertyPage extends PropertyPage {
             if (!Objects.equals(ia, ib)) {
                 diffs +=
                         "Integer values are different at "
+                                + level
+                                + " : "
+                                + ia
+                                + " vs. "
+                                + ib
+                                + ");\n";
+            }
+        } else if (sa instanceof Boolean ia && sb instanceof Boolean ib) {
+            if (!Objects.equals(ia, ib)) {
+                diffs +=
+                        "Boolean values are different at "
                                 + level
                                 + " : "
                                 + ia
@@ -1932,7 +1993,7 @@ public class DataPropertyPage extends PropertyPage {
         for (var c : listComp.getChildren()) {
             if (c instanceof Composite cc) {
                 var children = cc.getChildren();
-                if (children.length == 3 && children[2] instanceof Text t) {
+                if (children.length >= 3 && children[2] instanceof Text t) {
                     // scalar
                     var item = collectGeneralObject(t, str);
                     if (item != null) list.add(item);
@@ -1992,15 +2053,22 @@ public class DataPropertyPage extends PropertyPage {
     }
 
     public Object collectGeneralScalar(Object obj, StringBuilder str) {
-        if (obj instanceof Text t) {
-            var clazz = t.getData();
-            var text = t.getText();
-            if (clazz == String.class) return text;
-            if (clazz == Integer.class) return Integer.valueOf(text);
-            str.append("Unknown data type: " + clazz + "\n");
-        } else {
-            str.append("Unknown kind of widget: " + obj.getClass() + "\n");
-        }
+    	Object clazz = null;
+    	String text = null;
+    	try {
+    		if (obj instanceof Text t) {
+    			clazz = t.getData();
+    			text = t.getText();
+    			if (clazz == String.class) return text;
+    			if (clazz == Integer.class) return Integer.valueOf(text);
+    			if (clazz == Boolean.class) return Boolean.valueOf(text);
+    			str.append("Unknown data type: " + clazz + "\n");
+    		} else {
+    			str.append("Unknown kind of widget: " + obj.getClass() + "\n");
+    		}
+    	} catch (Exception e) {
+    		str.append("Failed to convert text to " + clazz + ": " + text);
+    	}
 
         return null;
     }
@@ -2010,18 +2078,29 @@ public class DataPropertyPage extends PropertyPage {
         IPath p = new Path(newPath);
         IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
         IContainer currentDir = root.getFile(p).getParent();
-
+        String diffs = "";
         switch (kind) {
             case MANIFEST:
-                return validateManifest((Map<String, Object>) yamlToCheck, currentDir);
+                diffs = validateManifest((Map<String, Object>) yamlToCheck, currentDir);
+                break;
             case MODEL:
-                return validateModel((Map<String, Object>) yamlToCheck, currentDir);
+                diffs = validateModel((Map<String, Object>) yamlToCheck, currentDir);
+                break;
             case DATA:
-                return validateData((Map<String, Object>) yamlToCheck, currentDir);
+                diffs = validateData((Map<String, Object>) yamlToCheck, currentDir);
+                break;
             case GENERAL:
-                return "";
+                diffs = "";
+                break;
+            default:
+            	diffs = "No such kind of yaml file: " + kind + "\n";;
+            	break;
         }
-        return "No such kind of yaml file: " + kind + "\n";
+        String diffs2 = validateAgainstSchema(yamlToCheck, kind);
+        if (!diffs2.isEmpty()) {
+        	diffs += "\nDifferences compared to schema:\n\n" + diffs2;
+        }
+        return diffs;
     }
 
     public String validateManifest(Map<String, Object> yamlToCheck, IContainer currentDir) {
@@ -2481,6 +2560,7 @@ public class DataPropertyPage extends PropertyPage {
     public Object copy(Object in) {
         if (in instanceof String) return in;
         if (in instanceof Integer) return in;
+        if (in instanceof Boolean) return in;
         if (in instanceof List<?> list) {
             var nlist = new java.util.ArrayList<Object>();
             for (var item : list) nlist.add(copy(item));
