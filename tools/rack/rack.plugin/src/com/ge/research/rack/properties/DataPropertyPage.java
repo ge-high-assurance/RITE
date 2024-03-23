@@ -57,8 +57,10 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
@@ -82,6 +84,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.PropertyPage;
 import org.eclipse.ui.forms.widgets.Twistie;
+import org.osgi.framework.Bundle;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.DumperOptions.FlowStyle;
 import org.yaml.snakeyaml.Yaml;
@@ -340,18 +343,6 @@ public class DataPropertyPage extends PropertyPage {
                 }
             }
             
-            // Validate against schema
-            if (kind.equals(MANIFEST)) {
-            	String schema = "/Users/davidcok/projects/galois/RACK/RITE/tools/rack/rack.plugin/resources/schemas/manifest.json";
-            	File schemaFile = new File(schema);
-            	File source = new File(file.getLocation().toOSString());
-            	diffs = YamlValidator.validate(currentYaml, source, schemaFile);
-            	if (!diffs.isEmpty()) {
-            		MessageDialog.openInformation(shell, "Schema validation",
-            			"Differences against schema:\n\n" + diffs);
-            	}
-            }
-
         } catch (Exception e) {
 
             MessageDialog.openError(
