@@ -46,7 +46,7 @@ public class YamlValidator {
 			// get schema from the schemaStream and store it into JsonSchema  
 			JsonSchema schema = schemaFactory.getSchema(schemaStream);  
 
-			// comvert yaml to json
+			// convert yaml to json
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String jsonString = gson.toJson(yaml,LinkedHashMap.class);
 

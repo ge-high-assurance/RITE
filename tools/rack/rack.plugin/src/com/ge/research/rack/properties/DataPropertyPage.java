@@ -191,6 +191,7 @@ public class DataPropertyPage extends PropertyPage {
     private Shell shell;
     private Composite topParent;
     private ScrolledComposite topScrolled;
+    private Text schemaText;
 
     private Object currentYaml = null;
     private Stack<Object> yamlStack = new Stack<>();
@@ -220,6 +221,12 @@ public class DataPropertyPage extends PropertyPage {
 
     @Override
     public void contributeButtons(Composite buttonBar) {
+        ((GridLayout) buttonBar.getLayout()).numColumns++;
+        addLabel(buttonBar, "Schema:", 7);
+        ((GridLayout) buttonBar.getLayout()).numColumns++;
+        schemaText = addText(buttonBar, "", 50);
+        ((GridLayout) buttonBar.getLayout()).numColumns++;
+        addFileBrowseButton(buttonBar, schemaText::setText, false, false);
         ((GridLayout) buttonBar.getLayout()).numColumns++;
         var validateButton = new Button(buttonBar, SWT.PUSH);
         validateButton.setText("Validate");
@@ -349,6 +356,33 @@ public class DataPropertyPage extends PropertyPage {
                     "Exception during createContents\n" + e.getMessage() + "\n" + getStack(e));
         }
         return composite;
+    }
+    
+    public String validateAgainstSchema(Object yaml, String kind) {
+        try {
+        	String schema = null;
+        	if (kind.equals(GENERAL)) {
+        		schema = schemaText.getText().trim();
+        		if (!schema.isEmpty() && !new File(schema).exists()) {
+        			return "Schema does not exist: " + schema;
+        		}
+        	} else if (!kind.isEmpty()) {
+        		Bundle bundle = Platform.getBundle("rack.plugin");
+        		String p = "resources/schemas/" + kind.toLowerCase() + ".json";
+        		URL url = FileLocator.find(bundle, new Path(p), null);
+        		if (url != null)  schema = FileLocator.toFileURL(url).getFile();
+        	}
+        	if (schema != null) {
+        		File schemaFile = new File(schema);
+        		if (schemaFile.exists()) {
+        			String diffs = YamlValidator.validate(currentYaml, schemaFile);
+        			return diffs;
+        		}
+        	}
+        } catch (Exception e) {
+        	return "Exception while attempting validation: " + e.getMessage();
+        }
+        return "";
     }
 
     public void addPathSection(Composite parent) {
@@ -1011,7 +1045,7 @@ public class DataPropertyPage extends PropertyPage {
         final Button addButton = new Button(buttonComposite, SWT.PUSH);
         addButton.setText("Add");
         if (fileBrowser) {
-            addFileBrowseButton(buttonComposite, list::add, true);
+            addFileBrowseButton(buttonComposite, list::add, true, true);
         }
         final Button removeButton = new Button(buttonComposite, SWT.PUSH);
         removeButton.setText("Remove");
@@ -1389,10 +1423,10 @@ public class DataPropertyPage extends PropertyPage {
     }
 
     public void addFileBrowseButton(Composite parent, Text textfield) {
-        addFileBrowseButton(parent, textfield::setText, false);
+        addFileBrowseButton(parent, textfield::setText, false, true);
     }
 
-    public void addFileBrowseButton(Composite parent, Setter setter, boolean longName) {
+    public void addFileBrowseButton(Composite parent, Setter setter, boolean longName, boolean makeRelative) {
         var b = new Button(parent, SWT.PUSH);
         b.setText(longName ? "Browse" : "B");
         b.addSelectionListener(
@@ -1409,8 +1443,14 @@ public class DataPropertyPage extends PropertyPage {
                         }
                         fd.setFilterPath(currentDir.toOSString());
                         String file = fd.open();
-                        var relativePath = new Path(file).makeRelativeTo(currentDir);
-                        setter.apply(relativePath.toOSString());
+                        if (setter == null) {
+                        	// skip
+                        } else if (makeRelative) {
+                        	var relativePath = new Path(file).makeRelativeTo(currentDir);
+                        	setter.apply(relativePath.toOSString());
+                        } else {
+                        	setter.apply(file);
+                        }
                     }
                 });
     }
@@ -2022,18 +2062,29 @@ public class DataPropertyPage extends PropertyPage {
         IPath p = new Path(newPath);
         IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
         IContainer currentDir = root.getFile(p).getParent();
-
+        String diffs = "";
         switch (kind) {
             case MANIFEST:
-                return validateManifest((Map<String, Object>) yamlToCheck, currentDir);
+                diffs = validateManifest((Map<String, Object>) yamlToCheck, currentDir);
+                break;
             case MODEL:
-                return validateModel((Map<String, Object>) yamlToCheck, currentDir);
+                diffs = validateModel((Map<String, Object>) yamlToCheck, currentDir);
+                break;
             case DATA:
-                return validateData((Map<String, Object>) yamlToCheck, currentDir);
+                diffs = validateData((Map<String, Object>) yamlToCheck, currentDir);
+                break;
             case GENERAL:
-                return "";
+                diffs = "";
+                break;
+            default:
+            	diffs = "No such kind of yaml file: " + kind + "\n";;
+            	break;
         }
-        return "No such kind of yaml file: " + kind + "\n";
+        String diffs2 = validateAgainstSchema(yamlToCheck, kind);
+        if (!diffs2.isEmpty()) {
+        	diffs += "\nDifferences compared to schema:\n\n" + diffs2;
+        }
+        return diffs;
     }
 
     public String validateManifest(Map<String, Object> yamlToCheck, IContainer currentDir) {
