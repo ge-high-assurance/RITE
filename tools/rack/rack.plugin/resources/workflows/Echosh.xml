@@ -1,0 +1,5 @@
+<workflow
+  name="Echosh"
+  command="bin/xmlecho.sh"
+  >
+</workflow>
