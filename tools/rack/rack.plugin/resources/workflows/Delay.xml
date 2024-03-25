@@ -1,0 +1,5 @@
+<workflow
+  name="Delay"
+  command="bin/xmldelay.sh"
+  >
+</workflow>

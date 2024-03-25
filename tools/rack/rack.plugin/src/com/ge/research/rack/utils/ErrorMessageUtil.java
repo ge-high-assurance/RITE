@@ -31,6 +31,7 @@
  */
 package com.ge.research.rack.utils;
 
+import com.ge.research.rack.views.RackPreferencePage;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
@@ -81,7 +82,7 @@ public class ErrorMessageUtil {
                                 }
                             }
                         });
-        raiseConsole();
+        if (RackPreferencePage.getShowConsole()) raiseConsole();
     }
 
     /**
@@ -105,7 +106,7 @@ public class ErrorMessageUtil {
                                 }
                             }
                         });
-        raiseConsole();
+        if (RackPreferencePage.getShowConsole()) raiseConsole();
     }
 
     public static void error(String msg, Exception e) {
@@ -123,7 +124,7 @@ public class ErrorMessageUtil {
                                 }
                             }
                         });
-        raiseConsole();
+        if (RackPreferencePage.getShowConsole()) raiseConsole();
     }
 
     /**
@@ -147,7 +148,7 @@ public class ErrorMessageUtil {
                                 }
                             }
                         });
-        raiseConsole();
+        if (RackPreferencePage.getShowConsole()) raiseConsole();
     }
 
     /**

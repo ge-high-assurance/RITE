@@ -57,6 +57,11 @@
       </commandParameter>
     </command>
 
+    <command categoryId="rackplugin.commands"
+      id="rackplugin.commands.runWorkflow" name="Run Workflow">
+    </command>
+
+
     <!-- For reports -->
     <command categoryId="rackplugin.commands"
       id="rackplugin.commands.reportsCommand"
@@ -74,11 +79,11 @@
       id="rackplugin.commands.ribCommand" name="Access RiB">
     </command>
 
-    <command id="rack.plugin.commands.showNumTriplesCommand"
+    <command id="rackplugin.commands.showNumTriplesCommand"
       name="Show Data Graphs and number of triples currently on RACK">
     </command>
 
-    <command id="rack.plugin.commands.refreshCommand"
+    <command id="rackplugin.commands.refreshCommand"
       name="Refresh Ontologies and Nodegroups">
     </command>
 
@@ -191,10 +196,13 @@
       commandId="rackplugin.commands.ribCommand">
     </handler>
     <handler class="com.ge.research.rack.RefreshHandler"
-      commandId="rack.plugin.commands.refreshCommand">
+      commandId="rackplugin.commands.refreshCommand">
     </handler>
     <handler class="com.ge.research.rack.ShowNumTriplesHandler"
-      commandId="rack.plugin.commands.showNumTriplesCommand">
+      commandId="rackplugin.commands.showNumTriplesCommand">
+    </handler>
+    <handler class="com.ge.research.rack.RunWorkflowHandler"
+      commandId="rackplugin.commands.runWorkflow">
     </handler>
 
   </extension>
@@ -224,6 +232,9 @@
         </command>
         <command commandId="rackplugin.commands.clearAll"
           id="rackplugin.menus.clearAll" label="Clear RACK" mnemonic="S">
+        </command>
+        <command commandId="rackplugin.commands.runWorkflow"
+          id="rackplugin.menus.runWorkflow" label="Run Workflow">
         </command>
 
         <separator name="separator2" visible="true">
@@ -259,7 +270,7 @@
     <menuContribution
       locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
       <toolbar id="rack.plugin.toolbars.refreshInfo">
-        <command commandId="rack.plugin.commands.refreshCommand"
+        <command commandId="rackplugin.commands.refreshCommand"
           icon="icons/refresh.png" id="rack.plugin.toolbars.refreshCommand"
           tooltip="Refresh Ontology and Nodegroups views with latest information on RACK">
         </command>
@@ -267,7 +278,7 @@
     </menuContribution>
 
     <!-- <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
-      <toolbar id="rack.plugin.toolbars.showNumTriples"> <command commandId="rack.plugin.commands.showNumTriplesCommand"
+      <toolbar id="rack.plugin.toolbars.showNumTriples"> <command commandId="rackplugin.commands.showNumTriplesCommand"
       icon="icons/ontclass.png" id="rack.plugin.toolbars.showNumTriplesCommand"
       tooltip="Show Data graphs with number of triples currently on RACK"> </command>
       </toolbar> </menuContribution> -->
@@ -291,6 +302,11 @@
       class="com.ge.research.rack.views.NodegroupTemplateView"
       id="rackplugin.views.CSVTemplates" inject="true"
       name="View CDR Templates">
+    </view>
+    <view category="rackplugin"
+      class="com.ge.research.rack.views.SessionView"
+      id="rackplugin.views.SessionView" inject="true"
+      name="Interactive Session">
     </view>
     <view category="rackplugin"
       class="com.ge.research.rack.views.AssuranceCaseTree"
