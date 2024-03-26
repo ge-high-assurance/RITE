@@ -248,8 +248,10 @@ public class DataPropertyPage extends PropertyPage {
                             return;
                         }
                         String kind = kindCombo.getItems()[k];
-                        var yaml = collectYaml(false, kind, false);
-                        String diffs = validate(yaml, kind);
+                        StringBuilder sb = new StringBuilder();
+                        currentYaml = collectYaml(false, kind, sb);
+                        String diffs = validate(currentYaml, kind);
+                        diffs = sb.toString() + diffs;
                         if (diffs.isEmpty()) {
                             MessageDialog.openInformation(shell, "Validate", "No errors found");
                         } else {
@@ -331,15 +333,28 @@ public class DataPropertyPage extends PropertyPage {
 
             if (!isNewOrIllformedFile) {
                 // This is a unit-test of the composite creation and scraping functionality
-                var newYamlMap = collectYaml(isNewOrIllformedFile, kind, false);
+            	StringBuilder sb = new StringBuilder();
+                var newYamlMap = collectYaml(isNewOrIllformedFile, kind, sb);
                 boolean b = Objects.equals(currentYaml, newYamlMap);
-                diffs = compareYaml(currentYaml, newYamlMap);
+                diffs = sb.toString() + compareYaml(currentYaml, newYamlMap);
                 if (!b || !diffs.isEmpty()) {
+                	String msg = kind != GENERAL && !kind.isEmpty() ?
+                        """
+                        Reading and then writing the yaml produced different results,
+                        possibly because in the input file contained elements that are not permitted
+                        permitted by the {kind} schema and are therefore ignored on input.
+                        If you want to keep those elements, use the General yaml editor.                        
+                        """
+                		.replace("{kind}",kind) // poor man's interpolation
+                	:   """
+                        Reading and then writing the yaml produced different results,
+                		possibly because of an unexpected organization in the input file.	
+                		"""
+                	;
+
                     MessageDialog.openInformation(
                             shell,
-                            "",
-                            "Reading and then writing the yaml produced different results -- possible bug or ill-formed file\n\n"
-                                    + diffs);
+                            "", msg + "\n" + diffs);
                 }
             }
 
@@ -370,7 +385,7 @@ public class DataPropertyPage extends PropertyPage {
             if (schema != null) {
                 File schemaFile = new File(schema);
                 if (schemaFile.exists()) {
-                    String diffs = YamlValidator.validate(currentYaml, schemaFile);
+                    String diffs = YamlValidator.validate(yaml, schemaFile);
                     return diffs;
                 }
             }
@@ -1030,7 +1045,7 @@ public class DataPropertyPage extends PropertyPage {
         final Composite contentComposite = addComposite(parent, 1);
 
         final Label titleLabel = new Label(contentComposite, SWT.NONE);
-        titleLabel.setText("Content sources for the " + sectionName);
+        titleLabel.setText("Content sources for " + (kind==MANIFEST?"footprint:":"") + sectionName);
 
         final Composite buttonComposite =
                 addCompositeUnequal(contentComposite, fileBrowser ? 3 : 2);
@@ -1760,9 +1775,10 @@ public class DataPropertyPage extends PropertyPage {
 
             int k = kindCombo.getSelectionIndex();
             String kind = kindCombo.getItems()[k];
-            var outYaml = collectYaml(false, kind, true);
+            StringBuilder sb = new StringBuilder();
+            var outYaml = collectYaml(false, kind, sb);
 
-            var diffs = validate(outYaml, kind);
+            var diffs = sb.toString() + validate(outYaml, kind);
             if (diffs != null && !diffs.isEmpty()) {
                 var ok =
                         MessageDialog.openConfirm(
@@ -1801,7 +1817,7 @@ public class DataPropertyPage extends PropertyPage {
         return true;
     }
 
-    public Object collectYaml(boolean isNewFile, String kind, boolean showErrors) {
+    public Object collectYaml(boolean isNewFile, String kind, StringBuilder sb) {
         String diffs;
         Object y = null;
         switch (kind) {
@@ -1832,9 +1848,7 @@ public class DataPropertyPage extends PropertyPage {
                 diffs = str.toString();
                 break;
         }
-        if (showErrors && !diffs.isEmpty()) {
-            MessageDialog.openError(shell, "Error", diffs);
-        }
+        sb.append(diffs);
         return y;
     }
 
@@ -2022,11 +2036,19 @@ public class DataPropertyPage extends PropertyPage {
             if (key != null) {
                 if (Map.class == c.getData()) {
                     var m = collectGeneralMap((Composite) c, str);
-                    map.put(key, m);
+                    if (!key.trim().isEmpty()) {
+                    	if (map.put(key, m) != null) {
+                    		str.append("Duplicate keys are not supported: " + key + "\n");
+                    	}
+                    }
                     key = null;
                 } else if (List.class == c.getData()) {
                     var m = collectGeneralList((Composite) c, str);
-                    map.put(key, m);
+                    if (!key.trim().isEmpty()) {
+                    	if (map.put(key, m) != null) {
+                    		str.append("Duplicate keys are not supported: " + key + "\n");
+                    	}
+                    }
                     key = null;
                 }
             } else if (children[1] instanceof Text t) {
@@ -2034,7 +2056,11 @@ public class DataPropertyPage extends PropertyPage {
                 Control valueComp = children[3];
                 if (valueComp.getData() != null) {
                     var item = collectGeneralObject(valueComp, str);
-                    map.put(key, item);
+                    if (!key.trim().isEmpty()) {
+                    	if (map.put(key, item) != null) {
+                    		str.append("Duplicate keys are not supported: " + key + "\n");
+                    	}
+                    }
                     key = null;
                 }
             }
@@ -2519,7 +2545,7 @@ public class DataPropertyPage extends PropertyPage {
         if (value == null) {
             // Not required
         } else if (value instanceof String s) {
-            diffs += okNodegroup(s, currentDir);
+            // the nodegroup is a regular expression -- not checkig its format
         } else {
             diffs += "Element '" + key + "' has the wrong type: " + value.getClass() + "\n";
         }

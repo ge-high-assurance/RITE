@@ -1,4 +1,4 @@
- 
+{ 
     "type": "object",
     "additionalProperties": false,
     "required": ["name"],
@@ -66,12 +66,13 @@
                                 "required": ["from-graph", "to-graph"],
                                 "properties": {
                                     "from-graph": {"type": "string"},
-                                    "to-graph": {"type": "string"},
+                                    "to-graph": {"type": "string"}
                                 }
                             }
                         }
-                    },
+                    }
                 ]
             }
         }
     }
+  }

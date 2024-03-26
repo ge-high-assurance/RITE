@@ -1,3 +1,5 @@
+{
+	
     "type" : "object",
     "additionalProperties": false,
     "required": ["files"],
@@ -8,7 +10,8 @@
         "model-graphs": {
             "oneOf": [
                 {"type": "string"},
-                {"type": "array", "items": {"type": "string"}},
+                {"type": "array", "items": {"type": "string"}}
             ]
-        },
+        }
     }
+}
