@@ -47,6 +47,7 @@ public class Arp4754AWireframeDAPReader {
     // General parameters
     private String company = "";
     private String creator = "";
+    private String topsystem = "";
 
     // Plan SADL parameters
     private String id = "";
@@ -78,6 +79,10 @@ public class Arp4754AWireframeDAPReader {
 
     public Arp4754AWireframeDAPReader(File ff) {
         json = ff;
+    }
+
+    public String getSystemPrefix() {
+        return topsystem;
     }
 
     public String getID() {
@@ -217,6 +222,11 @@ public class Arp4754AWireframeDAPReader {
             String str = getField(jsonObj, "company");
             if (str != null) {
                 company = str;
+            }
+
+            str = getField(jsonObj, "prefix");
+            if (str != null) {
+                topsystem = str;
             }
 
             str = getField(jsonObj, "creator");

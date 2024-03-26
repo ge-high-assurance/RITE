@@ -72,6 +72,7 @@ public class Arp4754WireframeMainViewHandler {
 
     // MAIN PLAN TAB
     @FXML private Tab tabMain;
+    @FXML private TextField txtSystem;
     @FXML private TextField txtCompany;
     @FXML private TextField txtCreator;
     @FXML private TextField txtUseCaseLabel;
@@ -95,6 +96,7 @@ public class Arp4754WireframeMainViewHandler {
     @FXML private ListView<String> lvQueries;
     @FXML private Button btnAddQuery;
     @FXML private Button btnRemoveQuery;
+    @FXML private Button btnEditQuery;
 
     // CONFIGURATION TAB
     @FXML private Tab tabConfiguration;
@@ -136,7 +138,7 @@ public class Arp4754WireframeMainViewHandler {
     @FXML
     private void initialize() {
         // Default item values
-        menuAssuranceLevel.setText("LEVEL A");
+        menuAssuranceLevel.setText("Level A");
 
         clearMenus();
         resetBasicMenus();
@@ -311,7 +313,7 @@ public class Arp4754WireframeMainViewHandler {
 
     private Arp4754AWireframeDAPWriter createWriter(File directory) {
         Arp4754AWireframeDAPWriter writer =
-                new Arp4754AWireframeDAPWriter(directory, menuSystem.getText());
+                new Arp4754AWireframeDAPWriter(directory, txtSystem.getText());
         writer.setGeneral(txtCompany.getText(), txtCreator.getText());
         writer.setID(txtUseCaseLabel.getText());
         writer.setDescription(txtUseCaseDescription.getText());
@@ -338,6 +340,7 @@ public class Arp4754WireframeMainViewHandler {
         writer.setInterfaceOutput(menuInterfaceOutput.getText());
         writer.setItem(menuItem.getText());
         writer.setItemReqs(menuItemReqs.getText());
+        writer.setSystem(menuSystem.getText());
         writer.setSysReqs(menuSystemReqs.getText());
         writer.setSystemDesignDescription(menuSystemDesignDesc.getText());
         writer.setReqCompleteReview(menuReqCompleteReview.getText());
@@ -349,6 +352,11 @@ public class Arp4754WireframeMainViewHandler {
         String str = reader.getCompany();
         if (str != null) {
             txtCompany.setText(str);
+        }
+
+        str = reader.getSystemPrefix();
+        if (str != null) {
+            txtSystem.setText(str);
         }
 
         str = reader.getCreator();
@@ -490,6 +498,7 @@ public class Arp4754WireframeMainViewHandler {
         // Check all items and generate DAP and configuration SADL files
         boolean check =
                 checkField(txtUseCaseLabel.getText(), "Use Case", "Plan")
+                        && checkField(txtSystem.getText(), "File Prefix", "Plan")
                         && checkField(txtUseCaseDescription.getText(), "Description", "Plan")
                         && checkField(menuAssuranceLevel.getText(), "Assurance Level", "Plan")
                         && checkObjectives()
@@ -596,6 +605,58 @@ public class Arp4754WireframeMainViewHandler {
                 }
             }
         }
+    }
+
+    @FXML
+    private void btnEditQueryAction(ActionEvent event) throws Exception {
+        // Get selected objective query
+        List<String> items = lvQueries.getSelectionModel().getSelectedItems();
+        if (items.isEmpty()) {
+            return;
+        }
+
+        // Edit existing objective query
+        // Set the stage with the other fxml
+        String key = items.get(0);
+        FXMLLoader objViewLoader =
+                Arp4754WireframeObjectivesViewManager.setNewFxmlToStage(
+                        "resources/fxml/arp4754/WireframeObjectivesView.fxml");
+
+        // initialize variables in the objectives query page
+        Arp4754WireframeObjectivesViewHandler handler = objViewLoader.getController();
+        handler.setText(key, objectiveMap.get(key));
+
+        Arp4754WireframeObjectivesViewManager.show();
+        String txt = handler.getText();
+        if (txt == null) {
+            return;
+        }
+
+        // Remove prior entry
+        lvQueries.getSelectionModel().clearSelection();
+        lvQueries.getItems().remove(key);
+        objectiveMap.remove(key);
+
+        // Add new entry
+        boolean notdone = true;
+        int index = 0;
+        List<String> list = lvQueries.getItems();
+        while (notdone && index < list.size()) {
+            if (txt.compareTo(list.get(index)) <= 0) {
+                notdone = false;
+            } else {
+                index++;
+            }
+        }
+
+        if (notdone) {
+            lvQueries.getItems().add(txt);
+        } else {
+            lvQueries.getItems().add(index, txt);
+        }
+
+        lvQueries.getSelectionModel().clearAndSelect(index);
+        objectiveMap.put(txt, handler.getObjective());
     }
 
     private String addCustomConfiguration(String header, String str) {
@@ -817,7 +878,7 @@ public class Arp4754WireframeMainViewHandler {
     private void resetMenus() {
         // Fill in default Configuration name
         if (txtID.getText().isEmpty() || txtID.getText().isBlank()) {
-            String cname = txtUseCaseLabel.getText();
+            String cname = txtUseCaseLabel.getText().replaceAll("\\s", "");
             if (cname != null && !cname.isEmpty() && !cname.isBlank()) {
                 txtID.setText(cname + "Config");
             }

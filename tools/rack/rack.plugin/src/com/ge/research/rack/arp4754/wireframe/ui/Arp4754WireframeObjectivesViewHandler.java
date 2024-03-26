@@ -161,6 +161,12 @@ public class Arp4754WireframeObjectivesViewHandler {
         Arp4754WireframeObjectivesViewManager.close();
     }
 
+    public void setText(String key, String value) {
+        txtObjectiveQuery.setText(key);
+        menuObjective.setText(value);
+        hasResult = true;
+    }
+
     public String getText() {
         if (hasResult) {
             return txtObjectiveQuery.getText();

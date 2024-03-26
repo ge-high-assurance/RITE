@@ -59,7 +59,6 @@ public class Arp4754AWireframeDAPWriter {
     private List<String> objectives = new LinkedList<String>();
     private HashMap<String, String> objectiveMap = new HashMap<String, String>();
     private List<Boolean> processes = new LinkedList<Boolean>();
-    ;
 
     // Config SADL parameters
     private String configID;
@@ -70,19 +69,20 @@ public class Arp4754AWireframeDAPWriter {
     private String interfaceOutput;
     private String item;
     private String itemReqs;
+    private String system;
     private String sysReqs;
     private String sysDesignDesc;
     private String reqCompleteReview;
     private String reqTraceabilityReview;
 
     // General parameters
-    private String system;
     private File path;
     private String err = null;
+    private String topsystem;
 
     public Arp4754AWireframeDAPWriter(File fn, String sys) {
         path = fn;
-        system = sys;
+        topsystem = restrictedString(sys);
     }
 
     public void setID(String str) {
@@ -133,6 +133,10 @@ public class Arp4754AWireframeDAPWriter {
 
     public void setInterfaceOutput(String str) {
         interfaceOutput = str;
+    }
+
+    public void setSystem(String str) {
+        system = str;
     }
 
     public void setItem(String str) {
@@ -186,8 +190,7 @@ public class Arp4754AWireframeDAPWriter {
     }
 
     private String writeConfig(String fn) {
-        String dap =
-                "uri \"http://sadl.org/" + fn + "\" alias " + system.toLowerCase() + "config.\n\n";
+        String dap = "uri \"http://sadl.org/" + fn + "\" alias " + topsystem + "config.\n\n";
 
         dap += comments();
         dap += "import \"http://sadl.org/PLAN-CORE.sadl\".\n\n";
@@ -209,9 +212,31 @@ public class Arp4754AWireframeDAPWriter {
         return dap;
     }
 
+    private String restrictedString(String str) {
+        String value = str.toLowerCase().replaceAll("\\s", "");
+        value = value.replaceAll("[!@#$%^&*()`~:;<>?/,.'{}|+=\"\\/]+", "");
+        if (value.isEmpty()) {
+            return value;
+        }
+
+        boolean check = true;
+        while (check) {
+            char ch = str.charAt(0);
+            if (ch >= '0' && ch <= '9') {
+                value = value.substring(1);
+                if (value.isEmpty()) {
+                    check = false;
+                }
+            } else {
+                check = false;
+            }
+        }
+
+        return value;
+    }
+
     private String writeDAP(String fn) {
-        String dap =
-                "uri \"http://sadl.org/" + fn + "\" alias " + system.toLowerCase() + "dap.\n\n";
+        String dap = "uri \"http://sadl.org/" + fn + "\" alias " + topsystem + "dap.\n\n";
 
         dap += comments();
 
@@ -227,15 +252,17 @@ public class Arp4754AWireframeDAPWriter {
             ii++;
         }
 
-        dap += "\n" + id + " is a SYSTEM\n";
-        dap += "    with identifier \"" + id + "\"\n";
+        String sid = id.replaceAll("\\s", "");
+
+        dap += "\n" + sid + " is a SYSTEM\n";
+        dap += "    with identifier \"" + sid + "\"\n";
         dap += "    with description \"" + id + " Use Case\"\n";
         dap += "    with developmentAssuranceLevel " + level.replaceAll("\\s", "") + ".\n\n";
 
-        dap += "Adept-DAP is DevelopmentAssurancePlan\n";
+        dap += "Adept-DAP is a DevelopmentAssurancePlan\n";
         dap += "    with identifier \"OEM-DAP\"\n";
         dap += "    with description \"" + desc + "\"\n";
-        dap += "    with system " + id;
+        dap += "    with system " + sid;
 
         ii = 0;
         while (ii < 8 && ii < processes.size()) {
@@ -307,6 +334,7 @@ public class Arp4754AWireframeDAPWriter {
         jo.put("id", id);
         jo.put("creator", creator);
         jo.put("company", company);
+        jo.put("prefix", topsystem);
 
         return jo.toJSONString();
     }
@@ -325,7 +353,7 @@ public class Arp4754AWireframeDAPWriter {
                 full += File.separator;
             }
 
-            String fn = system.toLowerCase() + "_arp4754.json";
+            String fn = topsystem + "_arp4754.json";
 
             File json = new File(full + fn);
 
@@ -365,8 +393,8 @@ public class Arp4754AWireframeDAPWriter {
                 full += File.separator;
             }
 
-            String planfn = system.toLowerCase() + "_arp4754_dap.sadl";
-            String configfn = system.toLowerCase() + "_arp4754_config.sadl";
+            String planfn = topsystem + "_arp4754_dap.sadl";
+            String configfn = topsystem + "_arp4754_config.sadl";
 
             File plan = new File(full + planfn);
             File config = new File(full + configfn);
