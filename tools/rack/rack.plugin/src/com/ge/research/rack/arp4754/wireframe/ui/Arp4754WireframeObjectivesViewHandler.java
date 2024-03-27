@@ -50,14 +50,8 @@ public class Arp4754WireframeObjectivesViewHandler {
 
     @FXML
     private void initialize() {}
-
-    @FXML
-    private void objectiveMenuAction(ActionEvent event) throws Exception {
-        String txt = ((MenuItem) event.getSource()).getText();
-        menuObjective.setText(txt);
-        txtObjectiveQuery.setText(txt + "-query");
-        hasResult = true;
-
+    
+    private boolean setObjectiveDescription(String txt) {
         if (txt.compareTo("Objective-1-1") == 0) {
             txtObjectiveDescription.setText(
                     "System development and integral processes activities are defined.");
@@ -146,8 +140,18 @@ public class Arp4754WireframeObjectivesViewHandler {
             txtObjectiveDescription.setText("Compliance substantiation is provided.");
         } else {
             txtObjectiveDescription.setText("<Description>");
-            hasResult = false;
+            return false;
         }
+
+        return true;
+    }
+
+    @FXML
+    private void objectiveMenuAction(ActionEvent event) throws Exception {
+        String txt = ((MenuItem) event.getSource()).getText();
+        menuObjective.setText(txt);
+        txtObjectiveQuery.setText(txt + "-query");
+        hasResult = setObjectiveDescription(txt);
     }
 
     @FXML
@@ -164,7 +168,7 @@ public class Arp4754WireframeObjectivesViewHandler {
     public void setText(String key, String value) {
         txtObjectiveQuery.setText(key);
         menuObjective.setText(value);
-        hasResult = true;
+        hasResult = setObjectiveDescription(value);
     }
 
     public String getText() {
