@@ -16,8 +16,10 @@
 
             <GridPane>
               <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="15" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="120" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="360" />
                 <ColumnConstraints hgrow="ALWAYS" prefWidth="5" />
-                <ColumnConstraints hgrow="ALWAYS" />
               </columnConstraints>
 
               <rowConstraints>
@@ -47,71 +49,76 @@
 
                 <!-- BUTTONS -->
                 <RowConstraints vgrow="SOMETIMES" prefHeight="50" />
+                <RowConstraints vgrow="SOMETIMES" prefHeight="5" />
 
               </rowConstraints>
 
               <children>
 
                 <!-- PLAN PREFIX -->
-                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.columnIndex="1" alignment="CENTER_LEFT" spacing="10" >
+                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.columnIndex="1" alignment="CENTER_RIGHT" spacing="10" >
                  <children>
-                   <Label style="-fx-font-size: 16px; -fx-font-weight: bold" text="File Prefix" />
-                   <TextField fx:id="txtSystem" style="-fx-font-size: 16px;" />
+                   <Label style="-fx-font-size: 16px; -fx-font-weight: bold" text="File Prefix  " />
                  </children>
                 </HBox>
+                <TextField fx:id="txtSystem" GridPane.rowIndex="1" GridPane.columnIndex="2" style="-fx-font-size: 16px;" />
 
                 <!-- COMPANY -->
-                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.columnIndex="1" alignment="CENTER_LEFT" spacing="10" >
+                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.columnIndex="1" alignment="CENTER_RIGHT" spacing="10" >
                  <children>
-                   <Label style="-fx-font-size: 16px; -fx-font-weight: bold" text="Company" />
-                   <TextField fx:id="txtCompany" style="-fx-font-size: 16px;" />
+                   <Label style="-fx-font-size: 16px; -fx-font-weight: bold" text="Company  " />
                  </children>
                 </HBox>
+                <TextField fx:id="txtCompany" GridPane.rowIndex="2" GridPane.columnIndex="2" style="-fx-font-size: 16px;" />
 
                 <!-- CREATOR -->
-                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.columnIndex="1" alignment="CENTER_LEFT" spacing="10" >
+                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.columnIndex="1" alignment="CENTER_RIGHT" spacing="10" >
                   <children>
-                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold" text="Creator" />
-                    <TextField fx:id="txtCreator" style="-fx-font-size: 16px;" />
+                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold" text="Creator  " />
                   </children>
                 </HBox>
+                <TextField fx:id="txtCreator" GridPane.rowIndex="3" GridPane.columnIndex="2" style="-fx-font-size: 16px;" />
 
                 <!-- USE CASE -->
-                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.columnIndex="1" alignment="CENTER_LEFT" spacing="10" >
+                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.columnIndex="1" alignment="CENTER_RIGHT" spacing="10" >
                   <children>
-                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold" text="Use Case" />
-                    <TextField fx:id="txtUseCaseLabel" style="-fx-font-size: 16px;" />
+                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold" text="Use Case  " />
                   </children>
                 </HBox>
+                <TextField fx:id="txtUseCaseLabel" GridPane.rowIndex="4" GridPane.columnIndex="2" style="-fx-font-size: 16px;" />
 
                 <!-- DESCRIPTION -->
-                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.columnIndex="1" alignment="CENTER_LEFT" spacing="10" >
+                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.columnIndex="1" alignment="CENTER_RIGHT" spacing="10" >
                   <children>
-                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold" text="Description" />
-                    <TextField fx:id="txtUseCaseDescription" style="-fx-font-size: 16px;" prefWidth="400.0" />
+                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold" text="Description  " />
                   </children>
                 </HBox>
+                <TextField fx:id="txtUseCaseDescription" GridPane.rowIndex="5" GridPane.columnIndex="2" style="-fx-font-size: 16px;" />
 
                 <!-- ASSURANCE LEVEL -->
-                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.columnIndex="1" alignment="CENTER_LEFT" spacing="10" >
+                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.columnIndex="1" alignment="CENTER_RIGHT" spacing="10" >
                   <children>
-                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold" mnemonicParsing="false" text="Assurance Level" />
-                    <MenuButton fx:id="menuAssuranceLevel" prefWidth="120.0" style="-fx-font-size: 16px;" >
-                      <items>
-                        <MenuItem mnemonicParsing="false" text="Level A" onAction="#assuranceLevelAction" />
-                        <MenuItem mnemonicParsing="false" text="Level B" onAction="#assuranceLevelAction" />
-                        <MenuItem mnemonicParsing="false" text="Level C" onAction="#assuranceLevelAction" />
-                        <MenuItem mnemonicParsing="false" text="Level D" onAction="#assuranceLevelAction" />
-                        <MenuItem mnemonicParsing="false" text="Level E" onAction="#assuranceLevelAction" />
-                      </items>
-                    </MenuButton>
+                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold" mnemonicParsing="false" text="Assurance Level  " />
                   </children>
                 </HBox>
+                  <MenuButton fx:id="menuAssuranceLevel" GridPane.rowIndex="6" GridPane.columnIndex="2" prefWidth="160.0" style="-fx-font-size: 16px;" >
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Level A" onAction="#assuranceLevelAction" />
+                      <MenuItem mnemonicParsing="false" text="Level B" onAction="#assuranceLevelAction" />
+                      <MenuItem mnemonicParsing="false" text="Level C" onAction="#assuranceLevelAction" />
+                      <MenuItem mnemonicParsing="false" text="Level D" onAction="#assuranceLevelAction" />
+                      <MenuItem mnemonicParsing="false" text="Level E" onAction="#assuranceLevelAction" />
+                    </items>
+                  </MenuButton>
                 
                 <!--  PROCESSES -->
-                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.columnIndex="1" alignment="CENTER_LEFT" spacing="10" >
+                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.columnIndex="1" alignment="CENTER_RIGHT" spacing="10" >
                   <children>
-                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold" mnemonicParsing="false" text="Processes" />
+                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold" mnemonicParsing="false" text="Processes  " />
+                  </children>
+                </HBox>
+                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.columnIndex="2" alignment="CENTER_LEFT" spacing="10" >
+                  <children>
                     <CheckBox fx:id="check1" style="-fx-font-size: 16px; -fx-font-weight: bold" mnemonicParsing="false" text="1" />
                     <CheckBox fx:id="check2" style="-fx-font-size: 16px; -fx-font-weight: bold" mnemonicParsing="false" text="2" />
                     <CheckBox fx:id="check3" style="-fx-font-size: 16px; -fx-font-weight: bold" mnemonicParsing="false" text="3" />
@@ -124,12 +131,12 @@
                 </HBox>
 
                 <!-- BUTTONS -->
-                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="8" spacing="20" GridPane.columnIndex="1" alignment="CENTER_LEFT" >
+                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="8" GridPane.columnIndex="2" spacing="20" alignment="CENTER_LEFT" >
                   <children>
-                    <Button fx:id="btnComplete" onAction="#btnCompleteAction" prefWidth="120.0" style="-fx-font-size: 16px; -fx-font-weight: bold" text="Write SADL" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM" />
-                    <Button fx:id="btnJSON" onAction="#btnJSONAction" prefWidth="120.0" style="-fx-font-size: 16px; -fx-font-weight: bold" text="Save JSON" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
-                    <Button fx:id="btnJSONRead" onAction="#btnJSONReadAction" prefWidth="120.0" style="-fx-font-size: 16px; -fx-font-weight: bold" text="Read JSON" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
-		            <Button fx:id="btnCancel" onAction="#btnCancelAction" prefWidth="120.0" style="-fx-font-size: 16px; -fx-font-weight: bold" text="Cancel" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM" />
+                    <Button fx:id="btnComplete" onAction="#btnCompleteAction" prefWidth="80" style="-fx-font-size: 16px; -fx-font-weight: bold" text="Export" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM" />
+                    <Button fx:id="btnJSON" onAction="#btnJSONAction" prefWidth="80" style="-fx-font-size: 16px; -fx-font-weight: bold" text="Save" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+                    <Button fx:id="btnJSONRead" onAction="#btnJSONReadAction" prefWidth="80" style="-fx-font-size: 16px; -fx-font-weight: bold" text="Read" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+		            <Button fx:id="btnCancel" onAction="#btnCancelAction" prefWidth="80" style="-fx-font-size: 16px; -fx-font-weight: bold" text="Cancel" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM" />
                   </children>
                 </HBox>
 
@@ -185,7 +192,9 @@
             <GridPane>
               <columnConstraints>
                 <ColumnConstraints hgrow="ALWAYS" prefWidth="5" />
-                <ColumnConstraints hgrow="ALWAYS" />
+                <ColumnConstraints hgrow="ALWAYS" prefWidth="180" />
+                <ColumnConstraints hgrow="ALWAYS" prefWidth="300" />
+                <ColumnConstraints hgrow="ALWAYS" prefWidth="5" />
               </columnConstraints>
 
               <rowConstraints>
@@ -233,168 +242,165 @@
 
                 <!-- FETCH -->
                 <RowConstraints vgrow="SOMETIMES" prefHeight="60" />
+                <RowConstraints vgrow="SOMETIMES" prefHeight="5" />
 
               </rowConstraints>
 
               <children>
                 <!-- ID -->
-                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.columnIndex="1" alignment="CENTER_LEFT" spacing="10" >
-                 <children>
-                   <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="ID" />
-                   <TextField fx:id="txtID" style="-fx-font-size: 14px;" />
-                 </children>
+                <HBox HBox.hgrow="ALWAYS" spacing="10" GridPane.rowIndex="1" GridPane.columnIndex="1" alignment="CENTER_RIGHT" >
+                  <children>
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="ID  " />
+                  </children>
                 </HBox>
+                <TextField fx:id="txtID" maxWidth="280.0" style="-fx-font-size: 14px;" GridPane.rowIndex="1" GridPane.columnIndex="2" />
 
                 <!-- DERIVED ITEM REQUIREMENTS -->
-                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.columnIndex="1" alignment="CENTER_LEFT" spacing="10" >
-                 <children>
-                   <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="Derived Item Requirements" />
-                   <MenuButton fx:id="menuDerivedItemReqs" prefWidth="240.0" style="-fx-font-size: 14px;" >
-                     <items>
-                       <MenuItem fx:id="menuDerivedItemReqsCustom" mnemonicParsing="false" text="Custom..." onAction="#addDerivedItemReq" />
-                     </items>
-                   </MenuButton>
-                 </children>
+                <HBox HBox.hgrow="ALWAYS" spacing="10" GridPane.rowIndex="2" GridPane.columnIndex="1" alignment="CENTER_RIGHT" >
+                  <children>
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="Derived Item Requirements  " />
+                  </children>
                 </HBox>
+                <MenuButton fx:id="menuDerivedItemReqs" prefWidth="280.0" style="-fx-font-size: 14px;" GridPane.rowIndex="2" GridPane.columnIndex="2"  >
+                   <items>
+                      <MenuItem fx:id="menuDerivedItemReqsCustom" mnemonicParsing="false" text="Custom..." onAction="#addDerivedItemReq" />
+                   </items>
+                </MenuButton>
 
                 <!-- DERIVED SYSTEM REQUIREMENTS -->
-                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.columnIndex="1" alignment="CENTER_LEFT" spacing="10" >
-                 <children>
-                   <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="Derived System Requirements" />
-                   <MenuButton fx:id="menuDerivedSystemReqs" prefWidth="240.0" style="-fx-font-size: 14px;" >
-                     <items>
-                       <MenuItem fx:id="menuDerivedSystemReqsCustom" mnemonicParsing="false" text="Custom..." onAction="#addDerivedSystemReqs" />
-                     </items>
-                   </MenuButton>
-                 </children>
+                <HBox HBox.hgrow="ALWAYS" spacing="10" GridPane.rowIndex="3" GridPane.columnIndex="1" alignment="CENTER_RIGHT" >
+                  <children>
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="Derived System Requirements  " />
+                  </children>
                 </HBox>
+                <MenuButton fx:id="menuDerivedSystemReqs" prefWidth="280.0" style="-fx-font-size: 14px;" GridPane.rowIndex="3" GridPane.columnIndex="2" >
+                   <items>
+                      <MenuItem fx:id="menuDerivedSystemReqsCustom" mnemonicParsing="false" text="Custom..." onAction="#addDerivedSystemReqs" />
+                   </items>
+                </MenuButton>
 
                 <!-- INTERFACE -->
-                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.columnIndex="1" alignment="CENTER_LEFT" spacing="10" >
-                 <children>
-                   <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="Interface" />
-                   <MenuButton fx:id="menuInterface" prefWidth="240.0" style="-fx-font-size: 14px;" >
-                     <items>
-                       <MenuItem fx:id="menuInterfaceCustom" mnemonicParsing="false" text="Custom..." onAction="#addInterface" />
-                     </items>
-                   </MenuButton>
-                 </children>
+                <HBox HBox.hgrow="ALWAYS" spacing="10" GridPane.rowIndex="4" GridPane.columnIndex="1" alignment="CENTER_RIGHT" >
+                  <children>
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="Interface  " />
+                  </children>
                 </HBox>
+                <MenuButton fx:id="menuInterface" prefWidth="280.0" style="-fx-font-size: 14px;" GridPane.rowIndex="4" GridPane.columnIndex="2" >
+                    <items>
+                      <MenuItem fx:id="menuInterfaceCustom" mnemonicParsing="false" text="Custom..." onAction="#addInterface" />
+                    </items>
+                </MenuButton>
 
                 <!-- INTERFACE INPUT -->
-                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.columnIndex="1" alignment="CENTER_LEFT" spacing="10" >
-                 <children>
-                   <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="Interface Input" />
-                   <MenuButton fx:id="menuInterfaceInput" prefWidth="240.0" style="-fx-font-size: 14px;" >
+                <HBox HBox.hgrow="ALWAYS" spacing="10" GridPane.rowIndex="5" GridPane.columnIndex="1" alignment="CENTER_RIGHT" >
+                  <children>
+                   <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="Interface Input  " />
+                  </children>
+                </HBox>
+                   <MenuButton fx:id="menuInterfaceInput" prefWidth="280.0" style="-fx-font-size: 14px;" GridPane.rowIndex="5" GridPane.columnIndex="2" >
                      <items>
                        <MenuItem fx:id="menuInterfaceInputCustom" mnemonicParsing="false" text="Custom..." onAction="#addInterfaceInput" />
                      </items>
                    </MenuButton>
-                 </children>
-                </HBox>
 
                 <!-- INTERFACE OUTPUT -->
-                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.columnIndex="1" alignment="CENTER_LEFT" spacing="10" >
-                 <children>
-                   <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="Interface Output" />
-                   <MenuButton fx:id="menuInterfaceOutput" prefWidth="240.0" style="-fx-font-size: 14px;" >
+                <HBox HBox.hgrow="ALWAYS" spacing="10" GridPane.rowIndex="6" GridPane.columnIndex="1" alignment="CENTER_RIGHT" >
+                  <children>
+                   <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="Interface Output  " />
+                  </children>
+                </HBox>
+                   <MenuButton fx:id="menuInterfaceOutput" prefWidth="280.0" style="-fx-font-size: 14px;" GridPane.rowIndex="6" GridPane.columnIndex="2" >
                      <items>
                        <MenuItem fx:id="menuInterfaceOutputCustom" mnemonicParsing="false" text="Custom..." onAction="#addInterfaceOutput" />
                      </items>
                    </MenuButton>
-                 </children>
-                </HBox>
 
                 <!-- ITEM -->
-                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.columnIndex="1" alignment="CENTER_LEFT" spacing="10" >
-                 <children>
-                   <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="Item" />
-                   <MenuButton fx:id="menuItem" prefWidth="240.0" style="-fx-font-size: 14px;" >
+                <HBox HBox.hgrow="ALWAYS" spacing="10" GridPane.rowIndex="7" GridPane.columnIndex="1" alignment="CENTER_RIGHT" >
+                  <children>
+                   <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="Item  " />
+                  </children>
+                </HBox>
+                   <MenuButton fx:id="menuItem" prefWidth="280.0" style="-fx-font-size: 14px;" GridPane.rowIndex="7" GridPane.columnIndex="2" >
                      <items>
                        <MenuItem fx:id="menuItemCustom" mnemonicParsing="false" text="Custom..." onAction="#addItem" />
                      </items>
                    </MenuButton>
-                 </children>
-                </HBox>
 
                 <!-- ITEM REQUIREMENTS -->
-                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="8" GridPane.columnIndex="1" alignment="CENTER_LEFT" spacing="10" >
-                 <children>
-                   <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="Item Requirements" />
-                   <MenuButton fx:id="menuItemReqs" prefWidth="240.0" style="-fx-font-size: 14px;" >
+                <HBox HBox.hgrow="ALWAYS" spacing="10" GridPane.rowIndex="8" GridPane.columnIndex="1" alignment="CENTER_RIGHT" >
+                  <children>
+                   <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="Item Requirements  " />
+                  </children>
+                </HBox>
+                   <MenuButton fx:id="menuItemReqs" prefWidth="280.0" style="-fx-font-size: 14px;" GridPane.rowIndex="8" GridPane.columnIndex="2" >
                      <items>
                        <MenuItem fx:id="menuItemReqsCustom" mnemonicParsing="false" text="Custom..." onAction="#addItemReqs" />
                      </items>
                    </MenuButton>
-                 </children>
-                </HBox>
 
                 <!-- SYSTEM REQUIREMENTS -->
-                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="9" GridPane.columnIndex="1" alignment="CENTER_LEFT" spacing="10" >
-                 <children>
-                   <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="System Requirements" />
-                   <MenuButton fx:id="menuSystemReqs" prefWidth="240.0" style="-fx-font-size: 14px;" >
+                <HBox HBox.hgrow="ALWAYS" spacing="10" GridPane.rowIndex="9" GridPane.columnIndex="1" alignment="CENTER_RIGHT" >
+                  <children>
+                   <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="System Requirements  " />
+                  </children>
+                </HBox>
+                   <MenuButton fx:id="menuSystemReqs" prefWidth="280.0" style="-fx-font-size: 14px;" GridPane.rowIndex="9" GridPane.columnIndex="2" >
                      <items>
                        <MenuItem fx:id="menuSystemReqsCustom" mnemonicParsing="false" text="Custom..." onAction="#addSystemReqs" />
                      </items>
                    </MenuButton>
-                 </children>
-                </HBox>
 
                 <!-- SYSTEM -->
-                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="10" GridPane.columnIndex="1" alignment="CENTER_LEFT" spacing="10" >
-                 <children>
-                   <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="System" />
-                   <MenuButton fx:id="menuSystem" prefWidth="240.0" style="-fx-font-size: 14px;" >
+                <HBox HBox.hgrow="ALWAYS" spacing="10" GridPane.rowIndex="10" GridPane.columnIndex="1" alignment="CENTER_RIGHT" >
+                  <children>
+                   <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="System  " />
+                  </children>
+                </HBox>
+                   <MenuButton fx:id="menuSystem" prefWidth="280.0" style="-fx-font-size: 14px;" GridPane.rowIndex="10" GridPane.columnIndex="2" >
                      <items>
                        <MenuItem fx:id="menuSystemCustom" mnemonicParsing="false" text="Custom..." onAction="#addSystem" />
                      </items>
                    </MenuButton>
-                 </children>
-                </HBox>
 
                 <!-- SYSTEM DESIGN DESCRIPTION -->
-                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="11" GridPane.columnIndex="1" alignment="CENTER_LEFT" spacing="10" >
-                 <children>
-                   <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="System Design Description" />
-                   <MenuButton fx:id="menuSystemDesignDesc" prefWidth="240.0" style="-fx-font-size: 14px;" >
+                <HBox HBox.hgrow="ALWAYS" spacing="10" GridPane.rowIndex="11" GridPane.columnIndex="1" alignment="CENTER_RIGHT" >
+                  <children>
+                   <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="System Design Description  " />
+                  </children>
+                </HBox>
+                   <MenuButton fx:id="menuSystemDesignDesc" prefWidth="280.0" style="-fx-font-size: 14px;" GridPane.rowIndex="11" GridPane.columnIndex="2" >
                      <items>
                        <MenuItem fx:id="menuSystemDesignDescCustom" mnemonicParsing="false" text="Custom..." onAction="#addSystemDesignDesc" />
                      </items>
                    </MenuButton>
-                 </children>
-                </HBox>
 
                 <!-- REQUIREMENTS COMPLETE CORRECT REVIEW -->
-                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="12" GridPane.columnIndex="1" alignment="CENTER_LEFT" spacing="10" >
-                 <children>
-                   <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="Requirements Complete Review" />
-                   <MenuButton fx:id="menuReqCompleteReview" prefWidth="240.0" style="-fx-font-size: 14px;" >
+                <HBox HBox.hgrow="ALWAYS" spacing="10" GridPane.rowIndex="12" GridPane.columnIndex="1" alignment="CENTER_RIGHT" >
+                  <children>
+                   <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="Requirements Complete Review  " />
+                  </children>
+                </HBox>
+                   <MenuButton fx:id="menuReqCompleteReview" prefWidth="280.0" style="-fx-font-size: 14px;" GridPane.rowIndex="12" GridPane.columnIndex="2" >
                      <items>
                        <MenuItem fx:id="menuReqCompleteReviewCustom" mnemonicParsing="false" text="Custom..." onAction="#addReqCompleteReview" />
                      </items>
                    </MenuButton>
-                 </children>
-                </HBox>
 
                 <!-- REQUIREMENTS TRACEABILITY REVIEW -->
-                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="13" GridPane.columnIndex="1" alignment="CENTER_LEFT" spacing="10" >
-                 <children>
-                   <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="Requirements Traceability Review" />
-                   <MenuButton fx:id="menuReqTraceabilityReview" prefWidth="240.0" style="-fx-font-size: 14px;" >
+                <HBox HBox.hgrow="ALWAYS" spacing="10" GridPane.rowIndex="13" GridPane.columnIndex="1" alignment="CENTER_RIGHT" >
+                  <children>
+                   <Label style="-fx-font-size: 14px; -fx-font-weight: bold" text="Requirements Traceability Review  " />
+                  </children>
+                </HBox>
+                   <MenuButton fx:id="menuReqTraceabilityReview" prefWidth="280.0" style="-fx-font-size: 14px;" GridPane.rowIndex="13" GridPane.columnIndex="2" >
                      <items>
                        <MenuItem fx:id="menuReqTraceabilityReviewCustom" mnemonicParsing="false" text="Custom..." onAction="#addReqTraceabilityReview" />
                      </items>
                    </MenuButton>
-                 </children>
-                </HBox>
 
                 <!-- FETCH -->
-                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="14" GridPane.columnIndex="1" alignment="CENTER_LEFT" >
-                  <children>
-                    <Button fx:id="btnFetch" onAction="#btnFetchAction" prefWidth="120.0" style="-fx-font-size: 16px; -fx-font-weight: bold" text="Fetch..." GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
-                  </children>
-                </HBox>
+                <Button fx:id="btnFetch" onAction="#btnFetchAction" prefWidth="120.0" style="-fx-font-size: 16px; -fx-font-weight: bold" GridPane.rowIndex="14" GridPane.columnIndex="1" text="Fetch..." GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
 
               </children>
            </GridPane>
