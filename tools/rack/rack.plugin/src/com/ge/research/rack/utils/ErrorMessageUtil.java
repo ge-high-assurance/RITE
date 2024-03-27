@@ -96,34 +96,38 @@ public class ErrorMessageUtil {
      * @param msg
      */
     public static void error(String msg) {
-        doit(
-                new Runnable() {
-                    public void run() {
-                        try {
-                            RackConsole.getConsole().error(msg);
-                        } catch (Exception ee) {
-                            // Don't think this should happen, but catching the exception so
-                            // as not to propagate it further
-                            ee.printStackTrace(System.out);
-                        }
-                    }
-                });
+        getShell()
+                .getDisplay()
+                .asyncExec(
+                        new Runnable() {
+                            public void run() {
+                                try {
+                                    RackConsole.getConsole().error(msg);
+                                } catch (Exception ee) {
+                                    // Don't think this should happen, but catching the exception so
+                                    // as not to propagate it further
+                                    ee.printStackTrace(System.out);
+                                }
+                            }
+                        });
         if (RackPreferencePage.getShowConsole()) raiseConsole();
     }
 
     public static void error(String msg, Exception e) {
-        doit(
-                new Runnable() {
-                    public void run() {
-                        try {
-                            RackConsole.getConsole().error(msg, e);
-                        } catch (Exception ee) {
-                            // Don't think this should happen, but catching the exception so
-                            // as not to propagate it further
-                            ee.printStackTrace(System.out);
-                        }
-                    }
-                });
+        getShell()
+                .getDisplay()
+                .asyncExec(
+                        new Runnable() {
+                            public void run() {
+                                try {
+                                    RackConsole.getConsole().error(msg, e);
+                                } catch (Exception ee) {
+                                    // Don't think this should happen, but catching the exception so
+                                    // as not to propagate it further
+                                    ee.printStackTrace(System.out);
+                                }
+                            }
+                        });
         if (RackPreferencePage.getShowConsole()) raiseConsole();
     }
 
@@ -134,18 +138,20 @@ public class ErrorMessageUtil {
      * @param msg
      */
     public static void errorEcho(String msg) {
-        doit(
-                new Runnable() {
-                    public void run() {
-                        try {
-                            RackConsole.getConsole().errorEcho(msg);
-                        } catch (Exception ee) {
-                            // Don't think this should happen, but catching the exception so
-                            // as not to propagate it further
-                            ee.printStackTrace(System.out);
-                        }
-                    }
-                });
+        getShell()
+                .getDisplay()
+                .asyncExec(
+                        new Runnable() {
+                            public void run() {
+                                try {
+                                    RackConsole.getConsole().errorEcho(msg);
+                                } catch (Exception ee) {
+                                    // Don't think this should happen, but catching the exception so
+                                    // as not to propagate it further
+                                    ee.printStackTrace(System.out);
+                                }
+                            }
+                        });
         if (RackPreferencePage.getShowConsole()) raiseConsole();
     }
 

@@ -1,0 +1,5 @@
+<workflow
+  name="Calc"
+  command="bin/xmlbc.sh"
+  >
+</workflow>
