@@ -170,7 +170,6 @@ import org.yaml.snakeyaml.Yaml;
 
 // General Yaml editor:
 //   warn about duplicate keys in maps
-//   warn about ill-formatted integers
 //   add any other types?
 //   what happens with long keys
 //   support for multiple documents per file
@@ -221,6 +220,18 @@ public class DataPropertyPage extends PropertyPage {
         // One can get the PropertyDialog using this.getContainer(), but the buttons themselves are
         // private and there appears no way to get a handle to them. Plus we'd want to change the
         // label just for this DataPropertyPage tab of the overall PropertyDialog.
+    }
+    
+    // I'm not sure of the reason, but this override appears necessary to get scrollbars when the
+    // Dialog page is first created. It seems a hack, but one that works around what seems to be 
+    // a misfeature or bug in the DialogPage implementation.
+    @Override
+    public Point computeSize() {
+		Control control = getControl();
+		if (control != null) {
+			return doComputeSize();
+		}
+		return new Point(0, 0);
     }
 
     @Override
@@ -333,28 +344,26 @@ public class DataPropertyPage extends PropertyPage {
 
             if (!isNewOrIllformedFile) {
                 // This is a unit-test of the composite creation and scraping functionality
-            	StringBuilder sb = new StringBuilder();
+                StringBuilder sb = new StringBuilder();
                 var newYamlMap = collectYaml(isNewOrIllformedFile, kind, sb);
                 boolean b = Objects.equals(currentYaml, newYamlMap);
                 diffs = sb.toString() + compareYaml(currentYaml, newYamlMap);
                 if (!b || !diffs.isEmpty()) {
-                	String msg = kind != GENERAL && !kind.isEmpty() ?
-                        """
+                    String msg =
+                            kind != GENERAL && !kind.isEmpty()
+                                    ? """
                         Reading and then writing the yaml produced different results,
                         possibly because in the input file contained elements that are not permitted
                         permitted by the {kind} schema and are therefore ignored on input.
-                        If you want to keep those elements, use the General yaml editor.                        
+                        If you want to keep those elements, use the General yaml editor.
                         """
-                		.replace("{kind}",kind) // poor man's interpolation
-                	:   """
+                                            .replace("{kind}", kind) // poor man's interpolation
+                                    : """
                         Reading and then writing the yaml produced different results,
-                		possibly because of an unexpected organization in the input file.	
-                		"""
-                	;
+                		possibly because of an unexpected organization in the input file.
+                		""";
 
-                    MessageDialog.openInformation(
-                            shell,
-                            "", msg + "\n" + diffs);
+                    MessageDialog.openInformation(shell, "", msg + "\n" + diffs);
                 }
             }
 
@@ -1045,7 +1054,8 @@ public class DataPropertyPage extends PropertyPage {
         final Composite contentComposite = addComposite(parent, 1);
 
         final Label titleLabel = new Label(contentComposite, SWT.NONE);
-        titleLabel.setText("Content sources for " + (kind==MANIFEST?"footprint:":"") + sectionName);
+        titleLabel.setText(
+                "Content sources for " + (kind == MANIFEST ? "footprint:" : "") + sectionName);
 
         final Composite buttonComposite =
                 addCompositeUnequal(contentComposite, fileBrowser ? 3 : 2);
@@ -1249,6 +1259,7 @@ public class DataPropertyPage extends PropertyPage {
                                         ingestionStepsWidgets, stepsComposite, "", "");
                                 break;
                         }
+                        relayout();
                     }
                 });
         addLabel(
@@ -2037,17 +2048,17 @@ public class DataPropertyPage extends PropertyPage {
                 if (Map.class == c.getData()) {
                     var m = collectGeneralMap((Composite) c, str);
                     if (!key.trim().isEmpty()) {
-                    	if (map.put(key, m) != null) {
-                    		str.append("Duplicate keys are not supported: " + key + "\n");
-                    	}
+                        if (map.put(key, m) != null) {
+                            str.append("Duplicate keys are not supported: " + key + "\n");
+                        }
                     }
                     key = null;
                 } else if (List.class == c.getData()) {
                     var m = collectGeneralList((Composite) c, str);
                     if (!key.trim().isEmpty()) {
-                    	if (map.put(key, m) != null) {
-                    		str.append("Duplicate keys are not supported: " + key + "\n");
-                    	}
+                        if (map.put(key, m) != null) {
+                            str.append("Duplicate keys are not supported: " + key + "\n");
+                        }
                     }
                     key = null;
                 }
@@ -2057,9 +2068,9 @@ public class DataPropertyPage extends PropertyPage {
                 if (valueComp.getData() != null) {
                     var item = collectGeneralObject(valueComp, str);
                     if (!key.trim().isEmpty()) {
-                    	if (map.put(key, item) != null) {
-                    		str.append("Duplicate keys are not supported: " + key + "\n");
-                    	}
+                        if (map.put(key, item) != null) {
+                            str.append("Duplicate keys are not supported: " + key + "\n");
+                        }
                     }
                     key = null;
                 }

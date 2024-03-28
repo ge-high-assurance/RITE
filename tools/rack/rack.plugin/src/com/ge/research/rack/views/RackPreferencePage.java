@@ -332,7 +332,11 @@ public class RackPreferencePage extends FieldEditorPreferencePage
                         CANCEL_DIALOG,
                         "Workflow cancel dialog behavior",
                         1,
-                        new String[][] {{"Non-blocking dialog", "noblock"}, {"Blocking dialog", "block"}, {"No dialog", "none"}},
+                        new String[][] {
+                            {"Non-blocking dialog", "noblock"},
+                            {"Blocking dialog", "block"},
+                            {"No dialog", "none"}
+                        },
                         getFieldEditorParent());
         addField(blockingPref);
     }

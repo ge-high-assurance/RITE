@@ -381,7 +381,7 @@
     value="1" /> <iterate> <adapt type="org.eclipse.core.resources.IFile" />
     </iterate> </with> </visibleWhen> </command> </menuContribution> </extension> -->
 
-<!-- OR locationURI="popup:org.eclipse.ui.popup.any" in the following -->
+  <!-- OR locationURI="popup:org.eclipse.ui.popup.any" in the following -->
   <extension point="org.eclipse.ui.menus">
     <menuContribution
       locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=export">
