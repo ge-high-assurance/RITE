@@ -33,7 +33,8 @@ package com.ge.research.rack;
 
 import com.ge.research.rack.autoGsn.viewManagers.AutoGsnViewsManager;
 import com.ge.research.rack.autoGsn.viewManagers.GsnTreeViewManager;
-import com.ge.research.rack.report.viewManagers.ReportViewsManager;
+import com.ge.research.rack.do178c.viewManagers.ReportViewsManager;
+import com.ge.research.rack.opgsn.viewManagers.OPGSNViewManager;
 import com.ge.research.rack.views.RibView;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -99,6 +100,30 @@ public class JavaFXAppLaunchManager {
                     () -> {
                         try {
                             Application application = new AutoGsnViewsManager();
+                            Stage primaryStage = new Stage();
+                            application.start(primaryStage);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+        }
+    }
+
+    /**
+     * Used to launch different Javafx AutoGsnMainView applications by consulting the flag
+     *
+     * <p>Sets the flag to true on the first launch.
+     */
+    public static void OPGsnMainViewLaunch() {
+        if (!launchFlag) {
+            Platform.setImplicitExit(false);
+            new Thread(() -> Application.launch(OPGSNViewManager.class)).start();
+            launchFlag = true;
+        } else {
+            Platform.runLater(
+                    () -> {
+                        try {
+                            Application application = new OPGSNViewManager();
                             Stage primaryStage = new Stage();
                             application.start(primaryStage);
                         } catch (Exception e) {

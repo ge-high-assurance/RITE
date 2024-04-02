@@ -124,7 +124,7 @@ public class GsnNode2DotPrinter {
             String nodeText = "";
             String hoverDisplay = "No additional information is available";
             String url = "";
-            String margin = "0.05";
+            String margin = "0";
             String style = "bold";
             String penwidth = "3.0";
 
@@ -134,14 +134,20 @@ public class GsnNode2DotPrinter {
             if (node.getNodeType() == GsnCoreElements.Class.Context) {
                 nodeShape = "rectangle, style=\"rounded\" ";
                 nodeText = node.getContext().getContext().replace('-', '_').replace('.', '_');
+                hoverDisplay = nodeText;
             } else if (node.getNodeType() == GsnCoreElements.Class.Solution) {
                 nodeShape = "circle";
-                nodeText = node.getSolution().getSolTest().replace('-', '_').replace('.', '_');
+                //                nodeText = node.getSolution().getSolTest().replace('-',
+                // '_').replace('.', '_');
+                nodeText = "";
+                hoverDisplay = node.getSolution().getSolTest().replace('-', '_').replace('.', '_');
+                ;
                 nodeStatus = node.getIsGreen();
             } else if (node.getNodeType() == GsnCoreElements.Class.Goal) {
 
                 nodeShape = "box";
                 nodeText = CustomStringUtils.stringWrapper(node.getGoal().getDescription());
+                hoverDisplay = nodeText;
                 nodeStatus = node.getIsGreen();
             } else if (node.getNodeType() == GsnCoreElements.Class.Strategy) {
                 nodeShape = "parallelogram";
@@ -166,6 +172,7 @@ public class GsnNode2DotPrinter {
                             + url
                             + "\", tooltip=\""
                             + hoverDisplay
+                            //                            + nodeText
                             + "\", margin=\""
                             + margin
                             + "\", style=\""

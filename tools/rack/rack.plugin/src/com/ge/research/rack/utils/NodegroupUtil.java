@@ -73,7 +73,8 @@ public class NodegroupUtil {
             ProjectUtils.writeYaml(yamlMap, yamlPath);
         } catch (Exception e) {
             String prj = RackPreferencePage.getInstanceDataFolder();
-            ErrorMessageUtil.error("Cannot write back to " + prj + " project's metadata.yaml");
+            RackConsole.getConsole()
+                    .error("Cannot write back to " + prj + " project's metadata.yaml");
         }
     }
 
@@ -82,8 +83,9 @@ public class NodegroupUtil {
         if (!ProjectUtils.validateInstanceDataFolder()) {
             return;
         }
+        Map<String, Object> yamlMap = null;
         String yamlPath = "";
-        Map<String, Object> yamlMap = (Map<String, Object>) ingestionNodegroupMapping;
+        yamlMap = (Map<String, Object>) ingestionNodegroupMapping;
         yamlPath = /*ProjectUtils.getOverlayProjectPath()*/
                 RackPreferencePage.getInstanceDataFolder() + "/nodegroups/metadata.yaml";
 
@@ -101,14 +103,16 @@ public class NodegroupUtil {
     }
 
     public static ArrayList<String> getLocalNodegroupsCore() {
-        Map<String, Object> yamlMap = (Map<String, Object>) ingestionNodegroupMapping;
+        Map<String, Object> yamlMap = null;
+        yamlMap = (Map<String, Object>) ingestionNodegroupMapping;
         Object oYamlNodegroups = yamlMap.get("nodegroups");
         ArrayList<String> yamlNodegroups = (ArrayList<String>) oYamlNodegroups;
         return yamlNodegroups;
     }
 
     public static ArrayList<String> getLocalNodegroupsOverlay() {
-        Map<String, Object> yamlMap = (Map<String, Object>) ingestionNodegroupMapping;
+        Map<String, Object> yamlMap = null;
+        yamlMap = (Map<String, Object>) ingestionNodegroupMapping;
         Object oYamlNodegroups = yamlMap.get("nodegroups");
         ArrayList<String> yamlNodegroups = (ArrayList<String>) oYamlNodegroups;
         return yamlNodegroups;

@@ -33,7 +33,7 @@ package com.ge.research.rack.autoGsn.utils;
 
 import com.ge.research.rack.autoGsn.constants.PrefixedPatternQueries;
 import com.ge.research.rack.autoGsn.constants.QueryTemplates;
-import com.ge.research.rack.report.structures.SparqlConnectionInfo;
+import com.ge.research.rack.do178c.structures.SparqlConnectionInfo;
 import java.io.IOException;
 import java.util.List;
 import org.json.simple.JSONObject;
@@ -91,7 +91,7 @@ public class QueryGenerationUtils {
         String targetClassUri = OntologyJsonObjUtils.getClassURI(ontInfo, targetClassId);
         String sourceClassUri = OntologyJsonObjUtils.getClassURI(ontInfo, sourceClassId);
 
-        List<String> propertyInfo =
+        List propertyInfo =
                 OntologyJsonObjUtils.getPropertyRangeURIs(ontInfo, sourceClassId, propertyId);
 
         String propertyUri =
@@ -187,7 +187,7 @@ public class QueryGenerationUtils {
         String targetClassUri = OntologyJsonObjUtils.getClassURI(ontInfo, targetClassId);
         String sourceClassUri = OntologyJsonObjUtils.getClassURI(ontInfo, sourceClassId);
 
-        List<String> propertyInfo =
+        List propertyInfo =
                 OntologyJsonObjUtils.getPropertyRangeURIs(ontInfo, sourceClassId, propertyId);
 
         String propertyUri =

@@ -36,6 +36,7 @@ import com.ge.research.rack.autoGsn.constants.RackCoreElements;
 import com.ge.research.rack.autoGsn.structures.GsnNode;
 import com.ge.research.rack.autoGsn.structures.InstanceData;
 import com.ge.research.rack.autoGsn.structures.PatternInfo;
+import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
 import com.ge.research.rack.autoGsn.utils.ListStratPatUtils;
 import com.ge.research.rack.autoGsn.utils.QueryResultUtils;
 import java.util.ArrayList;
@@ -319,9 +320,23 @@ public class DataProcessor {
         if (allSupportedByNodes.size() < 1) { // no supporting node
             colorFlag = false;
         } else { // exist supporting nodes
-            for (GsnNode supportNode : allSupportedByNodes) {
-                if (!supportNode.getIsGreen()) {
-                    colorFlag = false;
+
+            // use forall/at least one
+            // TODO: Replace string checking with other techniques in future
+            if ((CustomStringUtils.checkWordExistence("all", strategy.getDescription()))
+                    || (CustomStringUtils.checkWordExistence(
+                            "forall", strategy.getDescription().toLowerCase()))) {
+                for (GsnNode supportNode : allSupportedByNodes) {
+                    if (!supportNode.getIsGreen()) {
+                        colorFlag = false;
+                    }
+                }
+            } else if ((CustomStringUtils.checkWordExistence(
+                    "at least one", strategy.getDescription()))) {
+                for (GsnNode supportNode : allSupportedByNodes) {
+                    if (supportNode.getIsGreen()) {
+                        colorFlag = true;
+                    }
                 }
             }
         }

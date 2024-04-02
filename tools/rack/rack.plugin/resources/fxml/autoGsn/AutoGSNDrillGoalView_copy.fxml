@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.chart.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<GridPane prefHeight="639.0" prefWidth="1090.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ge.research.rack.opgsn.viewHandlers.OPGSNNavigatorHandler">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="208.0" minHeight="0.0" prefHeight="27.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="208.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="610.0" minHeight="10.0" prefHeight="522.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="47.0" minHeight="6.0" prefHeight="39.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <GridPane GridPane.rowIndex="2">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="950.0" minWidth="10.0" prefWidth="42.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1000.0" minWidth="10.0" prefWidth="935.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="539.0" minWidth="10.0" prefWidth="114.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <GridPane GridPane.columnIndex="2">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="btnUp" mnemonicParsing="false" onAction="#btnUpAction" prefWidth="90.0" text="Previous Goal" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" />
+                  <Button fx:id="btnRoot" mnemonicParsing="false" onAction="#btnRootAction" prefWidth="90.0" text="Root Goal" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="BOTTOM" />
+                  <Button fx:id="btnHome" mnemonicParsing="false" onAction="#btnHomeAction" prefWidth="90.0" text="Main Screen" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="BOTTOM" />
+               </children>
+            </GridPane>
+            <GridPane GridPane.columnIndex="1">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="576.0" minWidth="10.0" prefWidth="576.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="460.0" minWidth="10.0" prefWidth="359.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <GridPane GridPane.columnIndex="1">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="255.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="505.0" minHeight="10.0" prefHeight="500.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <TreeView fx:id="treeGsn" editable="true" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+                        <Label text="Position of the Goal in Focus in the GSN Hierarchy" GridPane.valignment="BOTTOM">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="btnTreePop" mnemonicParsing="false" onAction="#btnTreePopAction" text="Pop Out" GridPane.halignment="RIGHT" GridPane.valignment="BOTTOM">
+                           <font>
+                              <Font size="8.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets bottom="1.0" />
+                           </GridPane.margin>
+                        </Button>
+                     </children>
+                  </GridPane>
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="310.0" minHeight="10.0" prefHeight="228.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="238.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="269.0" minHeight="10.0" prefHeight="264.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="392.0" minWidth="10.0" prefWidth="344.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="283.0" minWidth="10.0" prefWidth="232.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <GridPane>
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints maxHeight="58.0" minHeight="7.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="131.0" minHeight="10.0" prefHeight="84.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="148.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="138.0" minHeight="10.0" prefHeight="93.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label fx:id="labelGoalHeading" text="Goal in Focus" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="labelGoalText" alignment="CENTER" contentDisplay="CENTER" text="Label" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                       <font>
+                                          <Font name="Consolas Bold" size="12.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label fx:id="labelStratText" alignment="CENTER" contentDisplay="CENTER" text="Label" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                                       <font>
+                                          <Font name="Consolas Bold" size="12.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label fx:id="labelStrategyHeading" text="Strategy for the Goal in Focus" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </GridPane>
+                              <BarChart fx:id="chartGoalStatus" animated="false" legendVisible="false" title="SubGoal Statistics" titleSide="BOTTOM" GridPane.columnIndex="1">
+                                 <xAxis>
+                                    <CategoryAxis side="BOTTOM" />
+                                 </xAxis>
+                                 <yAxis>
+                                    <NumberAxis fx:id="chartGoalStatusNumberAxis" animated="false" autoRanging="false" minorTickCount="1" minorTickVisible="false" side="LEFT" tickUnit="1.0" />
+                                 </yAxis>
+                              </BarChart>
+                           </children>
+                        </GridPane>
+                        <ListView fx:id="listSubGoals" onMouseClicked="#listSubGoalsSelectAction" prefHeight="656.0" prefWidth="458.0" GridPane.rowIndex="2" />
+                        <Label fx:id="labelSubElementsHeading" text="Sub Goals of the Goal in Focus" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="70.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <ComboBox fx:id="comboPassFail" onAction="#comboPassFailAction" prefHeight="25.0" prefWidth="141.0" promptText="Filter By Status" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                           <GridPane.margin>
+                              <Insets bottom="1.0" right="1.0" />
+                           </GridPane.margin>
+                        </ComboBox>
+                        <ListView fx:id="listSolutionDetails" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
+                     </children>
+                  </GridPane>
+               </children>
+            </GridPane>
+         </children>
+      </GridPane>
+      <Label text="GSN Navigator" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <GridPane GridPane.rowIndex="3">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="965.0" minWidth="10.0" prefWidth="545.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="676.0" minWidth="10.0" prefWidth="545.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="7.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="25.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="38.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="257.0" minWidth="10.0" prefWidth="252.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="109.0" minWidth="10.0" prefWidth="40.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="39.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="16.0" minHeight="1.0" prefHeight="16.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="13.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="9.0" minHeight="0.0" prefHeight="9.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="btnIncFnt"  onAction="#btnFontIncAction"  mnemonicParsing="false" text="A+" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Button fx:id="btnDecFnt" onAction="#btnFontDecAction" mnemonicParsing="false" text="A-" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+         </children>
+      </GridPane>
+   </children>
+</GridPane>

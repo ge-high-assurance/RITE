@@ -40,7 +40,7 @@ public class ManifestSelectedPropertyTester extends PropertyTester {
     public static final String MY_PROPERTY = "isManifestSelected";
 
     public static IEvaluationService getEvalService(BundleContext ctxt) {
-        final ServiceReference<?> reference =
+        final ServiceReference reference =
                 ctxt.getServiceReference(IEvaluationService.class.getName());
         return (IEvaluationService) ctxt.getService(reference);
     }

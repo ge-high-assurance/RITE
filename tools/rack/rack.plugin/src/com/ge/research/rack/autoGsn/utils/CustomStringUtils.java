@@ -59,7 +59,7 @@ public class CustomStringUtils {
      * @return
      */
     public static String getGsnOutDir(String instanceFilePath) {
-        // String dirPath = "";
+        String dirPath = "";
 
         // get the instance folder path
         String instDir = CustomFileUtils.getFileDirectory(instanceFilePath);
@@ -378,5 +378,20 @@ public class CustomStringUtils {
             s = s + c;
         }
         return s;
+    }
+
+    // checks if a word exists in a sentence
+    public static boolean checkWordExistence(String word, String sentence) {
+
+        if (sentence.contains(word)) {
+            int start = sentence.indexOf(word);
+            int end = start + word.length();
+
+            boolean valid_left = ((start == 0) || (sentence.charAt(start - 1) == ' '));
+            boolean valid_right = ((end == sentence.length()) || (sentence.charAt(end) == ' '));
+
+            return valid_left && valid_right;
+        }
+        return false;
     }
 }

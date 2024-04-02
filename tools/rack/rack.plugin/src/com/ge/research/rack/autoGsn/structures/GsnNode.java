@@ -321,6 +321,8 @@ public class GsnNode {
     private Context context;
     private Solution solution;
 
+    private String description = "";
+
     /** To decide color while displaying */
     private Boolean isGreen = false; // false by default
 
@@ -422,5 +424,13 @@ public class GsnNode {
      */
     public void setParentNodeId(String parentNodeId) {
         this.parentNodeId = parentNodeId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

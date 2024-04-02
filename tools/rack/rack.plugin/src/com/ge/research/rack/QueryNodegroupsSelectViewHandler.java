@@ -33,7 +33,7 @@ package com.ge.research.rack;
 
 import com.ge.research.rack.autoGsn.utils.CustomFileUtils;
 import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
-import com.ge.research.rack.report.utils.RackQueryUtils;
+import com.ge.research.rack.do178c.utils.RackQueryUtils;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;

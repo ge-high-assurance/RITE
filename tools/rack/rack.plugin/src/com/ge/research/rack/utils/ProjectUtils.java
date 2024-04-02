@@ -114,10 +114,10 @@ public class ProjectUtils {
         }
     }
 
-    public static HashMap<String, Object> readYaml(String path) throws Exception {
+    public static Object readYaml(String path) throws Exception {
         FileInputStream inputStream = new FileInputStream(new File(path));
         Yaml yaml = new Yaml();
-        return yaml.<HashMap<String, Object>>load(inputStream);
+        return yaml.load(inputStream);
     }
 
     public static DumperOptions getYamlDumperOptions() {
@@ -204,21 +204,23 @@ public class ProjectUtils {
         String path = RackPreferencePage.getInstanceDataFolder();
         File dir = new File(path);
         if (!dir.exists()) {
-            ErrorMessageUtil.error(
-                    "RACK Project does not exist, please set a valid directory as RACK project");
+            RackConsole.getConsole()
+                    .error(
+                            "RACK Project does not exist, please set a valid directory as RACK project");
             return false;
         }
         if (!dir.isDirectory()) {
-            ErrorMessageUtil.error(
-                    "RACK Project is not a directory, please set a valid directory as RACK project");
+            RackConsole.getConsole()
+                    .error(
+                            "RACK Project is not a directory, please set a valid directory as RACK project");
             return false;
         }
         return true;
     }
 
-    //    private HashMap<String, String> nodegroupMapping = new HashMap<>();
+    private HashMap<String, String> nodegroupMapping = new HashMap<>();
 
-    //    private String selectedProject = "";
+    private String selectedProject = "";
 
     public static void createInstanceDataFolder(String projectPath) {}
 

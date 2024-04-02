@@ -40,9 +40,9 @@ import com.ge.research.rack.autoGsn.utils.CustomFileUtils;
 import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
 import com.ge.research.rack.autoGsn.utils.QueryResultUtils;
 import com.ge.research.rack.autoGsn.viewManagers.AutoGsnViewsManager;
-import com.ge.research.rack.report.structures.SparqlConnectionInfo;
-import com.ge.research.rack.report.utils.RackQueryUtils;
-import com.ge.research.rack.report.utils.ReportViewUtils;
+import com.ge.research.rack.do178c.structures.SparqlConnectionInfo;
+import com.ge.research.rack.do178c.utils.RackQueryUtils;
+import com.ge.research.rack.do178c.utils.ReportViewUtils;
 import com.ge.research.rack.views.RackPreferencePage;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,7 +96,7 @@ public class AutoGsnUnifiedMainViewHandler {
 
     @FXML private GridPane gridPaneCharts;
     //    @FXML private BarChart chartBarStatus;
-    @FXML private BarChart<String, Integer> chartBarClass;
+    @FXML private BarChart chartBarClass;
 
     // --------------------------------
 
@@ -190,11 +190,11 @@ public class AutoGsnUnifiedMainViewHandler {
 
         // populate the class bar chart
 
-        XYChart.Series<String, Integer> classData = new XYChart.Series<>();
+        XYChart.Series classData = new XYChart.Series();
 
         // Create a list to store the Data objects so that we can
         // color them later
-        List<Data<String, Integer>> classBarList = new ArrayList<>();
+        List<Data> classBarList = new ArrayList<Data>();
 
         // By this step, all classes will have been added
         // to the comboClassFilter
@@ -204,8 +204,7 @@ public class AutoGsnUnifiedMainViewHandler {
             if (!classKey.equalsIgnoreCase("All")) {
                 int classCount =
                         AutoGsnGuiUtils.getClassCount(AutoGsnViewsManager.allRootGoals, classKey);
-                Data<String, Integer> classBar =
-                        new XYChart.Data<String, Integer>(classKey, classCount);
+                Data classBar = new XYChart.Data(classKey, classCount);
                 classData.getData().add(classBar);
                 classBarList.add(classBar);
             }
@@ -213,7 +212,7 @@ public class AutoGsnUnifiedMainViewHandler {
         chartBarClass.getData().add(classData);
 
         // set random colors to the class bars
-        for (var bar : classBarList) {
+        for (Data bar : classBarList) {
             //            bar.getNode().setStyle("-fx-bar-fill: " + AutoGsnGuiUtils.randomColor() +
             // ";");
             bar.getNode().setStyle("-fx-bar-fill: #635452;");
