@@ -155,6 +155,15 @@ public class ObjectiveViewHandler {
             comboRequirement.getItems().add("Has Allocation");
             comboRequirement.getItems().add("Has Both");
         }
+        
+        // TODO: write logic for other objectives
+        if (currentObjObject.getId().equalsIgnoreCase("objective-4-1")) {
+
+            // add the categories to the combo
+            comboRequirement.getItems().add("All");
+            comboRequirement.getItems().add("No Reviews");
+            comboRequirement.getItems().add("Has Reviews");
+        }
     }
 
     // -------------------------------------------------------------------
@@ -420,6 +429,7 @@ public class ObjectiveViewHandler {
         // clear the list and chart
         requirementList.getItems().clear();
         requirementChart.getData().clear();
+        populateSubGraphs();
 
         if (currentObjObject.getId().equalsIgnoreCase("objective-2-2")) {
             // TODO: objective-based setting of children
@@ -565,20 +575,55 @@ public class ObjectiveViewHandler {
             // store children releationship for this objective
             requirementChildrenRelation = "Reviews";
 
-            for (Evidence itemReq : currentObjObject.getOutputs().getItemReqObjs()) {
+            for (Evidence someReq : currentObjObject.getOutputs().getAllReqObjs()) {
                 if (filterKey.equalsIgnoreCase("All")
-                        && ((searchKey == null) || (itemReq.getId().contains(searchKey)))) {
+                        && ((searchKey == null) || (someReq.getId().contains(searchKey)))) {
                     Label evidenceLabel = new Label();
 
                     String evidenceText =
-                            itemReq.getId()
-                                    + " ("
-                                    + itemReq.getDescription()
-                                    + ")"
+                            someReq.getId()
+                            + "| Description: "
+                            + someReq.getDescription()
                                     + " | Reviews: ";
 
-                    for (Evidence system : itemReq.getHasReviews()) {
-                        evidenceText = evidenceText + system.getId() + ", ";
+                    for (Evidence rev : someReq.getHasReviews()) {
+                        evidenceText = evidenceText + rev.getId() + ", ";
+                    }
+
+                    evidenceLabel.setText(evidenceText);
+                    requirementList.getItems().add(evidenceLabel);
+                }
+                if (filterKey.equalsIgnoreCase("No Reviews")
+                        && ((searchKey == null) || (someReq.getId().contains(searchKey)))
+                        && (someReq.getHasReviews().size() < 1)) {
+                    Label evidenceLabel = new Label();
+
+                    String evidenceText =
+                            someReq.getId()
+                            + "| Description: "
+                            + someReq.getDescription()
+                                    + " | Reviews: ";
+
+                    for (Evidence rev : someReq.getHasReviews()) {
+                        evidenceText = evidenceText + rev.getId() + ", ";
+                    }
+
+                    evidenceLabel.setText(evidenceText);
+                    requirementList.getItems().add(evidenceLabel);
+                }
+                if (filterKey.equalsIgnoreCase("Has Reviews")
+                        && ((searchKey == null) || (someReq.getId().contains(searchKey)))
+                        && (someReq.getHasReviews().size() > 0)) {
+                    Label evidenceLabel = new Label();
+
+                    String evidenceText =
+                            someReq.getId()
+                            + "| Description: "
+                            + someReq.getDescription()
+                                    + " | Reviews: ";
+
+                    for (Evidence rev : someReq.getHasReviews()) {
+                        evidenceText = evidenceText + rev.getId() + ", ";
                     }
 
                     evidenceLabel.setText(evidenceText);
@@ -680,7 +725,8 @@ public class ObjectiveViewHandler {
 
     public void populateTabTest() {}
 
-    public void populateTabReview() {}
+    public void populateTabReview() {
+    }
 
     public void populateTabAnalysis() {}
 
@@ -818,17 +864,16 @@ public class ObjectiveViewHandler {
             String selectedReqLine = selectedLabel.getText();
             System.out.println("The selected req line: " + selectedReqLine);
 
-            
             // Contextmenu for reqList
             ContextMenu reqListContext = new ContextMenu();
             MenuItem menuItemGoToSource = new MenuItem("Go to Entity Source");
             reqListContext.getItems().add(menuItemGoToSource);
             requirementList.setContextMenu(reqListContext);
-            
+
             // TODO: below is ad hoc code. Make generic
             if (currentObjObject.getId().equalsIgnoreCase("objective-2-6")) {
                 // Contextmenu for reqList
-//                ContextMenu reqListContext = new ContextMenu();
+                //                ContextMenu reqListContext = new ContextMenu();
                 MenuItem menuItemShowTrace = new MenuItem("Show Traces");
                 MenuItem menuItemShowAllocation = new MenuItem("Show Allocations");
                 reqListContext.getItems().add(menuItemShowTrace);
@@ -876,12 +921,36 @@ public class ObjectiveViewHandler {
                             }
                         });
             }
+            
+            // TODO: below is ad hoc code. Make generic
+            if (currentObjObject.getId().equalsIgnoreCase("objective-4-1")) {
+                // Contextmenu for reqList
+                MenuItem menuItemShowReview = new MenuItem("Show Reviews");
+                reqListContext.getItems().add(menuItemShowReview);
+                requirementList.setContextMenu(reqListContext);
+                // show source of requirement in reqchildren if right click context selected
+                menuItemShowReview.setOnAction(
+                        (rightClickEvent) -> {
+                            // get the requirement id
+                            String[] reqIdWithSpace = selectedReqLine.split("\\|");
+                            String reqId = reqIdWithSpace[0].trim();
 
-//            // Contextmenu for reqList
-//            ContextMenu reqListContext = new ContextMenu();
-//            MenuItem menuItemGoToSource = new MenuItem("Go to Entity Source");
-//            reqListContext.getItems().add(menuItemGoToSource);
-//            requirementList.setContextMenu(reqListContext);
+                            // activate the label and list and put string in label
+                            deactivateRequirementChildren(false);
+                            requirementChildrenLabel.setText("Reviews:");
+
+                            // find the requirement object
+                            for (Evidence reqObj : currentObjObject.getOutputs().getItemReqObjs()) {
+                                // set children list to the sources, if any exist
+                                if (reqObj.getId().equals(reqId)) {
+                                    for (Evidence rev : reqObj.getHasReviews()) {
+                                        requirementChildrenList.getItems().add(rev.getId()+" | "+rev.getDescription());
+                                    }
+                                }
+                            }
+                        });
+            }
+
             // show source of requirement in reqchildren if right click context selected
             menuItemGoToSource.setOnAction(
                     (rightClickEvent) -> {

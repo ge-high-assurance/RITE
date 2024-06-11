@@ -50,7 +50,7 @@ public class Arp4754WireframeObjectivesViewHandler {
 
     @FXML
     private void initialize() {}
-    
+
     private boolean setObjectiveDescription(String txt) {
         if (txt.compareTo("Objective-1-1") == 0) {
             txtObjectiveDescription.setText(

@@ -47,6 +47,7 @@ public class Evidence {
     private String description = "";
     private String type = "";
     private String URL = "";
+    private Boolean status = false; // pass/fail for a review/test/analysis
 
     /**
      * All possible properties that link one evidence to another must be added here
@@ -86,7 +87,16 @@ public class Evidence {
     // The source document can be annotated here (can be an URL or a document Name)
     private List<String> sourceDocument = new ArrayList<String>();
 
-    /**
+    
+    public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
+
+	/**
      * @return the id
      */
     public String getId() {

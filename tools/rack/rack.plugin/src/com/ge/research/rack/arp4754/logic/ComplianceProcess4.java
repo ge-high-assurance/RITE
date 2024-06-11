@@ -34,6 +34,7 @@ package com.ge.research.rack.arp4754.logic;
 import com.ge.research.rack.arp4754.structures.Category;
 import com.ge.research.rack.arp4754.structures.DAPlan;
 import com.ge.research.rack.arp4754.structures.DAPlan.Objective;
+import com.ge.research.rack.arp4754.structures.Evidence;
 import com.ge.research.rack.arp4754.utils.ComplianceUtils;
 
 /**
@@ -45,15 +46,39 @@ public class ComplianceProcess4 {
 
         // TODO: write logic
 
+    	// hardcoded to heps data
         objective.setNoData(false);
         objective.setPartialData(true);
         objective.setPassed(false);
 
+        int norevs = 0;
+        int passedrevs = 0;
+        int failedrevs = 0;
+
+        for(Evidence itemReq: objective.getOutputs().getAllReqObjs()) {
+        	if(itemReq.getHasReviews().size()>0) {
+        		boolean allPassed = true;
+        		for(Evidence rev: itemReq.getHasReviews()) {
+        			if(!rev.getStatus()) { // if failed
+        				allPassed = false;
+        			}
+        		}
+        		if(allPassed) {
+        			passedrevs ++;
+        		}
+        		else {
+        			failedrevs ++;
+        		}
+        	}
+        	norevs = objective.getOutputs().getAllReqObjs().size() - (passedrevs + failedrevs);
+        }        
         // create and add appropriate graphdata (//TODO: add actual code, hardcoded now)
+        Category totalReviews = new Category("Total", objective.getOutputs().getAllReqObjs().size());
         Category reqWithNoReviews =
-                new Category("No Review", objective.getOutputs().getItemReqObjs().size());
-        Category reqWithPassedReviews = new Category("Passed Review", 0);
-        Category reqWithFailedReviews = new Category("Failed Review", 0);
+                new Category("No Review", norevs);
+        Category reqWithPassedReviews = new Category("Passed Review", passedrevs);
+        Category reqWithFailedReviews = new Category("Failed Review", failedrevs);
+        objective.getGraphs().getItemReqGraphData().getBuckets().add(totalReviews);
         objective.getGraphs().getItemReqGraphData().getBuckets().add(reqWithNoReviews);
         objective.getGraphs().getItemReqGraphData().getBuckets().add(reqWithPassedReviews);
         objective.getGraphs().getItemReqGraphData().getBuckets().add(reqWithFailedReviews);

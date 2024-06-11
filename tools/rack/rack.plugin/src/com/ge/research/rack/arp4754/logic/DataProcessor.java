@@ -31,6 +31,7 @@
  */
 package com.ge.research.rack.arp4754.logic;
 
+import com.ge.research.rack.arp4754.constants.HepsHardCoded;
 import com.ge.research.rack.arp4754.structures.Configuration;
 import com.ge.research.rack.arp4754.structures.DAPlan;
 import com.ge.research.rack.arp4754.structures.Evidence;
@@ -366,6 +367,31 @@ public class DataProcessor {
             System.out.println("Created Object for " + newEvidenceObj.getId());
         }
 
+     // hardcoded for HEPS
+        System.out.println(
+                "---- Creating Objects for RequirementCompleteCorrectReview ----"); // TODO: Add
+        // description
+        // field
+        for (String[] row : allRequirementCompleteCorrectReview) {
+            Evidence newEvidenceObj = new Evidence();
+            newEvidenceObj.setId(row[0]);
+            newEvidenceObj.setType("Review");
+            // hardcoded for HEPS
+            for (String rowHepsString: HepsHardCoded.allRequirementCompleteCorrectReview) {
+            	String[] rowHeps = rowHepsString.split(","); 
+            	if(rowHeps[1].equalsIgnoreCase(newEvidenceObj.getId())) {
+            		System.out.println("Found governedby of " + newEvidenceObj.getId());
+            		newEvidenceObj.setDescription(rowHeps[0]);
+            		if(rowHeps[2].equalsIgnoreCase("Passed")) {
+                		newEvidenceObj.setStatus(true);	
+            		}            		
+            	}
+            }
+            
+            Artifacts.getRequirementCompleteCorrectReviewObjs().add(newEvidenceObj);
+            System.out.println("Created Object for " + newEvidenceObj.getId());
+        }        
+        
         System.out.println("---- Creating Objects for ItemRequirement ----");
         String[] itemReqCols =
                 CSVUtil.getColumnInfo(
@@ -389,20 +415,26 @@ public class DataProcessor {
                     newEvidenceObj.setDescription(row[itemReqDescCol]);
                     System.out.println("Added desc:" + row[itemReqDescCol]);
                 }
+             // hardcoded for HEPS
+             // attach complete and correct review objects
+                for (String rowHepsString: HepsHardCoded.allRequirementCompleteCorrectReview) {
+                	String[] rowHeps = rowHepsString.split(","); 
+                	if(rowHeps[3].equalsIgnoreCase(newEvidenceObj.getId())) {
+                		System.out.println("Found a review for " + newEvidenceObj.getId());
+                		// add the review object to the req object
+                		int indx =
+                              EvidenceUtils.getEvidenceObjIndxById(
+                            		  Artifacts.getRequirementCompleteCorrectReviewObjs(), rowHeps[1]);
+                		newEvidenceObj.getHasReviews().add(Artifacts.getRequirementCompleteCorrectReviewObjs().get(indx));
+                		
+                 	}
+                }
                 Artifacts.getItemReqObjs().add(newEvidenceObj);
+                Artifacts.getAllReqObjs().add(newEvidenceObj);
                 System.out.println("Created Object for " + newEvidenceObj.getId());
             }
         }
 
-        //        System.out.println("---- Creating Objects for System ----");  // TODO: Add
-        // description field
-        //        for (String[] row : allSystem) {
-        //            Evidence newEvidenceObj = new Evidence();
-        //            newEvidenceObj.setId(row[0]);
-        //            newEvidenceObj.setType("System");
-        //            Artifacts.getItemObjs().add(newEvidenceObj);
-        //            System.out.println("Created Object for " + newEvidenceObj.getId());
-        //        }
 
         System.out.println("---- Creating Objects for SystemRequirement ----");
         String[] systemReqCols =
@@ -425,10 +457,52 @@ public class DataProcessor {
                 newEvidenceObj.setType("Requirement");
                 if ((systemReqDescCol >= 0) && row[systemReqDescCol] != null) {
                     newEvidenceObj.setDescription(row[systemReqDescCol]);
+                    System.out.println("Added desc:" + row[systemReqDescCol]);
                 }
+                // hardcoded for HEPS
+                // attach complete and correct review objects
+                   for (String rowHepsString: HepsHardCoded.allRequirementCompleteCorrectReview) {
+                   	String[] rowHeps = rowHepsString.split(","); 
+                   	if(rowHeps[3].equalsIgnoreCase(newEvidenceObj.getId())) {
+                   		System.out.println("Found a review for " + newEvidenceObj.getId());
+                   		// add the review object to the req object
+                   		int indx =
+                                 EvidenceUtils.getEvidenceObjIndxById(
+                               		  Artifacts.getRequirementCompleteCorrectReviewObjs(), rowHeps[1]);
+                   		newEvidenceObj.getHasReviews().add(Artifacts.getRequirementCompleteCorrectReviewObjs().get(indx));
+                   		
+                    	}
+                   }
                 Artifacts.getSysReqObjs().add(newEvidenceObj);
+                Artifacts.getAllReqObjs().add(newEvidenceObj);
                 System.out.println("Created Object for " + newEvidenceObj.getId());
             }
+        }
+        
+        System.out.println("---- Creating Objects for AircraftRequirement ----");
+        for (String rowHepsString1: HepsHardCoded.allAircraftReqs) {
+        	String[] rowHeps1 = rowHepsString1.split(","); 
+            Evidence newEvidenceObj = new Evidence();
+            newEvidenceObj.setId(rowHeps1[1]);
+            newEvidenceObj.setDescription(rowHeps1[0]);
+            newEvidenceObj.setType("Requirement");
+            // hardcoded for HEPS
+            // attach complete and correct review objects
+               for (String rowHepsString: HepsHardCoded.allRequirementCompleteCorrectReview) {
+               	String[] rowHeps = rowHepsString.split(","); 
+               	if(rowHeps[3].equalsIgnoreCase(newEvidenceObj.getId())) {
+               		System.out.println("Found a review for " + newEvidenceObj.getId());
+               		// add the review object to the req object
+               		int indx =
+                             EvidenceUtils.getEvidenceObjIndxById(
+                           		  Artifacts.getRequirementCompleteCorrectReviewObjs(), rowHeps[1]);
+               		newEvidenceObj.getHasReviews().add(Artifacts.getRequirementCompleteCorrectReviewObjs().get(indx));
+               		
+                	}
+               }
+            Artifacts.getAircraftReqObjs().add(newEvidenceObj);
+            Artifacts.getAllReqObjs().add(newEvidenceObj);
+            System.out.println("Created Object for " + newEvidenceObj.getId());
         }
 
         System.out.println("---- Creating Objects for System ----"); // TODO: Add description field
@@ -450,17 +524,29 @@ public class DataProcessor {
             System.out.println("Created Object for " + newEvidenceObj.getId());
         }
 
-        System.out.println(
-                "---- Creating Objects for RequirementCompleteCorrectReview ----"); // TODO: Add
-        // description
-        // field
-        for (String[] row : allRequirementCompleteCorrectReview) {
-            Evidence newEvidenceObj = new Evidence();
-            newEvidenceObj.setId(row[0]);
-            newEvidenceObj.setType("Review");
-            Artifacts.getRequirementCompleteCorrectReviewObjs().add(newEvidenceObj);
-            System.out.println("Created Object for " + newEvidenceObj.getId());
-        }
+//        System.out.println(
+//                "---- Creating Objects for RequirementCompleteCorrectReview ----"); // TODO: Add
+//        // description
+//        // field
+//        for (String[] row : allRequirementCompleteCorrectReview) {
+//            Evidence newEvidenceObj = new Evidence();
+//            newEvidenceObj.setId(row[0]);
+//            newEvidenceObj.setType("Review");
+//            // hardcoded for HEPS
+//            for (String rowHepsString: HepsHardCoded.allRequirementCompleteCorrectReview) {
+//            	String[] rowHeps = rowHepsString.split(","); 
+//            	if(rowHeps[1].equalsIgnoreCase(newEvidenceObj.getId())) {
+//            		System.out.println("Found governedby of " + newEvidenceObj.getId());
+//            		newEvidenceObj.setDescription(rowHeps[0]);
+//            		if(rowHeps[2].equalsIgnoreCase("Passed")) {
+//                		newEvidenceObj.setStatus(true);	
+//            		}            		
+//            	}
+//            }
+//            
+//            Artifacts.getRequirementCompleteCorrectReviewObjs().add(newEvidenceObj);
+//            System.out.println("Created Object for " + newEvidenceObj.getId());
+//        }
 
         System.out.println(
                 "---- Creating Objects for RequirementTraceableReview ----"); // TODO: Add
@@ -666,78 +752,79 @@ public class DataProcessor {
 
         System.out.println("created allItemRequirementwithSystemRequreiment");
 
-        // get the header line for allRequirementCompleteCorrectReview csv file
-        String[] allRequirementCompleteCorrectReviewCols =
-                CSVUtil.getColumnInfo(
-                        RackQueryUtils.createCsvFilePath(
-                                DataProcessorUtils.getVarCSVID(
-                                        "allRequirementCompleteCorrectReview", config),
-                                rackDir));
-        int reqIdCol =
-                CustomStringUtils.getCSVColumnIndex(
-                        allRequirementCompleteCorrectReviewCols,
-                        config.getItemReq() + "_id"); // TODO: change to all requirements
-        int completeCorrectReviewIdCol =
-                CustomStringUtils.getCSVColumnIndex(
-                        allRequirementCompleteCorrectReviewCols,
-                        config.getRequirementCompleteCorrectReview() + "_id");
-
-        for (String[] row : allRequirementCompleteCorrectReview) {
-            if ((row[reqIdCol] != null)) {
-                // find index of the object in the appropriate evidence list
-                int indx =
-                        EvidenceUtils.getEvidenceObjIndxById(
-                                Artifacts.getItemReqObjs(), row[reqIdCol]);
-                // add the data to the object
-                if ((row[completeCorrectReviewIdCol] != null)) {
-                    Artifacts.getItemReqObjs()
-                            .get(indx)
-                            .getHasReviews()
-                            .add(
-                                    EvidenceUtils.getEvidenceObjById(
-                                            Artifacts.getSysReqObjs(),
-                                            row[completeCorrectReviewIdCol]));
-                }
-            }
-        }
-
-        System.out.println("created allRequirementCompleteCorrectReview");
-
-        // get the header line for allRequirementCompleteCorrectReview csv file
-        String[] allRequirementTraceableReviewCols =
-                CSVUtil.getColumnInfo(
-                        RackQueryUtils.createCsvFilePath(
-                                DataProcessorUtils.getVarCSVID(
-                                        "allRequirementTraceableReview", config),
-                                rackDir));
-        int reqIdCol2 =
-                CustomStringUtils.getCSVColumnIndex(
-                        allRequirementTraceableReviewCols,
-                        config.getItemReq() + "_id"); // TODO: change to all requirements
-        int traceableReviewIdCol =
-                CustomStringUtils.getCSVColumnIndex(
-                        allRequirementTraceableReviewCols,
-                        config.getRequirementCompleteCorrectReview() + "_id");
-
-        for (String[] row : allRequirementTraceableReview) {
-            if ((row[reqIdCol2] != null)) {
-                // find index of the object in the appropriate evidence list
-                int indx =
-                        EvidenceUtils.getEvidenceObjIndxById(
-                                Artifacts.getItemReqObjs(), row[reqIdCol2]);
-                // add the data to the object
-                if ((row[traceableReviewIdCol] != null)) {
-                    Artifacts.getItemReqObjs()
-                            .get(indx)
-                            .getHasReviews()
-                            .add(
-                                    EvidenceUtils.getEvidenceObjById(
-                                            Artifacts.getSysReqObjs(), row[traceableReviewIdCol]));
-                }
-            }
-        }
-
-        System.out.println("created allRequirementTraceableReview");
+     // will hardcode below for HEPS demo
+//        // get the header line for allRequirementCompleteCorrectReview csv file
+//        String[] allRequirementCompleteCorrectReviewCols =
+//                CSVUtil.getColumnInfo(
+//                        RackQueryUtils.createCsvFilePath(
+//                                DataProcessorUtils.getVarCSVID(
+//                                        "allRequirementCompleteCorrectReview", config),
+//                                rackDir));
+//        int reqIdCol =
+//                CustomStringUtils.getCSVColumnIndex(
+//                        allRequirementCompleteCorrectReviewCols,
+//                        config.getItemReq() + "_id"); // TODO: change to all requirements
+//        int completeCorrectReviewIdCol =
+//                CustomStringUtils.getCSVColumnIndex(
+//                        allRequirementCompleteCorrectReviewCols,
+//                        config.getRequirementCompleteCorrectReview() + "_id");
+//
+//        for (String[] row : allRequirementCompleteCorrectReview) {
+//            if ((row[reqIdCol] != null)) {
+//                // find index of the object in the appropriate evidence list
+//                int indx =
+//                        EvidenceUtils.getEvidenceObjIndxById(
+//                                Artifacts.getItemReqObjs(), row[reqIdCol]);
+//                // add the data to the object
+//                if ((row[completeCorrectReviewIdCol] != null)) {
+//                    Artifacts.getItemReqObjs()
+//                            .get(indx)
+//                            .getHasReviews()
+//                            .add(
+//                                    EvidenceUtils.getEvidenceObjById(
+//                                            Artifacts.getSysReqObjs(),
+//                                            row[completeCorrectReviewIdCol]));
+//                }
+//            }
+//        }
+//
+//        System.out.println("created allRequirementCompleteCorrectReview");
+//
+//        // get the header line for allRequirementCompleteCorrectReview csv file
+//        String[] allRequirementTraceableReviewCols =
+//                CSVUtil.getColumnInfo(
+//                        RackQueryUtils.createCsvFilePath(
+//                                DataProcessorUtils.getVarCSVID(
+//                                        "allRequirementTraceableReview", config),
+//                                rackDir));
+//        int reqIdCol2 =
+//                CustomStringUtils.getCSVColumnIndex(
+//                        allRequirementTraceableReviewCols,
+//                        config.getItemReq() + "_id"); // TODO: change to all requirements
+//        int traceableReviewIdCol =
+//                CustomStringUtils.getCSVColumnIndex(
+//                        allRequirementTraceableReviewCols,
+//                        config.getRequirementCompleteCorrectReview() + "_id");
+//
+//        for (String[] row : allRequirementTraceableReview) {
+//            if ((row[reqIdCol2] != null)) {
+//                // find index of the object in the appropriate evidence list
+//                int indx =
+//                        EvidenceUtils.getEvidenceObjIndxById(
+//                                Artifacts.getItemReqObjs(), row[reqIdCol2]);
+//                // add the data to the object
+//                if ((row[traceableReviewIdCol] != null)) {
+//                    Artifacts.getItemReqObjs()
+//                            .get(indx)
+//                            .getHasReviews()
+//                            .add(
+//                                    EvidenceUtils.getEvidenceObjById(
+//                                            Artifacts.getSysReqObjs(), row[traceableReviewIdCol]));
+//                }
+//            }
+//        }
+//
+//        System.out.println("created allRequirementTraceableReview");
     }
 
     /**
@@ -859,20 +946,21 @@ public class DataProcessor {
                                 DataProcessorUtils.getVarCSVID(
                                         "allRequirementTraceableReview", config),
                                 rackDir));
+     // will hardcode below for HEPS demo
+//        allRequirementWithCompleteCorrectReview =
+//                CSVUtil.getRows(
+//                        RackQueryUtils.createCsvFilePath(
+//                                DataProcessorUtils.getVarCSVID(
+//                                        "allRequirementWithCompleteCorrectReview", config),
+//                                rackDir));
+//
+//        allRequirementWithTraceableReview =
+//                CSVUtil.getRows(
+//                        RackQueryUtils.createCsvFilePath(
+//                                DataProcessorUtils.getVarCSVID(
+//                                        "allRequirementWithTraceableReview", config),
+//                                rackDir));
 
-        allRequirementWithCompleteCorrectReview =
-                CSVUtil.getRows(
-                        RackQueryUtils.createCsvFilePath(
-                                DataProcessorUtils.getVarCSVID(
-                                        "allRequirementWithCompleteCorrectReview", config),
-                                rackDir));
-
-        allRequirementWithTraceableReview =
-                CSVUtil.getRows(
-                        RackQueryUtils.createCsvFilePath(
-                                DataProcessorUtils.getVarCSVID(
-                                        "allRequirementWithTraceableReview", config),
-                                rackDir));
         allDOCUMENT = CSVUtil.getRows(RackQueryUtils.createCsvFilePath("DOCUMENT", rackDir));
         planData =
                 CSVUtil.getRows(

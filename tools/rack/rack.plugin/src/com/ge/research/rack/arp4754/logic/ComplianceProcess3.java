@@ -32,7 +32,6 @@
 package com.ge.research.rack.arp4754.logic;
 
 import com.ge.research.rack.arp4754.structures.DAPlan;
-import com.ge.research.rack.arp4754.structures.DAPlan.Objective;
 import com.ge.research.rack.arp4754.utils.ComplianceUtils;
 
 /**
