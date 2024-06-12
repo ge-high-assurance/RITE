@@ -109,6 +109,7 @@ public class QueryGenerationUtils {
         try {
 
             String templateString = QueryTemplates.getBinary();
+
             // replace placeholders in template string
             templateString = templateString.replace("SPARQLCONN_NAME_PH", sparqlConnName);
             templateString = templateString.replace("MODEL_URL_PH", modelUrl);

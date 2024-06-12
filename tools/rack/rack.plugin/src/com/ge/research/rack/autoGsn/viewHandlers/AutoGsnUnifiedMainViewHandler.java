@@ -43,6 +43,7 @@ import com.ge.research.rack.autoGsn.viewManagers.AutoGsnViewsManager;
 import com.ge.research.rack.report.structures.SparqlConnectionInfo;
 import com.ge.research.rack.report.utils.RackQueryUtils;
 import com.ge.research.rack.report.utils.ReportViewUtils;
+import com.ge.research.rack.views.AssuranceCaseTree;
 import com.ge.research.rack.views.RackPreferencePage;
 import java.util.ArrayList;
 import java.util.List;
@@ -162,13 +163,13 @@ public class AutoGsnUnifiedMainViewHandler {
      * disabled with the dependents
      */
     private void enableFetchButton() {
-        System.out.println("3");
+        // System.out.println("3");
         // If preferences are there
         if (RackPreferencePage.areGSNPreferencesComplete()) {
-            System.out.println("4");
+            // System.out.println("4");
             btnFetchGoals.setDisable(false);
         } else {
-            System.out.println("5");
+            // System.out.println("5");
             labelSelectPreferences.setVisible(true);
         }
     }
@@ -267,7 +268,7 @@ public class AutoGsnUnifiedMainViewHandler {
     }
 
     @FXML
-    private void initialize() {
+    public void initialize() {
 
         // Disabled buttons
         btnFetchGoals.setDisable(true);
@@ -287,7 +288,7 @@ public class AutoGsnUnifiedMainViewHandler {
         if ((AutoGsnViewsManager.gsnVObjs != null)
                 && (AutoGsnViewsManager.allRootGoals.size() > 0)
                 && AutoGsnViewsManager.allGoalClassIds.size() > 0) {
-            System.out.println("1");
+            // System.out.println("1");
 
             // Then populate the list
             populateListGoals("All");
@@ -305,7 +306,7 @@ public class AutoGsnUnifiedMainViewHandler {
             populateCharts();
             labelSelectionGuide.setVisible(true);
         } else {
-            System.out.println("2");
+            // System.out.println("2");
             // Initialize the variables
             AutoGsnViewsManager.initializeViewVariables();
         }
@@ -314,7 +315,7 @@ public class AutoGsnUnifiedMainViewHandler {
     }
 
     @FXML
-    private void btnFetchGoalsAction(ActionEvent event) throws Exception {
+    public void btnFetchGoalsAction(ActionEvent event) throws Exception {
 
         // initialize the manager variables again
         AutoGsnViewsManager.initializeViewVariables();
@@ -375,12 +376,13 @@ public class AutoGsnUnifiedMainViewHandler {
                     btnFetchGoals.setDisable(false);
                     enableTraverseButton();
                     labelSelectionGuide.setVisible(true);
+                    if (!RackPreferencePage.getJavaFxPreference()) AssuranceCaseTree.showView();
                 });
         new Thread(task).start();
     }
 
     @FXML
-    private void btnGenerateAction(ActionEvent event) throws Exception {
+    public void btnGenerateAction(ActionEvent event) throws Exception {
 
         // get selections (Although only one will be selected)
         ObservableList<Label> selected = listGoals.getSelectionModel().getSelectedItems();
@@ -390,6 +392,10 @@ public class AutoGsnUnifiedMainViewHandler {
         if (selected.size() > 0) {
             for (int i = 0; i < selected.size(); i++)
                 actualSelections.add(selected.get(i).getText());
+        } else {
+            org.eclipse.jface.dialogs.MessageDialog.openInformation(
+                    null, "", "No goals are selected");
+            return;
         }
 
         // Strip "::" from each element in actual selections to get goal Ids only
@@ -456,12 +462,13 @@ public class AutoGsnUnifiedMainViewHandler {
                     btnGenerate.setDisable(false);
                     enableTraverseButton();
                     labelSelectionGuide.setVisible(true);
+                    if (!RackPreferencePage.getJavaFxPreference()) AssuranceCaseTree.showView();
                 });
         new Thread(task).start();
     }
 
     @FXML
-    private void comboFilterAction(ActionEvent event) throws Exception {
+    public void comboFilterAction(ActionEvent event) throws Exception {
 
         String newClassKey = (String) comboClassFilter.getValue();
 
@@ -474,7 +481,7 @@ public class AutoGsnUnifiedMainViewHandler {
     }
 
     @FXML
-    private void btnTraverseAction(ActionEvent event) throws Exception {
+    public void btnTraverseAction(ActionEvent event) throws Exception {
 
         // get selections
         ObservableList<Label> selected = listGoals.getSelectionModel().getSelectedItems();
@@ -493,20 +500,33 @@ public class AutoGsnUnifiedMainViewHandler {
                     CustomStringUtils.separateElementIdFromDescription(
                             listGoals.getSelectionModel().getSelectedItem().getText());
 
-            // Set the stage with the other fxml
-            FXMLLoader drillViewLoader =
-                    AutoGsnViewsManager.setNewFxmlToStage(
-                            "resources/fxml/autoGsn/AutoGsnUnifiedDrillGoalView.fxml");
+            if (RackPreferencePage.getJavaFxPreference()) {
+                // Set the stage with the other fxml
+                FXMLLoader drillViewLoader =
+                        AutoGsnViewsManager.setNewFxmlToStage(
+                                "resources/fxml/autoGsn/AutoGsnUnifiedDrillGoalView.fxml");
+                // initialize variables in the AutoGsnDrillGoalView page
+                AutoGsnUnifiedDrillGoalViewHandler drillViewLoaderClassObj =
+                        drillViewLoader.getController();
+                drillViewLoaderClassObj.prepareView(0, selectionId, recentlyGeneratedGsn);
 
-            // initialize variables in the AutoGsnDrillGoalView page
-            AutoGsnUnifiedDrillGoalViewHandler drillViewLoaderClassObj =
-                    drillViewLoader.getController();
-            drillViewLoaderClassObj.prepareView(0, selectionId, recentlyGeneratedGsn);
+            } else {
+                com.ge.research.rack.views.AssuranceGoalView.showView();
+
+                try {
+                    AutoGsnUnifiedDrillGoalViewHandler drillViewLoaderClassObj =
+                            AutoGsnUnifiedDrillGoalViewHandler.self;
+                    drillViewLoaderClassObj.prepareView(0, selectionId, recentlyGeneratedGsn);
+                    com.ge.research.rack.views.AssuranceGoalView.showView();
+                } catch (Exception e) {
+                    System.out.println("EXCEPTION " + e);
+                }
+            }
         }
     }
 
     @FXML
-    private void listGoalsSelectAction(MouseEvent event) {
+    public void listGoalsSelectAction(MouseEvent event) {
 
         //        // activate/deactivate the GoalView button
         //        // if exactly one selection, activate, otherwise deactivate

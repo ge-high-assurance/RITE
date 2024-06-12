@@ -116,6 +116,10 @@ public class RackPreferencePage extends FieldEditorPreferencePage
         setPreferenceStore(preferenceStore);
     }
 
+    public static boolean getJavaFxPreference() {
+        return preferenceStore.getBoolean(JAVAFX_WINDOW);
+    }
+
     public static boolean getShowConsole() {
         return preferenceStore.getBoolean(SHOW_CONSOLE);
     }
@@ -320,6 +324,14 @@ public class RackPreferencePage extends FieldEditorPreferencePage
                         getFieldEditorParent());
         addField(gsnProjectPattern);
 
+        var javafxPref =
+                new BooleanFieldEditor(
+                        JAVAFX_WINDOW,
+                        "Use javafx floating indows for assurance goals (if unselected, use an Eclipse view).\n"
+                                + "Requires a restart when changed.",
+                        getFieldEditorParent());
+        addField(javafxPref);
+
         var consolePref =
                 new BooleanFieldEditor(
                         SHOW_CONSOLE,
@@ -332,7 +344,11 @@ public class RackPreferencePage extends FieldEditorPreferencePage
                         CANCEL_DIALOG,
                         "Workflow cancel dialog behavior",
                         1,
-                        new String[][] {{"Non-blocking dialog", "noblock"}, {"Blocking dialog", "block"}, {"No dialog", "none"}},
+                        new String[][] {
+                            {"Non-blocking dialog", "noblock"},
+                            {"Blocking dialog", "block"},
+                            {"No dialog", "none"}
+                        },
                         getFieldEditorParent());
         addField(blockingPref);
     }

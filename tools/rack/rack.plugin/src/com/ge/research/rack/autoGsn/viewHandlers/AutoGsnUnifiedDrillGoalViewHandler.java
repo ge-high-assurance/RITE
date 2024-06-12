@@ -41,6 +41,7 @@ import com.ge.research.rack.autoGsn.utils.GsnNodeUtils;
 import com.ge.research.rack.autoGsn.viewManagers.AutoGsnViewsManager;
 import com.ge.research.rack.autoGsn.viewManagers.GsnTreeViewManager;
 import com.ge.research.rack.report.utils.ReportViewUtils;
+import com.ge.research.rack.views.RackPreferencePage;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.event.ActionEvent;
@@ -65,11 +66,18 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import org.eclipse.jface.dialogs.MessageDialog;
 
 /**
  * @author Saswata Paul
  */
 public class AutoGsnUnifiedDrillGoalViewHandler {
+
+    static AutoGsnUnifiedDrillGoalViewHandler self;
+
+    public AutoGsnUnifiedDrillGoalViewHandler() {
+        self = this;
+    }
 
     // -------- Local variables to store data
 
@@ -165,7 +173,7 @@ public class AutoGsnUnifiedDrillGoalViewHandler {
         // if this is the currentgoal, expand it by default
         //		System.out.println(node.getNodeId() + " ------- " + currentGoalId);
         if (node.getNodeId().equalsIgnoreCase(currentGoalId)) {
-            System.out.println("expanded");
+            // System.out.println("expanded");
             elementItem.setExpanded(true);
             myExpFlag = true;
         }
@@ -186,7 +194,7 @@ public class AutoGsnUnifiedDrillGoalViewHandler {
                 {
                     if (childReturned.getExpandFlag()) {
                         someChildExpanded = true;
-                        System.out.println(node.getNodeId() + " somechild expanded");
+                        // System.out.println(node.getNodeId() + " somechild expanded");
                     }
                 }
             }
@@ -196,7 +204,7 @@ public class AutoGsnUnifiedDrillGoalViewHandler {
                 if (someChildExpanded) {
                     myExpFlag = true;
                     elementItem.setExpanded(true);
-                    System.out.println(node.getNodeId() + " expanded");
+                    // System.out.println(node.getNodeId() + " expanded");
                 }
             }
         }
@@ -255,15 +263,19 @@ public class AutoGsnUnifiedDrillGoalViewHandler {
      * <p>TODO: BAD CODE. CHANGE LATER
      */
     private void decidePreviousGoalId() {
+        if (rootGsn == null) {
+            MessageDialog.openInformation(null, "", "rootGsn is null");
+            return;
+        }
         // find and assign parent strategy to previousGoalId
         findParentId(rootGsn, currentGoalId);
 
-        System.out.println("1 " + previousGoalId);
+        // System.out.println("1 " + previousGoalId);
 
         // find and assign grandparent goal to previousGoalId
         findParentId(rootGsn, previousGoalId);
 
-        System.out.println("2 " + previousGoalId);
+        // System.out.println("2 " + previousGoalId);
     }
 
     /** Show/hide previous goal button */
@@ -342,6 +354,7 @@ public class AutoGsnUnifiedDrillGoalViewHandler {
      * @param goalId
      */
     private void populateFields(String goalId) {
+        var previousGoalId = currentGoalId;
 
         // only goalIds starting with "G-" will warrant action
         if (goalId.startsWith("G-")) {
@@ -353,9 +366,9 @@ public class AutoGsnUnifiedDrillGoalViewHandler {
             // taken, we must check once if a goal node was actually returned
             if (goalNode != null) {
                 // update previousgoalId if the level change was downstream (level x to x+1)
-                System.out.println("gl" + goalNode.getNodeLevel() + " cl " + currentGoalLevel);
+                // System.out.println("gl" + goalNode.getNodeLevel() + " cl " + currentGoalLevel);
                 if (goalNode.getNodeLevel() > currentGoalLevel) {
-                    System.out.println("updated previous");
+                    // System.out.println("updated previous");
                     previousGoalId = currentGoalId;
                 }
 
@@ -429,7 +442,8 @@ public class AutoGsnUnifiedDrillGoalViewHandler {
                 // decide previous goal button
                 showOrHidePreviousBtn();
 
-            } else {
+            } else if (!currentGoalId.equals(
+                    previousGoalId)) { // This test prevents an infinite loop
                 // TODO
                 // Currently, if the selection in listview does not do anything,
                 // then the item is highlighted in blue, meking it illegible
@@ -450,6 +464,10 @@ public class AutoGsnUnifiedDrillGoalViewHandler {
         currentGoalLevel = initialLevel;
         rootNodeId = goalId;
         currentGoalId = goalId;
+
+        if (mainGsn == null) {
+            MessageDialog.openInformation(null, "", "MainGSN is null");
+        }
 
         // get and store the root gsn
         rootGsn = mainGsn;
@@ -538,7 +556,12 @@ public class AutoGsnUnifiedDrillGoalViewHandler {
     @FXML
     private void btnHomeAction(ActionEvent event) throws Exception {
 
-        // Set the stage with the other fxml
-        AutoGsnViewsManager.setNewFxmlToStage("resources/fxml/autoGsn/AutoGsnUnifiedMainView.fxml");
+        if (RackPreferencePage.getJavaFxPreference()) {
+            // Set the stage with the other fxml
+            AutoGsnViewsManager.setNewFxmlToStage(
+                    "resources/fxml/autoGsn/AutoGsnUnifiedMainView.fxml");
+        } else {
+            com.ge.research.rack.views.AssuranceCaseTree.showView();
+        }
     }
 }

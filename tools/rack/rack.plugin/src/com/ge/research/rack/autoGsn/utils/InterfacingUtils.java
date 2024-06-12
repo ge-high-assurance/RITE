@@ -118,7 +118,7 @@ public class InterfacingUtils {
         GraphVizUtils.generateGraphUsingGraphviz(dotFilePath, graphDestination);
         // GraphVizUtils.generateGraphUsingDot(dotFilePath, graphDestination);
 
-        System.out.println("Info: Written GSN to svg");
+        // System.out.println("Info: Written GSN to svg");
 
         //        // Delete the dot files
         // GsnFileUtils.delFilesWithExt("dot", outDir);

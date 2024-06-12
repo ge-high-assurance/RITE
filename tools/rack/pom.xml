@@ -218,6 +218,29 @@
       </dependency>
       <dependency>
         <groupId>org.openjfx</groupId>
+        <artifactId>javafx-swing</artifactId>
+        <version>${version.javafx}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-swing</artifactId>
+        <version>${version.javafx}</version>
+        <classifier>linux</classifier>
+      </dependency>
+      <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-swing</artifactId>
+        <version>${version.javafx}</version>
+        <classifier>mac</classifier>
+      </dependency>
+      <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-swing</artifactId>
+        <version>${version.javafx}</version>
+        <classifier>win</classifier>
+      </dependency>
+      <dependency>
+        <groupId>org.openjfx</groupId>
         <artifactId>javafx-web</artifactId>
         <version>${version.javafx}</version>
       </dependency>
