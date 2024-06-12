@@ -57,6 +57,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 /**
  * @author Saswata Paul
@@ -155,7 +156,7 @@ public class ObjectiveViewHandler {
             comboRequirement.getItems().add("Has Allocation");
             comboRequirement.getItems().add("Has Both");
         }
-        
+
         // TODO: write logic for other objectives
         if (currentObjObject.getId().equalsIgnoreCase("objective-4-1")) {
 
@@ -582,8 +583,8 @@ public class ObjectiveViewHandler {
 
                     String evidenceText =
                             someReq.getId()
-                            + "| Description: "
-                            + someReq.getDescription()
+                                    + "| Description: "
+                                    + someReq.getDescription()
                                     + " | Reviews: ";
 
                     for (Evidence rev : someReq.getHasReviews()) {
@@ -600,8 +601,8 @@ public class ObjectiveViewHandler {
 
                     String evidenceText =
                             someReq.getId()
-                            + "| Description: "
-                            + someReq.getDescription()
+                                    + "| Description: "
+                                    + someReq.getDescription()
                                     + " | Reviews: ";
 
                     for (Evidence rev : someReq.getHasReviews()) {
@@ -618,8 +619,8 @@ public class ObjectiveViewHandler {
 
                     String evidenceText =
                             someReq.getId()
-                            + "| Description: "
-                            + someReq.getDescription()
+                                    + "| Description: "
+                                    + someReq.getDescription()
                                     + " | Reviews: ";
 
                     for (Evidence rev : someReq.getHasReviews()) {
@@ -725,8 +726,7 @@ public class ObjectiveViewHandler {
 
     public void populateTabTest() {}
 
-    public void populateTabReview() {
-    }
+    public void populateTabReview() {}
 
     public void populateTabAnalysis() {}
 
@@ -921,7 +921,7 @@ public class ObjectiveViewHandler {
                             }
                         });
             }
-            
+
             // TODO: below is ad hoc code. Make generic
             if (currentObjObject.getId().equalsIgnoreCase("objective-4-1")) {
                 // Contextmenu for reqList
@@ -940,11 +940,19 @@ public class ObjectiveViewHandler {
                             requirementChildrenLabel.setText("Reviews:");
 
                             // find the requirement object
-                            for (Evidence reqObj : currentObjObject.getOutputs().getItemReqObjs()) {
+                            for (Evidence reqObj : currentObjObject.getOutputs().getAllReqObjs()) {
                                 // set children list to the sources, if any exist
                                 if (reqObj.getId().equals(reqId)) {
                                     for (Evidence rev : reqObj.getHasReviews()) {
-                                        requirementChildrenList.getItems().add(rev.getId()+" | "+rev.getDescription());
+                                        Label revLabel = new Label();
+                                        revLabel.setText(
+                                                rev.getId() + " | " + rev.getDescription());
+                                        if (rev.getStatus()) {
+                                            revLabel.setTextFill(Color.GREEN);
+                                        } else {
+                                            revLabel.setTextFill(Color.RED);
+                                        }
+                                        requirementChildrenList.getItems().add(revLabel);
                                     }
                                 }
                             }

@@ -46,7 +46,7 @@ public class ComplianceProcess4 {
 
         // TODO: write logic
 
-    	// hardcoded to heps data
+        // hardcoded to heps data
         objective.setNoData(false);
         objective.setPartialData(true);
         objective.setPassed(false);
@@ -55,27 +55,26 @@ public class ComplianceProcess4 {
         int passedrevs = 0;
         int failedrevs = 0;
 
-        for(Evidence itemReq: objective.getOutputs().getAllReqObjs()) {
-        	if(itemReq.getHasReviews().size()>0) {
-        		boolean allPassed = true;
-        		for(Evidence rev: itemReq.getHasReviews()) {
-        			if(!rev.getStatus()) { // if failed
-        				allPassed = false;
-        			}
-        		}
-        		if(allPassed) {
-        			passedrevs ++;
-        		}
-        		else {
-        			failedrevs ++;
-        		}
-        	}
-        	norevs = objective.getOutputs().getAllReqObjs().size() - (passedrevs + failedrevs);
-        }        
+        for (Evidence itemReq : objective.getOutputs().getAllReqObjs()) {
+            if (itemReq.getHasReviews().size() > 0) {
+                boolean allPassed = true;
+                for (Evidence rev : itemReq.getHasReviews()) {
+                    if (!rev.getStatus()) { // if failed
+                        allPassed = false;
+                    }
+                }
+                if (allPassed) {
+                    passedrevs++;
+                } else {
+                    failedrevs++;
+                }
+            }
+            norevs = objective.getOutputs().getAllReqObjs().size() - (passedrevs + failedrevs);
+        }
         // create and add appropriate graphdata (//TODO: add actual code, hardcoded now)
-        Category totalReviews = new Category("Total", objective.getOutputs().getAllReqObjs().size());
-        Category reqWithNoReviews =
-                new Category("No Review", norevs);
+        Category totalReviews =
+                new Category("Total", objective.getOutputs().getAllReqObjs().size());
+        Category reqWithNoReviews = new Category("No Review", norevs);
         Category reqWithPassedReviews = new Category("Passed Review", passedrevs);
         Category reqWithFailedReviews = new Category("Failed Review", failedrevs);
         objective.getGraphs().getItemReqGraphData().getBuckets().add(totalReviews);

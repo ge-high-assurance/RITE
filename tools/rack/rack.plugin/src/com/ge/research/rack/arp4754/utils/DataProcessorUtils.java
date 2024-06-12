@@ -153,8 +153,8 @@ public class DataProcessorUtils {
         allQueryIds.add(getVarCSVID("allRequirementCompleteCorrectReview", config));
         allQueryIds.add(getVarCSVID("allRequirementTraceableReview", config));
         // will hardcode below for HEPS demo
-//        allQueryIds.add(getVarCSVID("allRequirementWithCompleteCorrectReview", config));
-//        allQueryIds.add(getVarCSVID("allRequirementWithTraceableReview", config));
+        //        allQueryIds.add(getVarCSVID("allRequirementWithCompleteCorrectReview", config));
+        //        allQueryIds.add(getVarCSVID("allRequirementWithTraceableReview", config));
         allQueryIds.add("DOCUMENT");
 
         // Execute each predefined query

@@ -165,7 +165,7 @@ public class DAPlan {
         // ARP4754 Output Objects
         private List<Evidence> aircraftReqObjs = new ArrayList<Evidence>();
 
-    	private List<Evidence> documentObjs = new ArrayList<Evidence>();
+        private List<Evidence> documentObjs = new ArrayList<Evidence>();
 
         private List<Evidence> derItemReqObjs = new ArrayList<Evidence>();
 
@@ -182,7 +182,7 @@ public class DAPlan {
         private List<Evidence> itemReqObjs = new ArrayList<Evidence>();
 
         private List<Evidence> sysReqObjs = new ArrayList<Evidence>();
-        
+
         private List<Evidence> allReqObjs = new ArrayList<Evidence>();
 
         private List<Evidence> systemObjs = new ArrayList<Evidence>();
@@ -202,25 +202,23 @@ public class DAPlan {
 
         private List<Evidence> analysisObjs = new ArrayList<Evidence>();
 
-        
-        
         public List<Evidence> getAllReqObjs() {
-			return allReqObjs;
-		}
+            return allReqObjs;
+        }
 
-		public void setAllReqObjs(List<Evidence> allReqObjs) {
-			this.allReqObjs = allReqObjs;
-		}
+        public void setAllReqObjs(List<Evidence> allReqObjs) {
+            this.allReqObjs = allReqObjs;
+        }
 
-		public List<Evidence> getAircraftReqObjs() {
-			return aircraftReqObjs;
-		}
+        public List<Evidence> getAircraftReqObjs() {
+            return aircraftReqObjs;
+        }
 
-		public void setAircraftReqObjs(List<Evidence> aircraftReqObjs) {
-			this.aircraftReqObjs = aircraftReqObjs;
-		}
+        public void setAircraftReqObjs(List<Evidence> aircraftReqObjs) {
+            this.aircraftReqObjs = aircraftReqObjs;
+        }
 
-		/**
+        /**
          * @return the requirementCompleteCorrectReviewObjs
          */
         public List<Evidence> getRequirementCompleteCorrectReviewObjs() {
