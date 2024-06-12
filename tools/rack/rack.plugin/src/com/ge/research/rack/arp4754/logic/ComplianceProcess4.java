@@ -55,6 +55,7 @@ public class ComplianceProcess4 {
         int passedrevs = 0;
         int failedrevs = 0;
 
+        
         for (Evidence itemReq : objective.getOutputs().getAllReqObjs()) {
             if (itemReq.getHasReviews().size() > 0) {
                 boolean allPassed = true;
@@ -71,6 +72,9 @@ public class ComplianceProcess4 {
             }
             norevs = objective.getOutputs().getAllReqObjs().size() - (passedrevs + failedrevs);
         }
+        
+        objective.setComplianceStatus((double) passedrevs/objective.getOutputs().getAllReqObjs().size() * 100.00);
+        
         // create and add appropriate graphdata (//TODO: add actual code, hardcoded now)
         Category totalReviews =
                 new Category("Total", objective.getOutputs().getAllReqObjs().size());
