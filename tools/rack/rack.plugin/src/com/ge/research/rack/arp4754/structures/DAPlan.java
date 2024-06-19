@@ -1,23 +1,23 @@
 /*
  * BSD 3-Clause License
- * 
+ *
  * Copyright (c) 2023, General Electric Company and Galois, Inc.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -639,126 +639,147 @@ public class DAPlan {
         public String getDesc() {
             return desc;
         }
+
         /**
          * @param desc the desc to set
          */
         public void setDesc(String desc) {
             this.desc = desc;
         }
+
         /**
          * @return the id
          */
         public String getId() {
             return id;
         }
+
         /**
          * @param id the id to set
          */
         public void setId(String id) {
             this.id = id;
         }
+
         /**
          * @return the applicability
          */
         public String getApplicability() {
             return applicability;
         }
+
         /**
          * @param applicability the applicability to set
          */
         public void setApplicability(String applicability) {
             this.applicability = applicability;
         }
+
         /**
          * @return the queries
          */
         public List<String> getQueries() {
             return queries;
         }
+
         /**
          * @param queries the queries to set
          */
         public void setQueries(List<String> queries) {
             this.queries = queries;
         }
+
         /**
          * @return the outputs
          */
         public Output getOutputs() {
             return outputs;
         }
+
         /**
          * @param outputs the outputs to set
          */
         public void setOutputs(Output outputs) {
             this.outputs = outputs;
         }
+
         /**
          * @return the complianceStatus
          */
         public double getComplianceStatus() {
             return complianceStatus;
         }
+
         /**
          * @param complianceStatus the complianceStatus to set
          */
         public void setComplianceStatus(double complianceStatus) {
             this.complianceStatus = complianceStatus;
         }
+
         /**
          * @return the passed
          */
         public boolean isPassed() {
             return passed;
         }
+
         /**
          * @param passed the passed to set
          */
         public void setPassed(boolean passed) {
             this.passed = passed;
         }
+
         /**
          * @return the noData
          */
         public boolean isNoData() {
             return noData;
         }
+
         /**
          * @param noData the noData to set
          */
         public void setNoData(boolean noData) {
             this.noData = noData;
         }
+
         /**
          * @return the partialData
          */
         public boolean isPartialData() {
             return partialData;
         }
+
         /**
          * @param partialData the partialData to set
          */
         public void setPartialData(boolean partialData) {
             this.partialData = partialData;
         }
+
         /**
          * @return the metrics
          */
         public String getMetrics() {
             return metrics;
         }
+
         /**
          * @param metrics the metrics to set
          */
         public void setMetrics(String metrics) {
             this.metrics = metrics;
         }
+
         /**
          * @return the graphs
          */
         public Graph getGraphs() {
             return graphs;
         }
+
         /**
          * @param graphs the graphs to set
          */
@@ -780,66 +801,77 @@ public class DAPlan {
     public String getDesc() {
         return desc;
     }
+
     /**
      * @param desc the desc to set
      */
     public void setDesc(String desc) {
         this.desc = desc;
     }
+
     /**
      * @return the id
      */
     public String getId() {
         return id;
     }
+
     /**
      * @param id the id to set
      */
     public void setId(String id) {
         this.id = id;
     }
+
     /**
      * @return the system
      */
     public String getSystem() {
         return system;
     }
+
     /**
      * @param system the system to set
      */
     public void setSystem(String system) {
         this.system = system;
     }
+
     /**
      * @return the sysDAL
      */
     public String getSysDAL() {
         return sysDAL;
     }
+
     /**
      * @param sysDAL the sysDAL to set
      */
     public void setSysDAL(String sysDAL) {
         this.sysDAL = sysDAL;
     }
+
     /**
      * @return the process
      */
     public List<Process> getProcesses() {
         return processes;
     }
+
     /**
      * @param process the process to set
      */
     public void setProcesses(List<Process> process) {
         processes = process;
     }
+
     /**
      * @return the complianceStatus
      */
     public double getComplianceStatus() {
         return complianceStatus;
     }
+
     /**
      * @param complianceStatus the complianceStatus to set
      */

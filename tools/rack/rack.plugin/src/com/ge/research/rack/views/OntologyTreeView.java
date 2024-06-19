@@ -1,23 +1,23 @@
 /*
  * BSD 3-Clause License
- * 
+ *
  * Copyright (c) 2023, General Electric Company and Galois, Inc.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -35,7 +35,9 @@ import com.ge.research.rack.BuildIngestionNodegroupsHandler;
 import com.ge.research.rack.utils.*;
 import com.ge.research.semtk.resultSet.TableResultSet;
 import com.google.inject.*;
-
+import java.io.InputStream;
+import java.util.*;
+import java.util.ArrayList;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.action.*;
 import org.eclipse.jface.viewers.*;
@@ -58,10 +60,6 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.*;
 import org.eclipse.ui.part.*;
-
-import java.io.InputStream;
-import java.util.*;
-import java.util.ArrayList;
 
 /**
  * This sample class demonstrates how to plug-in a new workbench view. The view shows data obtained
@@ -90,7 +88,8 @@ public class OntologyTreeView extends ViewPart implements INodegroupView {
     private static Image ontFieldImg = null;
     private static String selectedUri = "";
     private static TreeParent selectedNode = null;
-    private static String selectedName = "";
+
+    // private static String selectedName = "";
 
     class TreeObject implements IAdaptable {
         private String name;
@@ -133,7 +132,7 @@ public class OntologyTreeView extends ViewPart implements INodegroupView {
     }
 
     class TreeParent extends TreeObject {
-        private ArrayList children;
+        private ArrayList<TreeObject> children;
         public String uri = "";
         public String type = "";
         public String comment = "";
@@ -141,7 +140,7 @@ public class OntologyTreeView extends ViewPart implements INodegroupView {
 
         public TreeParent(String name) {
             super(name);
-            children = new ArrayList();
+            children = new ArrayList<>();
         }
 
         public void addChild(TreeObject child) {
@@ -339,7 +338,7 @@ public class OntologyTreeView extends ViewPart implements INodegroupView {
                         if (((TreeParent) itemData).type.equals("inner")
                                 && ((TreeParent) itemData).hasChildren()) {
                             selectedUri = ((TreeParent) itemData).uri;
-                            selectedName = ((TreeParent) itemData).getName();
+                            // selectedName = ((TreeParent) itemData).getName();
                         }
                         selectedNode = (TreeParent) itemData;
                     }

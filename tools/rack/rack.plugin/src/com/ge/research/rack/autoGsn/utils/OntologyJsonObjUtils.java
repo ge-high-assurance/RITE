@@ -1,23 +1,23 @@
 /*
  * BSD 3-Clause License
- * 
+ *
  * Copyright (c) 2023, General Electric Company and Galois, Inc.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -31,12 +31,10 @@
  */
 package com.ge.research.rack.autoGsn.utils;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * @author Saswata Paul
@@ -70,12 +68,12 @@ public class OntologyJsonObjUtils {
     public static List<String> getPropertyRangeURIs(
             JSONObject ontInfo, String classId, String propId) {
         // Create a list of strings to store values
-        List rangeUris = new ArrayList<String>();
+        List<String> rangeUris = new ArrayList<String>();
 
         System.out.println("Finding range of " + classId + " | " + propId);
 
         JSONArray classPropertyRangeList = (JSONArray) ontInfo.get("classPropertyRangeList");
-        Iterator classPropertyRangeListIter = classPropertyRangeList.iterator();
+        var classPropertyRangeListIter = classPropertyRangeList.iterator();
 
         // Flag to check if propertyUri has been added as first element
         Boolean addedPropUriFlag = false;
@@ -88,8 +86,8 @@ public class OntologyJsonObjUtils {
             String rowRangeInfo = classPropertyRange.get(2).toString();
 
             String rowClassId = rowClassInfo.split("\\:")[1];
-            String rowClassUri =
-                    getUriPrefix(ontInfo, rowClassInfo.split("\\:")[0]) + "#" + rowClassId;
+            // String rowClassUri =
+            //        getUriPrefix(ontInfo, rowClassInfo.split("\\:")[0]) + "#" + rowClassId;
             String rowPropId = rowPropInfo.split("\\:")[1];
             String rowPropUri =
                     getUriPrefix(ontInfo, rowPropInfo.split("\\:")[0]) + "#" + rowPropId;
@@ -147,7 +145,7 @@ public class OntologyJsonObjUtils {
         System.out.println("Finding URI of class " + classId);
 
         JSONArray subClassSuperClassList = (JSONArray) ontInfo.get("subClassSuperClassList");
-        Iterator subClassSuperClassListIter = subClassSuperClassList.iterator();
+        var subClassSuperClassListIter = subClassSuperClassList.iterator();
 
         while (subClassSuperClassListIter.hasNext()) {
             JSONArray subSuperPair = (JSONArray) subClassSuperClassListIter.next();
@@ -184,7 +182,7 @@ public class OntologyJsonObjUtils {
         System.out.println("Finding Superclass of class " + classId);
 
         JSONArray subClassSuperClassList = (JSONArray) ontInfo.get("subClassSuperClassList");
-        Iterator subClassSuperClassListIter = subClassSuperClassList.iterator();
+        var subClassSuperClassListIter = subClassSuperClassList.iterator();
 
         while (subClassSuperClassListIter.hasNext()) {
             JSONArray subSuperPair = (JSONArray) subClassSuperClassListIter.next();
@@ -220,7 +218,7 @@ public class OntologyJsonObjUtils {
             JSONObject ontInfo, String classAId, String propId, String classBId) {
 
         JSONArray classPropertyRangeList = (JSONArray) ontInfo.get("classPropertyRangeList");
-        Iterator classPropertyRangeListIter = classPropertyRangeList.iterator();
+        var classPropertyRangeListIter = classPropertyRangeList.iterator();
 
         /**
          * Note: Since class can be from overlays, the JSON ontology information can have the Class

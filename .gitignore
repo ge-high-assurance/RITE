@@ -10,6 +10,7 @@
 .recommenders
 .settings/
 bin/
+!tools/rack/rack.plugin/resources/workflows/bin
 local.properties
 tmp/
 

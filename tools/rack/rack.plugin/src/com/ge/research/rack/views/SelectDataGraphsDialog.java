@@ -1,23 +1,23 @@
 /*
  * BSD 3-Clause License
- * 
+ *
  * Copyright (c) 2023, General Electric Company and Galois, Inc.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -39,7 +39,8 @@ import com.ge.research.rack.utils.RackConsole;
 import com.ge.research.semtk.api.nodeGroupExecution.client.NodeGroupExecutionClient;
 import com.ge.research.semtk.resultSet.TableResultSet;
 import com.ge.research.semtk.sparqlX.SparqlConnection;
-
+import java.io.File;
+import java.util.ArrayList;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
@@ -60,13 +61,12 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
-
-import java.io.File;
-import java.util.ArrayList;
+import org.eclipse.ui.PlatformUI;
 
 /** Author: Paul Meng */
 public class SelectDataGraphsDialog extends Dialog {
-    private Font font, boldFont;
+    private Font font;
+    // private Font boldFont;
     public static String nodegroupId = "";
     private static Table table;
 
@@ -74,7 +74,7 @@ public class SelectDataGraphsDialog extends Dialog {
         super(parent);
         nodegroupId = nodegroup;
         font = new Font(null, "Helvetica", 12, SWT.NORMAL);
-        boldFont = new Font(null, "Helvetica", 12, SWT.BOLD);
+        // boldFont = new Font(null, "Helvetica", 12, SWT.BOLD);
     }
 
     @Override
@@ -99,6 +99,7 @@ public class SelectDataGraphsDialog extends Dialog {
         Composite mainComposite = new Composite(parent, SWT.NONE);
         mainComposite.setLayout(new GridLayout(1, false));
         mainComposite.setSize(700, 700);
+
         renderNumTriples(mainComposite);
         // save and close buttons
         Composite closeButtons = new Composite(mainComposite, SWT.NONE);
@@ -119,6 +120,16 @@ public class SelectDataGraphsDialog extends Dialog {
         // Set the preferred size
         Point bestSize = getShell().computeSize(SWT.DEFAULT, SWT.DEFAULT);
         getShell().setSize(bestSize);
+
+        var wb = PlatformUI.getWorkbench();
+        var win = wb.getActiveWorkbenchWindow();
+        if (win != null) {
+            var rect = win.getShell().getBounds();
+            var sz = getShell().getSize();
+            getShell()
+                    .setLocation(
+                            rect.x + (rect.width - sz.x) / 2, rect.y + (rect.height - sz.y) / 2);
+        }
 
         cancel.addSelectionListener(
                 new SelectionAdapter() {
