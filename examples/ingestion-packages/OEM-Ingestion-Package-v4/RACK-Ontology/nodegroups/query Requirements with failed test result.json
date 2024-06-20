@@ -1,0 +1,279 @@
+{
+	"version": 3,
+	"sparqlConn": {
+		"name": "RACK",
+		"domain": "",
+		"enableOwlImports": false,
+		"model": [
+			{
+				"type": "fuseki",
+				"url": "http://localhost:3030/RACK",
+				"graph": "http://rack001/model"
+			}
+		],
+		"data": [
+			{
+				"type": "fuseki",
+				"url": "http://localhost:3030/RACK",
+				"graph": "http://rack001/data"
+			}
+		]
+	},
+	"sNodeGroup": {
+		"version": 18,
+		"limit": 0,
+		"offset": 0,
+		"sNodeList": [
+			{
+				"propList": [
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"domainURI": "http://arcos.rack/PROV-S#identifier",
+						"Constraints": "",
+						"SparqlID": "?req",
+						"isReturned": false,
+						"optMinus": 0,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false,
+						"binding": "?verifies_REQUIREMENT_identifier",
+						"isBindingReturned": true
+					}
+				],
+				"nodeList": [],
+				"fullURIName": "http://arcos.rack/REQUIREMENTS#REQUIREMENT",
+				"SparqlID": "?REQUIREMENT",
+				"isReturned": false,
+				"isRuntimeConstrained": false,
+				"valueConstraint": "",
+				"instanceValue": null,
+				"deletionMode": "NO_DELETE"
+			},
+			{
+				"propList": [],
+				"nodeList": [],
+				"fullURIName": "http://arcos.rack/TESTING#TEST_STATUS",
+				"SparqlID": "?TEST_STATUS",
+				"isReturned": false,
+				"isRuntimeConstrained": false,
+				"valueConstraint": "FILTER ( ?TEST_STATUS IN (<http://arcos.rack/TESTING#Failed> ) ) ",
+				"instanceValue": null,
+				"deletionMode": "NO_DELETE"
+			},
+			{
+				"propList": [
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"domainURI": "http://arcos.rack/PROV-S#identifier",
+						"Constraints": "",
+						"SparqlID": "?test",
+						"isReturned": false,
+						"optMinus": 0,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false,
+						"binding": "?confirms_TEST_identifier",
+						"isBindingReturned": true
+					}
+				],
+				"nodeList": [
+					{
+						"SnodeSparqlIDs": [
+							"?REQUIREMENT"
+						],
+						"OptionalMinus": [
+							0
+						],
+						"Qualifiers": [
+							""
+						],
+						"DeletionMarkers": [
+							false
+						],
+						"range": [
+							"http://arcos.rack/PROV-S#ENTITY"
+						],
+						"ConnectBy": "verifies",
+						"Connected": true,
+						"UriConnectBy": "http://arcos.rack/TESTING#verifies"
+					}
+				],
+				"fullURIName": "http://arcos.rack/TESTING#TEST",
+				"SparqlID": "?TEST",
+				"isReturned": false,
+				"isRuntimeConstrained": false,
+				"valueConstraint": "",
+				"instanceValue": null,
+				"deletionMode": "NO_DELETE"
+			},
+			{
+				"propList": [
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"domainURI": "http://arcos.rack/PROV-S#identifier",
+						"Constraints": "",
+						"SparqlID": "?test_execution",
+						"isReturned": false,
+						"optMinus": 0,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false,
+						"binding": "?executedBy_TEST_EXECUTION_identifier",
+						"isBindingReturned": true
+					}
+				],
+				"nodeList": [],
+				"fullURIName": "http://arcos.rack/TESTING#TEST_EXECUTION",
+				"SparqlID": "?TEST_EXECUTION",
+				"isReturned": false,
+				"isRuntimeConstrained": false,
+				"valueConstraint": "",
+				"instanceValue": null,
+				"deletionMode": "NO_DELETE"
+			},
+			{
+				"propList": [
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"domainURI": "http://arcos.rack/PROV-S#identifier",
+						"Constraints": "",
+						"SparqlID": "?test_result",
+						"isReturned": false,
+						"optMinus": 0,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false,
+						"binding": "?TEST_RESULT_identifier",
+						"isBindingReturned": true
+					}
+				],
+				"nodeList": [
+					{
+						"SnodeSparqlIDs": [
+							"?TEST_EXECUTION"
+						],
+						"OptionalMinus": [
+							0
+						],
+						"Qualifiers": [
+							""
+						],
+						"DeletionMarkers": [
+							false
+						],
+						"range": [
+							"http://arcos.rack/TESTING#TEST_EXECUTION"
+						],
+						"ConnectBy": "",
+						"Connected": true,
+						"UriConnectBy": "http://arcos.rack/PROV-S#wasGeneratedBy"
+					},
+					{
+						"SnodeSparqlIDs": [
+							"?TEST"
+						],
+						"OptionalMinus": [
+							0
+						],
+						"Qualifiers": [
+							""
+						],
+						"DeletionMarkers": [
+							false
+						],
+						"range": [
+							"http://arcos.rack/TESTING#TEST"
+						],
+						"ConnectBy": "confirms",
+						"Connected": true,
+						"UriConnectBy": "http://arcos.rack/TESTING#confirms"
+					},
+					{
+						"SnodeSparqlIDs": [
+							"?TEST_STATUS"
+						],
+						"OptionalMinus": [
+							0
+						],
+						"Qualifiers": [
+							""
+						],
+						"DeletionMarkers": [
+							false
+						],
+						"range": [
+							"http://arcos.rack/TESTING#TEST_STATUS"
+						],
+						"ConnectBy": "result",
+						"Connected": true,
+						"UriConnectBy": "http://arcos.rack/TESTING#result"
+					}
+				],
+				"fullURIName": "http://arcos.rack/TESTING#TEST_RESULT",
+				"SparqlID": "?TEST_RESULT",
+				"isReturned": false,
+				"isRuntimeConstrained": false,
+				"valueConstraint": "",
+				"instanceValue": null,
+				"deletionMode": "NO_DELETE"
+			}
+		],
+		"orderBy": [],
+		"groupBy": [],
+		"unionHash": {},
+		"columnOrder": []
+	},
+	"importSpec": {
+		"version": "1",
+		"baseURI": "",
+		"columns": [],
+		"dataValidator": [],
+		"texts": [],
+		"transforms": [],
+		"nodes": [
+			{
+				"sparqlID": "?TEST_RESULT",
+				"type": "http://arcos.rack/TESTING#TEST_RESULT",
+				"mapping": [],
+				"props": []
+			},
+			{
+				"sparqlID": "?TEST_EXECUTION",
+				"type": "http://arcos.rack/TESTING#TEST_EXECUTION",
+				"mapping": [],
+				"props": []
+			},
+			{
+				"sparqlID": "?TEST",
+				"type": "http://arcos.rack/TESTING#TEST",
+				"mapping": [],
+				"props": []
+			},
+			{
+				"sparqlID": "?TEST_STATUS",
+				"type": "http://arcos.rack/TESTING#TEST_STATUS",
+				"mapping": [],
+				"props": []
+			},
+			{
+				"sparqlID": "?REQUIREMENT",
+				"type": "http://arcos.rack/REQUIREMENTS#REQUIREMENT",
+				"mapping": [],
+				"props": []
+			}
+		]
+	},
+	"plotSpecs": []
+}
