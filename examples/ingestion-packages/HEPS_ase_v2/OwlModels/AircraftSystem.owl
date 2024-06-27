@@ -1,0 +1,85 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:sys="http://arcos.rack/SYSTEM#"
+    xmlns:builtinfunctions="http://sadl.org/builtinfunctions#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:AcSys="http://arcos.rack/AircraftSystem#"
+    xmlns:sadlimplicitmodel="http://sadl.org/sadlimplicitmodel#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:Rv="http://arcos.rack/REVIEW#"
+    xmlns:sadlbasemodel="http://sadl.org/sadlbasemodel#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:Rq="http://arcos.rack/REQUIREMENTS#">
+  <owl:Ontology rdf:about="http://arcos.rack/AircraftSystem">
+    <owl:imports rdf:resource="http://arcos.rack/SYSTEM"/>
+    <owl:imports rdf:resource="http://arcos.rack/REVIEW"/>
+    <owl:imports rdf:resource="http://arcos.rack/REQUIREMENTS"/>
+    <owl:imports rdf:resource="http://sadl.org/builtinfunctions"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlimplicitmodel"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlbasemodel"/>
+    <rdfs:comment xml:lang="en">This ontology was created from a SADL file 'AircraftSystem.sadl' and should not be directly edited.</rdfs:comment>
+  </owl:Ontology>
+  <owl:Class rdf:about="http://arcos.rack/AircraftSystem#AircraftReq">
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/REQUIREMENTS#REQUIREMENT"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://arcos.rack/AircraftSystem#Aircraft">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://arcos.rack/SYSTEM#SYSTEM"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom>
+          <owl:Class rdf:about="http://arcos.rack/SYSTEM#SYSTEM"/>
+        </owl:allValuesFrom>
+        <owl:onProperty rdf:resource="http://arcos.rack/REQUIREMENTS#governs"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <owl:unionOf rdf:parseType="Collection">
+      <owl:Class rdf:about="http://arcos.rack/AircraftSystem#SystemReq"/>
+      <owl:Class rdf:about="http://arcos.rack/AircraftSystem#SystemDerivedReq"/>
+    </owl:unionOf>
+  </owl:Class>
+  <owl:Class rdf:about="http://arcos.rack/AircraftSystem#SystemReq">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom>
+          <owl:Class>
+            <owl:unionOf rdf:parseType="Collection">
+              <owl:Class rdf:about="http://arcos.rack/AircraftSystem#AircraftReq"/>
+              <owl:Class rdf:about="http://arcos.rack/AircraftSystem#SystemReq"/>
+            </owl:unionOf>
+          </owl:Class>
+        </owl:allValuesFrom>
+        <owl:onProperty rdf:resource="http://arcos.rack/REQUIREMENTS#satisfies"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/REQUIREMENTS#REQUIREMENT"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://arcos.rack/AircraftSystem#SystemDerivedReq">
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/REQUIREMENTS#REQUIREMENT"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://arcos.rack/AircraftSystem#SystemDesignDescription">
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/DOCUMENT#DOCUMENT"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://arcos.rack/SYSTEM#SYSTEM">
+    <rdfs:comment xml:lang="en">SYSTEMs classify logical parts of the whole system being developed</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#ENTITY"/>
+  </owl:Class>
+  <owl:ObjectProperty rdf:about="http://arcos.rack/AircraftSystem#systemComponent">
+    <rdfs:range rdf:resource="http://arcos.rack/SYSTEM#SYSTEM"/>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="http://arcos.rack/AircraftSystem#Aircraft"/>
+          <owl:Class rdf:about="http://arcos.rack/SYSTEM#SYSTEM"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://arcos.rack/AircraftSystem#hasInterface">
+    <rdfs:range rdf:resource="http://arcos.rack/SYSTEM#INTERFACE"/>
+    <rdfs:domain rdf:resource="http://arcos.rack/SYSTEM#SYSTEM"/>
+  </owl:ObjectProperty>
+</rdf:RDF>

@@ -666,22 +666,22 @@ public class DataProcessor {
         System.out.println("created allItemRequirementwithSystemRequreiment");
 
         // get the header line for allRequirementCompleteCorrectReview csv file
-        String[] allRequirementCompleteCorrectReviewCols =
+        String[] allRequirementWithCompleteCorrectReviewCols =
                 CSVUtil.getColumnInfo(
                         RackQueryUtils.createCsvFilePath(
                                 DataProcessorUtils.getVarCSVID(
-                                        "allRequirementCompleteCorrectReview", config),
+                                        "allRequirementWithCompleteCorrectReview", config),
                                 rackDir));
         int reqIdCol =
                 CustomStringUtils.getCSVColumnIndex(
-                        allRequirementCompleteCorrectReviewCols,
+                		allRequirementWithCompleteCorrectReviewCols,
                         config.getItemReq() + "_id"); // TODO: change to all requirements
         int completeCorrectReviewIdCol =
                 CustomStringUtils.getCSVColumnIndex(
-                        allRequirementCompleteCorrectReviewCols,
+                		allRequirementWithCompleteCorrectReviewCols,
                         config.getRequirementCompleteCorrectReview() + "_id");
 
-        for (String[] row : allRequirementCompleteCorrectReview) {
+        for (String[] row : allRequirementWithCompleteCorrectReview) {
             if ((row[reqIdCol] != null)) {
                 // find index of the object in the appropriate evidence list
                 int indx =
@@ -694,31 +694,31 @@ public class DataProcessor {
                             .getHasReviews()
                             .add(
                                     EvidenceUtils.getEvidenceObjById(
-                                            Artifacts.getSysReqObjs(),
+                                            Artifacts.getItemReqObjs(),
                                             row[completeCorrectReviewIdCol]));
                 }
             }
         }
 
-        System.out.println("created allRequirementCompleteCorrectReview");
+        System.out.println("created allRequirementWithCompleteCorrectReview");
 
         // get the header line for allRequirementCompleteCorrectReview csv file
-        String[] allRequirementTraceableReviewCols =
+        String[] allRequirementWithTraceableReviewCols =
                 CSVUtil.getColumnInfo(
                         RackQueryUtils.createCsvFilePath(
                                 DataProcessorUtils.getVarCSVID(
-                                        "allRequirementTraceableReview", config),
+                                        "allRequirementWithTraceableReview", config),
                                 rackDir));
         int reqIdCol2 =
                 CustomStringUtils.getCSVColumnIndex(
-                        allRequirementTraceableReviewCols,
+                		allRequirementWithTraceableReviewCols,
                         config.getItemReq() + "_id"); // TODO: change to all requirements
         int traceableReviewIdCol =
                 CustomStringUtils.getCSVColumnIndex(
-                        allRequirementTraceableReviewCols,
+                		allRequirementWithTraceableReviewCols,
                         config.getRequirementCompleteCorrectReview() + "_id");
 
-        for (String[] row : allRequirementTraceableReview) {
+        for (String[] row : allRequirementWithTraceableReview) {
             if ((row[reqIdCol2] != null)) {
                 // find index of the object in the appropriate evidence list
                 int indx =
@@ -731,7 +731,7 @@ public class DataProcessor {
                             .getHasReviews()
                             .add(
                                     EvidenceUtils.getEvidenceObjById(
-                                            Artifacts.getSysReqObjs(), row[traceableReviewIdCol]));
+                                            Artifacts.getItemReqObjs(), row[traceableReviewIdCol]));
                 }
             }
         }

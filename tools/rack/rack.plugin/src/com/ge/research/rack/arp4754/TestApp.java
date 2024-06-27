@@ -32,6 +32,8 @@
 package com.ge.research.rack.arp4754;
 
 import com.ge.research.rack.arp4754.logic.DataProcessor;
+import com.ge.research.rack.arp4754.viewManagers.Arp4754ViewsManager;
+import com.ge.research.rack.autoGsn.utils.CustomFileUtils;
 
 /**
  * @author Saswata Paul
@@ -39,24 +41,30 @@ import com.ge.research.rack.arp4754.logic.DataProcessor;
 public class TestApp {
 
     public static void main(String[] args) throws Exception {
-        String configFilePath =
-                "C://Users/212807042/Desktop/RACK_tests/temp_results/arp4754_dev/dummy.config";
-        String rackDir = "C://Users/212807042/Desktop/RACK_tests/temp_results/arp4754_dev";
+//        String configFilePath =
+//                "C://Users/212807042/Desktop/RACK_tests/temp_results/arp4754_dev/dummy.config";
+//        String rackDir = "C://Users/212807042/Desktop/RACK_tests/temp_results/arp4754_dev";
+//
+//        //    	Configuration config = ConfigReader.getConfigFromFile(configFile);
+//
+//        //        Configuration config = ConfigReader.getConfigFromRACK(rackDir);
+//        //
+//        //        System.out.println("Got config");
+//        //
+//        //        System.out.println(config.getSysReq());
+//        //        System.out.println(config.getItemReq());
+//        //        System.out.println(config.getItem());
+//
+//        String configFile = "dummy.config";
+//
+//        DataProcessor processor = new DataProcessor();
+//
+//        processor.getPlanData(rackDir);
 
-        //    	Configuration config = ConfigReader.getConfigFromFile(configFile);
-
-        //        Configuration config = ConfigReader.getConfigFromRACK(rackDir);
-        //
-        //        System.out.println("Got config");
-        //
-        //        System.out.println(config.getSysReq());
-        //        System.out.println(config.getItemReq());
-        //        System.out.println(config.getItem());
-
-        String configFile = "dummy.config";
-
-        DataProcessor processor = new DataProcessor();
-
-        processor.getPlanData(rackDir);
+        // Create tempdir to store the csv files
+        String tempDir = "C://Users/212807042/Desktop/RACK_tests/temp_results/arp4754_dev";
+        DataProcessor rdpObj = new DataProcessor();
+        rdpObj.getPlanData(tempDir);
+    
     }
 }

@@ -1,0 +1,33 @@
+uri "http://arcos.rack/AircraftSystem" alias AcSys. // Aircraft System level
+
+import "http://arcos.rack/REQUIREMENTS".
+import "http://arcos.rack/REVIEW".
+import "http://arcos.rack/SYSTEM".
+
+// Alignment with Cameo model of HEPS.
+// Stereotype <<system>> mapped to Aircraft.
+// Stereotype <subsystem>> mapped to SYSTEM.
+// Stereotype <<block>> mapped to Item (defined in AircraftItem.sadl).
+// We do not combine AircraftSystem.sadl and AircraftItem.sadl into one file so that we can
+// have partOf property with different domain and range.
+
+//Aircraft is a type of ENTITY.  
+Aircraft is a type of SYSTEM.  
+systemComponent describes {Aircraft or SYSTEM} with values of type SYSTEM.
+//AM: systemComponent goes from parent to child; we may want to go the
+//AM: the other way and use "partOf" relationship.
+//AM: And then delete systemComponent
+
+//AcSys:partOf describes SYSTEM only has values of type SYSTEM.
+
+AircraftReq is a type of REQUIREMENT.
+SystemReq is a type of REQUIREMENT.
+SystemDerivedReq is a type of REQUIREMENT.
+governs of {SystemReq or SystemDerivedReq} only has values of type SYSTEM.
+satisfies of SystemReq only has values of type {AircraftReq or SystemReq}.
+
+SystemDesignDescription is a type of DOCUMENT.
+
+
+ //--SP: Connect SYSTEM with interface
+ hasInterface describes SYSTEM with values of type INTERFACE.

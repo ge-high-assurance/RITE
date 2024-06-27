@@ -1,0 +1,99 @@
+identifier,title,description,governedby_itemreq_identifier,governedby_systemreq_identifier
+RIndReview2,Requirements Independence Analysis-PropulsionController,Pair-wise Requirements Dependency Analysis (Per Package) - PropulsionControlReqs,,
+RIndReview2,,,84,
+RIndReview2,,,85,
+RIndReview2,,,86,
+RIndReview2,,,87,
+RIndReview2,,,88,
+RIndReview2,,,89,
+RIndReview2,,,90,
+RIndReview2,,,91,
+RIndReview2,,,92,
+RIndReview2,,,93,
+RIndReview2,,,94,
+RIndReview2,,,95,
+RIndReview2,,,96,
+RCompReview1,Requirements Completeness Analysis-Control,Completeness Analysis Results (Per Package) - Control,,
+RCompReview1,,,,97
+RCompReview1,,,,98
+RCompReview1,,,,99
+RCompReview1,,,,100
+RCompReview1,,,,101
+RCompReview1,,,,102
+RCompReview1,,,,C1
+RCompReview1,,,,C2
+RCompReview1,,,,C3
+RCompReview1,,,,C6
+RCompReview1,,,,C7
+RCompReview2,Requirements Completeness Analysis-HLRs,Completeness Analysis Results (Per Package) - HLRs,,
+RCompReview2,,,,31
+RCompReview2,,,,32
+RCompReview2,,,,33
+RCompReview2,,,,34
+RCompReview3,Requirements Completeness Analysis-PropulsionControl,Completeness Analysis Results (Per Package) - PropulsionControlReqs,,
+RCompReview3,,,84,
+RCompReview3,,,86,
+RCompReview3,,,87,
+RCompReview3,,,88,
+RCompReview3,,,89,
+RCompReview3,,,90,
+RCompReview3,,,91,
+RCompReview3,,,92,
+RCompReview3,,,93,
+RCompReview3,,,94,
+RCompReview3,,,95,
+RCompReview3,,,96,
+RCompReview4,Requirements Completeness Analysis-CockpitControl,Completeness Analysis Results (Per Package) - CockpitControl,,
+RCompReview4,,,CCC3,
+RCompReview4,,,CCC5,
+RCompReview4,,,CCC14,
+RCompReview4,,,CCC12,
+RCompReview4,,,CCC13,
+RCompReview4,,,CCC10,
+RCompReview6,Requirements Completeness Analysis-DCACCtrReqs,Completeness Analysis Results (Per Package) - DCACCtrReqs,,
+RCompReview6,,,DCACCtrR1,
+RCompReview6,,,DCACCtrR2,
+RCompReview6,,,DCACCtrR3,
+RCompReview6,,,DCACCtrR4,
+RCompReview6,,,DCACCtrR5,
+RCompReview6,,,DCACCtrR6,
+RCompReview6,,,DCACCtrR7,
+RCompReview6,,,DCACCtrR8,
+RCompReview7,Requirements Completeness Analysis-AutomatedControl,Completeness Analysis Results (Per Package) - AutomatedControl,,
+RCompReview7,,,,CAC3
+RCompReview7,,,,CAC4
+RCompReview7,,,,CAC5
+RCompReview8,Requirements Completeness Analysis-DCDCCtrReqs,Completeness Analysis Results (Per Package) - DCDCCtrReqs,,
+RCompReview8,,,DCDCCtrR1,
+RCompReview8,,,DCDCCtrR2,
+RCompReview8,,,DCDCCtrR3,
+RCompReview8,,,DCDCCtrR4,
+RCompReview8,,,DCDCCtrR5,
+RCompReview8,,,DCDCCtrR6,
+RCompReview8,,,DCDCCtrR7,
+RCompReview8,,,DCDCCtrR8,
+RCompReview9,Requirements Completeness Analysis-Aircraft,Completeness Analysis Results (Per Package) - Aircraft,,
+RCompReview9,,,,CAC1
+RCompReview9,,,,CAC2
+RGContReview1,Requirements Global Contingency Analysis-HLRs,Globally Contingency Analysis (Satisfiable or Falsifiable) - HLRs,,
+RGContReview1,,,,31
+RGContReview1,,,,32
+RGContReview1,,,,33
+RGContReview1,,,,34
+RContReview1,Requirements Contingency Analysis-DCACCtrReqs,Contingency Analysis (Satisfiable or Falsifiable) - DCACCtrReqs,,
+RContReview1,,,DCACCtrR1,
+RContReview1,,,DCACCtrR2,
+RContReview1,,,DCACCtrR3,
+RContReview1,,,DCACCtrR4,
+RContReview1,,,DCACCtrR5,
+RContReview1,,,DCACCtrR6,
+RContReview1,,,DCACCtrR7,
+RContReview1,,,DCACCtrR8,
+RContReview2,Requirements Contingency Analysis--Control,Contingency Analysis (Satisfiable or Falsifiable) - Control,,
+RContReview2,,,,97
+RContReview2,,,,98
+RContReview2,,,,99
+RContReview2,,,,100
+RContReview2,,,,101
+RContReview2,,,,102
+RContReview2,,,,C1

@@ -1,0 +1,57 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:j.0="http://sadl.org/GSN-Pattern-core.sadl#"
+    xmlns:j.1="http://arcos.rack/PROV-S#"
+    xmlns:builtinfunctions="http://sadl.org/builtinfunctions#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:sadlimplicitmodel="http://sadl.org/sadlimplicitmodel#"
+    xmlns:j.2="http://sadl.org/GSN-core.sadl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:hepspat="http://sadl.org/heps-pattern.sadl#"
+    xmlns:sadlbasemodel="http://sadl.org/sadlbasemodel#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+  <owl:Ontology rdf:about="http://sadl.org/heps-pattern.sadl">
+    <owl:imports rdf:resource="http://sadl.org/GSN-Pattern-core.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/builtinfunctions"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlimplicitmodel"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlbasemodel"/>
+    <rdfs:comment xml:lang="en">This ontology was created from a SADL file 'heps-pattern.sadl' and should not be directly edited.</rdfs:comment>
+  </owl:Ontology>
+  <j.2:Strategy rdf:about="http://sadl.org/heps-pattern.sadl#itemReq-SP">
+    <j.0:pGoalSubGoalConnector>reviews</j.0:pGoalSubGoalConnector>
+    <j.0:pSubGoal>REVIEW_LOG</j.0:pSubGoal>
+    <j.0:pGoal>ENTITY</j.0:pGoal>
+    <j.1:description>Argument: All relevant reviews have passed</j.1:description>
+    <j.1:identifier>itemReq-SP</j.1:identifier>
+    <j.0:isPat rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</j.0:isPat>
+  </j.2:Strategy>
+  <j.0:GsnEvidence rdf:about="http://sadl.org/heps-pattern.sadl#result-evdnc">
+    <j.0:passValue>Passed</j.0:passValue>
+    <j.0:statusProperty>identifier</j.0:statusProperty>
+    <j.0:classId>REVIEW_STATE</j.0:classId>
+  </j.0:GsnEvidence>
+  <j.2:Goal rdf:about="http://sadl.org/heps-pattern.sadl#itemReq-GP">
+    <j.0:pGoal>REQUIREMENT</j.0:pGoal>
+    <j.1:description>Claim: Item Requirement has passed review</j.1:description>
+    <j.1:identifier>itemReq-GP</j.1:identifier>
+    <j.0:isPat rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</j.0:isPat>
+  </j.2:Goal>
+  <j.2:Strategy rdf:about="http://sadl.org/heps-pattern.sadl#review-SP">
+    <j.0:pGoalSubGoalConnector>reviewResult</j.0:pGoalSubGoalConnector>
+    <j.0:pSubGoal>REVIEW_STATE</j.0:pSubGoal>
+    <j.0:pGoal>REVIEW_LOG</j.0:pGoal>
+    <j.1:description>Argument: Review log has passed</j.1:description>
+    <j.1:identifier>review-SP</j.1:identifier>
+    <j.0:isPat rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</j.0:isPat>
+  </j.2:Strategy>
+  <j.2:Goal rdf:about="http://sadl.org/heps-pattern.sadl#review-GP">
+    <j.0:pGoal>REVIEW_LOG</j.0:pGoal>
+    <j.1:description>Claim: Review Log has passed</j.1:description>
+    <j.1:identifier>review-GP</j.1:identifier>
+    <j.0:isPat rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</j.0:isPat>
+  </j.2:Goal>
+</rdf:RDF>

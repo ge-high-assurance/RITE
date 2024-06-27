@@ -1,0 +1,52 @@
+ uri "http://sadl.org/aircraft_arp4754_dap.sadl" alias aircraftdap.
+ 
+ 
+ import "http://sadl.org/PLAN-CORE-Process1.sadl". 
+ import "http://sadl.org/PLAN-CORE-Process2.sadl".
+ import "http://sadl.org/PLAN-CORE-Process3.sadl".
+ import "http://sadl.org/PLAN-CORE-Process4.sadl".
+ import "http://sadl.org/PLAN-CORE-Process5.sadl".
+ import "http://sadl.org/PLAN-CORE-Process6.sadl".
+ import "http://sadl.org/PLAN-CORE-Process7.sadl".
+ import "http://sadl.org/PLAN-CORE-Process8.sadl".
+ 
+ 
+ //-- A system
+ 
+ HEPS is a SYSTEM
+ 	with identifier "HEPS"
+ 	with description "HEPS Use Case"
+ 	with developmentAssuranceLevel LevelA.
+
+
+ //-- The DAP
+ Adept-DAP is a DevelopmentAssurancePlan
+ 	with identifier "OEM-DAP"
+ 	with description "Development Assurance Plan for the OEM Engine"
+ 	with system HEPS
+ 	with process Process-1
+ 	with process Process-2
+ 	with process Process-3
+ 	with process Process-4
+ 	with process Process-5
+ 	with process Process-6
+ 	with process Process-7
+ 	with process Process-8.
+ 	 	
+ 	
+ 
+ 
+ //-- Objective 2-2 info
+ Objective-2-2 has query "Objective-2-2-query-count-all-System-Requirements". 	
+ Objective-2-2 has query "Objective-2-2-query-count-all-System-Requirements-allocated-to-a-system". 	
+ Objective-2-2 has query "Objective-2-2-query-count-all-Interfaces-allocated-to-a-system". 	 
+ Objective-2-2 has query "Objective-2-2-query-count-all-inputs-outputs-of-Interfaces". 	 
+ 
+ //-- Objective 2-4 info
+ Objective-2-4 has query "Objective-2-4-query-count-all-Derived-System-Requirements". 	
+  
+ //-- Objective 2-6 info
+ Objective-2-6 has query "Objective-2-6-query-count-all-Item-Requirements". 	
+ Objective-2-6 has query "Objective-2-6-query-count-all-Item-Requirements-traced-to-system-requirements". 	
+ Objective-2-6 has query "Objective-2-6-query-count-all-Item-Requirements-allocated-to-DesignedParts". 	
+ Objective-2-6 has query "Objective-2-6-query-count-all-Item-Requirements-allocated-to-ManufacturedParts". 	

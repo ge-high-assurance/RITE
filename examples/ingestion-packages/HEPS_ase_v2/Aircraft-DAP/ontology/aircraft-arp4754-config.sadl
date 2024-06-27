@@ -1,0 +1,21 @@
+ uri "http://sadl.org/aircraft-arp4754-config.sadl" alias aircraftconfig.
+ 
+  
+ import "http://sadl.org/PLAN-CORE.sadl".
+  
+  
+HEPSConfig is a CONFIGURATION
+              with identifier "HEPSConfig"
+              with derivedItemRequirementAlias "ItemDerivedReq" 
+              with derivedsystemRequirementAlias "SystemDerivedReq"
+              with interfaceAlias "INTERFACE"
+              with interfaceInputAlias "Input" // This is a special case of config where classnames are not used
+              with interfaceOutputAlias "Output" // This is a special case of config where classnames are not used                   
+              with itemAlias "Item"
+              with itemRequirementAlias"ItemReq"
+              with systemRequirementAlias "SystemReq"
+              with systemAlias "Aircraft"
+              with systemDesignDescriptionAlias "SystemDesignDescription"
+              with requirementCompleteCorrectReviewAlias "RequirementCompleteCorrectReview"
+              with requirementTraceableReviewAlias "RequirementTraceableReview".
+  
