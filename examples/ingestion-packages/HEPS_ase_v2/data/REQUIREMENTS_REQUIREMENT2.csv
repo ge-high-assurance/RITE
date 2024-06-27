@@ -1,0 +1,70 @@
+identifier,dataInsertedBy_identifier,description,title
+30,Cameo Ingestion,Payload shall have a minimum use-able payload of x lbs,Maximum
+45,Cameo Ingestion,Pilot shall set flaps of Aerodynamics to Enable when (mode of OPERATION is Takeoff) or (mode of OPERATION is Final Approach),FlightControls
+45.12,Cameo Ingestion,,Slats
+45.12.1,Cameo Ingestion,Pilot shall set slats of Aerodynamics to Enable when (mode of OPERATION is Takeoff or (mode of OPERATION is Final Approach),Slat1
+45.12.2,Cameo Ingestion,Pilot shall set slats of Aerodynamics to Y degrees when mode of OPERATION is climb and altitude of aircraft > y,Slat2
+45.12.3,Cameo Ingestion,Pilot shall set slats of Aerodynamics to Disable when mode of OPERATION is Climb and altitude of aircraft > z,Slat3
+45.12.4,Cameo Ingestion,Pilot shall set slats of Aerodynamics to Q degrees when mode of OPERATION is After landing roll and speed of aircraft <q,Slat4
+45.12.5,Cameo Ingestion,Pilot shall set slats of Aerodynamics to Disable when mode of OPERATION is After landing roll and speed of aircraft <r,Slat5
+45.13,Cameo Ingestion,,Flaps
+45.13.1,Cameo Ingestion,Flap angle shall not exceed 15 degrees when mode of OPERATION is Takeoff,Flap2
+45.13.2,Cameo Ingestion,Pilot shall set flaps of Aerodynamics to X degrees when mode of OPERATION is climb and altitude of aircraft > x,Flap3
+45.13.3,Cameo Ingestion,Pilot shall set flaps of Aerodynamics to Disable when mode of OPERATION is Climb and altitude of aircraft > z,Flap4
+45.13.4,Cameo Ingestion,Flap angle shall not exceed 40 degrees when mode of OPERATION is Final Approach,Flap5
+45.13.5,Cameo Ingestion,Pilot shall set flaps of Aerodynamics to P degrees when mode of OPERATION is After landing roll and speed of aircraft <p,Flap6
+45.13.6,Cameo Ingestion,Pilot shall set flaps of Aerodynamics to Disable when mode of OPERATION is After landing roll and speed of aircraft <r,Flap7
+BSR1,Cameo Ingestion,Battery energy density shall be 150 Wh/kg,Battery Energy Density
+BSR2,Cameo Ingestion,Battery max C-rate shall be 10 1/hr,Battery max discharge rate
+BSR3,Cameo Ingestion,battery specific energy shall be 250 Wh/kg,Battery specific energy
+BSR4,Cameo Ingestion,Battery energy rating shall be at least 100 kW-hr,Energy Rating
+BSR5,Cameo Ingestion,Charging rate shall be 0.5C,Charging rate
+BSR6,Cameo Ingestion,Discharge rate shall be 10C,Discharge rate
+BSR7,Cameo Ingestion,Max battery voltage shall be at most 600V,Max voltage
+BSR8,Cameo Ingestion,Min battery voltage shall be no lower than 300V,Min voltage
+DCACCR1,Cameo Ingestion,Input voltage shall be 1000 V DC,Input voltage
+DCACCR2,Cameo Ingestion,Output voltage shall be 1000 v line-to-line AC,Output voltage
+DCACCR3,Cameo Ingestion,Output power shall be 510 kW,Output power
+DCACCR4,Cameo Ingestion,Efficiency shall be 98%,Efficiency
+DCACCR5,Cameo Ingestion,Power density shall be 5 kW/kg,Power density
+DCDCCR1,Cameo Ingestion,Low voltage rating shall be 300 V - 600 V,Low voltage rating
+DCDCCR2,Cameo Ingestion,High voltage rating shall be 1000 V,High voltage rating
+DCDCCR3,Cameo Ingestion,Output power shall be 520 kW,Output power
+DCDCCR4,Cameo Ingestion,Efficiency shall be 98%,Efficiency
+DCDCCR5,Cameo Ingestion,Power density shall be 5 kW/kg,Power density
+ESR1,Cameo Ingestion,Electrical system should be rated for altitudes up to 30000ft,Altitude capability
+ESR3,Cameo Ingestion,Converter/inverter specific power shall be 2.2kW/kg,Converter/inverter specific power
+ESR4,Cameo Ingestion,Converter/inverter efficiency shall be no less than 95%,Converter/inverter efficiency
+ESR8,Cameo Ingestion,Power electronics specific power shall be 2.2 kW/kg,Power electronics specific power
+MR1,Cameo Ingestion,Input voltage shall be 1000 V line-to-line AC,Input Voltage
+MR2,Cameo Ingestion,Output power shall be 500 kW,Output power
+MR3,Cameo Ingestion,Motor scaling constant kmot shall be 0.33,Motor scaling constant
+MR4,Cameo Ingestion,Motor internal resistance shall not exceed 50 mOhm,Motor internal resistance
+MR5,Cameo Ingestion,Power factor shall be 0.8,Power factor
+MR6,Cameo Ingestion,Speed shall be 5000 RPM,Speed
+MR7,Cameo Ingestion,Efficiency shall be 96%,Efficiency
+MR8,Cameo Ingestion,Power density shall be 5kW/kg,PowerDensity
+PHR1,Cameo Ingestion,Empty weight of the aircraft shall not exceed 24460 lbs,Empty weight
+PHR2,Cameo Ingestion,Max takeoff weight shall not exceed 34500 lbs,Max takeoff weight
+PHR3,Cameo Ingestion,Battery weight shall not exceed 696 lbs,Battery weight
+PHR4,Cameo Ingestion,Total propulsion system weight shall not exceed 1437 lbs,Total propulsion system weight
+PHR4.1,Cameo Ingestion,Propeller weight shall not exceed 314 lbs,Propeller weight
+PHR4.2,Cameo Ingestion,Gas turbine weight shall not exceed 511 lbs,Gas turbine weight
+PHR4.3,Cameo Ingestion,Gearbox weight shall not exceed 312 lbs,Gearbox weight
+PHR4.4,Cameo Ingestion,Power electronics weight shall not exceed 125 lbs,Power electronics weight
+PHR4.5,Cameo Ingestion,Motor weight shall not exceed 9.0 lbs,Morot weight
+PR1,Cameo Ingestion,Max corrected turbine power shall be at least 3396 hp,Max corrected turbine power
+PR2,Cameo Ingestion,Max motor power shall be at least 333 hp,Max motor power
+PR3,Cameo Ingestion,Cruise turbine thermal efficiency shall be at least 0.356,Cruise turbine thermal efficiency
+PR4,Cameo Ingestion,Mission fuel burn shall be 1976 lb,Mission fuel burn
+PR5,Cameo Ingestion,Mission total energy usage shall not exceed 10896 kWh,Mission total energy usage
+PR6,Cameo Ingestion,Range shall be at least 450 nm,Range
+PR7,Cameo Ingestion,Payload mass shall be at least 7147 lb,Payload mass
+PR8,Cameo Ingestion,Time to climb shall be 20 min,Time to climb
+THR1,Cameo Ingestion,Matimum turbine inlet temperature shall not exceed 1400 K,Max turbine inlet temperature
+THR2,Cameo Ingestion,Burner pressure ration shall be 0.99,Burner pressure ratio
+THR3,Cameo Ingestion,Nozzle pressure ration shall be 0.99,Nozzle pressure ratio
+THR4,Cameo Ingestion,Max compresor pressure ration shall be at least 15,Max compressor pressure ratio
+THR5,Cameo Ingestion,Max inlet corrected flow shall be 0.3625,Max inlet corrected flow
+THR6,Cameo Ingestion,Max inter-turbine temperature shall not exceed 1058 K,Max inter-turbine temperature
+THR7,Cameo Ingestion,Mass scaling factor shall be 19751 kg/m^3,Mass scaling factor

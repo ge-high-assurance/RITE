@@ -1,0 +1,10 @@
+data-graph: "http://rack001/data"
+ingestion-steps:
+- {class: "http://arcos.rack/OEM#CSID_Req", csv: "CSID.csv"}
+- {class: "http://arcos.rack/OEM#PIDS_Req", csv: "PIDS.csv"}
+- {class: "http://arcos.rack/OEM#SRS_Req", csv: "SRS.csv"}
+- {class: "http://arcos.rack/OEM#SubDD_Req", csv: "SUBDD.csv"}
+- {class: "http://arcos.rack/OEM#SBVT_Test", csv: "SBVT_Test.csv"}
+- {class: "http://arcos.rack/OEM#SBVT_Result", csv: "SBVT_Result.csv"}
+- {class: "http://arcos.rack/SOFTWARE#SWCOMPONENT", csv: "SWCOMPONENT.csv"}
+- {class: "http://arcos.rack/DOCUMENT#DOCUMENT", csv: "DOCUMENT.csv"}

@@ -1,0 +1,16 @@
+
+ //-- Author: Saswata Paul
+ //-- An ontology to specify the different objectives and their related properties in an ARP4754 Development Assurance Plan (DAP) 
+
+ uri "http://sadl.org/PLAN-CORE-Process8.sadl" alias p8core.
+ 
+ import "http://sadl.org/PLAN-CORE.sadl".
+ 
+ Process-8 is a Process
+ 	with identifier "Process-8"
+ 	with description "Certification and Regulatory Authority Coordination Process"
+  	with objective Objective-8-1. 	
+ 	
+  Objective-8-1 is a Objective
+  	with identifier "Objective-8-1"
+  	with description " ".  	

@@ -1,0 +1,115 @@
+
+ 
+ 
+ //-- Author: Saswata Paul
+ //-- An ontology to specify the different objectives and their related properties in an ARP4754 Development Assurance Plan (DAP)  
+ 
+ uri "http://sadl.org/PLAN-CORE.sadl" alias dapcore.
+ 
+ import "http://arcos.rack/PROV-S".
+ import "http://arcos.rack/DOCUMENT".
+ import "http://arcos.rack/SYSTEM".
+ import "http://arcos.rack/HARDWARE".
+ import "http://arcos.rack/REQUIREMENTS".
+ import "http://arcos.rack/REVIEW".
+ import "http://arcos.rack/TESTING".
+ import "http://arcos.rack/HAZARD".
+ import "http://arcos.rack/ANALYSIS".
+ import "http://arcos.rack/PROCESS".
+ import "http://arcos.rack/AGENTS".
+ import "http://arcos.rack/CONFIDENCE".
+ 
+
+ //****************************************************************************************** 
+ //-- Some new classes and properties to support the ARP4754 verbiage in RACK 
+ //******************************************************************************************  
+ DevelopmentAssuranceLevel (note "The Development Assurance Level is a property of a Aircraft/System") is a type of THING,
+ 	must be one of {LevelA (note "Level A - Catastrophic"),  // Cannot use 'A' since it is a keyword in SADL, so using LevelA instead
+ 					LevelB (note "Level B - Hazardous/Severe Major"), 
+ 					LevelC (note "Level C - Major"), 
+ 					LevelD (note "Level D - Minor "),
+ 					LevelE (note "Level E - No Safety Effect")}.
+ 					
+ developmentAssuranceLevel describes SYSTEM with a single value of type DevelopmentAssuranceLevel.					
+  
+ Applicability (note "The values that can be taken by applicability by software level property of objectives") is a type of THING,
+ 	must be one of {RI (note "Recommended for certification with process independence."), // Using RI instead of R* as * is not allowed by SADL in identifiers 
+ 					R  (note "Recommended for certification"),
+ 					AN (note "As negotiated for certification"), // using AN instead of A since A is a SADL keyword
+ 					N  (note "Not required for certification")}.
+ 
+ ApplicabilityByDAL (note "Applicability and Independence by Development Assurance Level is a property of ARP4753 objectives") is a type of THING,
+ 	described by levelA (note "The value for level A") with a single value of type Applicability
+ 	described by levelB (note "The value for level B") with a single value of type Applicability
+ 	described by levelC (note "The value for level C") with a single value of type Applicability
+ 	described by levelD (note "The value for level D") with a single value of type Applicability
+ 	described by levelE (note "The value for level E") with a single value of type Applicability.
+
+ Output (note "Outouts of ARP4754 objectives") is a type of THING. // will add properties later as and if needed
+ 
+ SystemControlCategory (note "The values that can be taken by the System Control category property of an ARP4754 objective") is a type of THING,
+ 	must be one of {Category1 (note "System Control category 1"), 
+ 					Category2 (note "System  Control category 2")}.
+ 
+ SystemControlCategoryByLevel (note "System Control Category by Level is a property of ARP4754 objectives") is a type of THING,
+ 	described by levelA (note "The value for level A") with a single value of type SystemControlCategory
+ 	described by levelB (note "The value for level B") with a single value of type SystemControlCategory
+ 	described by levelC (note "The value for level C") with a single value of type SystemControlCategory
+ 	described by levelD (note "The value for level D") with a single value of type SystemControlCategory
+ 	described by levelE (note "The value for level E") with a single value of type SystemControlCategory.
+ 
+ 
+ //****************************************************************************************** 
+ //-- Ontology to represent an ARP4754 DAP (Development Assurance Plan) hierarchy 
+ //******************************************************************************************  
+ 
+ 
+ /**
+  * A formal representation of ARP4754 DAP (Development Assurance Plan) has the following hierarchy:
+  * 	 DAP 
+  * 		- System
+  * 		- Process
+  * 			   -- Objective
+  * 						   --- Applicability and Independence by Development Assurance Level
+  * 						   --- Output
+  *                            --- System Control Category by Level
+  *                          
+  * NOTE: All DAP elements should somehow be connected to the RACK core 
+  */
+
+ //-- A class for ARP4754 DAP
+ DevelopmentAssurancePlan (note "A class for ARP4754 Development Assurance Plans") is a type of PLAN
+  	described by system (note "The aircraft/system being developed") with a single value of type SYSTEM
+ 	described by process (note "The Processes in the DAP") with values of type Process.
+ 	
+ 
+ //-- A class for ARP4754 Processes
+ Process (note "A generic class for ARP4754 processes") is a type of PLAN
+ 	described by objective (note "The objectives associated with the process") with values of type OBJECTIVE.
+ 
+ 
+ //-- A class for DO-178C objectives 
+ Objective (note "A generic class for ARP4754 objectives") is a type of OBJECTIVE
+  	described by applicability (note "Values of the Applicability by Software Level columns") with values of type ApplicabilityByDAL
+  	described by output (note "Outputs of the objective") with values of type Output
+  	described by query (note "One or more query IDs that will be required to determine if this objective has passed or failed") with values of type string.
+  	//described by logic (eventually we will add a way to encode the compliance logic in here somehow)
+ 
+ 
+ //-- A configuration class to allo users to connect their project ontologies to ARP4754 verbiage
+ 
+ CONFIGURATION is a type of THING, 
+ 	described by derivedItemRequirementAlias (note "The class in project ontology for derived item requirements") with values of type string
+ 	described by derivedsystemRequirementAlias (note "The class in project ontology for derived system requirements") with values of type string
+ 	described by interfaceAlias (note "The class in project ontology for interface requirements") with values of type string
+ 	described by interfaceInputAlias (note "The class in project ontology for interface inputs") with values of type string
+ 	described by interfaceOutputAlias (note "The class in project ontology for interface outputs") with values of type string 	 	 
+ 	described by itemAlias (note "The class in project ontology for items") with values of type string
+ 	described by itemRequirementAlias (note "The class in project ontology for item requirements") with values of type string
+ 	described by systemRequirementAlias (note "The class in project ontology for system requirements") with values of type string
+ 	described by systemAlias (note "The class in project ontology for systems") with values of type string
+ 	described by systemDesignDescriptionAlias (note "The class in project ontology for systemDesignDescription") with values of type string
+ 	described by requirementCompleteCorrectReviewAlias (note "Rviews for objective 4-1") with values of type string
+ 	described by requirementTraceableReviewAlias (note "Rviews for objective 4-4") with values of type string. 	
+ 
+ 

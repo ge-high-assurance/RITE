@@ -1,0 +1,133 @@
+{
+    "importSpec": {
+        "baseURI": "",
+        "columns": [],
+        "dataValidator": [],
+        "nodes": [
+            {
+                "mapping": [],
+                "props": [],
+                "sparqlID": "?FILE",
+                "type": "http://arcos.rack/FILE#FILE"
+            },
+            {
+                "mapping": [],
+                "props": [],
+                "sparqlID": "?FORMAT",
+                "type": "http://arcos.rack/FILE#FORMAT"
+            }
+        ],
+        "texts": [],
+        "transforms": [],
+        "version": "1"
+    },
+    "sNodeGroup": {
+        "limit": 0,
+        "offset": 0,
+        "orderBy": [],
+        "sNodeList": [
+            {
+                "NodeName": "FORMAT",
+                "SparqlID": "?FORMAT",
+                "deletionMode": "NO_DELETE",
+                "fullURIName": "http://arcos.rack/FILE#FORMAT",
+                "instanceValue": null,
+                "isReturned": false,
+                "isRuntimeConstrained": false,
+                "nodeList": [],
+                "propList": [
+                    {
+                        "Constraints": "",
+                        "KeyName": "identifier",
+                        "SparqlID": "?format",
+                        "UriRelationship": "http://arcos.rack/PROV-S#identifier",
+                        "ValueType": "string",
+                        "fullURIName": "",
+                        "instanceValues": [],
+                        "isMarkedForDeletion": false,
+                        "isReturned": false,
+                        "isRuntimeConstrained": true,
+                        "optMinus": 0,
+                        "relationship": "http://www.w3.org/2001/XMLSchema#string",
+						"binding": "?fileFormat_FILE_identifier",
+						"isBindingReturned": true
+                    }
+                ],
+                "subClassNames": [],
+                "valueConstraint": ""
+            },
+            {
+                "NodeName": "FILE",
+                "SparqlID": "?FILE",
+                "deletionMode": "NO_DELETE",
+                "fullURIName": "http://arcos.rack/FILE#FILE",
+                "instanceValue": null,
+                "isReturned": false,
+                "isRuntimeConstrained": false,
+                "nodeList": [
+                    {
+                        "ConnectBy": "fileFormat",
+                        "Connected": true,
+                        "DeletionMarkers": [
+                            false
+                        ],
+                        "KeyName": "fileFormat",
+                        "OptionalMinus": [
+                            0
+                        ],
+                        "Qualifiers": [
+                            ""
+                        ],
+                        "SnodeSparqlIDs": [
+                            "?FORMAT"
+                        ],
+                        "UriConnectBy": "http://arcos.rack/FILE#fileFormat",
+                        "UriValueType": "http://arcos.rack/FILE#FORMAT",
+                        "ValueType": "FORMAT"
+                    }
+                ],
+                "propList": [
+                    {
+                        "Constraints": "",
+                        "KeyName": "filename",
+                        "SparqlID": "?filename",
+                        "UriRelationship": "http://arcos.rack/FILE#filename",
+                        "ValueType": "string",
+                        "fullURIName": "",
+                        "instanceValues": [],
+                        "isMarkedForDeletion": false,
+                        "isReturned": false,
+                        "isRuntimeConstrained": false,
+                        "optMinus": 0,
+                        "relationship": "http://www.w3.org/2001/XMLSchema#string",
+						"binding": "?FILE_filename",
+						"isBindingReturned": true
+                    }
+                ],
+                "subClassNames": [],
+                "valueConstraint": ""
+            }
+        ],
+        "version": 11
+    },
+    "sparqlConn": {
+        "data": [
+            {
+                "graph": "http://rack001/data",
+                "type": "fuseki",
+                "url": "http://localhost:3030/RACK"
+            }
+        ],
+        "domain": "",
+        "enableOwlImports": false,
+        "model": [
+            {
+                "graph": "http://rack001/model",
+                "type": "fuseki",
+                "url": "http://localhost:3030/RACK"
+            }
+        ],
+        "name": "RACK local fuseki"
+    },
+    "version": 2
+}

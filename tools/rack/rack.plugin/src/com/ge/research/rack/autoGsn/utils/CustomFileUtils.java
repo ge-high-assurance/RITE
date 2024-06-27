@@ -39,6 +39,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import org.apache.commons.io.FileUtils;
 
 /**
  * @author Saswata Paul
@@ -225,6 +226,23 @@ public class CustomFileUtils {
         } catch (Exception e) {
             System.out.println("Error: Could not read file: " + path + " as string!");
             return null;
+        }
+    }
+
+    /**
+     * Clears a given directory
+     *
+     * @param rackDir
+     */
+    public static void clearDirectory(String rackDir) {
+        try {
+            // clean the outputs directory
+            File targetDirectory = new File(rackDir);
+            FileUtils.cleanDirectory(targetDirectory);
+        } catch (IOException e) {
+            System.out.println("ERROR: Was unable to successfuly clear rackDir!!\n");
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 }

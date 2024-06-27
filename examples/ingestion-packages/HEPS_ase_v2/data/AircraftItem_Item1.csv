@@ -1,0 +1,14 @@
+identifier
+BatterySystem
+CockpitControls
+DCACController
+DCACInverter
+DCDCController
+DCDCConverter
+FuelSystem
+GasTurbineEngine
+Gearbox
+Motor
+Propeller
+PropulsionController
+ThermalManagementSystem

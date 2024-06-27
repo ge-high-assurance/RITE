@@ -1,0 +1,34 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:j.0="http://arcos.rack/PROV-S#"
+    xmlns:builtinfunctions="http://sadl.org/builtinfunctions#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:aircraftconfig="http://sadl.org/aircraft-arp4754-config.sadl#"
+    xmlns:sadlimplicitmodel="http://sadl.org/sadlimplicitmodel#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:sadlbasemodel="http://sadl.org/sadlbasemodel#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:dapcore="http://sadl.org/PLAN-CORE.sadl#">
+  <owl:Ontology rdf:about="http://sadl.org/aircraft-arp4754-config.sadl">
+    <owl:imports rdf:resource="http://sadl.org/PLAN-CORE.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/builtinfunctions"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlimplicitmodel"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlbasemodel"/>
+    <rdfs:comment xml:lang="en">This ontology was created from a SADL file 'aircraft-arp4754-config.sadl' and should not be directly edited.</rdfs:comment>
+  </owl:Ontology>
+  <dapcore:CONFIGURATION rdf:about="http://sadl.org/aircraft-arp4754-config.sadl#HEPSConfig">
+    <j.0:identifier>HEPSConfig</j.0:identifier>
+    <dapcore:itemAlias>Item</dapcore:itemAlias>
+    <dapcore:systemDesignDescriptionAlias>SystemDesignDescription</dapcore:systemDesignDescriptionAlias>
+    <dapcore:interfaceAlias>INTERFACE</dapcore:interfaceAlias>
+    <dapcore:interfaceInputAlias>Input</dapcore:interfaceInputAlias>
+    <dapcore:interfaceOutputAlias>Output</dapcore:interfaceOutputAlias>
+    <dapcore:itemRequirementAlias>ItemReq</dapcore:itemRequirementAlias>
+    <dapcore:derivedsystemRequirementAlias>SystemDerivedReq</dapcore:derivedsystemRequirementAlias>
+    <dapcore:systemAlias>Aircraft</dapcore:systemAlias>
+    <dapcore:derivedItemRequirementAlias>ItemDerivedReq</dapcore:derivedItemRequirementAlias>
+    <dapcore:requirementCompleteCorrectReviewAlias>RequirementCompleteCorrectReview</dapcore:requirementCompleteCorrectReviewAlias>
+    <dapcore:systemRequirementAlias>SystemReq</dapcore:systemRequirementAlias>
+    <dapcore:requirementTraceableReviewAlias>RequirementTraceableReview</dapcore:requirementTraceableReviewAlias>
+  </dapcore:CONFIGURATION>
+</rdf:RDF>

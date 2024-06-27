@@ -1,0 +1,7 @@
+identifier,dataInsertedBy_identifier,description,governs_identifier,title
+29,Cameo Ingestion,Aerodynamics shall produce a (CLmax)TO of 1.9.,Aerodynamics,Takeoff
+31,Cameo Ingestion,Propulsion shall provide X lbs of thrust at takeoff at sea level.,ParallelHybridPropulsion,Takeoff Thrust
+32,Cameo Ingestion,Propulsion shall provide Y lbs of thrust at climb power  at sea level.,ParallelHybridPropulsion,Climb Thrust
+33,Cameo Ingestion,Propulsion shall provide Z lbs of thrust at Cruise power at sea level.,ParallelHybridPropulsion,Cruise Thrust
+34,Cameo Ingestion,Propulsion shall provide A lbs of thrust emergency power.,ParallelHybridPropulsion,Emergency Thrust
+35,Cameo Ingestion,Structure shall have a empty weight of no more than x lbs.,Structures,Empty Weight

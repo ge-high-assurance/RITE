@@ -1,0 +1,24 @@
+
+ //-- Author: Saswata Paul
+ //-- An ontology to specify the different objectives and their related properties in an ARP4754 Development Assurance Plan (DAP) 
+
+ uri "http://sadl.org/PLAN-CORE-Process1.sadl" alias p1core.
+ 
+ import "http://sadl.org/PLAN-CORE.sadl".
+ 
+ Process-1 is a Process
+ 	with identifier "Process-1"
+ 	with description "Planning Process"
+  	with objective Objective-1-1
+  	with objective Objective-1-2.
+
+  Objective-1-1 is a Objective
+  	with identifier "Objective-1-1"
+  	with description "System development and integral processes activities are defined ". 
+  	
+
+
+  Objective-1-2 is a Objective
+  	with identifier "Objective-1-2"
+  	with description "Transition criteria and interrelationship among processes are defined. ". 
+ 	

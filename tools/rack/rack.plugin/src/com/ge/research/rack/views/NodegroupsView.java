@@ -33,8 +33,8 @@ package com.ge.research.rack.views;
 
 import com.ge.research.rack.RefreshHandler;
 import com.ge.research.rack.utils.ConnectionUtil;
-import com.ge.research.rack.utils.ErrorMessageUtil;
 import com.ge.research.rack.utils.NodegroupUtil;
+import com.ge.research.rack.utils.RackConsole;
 import com.google.inject.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,13 +49,9 @@ import org.eclipse.jface.action.*;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.ControlAdapter;
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -95,9 +91,6 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
 
     private Table table;
     private Button selectAllButton;
-    private ScrolledComposite topComposite;
-    private Composite composite;
-    private Composite floatContainer;
 
     public String getProjectPath() {
         return "";
@@ -120,33 +113,19 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
 
     @Override
     public void createPartControl(Composite parent) {
-    	
-    	// Notes:
-    	// The table starts with an extra column. This appears to be a known WON'T FIX.
-    	// The extra column can be resized to zero width.
-    	// The code below sets each of the nested composite to fill out horizontally.
-    	// Then the table does also. This appears to be necessary when there is an encapsulating ScrolledComposite.
-    	    	
+
         final Display display = Display.getCurrent();
 
         final ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
-        sc.setLayout(new FillLayout());
-        this.topComposite = sc;
-        composite = new Composite(sc, SWT.NONE);
-        sc.setExpandHorizontal(true);
+        final Composite composite = new Composite(sc, SWT.NONE);
         sc.setContent(composite);
 
         GridLayout layout = new GridLayout();
         layout.numColumns = 1;
         layout.verticalSpacing = 10;
-        var gdata = new GridData();
-        gdata.grabExcessHorizontalSpace = true;
-        gdata.grabExcessVerticalSpace = true;
-        gdata.horizontalAlignment = SWT.FILL;
-        gdata.verticalAlignment = SWT.FILL;
-        gdata.widthHint = SWT.FILL;
         composite.setLayout(layout);
-        composite.setLayoutData(gdata);
+
+        composite.setSize(1130 / 2, 600);
 
         if (!ConnectionUtil.ping()) {
             return;
@@ -199,55 +178,59 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
                     }
                 });
 
-        floatContainer = new Composite(composite, SWT.NONE);
-        var floatLayout = new GridLayout(1, true);
-        var floatData = new GridData();
-        floatData.horizontalAlignment = SWT.FILL;
-        floatData.grabExcessHorizontalSpace = true;
-        floatContainer.setLayoutData(floatData);
-        floatContainer.setLayout(floatLayout);
+        /* Select All Button not supported in SWT table - float workaround */
+        final Composite floatContainer = new Composite(composite, SWT.BORDER);
+        floatContainer.setLayout(new FormLayout());
+        final FormData tableFloatPosition = new FormData();
+        tableFloatPosition.top = new FormAttachment(0);
+        tableFloatPosition.left = new FormAttachment(0);
+        tableFloatPosition.right = new FormAttachment(100);
+        tableFloatPosition.bottom = new FormAttachment(100);
 
-        table = new Table(floatContainer, SWT.MULTI | SWT.NO_SCROLL);
+        table = new Table(floatContainer, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
         table.removeAll();
+        table.setSize(1130, 600);
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
         table.setHeaderBackground(display.getSystemColor(SWT.COLOR_TITLE_BACKGROUND_GRADIENT));
+
         table.setHeaderForeground(display.getSystemColor(SWT.COLOR_TITLE_FOREGROUND));
+
         table.setFocus();
-        var tableData = new GridData();
-        tableData.horizontalAlignment = SWT.FILL;
-        // Setting FILL here allows the table to fill out the horizontal width of the view window.
-        // But it also makes the ScrolledComposite think horizontal scrollbars are never needed
-        // so we have to rely on the table's own scrollbars.
-        tableData.grabExcessHorizontalSpace = true;
-        table.setLayoutData(tableData);
+        table.setLayoutData(tableFloatPosition);
+        //        table.addSelectionListener(new NodegroupSelectionListener());
+
+        //        final FormData selectAllButtonPosition = new FormData();
+        //        selectAllButtonPosition.left = new FormAttachment(table, 1, SWT.LEFT);
+        //        selectAllButtonPosition.top = new FormAttachment(table, 2, SWT.TOP);
+        //
+        //        selectAllButton = new Button(floatContainer, SWT.CHECK);
+        //        selectAllButton.setLayoutData(selectAllButtonPosition);
+        //        selectAllButton.moveAbove(table);
+        //        selectAllButton.addSelectionListener(new NodegroupSelectAllListener());
 
         makeActions();
         hookContextMenu();
 
-        Stream.of("Nodegroup ID", "Comments", "Creation Data", "Creator")
+        final TableColumn col1 = new TableColumn(table, SWT.CENTER);
+        col1.setText("Nodegroup ID"); // Accommodate select all button buffer
+        table.showColumn(col1);
+
+        Stream.of("Comments", "Creation Data", "Creator")
                 .forEach(
                         header -> {
-                            final TableColumn col = new TableColumn(table, SWT.LEFT);
+                            final TableColumn col = new TableColumn(table, SWT.CENTER | SWT.WRAP);
+
                             col.setText(header);
                             table.showColumn(col);
-                            col.addControlListener( new ControlAdapter() {
-                            	@Override
-                            	public void controlResized(ControlEvent e) {
-                            		resetScrollbarSize();
-                            	}
-                            });
                         });
-        
+
         refreshNodegroupList();
 
-    }
-    
-    private void resetScrollbarSize() {
-        int minwidth = 20; // To account for margins 
-        for (int k=0; k< table.getColumnCount(); k++) minwidth += table.getColumn(k).getWidth();
+        // Initially show all columns for visibility / view reset
+        Arrays.stream(table.getColumns()).forEach(c -> c.setWidth(150));
 
-        topComposite.setMinSize(composite.computeSize(minwidth, SWT.DEFAULT));
+        composite.pack();
     }
 
     private void refreshNodegroupList() {
@@ -259,8 +242,8 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
                     .forEach(
                             row -> {
                                 final TableItem item = new TableItem(table, SWT.NONE);
-                                row.remove(4); // Remove application data "semTK"
                                 item.setData(row);
+                                row.remove(4); // Remove application data "semTK"
                                 for (int j = 0; j < row.size(); j++) {
                                     item.setText(j, row.get(j));
                                 }
@@ -268,15 +251,10 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
 
             table.setEnabled(table.getItemCount() > 0);
             Arrays.stream(table.getColumns()).forEach(TableColumn::pack);
-
             table.pack();
-            floatContainer.pack();
-            composite.pack();
-            resetScrollbarSize();
-            topComposite.pack();
 
         } catch (final Exception e) {
-            ErrorMessageUtil.warning(UPDATE_NODEGROUP_LIST_ERROR);
+            RackConsole.getConsole().warning(UPDATE_NODEGROUP_LIST_ERROR);
         }
     }
 
@@ -307,15 +285,10 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
 
             table.setEnabled(table.getItemCount() > 0);
             // Arrays.stream(table.getColumns()).forEach(TableColumn::pack);
-            table.pack();
-            floatContainer.pack();
-            composite.pack();
-            resetScrollbarSize();
-            //topComposite.pack(); // With this pack, the scrollbars disappear when the filter is changed.
-                       // though they reappear if the view window is resized.
+            // table.pack();
 
         } catch (final Exception e) {
-            ErrorMessageUtil.warning(UPDATE_NODEGROUP_LIST_ERROR);
+            RackConsole.getConsole().warning(UPDATE_NODEGROUP_LIST_ERROR);
         }
     }
 
@@ -358,6 +331,13 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
                 .filter(d -> !d.isEmpty())
                 .map(d -> (String) d.get(0))
                 .collect(Collectors.toCollection(ArrayList::new));
+
+        //        return Arrays.stream(table.getItems())
+        //                .filter(ng -> ng.getChecked())
+        //                .map(ng -> (List<?>) ng.getData())
+        //                .filter(d -> !d.isEmpty())
+        //                .map(d -> (String) d.get(0))
+        //                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     private class DeleteSelectedNodeGroupsAction extends Action {
@@ -382,12 +362,12 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
                                         thr.schedule();
                                         thr.join();
                                     } catch (final InterruptedException e) {
-                                        ErrorMessageUtil.error(NODEGROUP_DELETE_ERROR, e);
+                                        RackConsole.getConsole().error(NODEGROUP_DELETE_ERROR, e);
                                     }
                                 });
 
             } catch (final Exception e) {
-                ErrorMessageUtil.error(NODEGROUP_DELETE_ERROR, e);
+                RackConsole.getConsole().error(NODEGROUP_DELETE_ERROR, e);
             }
 
             refreshNodegroupList();
@@ -416,7 +396,7 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
                 window.getActivePage().showView(NodegroupTemplateView.ID);
 
             } catch (final Exception e) {
-                ErrorMessageUtil.error(TEMPLATE_VIEW_ERROR, e);
+                RackConsole.getConsole().error(TEMPLATE_VIEW_ERROR, e);
             }
         }
     }
@@ -434,20 +414,51 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
         @Override
         protected IStatus run(IProgressMonitor monitor) {
             try {
-                ErrorMessageUtil.println("Deleting nodegroup: " + nodegroupId + " ... ");
+                RackConsole.getConsole().println("Deleting nodegroup: " + nodegroupId + " ... ");
                 NodegroupUtil.client.deleteStoredNodeGroup(nodegroupId);
-                ErrorMessageUtil.printOK();
+                RackConsole.getConsole().printOK();
 
             } catch (final Exception e) {
-                ErrorMessageUtil.printFAIL();
-                ErrorMessageUtil.error(String.format(NODEGROUP_DELETE_ERROR, nodegroupId), e);
+                RackConsole.getConsole().printFAIL();
+                RackConsole.getConsole()
+                        .error(String.format(NODEGROUP_DELETE_ERROR, nodegroupId), e);
 
                 return Status.CANCEL_STATUS;
             }
 
-            ErrorMessageUtil.println(String.format(NODEGROUP_DELETE_SUCCESS, nodegroupId));
+            RackConsole.getConsole().println(String.format(NODEGROUP_DELETE_SUCCESS, nodegroupId));
 
             return Status.OK_STATUS;
         }
     }
+
+    //    private class NodegroupSelectAllListener implements SelectionListener {
+    //
+    //        @Override
+    //        public void widgetSelected(final SelectionEvent e) {
+    //            if (null == table) {
+    //                return;
+    //            }
+    //            final boolean selectAll = ((Button) e.getSource()).getSelection();
+    //            Arrays.stream(table.getItems()).forEach(i -> i.setChecked(selectAll));
+    //        }
+    //
+    //        @Override
+    //        public void widgetDefaultSelected(final SelectionEvent e) {}
+    //    }
+    //
+    //    private class NodegroupSelectionListener implements SelectionListener {
+    //
+    //        @Override
+    //        public void widgetSelected(final SelectionEvent e) {
+    //            if (null == selectAllButton) {
+    //                return;
+    //            }
+    //            selectAllButton.setSelection(
+    //                    Arrays.stream(table.getItems()).allMatch(p -> p.getChecked()));
+    //        }
+    //
+    //        @Override
+    //        public void widgetDefaultSelected(final SelectionEvent e) {}
+    //    }
 }

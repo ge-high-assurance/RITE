@@ -1,0 +1,38 @@
+# -- RACK-Ontology --
+files:
+- AGENTS.owl
+- ANALYSIS.owl
+- BASELINE.owl
+- CLAIM.owl
+- CONFIDENCE.owl
+- DOCUMENT.owl
+- EntityResolution.owl
+- FILE.owl
+- HARDWARE.owl
+- HAZARD.owl
+- MODEL.owl
+- PROCESS.owl
+- PROV-S.owl
+- REQUIREMENTS.owl
+- REVIEW.owl
+- SAFETY-SECURITY.owl
+- SOFTWARE.owl
+- SYSTEM.owl
+- TESTING.owl
+- RESOLUTIONS.owl
+# -- Aircraft-Ontology --
+- AircraftItem.owl
+- AircraftSystem.owl
+# -- ARP4754-DAP-Ontology-v2 --
+- PLAN-CORE.owl
+- PLAN-CORE-Process1.owl
+- PLAN-CORE-Process2.owl
+- PLAN-CORE-Process3.owl
+- PLAN-CORE-Process4.owl
+- PLAN-CORE-Process5.owl
+- PLAN-CORE-Process6.owl
+- PLAN-CORE-Process7.owl
+- PLAN-CORE-Process8.owl
+# -- Aircraft-DAP-Ontology --
+- aircraft_arp4754_dap.owl
+- aircraft-arp4754-config.owl

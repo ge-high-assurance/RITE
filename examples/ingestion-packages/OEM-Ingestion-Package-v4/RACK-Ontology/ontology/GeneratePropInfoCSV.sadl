@@ -1,0 +1,58 @@
+/* Copyright (c) 2020, General Electric Company, Galois, Inc.
+ *
+ * All Rights Reserved
+ *
+ * This material is based upon work supported by the Defense Advanced Research
+ * Projects Agency (DARPA) under Contract No. FA8750-20-C-0203.
+ *
+ * Any opinions, findings and conclusions or recommendations expressed in this
+ * material are those of the author(s) and do not necessarily reflect the views
+ * of the Defense Advanced Research Projects Agency (DARPA).
+ */
+
+uri "http://arcos.rack/GeneratePropInfoCSV" alias genpropinfo.
+import "http://arcos.rack/AGENTS".
+import "http://arcos.rack/ANALYSIS".
+import "http://arcos.rack/BASELINE".
+import "http://arcos.rack/CONFIDENCE".
+import "http://arcos.rack/DOCUMENT".
+import "http://arcos.rack/FILE".
+import "http://arcos.rack/HARDWARE".
+import "http://arcos.rack/HAZARD".
+import "http://arcos.rack/MODEL".
+import "http://arcos.rack/PROCESS".
+import "http://arcos.rack/REQUIREMENTS".
+import "http://arcos.rack/REVIEW".
+import "http://arcos.rack/SAFETY-SECURITY".
+import "http://arcos.rack/SOFTWARE".
+import "http://arcos.rack/SYSTEM".
+import "http://arcos.rack/TESTING".
+
+
+
+// Need to import all sadl files in ontology folder (except Prov-S.sadl as that is imported by other sadl files).
+
+// The following query writes out relevant info for properties defined.
+Write: data
+{
+  Ask: "select distinct (?prop as ?property) ?subPropertyOf ?propertyDomain ?propertyRange ?propertyNote where
+  {?prop <rdfs:domain> ?propertyDomain
+  . FILTER(!regex(str(?propertyDomain), 'DataDescriptor')) # in SADL ImplicitModels
+  . FILTER(!regex(str(?propertyDomain), 'FunctionPattern')) # in SADL ImplicitModels
+  . ?prop <rdfs:comment> ?propertyNote
+  . ?prop <rdfs:range> ?propertyRange
+  . OPTIONAL {?prop <rdfs:subPropertyOf> ?subPropertyOf . FILTER (?prop != ?subPropertyOf)}
+  . LET(?localname := strafter(str(?prop), '#'))
+  } order by ?localname".
+} to "ontology/Data/PropInfo.csv".
+
+// The following query writes out properties that are missing notes.
+Write: data
+{
+Ask: "select distinct (?prop as ?property) ?propertyDomain where
+  {?prop <rdfs:domain> ?propertyDomain
+  . FILTER(regex(str(?prop), 'arcos'))
+  . OPTIONAL {?prop <rdfs:comment> ?propertyNote} . FILTER (!bound(?propertyNote))
+  . LET(?localname := strafter(str(?prop), '#'))
+  } order by ?localname".
+} to "ontology/Data/PropInfo_missingPropertyNote.csv".

@@ -1,0 +1,70 @@
+/* Copyright (c) 2020, General Electric Company, Galois, Inc.
+ *
+ * All Rights Reserved
+ *
+ * This material is based upon work supported by the Defense Advanced Research
+ * Projects Agency (DARPA) under Contract No. FA8750-20-C-0203.
+ *
+ * Any opinions, findings and conclusions or recommendations expressed in this
+ * material are those of the author(s) and do not necessarily reflect the views
+ * of the Defense Advanced Research Projects Agency (DARPA).
+ */
+
+/************** edit history *****************
+  *
+  * dwa - 11 Nov 2020 - removed incorrect usages of relationships
+  * dwa - 11 Nov 2020 - added that developedBy is a type of wasAssociatedWith
+  * am - 27 July 2021 - removed 2 inverse relationships
+  *
+  *********************************************/
+
+uri "http://arcos.rack/SYSTEM" alias sys.
+import "http://arcos.rack/PROV-S".
+import "http://arcos.rack/DOCUMENT".
+
+SYSTEM
+	(note "SYSTEMs classify logical parts of the whole system being developed")
+	is a type of ENTITY.
+
+	partOf (note "Used to define a relationship to a higher level system") describes SYSTEM with values of type SYSTEM.
+
+	provides (note "List of entities that this SYSTEM provides to others") describes SYSTEM with values of type FUNCTION.
+
+	requires (note "List of entities that this SYSTEM requires from others") describes SYSTEM with values of type FUNCTION.
+
+	function (note "functionality / capability of a SYSTEM") describes SYSTEM with values of type FUNCTION.
+	function is a type of wasImpactedBy.
+	
+	wasGeneratedBy of SYSTEM only has values of type SYSTEM_DEVELOPMENT.
+
+INTERFACE
+	(note "INTERFACEs describe directed connections between a SYSTEM providing what another SYSTEM requires")
+	is a type of ENTITY.
+
+	commodity (note "the thing conveyed by the interface") describes INTERFACE with values of type string.
+	commodity describes INTERFACE with at most 1 value.
+
+	source (note "SYSTEM that provides what the INTERFACE offers") describes INTERFACE with values of type SYSTEM.
+	source is a type of wasImpactedBy.
+
+	destination (note "SYSTEM that requires what the INTERFACE offers") describes INTERFACE with values of type SYSTEM.
+	destination is a type of wasImpactedBy.
+
+SYSTEM_DEVELOPMENT
+	(note "ACTIVITY related to the creation of one or more SYSTEM(s)")
+	is a type of ACTIVITY.
+
+FUNCTION
+	(note "defines functionality / capability")
+	is a type of ENTITY.
+
+    parentFunction (note "allows for decomposition of functionality") describes FUNCTION with values of type FUNCTION.
+    parentFunction describes FUNCTION with at most 1 value.
+
+OP_ENV
+	(note "defines the operating environment assumptions and constraints")
+	is a type of THING. // should this be an ENTITY?
+
+OP_PROCEDURE
+	(note "system operational procedures employed, e.g. going through a checklist, limiting people near runways, etc.")
+	is a type of PROCEDURE.

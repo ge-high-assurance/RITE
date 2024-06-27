@@ -1,0 +1,65 @@
+
+ uri "http://sadl.org/OEM-table1-instance-data.sadl" alias tab1instance.
+ 
+ import "http://arcos.rack/OEM-specific-PSAC.sadl".
+
+
+ /**
+  * Avatars of some documents that we know exist for the OEM data
+  * 
+  * Note: These avatars are actually instance data and this is the only case
+  * where the instance data is in SADL.  
+  */
+ //-- PSAC
+ OEMTextPSAC (note "representing the OEM provided PSAC textfile") is a DataItem
+ 	with identifier "OEMTextPSAC"
+ 	with itemFormat PdfFormat.
+ 
+ //-- SDP
+ OEMTextSDP (note "representing the OEM provided SDP textfile") is a DataItem
+ 	with identifier "OEMTextSDP"
+ 	with itemFormat PdfFormat.
+  	
+ //-- SVP
+ OEMTextSVP (note "representing the OEM provided SVP textfile") is a DataItem
+ 	with identifier "OEMTextSVP"
+ 	with itemFormat PdfFormat.
+  	
+ //-- SCM Plan
+ OEMTextSCM-Plan (note "representing the OEM provided SCM-Plan textfile") is a DataItem
+	with identifier "OEMTextSCM-Plan"
+ 	with itemFormat PdfFormat.
+  	
+ //-- SQA Plan
+ OEMTextSQA-Plan (note "representing the OEM provided SQA-Plan textfile") is a DataItem
+	with identifier "OEMTextSQA-Plan"
+ 	with itemFormat PdfFormat.
+ 	
+ //-- connecting these instance data to the Table 1 objective 1
+ Objective-A1-1 has output OEMTextPSAC.
+ Objective-A1-1 has output OEMTextSDP.
+ Objective-A1-1 has output OEMTextSVP.
+ Objective-A1-1 has output OEMTextSCM-Plan.
+ Objective-A1-1 has output OEMTextSQA-Plan.    
+ 	
+ //-- connecting these instance data to the Table 1 objective 2
+ Objective-A1-2 has output OEMTextPSAC.
+ Objective-A1-2 has output OEMTextSDP.
+ Objective-A1-2 has output OEMTextSVP.
+ Objective-A1-2 has output OEMTextSCM-Plan.
+ Objective-A1-2 has output OEMTextSQA-Plan.    
+
+ //-- connecting these instance data to the Table 1 objective 3
+ Objective-A1-3 has output OEMTextPSAC.
+ Objective-A1-3 has output OEMTextSDP.
+ Objective-A1-3 has output OEMTextSVP.
+ Objective-A1-3 has output OEMTextSCM-Plan.
+ Objective-A1-3 has output OEMTextSQA-Plan.    
+
+ //-- connecting these instance data to the Table 1 objective 4
+ Objective-A1-4 has output OEMTextPSAC.
+ Objective-A1-4 has output OEMTextSDP.
+ Objective-A1-4 has output OEMTextSVP.
+ Objective-A1-4 has output OEMTextSCM-Plan.
+ Objective-A1-4 has output OEMTextSQA-Plan.    
+

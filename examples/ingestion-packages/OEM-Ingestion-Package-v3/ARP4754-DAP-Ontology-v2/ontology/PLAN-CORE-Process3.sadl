@@ -1,0 +1,55 @@
+
+ //-- Author: Saswata Paul
+ //-- An ontology to specify the different objectives and their related properties in an ARP4754 Development Assurance Plan (DAP) 
+
+ uri "http://sadl.org/PLAN-CORE-Process3.sadl" alias p3core.
+ 
+ import "http://sadl.org/PLAN-CORE.sadl".
+ 
+ Process-3 is a Process
+ 	with identifier "Process-3"
+ 	with description "Safety Assessment Process"
+  	with objective Objective-3-1
+  	with objective Objective-3-2
+  	with objective Objective-3-3
+  	with objective Objective-3-4
+  	with objective Objective-3-5
+  	with objective Objective-3-6
+  	with objective Objective-3-7.  	
+ 	
+ 	
+  Objective-3-1 is a Objective
+  	with identifier "Objective-3-1"
+  	with description " ".  	
+ 	
+ 	
+  Objective-3-2 is a Objective
+  	with identifier "Objective-3-2"
+  	with description " ".  	
+
+
+  Objective-3-3 is a Objective
+  	with identifier "Objective-3-3"
+  	with description " ".  	
+
+
+  Objective-3-4 is a Objective
+  	with identifier "Objective-3-4"
+  	with description " ".  	
+
+
+  Objective-3-5 is a Objective
+  	with identifier "Objective-3-5"
+  	with description " ".  	
+
+
+  Objective-3-6 is a Objective
+  	with identifier "Objective-3-6"
+  	with description " ".  	
+  	
+  	
+  Objective-3-7 is a Objective
+  	with identifier "Objective-3-7"
+  	with description " ".  	
+  	
+ 	

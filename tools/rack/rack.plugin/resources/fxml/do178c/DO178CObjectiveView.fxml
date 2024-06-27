@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.chart.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<VBox prefHeight="600.0" prefWidth="800.0" 
+      stylesheets="@/resources/fxml/do178c/DO178CViews.css" 
+      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.ge.research.rack.do178c.viewHandlers.ReportObjectiveViewHandlerNew">
+    
+    <children>
+
+        <!-- " -fx-grid-lines-visible: true"> -->
+        <GridPane style="-fx-vgap: 1em; -fx-padding: 1.5em 3em 1.5em 3em" VBox.vgrow="ALWAYS"> 
+
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+
+            <rowConstraints>
+                <!-- TITLE -->
+                <RowConstraints vgrow="SOMETIMES" />
+                <!-- SUBTITLE -->
+                <RowConstraints vgrow="SOMETIMES" />
+                <!-- SUB-SUBTITLE -->
+                <RowConstraints vgrow="SOMETIMES" />
+                <!-- TABS PANEL -->
+                <RowConstraints vgrow="ALWAYS" />
+                <!-- NAVIGATION BUTTONS -->
+                <RowConstraints prefHeight="40.0" vgrow="NEVER" />
+                
+            </rowConstraints>
+
+            <children>
+    
+                <!-- TITLE -->
+                <VBox style="-fx-alignment: center" GridPane.rowIndex="0">
+                    <children>
+                        <Label fx:id="headerLabel"/>
+                        <Label text="DO-178C Compliance Report" style="-fx-font-size: 2em"/>
+                    </children>
+                </VBox>
+
+                <!-- SUBTITLE -->
+                <Label fx:id="labelTableInfo" style="-fx-font-size: 1.5em" text="Label" GridPane.rowIndex="1" />
+
+                <!-- SUB-SUBTITLE -->
+                <Label fx:id="labelObjInfo" style="-fx-font-size: 1.5em" text="Label" GridPane.rowIndex="2" />
+
+                <!-- TABS PANEL -->
+                <TabPane tabClosingPolicy="UNAVAILABLE" GridPane.hgrow="ALWAYS" 
+                         GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
+                    
+                    <tabs>
+
+                        <Tab fx:id="tabAct" text="Activities">
+                            <content>
+                                <ListView fx:id="actList" />
+                            </content>
+                        </Tab>
+
+                        <Tab fx:id="tabDoc" text="Documents">
+                            <content>
+                                <ListView fx:id="docList" />
+                            </content>
+                        </Tab>
+
+                        <Tab fx:id="tabReq" text="Requirements">
+                            
+                            <content>
+                                <GridPane style="-fx-padding: .5em 0em 0em 0em; -fx-background-color: white">
+
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="ALWAYS" percentWidth="70.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" />
+                                    </columnConstraints>
+
+                                    <rowConstraints>
+                                        <RowConstraints vgrow="ALWAYS" />
+                                    </rowConstraints>
+
+                                    <children>
+
+                                        <VBox GridPane.columnIndex="0">
+                                            <children>
+                                                <HBox>
+                                                    <children>
+                                                        <TextField fx:id="searchReq" HBox.hgrow="ALWAYS" />
+                                                        <ComboBox fx:id="comboReq" onAction="#comboReqAction" />
+                                                    </children>
+                                                </HBox>
+                                                
+                                                <HBox VBox.vgrow="ALWAYS">
+                                                    
+                                                    <children>
+                                                        
+                                                        <ListView fx:id="reqList" onMouseClicked="#reqListSelectionAction" prefHeight="312.0" prefWidth="285.0" HBox.hgrow="ALWAYS">
+                                                            <HBox.margin>
+                                                                <Insets />
+                                                            </HBox.margin>
+                                                        </ListView>
+                                                        
+                                                        <VBox HBox.hgrow="ALWAYS">
+                                                            <children>
+                                                                <Label fx:id="reqChildrenLabel">
+                                                                    <VBox.margin>
+                                                                        <Insets left="4.0" />
+                                                                    </VBox.margin>
+                                                                </Label>
+                                                                <ListView fx:id="reqChildrenList" prefHeight="295.0" prefWidth="217.0" VBox.vgrow="ALWAYS" />
+                                                            </children>
+                                                        </VBox>
+                                                        
+                                                    </children>
+                                                    
+                                                </HBox>
+                                            </children>
+                                        </VBox>
+
+                                        <BarChart fx:id="reqChart" animated="false" barGap="2.0" horizontalGridLinesVisible="false" legendVisible="false" style="-fx-font-size: .8em" titleSide="BOTTOM" verticalGridLinesVisible="false" GridPane.columnIndex="1">
+
+                                            <xAxis>
+                                                <CategoryAxis side="BOTTOM" />
+                                            </xAxis>
+                                            
+                                            <yAxis>
+                                                <NumberAxis fx:id="yAxisReqChart" animated="false" autoRanging="false" minorTickVisible="false" side="LEFT" />
+                                            </yAxis>
+                                            
+                                        </BarChart>
+
+                                    </children>
+
+                                </GridPane>
+                            </content>
+                        </Tab>
+
+                        <Tab fx:id="tabHzrd" text="Hazards">
+                            <content>
+                                <AnchorPane />
+                            </content>
+                        </Tab>
+
+                        <Tab fx:id="tabTest" text="Tests">
+                            <content>
+                                <GridPane style="-fx-padding: .5em 0em 0em 0em; -fx-background-color: white">
+
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="ALWAYS" percentWidth="70.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" />
+                                    </columnConstraints>
+
+                                    <rowConstraints>
+                                        <RowConstraints vgrow="ALWAYS" />
+                                    </rowConstraints>
+
+                                    <children>
+
+                                        <VBox GridPane.columnIndex="0">
+                                            <children>
+                                                <HBox>
+                                                    <children>
+                                                        <TextField fx:id="searchTst" HBox.hgrow="ALWAYS" />
+                                                        <ComboBox fx:id="comboTst" onAction="#comboTstAction" />
+                                                    </children>
+                                                </HBox>
+                                                <HBox VBox.vgrow="ALWAYS">
+                                                    <children>
+                                                        <ListView fx:id="tstList" onMouseClicked="#tstListSelectionAction" HBox.hgrow="ALWAYS" />
+                                                        <VBox HBox.hgrow="ALWAYS">
+                                                            <children>
+                                                                <Label fx:id="tstChildrenLabel">
+                                                                    <VBox.margin>
+                                                                        <Insets left="4.0" />
+                                                                    </VBox.margin>
+                                                                </Label>
+                                                                <ListView fx:id="tstChildrenList" prefHeight="295.0" prefWidth="178.0" VBox.vgrow="ALWAYS" />
+                                                            </children>
+                                                        </VBox>
+                                                    </children>
+                                                </HBox>
+                                            </children>
+                                        </VBox>
+
+                                        <BarChart fx:id="tstChart" animated="false" horizontalGridLinesVisible="false" legendVisible="false" style="-fx-font-size: .8em" titleSide="BOTTOM" verticalGridLinesVisible="false" GridPane.columnIndex="1">
+
+                                            <xAxis>
+                                                <CategoryAxis side="BOTTOM" />
+                                            </xAxis>
+                                            <yAxis>
+                                                <NumberAxis fx:id="yAxisTstChart" animated="false" autoRanging="false" side="LEFT" />
+                                            </yAxis>
+
+                                        </BarChart>
+
+                                    </children>
+                                </GridPane>
+                            </content>
+                        </Tab>
+
+                        <Tab fx:id="tabRev" text="Review Logs">
+                            <content>
+                                <GridPane style="-fx-padding: .5em 0em 0em 0em; -fx-background-color: white">
+
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="ALWAYS" percentWidth="70.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" />
+                                    </columnConstraints>
+
+                                    <rowConstraints>
+                                        <RowConstraints vgrow="ALWAYS" />
+                                    </rowConstraints>
+
+                                    <children>
+
+                                        <VBox GridPane.columnIndex="0">
+                                            <children>
+                                                <HBox style="-fx-alignment: buttom-right">
+                                                    <children>
+                                                        <ComboBox fx:id="comboRev" promptText="Filter" />
+                                                    </children>
+                                                </HBox>
+                                                <ListView fx:id="reviList" VBox.vgrow="ALWAYS" />
+                                            </children>
+                                        </VBox>
+
+                                        <BarChart fx:id="revChart" animated="false" horizontalGridLinesVisible="false" 
+                                                  style="-fx-font-size: .8em" verticalGridLinesVisible="false" GridPane.columnIndex="1">
+
+                                            <xAxis>
+                                                <CategoryAxis side="BOTTOM" />
+                                            </xAxis>
+                                            <yAxis>
+                                                <NumberAxis fx:id="yAxisRevChart" animated="false" autoRanging="false" 
+                                                            minorTickVisible="false" side="LEFT" />
+                                            </yAxis>
+                                        </BarChart>
+
+
+                                    </children>
+                                </GridPane>
+                            </content>
+                        </Tab>
+
+                        <Tab fx:id="tabAnls" text="Analysis Outputs">
+                            <content>
+                                <AnchorPane />
+                            </content>
+                        </Tab>
+                        
+                        <Tab fx:id="tabSwComp" text="Source Code">
+                            <content>
+                                <GridPane style="-fx-padding: .5em 0em 0em 0em; -fx-background-color: white">
+                                    <children>
+                                        <VBox GridPane.columnIndex="0">
+                                            <children>
+                                                <HBox>
+                                                    <children>
+                                                        <TextField fx:id="searchSwComp" HBox.hgrow="ALWAYS" />
+                                                        <ComboBox fx:id="comboSwComp" onAction="#comboSwCompAction" />
+                                                    </children>
+                                                </HBox>
+                                                <HBox VBox.vgrow="ALWAYS">
+                                                    <children>
+                                                        <ListView fx:id="swCompList" onMouseClicked="#swCompListSelectionAction" prefHeight="312.0" prefWidth="285.0" HBox.hgrow="ALWAYS">
+                                                            <HBox.margin>
+                                                                <Insets />
+                                                            </HBox.margin>
+                                                        </ListView>
+                                                        <VBox HBox.hgrow="ALWAYS">
+                                                            <children>
+                                                                <Label fx:id="swCompChildrenLabel">
+                                                                    <VBox.margin>
+                                                                        <Insets left="4.0" />
+                                                                    </VBox.margin>
+                                                                </Label>
+                                                                <ListView fx:id="swCompChildrenList" prefHeight="295.0" prefWidth="217.0" VBox.vgrow="ALWAYS" />
+                                                            </children>
+                                                        </VBox>
+                                                    </children>
+                                                </HBox>
+                                            </children>
+                                        </VBox>
+                                        <BarChart fx:id="swCompChart" animated="false" barGap="2.0" horizontalGridLinesVisible="false" legendVisible="false" style="-fx-font-size: .8em" titleSide="BOTTOM" verticalGridLinesVisible="false" GridPane.columnIndex="1">
+                                            <xAxis>
+                                                <CategoryAxis side="BOTTOM" />
+                                            </xAxis>
+                                            <yAxis>
+                                                <NumberAxis fx:id="yAxisSwCompChart" animated="false" autoRanging="false" minorTickVisible="false" side="LEFT" />
+                                            </yAxis>
+                                        </BarChart>
+                                    </children>
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="ALWAYS" percentWidth="70.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints vgrow="ALWAYS" />
+                                    </rowConstraints>
+                                </GridPane>
+                            </content>
+                        </Tab>
+
+                    </tabs>
+                
+                </TabPane>
+                
+                <!-- NAVIGATION BUTTONS -->
+                <HBox HBox.hgrow="ALWAYS" GridPane.rowIndex="4">
+
+                    <children>
+
+                        <Button fx:id="btnHome" mnemonicParsing="false"
+                                onAction="#btnHomeAction" text="Report Home" />
+
+                        <Region prefWidth="20.0" HBox.hgrow="NEVER" />
+                        
+                        <Button fx:id="btnTab" mnemonicParsing="false"
+                                onAction="#btnTabAction" text="Back to Table" />
+                        
+                        <Pane HBox.hgrow="ALWAYS" />
+
+                        <Button fx:id="btnFontInc" onAction="#btnFontIncAction" 
+                                styleClass="transparent-button" mnemonicParsing="false">
+                            <graphic>
+                                <HBox alignment="CENTER">
+                                    <children>
+                                        <Label text="A"/>
+                                        <Label styleClass="superscript" text="+"/>
+                                    </children>
+                                </HBox>
+                            </graphic>
+                        </Button>
+
+                        <Button fx:id="btnFontDec" onAction="#btnFontDecAction" 
+                                styleClass="transparent-button" mnemonicParsing="false">
+                            <graphic>
+                                <HBox alignment="CENTER">
+                                    <children>
+                                        <Label text="A"/>
+                                        <Label styleClass="superscript" text="-"/>
+                                    </children>
+                                </HBox>
+                            </graphic>
+                        </Button>
+                        
+                    </children>
+                </HBox>
+
+            </children>
+
+        </GridPane>
+   
+    </children>
+
+</VBox>

@@ -1,0 +1,2337 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:builtinfunctions="http://sadl.org/builtinfunctions#"
+    xmlns:sadllistmodel="http://sadl.org/sadllistmodel#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:sadlimplicitmodel="http://sadl.org/sadlimplicitmodel#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:sadlbasemodel="http://sadl.org/sadlbasemodel#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+  <owl:Ontology rdf:about="http://sadl.org/builtinfunctions">
+    <owl:imports rdf:resource="http://sadl.org/sadllistmodel"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlimplicitmodel"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlbasemodel"/>
+    <rdfs:comment xml:lang="en">This ontology was created from a SADL file 'SadlBuiltinFunctions.sadl' and should not be directly edited.</rdfs:comment>
+  </owl:Ontology>
+  <owl:Class rdf:nodeID="A0">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:nodeID="A0"/>
+        <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#rest"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:resource="http://sadl.org/sadlimplicitmodel#DataDescriptor"/>
+        <owl:onProperty rdf:resource="http://sadl.org/sadllistmodel#first"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="http://sadl.org/sadllistmodel#List"/>
+  </owl:Class>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#countUniqueMatches">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.CountUniqueMatches</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- countUniqueMatches(...): uri("com.ge.research.sadl.jena.reasoner.builtin.CountUniqueMatches")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#listConcat">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.ListConcat</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- listConcat(...): uri("com.ge.research.sadl.jena.reasoner.builtin.ListConcat")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#unique">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.Unique</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- unique(...): uri("com.ge.research.sadl.jena.reasoner.builtin.Unique")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#abs">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.Abs</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://www.w3.org/2001/XMLSchema#decimal</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://www.w3.org/2001/XMLSchema#decimal</sadlimplicitmodel:dataType>
+          <sadlimplicitmodel:descriptorVariable>
+            <sadlimplicitmodel:GPVariable rdf:about="http://sadl.org/builtinfunctions#abs_X1"/>
+          </sadlimplicitmodel:descriptorVariable>
+          <sadlimplicitmodel:localDescriptorName>X1</sadlimplicitmodel:localDescriptorName>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>decimal abs(decimal X1): uri("com.ge.research.sadl.jena.reasoner.builtin.Abs")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#addOne">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.AddOne</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- addOne(--): uri("org.apache.jena.reasoner.rulesys.builtins.AddOne")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#listMapAsObject">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.ListMapAsObject</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- listMapAsObject(--): uri("org.apache.jena.reasoner.rulesys.builtins.ListMapAsObject")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#isListHead">
+    <sadlimplicitmodel:externalURI>com.naturalsemantics.sadl.jena.reasoner.builtin.IsListHead</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script> isListHead(--): uri("com.naturalsemantics.sadl.jena.reasoner.builtin.IsListHead")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#le">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.LE</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- le(--): uri("org.apache.jena.reasoner.rulesys.builtins.LE")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#notBNode">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.NotBNode</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- notBNode(--): uri("org.apache.jena.reasoner.rulesys.builtins.NotBNode")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#ceiling">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.Ceiling</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- ceiling(...): uri("com.ge.research.sadl.jena.reasoner.builtin.Ceiling")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#mod">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.Mod</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- mod(...): uri("com.ge.research.sadl.jena.reasoner.builtin.Mod")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#lessThan">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.LessThan</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- lessThan(...): uri("com.ge.research.sadl.jena.reasoner.builtin.LessThan")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#firstElement">
+    <sadlimplicitmodel:externalURI>com.naturalsemantics.sadl.jena.reasoner.builtin.FirstElement</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- firstElement(--): uri("com.naturalsemantics.sadl.jena.reasoner.builtin.FirstElement")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#localname">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.Localname</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- localname(...): uri("com.ge.research.sadl.jena.reasoner.builtin.Localname")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#list">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.List</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- list(...): uri("com.ge.research.sadl.jena.reasoner.builtin.List")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#oneOf">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.OneOf</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- oneOf(...): uri("com.ge.research.sadl.jena.reasoner.builtin.OneOf")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#deleteElementFromList">
+    <sadlimplicitmodel:externalURI>com.naturalsemantics.sadl.jena.reasoner.builtin.DeleteElementFromList</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:rest rdf:parseType="Resource">
+        <sadllistmodel:first>
+          <sadlimplicitmodel:DataDescriptor>
+            <sadlimplicitmodel:dataType>http://www.w3.org/2001/XMLSchema#int</sadlimplicitmodel:dataType>
+            <sadlimplicitmodel:descriptorVariable>
+              <sadlimplicitmodel:GPVariable rdf:about="http://sadl.org/builtinfunctions#deleteElementFromList_X2"/>
+            </sadlimplicitmodel:descriptorVariable>
+            <sadlimplicitmodel:localDescriptorName>X2</sadlimplicitmodel:localDescriptorName>
+          </sadlimplicitmodel:DataDescriptor>
+        </sadllistmodel:first>
+        <rdf:type rdf:nodeID="A0"/>
+      </sadllistmodel:rest>
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- deleteElementFromList(--,int X2): uri("com.naturalsemantics.sadl.jena.reasoner.builtin.DeleteElementFromList")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#listLength">
+    <sadlimplicitmodel:externalURI>com.naturalsemantics.sadl.jena.reasoner.builtin.ListLength</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://www.w3.org/2001/XMLSchema#int</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>int listLength(--): uri("com.naturalsemantics.sadl.jena.reasoner.builtin.ListLength")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#asin">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.Asin</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- asin(...): uri("com.ge.research.sadl.jena.reasoner.builtin.Asin")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#listEqual">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.ListEqual</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- listEqual(--): uri("org.apache.jena.reasoner.rulesys.builtins.ListEqual")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#print">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.Print</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- print(...): uri("com.ge.research.sadl.jena.reasoner.builtin.Print")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#listContains">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.ListContains</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- listContains(--): uri("org.apache.jena.reasoner.rulesys.builtins.ListContains")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#sqrt">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.Sqrt</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- sqrt(...): uri("com.ge.research.sadl.jena.reasoner.builtin.Sqrt")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#getInstance">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.GetInstance</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- getInstance(...): uri("com.ge.research.sadl.jena.reasoner.builtin.GetInstance")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#notOnlyValue">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.NotOnlyValue</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- notOnlyValue(...): uri("com.ge.research.sadl.jena.reasoner.builtin.NotOnlyValue")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#pow">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.Pow</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- pow(...): uri("com.ge.research.sadl.jena.reasoner.builtin.Pow")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#ge">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.GE</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- ge(--): uri("org.apache.jena.reasoner.rulesys.builtins.GE")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#table">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.Table</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- table(--): uri("org.apache.jena.reasoner.rulesys.builtins.Table")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#listMapAsSubject">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.ListMapAsSubject</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- listMapAsSubject(--): uri("org.apache.jena.reasoner.rulesys.builtins.ListMapAsSubject")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#equal">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.Equal</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- equal(--): uri("org.apache.jena.reasoner.rulesys.builtins.Equal")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#listEntry">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.ListEntry</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- listEntry(--): uri("org.apache.jena.reasoner.rulesys.builtins.ListEntry")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#elementInList">
+    <sadlimplicitmodel:externalURI>com.naturalsemantics.sadl.jena.reasoner.builtin.ElementInList</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:rest rdf:parseType="Resource">
+        <sadllistmodel:first>
+          <sadlimplicitmodel:DataDescriptor>
+            <sadlimplicitmodel:dataType>http://www.w3.org/2001/XMLSchema#int</sadlimplicitmodel:dataType>
+            <sadlimplicitmodel:descriptorVariable>
+              <sadlimplicitmodel:GPVariable rdf:about="http://sadl.org/builtinfunctions#elementInList_X2"/>
+            </sadlimplicitmodel:descriptorVariable>
+            <sadlimplicitmodel:localDescriptorName>X2</sadlimplicitmodel:localDescriptorName>
+          </sadlimplicitmodel:DataDescriptor>
+        </sadllistmodel:first>
+        <rdf:type rdf:nodeID="A0"/>
+      </sadllistmodel:rest>
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- elementInList(--,int X2): uri("com.naturalsemantics.sadl.jena.reasoner.builtin.ElementInList")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#strbefore">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.StrBefore</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- strbefore(...): uri("com.ge.research.sadl.jena.reasoner.builtin.StrBefore")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#isLiteral">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.IsLiteral</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- isLiteral(--): uri("org.apache.jena.reasoner.rulesys.builtins.IsLiteral")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#elementBefore">
+    <sadlimplicitmodel:externalURI>com.naturalsemantics.sadl.jena.reasoner.builtin.ElementBefore</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:rest rdf:parseType="Resource">
+        <sadllistmodel:first>
+          <sadlimplicitmodel:DataDescriptor>
+            <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+          </sadlimplicitmodel:DataDescriptor>
+        </sadllistmodel:first>
+        <rdf:type rdf:nodeID="A0"/>
+      </sadllistmodel:rest>
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- elementBefore(--,--): uri("com.naturalsemantics.sadl.jena.reasoner.builtin.ElementBefore")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#quotient">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.Quotient</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- quotient(--): uri("org.apache.jena.reasoner.rulesys.builtins.Quotient")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#assign">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.Assign</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- assign(...): uri("com.ge.research.sadl.jena.reasoner.builtin.Assign")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#strConcat">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.StrConcat</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- strConcat(--): uri("org.apache.jena.reasoner.rulesys.builtins.StrConcat")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#tan">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.Tan</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- tan(...): uri("com.ge.research.sadl.jena.reasoner.builtin.Tan")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#floor">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.Floor</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- floor(...): uri("com.ge.research.sadl.jena.reasoner.builtin.Floor")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#sameAs">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.SameAs</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- sameAs(...): uri("com.ge.research.sadl.jena.reasoner.builtin.SameAs")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#combineUnits">
+    <sadlimplicitmodel:externalURI>com.naturalsemantics.sadl.jena.reasoner.builtin.CombineUnits</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- combineUnits(...): uri("com.naturalsemantics.sadl.jena.reasoner.builtin.CombineUnits")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#isDType">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.IsDType</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- isDType(--): uri("org.apache.jena.reasoner.rulesys.builtins.IsDType")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#evaluateSadlEquation">
+    <sadlimplicitmodel:externalURI>com.naturalsemantics.sadl.jena.reasoner.builtin.EvaluateSadlEquation</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- evaluateSadlEquation(...): uri("com.naturalsemantics.sadl.jena.reasoner.builtin.EvaluateSadlEquation")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#insertElementInList">
+    <sadlimplicitmodel:externalURI>com.naturalsemantics.sadl.jena.reasoner.builtin.InsertElementInList</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:rest rdf:parseType="Resource">
+        <sadllistmodel:rest rdf:parseType="Resource">
+          <sadllistmodel:first>
+            <sadlimplicitmodel:DataDescriptor>
+              <sadlimplicitmodel:dataType>http://www.w3.org/2001/XMLSchema#int</sadlimplicitmodel:dataType>
+              <sadlimplicitmodel:descriptorVariable>
+                <sadlimplicitmodel:GPVariable rdf:about="http://sadl.org/builtinfunctions#insertElementInList_X3"/>
+              </sadlimplicitmodel:descriptorVariable>
+              <sadlimplicitmodel:localDescriptorName>X3</sadlimplicitmodel:localDescriptorName>
+            </sadlimplicitmodel:DataDescriptor>
+          </sadllistmodel:first>
+          <rdf:type rdf:nodeID="A0"/>
+        </sadllistmodel:rest>
+        <sadllistmodel:first>
+          <sadlimplicitmodel:DataDescriptor>
+            <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+          </sadlimplicitmodel:DataDescriptor>
+        </sadllistmodel:first>
+        <rdf:type rdf:nodeID="A0"/>
+      </sadllistmodel:rest>
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- insertElementInList(--,--,int X3): uri("com.naturalsemantics.sadl.jena.reasoner.builtin.InsertElementInList")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#min">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.Min</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://www.w3.org/2001/XMLSchema#decimal</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:rest rdf:parseType="Resource">
+        <sadllistmodel:rest rdf:parseType="Resource">
+          <sadllistmodel:first>
+            <sadlimplicitmodel:DataDescriptor>
+              <sadlimplicitmodel:variableNumArguments rdf:datatype=
+              "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+            </sadlimplicitmodel:DataDescriptor>
+          </sadllistmodel:first>
+          <rdf:type rdf:nodeID="A0"/>
+        </sadllistmodel:rest>
+        <sadllistmodel:first>
+          <sadlimplicitmodel:DataDescriptor>
+            <sadlimplicitmodel:dataType>http://www.w3.org/2001/XMLSchema#decimal</sadlimplicitmodel:dataType>
+            <sadlimplicitmodel:descriptorVariable>
+              <sadlimplicitmodel:GPVariable rdf:about="http://sadl.org/builtinfunctions#min_X2"/>
+            </sadlimplicitmodel:descriptorVariable>
+            <sadlimplicitmodel:localDescriptorName>X2</sadlimplicitmodel:localDescriptorName>
+          </sadlimplicitmodel:DataDescriptor>
+        </sadllistmodel:first>
+        <rdf:type rdf:nodeID="A0"/>
+      </sadllistmodel:rest>
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://www.w3.org/2001/XMLSchema#decimal</sadlimplicitmodel:dataType>
+          <sadlimplicitmodel:descriptorVariable>
+            <sadlimplicitmodel:GPVariable rdf:about="http://sadl.org/builtinfunctions#min_X1"/>
+          </sadlimplicitmodel:descriptorVariable>
+          <sadlimplicitmodel:localDescriptorName>X1</sadlimplicitmodel:localDescriptorName>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>decimal min(decimal X1,decimal X2,...): uri("com.ge.research.sadl.jena.reasoner.builtin.Min")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#noSubjectsOtherThan">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.NoSubjectsOtherThan</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- noSubjectsOtherThan(...): uri("com.ge.research.sadl.jena.reasoner.builtin.NoSubjectsOtherThan")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#now">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.Now</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- now(--): uri("org.apache.jena.reasoner.rulesys.builtins.Now")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#average">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.Average</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- average(...): uri("com.ge.research.sadl.jena.reasoner.builtin.Average")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#atan">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.Atan</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- atan(...): uri("com.ge.research.sadl.jena.reasoner.builtin.Atan")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#uriConcat">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.UriConcat</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- uriConcat(--): uri("org.apache.jena.reasoner.rulesys.builtins.UriConcat")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#greaterThan">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.GreaterThan</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- greaterThan(...): uri("com.ge.research.sadl.jena.reasoner.builtin.GreaterThan")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#lastElement">
+    <sadlimplicitmodel:externalURI>com.naturalsemantics.sadl.jena.reasoner.builtin.LastElement</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- lastElement(--): uri("com.naturalsemantics.sadl.jena.reasoner.builtin.LastElement")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#subtractDates">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.SubtractDates</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- subtractDates(...): uri("com.ge.research.sadl.jena.reasoner.builtin.SubtractDates")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#index">
+    <sadlimplicitmodel:externalURI>com.naturalsemantics.sadl.jena.reasoner.builtin.Index</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://www.w3.org/2001/XMLSchema#int</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:rest rdf:parseType="Resource">
+        <sadllistmodel:first>
+          <sadlimplicitmodel:DataDescriptor>
+            <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+          </sadlimplicitmodel:DataDescriptor>
+        </sadllistmodel:first>
+        <rdf:type rdf:nodeID="A0"/>
+      </sadllistmodel:rest>
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>int index(--,--): uri("com.naturalsemantics.sadl.jena.reasoner.builtin.Index")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#cos">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.Cos</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- cos(...): uri("com.ge.research.sadl.jena.reasoner.builtin.Cos")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#regex">
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- regex(--): uri("org.apache.jena.reasoner.rulesys.builtins.Regex")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.Regex</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- regex(--): uri("org.apache.jena.reasoner.rulesys.builtins.Regex")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#getClassFromConstraint">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.GetClassFromConstraint</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- getClassFromConstraint(...): uri("com.ge.research.sadl.jena.reasoner.builtin.GetClassFromConstraint")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#strafter">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.StrAfter</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- strafter(...): uri("com.ge.research.sadl.jena.reasoner.builtin.StrAfter")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#noValuesOtherThan">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.NoValuesOtherThan</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- noValuesOtherThan(...): uri("com.ge.research.sadl.jena.reasoner.builtin.NoValuesOtherThan")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#notLiteral">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.NotLiteral</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- notLiteral(--): uri("org.apache.jena.reasoner.rulesys.builtins.NotLiteral")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#differentFrom">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.DifferentFrom</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- differentFrom(...): uri("com.ge.research.sadl.jena.reasoner.builtin.DifferentFrom")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#product">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.Product</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- product(...): uri("com.ge.research.sadl.jena.reasoner.builtin.Product")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#elementAfter">
+    <sadlimplicitmodel:externalURI>com.naturalsemantics.sadl.jena.reasoner.builtin.ElementAfter</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:rest rdf:parseType="Resource">
+        <sadllistmodel:first>
+          <sadlimplicitmodel:DataDescriptor>
+            <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+          </sadlimplicitmodel:DataDescriptor>
+        </sadllistmodel:first>
+        <rdf:type rdf:nodeID="A0"/>
+      </sadllistmodel:rest>
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- elementAfter(--,--): uri("com.naturalsemantics.sadl.jena.reasoner.builtin.ElementAfter")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#countMatches">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.CountMatches</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://www.w3.org/2001/XMLSchema#int</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>int countMatches(...): uri("com.ge.research.sadl.jena.reasoner.builtin.CountMatches")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#bound">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.Bound</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- bound(--): uri("org.apache.jena.reasoner.rulesys.builtins.Bound")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#acos">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.Acos</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://www.w3.org/2001/XMLSchema#decimal</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://www.w3.org/2001/XMLSchema#decimal</sadlimplicitmodel:dataType>
+          <sadlimplicitmodel:descriptorVariable>
+            <sadlimplicitmodel:GPVariable rdf:about="http://sadl.org/builtinfunctions#acos_X1"/>
+          </sadlimplicitmodel:descriptorVariable>
+          <sadlimplicitmodel:localDescriptorName>X1</sadlimplicitmodel:localDescriptorName>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>decimal acos(decimal X1): uri("com.ge.research.sadl.jena.reasoner.builtin.Acos")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#isBNode">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.IsBNode</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- isBNode(--): uri("org.apache.jena.reasoner.rulesys.builtins.IsBNode")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#notDType">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.NotDType</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- notDType(--): uri("org.apache.jena.reasoner.rulesys.builtins.NotDType")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#noValue">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.NoValue</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- noValue(...): uri("com.ge.research.sadl.jena.reasoner.builtin.NoValue")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#sum">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.Sum</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- sum(...): uri("com.ge.research.sadl.jena.reasoner.builtin.Sum")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#tableAll">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.TableAll</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- tableAll(--): uri("org.apache.jena.reasoner.rulesys.builtins.TableAll")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#listToString">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.ListToString</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- listToString(...): uri("com.ge.research.sadl.jena.reasoner.builtin.ListToString")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#max">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.Max</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://www.w3.org/2001/XMLSchema#decimal</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:rest rdf:parseType="Resource">
+        <sadllistmodel:rest rdf:parseType="Resource">
+          <sadllistmodel:first>
+            <sadlimplicitmodel:DataDescriptor>
+              <sadlimplicitmodel:variableNumArguments rdf:datatype=
+              "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+            </sadlimplicitmodel:DataDescriptor>
+          </sadllistmodel:first>
+          <rdf:type rdf:nodeID="A0"/>
+        </sadllistmodel:rest>
+        <sadllistmodel:first>
+          <sadlimplicitmodel:DataDescriptor>
+            <sadlimplicitmodel:dataType>http://www.w3.org/2001/XMLSchema#decimal</sadlimplicitmodel:dataType>
+            <sadlimplicitmodel:descriptorVariable>
+              <sadlimplicitmodel:GPVariable rdf:about="http://sadl.org/builtinfunctions#max_X2"/>
+            </sadlimplicitmodel:descriptorVariable>
+            <sadlimplicitmodel:localDescriptorName>X2</sadlimplicitmodel:localDescriptorName>
+          </sadlimplicitmodel:DataDescriptor>
+        </sadllistmodel:first>
+        <rdf:type rdf:nodeID="A0"/>
+      </sadllistmodel:rest>
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://www.w3.org/2001/XMLSchema#decimal</sadlimplicitmodel:dataType>
+          <sadlimplicitmodel:descriptorVariable>
+            <sadlimplicitmodel:GPVariable rdf:about="http://sadl.org/builtinfunctions#max_X1"/>
+          </sadlimplicitmodel:descriptorVariable>
+          <sadlimplicitmodel:localDescriptorName>X1</sadlimplicitmodel:localDescriptorName>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>decimal max(decimal X1,decimal X2,...): uri("com.ge.research.sadl.jena.reasoner.builtin.Max")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#difference">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.Difference</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- difference(--): uri("org.apache.jena.reasoner.rulesys.builtins.Difference")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#listSubtract">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.ListSubtract</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- listSubtract(...): uri("com.ge.research.sadl.jena.reasoner.builtin.ListSubtract")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#unbound">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.Unbound</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- unbound(--): uri("org.apache.jena.reasoner.rulesys.builtins.Unbound")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#listNotEqual">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.ListNotEqual</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- listNotEqual(--): uri("org.apache.jena.reasoner.rulesys.builtins.ListNotEqual")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#sin">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.Sin</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- sin(...): uri("com.ge.research.sadl.jena.reasoner.builtin.Sin")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#sadlListToString">
+    <sadlimplicitmodel:externalURI>com.naturalsemantics.sadl.jena.reasoner.builtin.SadlListToString</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://www.w3.org/2001/XMLSchema#string</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>string sadlListToString(--): uri("com.naturalsemantics.sadl.jena.reasoner.builtin.SadlListToString")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#countLiteralValues">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.CountLiteralValues</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- countLiteralValues(--): uri("org.apache.jena.reasoner.rulesys.builtins.CountLiteralValues")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#listNotContains">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.ListNotContains</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- listNotContains(--): uri("org.apache.jena.reasoner.rulesys.builtins.ListNotContains")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#noUnknownValues">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.NoUnknownValues</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- noUnknownValues(...): uri("com.ge.research.sadl.jena.reasoner.builtin.NoUnknownValues")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#thereExists">
+    <sadlimplicitmodel:externalURI>com.ge.research.sadl.jena.reasoner.builtin.ThereExists</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:variableNumArguments rdf:datatype=
+          "http://www.w3.org/2001/XMLSchema#boolean">true</sadlimplicitmodel:variableNumArguments>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- thereExists(...): uri("com.ge.research.sadl.jena.reasoner.builtin.ThereExists")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+  <sadlimplicitmodel:ExternalEquation rdf:about="http://sadl.org/builtinfunctions#notEqual">
+    <sadlimplicitmodel:externalURI>org.apache.jena.reasoner.rulesys.builtins.NotEqual</sadlimplicitmodel:externalURI>
+    <sadlimplicitmodel:returnTypes rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:returnTypes>
+    <sadlimplicitmodel:arguments rdf:parseType="Resource">
+      <sadllistmodel:first>
+        <sadlimplicitmodel:DataDescriptor>
+          <sadlimplicitmodel:dataType>http://com.ge.research.sadl.model.gp#com.ge.research.sadl.model.gp.UnknownNode</sadlimplicitmodel:dataType>
+        </sadlimplicitmodel:DataDescriptor>
+      </sadllistmodel:first>
+      <rdf:type rdf:nodeID="A0"/>
+    </sadlimplicitmodel:arguments>
+    <sadlimplicitmodel:expression>
+      <sadlimplicitmodel:Script>
+        <sadlimplicitmodel:language rdf:resource="http://sadl.org/sadlimplicitmodel#Text"/>
+        <sadlimplicitmodel:script>-- notEqual(--): uri("org.apache.jena.reasoner.rulesys.builtins.NotEqual")</sadlimplicitmodel:script>
+      </sadlimplicitmodel:Script>
+    </sadlimplicitmodel:expression>
+  </sadlimplicitmodel:ExternalEquation>
+</rdf:RDF>

@@ -1,0 +1,24 @@
+ID,comments,creator,jsonFile,itemType
+getDAP,arp4754,spaul,getDAP.json,PrefabNodeGroup
+getConfiguration,arp4754,spaul,getConfiguration.json,PrefabNodeGroup
+Aircraft,arp,spaul,Aircraft.json,PrefabNodeGroup
+Aircraft_with_INTERFACE,arp,spaul,Aircraft_with_INTERFACE.json,PrefabNodeGroup
+DOCUMENT,arp,spaul,DOCUMENT.json,PrefabNodeGroup
+Input,arp,spaul,Input.json,PrefabNodeGroup
+INTERFACE,arp,spaul,INTERFACE.json,PrefabNodeGroup
+INTERFACE_with_IO,arp,spaul,INTERFACE_with_IO.json,PrefabNodeGroup
+Item,arp,spaul,Item.json,PrefabNodeGroup
+ItemDerivedReq,arp,spaul,ItemDerivedReq.json,PrefabNodeGroup
+ItemReq,arp,spaul,ItemReq.json,PrefabNodeGroup
+ItemReq_with_Item,arp,spaul,ItemReq_with_Item.json,PrefabNodeGroup
+ItemReq_with_RequirementCompleteCorrectReview,arp,spaul,ItemReq_with_RequirementCompleteCorrectReview.json,PrefabNodeGroup
+ItemReq_with_RequirementTraceableReview,arp,spaul,ItemReq_with_RequirementTraceableReview.json,PrefabNodeGroup
+ItemReq_with_SystemReq,arp,spaul,ItemReq_with_SystemReq.json,PrefabNodeGroup
+Output,arp,spaul,Output.json,PrefabNodeGroup
+RequirementCompleteCorrectReview,arp,spaul,RequirementCompleteCorrectReview.json,PrefabNodeGroup
+RequirementTraceableReview,arp,spaul,RequirementTraceableReview.json,PrefabNodeGroup
+SystemDerivedReq,arp,spaul,SystemDerivedReq.json,PrefabNodeGroup
+SystemDesignDescription,arp,spaul,SystemDesignDescription.json,PrefabNodeGroup
+SystemReq,arp,spaul,SystemReq.json,PrefabNodeGroup
+SystemReq_with_Aircraft,arp,spaul,SystemReq_with_Aircraft.json,PrefabNodeGroup
+REVIEW_and_LOGs,"show REVIEWs, the REVIEW_LOG, and what ENTITYs were described in the LOGs",kityansiu,REVIEW_and_LOGs.json,PrefabNodeGroup

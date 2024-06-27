@@ -1,0 +1,77 @@
+/* Copyright (c) 2022, General Electric Company, Galois, Inc.
+ *
+ * All Rights Reserved
+ *
+ * This material is based upon work supported by the Defense Advanced Research
+ * Projects Agency (DARPA) under Contract No. FA8750-20-C-0203.
+ *
+ * Any opinions, findings and conclusions or recommendations expressed in this
+ * material are those of the author(s) and do not necessarily reflect the views
+ * of the Defense Advanced Research Projects Agency (DARPA).
+ */
+
+ //-- Author: Saswata Paul
+ //-- A template for creating an instance of Do178C Table A1 using DO178C-core overlay  
+ 
+ uri "http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl" alias do178cPsacCorA3.
+ 
+ import "http://arcos.rack/DO178C-PSAC-CORE.sadl".
+ 
+   
+ //****************************************************************************************** 
+ //-- A template for Table A3 that can be instantiated while creating an actual PSAC instance
+ //******************************************************************************************  
+ /**
+  * NOTE: When instantiating Table A3, some things like the objective descriptions 
+  * 	will be common for all users while further details such as data items, control categories, applicability
+  * 	tools used, review, and analyses will vary for different users 
+  * 
+  * 	The template below consists of these common fields for Table A3 pre-filled that can be extended with 
+  * 	the other properties by users when creating a plan 
+  * 
+  * 	Details beyond this generic template are expected to be specific to the software being developed and
+  * 	can vary greatly depending on how the developers will connect their evidences to the PSAC
+  */
+  
+  Table-A3 is a DO178CTable
+  	with identifier "Table-A3"
+  	with description "Verification of Outputs of Software Requirements Process"
+  	with objective Objective-A3-1
+  	with objective Objective-A3-2
+  	with objective Objective-A3-3
+  	with objective Objective-A3-4
+  	with objective Objective-A3-5
+  	with objective Objective-A3-6
+  	with objective Objective-A3-7. 
+   	
+   	
+  Objective-A3-1 is a DO178CObjective
+  	with identifier "Objective-A3-1"
+  	with description "High-level requirements comply with system requirements".
+
+  Objective-A3-2 is a DO178CObjective
+  	with identifier "Objective-A3-2"
+  	with description "High-level requirements are accurate and consistent".
+
+ Objective-A3-3 is a DO178CObjective
+  	with identifier "Objective-A3-3"
+  	with description "High-level requirements are compatible with target computer".
+  	
+  	
+  Objective-A3-4 is a DO178CObjective
+  	with identifier "Objective-A3-4"
+  	with description "High-level requirements are verifiable".
+
+
+  Objective-A3-5 is a DO178CObjective
+  	with identifier "Objective-A3-5"
+  	with description "High-level requirements conform to standards".
+
+
+  Objective-A3-6 is a DO178CObjective
+  	with identifier "Objective-A3-6"
+  	with description "High-level requirements are traceable to system requirements".
+
+  Objective-A3-7 is a DO178CObjective
+  	with identifier "Objective-A3-7"
+  	with description "Algorithms are accurate".

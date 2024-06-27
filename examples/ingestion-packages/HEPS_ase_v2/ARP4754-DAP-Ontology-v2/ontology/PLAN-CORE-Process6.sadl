@@ -1,0 +1,11 @@
+
+ //-- Author: Saswata Paul
+ //-- An ontology to specify the different objectives and their related properties in an ARP4754 Development Assurance Plan (DAP) 
+
+ uri "http://sadl.org/PLAN-CORE-Process6.sadl" alias p6core.
+ 
+ import "http://sadl.org/PLAN-CORE.sadl".
+ 
+ Process-6 is a Process
+ 	with identifier "Process-6"
+ 	with description "Configuration Management Process".

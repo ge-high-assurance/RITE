@@ -1,0 +1,47 @@
+data-graph: http://rack001/data
+ingestion-steps:
+- class: http://arcos.rack/AircraftItem#Item
+  csv: AircraftItem_Item1.csv
+- class: http://arcos.rack/AircraftItem#ItemReq
+  csv: AircraftItem_ItemReq1.csv
+- class: http://arcos.rack/AircraftItem#ItemReq
+  csv: AircraftItem_ItemReq1_addl.csv
+- class: http://arcos.rack/AircraftSystem#Aircraft
+  csv: AircraftSystem_Aircraft1.csv
+- class: http://arcos.rack/AircraftSystem#AircraftReq
+  csv: AircraftSystem_AircraftReq1.csv
+- class: http://arcos.rack/AircraftSystem#SystemReq
+  csv: AircraftSystem_SystemReq1.csv
+- class: http://arcos.rack/AircraftSystem#SystemReq
+  csv: AircraftSystem_SystemReq1_addl.csv
+- class: http://arcos.rack/PROV-S#ACTIVITY
+  csv: PROV_S_ACTIVITY1.csv
+- class: http://arcos.rack/REQUIREMENTS#REQUIREMENT
+  csv: REQUIREMENTS_REQUIREMENT1.csv
+- class: http://arcos.rack/SYSTEM#SYSTEM
+  csv: SYSTEM_SYSTEM1.csv
+- class: http://arcos.rack/AircraftItem#Item
+  csv: AircraftItem_Item2.csv
+- class: http://arcos.rack/AircraftItem#ItemReq
+  csv: AircraftItem_ItemReq2.csv
+- class: http://arcos.rack/AircraftItem#ItemReq
+  csv: AircraftItem_ItemReq2_addl.csv
+- class: http://arcos.rack/AircraftSystem#Aircraft
+  csv: AircraftSystem_Aircraft2.csv
+- class: http://arcos.rack/AircraftSystem#AircraftReq
+  csv: AircraftSystem_AircraftReq2.csv
+- class: http://arcos.rack/AircraftSystem#SystemReq
+  csv: AircraftSystem_SystemReq2.csv
+- class: http://arcos.rack/AircraftSystem#SystemReq
+  csv: AircraftSystem_SystemReq2_addl.csv
+- class: http://arcos.rack/PROV-S#ACTIVITY
+  csv: PROV_S_ACTIVITY2.csv
+- class: http://arcos.rack/REQUIREMENTS#REQUIREMENT
+  csv: REQUIREMENTS_REQUIREMENT2.csv
+- class: http://arcos.rack/SYSTEM#SYSTEM
+  csv: SYSTEM_SYSTEM2.csv
+- class: http://arcos.rack/AircraftItem#RequirementCompleteCorrectReview
+  csv: REVIEW_RequirementCompleteCorrectReview.csv
+- class: http://arcos.rack/REVIEW#REVIEW_LOG
+  csv: REVIEW_REVIEW_LOG.csv
+  

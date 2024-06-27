@@ -1,0 +1,35 @@
+
+ //-- Author: Saswata Paul
+ //-- An ontology to specify the different objectives and their related properties in an ARP4754 Development Assurance Plan (DAP) 
+
+ uri "http://sadl.org/PLAN-CORE-Process6.sadl" alias p6core.
+ 
+ import "http://sadl.org/PLAN-CORE.sadl".
+ 
+ Process-6 is a Process
+ 	with identifier "Process-6"
+ 	with description "Configuration Management Process"
+  	with objective Objectve-6-1
+  	with objective Objectve-6-2
+  	with objective Objectve-6-3
+  	with objective Objectve-6-4.  	
+ 	
+ 	
+  Objectve-6-1 is a Objective
+  	with identifier "Objectve-6-1"
+  	with description " ".  	
+ 	
+ 	
+  Objectve-6-2 is a Objective
+  	with identifier "Objectve-6-2"
+  	with description " ".  	
+
+
+  Objectve-6-3 is a Objective
+  	with identifier "Objectve-6-3"
+  	with description " ".  	
+
+
+  Objectve-6-4 is a Objective
+  	with identifier "Objectve-6-4"
+  	with description " ".  	 	

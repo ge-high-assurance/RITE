@@ -1,0 +1,14 @@
+identifier,dataInsertedBy_identifier,description,governs_identifier
+84,Manual Cameo Ingestion,The PropulsionController shall set Chiller_fault to 1.0 when (inlet temperature of chiller > Inlet_T_max) or (flow rate of chiller < Flow_rate_min) or (outlet temperature of chiller > Outlet_T_max).,PropulsionController
+85,Manual Cameo Ingestion,The PropulsionController shall set Chiller_warning to 1.0 when (inlet temperature of chiller > Inlet_T_max-5) or (flow rate of chiller < Flow_rate_min+0.5) or (outlet temperature of chiller > Outlet_T_max-5).,PropulsionController
+86,Manual Cameo Ingestion,PropulsionController shall set Temp_warning_electric to 1.0 when (Warning_DCAC_temp of DCACcontroller is 1.0 ) or (Warning_DCDC_temp of DCDCcontroller is 1.0 ).,PropulsionController
+87,Manual Cameo Ingestion,PropulsionController shall set TurbineDriveTrain of ParallelHybridPropulsion to ON when System of PropulsionController =1.0 and System of PropulsionController =2.0.,PropulsionController
+88,Manual Cameo Ingestion,PropulsionController shall set fuel_flow_reference of Fuel System to fuel_flow_reference of PropulsionController.,PropulsionController
+89,Manual Cameo Ingestion,PropulsionController shall set ElectricDriveTrain of ParallelHybridPropulsion to ON when System of PropulsionController =1.0.,PropulsionController
+90,Manual Cameo Ingestion,PropulsionController shall set Starter Motor of Fuel System to DECLUTCH when Starter_motor_status of PropulsionController is DECLUTCH.,PropulsionController
+91,Manual Cameo Ingestion,PropulsionController shall set Ignitor of Fuel System to OFF when Ignitor_status of PropulsionController is OFF.,PropulsionController
+92,Manual Cameo Ingestion,PropulsionController shall set Start Valve of Fuel System to OPEN when Start_Valve_status of PropulsionController is OPEN.,PropulsionController
+93,Manual Cameo Ingestion,PropulsionController shall set Fuel Switch of Fuel System to ON when Fuel_Switch_status of PropulsionController is ON.,PropulsionController
+94,Manual Cameo Ingestion,PropulsionController shall set Ignitor of Fuel System to ON when Ignitor_status of PropulsionController is ON.,PropulsionController
+95,Manual Cameo Ingestion,PropulsionController shall set Fuel Switch of Fuel System to OFF when Fuel_Switch_status of PropulsionController is OFF.,PropulsionController
+96,Manual Cameo Ingestion,PropulsionController shall set Ignitor of Fuel System to ON when Ignitor_status of PropulsionController is ON.,PropulsionController

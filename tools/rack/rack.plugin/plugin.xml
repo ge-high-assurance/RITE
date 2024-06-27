@@ -57,15 +57,20 @@
       </commandParameter>
     </command>
 
+    <!-- ARP-4754A Plan Creation -->
     <command categoryId="rackplugin.commands"
-      id="rackplugin.commands.runWorkflow" name="Run Workflow">
+      id="rackplugin.commands.arp4754PlanCommand"
+      name="Create ARP-4754A Plan">
     </command>
-
 
     <!-- For reports -->
     <command categoryId="rackplugin.commands"
       id="rackplugin.commands.reportsCommand"
       name="Generate DO178C Reports">
+    </command>
+    <command categoryId="rackplugin.commands"
+      id="rackplugin.commands.arp4754Command"
+      name="Generate ARP-4754A Report">
     </command>
 
     <!-- For auto Gsn -->
@@ -79,11 +84,11 @@
       id="rackplugin.commands.ribCommand" name="Access RiB">
     </command>
 
-    <command id="rackplugin.commands.showNumTriplesCommand"
+    <command id="rack.plugin.commands.showNumTriplesCommand"
       name="Show Data Graphs and number of triples currently on RACK">
     </command>
 
-    <command id="rackplugin.commands.refreshCommand"
+    <command id="rack.plugin.commands.refreshCommand"
       name="Refresh Ontologies and Nodegroups">
     </command>
 
@@ -187,6 +192,13 @@
     <handler class="com.ge.research.rack.ReportButtonHandler"
       commandId="rackplugin.commands.reportsCommand">
     </handler>
+    <handler class="com.ge.research.rack.Arp4754ButtonHandler"
+      commandId="rackplugin.commands.arp4754Command">
+    </handler>
+    <!-- For ARP-4754A Plans -->
+    <handler class="com.ge.research.rack.Arp4754WireframeHandler"
+      commandId="rackplugin.commands.arp4754PlanCommand">
+    </handler>
     <!-- For auto Gsn -->
     <handler class="com.ge.research.rack.AutoGsnButtonHandler"
       commandId="rackplugin.commands.autoGsnCommand">
@@ -196,13 +208,10 @@
       commandId="rackplugin.commands.ribCommand">
     </handler>
     <handler class="com.ge.research.rack.RefreshHandler"
-      commandId="rackplugin.commands.refreshCommand">
+      commandId="rack.plugin.commands.refreshCommand">
     </handler>
     <handler class="com.ge.research.rack.ShowNumTriplesHandler"
-      commandId="rackplugin.commands.showNumTriplesCommand">
-    </handler>
-    <handler class="com.ge.research.rack.RunWorkflowHandler"
-      commandId="rackplugin.commands.runWorkflow">
+      commandId="rack.plugin.commands.showNumTriplesCommand">
     </handler>
 
   </extension>
@@ -233,20 +242,28 @@
         <command commandId="rackplugin.commands.clearAll"
           id="rackplugin.menus.clearAll" label="Clear RACK" mnemonic="S">
         </command>
-        <command commandId="rackplugin.commands.runWorkflow"
-          id="rackplugin.menus.runWorkflow" label="Run Workflow">
-        </command>
 
         <separator name="separator2" visible="true">
         </separator>
 
-        <!-- <command commandId="rackplugin.commands.gsnCommand" id="rackplugin.menus.loadGsn"
-          label="Show GSN Assurance Case" mnemonic="S"> </command> -->
-
         <!-- <command commandId="rackplugin.commands.loadQueriesCommand" id="rackplugin.menus.loadQueries"
-          label="Load Query Nodegroups from Disk" mnemonic="S"> </command> <command
-          commandId="rackplugin.commands.reportsCommand" id="rackplugin.menus.reports"
-          label="DO-178C Compliance Report" mnemonic="S" style="push"> </command> -->
+          label="Load Query Nodegroups from Disk" mnemonic="S"> </command> -->
+
+        <command commandId="rackplugin.commands.reportsCommand"
+          id="rackplugin.menus.reports" label="DO-178C Compliance Report"
+          mnemonic="S" style="push">
+        </command>
+
+        <command commandId="rackplugin.commands.arp4754Command"
+          id="rackplugin.menus.arp4754" label="ARP-4754A Compliance Report"
+          mnemonic="S" style="push">
+        </command>
+
+        <!-- For ARP-4754A Plans -->
+        <command commandId="rackplugin.commands.arp4754PlanCommand"
+          id="rackplugin.menus.arp4754Plan" label="Create ARP-4754A Plan"
+          mnemonic="A" style="push">
+        </command>
 
         <!-- For auto Gsn -->
         <command commandId="rackplugin.commands.autoGsnCommand"
@@ -270,7 +287,7 @@
     <menuContribution
       locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
       <toolbar id="rack.plugin.toolbars.refreshInfo">
-        <command commandId="rackplugin.commands.refreshCommand"
+        <command commandId="rack.plugin.commands.refreshCommand"
           icon="icons/refresh.png" id="rack.plugin.toolbars.refreshCommand"
           tooltip="Refresh Ontology and Nodegroups views with latest information on RACK">
         </command>
@@ -278,7 +295,7 @@
     </menuContribution>
 
     <!-- <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
-      <toolbar id="rack.plugin.toolbars.showNumTriples"> <command commandId="rackplugin.commands.showNumTriplesCommand"
+      <toolbar id="rack.plugin.toolbars.showNumTriples"> <command commandId="rack.plugin.commands.showNumTriplesCommand"
       icon="icons/ontclass.png" id="rack.plugin.toolbars.showNumTriplesCommand"
       tooltip="Show Data graphs with number of triples currently on RACK"> </command>
       </toolbar> </menuContribution> -->
@@ -302,11 +319,6 @@
       class="com.ge.research.rack.views.NodegroupTemplateView"
       id="rackplugin.views.CSVTemplates" inject="true"
       name="View CDR Templates">
-    </view>
-    <view category="rackplugin"
-      class="com.ge.research.rack.views.SessionView"
-      id="rackplugin.views.SessionView" inject="true"
-      name="Interactive Session">
     </view>
     <view category="rackplugin"
       class="com.ge.research.rack.views.AssuranceCaseTree"
@@ -512,16 +524,6 @@
       namespace="com.ge.research.rack" properties="isManifestSelected"
       type="java.lang.Object">
     </propertyTester>
-  </extension>
-  <extension id="com.ge.research.rack.product" name="RITE"
-    point="org.eclipse.core.runtime.products">
-    <product name="RITE"
-      application="org.eclipse.ui.ide.workbench">
-    </product>
-    <property name="appName" value="RITE" />
-    <property name="windowImages"
-      value="./RITE-16.bmp,./RITE-32.bmp,./RITE-128.bmp,./RITE-256.bmp" />
-
   </extension>
 
 </plugin>

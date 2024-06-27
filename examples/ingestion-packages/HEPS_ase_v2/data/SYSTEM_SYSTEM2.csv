@@ -1,0 +1,23 @@
+identifier,dataInsertedBy_identifier,partOf_identifier
+ElectricDriveTrain,Cameo Ingestion,
+Control,Cameo Ingestion,
+PowerElectronics,Cameo Ingestion,
+PowerElectronics,Cameo Ingestion,
+PowerElectronics,Cameo Ingestion,
+PowerElectronics,Cameo Ingestion,
+TurbineDriveTrain,Cameo Ingestion,
+TurbineDriveTrain,Cameo Ingestion,
+ParallelHybridPropulsion,Cameo Ingestion,
+ElectricDriveTrain,Cameo Ingestion,
+ParallelHybridPropulsion,Cameo Ingestion,
+ParallelHybridPropulsion,Cameo Ingestion,
+PowerElectronics,Cameo Ingestion,
+Aerodynamics,Cameo Ingestion,Aircraft
+AutomatedControl,Cameo Ingestion,Control
+Control,Cameo Ingestion,Aircraft
+ElectricDriveTrain,Cameo Ingestion,ParallelHybridPropulsion
+ParallelHybridPropulsion,Cameo Ingestion,Aircraft
+Payload,Cameo Ingestion,Aircraft
+PowerElectronics,Cameo Ingestion,ElectricDriveTrain
+Structures,Cameo Ingestion,Aircraft
+TurbineDriveTrain,Cameo Ingestion,ParallelHybridPropulsion

@@ -1,0 +1,11 @@
+
+ //-- Author: Saswata Paul
+ //-- An ontology to specify the different objectives and their related properties in an ARP4754 Development Assurance Plan (DAP) 
+
+ uri "http://sadl.org/PLAN-CORE-Process7.sadl" alias p7core.
+ 
+ import "http://sadl.org/PLAN-CORE.sadl".
+ 
+ Process-7 is a Process
+ 	with identifier "Process-7"
+ 	with description "Process Assurance Process".
