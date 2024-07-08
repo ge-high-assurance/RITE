@@ -32,7 +32,7 @@
     <j.0:classId>REVIEW_STATE</j.0:classId>
   </j.0:GsnEvidence>
   <j.2:Goal rdf:about="http://sadl.org/heps-pattern.sadl#itemReq-GP">
-    <j.0:pGoal>REQUIREMENT</j.0:pGoal>
+    <j.0:pGoal>ENTITY</j.0:pGoal>
     <j.1:description>Claim: Item Requirement has passed review</j.1:description>
     <j.1:identifier>itemReq-GP</j.1:identifier>
     <j.0:isPat rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"

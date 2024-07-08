@@ -10,7 +10,7 @@
 	with isPat true
 	with identifier "itemReq-GP"
 	with description "Claim: Item Requirement has passed review" 
-	with pGoal "REQUIREMENT".
+	with pGoal "ENTITY".
 
 
 

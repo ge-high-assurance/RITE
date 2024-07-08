@@ -20,9 +20,9 @@
 
 
  //-- The DAP
- Adept-DAP is a DevelopmentAssurancePlan
- 	with identifier "OEM-DAP"
- 	with description "Development Assurance Plan for the OEM Engine"
+ HEPS-DAP is a DevelopmentAssurancePlan
+ 	with identifier "HEPS-DAP"
+ 	with description "Development Assurance Plan for the HEPS Project"
  	with system HEPS
  	with process Process-1
  	with process Process-2
@@ -41,9 +41,6 @@
  Objective-2-2 has query "Objective-2-2-query-count-all-System-Requirements-allocated-to-a-system". 	
  Objective-2-2 has query "Objective-2-2-query-count-all-Interfaces-allocated-to-a-system". 	 
  Objective-2-2 has query "Objective-2-2-query-count-all-inputs-outputs-of-Interfaces". 	 
- 
- //-- Objective 2-4 info
- Objective-2-4 has query "Objective-2-4-query-count-all-Derived-System-Requirements". 	
   
  //-- Objective 2-6 info
  Objective-2-6 has query "Objective-2-6-query-count-all-Item-Requirements". 	
