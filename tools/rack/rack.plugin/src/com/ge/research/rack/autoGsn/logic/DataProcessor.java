@@ -324,15 +324,16 @@ public class DataProcessor {
 
             // use forall/at least one
             // TODO: Replace string checking with other techniques in future
-            if ((CustomStringUtils.checkWordExistence("all", strategy.getDescription()))
-                    || (CustomStringUtils.checkWordExistence(
+            if ((CustomStringUtils.checkWordExistenceV2("all", strategy.getDescription()))
+                    || (CustomStringUtils.checkWordExistenceV2(
                             "forall", strategy.getDescription().toLowerCase()))) {
+                System.out.println("Found all/forall " + strategy.getDescription().toLowerCase());
                 for (GsnNode supportNode : allSupportedByNodes) {
                     if (!supportNode.getIsGreen()) {
                         colorFlag = false;
                     }
                 }
-            } else if ((CustomStringUtils.checkWordExistence(
+            } else if ((CustomStringUtils.checkWordExistenceV2(
                     "at least one", strategy.getDescription()))) {
                 for (GsnNode supportNode : allSupportedByNodes) {
                     if (supportNode.getIsGreen()) {
