@@ -393,4 +393,19 @@ public class CustomStringUtils {
         }
         return false;
     }
+
+    public static boolean checkWordExistenceV2(String word, String sentence) {
+        sentence = sentence.toUpperCase();
+        word = word.toUpperCase();
+        if (sentence.contains(word)) {
+            int start = sentence.indexOf(word);
+            int end = start + word.length();
+
+            boolean valid_left = ((start == 0) || (sentence.charAt(start - 1) == ' '));
+            boolean valid_right = ((end == sentence.length()) || (sentence.charAt(end) == ' '));
+
+            return valid_left && valid_right;
+        }
+        return false;
+    }
 }
