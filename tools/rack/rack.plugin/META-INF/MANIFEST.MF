@@ -4,6 +4,7 @@ Bundle-Name: rack.plugin
 Bundle-Vendor: rack.plugin
 Bundle-SymbolicName: rack.plugin;singleton:=true
 Bundle-Version: 0.5.0.qualifier
+Import-Package: org.eclipse.ui.part
 Require-Bundle: com.ge.research.jena,
  com.ge.research.sadl,
  com.ge.research.sadl.applications,

@@ -120,6 +120,12 @@ public class ProjectUtils {
         return yaml.<HashMap<String, Object>>load(inputStream);
     }
 
+    public static Object readAnyYaml(String path) throws Exception {
+        FileInputStream inputStream = new FileInputStream(new File(path));
+        Yaml yaml = new Yaml();
+        return yaml.<Object>load(inputStream);
+    }
+
     public static DumperOptions getYamlDumperOptions() {
         final DumperOptions options = new DumperOptions();
         options.setIndent(1);
@@ -129,6 +135,10 @@ public class ProjectUtils {
     }
 
     public static void writeYaml(Object object, String path) throws Exception {
+        FileUtils.write(new File(path), writeYaml(object), Charset.defaultCharset());
+    }
+
+    public static String writeYaml(Object object) throws Exception {
         DumperOptions options = new DumperOptions();
         options.setIndent(1);
         options.setPrettyFlow(true);
@@ -136,7 +146,7 @@ public class ProjectUtils {
         Yaml yaml = new Yaml(options);
         StringWriter writer = new StringWriter();
         yaml.dump(object, writer);
-        FileUtils.write(new File(path), writer.toString(), Charset.defaultCharset());
+        return writer.toString();
     }
 
     public static void refreshProjects() {

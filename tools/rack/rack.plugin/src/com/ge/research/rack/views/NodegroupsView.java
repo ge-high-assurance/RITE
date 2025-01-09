@@ -52,9 +52,6 @@ import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -120,13 +117,14 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
 
     @Override
     public void createPartControl(Composite parent) {
-    	
-    	// Notes:
-    	// The table starts with an extra column. This appears to be a known WON'T FIX.
-    	// The extra column can be resized to zero width.
-    	// The code below sets each of the nested composite to fill out horizontally.
-    	// Then the table does also. This appears to be necessary when there is an encapsulating ScrolledComposite.
-    	    	
+
+        // Notes:
+        // The table starts with an extra column. This appears to be a known WON'T FIX.
+        // The extra column can be resized to zero width.
+        // The code below sets each of the nested composite to fill out horizontally.
+        // Then the table does also. This appears to be necessary when there is an encapsulating
+        // ScrolledComposite.
+
         final Display display = Display.getCurrent();
 
         final ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
@@ -231,21 +229,21 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
                             final TableColumn col = new TableColumn(table, SWT.LEFT);
                             col.setText(header);
                             table.showColumn(col);
-                            col.addControlListener( new ControlAdapter() {
-                            	@Override
-                            	public void controlResized(ControlEvent e) {
-                            		resetScrollbarSize();
-                            	}
-                            });
+                            col.addControlListener(
+                                    new ControlAdapter() {
+                                        @Override
+                                        public void controlResized(ControlEvent e) {
+                                            resetScrollbarSize();
+                                        }
+                                    });
                         });
-        
-        refreshNodegroupList();
 
+        refreshNodegroupList();
     }
-    
+
     private void resetScrollbarSize() {
-        int minwidth = 20; // To account for margins 
-        for (int k=0; k< table.getColumnCount(); k++) minwidth += table.getColumn(k).getWidth();
+        int minwidth = 20; // To account for margins
+        for (int k = 0; k < table.getColumnCount(); k++) minwidth += table.getColumn(k).getWidth();
 
         topComposite.setMinSize(composite.computeSize(minwidth, SWT.DEFAULT));
     }
@@ -311,8 +309,9 @@ public class NodegroupsView extends ViewPart implements INodegroupView {
             floatContainer.pack();
             composite.pack();
             resetScrollbarSize();
-            //topComposite.pack(); // With this pack, the scrollbars disappear when the filter is changed.
-                       // though they reappear if the view window is resized.
+            // topComposite.pack(); // With this pack, the scrollbars disappear when the filter is
+            // changed.
+            // though they reappear if the view window is resized.
 
         } catch (final Exception e) {
             ErrorMessageUtil.warning(UPDATE_NODEGROUP_LIST_ERROR);
