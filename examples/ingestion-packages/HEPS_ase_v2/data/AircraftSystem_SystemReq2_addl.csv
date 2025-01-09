@@ -1,0 +1,19 @@
+identifier,dataInsertedBy_identifier,description,governs_identifier,title
+97,Manual Cameo Ingestion,Control shall set Temp_warning_light_EL to ON when Temp_warning_electric of PropulsionController is 1.0.,Control,
+98,Manual Cameo Ingestion,Control shall set Temp_warning_light_EL to OFF when Temp_warning_electric of PropulsionController is 0.0.,Control,
+99,Manual Cameo Ingestion,Control shall set Temp_warning_light_TU to ON when Temp_warning_turbine of PropulsionController is 1.0.,Control,
+100,Manual Cameo Ingestion,Control shall set Temp_warning_light_TU to OFF when Temp_warning_turbine of PropulsionController is 0.0.,Control,
+101,Manual Cameo Ingestion,Control shall set Chiller_warning_light to ON when Chiller_warning of PropulsionController is 1.0.,Control,
+102,Manual Cameo Ingestion,Control shall set Chiller_fault_light to ON when Chiller_fault of PropulsionController is 1.0.,Control,
+C6,Manual Cameo Ingestion,Control shall set System of PropulsionControl to 2.0 when (fuel_flow_reference > max_fuel_flow) and (mode of OPERATION is Takeoff).,Control,ElectricDriveTrain ON
+C7,Manual Cameo Ingestion,PropulsionController shall set ElectricDriveTrain of ParallelHybridPropulsion to OFF when (Fault_DCAC of DCACcontroller is 1.0) or (Fault_DCDC of DCDCcontroller is 1.0).,PropulsionController,ParallelHybridPropulsion OFF
+C4,Manual Cameo Ingestion,Control shall set fuel_flow_reference of PropulsionController to k*A when reference of Throttle is A.,,Fuel Flow
+C1,Manual Cameo Ingestion,Control shall set reference of Throttle to Throttle_Lever_Angle when Input of Control is Cockpit_Controls.,Control,Throttle Lever Angle
+C2,Manual Cameo Ingestion,Control shall set reference of Throttle to Autothrust when Input of Control is Automated_Control.,Control,Throttle Autothrust
+C5,Manual Cameo Ingestion,Control shall set fuel_flow_reference of PropulsionControl to max_fuel_flow when fuel_flow_reference > max_fuel_flow.,Control,Fuel Flow max
+C3,Manual Cameo Ingestion,Control shall set System of PropulsionController to 1.0 when reference of Throttle >0.,Control,TurbineDriveTrain ON
+CAC3,Manual Cameo Ingestion,Auto_control shall set Starter_Motor_status of PropulsionController to DECLUTCH when speed of Gas Turbine Engine > Y.,AutomatedControl,Starter Motor Fuel System
+CAC4,Manual Cameo Ingestion,Auto_control shall set Ignitor_status of PropulsionController to OFF when speed of Gas Turbine Engine > Y.,AutomatedControl,Ignition Fuel System
+CAC5,Manual Cameo Ingestion,Auto_control shall set EGT exceedance light of Aircraft to ON when EGT of Gas Turbine Engine> EGT_permissible.,AutomatedControl,Exhaust Gas Temperature
+CAC1,Manual Cameo Ingestion,Aircraft shall set Input of Control to Automated_Control when AUTOPILOT of aircraft is ON.,Aircraft,Autopilot ON
+CAC2,Manual Cameo Ingestion,Aircraft shall set Input of Control to Cockpit_Controls when AUTOPILOT of aircraft is OFF.,Aircraft,Autopilot OFF

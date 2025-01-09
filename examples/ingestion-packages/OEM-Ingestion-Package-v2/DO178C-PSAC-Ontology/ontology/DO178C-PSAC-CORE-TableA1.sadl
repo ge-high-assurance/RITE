@@ -1,0 +1,125 @@
+/* Copyright (c) 2022, General Electric Company, Galois, Inc.
+ *
+ * All Rights Reserved
+ *
+ * This material is based upon work supported by the Defense Advanced Research
+ * Projects Agency (DARPA) under Contract No. FA8750-20-C-0203.
+ *
+ * Any opinions, findings and conclusions or recommendations expressed in this
+ * material are those of the author(s) and do not necessarily reflect the views
+ * of the Defense Advanced Research Projects Agency (DARPA).
+ */
+
+ //-- Author: Saswata Paul
+ //-- A template for creating an instance of Do178C Table A1 using DO178C-core overlay  
+ 
+ uri "http://sadl.org/DO178C-PSAC-CORE-TableA1.sadl" alias do178cPsacCorA1.
+ 
+ import "http://arcos.rack/DO178C-PSAC-CORE.sadl".
+ 
+   
+  Table-A1 is a DO178CTable
+  	with identifier "Table-A1"
+  	with description "Software Planning Process"
+  	with objective Objective-A1-1
+  	with objective Objective-A1-2
+  	with objective Objective-A1-3
+  	with objective Objective-A1-4
+  	with objective Objective-A1-5
+  	with objective Objective-A1-6
+  	with objective Objective-A1-7.
+  	
+  
+  Objective-A1-1 is a DO178CObjective
+  	with identifier "Objective-A1-1"
+  	with description "The activities of the software life cycle processes are defined"
+  	with applicability Applicability-Obj-A1-1.
+
+  Objective-A1-2 is a DO178CObjective
+  	with identifier "Objective-A1-2"
+  	with description "The software life cycles, including the inter-relationships between the processes, their sequencing, feedback mechanisms, and translation criteria are defined"
+  	with applicability Applicability-Obj-A1-2.  	
+
+ Objective-A1-3 is a DO178CObjective
+  	with identifier "Objective-A1-3"
+  	with description "Software life cycle environment is selected and defined"
+  	with applicability Applicability-Obj-A1-3. 
+  	
+  Objective-A1-4 is a DO178CObjective
+  	with identifier "Objective-A1-4"
+  	with description "Additional considerations are addressed"
+  	with applicability Applicability-Obj-A1-4.  	
+
+
+  Objective-A1-5 is a DO178CObjective
+  	with identifier "Objective-A1-5"
+  	with description "Software development standards are defined"
+  	with applicability Applicability-Obj-A1-5. 
+
+
+  Objective-A1-6 is a DO178CObjective
+  	with identifier "Objective-A1-6"
+  	with description "Software plans comply with this document"
+  	with applicability Applicability-Obj-A1-6.
+
+  Objective-A1-7 is a DO178CObjective
+  	with identifier "Objective-A1-7"
+  	with description "Development and revision of software plans are coordinated"
+  	with applicability Applicability-Obj-A1-7.   
+  	
+  	
+  	
+  	
+  	
+    // Objective A1-1 Applicabilities	
+  Applicability-Obj-A1-1 is an ApplicabilityBySoftwareLevel
+  	with levelA SatisfyObjective
+  	with levelB SatisfyObjective
+  	with levelC SatisfyObjective
+  	with levelD SatisfyObjective.
+					 
+  // Objective A1-2 Applicabilities	
+  Applicability-Obj-A1-2 is an ApplicabilityBySoftwareLevel
+  	with levelA SatisfyObjective
+  	with levelB SatisfyObjective
+  	with levelC SatisfyObjective
+  	with levelD NA.
+					 
+  // Objective A1-3 Applicabilities	
+  Applicability-Obj-A1-3 is an ApplicabilityBySoftwareLevel
+  	with levelA SatisfyObjective
+  	with levelB SatisfyObjective
+  	with levelC SatisfyObjective
+  	with levelD NA.
+
+  // Objective A1-4 Applicabilities	
+  Applicability-Obj-A1-4 is an ApplicabilityBySoftwareLevel
+  	with levelA SatisfyObjective
+  	with levelB SatisfyObjective
+  	with levelC SatisfyObjective
+  	with levelD SatisfyObjective.
+					
+
+  // Objective A1-5 Applicabilities	
+  Applicability-Obj-A1-5 is an ApplicabilityBySoftwareLevel
+  	with levelA SatisfyObjective
+  	with levelB SatisfyObjective
+  	with levelC SatisfyObjective
+  	with levelD NA.
+					
+  // Objective A1-6 Applicabilities	
+  Applicability-Obj-A1-6 is an ApplicabilityBySoftwareLevel
+  	with levelA SatisfyObjective
+  	with levelB SatisfyObjective
+  	with levelC SatisfyObjective
+  	with levelD NA.
+					
+  // Objective A1-7 Applicabilities	
+  Applicability-Obj-A1-7 is an ApplicabilityBySoftwareLevel
+  	with levelA SatisfyObjective
+  	with levelB SatisfyObjective
+  	with levelC SatisfyObjective
+  	with levelD NA.	
+  	
+  	
+  	

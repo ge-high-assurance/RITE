@@ -1,0 +1,50 @@
+ uri "http://sadl.org/heps-pattern.sadl" alias hepspat.
+ 
+ import "http://sadl.org/GSN-Pattern-core.sadl".
+ 
+ 
+ //-- Goal patterns
+ 
+
+ itemReq-GP is a Goal
+	with isPat true
+	with identifier "itemReq-GP"
+	with description "Claim: Item Requirement has passed review" 
+	with pGoal "ENTITY".
+
+
+
+ review-GP is a Goal
+	with isPat true
+	with identifier "review-GP"
+	with description "Claim: Review Log has passed" 
+	with pGoal "REVIEW_LOG".
+		
+
+ //-- strategy patterns
+
+ itemReq-SP is a Strategy
+	with isPat true
+ 	with identifier "itemReq-SP"
+ 	with description "Argument: All relevant reviews have passed"
+ 	with pGoal "ENTITY"
+ 	with pSubGoal "REVIEW_LOG"
+ 	with pGoalSubGoalConnector "reviews". 	
+
+ review-SP is a Strategy
+	with isPat true
+ 	with identifier "review-SP"
+ 	with description "Argument: Review log has passed"
+ 	with pGoal "REVIEW_LOG"
+ 	with pSubGoal "REVIEW_STATE"
+ 	with pGoalSubGoalConnector "reviewResult". 	
+
+ 	
+ //-- Evidence patterns 
+ 
+  result-evdnc is a GsnEvidence
+ 	with classId "REVIEW_STATE"
+ 	with statusProperty "identifier" 
+ 	with passValue "Passed".
+ 		 	 	
+ 	 	 

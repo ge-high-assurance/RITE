@@ -1,0 +1,129 @@
+{
+	"version": 3,
+	"sparqlConn": {
+		"name": "RACK",
+		"domain": "",
+		"enableOwlImports": false,
+		"model": [
+			{
+				"type": "fuseki",
+				"url": "http://localhost:3030/RACK",
+				"graph": "http://rack001/model"
+			}
+		],
+		"data": [
+			{
+				"type": "fuseki",
+				"url": "http://localhost:3030/RACK",
+				"graph": "http://rack001/data"
+			}
+		]
+	},
+	"sNodeGroup": {
+		"version": 20,
+		"limit": 0,
+		"offset": 0,
+		"sNodeList": [
+			{
+				"propList": [
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://arcos.rack/PROV-S#identifier",
+						"Constraints": "",
+						"SparqlID": "?RequirementTraceableReview_id",
+						"isReturned": true,
+						"optMinus": 0,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					}
+				],
+				"nodeList": [],
+				"fullURIName": "http://arcos.rack/AircraftItem#ItemReq",
+				"SparqlID": "?ItemReq",
+				"isReturned": false,
+				"isRuntimeConstrained": false,
+				"valueConstraint": "",
+				"instanceValue": null,
+				"deletionMode": "NO_DELETE"
+			},
+			{
+				"propList": [
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://arcos.rack/PROV-S#identifier",
+						"Constraints": "",
+						"SparqlID": "?ItemReq_id",
+						"isReturned": true,
+						"optMinus": 0,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					}
+				],
+				"nodeList": [
+					{
+						"SnodeSparqlIDs": [
+							"?ItemReq"
+						],
+						"OptionalMinus": [
+							0
+						],
+						"Qualifiers": [
+							""
+						],
+						"DeletionMarkers": [
+							false
+						],
+						"range": [
+							"http://arcos.rack/PROV-S#ENTITY"
+						],
+						"ConnectBy": "reviewed",
+						"Connected": true,
+						"UriConnectBy": "http://arcos.rack/REVIEW#reviewed"
+					}
+				],
+				"fullURIName": "http://arcos.rack/AircraftItem#RequirementTraceableReview",
+				"SparqlID": "?RequirementTraceableReview",
+				"isReturned": false,
+				"isRuntimeConstrained": false,
+				"valueConstraint": "",
+				"instanceValue": null,
+				"deletionMode": "NO_DELETE"
+			}
+		],
+		"orderBy": [],
+		"groupBy": [],
+		"unionHash": {},
+		"columnOrder": []
+	},
+	"importSpec": {
+		"version": "1",
+		"baseURI": "",
+		"columns": [],
+		"dataValidator": [],
+		"texts": [],
+		"transforms": [],
+		"nodes": [
+			{
+				"sparqlID": "?RequirementTraceableReview",
+				"type": "http://arcos.rack/AircraftItem#RequirementTraceableReview",
+				"mapping": [],
+				"props": []
+			},
+			{
+				"sparqlID": "?ItemReq",
+				"type": "http://arcos.rack/AircraftItem#ItemReq",
+				"mapping": [],
+				"props": []
+			}
+		]
+	},
+	"plotSpecs": null
+}

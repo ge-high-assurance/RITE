@@ -1,0 +1,18 @@
+description: Reporting Demo
+footprint:
+  data-graphs:
+  - http://rack001/data
+  model-graphs:
+  - http://rack001/model
+name: OEM DO178C + ARP4754
+steps:
+- model: RACK-Ontology/OwlModels/model.yaml
+- model: ARP4754-DAP-Ontology-v2/OwlModels/import.yaml
+- model: DO178C-PSAC-Ontology/OwlModels/import.yaml
+- model: OEM-Ontology/OwlModels/import.yaml
+
+- model: OEM_DO178C_Data/oem_do178c_sadl_data/OwlModels/import.yaml
+- model: OEM_ARP4754_Data/oem_arp4754_sadl_data/OwlModels/import.yaml
+ 
+- nodegroups: 02_nodegroups
+- data: OEM_DO178C_Data/data.yaml

@@ -1,0 +1,47 @@
+
+ //-- Author: Saswata Paul
+ //-- An ontology to specify the different objectives and their related properties in an ARP4754 Development Assurance Plan (DAP) 
+
+ uri "http://sadl.org/PLAN-CORE-Process5.sadl" alias p5core.
+ 
+ import "http://sadl.org/PLAN-CORE.sadl".
+ 
+ Process-5 is a Process
+ 	with identifier "Process-5"
+ 	with description "Implementation Verification Process"
+  	with objective Objective-5-1
+  	with objective Objective-5-2
+  	with objective Objective-5-3
+  	with objective Objective-5-4
+  	with objective Objective-5-5
+  	with objective Objective-5-6.
+  	
+  	
+  Objective-5-1 is a Objective
+  	with identifier "Objective-5-1"
+  	with description " ".  	
+ 	
+ 	
+  Objective-5-2 is a Objective
+  	with identifier "Objective-5-2"
+  	with description " ".  	
+
+
+  Objective-5-3 is a Objective
+  	with identifier "Objective-5-3"
+  	with description " ".  	
+
+
+  Objective-5-4 is a Objective
+  	with identifier "Objective-5-4"
+  	with description " ".  	
+
+
+  Objective-5-5 is a Objective
+  	with identifier "Objective-5-5"
+  	with description " ".  	
+
+
+  Objective-5-6 is a Objective
+  	with identifier "Objective-5-6"
+  	with description " ".   	  	

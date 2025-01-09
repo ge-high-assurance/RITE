@@ -1,0 +1,170 @@
+{
+    "importSpec": {
+        "baseURI": "",
+        "columns": [],
+        "dataValidator": [],
+        "nodes": [
+            {
+                "mapping": [],
+                "props": [],
+                "sparqlID": "?SYSTEM",
+                "type": "http://arcos.rack/SYSTEM#SYSTEM"
+            },
+            {
+                "mapping": [],
+                "props": [],
+                "sparqlID": "?SYSTEM_PARENT",
+                "type": "http://arcos.rack/SYSTEM#SYSTEM"
+            },
+            {
+                "mapping": [],
+                "props": [],
+                "sparqlID": "?ANCHOR_SYSTEM",
+                "type": "http://arcos.rack/SYSTEM#SYSTEM"
+            }
+        ],
+        "texts": [],
+        "transforms": [],
+        "version": "1"
+    },
+    "sNodeGroup": {
+        "limit": 0,
+        "offset": 0,
+        "orderBy": [
+        ],
+        "sNodeList": [
+            {
+                "NodeName": "SYSTEM",
+                "SparqlID": "?ANCHOR_SYSTEM",
+                "deletionMode": "NO_DELETE",
+                "fullURIName": "http://arcos.rack/SYSTEM#SYSTEM",
+                "instanceValue": null,
+                "isReturned": false,
+                "isRuntimeConstrained": false,
+                "nodeList": [],
+                "propList": [
+                    {
+                        "Constraints": "",
+                        "KeyName": "identifier",
+                        "SparqlID": "?anchorId",
+                        "UriRelationship": "http://arcos.rack/PROV-S#identifier",
+                        "ValueType": "string",
+                        "fullURIName": "",
+                        "instanceValues": [],
+                        "isMarkedForDeletion": false,
+                        "isReturned": false,
+                        "isRuntimeConstrained": true,
+                        "optMinus": 0,
+                        "relationship": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                ],
+                "subClassNames": [],
+                "valueConstraint": ""
+            },
+            {
+                "NodeName": "SYSTEM",
+                "SparqlID": "?SYSTEM_PARENT",
+                "deletionMode": "NO_DELETE",
+                "fullURIName": "http://arcos.rack/SYSTEM#SYSTEM",
+                "isReturned": false,
+                "isRuntimeConstrained": false,
+                "nodeList": [],
+                "propList": [
+                    {
+                        "Constraints": "FILTER(regex(str(%id), 'TurnStileSystem'))",
+                        "KeyName": "identifier",
+                        "SparqlID": "?parentComp",
+                        "UriRelationship": "http://arcos.rack/PROV-S#identifier",
+                        "ValueType": "string",
+                        "fullURIName": "",
+                        "instanceValues": [],
+                        "isMarkedForDeletion": false,
+                        "isReturned": false,
+                        "isRuntimeConstrained": true,
+                        "optMinus": 0,
+                        "relationship": "http://www.w3.org/2001/XMLSchema#string",
+						"binding": "?partOf_SYSTEM_PARENT_identifier",
+						"isBindingReturned": true
+                    }
+                ],
+                "subClassNames": [],
+                "valueConstraint": ""
+            },
+            {
+                "NodeName": "SYSTEM",
+                "SparqlID": "?SYSTEM",
+                "deletionMode": "NO_DELETE",
+                "fullURIName": "http://arcos.rack/SYSTEM#SYSTEM",
+                "isReturned": false,
+                "isRuntimeConstrained": false,
+                "nodeList": [
+                    {
+                        "ConnectBy": "partOf",
+                        "Connected": true,
+                        "DeletionMarkers": [
+                            false,
+                            false
+                        ],
+                        "KeyName": "partOf",
+                        "OptionalMinus": [
+                            "0",
+                            "0"
+                        ],
+                        "Qualifiers": [
+                            "+",
+                            "*"
+                        ],
+                        "SnodeSparqlIDs": [
+                            "?SYSTEM_PARENT",
+                            "?ANCHOR_SYSTEM"
+                        ],
+                        "UriConnectBy": "http://arcos.rack/SYSTEM#partOf",
+                        "UriValueType": "http://arcos.rack/SYSTEM#SYSTEM",
+                        "ValueType": "SYSTEM"
+                    }
+                ],
+                "propList": [
+                    {
+                        "Constraints": "",
+                        "KeyName": "identifier",
+                        "SparqlID": "?subComp",
+                        "UriRelationship": "http://arcos.rack/PROV-S#identifier",
+                        "ValueType": "string",
+                        "fullURIName": "",
+                        "instanceValues": [],
+                        "isMarkedForDeletion": false,
+                        "isReturned": false,
+                        "isRuntimeConstrained": true,
+                        "optMinus": 0,
+                        "relationship": "http://www.w3.org/2001/XMLSchema#string",
+						"binding": "?SYSTEM_identifier",
+						"isBindingReturned": true
+                    }
+                ],
+                "subClassNames": [],
+                "valueConstraint": ""
+            }
+        ],
+        "version": 11
+    },
+    "sparqlConn": {
+        "data": [
+            {
+                "graph": "http://rack001/data",
+                "type": "fuseki",
+                "url": "http://localhost:3030/RACK"
+            }
+        ],
+        "domain": "",
+        "enableOwlImports": false,
+        "model": [
+            {
+                "graph": "http://rack001/model",
+                "type": "fuseki",
+                "url": "http://localhost:3030/RACK"
+            }
+        ],
+        "name": "RACK"
+    },
+    "version": 2
+}

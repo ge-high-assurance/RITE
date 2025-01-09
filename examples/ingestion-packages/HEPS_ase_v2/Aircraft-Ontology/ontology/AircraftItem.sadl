@@ -1,0 +1,28 @@
+uri "http://arcos.rack/AircraftItem" alias AcItem. //Aircraft Item level
+
+import "http://arcos.rack/AircraftSystem".
+
+Item is a type of SYSTEM.
+itemComponent describes {SYSTEM or Item} with values of type Item.
+//AM: itemComponent goes from parent to child; we may want to go the
+//AM: the other way and use "partOf" relationship.
+//AM: And then delete itemComponent
+
+//AcItem:partOf describes Item with values of type {Item or SYSTEM}.
+partOf_Item describes Item with values of type Item.
+
+ItemReq is a type of REQUIREMENT.
+ItemDerivedReq is a type of REQUIREMENT.
+governs of {ItemReq or ItemDerivedReq} only has values of type Item.
+satisfies of ItemReq only has values of type {SystemReq or ItemReq}.
+//AM: what can we say about SystemDerivedReq and ItemDerivedReq in terms of governs and satisfies?
+
+RequirementCompleteCorrectReview is a type of REVIEW.
+Rv:governedBy of RequirementCompleteCorrectReview only has values of type 
+	{SystemReq or SystemDerivedReq or ItemReq or ItemDerivedReq}.
+	
+RequirementTraceableReview is a type of REVIEW.
+Rv:governedBy of RequirementTraceableReview only has values of type
+	{SYSTEM or Item}.	
+		
+	

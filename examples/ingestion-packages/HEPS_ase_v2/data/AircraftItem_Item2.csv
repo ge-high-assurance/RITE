@@ -1,0 +1,14 @@
+identifier,dataInsertedBy_identifier,partOf_identifier
+BatterySystem,Cameo Ingestion,ElectricDriveTrain
+CockpitControls,Cameo Ingestion,Control
+DCACController,Cameo Ingestion,PowerElectronics
+DCACInverter,Cameo Ingestion,PowerElectronics
+DCDCController,Cameo Ingestion,PowerElectronics
+DCDCConverter,Cameo Ingestion,PowerElectronics
+FuelSystem,Cameo Ingestion,TurbineDriveTrain
+GasTurbineEngine,Cameo Ingestion,TurbineDriveTrain
+Gearbox,Cameo Ingestion,ParallelHybridPropulsion
+Motor,Cameo Ingestion,ElectricDriveTrain
+Propeller,Cameo Ingestion,ParallelHybridPropulsion
+PropulsionController,Cameo Ingestion,ParallelHybridPropulsion
+ThermalManagementSystem,Cameo Ingestion,PowerElectronics

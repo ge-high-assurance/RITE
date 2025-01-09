@@ -1,0 +1,732 @@
+{
+	"version": 3,
+	"sparqlConn": {
+		"name": "RACK local fuseki",
+		"domain": "",
+		"enableOwlImports": false,
+		"model": [
+			{
+				"type": "fuseki",
+				"url": "http://localhost:3030/RACK",
+				"graph": "http://rack001/model"
+			}
+		],
+		"data": [
+			{
+				"type": "fuseki",
+				"url": "http://localhost:3030/RACK",
+				"graph": "http://rack001/data"
+			}
+		]
+	},
+	"sNodeGroup": {
+		"version": 19,
+		"limit": 0,
+		"offset": 0,
+		"sNodeList": [
+			{
+				"propList": [
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://arcos.rack/PROV-S#identifier",
+						"Constraints": "",
+						"SparqlID": "?identifier_applicability_leveld",
+						"isReturned": true,
+						"optMinus": 1,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					}
+				],
+				"nodeList": [],
+				"fullURIName": "http://arcos.rack/DO178C-PSAC-CORE.sadl#Applicability",
+				"SparqlID": "?Applicability_2",
+				"isReturned": false,
+				"isRuntimeConstrained": false,
+				"valueConstraint": "",
+				"instanceValue": null,
+				"deletionMode": "NO_DELETE"
+			},
+			{
+				"propList": [
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://arcos.rack/PROV-S#identifier",
+						"Constraints": "",
+						"SparqlID": "?identifier_applicability_levelc",
+						"isReturned": true,
+						"optMinus": 1,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					}
+				],
+				"nodeList": [],
+				"fullURIName": "http://arcos.rack/DO178C-PSAC-CORE.sadl#Applicability",
+				"SparqlID": "?Applicability_1",
+				"isReturned": false,
+				"isRuntimeConstrained": false,
+				"valueConstraint": "",
+				"instanceValue": null,
+				"deletionMode": "NO_DELETE"
+			},
+			{
+				"propList": [
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://arcos.rack/PROV-S#identifier",
+						"Constraints": "",
+						"SparqlID": "?identifier_applicability_levelb",
+						"isReturned": true,
+						"optMinus": 1,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					}
+				],
+				"nodeList": [],
+				"fullURIName": "http://arcos.rack/DO178C-PSAC-CORE.sadl#Applicability",
+				"SparqlID": "?Applicability_0",
+				"isReturned": false,
+				"isRuntimeConstrained": false,
+				"valueConstraint": "",
+				"instanceValue": null,
+				"deletionMode": "NO_DELETE"
+			},
+			{
+				"propList": [
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://arcos.rack/PROV-S#identifier",
+						"Constraints": "",
+						"SparqlID": "?identifier_applicability",
+						"isReturned": false,
+						"optMinus": 1,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false,
+						"binding": "?identifier_applicability_levela",
+						"isBindingReturned": true
+					}
+				],
+				"nodeList": [],
+				"fullURIName": "http://arcos.rack/DO178C-PSAC-CORE.sadl#Applicability",
+				"SparqlID": "?Applicability",
+				"isReturned": false,
+				"isRuntimeConstrained": false,
+				"valueConstraint": "",
+				"instanceValue": null,
+				"deletionMode": "NO_DELETE"
+			},
+			{
+				"propList": [
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://arcos.rack/PROV-S#description",
+						"Constraints": "",
+						"SparqlID": "?description_performs",
+						"isReturned": true,
+						"optMinus": 1,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					},
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://arcos.rack/PROV-S#identifier",
+						"Constraints": "",
+						"SparqlID": "?identifier_performs",
+						"isReturned": true,
+						"optMinus": 1,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					}
+				],
+				"nodeList": [],
+				"fullURIName": "http://arcos.rack/PROV-S#ACTIVITY",
+				"SparqlID": "?ACTIVITY",
+				"isReturned": false,
+				"isRuntimeConstrained": false,
+				"valueConstraint": "",
+				"instanceValue": null,
+				"deletionMode": "NO_DELETE"
+			},
+			{
+				"propList": [],
+				"nodeList": [
+					{
+						"SnodeSparqlIDs": [
+							"?Applicability"
+						],
+						"OptionalMinus": [
+							1
+						],
+						"Qualifiers": [
+							""
+						],
+						"DeletionMarkers": [
+							false
+						],
+						"range": [
+							"http://arcos.rack/DO178C-PSAC-CORE.sadl#Applicability",
+							"http://arcos.rack/DO178C-PSAC-CORE.sadl#ControlCategory"
+						],
+						"ConnectBy": "levelA",
+						"Connected": true,
+						"UriConnectBy": "http://arcos.rack/DO178C-PSAC-CORE.sadl#levelA"
+					},
+					{
+						"SnodeSparqlIDs": [
+							"?Applicability_0"
+						],
+						"OptionalMinus": [
+							1
+						],
+						"Qualifiers": [
+							""
+						],
+						"DeletionMarkers": [
+							false
+						],
+						"range": [
+							"http://arcos.rack/DO178C-PSAC-CORE.sadl#Applicability",
+							"http://arcos.rack/DO178C-PSAC-CORE.sadl#ControlCategory"
+						],
+						"ConnectBy": "levelB",
+						"Connected": true,
+						"UriConnectBy": "http://arcos.rack/DO178C-PSAC-CORE.sadl#levelB"
+					},
+					{
+						"SnodeSparqlIDs": [
+							"?Applicability_1"
+						],
+						"OptionalMinus": [
+							1
+						],
+						"Qualifiers": [
+							""
+						],
+						"DeletionMarkers": [
+							false
+						],
+						"range": [
+							"http://arcos.rack/DO178C-PSAC-CORE.sadl#Applicability",
+							"http://arcos.rack/DO178C-PSAC-CORE.sadl#ControlCategory"
+						],
+						"ConnectBy": "levelC",
+						"Connected": true,
+						"UriConnectBy": "http://arcos.rack/DO178C-PSAC-CORE.sadl#levelC"
+					},
+					{
+						"SnodeSparqlIDs": [
+							"?Applicability_2"
+						],
+						"OptionalMinus": [
+							1
+						],
+						"Qualifiers": [
+							""
+						],
+						"DeletionMarkers": [
+							false
+						],
+						"range": [
+							"http://arcos.rack/DO178C-PSAC-CORE.sadl#Applicability",
+							"http://arcos.rack/DO178C-PSAC-CORE.sadl#ControlCategory"
+						],
+						"ConnectBy": "levelD",
+						"Connected": true,
+						"UriConnectBy": "http://arcos.rack/DO178C-PSAC-CORE.sadl#levelD"
+					}
+				],
+				"fullURIName": "http://arcos.rack/DO178C-PSAC-CORE.sadl#ApplicabilityBySoftwareLevel",
+				"SparqlID": "?ApplicabilityBySoftwareLevel",
+				"isReturned": false,
+				"isRuntimeConstrained": false,
+				"valueConstraint": "",
+				"instanceValue": null,
+				"deletionMode": "NO_DELETE"
+			},
+			{
+				"propList": [
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://arcos.rack/PROV-S#description",
+						"Constraints": "",
+						"SparqlID": "?description_activity",
+						"isReturned": true,
+						"optMinus": 1,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					},
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://arcos.rack/PROV-S#identifier",
+						"Constraints": "",
+						"SparqlID": "?identifier_activity",
+						"isReturned": true,
+						"optMinus": 1,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					}
+				],
+				"nodeList": [
+					{
+						"SnodeSparqlIDs": [
+							"?ACTIVITY"
+						],
+						"OptionalMinus": [
+							1
+						],
+						"Qualifiers": [
+							""
+						],
+						"DeletionMarkers": [
+							false
+						],
+						"range": [
+							"http://arcos.rack/SYSTEM#SYSTEM_DEVELOPMENT",
+							"http://arcos.rack/CONFIDENCE#ASSESSING_CONFIDENCE",
+							"http://arcos.rack/FILE#FILE_CREATION",
+							"http://arcos.rack/TESTING#TEST_DEVELOPMENT",
+							"http://arcos.rack/PROV-S#ACTIVITY",
+							"http://arcos.rack/SECURITY#THREAT_IDENTIFICATION",
+							"http://arcos.rack/REVIEW#REVIEW",
+							"http://arcos.rack/HAZARD#HAZARD_IDENTIFICATION",
+							"http://arcos.rack/ANALYSIS#ANALYSIS",
+							"http://arcos.rack/TESTING#TEST_EXECUTION",
+							"http://arcos.rack/REQUIREMENTS#REQUIREMENT_DEVELOPMENT"
+						],
+						"ConnectBy": "performs",
+						"Connected": true,
+						"UriConnectBy": "http://arcos.rack/DO178C-PSAC-CORE.sadl#performs"
+					}
+				],
+				"fullURIName": "http://arcos.rack/DO178C-PSAC-CORE.sadl#DO178CActivity",
+				"SparqlID": "?DO178CActivity",
+				"isReturned": false,
+				"isRuntimeConstrained": false,
+				"valueConstraint": "",
+				"instanceValue": null,
+				"deletionMode": "NO_DELETE"
+			},
+			{
+				"propList": [
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://arcos.rack/DO178C-PSAC-CORE.sadl#query",
+						"Constraints": "",
+						"SparqlID": "?objective_query",
+						"isReturned": true,
+						"optMinus": 1,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					},
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://arcos.rack/PROV-S#description",
+						"Constraints": "",
+						"SparqlID": "?description_objective",
+						"isReturned": true,
+						"optMinus": 1,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					},
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://arcos.rack/PROV-S#identifier",
+						"Constraints": "",
+						"SparqlID": "?identifier_objective",
+						"isReturned": true,
+						"optMinus": 1,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					}
+				],
+				"nodeList": [
+					{
+						"SnodeSparqlIDs": [
+							"?DO178CActivity"
+						],
+						"OptionalMinus": [
+							1
+						],
+						"Qualifiers": [
+							""
+						],
+						"DeletionMarkers": [
+							false
+						],
+						"range": [
+							"http://arcos.rack/DO178C-PSAC-CORE.sadl#DO178CActivity"
+						],
+						"ConnectBy": "activity",
+						"Connected": true,
+						"UriConnectBy": "http://arcos.rack/DO178C-PSAC-CORE.sadl#activity"
+					},
+					{
+						"SnodeSparqlIDs": [
+							"?ApplicabilityBySoftwareLevel"
+						],
+						"OptionalMinus": [
+							1
+						],
+						"Qualifiers": [
+							""
+						],
+						"DeletionMarkers": [
+							false
+						],
+						"range": [
+							"http://arcos.rack/DO178C-PSAC-CORE.sadl#ApplicabilityBySoftwareLevel"
+						],
+						"ConnectBy": "applicability",
+						"Connected": true,
+						"UriConnectBy": "http://arcos.rack/DO178C-PSAC-CORE.sadl#applicability"
+					}
+				],
+				"fullURIName": "http://arcos.rack/DO178C-PSAC-CORE.sadl#DO178CObjective",
+				"SparqlID": "?DO178CObjective",
+				"isReturned": false,
+				"isRuntimeConstrained": false,
+				"valueConstraint": "",
+				"instanceValue": null,
+				"deletionMode": "NO_DELETE"
+			},
+			{
+				"propList": [],
+				"nodeList": [],
+				"fullURIName": "http://arcos.rack/DO178C-PSAC-CORE.sadl#SoftwareLevel",
+				"SparqlID": "?SoftwareLevel",
+				"isReturned": false,
+				"isRuntimeConstrained": false,
+				"valueConstraint": "",
+				"instanceValue": null,
+				"deletionMode": "NO_DELETE",
+				"binding": "?software_level",
+				"isBindingReturned": true
+			},
+			{
+				"propList": [
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://arcos.rack/PROV-S#description",
+						"Constraints": "",
+						"SparqlID": "?description_table",
+						"isReturned": true,
+						"optMinus": 1,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					},
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://arcos.rack/PROV-S#identifier",
+						"Constraints": "",
+						"SparqlID": "?identifier_0",
+						"isReturned": false,
+						"optMinus": 1,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false,
+						"binding": "?identifier_table",
+						"isBindingReturned": true
+					}
+				],
+				"nodeList": [
+					{
+						"SnodeSparqlIDs": [
+							"?DO178CObjective"
+						],
+						"OptionalMinus": [
+							1
+						],
+						"Qualifiers": [
+							""
+						],
+						"DeletionMarkers": [
+							false
+						],
+						"range": [
+							"http://arcos.rack/PROCESS#OBJECTIVE"
+						],
+						"ConnectBy": "objective",
+						"Connected": true,
+						"UriConnectBy": "http://arcos.rack/DO178C-PSAC-CORE.sadl#objective"
+					}
+				],
+				"fullURIName": "http://arcos.rack/DO178C-PSAC-CORE.sadl#DO178CTable",
+				"SparqlID": "?DO178CTable",
+				"isReturned": false,
+				"isRuntimeConstrained": false,
+				"valueConstraint": "",
+				"instanceValue": null,
+				"deletionMode": "NO_DELETE"
+			},
+			{
+				"propList": [
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://arcos.rack/PROV-S#identifier",
+						"Constraints": "",
+						"SparqlID": "?identifier_software",
+						"isReturned": true,
+						"optMinus": 1,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false
+					}
+				],
+				"nodeList": [
+					{
+						"SnodeSparqlIDs": [
+							"?SoftwareLevel"
+						],
+						"OptionalMinus": [
+							0
+						],
+						"Qualifiers": [
+							""
+						],
+						"DeletionMarkers": [
+							false
+						],
+						"range": [
+							"http://arcos.rack/DO178C-PSAC-CORE.sadl#SoftwareLevel"
+						],
+						"ConnectBy": "softwareLevel",
+						"Connected": true,
+						"UriConnectBy": "http://arcos.rack/DO178C-PSAC-CORE.sadl#softwareLevel"
+					}
+				],
+				"fullURIName": "http://arcos.rack/SOFTWARE#SWCOMPONENT",
+				"SparqlID": "?SWCOMPONENT",
+				"isReturned": false,
+				"isRuntimeConstrained": false,
+				"valueConstraint": "",
+				"instanceValue": null,
+				"deletionMode": "NO_DELETE"
+			},
+			{
+				"propList": [
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://arcos.rack/PROV-S#description",
+						"Constraints": "",
+						"SparqlID": "?description",
+						"isReturned": false,
+						"optMinus": 1,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false,
+						"binding": "?description_psac",
+						"isBindingReturned": true
+					},
+					{
+						"valueTypes": [
+							"string"
+						],
+						"rangeURI": "http://www.w3.org/2001/XMLSchema#string",
+						"UriRelationship": "http://arcos.rack/PROV-S#identifier",
+						"Constraints": "",
+						"SparqlID": "?identifier",
+						"isReturned": false,
+						"optMinus": 1,
+						"isRuntimeConstrained": false,
+						"instanceValues": [],
+						"isMarkedForDeletion": false,
+						"binding": "?identifier_psac",
+						"isBindingReturned": true
+					}
+				],
+				"nodeList": [
+					{
+						"SnodeSparqlIDs": [
+							"?SWCOMPONENT"
+						],
+						"OptionalMinus": [
+							1
+						],
+						"Qualifiers": [
+							""
+						],
+						"DeletionMarkers": [
+							false
+						],
+						"range": [
+							"http://arcos.rack/SOFTWARE#SWCOMPONENT"
+						],
+						"ConnectBy": "software",
+						"Connected": true,
+						"UriConnectBy": "http://arcos.rack/DO178C-PSAC-CORE.sadl#software"
+					},
+					{
+						"SnodeSparqlIDs": [
+							"?DO178CTable"
+						],
+						"OptionalMinus": [
+							1
+						],
+						"Qualifiers": [
+							""
+						],
+						"DeletionMarkers": [
+							false
+						],
+						"range": [
+							"http://arcos.rack/DO178C-PSAC-CORE.sadl#DO178CTable"
+						],
+						"ConnectBy": "tables",
+						"Connected": true,
+						"UriConnectBy": "http://arcos.rack/DO178C-PSAC-CORE.sadl#tables"
+					}
+				],
+				"fullURIName": "http://arcos.rack/DO178C-PSAC-CORE.sadl#DO178CPSAC",
+				"SparqlID": "?DO178CPSAC",
+				"isReturned": false,
+				"isRuntimeConstrained": false,
+				"valueConstraint": "",
+				"instanceValue": null,
+				"deletionMode": "NO_DELETE"
+			}
+		],
+		"orderBy": [],
+		"groupBy": [],
+		"unionHash": {},
+		"columnOrder": []
+	},
+	"importSpec": {
+		"version": "1",
+		"baseURI": "",
+		"columns": [],
+		"dataValidator": [],
+		"texts": [],
+		"transforms": [],
+		"nodes": [
+			{
+				"sparqlID": "?DO178CPSAC",
+				"type": "http://arcos.rack/DO178C-PSAC-CORE.sadl#DO178CPSAC",
+				"mapping": [],
+				"props": []
+			},
+			{
+				"sparqlID": "?SWCOMPONENT",
+				"type": "http://arcos.rack/SOFTWARE#SWCOMPONENT",
+				"mapping": [],
+				"props": []
+			},
+			{
+				"sparqlID": "?DO178CTable",
+				"type": "http://arcos.rack/DO178C-PSAC-CORE.sadl#DO178CTable",
+				"mapping": [],
+				"props": []
+			},
+			{
+				"sparqlID": "?SoftwareLevel",
+				"type": "http://arcos.rack/DO178C-PSAC-CORE.sadl#SoftwareLevel",
+				"mapping": [],
+				"props": []
+			},
+			{
+				"sparqlID": "?DO178CObjective",
+				"type": "http://arcos.rack/DO178C-PSAC-CORE.sadl#DO178CObjective",
+				"mapping": [],
+				"props": []
+			},
+			{
+				"sparqlID": "?DO178CActivity",
+				"type": "http://arcos.rack/DO178C-PSAC-CORE.sadl#DO178CActivity",
+				"mapping": [],
+				"props": []
+			},
+			{
+				"sparqlID": "?ApplicabilityBySoftwareLevel",
+				"type": "http://arcos.rack/DO178C-PSAC-CORE.sadl#ApplicabilityBySoftwareLevel",
+				"mapping": [],
+				"props": []
+			},
+			{
+				"sparqlID": "?ACTIVITY",
+				"type": "http://arcos.rack/PROV-S#ACTIVITY",
+				"mapping": [],
+				"props": []
+			},
+			{
+				"sparqlID": "?Applicability",
+				"type": "http://arcos.rack/DO178C-PSAC-CORE.sadl#Applicability",
+				"mapping": [],
+				"props": []
+			},
+			{
+				"sparqlID": "?Applicability_0",
+				"type": "http://arcos.rack/DO178C-PSAC-CORE.sadl#Applicability",
+				"mapping": [],
+				"props": []
+			},
+			{
+				"sparqlID": "?Applicability_1",
+				"type": "http://arcos.rack/DO178C-PSAC-CORE.sadl#Applicability",
+				"mapping": [],
+				"props": []
+			},
+			{
+				"sparqlID": "?Applicability_2",
+				"type": "http://arcos.rack/DO178C-PSAC-CORE.sadl#Applicability",
+				"mapping": [],
+				"props": []
+			}
+		]
+	},
+	"plotSpecs": []
+}

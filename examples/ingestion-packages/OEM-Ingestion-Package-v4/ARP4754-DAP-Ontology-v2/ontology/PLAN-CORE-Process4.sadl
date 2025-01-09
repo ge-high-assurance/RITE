@@ -1,0 +1,44 @@
+
+ //-- Author: Saswata Paul
+ //-- An ontology to specify the different objectives and their related properties in an ARP4754 Development Assurance Plan (DAP) 
+
+ uri "http://sadl.org/PLAN-CORE-Process4.sadl" alias p4core.
+ 
+ import "http://sadl.org/PLAN-CORE.sadl".
+ 
+ Process-4 is a Process
+ 	with identifier "Process-4"
+ 	with description "Requirements Validation Process"
+  	with objective Objective-4-1
+  	with objective Objective-4-2
+  	with objective Objective-4-3
+  	with objective Objective-4-4
+//  	with objective Objective-4-5 // There is no 4.5 in the document !!
+  	with objective Objective-4-6.  
+
+
+  Objective-4-1 is a Objective
+  	with identifier "Objective-4-1"
+  	with description "Aircraft, system, item requirements are complete and correct". 
+  	
+
+  Objective-4-2 is a Objective
+  	with identifier "Objective-4-2"
+  	with description "Assumptions are justified and validated". 
+  	
+  	
+  Objective-4-3 is a Objective
+  	with identifier "Objective-4-3"
+  	with description "Derived requirements are justified and validated". 
+  	
+  	
+  Objective-4-4 is a Objective
+  	with identifier "Objective-4-4"
+  	with description "Requirements are traceable". 
+  	  	
+  	
+  Objective-4-6 is a Objective
+  	with identifier "Objective-4-6"
+  	with description "Validation compliance substantiation is provided". 
+  	
+  	
