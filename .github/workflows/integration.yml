@@ -27,7 +27,7 @@ jobs:
 
     steps:
     - name: Check out RITE source
-      uses: actions/checkout@v4.1.7
+      uses: actions/checkout@v4.2.2
 
     - name: Set up Java and Maven
       uses: actions/setup-java@v4.6.0
