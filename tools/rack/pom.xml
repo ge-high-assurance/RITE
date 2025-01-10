@@ -63,7 +63,7 @@
     <!-- Versions of dependencies which share the same version -->
     <version.javafx>22.0.1</version.javafx>
     <version.rack>${project.version}</version.rack>
-    <version.surefire>3.2.5</version.surefire>
+    <version.surefire>3.5.2</version.surefire>
     <version.tycho>4.0.10</version.tycho>
   </properties>
 
