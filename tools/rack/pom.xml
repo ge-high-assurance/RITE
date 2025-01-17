@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <!-- Define our GAV coordinates -->
@@ -62,12 +62,11 @@
     <maven.compiler.target>17</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-<<<<<<< HEAD
     <!-- Versions of dependencies which share the same version -->
     <version.javafx>22.0.1</version.javafx>
     <version.rack>${project.version}</version.rack>
     <version.surefire>3.5.2</version.surefire>
-    <version.tycho>4.0.10</version.tycho>
+    <version.tycho>4.0.8</version.tycho>
   </properties>
 
   <!-- Set all dependency versions in one place -->

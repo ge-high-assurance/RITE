@@ -31,7 +31,7 @@
  */
 package com.ge.research.rack;
 
-import com.ge.research.rack.report.utils.RackQueryUtils;
+import com.ge.research.rack.do178c.utils.RackQueryUtils;
 import com.ge.research.rack.utils.ErrorMessageUtil;
 import com.ge.research.rack.utils.RackConsole;
 

@@ -32,6 +32,7 @@
 package com.ge.research.rack.do178c.viewManagers;
 
 import com.ge.research.rack.do178c.structures.PsacNode;
+import com.ge.research.rack.utils.ErrorMessageUtil;
 
 import javafx.application.Application;
 import javafx.application.HostServices;
