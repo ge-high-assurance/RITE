@@ -51,6 +51,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
@@ -1480,7 +1481,7 @@ public class ReportObjectiveViewHandlerNew {
                             if (reqObj.getId().equals(reqId)
                                     && reqObj.getSourceDocument() != null) {
                                 for (String src : reqObj.getSourceDocument()) {
-                                    reqChildrenList.getItems().add(src);
+                                    reqChildrenList.getItems().add(new Label(src));
                                 }
                             }
                         }
@@ -1500,7 +1501,7 @@ public class ReportObjectiveViewHandlerNew {
                                 currentObjObject.getObjOutputs().getRequirements()) {
                             // set children list to the sources, if any exist
                             if (reqObj.getId().equals(reqId) && reqObj.getDescription() != null) {
-                                reqChildrenList.getItems().add(reqObj.getDescription());
+                                reqChildrenList.getItems().add(new Label(reqObj.getDescription()));
                             }
                         }
                     });
@@ -1565,7 +1566,7 @@ public class ReportObjectiveViewHandlerNew {
                             if (tstObj.getId().equals(tstId)
                                     && tstObj.getSourceDocument() != null) {
                                 for (String src : tstObj.getSourceDocument()) {
-                                    tstChildrenList.getItems().add(src);
+                                    tstChildrenList.getItems().add(new Label(src));
                                 }
                             }
                         }
