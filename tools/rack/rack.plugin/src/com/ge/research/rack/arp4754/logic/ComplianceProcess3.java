@@ -32,6 +32,8 @@
 package com.ge.research.rack.arp4754.logic;
 
 import com.ge.research.rack.arp4754.structures.DAPlan;
+import com.ge.research.rack.arp4754.structures.DAPlan.Objective;
+import com.ge.research.rack.arp4754.utils.ComplianceUtils;
 
 /**
  * @author Saswata Paul
@@ -46,6 +48,56 @@ public class ComplianceProcess3 {
      */
     public static DAPlan.Process computeProcess(DAPlan.Process process) {
 
+        int numPassed = 0;
+        int numNoData = 0;
+        int numPartialData = 0;
+
+        for (int i = 0; i < process.getObjectives().size(); i++) {
+
+            DAPlan.Objective objective = process.getObjectives().get(i);
+
+            DAPlan.Objective updatedObjective = objective;
+            // get metrics
+            if (updatedObjective.isPassed()) {
+                numPassed++;
+            } else {
+                if (updatedObjective.isPartialData()) {
+                    numPartialData++;
+                } else {
+                    if (updatedObjective.isNoData()) {
+                        numNoData++;
+                    }
+                }
+            }
+
+            System.out.println(
+                    "Objective "
+                            + updatedObjective.getId()
+                            + " compliance status: "
+                            + updatedObjective.getComplianceStatus());
+
+            System.out.println(
+                    updatedObjective.getId()
+                            + " no: "
+                            + updatedObjective.isNoData()
+                            + " partial:"
+                            + updatedObjective.isPartialData()
+                            + " pass:"
+                            + updatedObjective.isPassed());
+
+            // replace old objective node with new node
+            process.getObjectives().set(i, updatedObjective);
+        }
+
+        // add metrics to process
+        process.setNumObjectivesNoData(numNoData);
+        process.setNumObjectivesPartialData(numPartialData);
+        process.setNumObjectivesPassed(numPassed);
+
+        // set process status metrics
+        process = ComplianceUtils.getProcessStatus(process);
+
+        process.setMetrics("");
         return process;
     }
 }

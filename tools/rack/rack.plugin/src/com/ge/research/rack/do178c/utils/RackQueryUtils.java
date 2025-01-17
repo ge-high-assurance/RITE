@@ -136,14 +136,14 @@ public class RackQueryUtils {
         try {
             // ------ MANUAL RACK CONNECTION FOR TESTING WITHOUT ECLIPSE GUI
             // Set up the nodegroup execution service
-            String PROTOCOL = "http";
-            String SERVER = "localhost";
-            int NGE_PORT = 12058;
+            String PROTOCOL = RackPreferencePage.getProtocol();
+            String SERVER = RackPreferencePage.getServer();
+            int NGE_PORT = Integer.parseInt(RackPreferencePage.getNGEPort());
             // set up a triplestore connection
-            String CONN_TYPE = "fuseki";
-            String CONN_URL = "http://localhost:3030/RACK";
-            String CONN_GRAPH = "http://rack001/model";
-            String DATA_GRAPH = "http://rack001/data";
+            String CONN_TYPE = RackPreferencePage.getConnType();
+            String CONN_URL = RackPreferencePage.getConnURL();
+            String CONN_GRAPH = RackPreferencePage.getDefaultModelGraph();
+            String DATA_GRAPH = RackPreferencePage.getDefaultDataGraph();
             // build the nodegroup executor client
             NodeGroupExecutionClientConfig config =
                     new NodeGroupExecutionClientConfig(PROTOCOL, SERVER, NGE_PORT);

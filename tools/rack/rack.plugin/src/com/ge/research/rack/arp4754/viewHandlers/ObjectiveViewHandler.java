@@ -818,10 +818,17 @@ public class ObjectiveViewHandler {
             String selectedReqLine = selectedLabel.getText();
             System.out.println("The selected req line: " + selectedReqLine);
 
+            
+            // Contextmenu for reqList
+            ContextMenu reqListContext = new ContextMenu();
+            MenuItem menuItemGoToSource = new MenuItem("Go to Entity Source");
+            reqListContext.getItems().add(menuItemGoToSource);
+            requirementList.setContextMenu(reqListContext);
+            
             // TODO: below is ad hoc code. Make generic
             if (currentObjObject.getId().equalsIgnoreCase("objective-2-6")) {
                 // Contextmenu for reqList
-                ContextMenu reqListContext = new ContextMenu();
+//                ContextMenu reqListContext = new ContextMenu();
                 MenuItem menuItemShowTrace = new MenuItem("Show Traces");
                 MenuItem menuItemShowAllocation = new MenuItem("Show Allocations");
                 reqListContext.getItems().add(menuItemShowTrace);
@@ -870,11 +877,11 @@ public class ObjectiveViewHandler {
                         });
             }
 
-            // Contextmenu for reqList
-            ContextMenu reqListContext = new ContextMenu();
-            MenuItem menuItemGoToSource = new MenuItem("Go to Entity Source");
-            reqListContext.getItems().add(menuItemGoToSource);
-            requirementList.setContextMenu(reqListContext);
+//            // Contextmenu for reqList
+//            ContextMenu reqListContext = new ContextMenu();
+//            MenuItem menuItemGoToSource = new MenuItem("Go to Entity Source");
+//            reqListContext.getItems().add(menuItemGoToSource);
+//            requirementList.setContextMenu(reqListContext);
             // show source of requirement in reqchildren if right click context selected
             menuItemGoToSource.setOnAction(
                     (rightClickEvent) -> {
