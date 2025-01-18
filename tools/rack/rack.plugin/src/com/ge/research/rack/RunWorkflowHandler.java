@@ -414,26 +414,34 @@ public class RunWorkflowHandler extends AbstractHandler {
                             writer.print(currentXML);
                             writer.close(); // So that the workflow script knows the stdin is
                             // complete
-                            
-                            // Need to watch for user cancellation in the Progress View concurrently with
+
+                            // Need to watch for user cancellation in the Progress View concurrently
+                            // with
                             // waiting for input from the process's stdout
-                            Thread cancelWatcher = new Thread() {
-                            	@Override
-                            	public void run() {
-                            		while (!monitor.isCanceled()) try { Thread.sleep(250); } catch (Exception e) {}
-                            		// The main job is stuck watching for input
-                            		// so we cancel by brute force
-                            		canceled[0] = true;
-                            		process_[0].destroy();
-                            		return;
-                            	}
-                            };
+                            Thread cancelWatcher =
+                                    new Thread() {
+                                        @Override
+                                        public void run() {
+                                            while (!monitor.isCanceled())
+                                                try {
+                                                    Thread.sleep(250);
+                                                } catch (Exception e) {
+                                                }
+                                            // The main job is stuck watching for input
+                                            // so we cancel by brute force
+                                            canceled[0] = true;
+                                            process_[0].destroy();
+                                            return;
+                                        }
+                                    };
                             cancelWatcher.start();
 
                             // read response
                             try {
-                                responseText = reader.lines().collect(
-                                    Collectors.joining(System.lineSeparator()));
+                                responseText =
+                                        reader.lines()
+                                                .collect(
+                                                        Collectors.joining(System.lineSeparator()));
                             } catch (Exception e) {
                                 if (error[0] != null) error[0] = "Failed to read response: " + e;
                                 return Status.CANCEL_STATUS;
@@ -455,72 +463,82 @@ public class RunWorkflowHandler extends AbstractHandler {
         var listener =
                 new JobChangeAdapter() {
                     public void done(IJobChangeEvent event) {
-                        if (event.getResult() == Status.OK_STATUS || event.getResult() == Status.CANCEL_STATUS) {
-                            PlatformUI.getWorkbench().getDisplay().syncExec(
-                                new Runnable() {
-                                    public void run() {
-                                        try {
-                                        	if (event.getResult() == Status.CANCEL_STATUS || canceled[0]) {
-                                        		canceled[0] = true;
-                                        		if (process_[0] != null) {
-                                        			process_[0].destroy();
-                                        			process_[0] = null;
-                                        		}
-                                        		if (dialog_[0] != null) {
-                                        			dialog_[0].close();
-                                        			dialog_[0] = null;
-                                        		}
-                                        		MessageDialog.openError(null, "Error", "Response canceled");
-                                        		view.showView();
-                                        	} else if (event.getResult() == Status.OK_STATUS) {
-                                        		if (dialog_[0] != null) {
-                                        			dialog_[0].close();
-                                        			dialog_[0] = null;
-                                        		}
-                                        		if (error[0] != null) {
-                                        			MessageDialog.openError(
-                                        					null, "Error", error[0]);
-                                        			return;
-                                        		}
-                                        		var responseText = output[0];
-                                        		// MessageDialog.openInformation(null,
-                                        		// "Received", responseText);
+                        if (event.getResult() == Status.OK_STATUS
+                                || event.getResult() == Status.CANCEL_STATUS) {
+                            PlatformUI.getWorkbench()
+                                    .getDisplay()
+                                    .syncExec(
+                                            new Runnable() {
+                                                public void run() {
+                                                    try {
+                                                        if (event.getResult()
+                                                                        == Status.CANCEL_STATUS
+                                                                || canceled[0]) {
+                                                            canceled[0] = true;
+                                                            if (process_[0] != null) {
+                                                                process_[0].destroy();
+                                                                process_[0] = null;
+                                                            }
+                                                            if (dialog_[0] != null) {
+                                                                dialog_[0].close();
+                                                                dialog_[0] = null;
+                                                            }
+                                                            MessageDialog.openError(
+                                                                    null,
+                                                                    "Error",
+                                                                    "Response canceled");
+                                                            view.showView();
+                                                        } else if (event.getResult()
+                                                                == Status.OK_STATUS) {
+                                                            if (dialog_[0] != null) {
+                                                                dialog_[0].close();
+                                                                dialog_[0] = null;
+                                                            }
+                                                            if (error[0] != null) {
+                                                                MessageDialog.openError(
+                                                                        null, "Error", error[0]);
+                                                                return;
+                                                            }
+                                                            var responseText = output[0];
+                                                            // MessageDialog.openInformation(null,
+                                                            // "Received", responseText);
 
-                                        		// Parse and display response
-                                        		try {
-                                        			currentDisplayedDoc =
-                                        					parseXML(responseText);
-                                        			view.displayXML(currentDisplayedDoc);
-                                        			history.push(currentDisplayedDoc);
-                                        			String newname =
-                                        					workflowNameFromDoc(
-                                        							currentDisplayedDoc);
-                                        			if (!workflowName.equals(newname)) {
-                                        				MessageDialog.openError(
-                                        						null,
-                                        						"Error",
-                                        						"Returned XML contains a different workflow name than the filename: "
-                                        								+ newname
-                                        								+ " vs. "
-                                        								+ workflowName);
-                                        				workflowName = newname;
-                                        			}
-                                        		} catch (Exception e) {
-                                        			if (!canceled[0])
-                                        				MessageDialog.openError(
-                                        						null,
-                                        						"Error",
-                                        						"Communication failure\n"
-                                        								+ responseText
-                                        								+ "\n"
-                                        								+ e);
-                                        		}
-                                        	}
-                                        } finally {
-                                            view.enableButtons(true);
-                                        }
-                                    }
-                                });
+                                                            // Parse and display response
+                                                            try {
+                                                                currentDisplayedDoc =
+                                                                        parseXML(responseText);
+                                                                view.displayXML(
+                                                                        currentDisplayedDoc);
+                                                                history.push(currentDisplayedDoc);
+                                                                String newname =
+                                                                        workflowNameFromDoc(
+                                                                                currentDisplayedDoc);
+                                                                if (!workflowName.equals(newname)) {
+                                                                    MessageDialog.openError(
+                                                                            null,
+                                                                            "Error",
+                                                                            "Returned XML contains a different workflow name than the filename: "
+                                                                                    + newname
+                                                                                    + " vs. "
+                                                                                    + workflowName);
+                                                                    workflowName = newname;
+                                                                }
+                                                            } catch (Exception e) {
+                                                                if (!canceled[0])
+                                                                    MessageDialog.openError(
+                                                                            null,
+                                                                            "Error",
+                                                                            "Communication failure\n"
+                                                                                    + responseText
+                                                                                    + "\n"
+                                                                                    + e);
+                                                            }
+                                                        }
+                                                    } finally {
+                                                        view.enableButtons(true);
+                                                    }
+                                                }
+                                            });
                         }
                     }
                 };
@@ -529,96 +547,103 @@ public class RunWorkflowHandler extends AbstractHandler {
         if (currentDisplayedDoc != null) {
             view.enableButtons(false);
             switch (RackPreferencePage.getCancelBehavior()) {
-            default:
-            case "none": // no dialog
-                dialog_[0] = null;
-                job.schedule(); // start as soon as possible
-            	break;
-            case "block": { // blocking cancel
-                // This implementation creates a dialog that blocks the UI thread, but after
-                // opening the dialog, goes on to start the computational thread and execute
-                // the communication with the workflow process.
-                MessageDialog dialog =
-                        new MessageDialog(
-                                null,
-                                "Cancel",
-                                null,
-                                """
+                default:
+                case "none": // no dialog
+                    dialog_[0] = null;
+                    job.schedule(); // start as soon as possible
+                    break;
+                case "block":
+                    { // blocking cancel
+                        // This implementation creates a dialog that blocks the UI thread, but after
+                        // opening the dialog, goes on to start the computational thread and execute
+                        // the communication with the workflow process.
+                        MessageDialog dialog =
+                                new MessageDialog(
+                                        null,
+                                        "Cancel",
+                                        null,
+                                        """
                                 Cancel the workflow?
 
                                 If you dismiss this dialog, you can still cancel the workflow using the Progress View.
                                 You can set a preference to always suppress this cancel dialog.
                                 """,
-                                MessageDialog.QUESTION,
-                                new String[] {"Dismiss (no cancel)", "Yes"},
-                                1) {
-                            protected Control createDialogArea(Composite parent) {
-                                setShellStyle(SWT.CLOSE | SWT.MODELESS | SWT.BORDER | SWT.TITLE);
-                                setBlockOnOpen(false);
-                                return super.createDialogArea(parent);
-                            }
+                                        MessageDialog.QUESTION,
+                                        new String[] {"Dismiss (no cancel)", "Yes"},
+                                        1) {
+                                    protected Control createDialogArea(Composite parent) {
+                                        setShellStyle(
+                                                SWT.CLOSE | SWT.MODELESS | SWT.BORDER | SWT.TITLE);
+                                        setBlockOnOpen(false);
+                                        return super.createDialogArea(parent);
+                                    }
 
-                            protected void buttonPressed(int buttonID) {
-                            	if (buttonID == 1) {
-                            		if (process_[0] != null) process_[0].destroy();
-                            		canceled[0] = true;
-                            	}
-                        		super.buttonPressed(buttonID);
-                            }
-                        };
-                dialog_[0] = dialog;
-                dialog.open();
-                job.schedule(); // start as soon as possible
-                break;
-            }
-            case "noblock": { // non blocking dialog
-                // This implementation creates a non-blocking cancel dialog -- that is, while
-                // the dialog is open, the IU thread allows interaction with other UI elements.
-                // However, it also appears that control flow here waits for user action before
-                // proceeding from the open() call. Hence we schedule the job before opening
-                // the dialog.
-                MessageDialog dialog =
-                        new MessageDialog(
-                                PlatformUI.getWorkbench().getDisplay().getActiveShell(),
-                                "Cancel",
-                                null,
-                                """
+                                    protected void buttonPressed(int buttonID) {
+                                        if (buttonID == 1) {
+                                            if (process_[0] != null) process_[0].destroy();
+                                            canceled[0] = true;
+                                        }
+                                        super.buttonPressed(buttonID);
+                                    }
+                                };
+                        dialog_[0] = dialog;
+                        dialog.open();
+                        job.schedule(); // start as soon as possible
+                        break;
+                    }
+                case "noblock":
+                    { // non blocking dialog
+                        // This implementation creates a non-blocking cancel dialog -- that is,
+                        // while
+                        // the dialog is open, the IU thread allows interaction with other UI
+                        // elements.
+                        // However, it also appears that control flow here waits for user action
+                        // before
+                        // proceeding from the open() call. Hence we schedule the job before opening
+                        // the dialog.
+                        MessageDialog dialog =
+                                new MessageDialog(
+                                        PlatformUI.getWorkbench().getDisplay().getActiveShell(),
+                                        "Cancel",
+                                        null,
+                                        """
                                 Cancel the workflow?
 
                                 If you dismiss this dialog, you can still cancel the workflow using the Progress View.
                                 You can set a preference to always suppress this cancel dialog.
                                 """,
-                                MessageDialog.QUESTION,
-                                new String[] {"Dismiss (no cancel)", "Yes"},
-                                1) {
+                                        MessageDialog.QUESTION,
+                                        new String[] {"Dismiss (no cancel)", "Yes"},
+                                        1) {
 
-                            @Override
-                            protected void buttonPressed(int buttonID) {
-                            	if (buttonID == 1) {
-                            		if (process_[0] != null) {
-                            			process_[0].destroy();
-                            			process_[0] = null;
-                            		}
-                            		canceled[0] = true;
-                            		view.enableButtons(true);
-                            	}
-                                super.buttonPressed(buttonID);
-                            }
+                                    @Override
+                                    protected void buttonPressed(int buttonID) {
+                                        if (buttonID == 1) {
+                                            if (process_[0] != null) {
+                                                process_[0].destroy();
+                                                process_[0] = null;
+                                            }
+                                            canceled[0] = true;
+                                            view.enableButtons(true);
+                                        }
+                                        super.buttonPressed(buttonID);
+                                    }
 
-                            @Override
-                            protected void setShellStyle(int newShellStyle) {
-                                super.setShellStyle(
-                                        SWT.CLOSE | SWT.MODELESS | SWT.BORDER | SWT.TITLE);
-                                setBlockOnOpen(false);
-                            }
-                        };
-                dialog_[0] = dialog;
-                job.schedule(); // start as soon as possible
-                // It is possible the job will complete before the dialog ever is opened.
-                // Even with the guard in the next statement, there could be a race in that the
-                // job could complete (and close the dialog) before the dialog is opened.
-                if (process_[0] != null) dialog.open();
-            }
+                                    @Override
+                                    protected void setShellStyle(int newShellStyle) {
+                                        super.setShellStyle(
+                                                SWT.CLOSE | SWT.MODELESS | SWT.BORDER | SWT.TITLE);
+                                        setBlockOnOpen(false);
+                                    }
+                                };
+                        dialog_[0] = dialog;
+                        job.schedule(); // start as soon as possible
+                        // It is possible the job will complete before the dialog ever is opened.
+                        // Even with the guard in the next statement, there could be a race in that
+                        // the
+                        // job could complete (and close the dialog) before the dialog is opened.
+                        if (process_[0] != null) dialog.open();
+                    }
             }
         } else {
             job.schedule(); // start as soon as possible
@@ -722,4 +747,3 @@ public class RunWorkflowHandler extends AbstractHandler {
         view.displayEmpty();
     }
 }
-

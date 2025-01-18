@@ -34,6 +34,16 @@
     <command categoryId="rackplugin.commands"
       id="rackplugin.commands.ingestInstanceData" name="Manifest Import">
     </command>
+
+    <command categoryId="rackplugin.commands"
+      id="rackplugin.commands.editorPropertyPage" name="Properties">
+    </command>
+
+    <command categoryId="rackplugin.commands"
+      id="rackplugin.commands.newYamlPropertyPage"
+      name="New Manifest Property Page">
+    </command>
+
     <!-- <command categoryId="rackplugin.commands" id="rackplugin.commands.gsnCommand"
       name="Load Assurance Case"> </command> -->
     <command categoryId="rackplugin.commands"
@@ -150,6 +160,16 @@
     </handler>
 
     <handler
+      class="com.ge.research.rack.properties.NewPropertyPageHandler"
+      commandId="rackplugin.commands.newYamlPropertyPage">
+    </handler>
+
+    <handler
+      class="com.ge.research.rack.properties.NewPropertyPageHandler$Editor"
+      commandId="rackplugin.commands.editorPropertyPage">
+    </handler>
+
+    <handler
       class="com.ge.research.rack.ZipIngestionPackageHandler"
       commandId="rackplugin.commands.zipIngestionPackage">
     </handler>
@@ -230,6 +250,11 @@
           id="rackplugin.menus.ingestInstanceData" label="Manifest Import"
           mnemonic="S">
         </command>
+        <command commandId="rackplugin.commands.newYamlPropertyPage"
+          id="rackplugin.menus.newYamlPropertyPage" label="New yaml file"
+          mnemonic="N">
+        </command>
+
         <command commandId="rackplugin.commands.clearAll"
           id="rackplugin.menus.clearAll" label="Clear RACK" mnemonic="S">
         </command>
@@ -356,6 +381,7 @@
     value="1" /> <iterate> <adapt type="org.eclipse.core.resources.IFile" />
     </iterate> </with> </visibleWhen> </command> </menuContribution> </extension> -->
 
+  <!-- OR locationURI="popup:org.eclipse.ui.popup.any" in the following -->
   <extension point="org.eclipse.ui.menus">
     <menuContribution
       locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=export">
@@ -522,6 +548,25 @@
     <property name="windowImages"
       value="./RITE-16.bmp,./RITE-32.bmp,./RITE-128.bmp,./RITE-256.bmp" />
 
+  </extension>
+
+  <extension point="org.eclipse.ui.propertyPages">
+    <page class="com.ge.research.rack.properties.DataPropertyPage"
+      id="com.ge.research.rack.properties.dataPropertyPage"
+      name="Data Settings" nameFilter="*.yaml">
+      <enabledWhen>
+        <instanceof value="org.eclipse.core.resources.IFile">
+        </instanceof>
+      </enabledWhen>
+    </page>
+  </extension>
+
+  <extension point="org.eclipse.ui.menus">
+    <menuContribution
+      locationURI="popup:yamleditor.editors.YamlEditor.context?after=additions">
+      <command commandId="rackplugin.commands.editorPropertyPage">
+      </command>
+    </menuContribution>
   </extension>
 
 </plugin>
