@@ -210,7 +210,7 @@ public class RackQueryUtils {
      */
     public static String createCsvFilePath(String QueryId, String outDir) {
 
-        String filePath = outDir + "\\" + QueryId + ".csv";
+        String filePath = outDir + File.separator + QueryId + ".csv";
 
         return filePath;
     }
