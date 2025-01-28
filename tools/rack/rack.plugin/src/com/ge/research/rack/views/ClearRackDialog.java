@@ -34,7 +34,10 @@ package com.ge.research.rack.views;
 import com.ge.research.rack.IngestInstanceDataHandler;
 import com.ge.research.rack.utils.ConnectionUtil;
 import com.ge.research.rack.utils.RackConsole;
+
 import com.ge.research.semtk.resultSet.TableResultSet;
+import com.ge.research.semtk.services.nodegroupStore.NgStore.StoredItemTypes;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.eclipse.jface.dialogs.Dialog;
@@ -181,6 +184,13 @@ public class ClearRackDialog extends Dialog {
                             if (deleteAllNodegroupsBtn.getSelection() == true) {
                                 RackConsole.getConsole().print("Deleting all nodegroups ...");
                                 ConnectionUtil.getNGSClient().deleteAllStoredNodeGroups();
+                                TableResultSet reports = ConnectionUtil.getNGSClient().executeGetStoredItemsMetadata(StoredItemTypes.Report);
+                                com.ge.research.semtk.resultSet.Table reportsTable = reports.getTable();
+                                ArrayList<ArrayList<String>> rows = reportsTable.getRows();
+                                for (ArrayList<String> row : rows) {
+                                	ConnectionUtil.getNGSClient().deleteStoredItem(row.get(0), StoredItemTypes.Report);
+                                }
+                                
                                 RackConsole.getConsole().printOK();
                             }
 
