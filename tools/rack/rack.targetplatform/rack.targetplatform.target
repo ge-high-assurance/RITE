@@ -21,18 +21,16 @@
       <unit id="org.eclipse.gmf.runtime.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.jdt.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.m2e.logback.feature.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.mylyn.context.feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.platform.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.rcp.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.sirius.common.acceleo.aql" version="0.0.0"/>
       <unit id="org.eclipse.sirius.runtime.ide.ui.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.uml2.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.zest.feature.group" version="0.0.0"/>
-      <repository location="https://download.eclipse.org/releases/2022-06/"/>
+      <repository location="https://download.eclipse.org/releases/2023-12/"/>
     </location>
-    <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
-      <unit id="org.eclipse.mylyn.context_feature.feature.group" version="0.0.0"/>
-      <repository location="https://download.eclipse.org/mylyn/releases/3.25"/>
-    </location>
+  
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="com.google.gson" version="0.0.0"/>
       <unit id="com.google.guava" version="0.0.0"/>
@@ -44,8 +42,9 @@
       <unit id="org.slf4j.api" version="0.0.0"/>
       <unit id="org.slf4j.binding.simple" version="0.0.0"/>
       <unit id="org.yaml.snakeyaml" version="0.0.0"/>
-      <repository location="https://download.eclipse.org/tools/orbit/downloads/2022-06/"/>
+      <repository location="https://download.eclipse.org/tools/orbit/downloads/2023-03/"/>
     </location>
+   
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="com.ge.research.sadl.feature.feature.group" version="0.0.0"/>
       <repository location="https://raw.githubusercontent.com/SemanticApplicationDesignLanguage/sadl-update-sites/main/sadl-develop/"/>
@@ -68,7 +67,7 @@
       <unit id="org.osate.plugins.feature.feature.group" version="0.0.0"/>
       <unit id="org.osate.utils.feature.feature.group" version="0.0.0"/>
       <unit id="org.osate.xtext.aadl2.errormodel.feature.feature.group" version="0.0.0"/>
-      <repository location="https://osate-build.sei.cmu.edu/download/osate/stable/2.12.0-vfinal/updates/"/>
+      <repository location="https://osate-build.sei.cmu.edu/download/osate/stable/2.15.0-vfinal/updates/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="org.eclipse.birt.chart.engine" version="0.0.0"/>
@@ -107,19 +106,19 @@
       <repository location="https://download.eclipse.org/birt/update-site/4.9.0/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
-      <unit id="org.eclipse.xtext.generator" version="0.0.0"/>
+      <unit id="org.eclipse.xtext.xtext.generator" version="0.0.0"/>
       <unit id="org.eclipse.xtext.junit4" version="0.0.0"/>
       <unit id="org.eclipse.xtext.redist.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.xtext.testing" version="0.0.0"/>
-      <repository location="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.27.0/"/>
+      <repository location="https://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.33.0/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="org.eclipse.emf.mwe2.launcher.feature.group" version="0.0.0"/>
-      <repository location="https://download.eclipse.org/modeling/emft/mwe/updates/releases/2.13.0/"/>
+      <repository location="https://download.eclipse.org/modeling/emft/mwe/updates/releases/2.16.0/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="org.eclipse.xsemantics.runtime.feature.feature.group" version="0.0.0"/>
-      <repository location="https://download.eclipse.org/xsemantics/milestones/1.22/"/>
+      <repository location="https://download.eclipse.org/xsemantics/milestones/1.24/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="org.eclipse.elk.algorithms.feature.feature.group" version="0.0.0"/>
