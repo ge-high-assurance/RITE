@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <!-- Define our GAV coordinates -->
@@ -25,24 +25,24 @@
     <copyright.holders>Copyright (c) $today.year, General Electric Company and Galois, Inc.</copyright.holders>
     <copyright.license>/*
  * BSD 3-Clause License
- *
+ * 
  * ${copyright.holders}
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *
+ * 
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- *
+ * 
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- *
+ * 
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -56,6 +56,8 @@
  */</copyright.license>
     <!-- Settings of Maven plugins -->
     <maven.compiler.release>17</maven.compiler.release>
+    <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
+    <maven.compiler.showWarnings>true</maven.compiler.showWarnings>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -64,7 +66,7 @@
     <version.javafx>22.0.1</version.javafx>
     <version.rack>${project.version}</version.rack>
     <version.surefire>3.5.2</version.surefire>
-    <version.tycho>4.0.10</version.tycho>
+    <version.tycho>4.0.8</version.tycho>
   </properties>
 
   <!-- Set all dependency versions in one place -->
@@ -73,12 +75,12 @@
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-core</artifactId>
-        <version>2.16.0</version>
+        <version>2.13.4</version>
       </dependency>
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-databind</artifactId>
-        <version>2.16.0</version>
+        <version>2.13.4</version>
       </dependency>
       <dependency>
         <groupId>com.ge.research.semtk</groupId>
@@ -88,7 +90,7 @@
       <dependency>
         <groupId>com.opencsv</groupId>
         <artifactId>opencsv</artifactId>
-        <version>5.9</version>
+        <version>5.8</version>
       </dependency>
       <dependency>
         <groupId>guru.nidi</groupId>
@@ -254,7 +256,7 @@
         <plugin>
           <groupId>com.diffplug.spotless</groupId>
           <artifactId>spotless-maven-plugin</artifactId>
-          <version>2.41.1</version>
+          <version>2.36.0</version>
           <configuration>
             <java>
               <includes>
@@ -285,7 +287,7 @@
                 <endWithNewline></endWithNewline>
                 <indent>
                   <spaces>true</spaces>
-                  <spacesPerTab>2</spacesPerTab>
+                  <spacesPerTab>4</spacesPerTab>
                 </indent>
               </format>
             </formats>
@@ -358,7 +360,7 @@
           <configuration>
             <rules>
               <requireMavenVersion>
-                <version>[3.9.0,)</version>
+                <version>[3.6.3,)</version>
               </requireMavenVersion>
             </rules>
           </configuration>
@@ -426,10 +428,10 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>versions-maven-plugin</artifactId>
-          <version>2.16.2</version>
+          <version>2.15.0</version>
         </plugin>
-        <!-- Define the target platform -->
         <plugin>
+          <?m2e ignore?>
           <groupId>org.eclipse.tycho</groupId>
           <artifactId>target-platform-configuration</artifactId>
           <version>${version.tycho}</version>
@@ -474,13 +476,6 @@
             </target>
           </configuration>
         </plugin>
-        <!-- Suppress an Eclipse m2e lifecycle warning -->
-        <plugin>
-          <?m2e ignore?>
-          <groupId>org.eclipse.tycho</groupId>
-          <artifactId>tycho-bnd-plugin</artifactId>
-          <version>${version.tycho}</version>
-        </plugin>
         <plugin>
           <groupId>org.eclipse.tycho</groupId>
           <artifactId>tycho-compiler-plugin</artifactId>
@@ -489,20 +484,27 @@
             <useProjectSettings>false</useProjectSettings>
           </configuration>
         </plugin>
-        <!-- Tycho needs extensions -->
         <plugin>
           <groupId>org.eclipse.tycho</groupId>
           <artifactId>tycho-maven-plugin</artifactId>
           <version>${version.tycho}</version>
           <extensions>true</extensions>
         </plugin>
-        <!-- Tycho can build Eclipse products too -->
         <plugin>
           <groupId>org.eclipse.tycho</groupId>
           <artifactId>tycho-p2-director-plugin</artifactId>
           <version>${version.tycho}</version>
         </plugin>
-        <!-- Tycho can build Eclipse p2 repositories too -->
+        <plugin>
+          <groupId>org.eclipse.tycho</groupId>
+          <artifactId>tycho-p2-plugin</artifactId>
+          <version>${version.tycho}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.eclipse.tycho</groupId>
+          <artifactId>tycho-p2-publisher-plugin</artifactId>
+          <version>${version.tycho}</version>
+        </plugin>
         <plugin>
           <groupId>org.eclipse.tycho</groupId>
           <artifactId>tycho-p2-repository-plugin</artifactId>
@@ -516,9 +518,22 @@
           <artifactId>tycho-packaging-plugin</artifactId>
           <version>${version.tycho}</version>
         </plugin>
-        <!-- To skip running (and compiling) tests: -Dmaven.test.skip -->
-        <!-- To skip tests, but still compile them: -DskipTests -->
-        <!-- To run all tests but only fail at end: -fae -->
+        <plugin>
+          <groupId>org.eclipse.tycho</groupId>
+          <artifactId>tycho-source-plugin</artifactId>
+          <version>${version.tycho}</version>
+          <executions>
+            <execution>
+              <id>default-plugin-source</id>
+              <goals>
+                <goal>plugin-source</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <!-- To skip running (and compiling) tests, use: -Dmaven.test.skip -->
+        <!-- To skip tests, but still compile them, use: -DskipTests -->
+        <!-- To run all tests but only fail at end, use: -fae -->
         <plugin>
           <groupId>org.eclipse.tycho</groupId>
           <artifactId>tycho-surefire-plugin</artifactId>
@@ -531,6 +546,11 @@
             </systemProperties>
             <useUIHarness>true</useUIHarness>
           </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.eclipse.tycho</groupId>
+          <artifactId>tycho-versions-plugin</artifactId>
+          <version>${version.tycho}</version>
         </plugin>
       </plugins>
     </pluginManagement>

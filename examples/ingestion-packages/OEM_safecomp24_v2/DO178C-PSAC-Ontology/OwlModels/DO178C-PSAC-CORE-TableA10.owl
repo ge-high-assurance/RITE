@@ -1,0 +1,23 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:do178cPsacCore="http://arcos.rack/DO178C-PSAC-CORE.sadl#"
+    xmlns:do178cPsacCorA10="http://sadl.org/DO178C-PSAC-CORE-TableA10.sadl#"
+    xmlns:j.0="http://arcos.rack/PROV-S#"
+    xmlns:builtinfunctions="http://sadl.org/builtinfunctions#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:sadlimplicitmodel="http://sadl.org/sadlimplicitmodel#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:sadlbasemodel="http://sadl.org/sadlbasemodel#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+  <owl:Ontology rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA10.sadl">
+    <owl:imports rdf:resource="http://arcos.rack/DO178C-PSAC-CORE.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/builtinfunctions"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlimplicitmodel"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlbasemodel"/>
+    <rdfs:comment xml:lang="en">This ontology was created from a SADL file 'DO178C-PSAC-CORE-TableA10.sadl' and should not be directly edited.</rdfs:comment>
+  </owl:Ontology>
+  <do178cPsacCore:DO178CTable rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA10.sadl#Table-A10">
+    <j.0:description>Certification Liason Process</j.0:description>
+    <j.0:identifier>Table-A10</j.0:identifier>
+  </do178cPsacCore:DO178CTable>
+</rdf:RDF>

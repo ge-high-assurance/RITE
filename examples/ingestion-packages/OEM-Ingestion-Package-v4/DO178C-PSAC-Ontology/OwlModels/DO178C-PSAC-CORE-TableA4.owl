@@ -1,0 +1,101 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:do178cPsacCore="http://arcos.rack/DO178C-PSAC-CORE.sadl#"
+    xmlns:j.0="http://arcos.rack/PROV-S#"
+    xmlns:builtinfunctions="http://sadl.org/builtinfunctions#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:sadlimplicitmodel="http://sadl.org/sadlimplicitmodel#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:do178cPsacCorA4="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#"
+    xmlns:sadlbasemodel="http://sadl.org/sadlbasemodel#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+  <owl:Ontology rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl">
+    <owl:imports rdf:resource="http://arcos.rack/DO178C-PSAC-CORE.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/builtinfunctions"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlimplicitmodel"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlbasemodel"/>
+    <rdfs:comment xml:lang="en">This ontology was created from a SADL file 'DO178C-PSAC-CORE-TableA4.sadl' and should not be directly edited.</rdfs:comment>
+  </owl:Ontology>
+  <do178cPsacCore:DO178CTable rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Table-A4">
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-12">
+        <j.0:description>Software architecture conform to standards</j.0:description>
+        <j.0:identifier>Objective-A4-12</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-13">
+        <j.0:description>Software partitioning integrity is confirmed</j.0:description>
+        <j.0:identifier>Objective-A4-13</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <j.0:identifier>Table-A4</j.0:identifier>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-1">
+        <j.0:description>Low-level requirements comply with high-level requirements</j.0:description>
+        <j.0:identifier>Objective-A4-1</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-3">
+        <j.0:description>Low-level requirements are compatible with target computer</j.0:description>
+        <j.0:identifier>Objective-A4-3</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-2">
+        <j.0:description>Low-level requirements are accurate and consistent</j.0:description>
+        <j.0:identifier>Objective-A4-2</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-4">
+        <j.0:description>Low-level requirements are verifiable</j.0:description>
+        <j.0:identifier>Objective-A4-4</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <j.0:description>Verification of Outputs of Software Design Process</j.0:description>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-5">
+        <j.0:description>Low-level requirements conform to standards</j.0:description>
+        <j.0:identifier>Objective-A4-5</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-6">
+        <j.0:description>Low-level requirements are traceable to high-level requirements</j.0:description>
+        <j.0:identifier>Objective-A4-6</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-7">
+        <j.0:description>Algorithms are accurate</j.0:description>
+        <j.0:identifier>Objective-A4-7</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-8">
+        <j.0:description>Software architecture is compatible with high-level requirements</j.0:description>
+        <j.0:identifier>Objective-A4-8</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-10">
+        <j.0:description>Software architecture is compatible with target computer</j.0:description>
+        <j.0:identifier>Objective-A4-10</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-9">
+        <j.0:description>Software architecture is consistent</j.0:description>
+        <j.0:identifier>Objective-A4-9</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+    <do178cPsacCore:objective>
+      <do178cPsacCore:DO178CObjective rdf:about="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl#Objective-A4-11">
+        <j.0:description>Software architecture is verifiable</j.0:description>
+        <j.0:identifier>Objective-A4-11</j.0:identifier>
+      </do178cPsacCore:DO178CObjective>
+    </do178cPsacCore:objective>
+  </do178cPsacCore:DO178CTable>
+</rdf:RDF>

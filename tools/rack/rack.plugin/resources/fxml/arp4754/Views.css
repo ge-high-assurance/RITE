@@ -1,0 +1,50 @@
+/* 
+JavaFX Cascading Style Sheets (CSS) is based on the W3C CSS version 2.1 {@link https://www.w3.org/TR/CSS21/} 
+JavaFX CSS supports a limited subset of CSS properties - read more about that here: 
+    https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#references
+*/
+
+.legend-button {
+    -fx-font-size: .8em
+}
+
+.color-passed {
+    -fx-background-color: linear-gradient(from 0px 0px to 5px 5px, repeat, darkgreen 50%, green 50%);
+    -fx-bar-fill: linear-gradient(from 0px 0px to 5px 5px, repeat, darkgreen 50%, green 50%);
+}
+
+.color-failed {
+    -fx-background-color: linear-gradient(from 5px 4px to 0px 9px, repeat, darkred 50%, red 50%);
+    -fx-bar-fill: linear-gradient(from 5px 4px to 0px 9px, repeat, darkred 50%, red 50%);
+}
+
+.color-partial-data {
+    -fx-background-color: linear-gradient(from 0px 0px to 0px 8px, repeat, darkorange 50%, orange 50%);
+    -fx-bar-fill: linear-gradient(from 0px 0px to 0px 8px, repeat, darkorange 50%, orange 50%);
+}
+
+.color-no-data {
+    -fx-background-color: grey; /* linear-gradient(from 0px 0px to 4px 0px, repeat, darkgray 30%, grey 50%); */
+    -fx-bar-fill: grey; /* linear-gradient(from 0px 0px to 4px 0px, repeat, darkgray 30%, grey 50%); */
+}
+
+.transparent-button {
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-padding: 0px;
+    -fx-padding-bottom: 0px;
+    -fx-content-display: bottom;
+    -fx-alignment: bottom;
+}
+
+.bottom-align {
+    -fx-content-display: bottom;
+    -fx-alignment: bottom;
+}
+
+.superscript {
+    -fx-translate-y: -.3em;
+}
+
+
+

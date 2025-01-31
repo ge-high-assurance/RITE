@@ -1,0 +1,35 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:j.0="http://arcos.rack/PROV-S#"
+    xmlns:builtinfunctions="http://sadl.org/builtinfunctions#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:sadlimplicitmodel="http://sadl.org/sadlimplicitmodel#"
+    xmlns:p1core="http://sadl.org/PLAN-CORE-Process1.sadl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:sadlbasemodel="http://sadl.org/sadlbasemodel#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:dapcore="http://sadl.org/PLAN-CORE.sadl#">
+  <owl:Ontology rdf:about="http://sadl.org/PLAN-CORE-Process1.sadl">
+    <owl:imports rdf:resource="http://sadl.org/PLAN-CORE.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/builtinfunctions"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlimplicitmodel"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlbasemodel"/>
+    <rdfs:comment xml:lang="en">This ontology was created from a SADL file 'PLAN-CORE-Process1.sadl' and should not be directly edited.</rdfs:comment>
+  </owl:Ontology>
+  <dapcore:Process rdf:about="http://sadl.org/PLAN-CORE-Process1.sadl#Process-1">
+    <dapcore:objective>
+      <dapcore:Objective rdf:about="http://sadl.org/PLAN-CORE-Process1.sadl#Objective-1-2">
+        <j.0:description>Transition criteria and interrelationship among processes are defined. </j.0:description>
+        <j.0:identifier>Objective-1-2</j.0:identifier>
+      </dapcore:Objective>
+    </dapcore:objective>
+    <dapcore:objective>
+      <dapcore:Objective rdf:about="http://sadl.org/PLAN-CORE-Process1.sadl#Objective-1-1">
+        <j.0:description>System development and integral processes activities are defined </j.0:description>
+        <j.0:identifier>Objective-1-1</j.0:identifier>
+      </dapcore:Objective>
+    </dapcore:objective>
+    <j.0:description>Planning Process</j.0:description>
+    <j.0:identifier>Process-1</j.0:identifier>
+  </dapcore:Process>
+</rdf:RDF>
