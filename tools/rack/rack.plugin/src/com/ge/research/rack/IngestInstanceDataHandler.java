@@ -39,6 +39,7 @@ import com.ge.research.rack.views.ViewUtils;
 import com.ge.research.semtk.api.nodeGroupExecution.client.NodeGroupExecutionClient;
 import com.ge.research.semtk.load.utility.SparqlGraphJson;
 import com.ge.research.semtk.nodeGroupStore.client.NodeGroupStoreRestClient;
+import com.ge.research.semtk.services.nodegroupStore.NgStore.StoredItemTypes;
 import com.ge.research.semtk.sparqlX.SparqlConnection;
 import com.ge.research.semtk.sparqlX.client.SparqlQueryClient;
 import com.opencsv.CSVReader;
@@ -75,6 +76,8 @@ public class IngestInstanceDataHandler extends AbstractHandler {
     private static String MANIFEST_FAILED = "Manifest Ingestion Failed";
     private static String MANIFEST_IN_PROGRESS = "Another Manifest Import is in progress";
     private static String manifestPath = "";
+    private static String NODEGROUP_LABEL = "Nodegroup";
+    private static String REPORT_LABEL =  "Report";
     private static List<String> dGraphs = new ArrayList<>();
     private static List<String> mGraphs = new ArrayList<>();
     private static List<String> dedupSteps = new ArrayList<>();
@@ -465,7 +468,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 
         } catch (Exception e) {
             String message =
-                    "Problem occured when reading lines for :" + dir + "/" + csvNgStore.getName();
+                    "Problem occured when reading lines for :" + dir + File.separator + csvNgStore.getName();
             ErrorMessageUtil.error(message);
             return IngestionStatus.FAILED;
         }
@@ -488,7 +491,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
             }
             final String nodegroupId = entry.get(0);
             final String jsonFile = entry.get(3);
-            File ngJson = new File(ngPath + "/" + jsonFile);
+            File ngJson = new File(ngPath + File.separator + jsonFile);
             if (!ngJson.exists()) {
                 ErrorMessageUtil.error(
                         "json file for " + jsonFile + "missing in folder: " + ngPath);
@@ -502,9 +505,19 @@ public class IngestInstanceDataHandler extends AbstractHandler {
             final SparqlGraphJson json2 = json;
 
             try {
-                ErrorMessageUtil.print("Uploading nodegroup: " + nodegroupId + ".json ... ");
-                ngClient.executeStoreNodeGroup(
-                        nodegroupId, entry.get(1), entry.get(2), json2.getJson());
+            	
+                // Check for a Report, else fallback to PreFabNodeGroup
+                String itemType = entry.get(4);
+                //Defaulting to PrefabNodeGroup
+                StoredItemTypes storeItemType = StoredItemTypes.PrefabNodeGroup;
+                String itemLabel = NODEGROUP_LABEL;
+                if(itemType != null && itemType.equals(StoredItemTypes.Report.toString())) {
+                	storeItemType = StoredItemTypes.Report;
+                	itemLabel = REPORT_LABEL;
+                }
+                ErrorMessageUtil.print("Uploading " + itemLabel + ": " + nodegroupId + ".json ... ");
+                ngClient.executeStoreItem(
+                        nodegroupId, entry.get(1), entry.get(2), json2.getJson(), storeItemType);
                 ErrorMessageUtil.printOK();
 
             } catch (Exception e) {
@@ -543,11 +556,11 @@ public class IngestInstanceDataHandler extends AbstractHandler {
         try {
             yamlMap = ProjectUtils.readYaml(yamlPath);
         } catch (Exception e) {
-            ErrorMessageUtil.error("Unable to read " + dir + "/" + file.getName());
+            ErrorMessageUtil.error("Unable to read " + dir + File.separator + file.getName());
         }
         if (yamlMap == null) {
             ErrorMessageUtil.error(
-                    "Ill formed manifest at " + dir + "/" + file.getName() + ", please check");
+                    "Ill formed manifest at " + dir + File.separator + file.getName() + ", please check");
             ErrorMessageUtil.error("Check YAML: " + file.getAbsolutePath());
             return IngestionStatus.FAILED;
         }
@@ -576,7 +589,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                 }
                 IngestionStatus status =
                         uploadDataFromYAML(
-                                Paths.get(Paths.get(dir) + "/" + importDataYaml)
+                                Paths.get(Paths.get(dir) + File.separator + importDataYaml)
                                         .normalize()
                                         .toString(),
                                 monitor);
@@ -594,7 +607,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 
                 IngestionStatus status =
                         uploadModelFromYAML(
-                                Paths.get(Paths.get(dir) + "/" + owlModel).normalize().toString(),
+                                Paths.get(Paths.get(dir) + File.separator + owlModel).normalize().toString(),
                                 monitor);
                 if (status == IngestionStatus.FAILED || status == IngestionStatus.CANCELED) {
                     return status;
@@ -610,7 +623,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 
                 IngestionStatus status =
                         uploadDataFromManifestYAML(
-                                Paths.get(Paths.get(dir) + "/" + subManifest)
+                                Paths.get(Paths.get(dir) + File.separator + subManifest)
                                         .normalize()
                                         .toString(),
                                 monitor);
@@ -631,7 +644,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 
                 IngestionStatus status =
                         uploadNodegroupsFromYAML(
-                                Paths.get(Paths.get(dir) + "/" + ngEntry).normalize().toString(),
+                                Paths.get(Paths.get(dir) + File.separator + ngEntry).normalize().toString(),
                                 monitor);
                 if (status == IngestionStatus.FAILED || status == IngestionStatus.CANCELED) {
                     return status;
@@ -664,7 +677,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
         try {
             yamlMap = ProjectUtils.readYaml(ingestionYaml.getAbsolutePath());
         } catch (Exception e) {
-            ErrorMessageUtil.error("Unable to read " + dir + "/" + ingestionYaml.getName());
+            ErrorMessageUtil.error("Unable to read " + dir + File.separator + ingestionYaml.getName());
             return Status.CANCEL_STATUS;
         }
         if (yamlMap == null) {
