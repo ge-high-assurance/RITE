@@ -339,7 +339,11 @@ public class IngestInstanceDataHandler extends AbstractHandler {
                         }
                         if (line != null) {
                             ArrayList<String> itemsList = new ArrayList<>(Arrays.asList(line));
-                            tabData.add(itemsList);
+                            ArrayList<String> itemsListTrimmed = new ArrayList<>();
+                            for(String entry : itemsList) {
+                            	 itemsListTrimmed.add(entry.trim());
+                            }
+                            tabData.add(itemsListTrimmed);
                         }
                     }
                     csvReader.close();
