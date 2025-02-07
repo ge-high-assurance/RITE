@@ -32,9 +32,14 @@
 package com.ge.research.rack.utils;
 
 import com.ge.research.rack.views.RackPreferencePage;
+import com.google.common.io.Files;
+
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+
+import java.io.File;
+import java.io.PrintStream;
 
 public class ErrorMessageUtil {
     public static String getErrorMessage(Exception e) {
@@ -240,5 +245,21 @@ public class ErrorMessageUtil {
                                 }
                             }
                         });
+    }
+
+    public static void reportInit() {
+        String tempDir = Files.createTempDir().getAbsolutePath();
+        String logFilePath = tempDir + File.separator + "logs";
+        File logFile = new File(logFilePath);
+        try {
+            PrintStream printstream = new PrintStream(logFile);
+            System.setOut(printstream);
+        } catch (Exception e) {
+            System.out.println("Error creating log file for reports");
+        }
+    }
+
+    public static void reportCleanup() {
+        System.setOut(System.out);
     }
 }

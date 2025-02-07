@@ -35,6 +35,7 @@ import com.ge.research.rack.arp4754.viewManagers.Arp4754ViewsManager;
 import com.ge.research.rack.autoGsn.viewManagers.AutoGsnViewsManager;
 import com.ge.research.rack.autoGsn.viewManagers.GsnTreeViewManager;
 import com.ge.research.rack.do178c.viewManagers.ReportViewsManager;
+import com.ge.research.rack.utils.ErrorMessageUtil;
 import com.ge.research.rack.views.RibView;
 
 import javafx.application.Application;
@@ -81,7 +82,7 @@ public class JavaFXAppLaunchManager {
                             application.start(primaryStage);
                         } catch (Exception e) {
                             e.printStackTrace();
-                        }
+                        } 
                     });
         }
     }
@@ -94,17 +95,29 @@ public class JavaFXAppLaunchManager {
     public static void autoGsnMainViewLaunch() {
         if (!launchFlag) {
             Platform.setImplicitExit(false);
-            new Thread(() -> Application.launch(AutoGsnViewsManager.class)).start();
+            new Thread(
+                            () -> {
+                                try {
+                                    ErrorMessageUtil.reportInit();
+                                    Application.launch(AutoGsnViewsManager.class);
+                                } finally {
+                                    ErrorMessageUtil.reportCleanup();
+                                }
+                            })
+                    .start();
             launchFlag = true;
         } else {
             Platform.runLater(
                     () -> {
                         try {
+                            ErrorMessageUtil.reportInit();
                             Application application = new AutoGsnViewsManager();
                             Stage primaryStage = new Stage();
                             application.start(primaryStage);
                         } catch (Exception e) {
                             e.printStackTrace();
+                        } finally {
+                            ErrorMessageUtil.reportCleanup();
                         }
                     });
         }
@@ -142,22 +155,35 @@ public class JavaFXAppLaunchManager {
     public static void do178CReportMainViewLaunch() {
         if (!launchFlag) {
             Platform.setImplicitExit(false);
-            new Thread(() -> Application.launch(ReportViewsManager.class)).start();
+            new Thread(
+                            () -> {
+                                try {
+                                    ErrorMessageUtil.reportInit();
+                                    Application.launch(ReportViewsManager.class);
+                                } finally {
+                                    ErrorMessageUtil.reportCleanup();
+                                }
+                            })
+                    .start();
             launchFlag = true;
         } else {
             Platform.runLater(
                     () -> {
                         try {
+                            ErrorMessageUtil.reportInit();
                             Application application = new ReportViewsManager();
                             Stage primaryStage = new Stage();
                             application.start(primaryStage);
+
                         } catch (Exception e) {
                             e.printStackTrace();
+                        } finally {
+                            ErrorMessageUtil.reportCleanup();
                         }
                     });
         }
     }
-    
+
     /**
      * Used to launch different Javafx arp4754ReportMainView applications by consulting the flag
      *
@@ -166,22 +192,34 @@ public class JavaFXAppLaunchManager {
     public static void arp4754ReportMainViewLaunch() {
         if (!launchFlag) {
             Platform.setImplicitExit(false);
-            new Thread(() -> Application.launch(Arp4754ViewsManager.class)).start();
+            new Thread(
+                            () -> {
+                                try {
+                                    ErrorMessageUtil.reportInit();
+                                    Application.launch(Arp4754ViewsManager.class);
+                                } finally {
+                                    ErrorMessageUtil.reportCleanup();
+                                }
+                            })
+                    .start();
             launchFlag = true;
         } else {
             Platform.runLater(
                     () -> {
                         try {
+                            ErrorMessageUtil.reportInit();
                             Application application = new Arp4754ViewsManager();
                             Stage primaryStage = new Stage();
                             application.start(primaryStage);
                         } catch (Exception e) {
                             e.printStackTrace();
+                        } finally {
+                            ErrorMessageUtil.reportCleanup();
                         }
                     });
         }
     }
-    
+
     /**
      * Used to launch different Javafx QueryNodeGroupSelectView applications by consulting the flag
      *
