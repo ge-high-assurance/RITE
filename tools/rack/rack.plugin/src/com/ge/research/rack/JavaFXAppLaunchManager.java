@@ -1,23 +1,23 @@
 /*
  * BSD 3-Clause License
- *
+ * 
  * Copyright (c) 2023, General Electric Company and Galois, Inc.
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *
+ * 
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- *
+ * 
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- *
+ * 
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -31,10 +31,13 @@
  */
 package com.ge.research.rack;
 
+import com.ge.research.rack.arp4754.viewManagers.Arp4754ViewsManager;
 import com.ge.research.rack.autoGsn.viewManagers.AutoGsnViewsManager;
 import com.ge.research.rack.autoGsn.viewManagers.GsnTreeViewManager;
-import com.ge.research.rack.report.viewManagers.ReportViewsManager;
+import com.ge.research.rack.do178c.viewManagers.ReportViewsManager;
+import com.ge.research.rack.utils.ErrorMessageUtil;
 import com.ge.research.rack.views.RibView;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -79,7 +82,7 @@ public class JavaFXAppLaunchManager {
                             application.start(primaryStage);
                         } catch (Exception e) {
                             e.printStackTrace();
-                        }
+                        } 
                     });
         }
     }
@@ -92,17 +95,29 @@ public class JavaFXAppLaunchManager {
     public static void autoGsnMainViewLaunch() {
         if (!launchFlag) {
             Platform.setImplicitExit(false);
-            new Thread(() -> Application.launch(AutoGsnViewsManager.class)).start();
+            new Thread(
+                            () -> {
+                                try {
+                                    ErrorMessageUtil.reportInit();
+                                    Application.launch(AutoGsnViewsManager.class);
+                                } finally {
+                                    ErrorMessageUtil.reportCleanup();
+                                }
+                            })
+                    .start();
             launchFlag = true;
         } else {
             Platform.runLater(
                     () -> {
                         try {
+                            ErrorMessageUtil.reportInit();
                             Application application = new AutoGsnViewsManager();
                             Stage primaryStage = new Stage();
                             application.start(primaryStage);
                         } catch (Exception e) {
                             e.printStackTrace();
+                        } finally {
+                            ErrorMessageUtil.reportCleanup();
                         }
                     });
         }
@@ -133,24 +148,73 @@ public class JavaFXAppLaunchManager {
     }
 
     /**
-     * Used to launch different Javafx ReportMainView applications by consulting the flag
+     * Used to launch different Javafx do178CReportMainView applications by consulting the flag
      *
      * <p>Sets the flag to true on the first launch.
      */
-    public static void reportMainViewLaunch() {
+    public static void do178CReportMainViewLaunch() {
         if (!launchFlag) {
             Platform.setImplicitExit(false);
-            new Thread(() -> Application.launch(ReportViewsManager.class)).start();
+            new Thread(
+                            () -> {
+                                try {
+                                    ErrorMessageUtil.reportInit();
+                                    Application.launch(ReportViewsManager.class);
+                                } finally {
+                                    ErrorMessageUtil.reportCleanup();
+                                }
+                            })
+                    .start();
             launchFlag = true;
         } else {
             Platform.runLater(
                     () -> {
                         try {
+                            ErrorMessageUtil.reportInit();
                             Application application = new ReportViewsManager();
+                            Stage primaryStage = new Stage();
+                            application.start(primaryStage);
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            ErrorMessageUtil.reportCleanup();
+                        }
+                    });
+        }
+    }
+
+    /**
+     * Used to launch different Javafx arp4754ReportMainView applications by consulting the flag
+     *
+     * <p>Sets the flag to true on the first launch.
+     */
+    public static void arp4754ReportMainViewLaunch() {
+        if (!launchFlag) {
+            Platform.setImplicitExit(false);
+            new Thread(
+                            () -> {
+                                try {
+                                    ErrorMessageUtil.reportInit();
+                                    Application.launch(Arp4754ViewsManager.class);
+                                } finally {
+                                    ErrorMessageUtil.reportCleanup();
+                                }
+                            })
+                    .start();
+            launchFlag = true;
+        } else {
+            Platform.runLater(
+                    () -> {
+                        try {
+                            ErrorMessageUtil.reportInit();
+                            Application application = new Arp4754ViewsManager();
                             Stage primaryStage = new Stage();
                             application.start(primaryStage);
                         } catch (Exception e) {
                             e.printStackTrace();
+                        } finally {
+                            ErrorMessageUtil.reportCleanup();
                         }
                     });
         }

@@ -1,23 +1,23 @@
 /*
  * BSD 3-Clause License
- *
+ * 
  * Copyright (c) 2023, General Electric Company and Galois, Inc.
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *
+ * 
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- *
+ * 
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- *
+ * 
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
  *    this software without specific prior written permission.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -36,8 +36,10 @@ import com.ge.research.rack.autoGsn.constants.RackCoreElements;
 import com.ge.research.rack.autoGsn.structures.GsnNode;
 import com.ge.research.rack.autoGsn.structures.InstanceData;
 import com.ge.research.rack.autoGsn.structures.PatternInfo;
+import com.ge.research.rack.autoGsn.utils.CustomStringUtils;
 import com.ge.research.rack.autoGsn.utils.ListStratPatUtils;
 import com.ge.research.rack.autoGsn.utils.QueryResultUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -319,9 +321,24 @@ public class DataProcessor {
         if (allSupportedByNodes.size() < 1) { // no supporting node
             colorFlag = false;
         } else { // exist supporting nodes
-            for (GsnNode supportNode : allSupportedByNodes) {
-                if (!supportNode.getIsGreen()) {
-                    colorFlag = false;
+
+            // use forall/at least one
+            // TODO: Replace string checking with other techniques in future
+            if ((CustomStringUtils.checkWordExistenceV2("all", strategy.getDescription()))
+                    || (CustomStringUtils.checkWordExistenceV2(
+                            "forall", strategy.getDescription().toLowerCase()))) {
+                System.out.println("Found all/forall " + strategy.getDescription().toLowerCase());
+                for (GsnNode supportNode : allSupportedByNodes) {
+                    if (!supportNode.getIsGreen()) {
+                        colorFlag = false;
+                    }
+                }
+            } else if ((CustomStringUtils.checkWordExistenceV2(
+                    "at least one", strategy.getDescription()))) {
+                for (GsnNode supportNode : allSupportedByNodes) {
+                    if (supportNode.getIsGreen()) {
+                        colorFlag = true;
+                    }
                 }
             }
         }

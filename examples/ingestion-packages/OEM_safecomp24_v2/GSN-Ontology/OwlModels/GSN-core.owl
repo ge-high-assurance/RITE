@@ -1,0 +1,112 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:provs="http://arcos.rack/PROV-S#"
+    xmlns:builtinfunctions="http://sadl.org/builtinfunctions#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:sadlimplicitmodel="http://sadl.org/sadlimplicitmodel#"
+    xmlns:gc="http://sadl.org/GSN-core.sadl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:sadlbasemodel="http://sadl.org/sadlbasemodel#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+  <owl:Ontology rdf:about="http://sadl.org/GSN-core.sadl">
+    <owl:imports rdf:resource="http://arcos.rack/PROV-S"/>
+    <owl:imports rdf:resource="http://sadl.org/builtinfunctions"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlimplicitmodel"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlbasemodel"/>
+    <rdfs:comment xml:lang="en">Developed from the 'Goal Structuring Notation Community Standard, Version 2', January 2018, 
+available for download from https://scsc.uk/r141B:1</rdfs:comment>
+    <rdfs:comment xml:lang="en">This ontology was created from a SADL file 'GSN-core.sadl' and should not be directly edited.</rdfs:comment>
+  </owl:Ontology>
+  <owl:Class rdf:about="http://sadl.org/GSN-core.sadl#GSN">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onClass>
+          <owl:Class rdf:about="http://sadl.org/GSN-core.sadl#Goal"/>
+        </owl:onClass>
+        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+        >1</owl:qualifiedCardinality>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="http://sadl.org/GSN-core.sadl#rootGoal"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">a graphical argument notation, capturing a hierarchy of claims</rdfs:comment>
+    <rdfs:label xml:lang="en">Goal Structuring Notation</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#THING"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://sadl.org/GSN-core.sadl#Solution">
+    <rdfs:comment xml:lang="en">presents a reference to an evidence item</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#THING"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://sadl.org/GSN-core.sadl#Strategy">
+    <rdfs:comment xml:lang="en">mediates between a goal and its subgoals, explaining basis of inference</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#THING"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://sadl.org/GSN-core.sadl#Assumption">
+    <rdfs:comment xml:lang="en">complete sentences in the form of a noun-phrase + a verb-phrase</rdfs:comment>
+    <rdfs:comment xml:lang="en">applies to argument substructure without repetition</rdfs:comment>
+    <rdfs:comment xml:lang="en">a goal or strategy in the context of an assumption is only applicable when the assumption is true</rdfs:comment>
+    <rdfs:label xml:lang="en">an unsubstantiated statement</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#THING"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://sadl.org/GSN-core.sadl#Context">
+    <rdfs:comment xml:lang="en">applies to argument substructure without repetition</rdfs:comment>
+    <rdfs:label xml:lang="en">scope over which claim of goal is made or strategy applies</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#THING"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://sadl.org/GSN-core.sadl#Goal">
+    <rdfs:comment xml:lang="en">a requirements statement; a claim forming part of an argument</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#THING"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://sadl.org/GSN-core.sadl#Justification">
+    <rdfs:comment xml:lang="en">complete sentences in the form of a noun-phrase + a verb-phrase</rdfs:comment>
+    <rdfs:comment xml:lang="en">applies only to goal or strategy and not to argument substructure</rdfs:comment>
+    <rdfs:label xml:lang="en">rational for the associated claim of the goal or strategy</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#THING"/>
+  </owl:Class>
+  <owl:ObjectProperty rdf:about="http://sadl.org/GSN-core.sadl#supportedBy">
+    <rdfs:comment xml:lang="en">indicated by solid arrow head</rdfs:comment>
+    <rdfs:range>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="http://sadl.org/GSN-core.sadl#Goal"/>
+          <owl:Class rdf:about="http://sadl.org/GSN-core.sadl#Strategy"/>
+          <owl:Class rdf:about="http://sadl.org/GSN-core.sadl#Solution"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:range>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="http://sadl.org/GSN-core.sadl#Goal"/>
+          <owl:Class rdf:about="http://sadl.org/GSN-core.sadl#Strategy"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://sadl.org/GSN-core.sadl#inContextOf">
+    <rdfs:comment xml:lang="en">Kelly's thesis included Solution in the domain</rdfs:comment>
+    <rdfs:comment xml:lang="en">indicated by hollow arrow head</rdfs:comment>
+    <rdfs:range>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="http://sadl.org/GSN-core.sadl#Context"/>
+          <owl:Class rdf:about="http://sadl.org/GSN-core.sadl#Assumption"/>
+          <owl:Class rdf:about="http://sadl.org/GSN-core.sadl#Justification"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:range>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="http://sadl.org/GSN-core.sadl#Goal"/>
+          <owl:Class rdf:about="http://sadl.org/GSN-core.sadl#Strategy"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://sadl.org/GSN-core.sadl#rootGoal">
+    <rdfs:domain rdf:resource="http://sadl.org/GSN-core.sadl#GSN"/>
+    <rdfs:range rdf:resource="http://sadl.org/GSN-core.sadl#Goal"/>
+  </owl:ObjectProperty>
+</rdf:RDF>
