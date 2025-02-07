@@ -1,5 +1,0 @@
-<workflow
-  name="echo_workflow"
-  command="bin/venv/bin/echo-workflow"
-  >
-</workflow>
