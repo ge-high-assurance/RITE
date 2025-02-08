@@ -29,15 +29,9 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-<<<<<<< HEAD
-package com.ge.research.rack.utils;
-
-import com.ge.research.rack.views.RackPreferencePage;
-=======
 package com.ge.research.rite.utils;
 
 import com.ge.research.rite.views.RackPreferencePage;
->>>>>>> 58d31630c3eca4cd02adf1b185a3c9fe3b893eb7
 import java.util.List;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
