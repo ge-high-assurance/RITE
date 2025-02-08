@@ -31,6 +31,7 @@ For Developers
 5) From a command line, navigate to the rite directory : `/RITE/tools/rite`
 6) Run `mvn clean install`. This will build all the projects inside rite folder and also the plugin
 7) From the Eclipse IDE, select all projects and `right-click on any selected project > Maven > Update Project...`. After the update finishes, `right-click on rite.plugin > Run As > Run Configurations... > Double click Eclipse Application > Run` (pictured below). 	    	Subsequent runs can use the same configuration. This will launch the RITE Plugin in a SADL Eclipse Environment
+
 	<img width="1062" alt="image" src="https://user-images.githubusercontent.com/44778536/199816508-9b100b99-74b3-432a-96d2-9c8bd3022906.png">
 
 #### Eclipse IDE Installation Instructions:

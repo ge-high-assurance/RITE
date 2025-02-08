@@ -29,9 +29,15 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+<<<<<<< HEAD
 package com.ge.research.rack.utils;
 
 import com.ge.research.rack.views.RackPreferencePage;
+=======
+package com.ge.research.rite.utils;
+
+import com.ge.research.rite.views.RackPreferencePage;
+>>>>>>> 58d31630c3eca4cd02adf1b185a3c9fe3b893eb7
 import java.util.List;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
@@ -45,7 +51,7 @@ import org.junit.Test;
  * <p>The tools/rack/pom.xml configures this test's bundle in two places, the
  * target-platform-configuration to enable slf4j logging and the tycho-surefire-plugin to configure
  * slf4j logging and enable the UI harness. If you want to examine the test bundle's log, open the
- * file tools/rack/rack.test/target/rack.test.log. If you want to run this test from Maven and debug
+ * file tools/rack/rite.test/target/rite.test.log. If you want to run this test from Maven and debug
  * it in the Eclipse debugger, set debugPort in the tycho-surefire-plugin's configuration (see
  * https://tycho.eclipseprojects.io/doc/latest/tycho-surefire-plugin/test-mojo.html#debugPort).
  *

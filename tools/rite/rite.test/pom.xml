@@ -5,8 +5,13 @@
 
   <parent>
     <groupId>com.ge.research.rite</groupId>
+<<<<<<< HEAD
     <artifactId>rite</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+=======
+    <artifactId>rack</artifactId>
+    <version>0.5.0-SNAPSHOT</version>
+>>>>>>> 58d31630c3eca4cd02adf1b185a3c9fe3b893eb7
   </parent>
 
   <artifactId>rite.test</artifactId>

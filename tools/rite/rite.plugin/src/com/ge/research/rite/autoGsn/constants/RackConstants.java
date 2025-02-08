@@ -69,6 +69,7 @@ public class RackConstants {
      * @author Saswata Paul
      */
     public enum ArcosUris {
+<<<<<<< HEAD
         AGENTS("http://arcos.rack/AGENTS"),
         ANALYSIS("http://arcos.rack/ANALYSIS"),
         BASELINE("http://arcos.rack/BASELINE"),
@@ -86,6 +87,25 @@ public class RackConstants {
         SOFTWARE("http://arcos.rack/SOFTWARE"),
         SYSTEM("http://arcos.rack/SYSTEM"),
         TESTING("http://arcos.rack/TESTING");
+=======
+        AGENTS("http://arcos.rite/AGENTS"),
+        ANALYSIS("http://arcos.rite/ANALYSIS"),
+        BASELINE("http://arcos.rite/BASELINE"),
+        CONFIDENCE("http://arcos.rite/CONFIDENCE"),
+        DOCUMENT("http://arcos.rite/DOCUMENT"),
+        FILE("http://arcos.rite/FILE"),
+        HARDWARE("http://arcos.rite/HARDWARE"),
+        HAZARD("http://arcos.rite/HAZARD"),
+        MODEL("http://arcos.rite/MODEL"),
+        PROCESS("http://arcos.rite/PROCESS"),
+        PROVS("http://arcos.rite/PROV-S"),
+        REQUIREMENTS("http://arcos.rite/REQUIREMENTS"),
+        REVIEW("http://arcos.rite/REVIEW"),
+        SECURITY("http://arcos.rite/SECURITY"),
+        SOFTWARE("http://arcos.rite/SOFTWARE"),
+        SYSTEM("http://arcos.rite/SYSTEM"),
+        TESTING("http://arcos.rite/TESTING");
+>>>>>>> 58d31630c3eca4cd02adf1b185a3c9fe3b893eb7
 
         // To set and get the strings of the enums
         private String arcosUri;
@@ -103,8 +123,13 @@ public class RackConstants {
      * @author Saswata Paul
      */
     public enum TestStatus {
+<<<<<<< HEAD
         PASSED("http://arcos.rack/TESTING#Passed"),
         FAILED("http://arcos.rack/TESTING#Failed");
+=======
+        PASSED("http://arcos.rite/TESTING#Passed"),
+        FAILED("http://arcos.rite/TESTING#Failed");
+>>>>>>> 58d31630c3eca4cd02adf1b185a3c9fe3b893eb7
 
         // To set and get the strings of the enums
         private String rackUri;

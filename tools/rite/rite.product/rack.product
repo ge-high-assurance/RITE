@@ -21,26 +21,26 @@
       </vmArgsMac>
    </launcherArgs>
 
-   <windowImages i16="/rack.product/RITE-16.PNG" i32="/rack.product/RITE-32.PNG" i48="/rack.product/RITE-48.PNG" i64="/rack.product/RITE-64.PNG" i128="/rack.product/RITE-128.PNG" i256="/rack.product/RITE-256.PNG"/>
+   <windowImages i16="/rite.product/RITE-16.PNG" i32="/rite.product/RITE-32.PNG" i48="/rite.product/RITE-48.PNG" i64="/rite.product/RITE-64.PNG" i128="/rite.product/RITE-128.PNG" i256="/rite.product/RITE-256.PNG"/>
 
    <splash
-      location="rack.plugin"
+      location="rite.plugin"
       startupProgressRect="5,275,445,15"
       startupMessageRect="7,252,445,20"
       startupForegroundColor="000000" />
    <launcher name="RITE">
-      <linux icon="/rack.product/RITE-32.XPM"/>
-      <macosx icon="/rack.product/RITE.icns"/>
+      <linux icon="/rite.product/RITE-32.XPM"/>
+      <macosx icon="/rite.product/RITE.icns"/>
       <win useIco="true">
-         <ico path="/rack.product/RITE-128.ICO"/>
+         <ico path="/rite.product/RITE-128.ICO"/>
          <bmp
-            winSmallHigh="/rack.product/RITE-16.bmp"
-            winSmallLow="/rack.product/RITE8-16.bmp"
-            winMediumHigh="/rack.product/RITE-32.bmp"
-            winMediumLow="/rack.product/RITE8-32.bmp"
-            winLargeHigh="/rack.product/RITE-48.bmp"
-            winLargeLow="/rack.product/RITE8-48.bmp"
-            winExtraLargeHigh="/rack.product/RITE-256.bmp"/>
+            winSmallHigh="/rite.product/RITE-16.bmp"
+            winSmallLow="/rite.product/RITE8-16.bmp"
+            winMediumHigh="/rite.product/RITE-32.bmp"
+            winMediumLow="/rite.product/RITE8-32.bmp"
+            winLargeHigh="/rite.product/RITE-48.bmp"
+            winLargeLow="/rite.product/RITE8-48.bmp"
+            winExtraLargeHigh="/rite.product/RITE-256.bmp"/>
       </win>
    </launcher>
 
@@ -57,7 +57,7 @@
       <feature id="org.eclipse.equinox.p2.extras.feature"/>
       <feature id="org.eclipse.platform"/>
       <feature id="org.eclipse.rcp"/>
-      <feature id="rack.feature"/>
+      <feature id="rite.feature"/>
    </features>
 
    <configurations>

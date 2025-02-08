@@ -71,7 +71,11 @@ public class QueryTemplates {
                     + "							\"string\"\r\n"
                     + "						],\r\n"
                     + "						\"rangeURI\": \"http://www.w3.org/2001/XMLSchema#string\",\r\n"
+<<<<<<< HEAD
                     + "						\"UriRelationship\": \"http://arcos.rack/PROV-S#identifier\",\r\n"
+=======
+                    + "						\"UriRelationship\": \"http://arcos.rite/PROV-S#identifier\",\r\n"
+>>>>>>> 58d31630c3eca4cd02adf1b185a3c9fe3b893eb7
                     + "						\"Constraints\": \"\",\r\n"
                     + "						\"SparqlID\": \"?identifier_TARGET_CLASS_ID_PH\",\r\n"
                     + "						\"isReturned\": true,\r\n"
@@ -97,7 +101,11 @@ public class QueryTemplates {
                     + "							\"string\"\r\n"
                     + "						],\r\n"
                     + "						\"rangeURI\": \"http://www.w3.org/2001/XMLSchema#string\",\r\n"
+<<<<<<< HEAD
                     + "						\"UriRelationship\": \"http://arcos.rack/PROV-S#identifier\",\r\n"
+=======
+                    + "						\"UriRelationship\": \"http://arcos.rite/PROV-S#identifier\",\r\n"
+>>>>>>> 58d31630c3eca4cd02adf1b185a3c9fe3b893eb7
                     + "						\"Constraints\": \"\",\r\n"
                     + "						\"SparqlID\": \"?identifier_SOURCE_CLASS_ID_PH\",\r\n"
                     + "						\"isReturned\": true,\r\n"
@@ -206,7 +214,11 @@ public class QueryTemplates {
                     + "							\"string\"\r\n"
                     + "						],\r\n"
                     + "						\"rangeURI\": \"http://www.w3.org/2001/XMLSchema#string\",\r\n"
+<<<<<<< HEAD
                     + "													\"UriRelationship\": \"http://arcos.rack/PROV-S#description\",	\r\n"
+=======
+                    + "													\"UriRelationship\": \"http://arcos.rite/PROV-S#description\",	\r\n"
+>>>>>>> 58d31630c3eca4cd02adf1b185a3c9fe3b893eb7
                     + "						\"Constraints\": \"\",	\r\n"
                     + "						\"SparqlID\": \"?description_TARGET_CLASS_ID_PH\",	\r\n"
                     + "						\"isReturned\": true,	\r\n"
@@ -220,7 +232,11 @@ public class QueryTemplates {
                     + "							\"string\"	\r\n"
                     + "						],	\r\n"
                     + "						\"rangeURI\": \"http://www.w3.org/2001/XMLSchema#string\",\r\n"
+<<<<<<< HEAD
                     + "						\"UriRelationship\": \"http://arcos.rack/PROV-S#identifier\",\r\n"
+=======
+                    + "						\"UriRelationship\": \"http://arcos.rite/PROV-S#identifier\",\r\n"
+>>>>>>> 58d31630c3eca4cd02adf1b185a3c9fe3b893eb7
                     + "						\"Constraints\": \"\",\r\n"
                     + "						\"SparqlID\": \"?identifier_TARGET_CLASS_ID_PH\",\r\n"
                     + "						\"isReturned\": true,\r\n"
@@ -246,7 +262,11 @@ public class QueryTemplates {
                     + "							\"string\"\r\n"
                     + "						],\r\n"
                     + "						\"rangeURI\": \"http://www.w3.org/2001/XMLSchema#string\",\r\n"
+<<<<<<< HEAD
                     + "						\"UriRelationship\": \"http://arcos.rack/PROV-S#description\",	\r\n"
+=======
+                    + "						\"UriRelationship\": \"http://arcos.rite/PROV-S#description\",	\r\n"
+>>>>>>> 58d31630c3eca4cd02adf1b185a3c9fe3b893eb7
                     + "						\"Constraints\": \"\",	\r\n"
                     + "						\"SparqlID\": \"?description_SOURCE_CLASS_ID_PH\",	\r\n"
                     + "						\"isReturned\": true,	\r\n"
@@ -260,7 +280,11 @@ public class QueryTemplates {
                     + "							\"string\"	\r\n"
                     + "						],	\r\n"
                     + "						\"rangeURI\": \"http://www.w3.org/2001/XMLSchema#string\",\r\n"
+<<<<<<< HEAD
                     + "						\"UriRelationship\": \"http://arcos.rack/PROV-S#identifier\",\r\n"
+=======
+                    + "						\"UriRelationship\": \"http://arcos.rite/PROV-S#identifier\",\r\n"
+>>>>>>> 58d31630c3eca4cd02adf1b185a3c9fe3b893eb7
                     + "						\"Constraints\": \"\",\r\n"
                     + "						\"SparqlID\": \"?identifier_SOURCE_CLASS_ID_PH\",\r\n"
                     + "						\"isReturned\": true,\r\n"
