@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+    <feature url="rite.feature_0.5.0.qualifier.jar"
+        id="rite.feature" version="0.5.0.qualifier">
+        <category name="rite.category" />
+    </feature>
+    <category-def name="rite.category" label="rack Category">
+        <description>
+            rack Category
+        </description>
+    </category-def>
+</site>

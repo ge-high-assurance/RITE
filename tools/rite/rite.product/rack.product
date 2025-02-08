@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<product name="RACK Product" uid="RITE" id="org.eclipse.platform.ide" application="org.eclipse.ui.ide.workbench" version="0.6.0.qualifier" useFeatures="true" includeLaunchers="true" autoIncludeRequirements="true">
+
+   <aboutInfo>
+      <text>
+         RITE v0.5.0
+      </text>
+   </aboutInfo>
+
+   <configIni use="default">
+   </configIni>
+
+   <launcherArgs>
+      <programArgs>--launcher.defaultAction openFile --launcher.appendVmargs --launcher.suppressErrors
+      </programArgs>
+      <vmArgs>-Dosgi.requiredJavaVersion=17 -Dosgi.dataAreaRequiresExplicitInit=true -Dosgi.framework.extensions=org.eclipse.fx.osgi -Dorg.eclipse.swt.graphics.Resource.reportNonDisposed=true -Xms256m -Xmx2048m --add-modules=ALL-SYSTEM
+      </vmArgs>
+      <vmArgsMac>-Xdock:icon=../Resources/Eclipse.icns -XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
+      </vmArgsMac>
+   </launcherArgs>
+
+   <windowImages i16="/rite.product/RITE-16.PNG" i32="/rite.product/RITE-32.PNG" i48="/rite.product/RITE-48.PNG" i64="/rite.product/RITE-64.PNG" i128="/rite.product/RITE-128.PNG" i256="/rite.product/RITE-256.PNG"/>
+
+   <splash
+      location="rite.plugin"
+      startupProgressRect="5,275,445,15"
+      startupMessageRect="7,252,445,20"
+      startupForegroundColor="000000" />
+   <launcher name="RITE">
+      <linux icon="/rite.product/RITE-32.XPM"/>
+      <macosx icon="/rite.product/RITE.icns"/>
+      <win useIco="true">
+         <ico path="/rite.product/RITE-128.ICO"/>
+         <bmp
+            winSmallHigh="/rite.product/RITE-16.bmp"
+            winSmallLow="/rite.product/RITE8-16.bmp"
+            winMediumHigh="/rite.product/RITE-32.bmp"
+            winMediumLow="/rite.product/RITE8-32.bmp"
+            winLargeHigh="/rite.product/RITE-48.bmp"
+            winLargeLow="/rite.product/RITE8-48.bmp"
+            winExtraLargeHigh="/rite.product/RITE-256.bmp"/>
+      </win>
+   </launcher>
+
+
+   <vm>
+   </vm>
+
+   <plugins>
+   </plugins>
+
+   <features>
+      <feature id="org.eclipse.e4.rcp"/>
+      <feature id="org.eclipse.ecf.core.feature"/>
+      <feature id="org.eclipse.equinox.p2.extras.feature"/>
+      <feature id="org.eclipse.platform"/>
+      <feature id="org.eclipse.rcp"/>
+      <feature id="rite.feature"/>
+   </features>
+
+   <configurations>
+      <plugin id="org.apache.felix.scr" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="4" />
+      <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.event" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
+      <property name="preferenceCustomization" value="plugin_customization.ini" />
+      <property name="osgi.instance.area.default" value="@user.home/workspace-RITE" />
+      <property name="osgi.bundles.defaultStartLevel" value="4" />
+      <property name="osgi.requiredJavaVersion" value="17" />
+      <property name="org.eclipse.update.reconcile" value="false" />
+   </configurations>
+
+   <preferencesInfo>
+      <targetfile overwrite="false"/>
+   </preferencesInfo>
+
+   <cssInfo>
+   </cssInfo>
+
+</product>

@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+    <!-- Command IDs -->
+    <extension point="org.eclipse.ui.commands">
+
+        <category description="RACK Commands" id="rite.commands"
+            name="RACK Commands">
+        </category>
+
+        <command categoryId="rite.commands"
+            id="rite.commands.clearAll" name="Clear RACK">
+        </command>
+
+        <command categoryId="rite.commands"
+            id="rite.commands.uploadOwlModels" name="Upload Ontology">
+        </command>
+
+        <command categoryId="rite.commands"
+            id="rite.commands.uploadNodegroups" name="Upload Nodegroup(s)">
+        </command>
+
+        <command categoryId="rite.commands"
+            id="rite.commands.uploadIngestionPackage"
+            name="Upload as Ingestion Package">
+        </command>
+
+        <command categoryId="rite.commands"
+            id="rite.commands.zipIngestionPackage"
+            name="Save Ingestion Package as ZIP">
+        </command>
+
+        <command categoryId="rite.commands"
+            id="rite.commands.ingestInstanceData" name="Manifest Import">
+        </command>
+        <!-- <command categoryId="rite.commands" id="rite.commands.gsnCommand"
+            name="Load Assurance Case"> </command> -->
+        <command categoryId="rite.commands"
+            id="rite.commands.settingCommand" name="RACK Settings">
+        </command>
+        <command categoryId="rite.commands"
+            id="rite.commands.buildIngestionNodegroups"
+            name="Build All Ingestion Nodegroups">
+        </command>
+        <command id="rite.commands.setProjectTypeCommand"
+            name="Set Project Type">
+            <commandParameter id="rite.projectType"
+                name="Project Type Parameter" optional="false">
+            </commandParameter>
+        </command>
+        <command id="rite.commands.setProjectAsDataPackageCommand"
+            name="Set Project as Instance Data">
+            <commandParameter id="rite.projectType"
+                name="Project Type Parameter" optional="false">
+            </commandParameter>
+        </command>
+
+        <command categoryId="rite.commands"
+            id="rite.commands.runWorkflow" name="Run Workflow">
+        </command>
+
+
+        <!-- For reports -->
+        <command categoryId="rite.commands"
+            id="rite.commands.reportsCommand" name="Generate DO178C Reports">
+        </command>
+
+        <command categoryId="rite.commands"
+            id="rite.commands.arp4754Command" name="Generate ARP-4754A Report">
+        </command>
+
+        <!-- For auto Gsn -->
+        <command categoryId="rite.commands"
+            id="rite.commands.autoGsnCommand" name="Automatic GSN Inference">
+        </command>
+
+        <!-- For semtk browser -->
+        <command categoryId="rite.commands"
+            id="rite.commands.ribCommand" name="Access RiB">
+        </command>
+
+        <command id="rite.commands.showNumTriplesCommand"
+            name="Show Data Graphs and number of triples currently on RACK">
+        </command>
+
+        <command id="rite.commands.refreshCommand"
+            name="Refresh Ontologies and Nodegroups">
+        </command>
+
+    </extension>
+
+    <!-- UI Handlers -->
+    <extension point="org.eclipse.ui.handlers">
+
+        <handler class="com.ge.research.rite.ClearAllHandler"
+            commandId="rite.commands.clearAll">
+        </handler>
+
+        <handler class="com.ge.research.rite.UploadOwlModelsHandler"
+            commandId="rite.commands.uploadOwlModels">
+            <enabledWhen>
+                <with variable="selection">
+                    <count value="1" />
+                    <iterate>
+                        <adapt type="org.eclipse.core.resources.IProject" />
+                    </iterate>
+                </with>
+            </enabledWhen>
+        </handler>
+
+        <handler class="com.ge.research.rite.UploadNodegroupsHandler"
+            commandId="rite.commands.uploadNodegroups">
+            <enabledWhen>
+                <with variable="selection">
+                    <count value="+" />
+                    <iterate ifEmpty="false" operator="and">
+                        <or>
+                            <instanceof
+                                value="org.eclipse.core.resources.IProject" />
+                            <adapt type="org.eclipse.core.resources.IFile">
+                                <test property="org.eclipse.core.resources.name"
+                                    value="*.json" />
+                            </adapt>
+                            <instanceof value="org.eclipse.core.resources.IFolder" />
+                        </or>
+                    </iterate>
+                </with>
+            </enabledWhen>
+        </handler>
+
+        <handler
+            class="com.ge.research.rite.UploadIngestionPackageHandler"
+            commandId="rite.commands.uploadIngestionPackage">
+            <enabledWhen>
+                <with variable="selection">
+                    <count value="+" />
+                    <iterate ifEmpty="false" operator="and">
+                        <or>
+                            <instanceof
+                                value="org.eclipse.core.resources.IProject" />
+                            <adapt type="org.eclipse.core.resources.IFile">
+                                <test property="org.eclipse.core.resources.name"
+                                    value="*.zip" />
+                            </adapt>
+                            <instanceof value="org.eclipse.core.resources.IFolder" />
+                        </or>
+                    </iterate>
+                </with>
+            </enabledWhen>
+        </handler>
+
+        <handler
+            class="com.ge.research.rite.ZipIngestionPackageHandler"
+            commandId="rite.commands.zipIngestionPackage">
+        </handler>
+
+        <handler
+            class="com.ge.research.rite.IngestInstanceDataHandler"
+            commandId="rite.commands.ingestInstanceData">
+            <enabledWhen>
+                <test args="null" forcePluginActivation="true"
+                    property="com.ge.research.rite.isManifestSelected" value="true">
+                </test>
+            </enabledWhen>
+
+        </handler>
+        <!-- <handler class="com.ge.research.rite.LoadAssuranceCaseHandler" commandId="rite.commands.gsnCommand">
+            <enabledWhen> <reference definitionId="com.ge.research.rite.eObjectSelected">
+            </reference> </enabledWhen> </handler> -->
+        <handler class="com.ge.research.rite.RackSettingHandler"
+            commandId="rite.commands.settingCommand">
+        </handler>
+        <handler
+            class="com.ge.research.rite.BuildIngestionNodegroupsHandler"
+            commandId="rite.commands.buildIngestionNodegroups">
+        </handler>
+        <handler class="com.ge.research.rite.RegenerateManifest"
+            commandId="rite.commands.regenerateManifest">
+        </handler>
+        <handler class="com.ge.research.rite.SetProjectTypeHandler"
+            commandId="rite.commands.setProjectTypeCommand">
+        </handler>
+        <handler class="com.ge.research.rite.SetProjectTypeHandler"
+            commandId="rite.commands.setProjectAsDataPackageCommand">
+        </handler>
+        <!-- For reports -->
+        <handler class="com.ge.research.rite.ReportButtonHandler"
+            commandId="rite.commands.reportsCommand">
+        </handler>
+        <handler class="com.ge.research.rite.Arp4754ButtonHandler"
+            commandId="rite.commands.arp4754Command">
+        </handler>
+        <!-- For auto Gsn -->
+        <handler class="com.ge.research.rite.AutoGsnButtonHandler"
+            commandId="rite.commands.autoGsnCommand">
+        </handler>
+        <!-- For semtk browser -->
+        <handler class="com.ge.research.rite.RibButtonHandler"
+            commandId="rite.commands.ribCommand">
+        </handler>
+        <handler class="com.ge.research.rite.RefreshHandler"
+            commandId="rite.commands.refreshCommand">
+        </handler>
+        <handler class="com.ge.research.rite.ShowNumTriplesHandler"
+            commandId="rite.commands.showNumTriplesCommand">
+        </handler>
+        <handler class="com.ge.research.rite.RunWorkflowHandler"
+            commandId="rite.commands.runWorkflow">
+        </handler>
+
+    </extension>
+    <extension point="org.eclipse.ui.bindings"></extension>
+
+
+    <!-- UI Menus (Navbar > RACK Dropdown) -->
+    <extension point="org.eclipse.ui.menus">
+        <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+
+            <menu id="rite.menus.sampleMenu" label="RACK" mnemonic="M">
+                <!-- <command commandId="rite.commands.uploadOwlModels" id="rite.menus.uploadOwlModels"
+                    label="Upload Ontology" mnemonic="S"> </command> -->
+                <command commandId="rite.commands.buildIngestionNodegroups"
+                    id="rite.menus.buildIngestionNodegroups"
+                    label="Generate All Ingestion Nodegroups" mnemonic="S">
+                </command>
+                <command commandId="rite.commands.regenerateManifest"
+                    id="rite.menus.regenerateManifest" label="Regenerate manifest file"
+                    mnemonic="R">
+                </command>
+                <command commandId="rite.commands.ingestInstanceData"
+                    id="rite.menus.ingestInstanceData" label="Manifest Import"
+                    mnemonic="S">
+                </command>
+                <command commandId="rite.commands.clearAll"
+                    id="rite.menus.clearAll" label="Clear RACK" mnemonic="S">
+                </command>
+                <command commandId="rite.commands.runWorkflow"
+                    id="rite.menus.runWorkflow" label="Run Workflow">
+                </command>
+
+                <separator name="separator2" visible="true">
+                </separator>
+
+                <!-- <command commandId="rite.commands.gsnCommand" id="rite.menus.loadGsn"
+                    label="Show GSN Assurance Case" mnemonic="S"> </command> -->
+
+                <!-- <command commandId="rite.commands.loadQueriesCommand" id="rite.menus.loadQueries"
+                    label="Load Query Nodegroups from Disk" mnemonic="S"> </command> -->
+                <command commandId="rite.commands.reportsCommand"
+                    id="rite.menus.reports" label="DO-178C Compliance Report"
+                    mnemonic="S" style="push">
+                </command>
+
+                <command commandId="rite.commands.arp4754Command"
+                    id="rite.menus.arp4754" label="ARP-4754A Compliance Report"
+                    mnemonic="S" style="push">
+                </command>
+
+                <!-- For auto Gsn -->
+                <command commandId="rite.commands.autoGsnCommand"
+                    id="rite.menus.autoGsn" label="Automatic GSN Inference"
+                    mnemonic="S" style="push">
+                </command>
+
+                <!--<!-For semtk browser-> <command commandId="rite.commands.ribCommand"
+                    id="rite.menus.rib" label="Access RiB" mnemonic="S" style="push"> </command> -->
+
+                <command commandId="rite.commands.settingCommand"
+                    id="rite.menus.setting" label="RACK Settings" mnemonic="S">
+                </command>
+            </menu>
+        </menuContribution>
+
+        <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+        </menuContribution>
+
+        <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+            <toolbar id="rite.plugin.toolbars.refreshInfo">
+                <command commandId="rite.commands.refreshCommand"
+                    icon="icons/refresh.png" id="rite.plugin.toolbars.refreshCommand"
+                    tooltip="Refresh Ontology and Nodegroups views with latest information on RACK">
+                </command>
+            </toolbar>
+        </menuContribution>
+
+        <!-- <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+            <toolbar id="rite.plugin.toolbars.showNumTriples"> <command commandId="rite.commands.showNumTriplesCommand"
+            icon="icons/ontclass.png" id="rite.plugin.toolbars.showNumTriplesCommand"
+            tooltip="Show Data graphs with number of triples currently on RACK"> </command>
+            </toolbar> </menuContribution> -->
+
+    </extension>
+
+    <!-- UI Views (Navbar > Window > Show View > Other) -->
+    <extension point="org.eclipse.ui.views">
+        <category id="rite" name="RACK views">
+        </category>
+        <view category="rite"
+            class="com.ge.research.rite.views.OntologyTreeView"
+            id="rite.views.TreeView" inject="true" name="Ontology Info">
+        </view>
+        <view category="rite"
+            class="com.ge.research.rite.views.InstanceDataEditor"
+            id="rite.views.SampleTableView" inject="true"
+            name="Create Instance Data">
+        </view>
+        <view category="rite"
+            class="com.ge.research.rite.views.NodegroupTemplateView"
+            id="rite.views.CSVTemplates" inject="true" name="View CDR Templates">
+        </view>
+        <view category="rite"
+            class="com.ge.research.rite.views.SessionView"
+            id="rite.views.SessionView" inject="true" name="Interactive Session">
+        </view>
+        <view category="rite"
+            class="com.ge.research.rite.views.AssuranceCaseTree"
+            id="rite.views.AssuranceCaseTree" inject="true"
+            name="Assurance Case GSN">
+        </view>
+        <view category="rite"
+            class="com.ge.research.rite.views.NodegroupColumnView"
+            id="rite.views.ManageCSVColumns" inject="true"
+            name="Add/Remove Columns for Nodegroup">
+        </view>
+        <view category="rite"
+            class="com.ge.research.rite.views.QueryResultsView"
+            id="rite.views.QueryResults" inject="true" name="Query Results">
+        </view>
+        <view category="rite"
+            class="com.ge.research.rite.views.NodegroupsView"
+            id="rite.views.NodegroupsView" inject="true" name="Nodegroup Store">
+        </view>
+    </extension>
+
+    <extension point="org.eclipse.help.contexts">
+        <contexts file="contexts.xml">
+        </contexts>
+        <contexts file="contexts.xml">
+        </contexts>
+        <contexts file="contexts.xml">
+        </contexts>
+        <contexts file="contexts.xml">
+        </contexts>
+        <contexts file="contexts.xml">
+        </contexts>
+        <contexts file="contexts.xml">
+        </contexts>
+        <contexts file="contexts.xml">
+        </contexts>
+        <contexts file="contexts.xml">
+        </contexts>
+        <contexts file="contexts.xml">
+        </contexts>
+    </extension>
+
+    <!-- <extension point="org.eclipse.ui.menus"> <menuContribution label="GSN"
+        locationURI="popup:org.eclipse.ui.popup.any"> <command commandId="rite.commands.gsnCommand"
+        name="Load Assurance Case"> <visibleWhen> <with variable="selection"> <count
+        value="1" /> <iterate> <adapt type="org.eclipse.core.resources.IFile" />
+        </iterate> </with> </visibleWhen> </command> </menuContribution> </extension> -->
+
+    <extension point="org.eclipse.ui.menus">
+        <menuContribution
+            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=export">
+            <command commandId="rite.commands.ingestInstanceData"
+                name="Manifest Import">
+                <enabledWhen>
+                    <test args="null" forcePluginActivation="true"
+                        property="com.ge.research.rite.isManifestSelected" value="true">
+                    </test>
+                </enabledWhen>
+                <visibleWhen>
+                    <with variable="selection">
+                        <count value="1" />
+                        <iterate>
+                            <adapt type="org.eclipse.core.resources.IFile" />
+                        </iterate>
+                    </with>
+                </visibleWhen>
+            </command>
+        </menuContribution>
+    </extension>
+
+
+    <extension point="org.eclipse.ui.menus">
+        <menuContribution label="projectDataPackage"
+            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=export">
+            <separator name="separator-id" visible="true">
+            </separator>
+            <command
+                commandId="rite.commands.setProjectAsDataPackageCommand"
+                label="Set as RACK Project" name="Set as Instance Data Project">
+                <visibleWhen>
+                    <with variable="selection">
+                        <count value="1" />
+                        <iterate>
+                            <adapt type="org.eclipse.core.resources.IProject" />
+                        </iterate>
+                    </with>
+                </visibleWhen>
+                <parameter name="rite.projectType"
+                    value="rite.DataPackage">
+                </parameter>
+            </command>
+        </menuContribution>
+    </extension>
+    <!-- <extension point="org.eclipse.ui.menus"> <menuContribution label="uploadOwlModels"
+        locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=rite.commands.setProjectAsDataPackageCommand">
+        <command commandId="rite.commands.uploadOwlModels" label="Upload Ontology"
+        name="Upload Ontology"> <visibleWhen> <with variable="selection"> <count
+        value="1" /> <iterate> <adapt type="org.eclipse.core.resources.IProject"
+        /> </iterate> </with> </visibleWhen> </command> </menuContribution> </extension> -->
+
+    <extension point="org.eclipse.ui.menus">
+        <menuContribution label="uploadNodegroups"
+            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=rite.commands.setProjectAsDataPackageCommand">
+            <separator name="separator-id" visible="true"></separator>
+            <command commandId="rite.commands.uploadNodegroups"
+                label="Upload Nodegroup(s)" name="Upload Nodegroups">
+                <visibleWhen>
+                    <with variable="selection">
+                        <count value="+" />
+                        <iterate ifEmpty="false" operator="and">
+                            <or>
+                                <instanceof
+                                    value="org.eclipse.core.resources.IProject" />
+                                <instanceof value="org.eclipse.core.resources.IFile" />
+                                <instanceof
+                                    value="org.eclipse.core.resources.IFolder" />
+                            </or>
+                        </iterate>
+                    </with>
+                </visibleWhen>
+            </command>
+        </menuContribution>
+    </extension>
+
+    <extension point="org.eclipse.ui.menus">
+        <menuContribution label="uploadIngestionPackage"
+            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=rite.commands.uploadNodegroups">
+            <command commandId="rite.commands.uploadIngestionPackage"
+                label="Upload as Ingestion Package" name="Upload Ingestion Package">
+                <visibleWhen>
+                    <with variable="selection">
+                        <count value="+" />
+                        <iterate ifEmpty="false" operator="and">
+                            <or>
+                                <instanceof
+                                    value="org.eclipse.core.resources.IProject" />
+                                <instanceof value="org.eclipse.core.resources.IFile" />
+                                <instanceof
+                                    value="org.eclipse.core.resources.IFolder" />
+                            </or>
+                        </iterate>
+                    </with>
+                </visibleWhen>
+            </command>
+        </menuContribution>
+        <menuContribution label="zipIngestionPackage"
+            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=rite.commands.uploadNodegroups">
+            <command commandId="rite.commands.zipIngestionPackage"
+                label="Save Ingestion Package as Zip" name="Zip Ingestion Package">
+                <visibleWhen>
+                    <with variable="selection">
+                        <count value="+" />
+                        <iterate ifEmpty="false" operator="and">
+                            <or>
+                                <instanceof
+                                    value="org.eclipse.core.resources.IProject" />
+                                <instanceof value="org.eclipse.core.resources.IFile" />
+                                <instanceof
+                                    value="org.eclipse.core.resources.IFolder" />
+                            </or>
+                        </iterate>
+                    </with>
+                </visibleWhen>
+            </command>
+        </menuContribution>
+    </extension>
+
+    <extension point="org.eclipse.core.expressions.definitions">
+        <definition id="com.ge.research.rite.eObjectSelected">
+            <with variable="selection">
+                <and>
+                    <count value="1">
+                    </count>
+                    <iterate ifEmpty="false" operator="and">
+                        <or>
+                            <instanceof
+                                value="org.eclipse.core.resources.IProject">
+                            </instanceof>
+                            <instanceof value="org.eclipse.core.resources.IFile">
+                            </instanceof>
+                            <instanceof value="org.eclipse.core.resources.IFolder">
+                            </instanceof>
+                        </or>
+                    </iterate>
+                </and>
+            </with>
+        </definition>
+    </extension>
+
+    <extension point="org.eclipse.ui.preferencePages">
+        <page id="com.ge.research.rite.pref"
+            class="com.ge.research.rite.views.RackPreferencePage" name="RACK"
+            category="com.ge.research.rite.settings" />
+    </extension>
+
+    <extension
+        point="org.eclipse.core.expressions.propertyTesters">
+        <propertyTester
+            class="com.ge.research.rite.ManifestSelectedPropertyTester"
+            id="com.ge.research.rite.manifestSelected"
+            namespace="com.ge.research.rite" properties="isManifestSelected"
+            type="java.lang.Object">
+        </propertyTester>
+    </extension>
+    <extension id="com.ge.research.rite.product" name="RITE"
+        point="org.eclipse.core.runtime.products">
+        <product name="RITE"
+            application="org.eclipse.ui.ide.workbench">
+        </product>
+        <property name="appName" value="RITE" />
+        <property name="windowImages"
+            value="./RITE-16.bmp,./RITE-32.bmp,./RITE-128.bmp,./RITE-256.bmp" />
+
+    </extension>
+
+</plugin>
