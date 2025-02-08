@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+    <feature url="features/rite.feature_1.0.0.qualifier.jar"
+        id="rite.feature" version="1.0.0.qualifier" />
+</site>

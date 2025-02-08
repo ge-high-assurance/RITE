@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: rite.test
+Bundle-Vendor: rite
+Bundle-SymbolicName: rite.test
+Bundle-Version: 1.0.0.qualifier
+Fragment-Host: rite.plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-17
+Require-Bundle: org.junit
+Automatic-Module-Name: rite.test

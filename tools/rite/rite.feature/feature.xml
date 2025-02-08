@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature id="rite.feature" label="RITE Feature"
+    version="1.0.0.qualifier" provider-name="GE Aerospace Research">
+
+    <description
+        url="https://github.com/ge-high-assurance/RITE/blob/main/README.md">
+        RITE is an Eclipse-based IDE that seamlessly
+        connects with RACK (Rapid Assurance Curation Kit) database which uses a
+        structured semantic data
+        model tuned to the domain of the DARPA ARCOS (Automated Rapid
+        Certification Of Software) program.
+    </description>
+
+    <copyright
+        url="https://github.com/ge-high-assurance/RITE/blob/main/LICENSE">
+        Copyright (c) 2024, GE Aerospace and Galois, Inc.
+    </copyright>
+
+    <license
+        url="https://github.com/ge-high-assurance/RITE/blob/main/LICENSE">
+        BSD 3-Clause License
+
+        Copyright (c) 2024, GE Aerospace and Galois, Inc.
+        All rights reserved.
+
+        Redistribution and use in source and binary forms, with or without
+        modification, are permitted provided that the following conditions are met:
+
+        1. Redistributions of source code must retain the above copyright
+        notice, this
+        list of conditions and the following disclaimer.
+
+        2. Redistributions in binary form must reproduce the above copyright
+        notice,
+        this list of conditions and the following disclaimer in the documentation
+        and/or other materials provided with the distribution.
+
+        3. Neither the name of the copyright holder nor the names of its
+        contributors may be used to endorse or promote products derived from
+        this software without specific prior written permission.
+
+        THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+        &quot;AS IS&quot;
+        AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+        IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+        PURPOSE ARE
+        DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+        FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+        CONSEQUENTIAL
+        DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+        SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+        HOWEVER
+        CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+        LIABILITY,
+        OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
+        THE USE
+        OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    </license>
+
+    <requires>
+        <import plugin="org.slf4j.api" />
+    </requires>
+
+    <plugin id="rite.plugin" download-size="0" install-size="0"
+        version="0.0.0" unpack="false" />
+
+    <plugin id="org.slf4j.binding.simple" download-size="0"
+        install-size="0" version="0.0.0" fragment="true" unpack="false" />
+
+</feature>
