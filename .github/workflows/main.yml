@@ -38,4 +38,4 @@ jobs:
         java-version: ${{ matrix.java-version }}
 
     - name: Build RITE source
-      run: mvn -B package -f tools/rack/pom.xml -Dtycho.localArtifacts=ignore
+      run: mvn -B package -f tools/rite/pom.xml -Dtycho.localArtifacts=ignore
