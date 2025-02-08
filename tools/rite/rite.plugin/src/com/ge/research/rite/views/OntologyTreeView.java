@@ -205,11 +205,7 @@ public class OntologyTreeView extends ViewPart implements INodegroupView {
                         this.getClass().getResourceAsStream("/icons/ontclass.png");
                 InputStream ontFieldStream =
                         this.getClass().getResourceAsStream("/icons/ontfield.png");
-<<<<<<< HEAD
                 
-=======
-
->>>>>>> 58d31630c3eca4cd02adf1b185a3c9fe3b893eb7
                 ontClassImg = new Image(display, ontClassStream);
                 ontFieldImg = new Image(display, ontFieldStream);
             } catch (Exception e) {
