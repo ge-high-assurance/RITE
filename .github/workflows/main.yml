@@ -4,7 +4,7 @@ name: RITE Main Workflow
 
 on:
   push:
-    branches: [ main, march-release-v3 ]
+    branches: [ main ]
     tags-ignore: [ '*' ]
   workflow_dispatch:
 
@@ -38,4 +38,4 @@ jobs:
         java-version: ${{ matrix.java-version }}
 
     - name: Build RITE source
-      run: mvn -B package -f tools/rite/pom.xml -Dtycho.localArtifacts=ignore
+      run: mvn clean install -f tools/rite/pom.xml -Dtycho.localArtifacts=ignore
