@@ -61,12 +61,13 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.HashSet;
 
-public class LoadAssuranceCaseHandler extends AbstractHandler {
+public class LoadAssuranceCaseHandler extends RiteHandler {
 
     public static HashMap<String, TreeNode> index = new HashMap<>();
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
+    	super.execute(event);
         index.clear();
         IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
         ISelection selection = HandlerUtil.getCurrentSelection(event);

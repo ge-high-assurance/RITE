@@ -35,10 +35,11 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 
-public class AutoGsnButtonHandler extends AbstractHandler {
+public class AutoGsnButtonHandler extends RiteHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
+    	super.execute(event);
         // Launch the AutoGsnMainView
         JavaFXAppLaunchManager.autoGsnMainViewLaunch();
 

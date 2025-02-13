@@ -38,10 +38,11 @@ import org.eclipse.core.commands.ExecutionException;
 /**
  * @author Saswata Paul
  */
-public class LoadQueriesButtonHandler extends AbstractHandler {
+public class LoadQueriesButtonHandler extends RiteHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
+    	super.execute(event);
         // Launch the view to select query json files
         JavaFXAppLaunchManager.queryNodegroupSelectViewLaunch();
 

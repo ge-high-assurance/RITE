@@ -40,11 +40,11 @@ import org.eclipse.core.commands.ExecutionException;
 /**
  * @author Saswata Paul
  */
-public class Arp4754ButtonHandler extends AbstractHandler {
+public class Arp4754ButtonHandler extends RiteHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-
+    	super.execute(event);
         System.out.println("Arp4754ButtonHandler");
         // Launch the AutoGsnMainView
         JavaFXAppLaunchManager.arp4754ReportMainViewLaunch();

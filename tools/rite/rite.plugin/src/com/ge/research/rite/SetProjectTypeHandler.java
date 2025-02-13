@@ -43,10 +43,11 @@ import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-public class SetProjectTypeHandler extends AbstractHandler {
+public class SetProjectTypeHandler extends RiteHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
+    	super.execute(event);
         ISelection selection = HandlerUtil.getCurrentSelection(event);
         TreePath[] paths = ((TreeSelection) selection).getPaths();
         Project project = (Project) paths[0].getLastSegment();

@@ -54,7 +54,7 @@ import org.eclipse.swt.widgets.TableItem;
 
 import java.util.ArrayList;
 
-public class ShowNumTriplesHandler extends AbstractHandler {
+public class ShowNumTriplesHandler extends RiteHandler {
 
     class NumTriplesWindow extends ApplicationWindow {
         public NumTriplesWindow() {
@@ -131,7 +131,7 @@ public class ShowNumTriplesHandler extends AbstractHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-        // TODO Auto-generated method stub
+    	super.execute(event);
         // hide and show ontology view, also refresh nodegroups views
         if (numTriplesWindow == null) {
             numTriplesWindow = new NumTriplesWindow();

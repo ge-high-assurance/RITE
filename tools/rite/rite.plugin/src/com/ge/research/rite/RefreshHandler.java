@@ -43,13 +43,15 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-public class RefreshHandler extends AbstractHandler {
+public class RefreshHandler extends RiteHandler {
 
     private static final String ONTOLOGY_ERROR = "Unable to refresh Ontology View";
     private static final String CSV_TEMPLATE_ERROR = "Unable to get CSV templates";
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
+    	
+    	super.execute(event);
 
         // hide and show ontology view, also refresh nodegroups views
         final IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);

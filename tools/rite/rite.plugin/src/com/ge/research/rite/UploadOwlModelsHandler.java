@@ -49,7 +49,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class UploadOwlModelsHandler extends AbstractHandler {
+public class UploadOwlModelsHandler extends RiteHandler {
 
     public static ArrayList<String> getOwlFiles(String basedir) {
         File dir = new File(basedir);
@@ -118,6 +118,7 @@ public class UploadOwlModelsHandler extends AbstractHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
+    	super.execute(event);
         IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
 
         /*String commandId = event.getCommand().getId();

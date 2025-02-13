@@ -47,7 +47,7 @@ import org.eclipse.swt.widgets.Display;
 
 import java.util.ArrayList;
 
-public class ClearAllHandler extends AbstractHandler {
+public class ClearAllHandler extends RiteHandler {
 
     public static void clearRackModel() {
 
@@ -104,7 +104,8 @@ public class ClearAllHandler extends AbstractHandler {
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
 
-        ClearRackDialog dialog = new ClearRackDialog(Display.getDefault().getActiveShell());
+        super.execute(event);
+    	ClearRackDialog dialog = new ClearRackDialog(Display.getDefault().getActiveShell());
         dialog.run();
 
         return null;

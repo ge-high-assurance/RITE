@@ -34,6 +34,7 @@ package com.ge.research.rite;
 import com.ge.research.rite.utils.ConnectionUtil;
 import com.ge.research.rite.utils.ErrorMessageUtil;
 import com.ge.research.rite.utils.ProjectUtils;
+import com.ge.research.rite.utils.RackConsole;
 import com.ge.research.rite.views.RackPreferencePage;
 import com.ge.research.rite.views.ViewUtils;
 import com.ge.research.semtk.api.nodeGroupExecution.client.NodeGroupExecutionClient;
@@ -69,7 +70,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class IngestInstanceDataHandler extends AbstractHandler {
+public class IngestInstanceDataHandler extends RiteHandler {
     private static volatile boolean isRunning = false;
     private static String MANIFEST_SUCCESS = "Manifest Ingestion Completed Successfully";
     private static String MANIFEST_CANCELED = "Manifest Ingestion Stopped";
@@ -677,7 +678,6 @@ public class IngestInstanceDataHandler extends AbstractHandler {
         if (monitor.isCanceled()) {
             return Status.CANCEL_STATUS;
         }
-
         dedupSteps.clear();
         dGraphs.clear();
         mGraphs.clear();
@@ -830,7 +830,7 @@ public class IngestInstanceDataHandler extends AbstractHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-
+    	super.execute(event);
         ISelection selection = HandlerUtil.getCurrentSelection(event);
         TreePath[] paths = ((TreeSelection) selection).getPaths();
         if (paths.length == 1) {

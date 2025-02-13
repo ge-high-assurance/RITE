@@ -393,7 +393,7 @@
             </separator>
             <command
                 commandId="rite.commands.setProjectAsDataPackageCommand"
-                label="Set as Rite Project" name="Set as Instance Data Project">
+                label="Set as RACK Project" name="Set as Instance Data Project">
                 <visibleWhen>
                     <with variable="selection">
                         <count value="1" />

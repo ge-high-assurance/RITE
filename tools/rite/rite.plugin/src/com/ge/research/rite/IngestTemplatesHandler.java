@@ -57,7 +57,7 @@ import java.io.File;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
-public class IngestTemplatesHandler extends AbstractHandler {
+public class IngestTemplatesHandler extends RiteHandler {
 
     public static IStatus ingestTemplate(ExecutionEvent event, IProgressMonitor monitor)
             throws Exception {
@@ -189,7 +189,7 @@ public class IngestTemplatesHandler extends AbstractHandler {
     public Object execute(ExecutionEvent event) throws ExecutionException {
 
         try {
-
+        	super.execute(event);
             String consoleViewId = IConsoleConstants.ID_CONSOLE_VIEW;
             IConsoleView consoleView =
                     (IConsoleView)

@@ -33,6 +33,7 @@ package com.ge.research.rite;
 
 import com.ge.research.rite.utils.RackConsole;
 import com.ge.research.rite.views.RackPreferencePage;
+import com.ge.research.rite.views.ViewUtils;
 
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
@@ -58,7 +59,7 @@ public class Activator extends AbstractUIPlugin {
         new RackPreferencePage().init(workbench);
         // TODO: use appropriate nondispose listener to queue SWT dispose errors
         org.eclipse.swt.graphics.Resource.setNonDisposeHandler(null);
-        RackConsole.getConsole();
+        ViewUtils.pinConsole(RackConsole.getConsole());
     }
 
     public void stop(BundleContext context) throws Exception {

@@ -40,14 +40,13 @@ import org.eclipse.core.commands.ExecutionException;
 /**
  * @author Paul Meng
  */
-public class RackSettingHandler extends AbstractHandler {
+public class RackSettingHandler extends RiteHandler {
 
     private static RackSettingPanel rackSettingWindow;
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-        // If the threats model panel is not created yet, we create a new one;
-        // otherwise, we bring the old panel to the front.
+    	super.execute(event);
         if (rackSettingWindow == null) {
             rackSettingWindow = new RackSettingPanel();
             rackSettingWindow.run();

@@ -61,7 +61,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class UploadNodegroupsHandler extends AbstractHandler {
+public class UploadNodegroupsHandler extends RiteHandler {
 
     // FIXME: Reference NodegroupsView ID from class when added
     public static final String NODEGROUPS_ID = "rite.views.NodegroupsView";
@@ -142,7 +142,8 @@ public class UploadNodegroupsHandler extends AbstractHandler {
      */
     @Override
     public Object execute(final ExecutionEvent event) throws ExecutionException {
-
+    	
+    	super.execute(event);
         if (!startRun()) {
             return null;
         }

@@ -73,7 +73,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 import java.util.zip.ZipOutputStream;
 
-public class UploadIngestionPackageHandler extends AbstractHandler {
+public class UploadIngestionPackageHandler extends RiteHandler {
 
     private static final boolean CLEAR_FOOTPRINT_GRAPHS_ON_LOAD = true;
 
@@ -123,6 +123,7 @@ public class UploadIngestionPackageHandler extends AbstractHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
+    	super.execute(event);
         return execute(event, true, false);
     }
 

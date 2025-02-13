@@ -394,6 +394,7 @@ public class RackPreferencePage extends FieldEditorPreferencePage
             }
 
             project.open(null);
+            RackConsole.getConsole().newline();
             RackConsole.getConsole().println("RACK project set to: " + absolutePath);
         } catch (Exception e) {
             RackConsole.getConsole().error("Unable to import RACK project into RITE");

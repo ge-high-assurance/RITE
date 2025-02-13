@@ -61,7 +61,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class RegenerateManifest extends AbstractHandler {
+public class RegenerateManifest extends RiteHandler {
 
     static final String DEFAULT_MODEL_GRAPH = "http://rack001/model";
     static final String DEFAULT_DATA_GRAPH = "http://rack001/data";
@@ -319,6 +319,7 @@ public class RegenerateManifest extends AbstractHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
+    	super.execute(event);
         // Ensure all the projects are visited at least once.
         // Duplicate visits due to references will be skipped.
         visitedProjects.clear();

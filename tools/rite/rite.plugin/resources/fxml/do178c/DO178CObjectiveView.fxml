@@ -42,7 +42,7 @@
                 <VBox style="-fx-alignment: center" GridPane.rowIndex="0">
                     <children>
                         <Label fx:id="headerLabel"/>
-                        <Label text="DO-178C Compliance Report" style="-fx-font-size: 2em"/>
+                        <Label text="DO-178C Compliance Summary" style="-fx-font-size: 2em"/>
                     </children>
                 </VBox>
 

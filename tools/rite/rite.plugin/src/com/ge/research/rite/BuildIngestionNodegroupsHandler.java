@@ -55,7 +55,7 @@ import java.io.File;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
-public class BuildIngestionNodegroupsHandler extends AbstractHandler {
+public class BuildIngestionNodegroupsHandler extends RiteHandler {
 
     public static void bookkeepNodegroups() {
         ProjectUtils.refreshProjects();
@@ -163,6 +163,7 @@ public class BuildIngestionNodegroupsHandler extends AbstractHandler {
          * return Status.CANCEL_STATUS; } } };
          *
          */
+    	super.execute(event);
         Job job =
                 WorkbenchJob.create(
                         "Generating nodegroups in the project nodegroups folder",

@@ -75,7 +75,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-public class RunWorkflowHandler extends AbstractHandler {
+public class RunWorkflowHandler extends RiteHandler {
 
     /** Cached list of folders containing workflows (that is, a workflow path) */
     List<String> workflowDirs = null;
@@ -155,6 +155,7 @@ public class RunWorkflowHandler extends AbstractHandler {
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
         try {
+        	super.execute(event);
             // Find the corresponding view (currently there only ever is at most one)
             try {
                 view =
