@@ -531,8 +531,8 @@ public class IngestInstanceDataHandler extends AbstractHandler {
             } catch (Exception e) {
                 ErrorMessageUtil.printFAIL();
                 ErrorMessageUtil.error(e.getLocalizedMessage());
-                ErrorMessageUtil.error(
-                        "Upload of nodegroup"
+                ErrorMessageUtil.error( 
+                        "Upload of nodegroup "
                                 + nodegroupId
                                 + " failed, JSON:"
                                 + ngJson.getAbsolutePath());
