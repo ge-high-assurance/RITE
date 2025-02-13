@@ -63,11 +63,11 @@
 
         <!-- For reports -->
         <command categoryId="rite.commands"
-            id="rite.commands.reportsCommand" name="Generate DO178C Reports">
+            id="rite.commands.reportsCommand" name="Generate DO-178C Summaries">
         </command>
 
         <command categoryId="rite.commands"
-            id="rite.commands.arp4754Command" name="Generate ARP-4754A Report">
+            id="rite.commands.arp4754Command" name="Generate ARP4754A Summary">
         </command>
 
         <!-- For auto Gsn -->
@@ -249,12 +249,12 @@
                 <!-- <command commandId="rite.commands.loadQueriesCommand" id="rite.menus.loadQueries"
                     label="Load Query Nodegroups from Disk" mnemonic="S"> </command> -->
                 <command commandId="rite.commands.reportsCommand"
-                    id="rite.menus.reports" label="DO-178C Compliance Report"
+                    id="rite.menus.reports" label="DO-178C Compliance Summary"
                     mnemonic="S" style="push">
                 </command>
 
                 <command commandId="rite.commands.arp4754Command"
-                    id="rite.menus.arp4754" label="ARP-4754A Compliance Report"
+                    id="rite.menus.arp4754" label="ARP4754A Compliance Summary"
                     mnemonic="S" style="push">
                 </command>
 
@@ -281,8 +281,7 @@
             locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
             <toolbar id="rite.plugin.toolbars.refreshInfo">
                 <command commandId="rite.commands.refreshCommand"
-                    icon="icons/refresh.png"
-                    id="rite.plugin.toolbars.refreshCommand"
+                    icon="icons/refresh.png" id="rite.plugin.toolbars.refreshCommand"
                     tooltip="Refresh Ontology and Nodegroups views with latest information on RACK">
                 </command>
             </toolbar>

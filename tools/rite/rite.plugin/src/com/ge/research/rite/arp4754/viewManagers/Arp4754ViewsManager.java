@@ -56,7 +56,7 @@ import java.net.URL;
 public class Arp4754ViewsManager extends Application {
 
     private static final String FXML_FILE_PATH = "resources/fxml/arp4754/MainView.fxml";
-    private static final String REPORT_TITLE = "ARP-4754 Compliance Report";
+    private static final String REPORT_TITLE = "ARP4754A Compliance Summary";
     private static double DEFAULT_FONT_SIZE_PX = 20;
     private static final double MIN_HEIGHT_PX = 600;
     private static final double MIN_WIDTH_PX = 800;

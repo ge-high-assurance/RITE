@@ -39,7 +39,7 @@
                 <VBox style="-fx-alignment: center" GridPane.rowIndex="0">
                     <children>
                         <Label fx:id="headerLabel" />
-                        <Label style="-fx-font-size: 2em" text="ARP-4754A Compliance Report" />
+                        <Label style="-fx-font-size: 2em" text="ARP4754A Compliance Summary" />
                     </children>
                 </VBox>
 

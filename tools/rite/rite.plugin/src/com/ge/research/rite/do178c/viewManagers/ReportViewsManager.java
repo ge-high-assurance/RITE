@@ -57,7 +57,7 @@ import java.net.URL;
 public class ReportViewsManager extends Application {
 
     private static final String FXML_FILE_PATH = "resources/fxml/do178c/DO178CMainView.fxml";
-    private static final String REPORT_TITLE = "DO-178C Compliance Report";
+    private static final String REPORT_TITLE = "DO-178C Compliance Summary";
     private static double DEFAULT_FONT_SIZE_PX = 20;
     private static final double MIN_HEIGHT_PX = 600;
     private static final double MIN_WIDTH_PX = 800;
