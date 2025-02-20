@@ -529,5 +529,11 @@
             value="./RITE-16.bmp,./RITE-32.bmp,./RITE-128.bmp,./RITE-256.bmp" />
 
     </extension>
-
+    
+   
+    <extension point="org.eclipse.ui.workbench.texteditor.hyperlinkDetectors"> 
+      <hyperlinkDetector id="com.ge.research.rite.hyperlinkdetector" name="RITE Hyperlink Detection" targetId="org.eclipse.ui.DefaultTextEditor"  class="com.ge.research.rite.RiteHyperlinkDetector">
+      </hyperlinkDetector>
+    </extension>
+   
 </plugin>
