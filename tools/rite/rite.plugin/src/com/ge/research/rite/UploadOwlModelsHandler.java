@@ -37,7 +37,6 @@ import com.ge.research.rite.utils.RackConsole;
 import com.ge.research.rite.views.OntologyTreeView;
 import com.ge.research.semtk.sparqlX.client.SparqlQueryClient;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.ui.IViewPart;
@@ -118,7 +117,7 @@ public class UploadOwlModelsHandler extends RiteHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-    	super.execute(event);
+        super.execute(event);
         IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
 
         /*String commandId = event.getCommand().getId();

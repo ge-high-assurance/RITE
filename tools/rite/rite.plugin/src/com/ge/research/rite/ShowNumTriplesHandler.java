@@ -35,7 +35,6 @@ import com.ge.research.rite.utils.ConnectionUtil;
 import com.ge.research.rite.utils.RackConsole;
 import com.ge.research.semtk.resultSet.TableResultSet;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.window.ApplicationWindow;
@@ -131,7 +130,7 @@ public class ShowNumTriplesHandler extends RiteHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-    	super.execute(event);
+        super.execute(event);
         // hide and show ontology view, also refresh nodegroups views
         if (numTriplesWindow == null) {
             numTriplesWindow = new NumTriplesWindow();

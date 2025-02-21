@@ -31,7 +31,6 @@
  */
 package com.ge.research.rite;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 
@@ -44,7 +43,7 @@ public class Arp4754ButtonHandler extends RiteHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-    	super.execute(event);
+        super.execute(event);
         System.out.println("Arp4754ButtonHandler");
         // Launch the AutoGsnMainView
         JavaFXAppLaunchManager.arp4754ReportMainViewLaunch();

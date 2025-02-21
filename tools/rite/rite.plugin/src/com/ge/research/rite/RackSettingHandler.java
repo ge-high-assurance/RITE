@@ -33,7 +33,6 @@ package com.ge.research.rite;
 
 import com.ge.research.rite.views.RackSettingPanel;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 
@@ -46,7 +45,7 @@ public class RackSettingHandler extends RiteHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-    	super.execute(event);
+        super.execute(event);
         if (rackSettingWindow == null) {
             rackSettingWindow = new RackSettingPanel();
             rackSettingWindow.run();

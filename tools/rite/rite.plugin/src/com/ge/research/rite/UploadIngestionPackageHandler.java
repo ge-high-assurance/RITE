@@ -42,7 +42,6 @@ import com.ge.research.semtk.services.client.UtilityClient;
 import com.google.common.base.Strings;
 
 import org.apache.commons.io.FilenameUtils;
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
@@ -123,7 +122,7 @@ public class UploadIngestionPackageHandler extends RiteHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-    	super.execute(event);
+        super.execute(event);
         return execute(event, true, false);
     }
 

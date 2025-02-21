@@ -34,7 +34,6 @@ package com.ge.research.rite;
 import com.ge.research.rite.utils.RackConsole;
 import com.ge.research.rite.views.RackPreferencePage;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.internal.resources.Project;
@@ -47,7 +46,7 @@ public class SetProjectTypeHandler extends RiteHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-    	super.execute(event);
+        super.execute(event);
         ISelection selection = HandlerUtil.getCurrentSelection(event);
         TreePath[] paths = ((TreeSelection) selection).getPaths();
         Project project = (Project) paths[0].getLastSegment();

@@ -220,12 +220,16 @@ public class RackConsole extends MessageConsole {
         streamWarn.setColor(yellow);
         streamWarn.print("\nWARNING: " + message);
     }
-    
+
     public void newline() {
-    	stream.print("\n");
+        stream.print("\n");
     }
 
     public void clearConsole() {
         super.clearConsole();
+    }
+
+    public static MessageConsoleStream getStream() {
+        return stream;
     }
 }

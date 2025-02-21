@@ -37,7 +37,6 @@ import com.ge.research.rite.utils.RackConsole;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IResource;
@@ -142,8 +141,8 @@ public class UploadNodegroupsHandler extends RiteHandler {
      */
     @Override
     public Object execute(final ExecutionEvent event) throws ExecutionException {
-    	
-    	super.execute(event);
+
+        super.execute(event);
         if (!startRun()) {
             return null;
         }

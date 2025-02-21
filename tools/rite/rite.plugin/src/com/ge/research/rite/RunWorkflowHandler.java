@@ -34,7 +34,6 @@ package com.ge.research.rite;
 import com.ge.research.rite.views.RackPreferencePage;
 import com.ge.research.rite.views.SessionView;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.FileLocator;
@@ -155,7 +154,7 @@ public class RunWorkflowHandler extends RiteHandler {
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
         try {
-        	super.execute(event);
+            super.execute(event);
             // Find the corresponding view (currently there only ever is at most one)
             try {
                 view =

@@ -57,7 +57,6 @@ public class Activator extends AbstractUIPlugin {
         plugin = this;
         IWorkbench workbench = PlatformUI.getWorkbench();
         new RackPreferencePage().init(workbench);
-        // TODO: use appropriate nondispose listener to queue SWT dispose errors
         org.eclipse.swt.graphics.Resource.setNonDisposeHandler(null);
         ViewUtils.pinConsole(RackConsole.getConsole());
     }

@@ -31,7 +31,6 @@
  */
 package com.ge.research.rite;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 
@@ -42,7 +41,7 @@ public class LoadQueriesButtonHandler extends RiteHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-    	super.execute(event);
+        super.execute(event);
         // Launch the view to select query json files
         JavaFXAppLaunchManager.queryNodegroupSelectViewLaunch();
 

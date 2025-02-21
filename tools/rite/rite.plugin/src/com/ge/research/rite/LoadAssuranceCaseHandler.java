@@ -43,7 +43,6 @@ import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.internal.resources.File;
@@ -67,7 +66,7 @@ public class LoadAssuranceCaseHandler extends RiteHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-    	super.execute(event);
+        super.execute(event);
         index.clear();
         IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
         ISelection selection = HandlerUtil.getCurrentSelection(event);

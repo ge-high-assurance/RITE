@@ -33,7 +33,6 @@ package com.ge.research.rite;
 
 import com.ge.research.rite.utils.RackConsole;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IContainer;
@@ -319,7 +318,7 @@ public class RegenerateManifest extends RiteHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-    	super.execute(event);
+        super.execute(event);
         // Ensure all the projects are visited at least once.
         // Duplicate visits due to references will be skipped.
         visitedProjects.clear();

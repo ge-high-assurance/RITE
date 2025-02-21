@@ -38,7 +38,6 @@ import com.ge.research.semtk.nodeGroupStore.client.NodeGroupStoreRestClient;
 import com.ge.research.semtk.resultSet.Table;
 import com.ge.research.semtk.resultSet.TableResultSet;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -105,7 +104,7 @@ public class ClearAllHandler extends RiteHandler {
     public Object execute(ExecutionEvent event) throws ExecutionException {
 
         super.execute(event);
-    	ClearRackDialog dialog = new ClearRackDialog(Display.getDefault().getActiveShell());
+        ClearRackDialog dialog = new ClearRackDialog(Display.getDefault().getActiveShell());
         dialog.run();
 
         return null;

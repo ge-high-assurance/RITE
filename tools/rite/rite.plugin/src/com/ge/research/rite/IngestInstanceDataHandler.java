@@ -34,7 +34,6 @@ package com.ge.research.rite;
 import com.ge.research.rite.utils.ConnectionUtil;
 import com.ge.research.rite.utils.ErrorMessageUtil;
 import com.ge.research.rite.utils.ProjectUtils;
-import com.ge.research.rite.utils.RackConsole;
 import com.ge.research.rite.views.RackPreferencePage;
 import com.ge.research.rite.views.ViewUtils;
 import com.ge.research.semtk.api.nodeGroupExecution.client.NodeGroupExecutionClient;
@@ -46,7 +45,6 @@ import com.ge.research.semtk.sparqlX.client.SparqlQueryClient;
 import com.opencsv.CSVReader;
 
 import org.apache.commons.io.FileUtils;
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -440,7 +438,7 @@ public class IngestInstanceDataHandler extends RiteHandler {
         if (!dir.exists()) {
             return IngestionStatus.FAILED;
         }
-        File csvNgStore = new File(ngPath + "/store_data.csv");
+        File csvNgStore = new File(ngPath + File.separator + "store_data.csv");
         if (!csvNgStore.exists()) {
             ErrorMessageUtil.error(
                     "Nodegroup csv store is missing, cannot ingest nodegroups specified in folder:"
@@ -493,12 +491,20 @@ public class IngestInstanceDataHandler extends RiteHandler {
     private IngestionStatus uploadNodegroupsFromCSV(
             String ngPath, ArrayList<ArrayList<String>> tabData, IProgressMonitor monitor)
             throws Exception {
+    	int lineNumber = 1;
         for (ArrayList<String> entry : tabData) {
+        	
             if (monitor.isCanceled()) {
                 return IngestionStatus.CANCELED;
             }
+            if(entry.size() == 0 || entry.size() < 4) {
+            	ErrorMessageUtil.error("Malformed entry at line " + (lineNumber+1) + " in nodegroup store data at" + ngPath + File.separator + "store_data.csv");
+            	continue;
+            }
+            
             final String nodegroupId = entry.get(0);
             final String jsonFile = entry.get(3);
+            
             File ngJson = new File(ngPath + File.separator + jsonFile);
             if (!ngJson.exists()) {
                 ErrorMessageUtil.error(
@@ -515,14 +521,21 @@ public class IngestInstanceDataHandler extends RiteHandler {
             try {
 
                 // Check for a Report, else fallback to PreFabNodeGroup
-                String itemType = entry.get(4);
+            	if(entry.size() < 5) {
+            		ErrorMessageUtil.warning("Missing nodegroup type for nodegroup: " + nodegroupId +" at line " + (lineNumber + 1) + " in " + ngPath + File.separator + "store_data.csv, assuming PrefabNodeGroup");
+            	}
+                String itemType = entry.size() < 5 ? StoredItemTypes.PrefabNodeGroup.toString() : entry.get(4);
                 // Defaulting to PrefabNodeGroup
                 StoredItemTypes storeItemType = StoredItemTypes.PrefabNodeGroup;
                 String itemLabel = NODEGROUP_LABEL;
+                
                 if (itemType != null && itemType.equals(StoredItemTypes.Report.toString())) {
                     storeItemType = StoredItemTypes.Report;
                     itemLabel = REPORT_LABEL;
                 }
+                
+                
+                
                 ErrorMessageUtil.print(
                         "Uploading " + itemLabel + ": " + nodegroupId + ".json ... ");
                 ngClient.executeStoreItem(
@@ -532,13 +545,14 @@ public class IngestInstanceDataHandler extends RiteHandler {
             } catch (Exception e) {
                 ErrorMessageUtil.printFAIL();
                 ErrorMessageUtil.error(e.getLocalizedMessage());
-                ErrorMessageUtil.error( 
+                ErrorMessageUtil.error(
                         "Upload of nodegroup "
                                 + nodegroupId
                                 + " failed, JSON:"
                                 + ngJson.getAbsolutePath());
                 return IngestionStatus.FAILED;
             }
+            lineNumber++;
         }
         return IngestionStatus.DONE;
     }
@@ -830,7 +844,7 @@ public class IngestInstanceDataHandler extends RiteHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-    	super.execute(event);
+        super.execute(event);
         ISelection selection = HandlerUtil.getCurrentSelection(event);
         TreePath[] paths = ((TreeSelection) selection).getPaths();
         if (paths.length == 1) {

@@ -39,7 +39,6 @@ import com.ge.research.semtk.nodeGroupStore.client.NodeGroupStoreRestClient;
 import com.ge.research.semtk.sparqlX.SparqlConnection;
 
 import org.apache.commons.io.FileUtils;
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -189,7 +188,7 @@ public class IngestTemplatesHandler extends RiteHandler {
     public Object execute(ExecutionEvent event) throws ExecutionException {
 
         try {
-        	super.execute(event);
+            super.execute(event);
             String consoleViewId = IConsoleConstants.ID_CONSOLE_VIEW;
             IConsoleView consoleView =
                     (IConsoleView)

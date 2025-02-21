@@ -40,7 +40,6 @@ import com.ge.research.rite.views.RackPreferencePage;
 import com.ge.research.rite.views.ViewUtils;
 
 import org.apache.commons.io.FileUtils;
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -163,7 +162,7 @@ public class BuildIngestionNodegroupsHandler extends RiteHandler {
          * return Status.CANCEL_STATUS; } } };
          *
          */
-    	super.execute(event);
+        super.execute(event);
         Job job =
                 WorkbenchJob.create(
                         "Generating nodegroups in the project nodegroups folder",

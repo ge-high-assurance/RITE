@@ -35,7 +35,6 @@ import com.ge.research.rite.utils.IngestionTemplateUtil;
 import com.ge.research.rite.utils.RackConsole;
 import com.ge.research.rite.views.OntologyTreeView;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.ui.IViewPart;
@@ -50,8 +49,8 @@ public class RefreshHandler extends RiteHandler {
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-    	
-    	super.execute(event);
+
+        super.execute(event);
 
         // hide and show ontology view, also refresh nodegroups views
         final IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
