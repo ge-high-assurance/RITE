@@ -1,0 +1,89 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:gpc="http://sadl.org/GSN-Pattern-core.sadl#"
+    xmlns:j.0="http://arcos.rack/PROV-S#"
+    xmlns:builtinfunctions="http://sadl.org/builtinfunctions#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:oempat="http://sadl.org/GE-GSN-Pattern.sadl#"
+    xmlns:sadlimplicitmodel="http://sadl.org/sadlimplicitmodel#"
+    xmlns:j.1="http://sadl.org/GSN-core.sadl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:sadlbasemodel="http://sadl.org/sadlbasemodel#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+  <owl:Ontology rdf:about="http://sadl.org/GE-GSN-Pattern.sadl">
+    <owl:imports rdf:resource="http://sadl.org/GSN-Pattern-core.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/builtinfunctions"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlimplicitmodel"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlbasemodel"/>
+    <rdfs:comment xml:lang="en">This ontology was created from a SADL file 'oem-pattern.sadl' and should not be directly edited.</rdfs:comment>
+  </owl:Ontology>
+  <gpc:GsnEvidence rdf:about="http://sadl.org/GE-GSN-Pattern.sadl#evidence-sbvttr">
+    <gpc:passValue>Passed</gpc:passValue>
+    <gpc:statusProperty>identifier</gpc:statusProperty>
+    <gpc:classId>TEST_STATUS</gpc:classId>
+  </gpc:GsnEvidence>
+  <j.1:Strategy rdf:about="http://sadl.org/GE-GSN-Pattern.sadl#subdd-tested-SP">
+    <gpc:pGoalSubGoalConnector>verifies</gpc:pGoalSubGoalConnector>
+    <gpc:pSubGoal>SBVT_Test</gpc:pSubGoal>
+    <gpc:pGoal>SubDD_Req</gpc:pGoal>
+    <j.0:description>Argument: All relevant SBVT Tests have passed</j.0:description>
+    <j.0:identifier>subdd-tested-SP</j.0:identifier>
+    <gpc:isPat rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</gpc:isPat>
+  </j.1:Strategy>
+  <j.1:Strategy rdf:about="http://sadl.org/GE-GSN-Pattern.sadl#srs-tested-SP">
+    <gpc:pGoalSubGoalConnector>satisfies</gpc:pGoalSubGoalConnector>
+    <gpc:pSubGoal>SubDD_Req</gpc:pSubGoal>
+    <gpc:pGoal>SRS_Req</gpc:pGoal>
+    <j.0:description>Argument: All relevant SubDDs have passed baseline verification</j.0:description>
+    <j.0:identifier>srs-tested-SP</j.0:identifier>
+    <gpc:isPat rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</gpc:isPat>
+  </j.1:Strategy>
+  <j.1:Goal rdf:about="http://sadl.org/GE-GSN-Pattern.sadl#sbvttr-GP">
+    <gpc:pGoal>SBVT_Result</gpc:pGoal>
+    <j.0:description>Claim: SBVT test result is: Passed</j.0:description>
+    <j.0:identifier>sbvttr-GP</j.0:identifier>
+    <gpc:isPat rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</gpc:isPat>
+  </j.1:Goal>
+  <j.1:Strategy rdf:about="http://sadl.org/GE-GSN-Pattern.sadl#sbvttr-passed-SP">
+    <gpc:pGoalSubGoalConnector>result</gpc:pGoalSubGoalConnector>
+    <gpc:pSubGoal>TEST_STATUS</gpc:pSubGoal>
+    <gpc:pGoal>SBVT_Result</gpc:pGoal>
+    <j.0:description>Argument: Confirmed by Test Status</j.0:description>
+    <j.0:identifier>sbvttr-passed-SP</j.0:identifier>
+    <gpc:isPat rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</gpc:isPat>
+  </j.1:Strategy>
+  <j.1:Goal rdf:about="http://sadl.org/GE-GSN-Pattern.sadl#subdd-GP">
+    <gpc:pGoal>SubDD_Req</gpc:pGoal>
+    <j.0:description>Claim: SubDD Requirement has passed baseline verification</j.0:description>
+    <j.0:identifier>subdd-GP</j.0:identifier>
+    <gpc:isPat rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</gpc:isPat>
+  </j.1:Goal>
+  <j.1:Goal rdf:about="http://sadl.org/GE-GSN-Pattern.sadl#srs-GP">
+    <gpc:pGoal>SRS_Req</gpc:pGoal>
+    <j.0:description>Claim: SRS Requirement has passed baseline verification</j.0:description>
+    <j.0:identifier>srs-GP</j.0:identifier>
+    <gpc:isPat rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</gpc:isPat>
+  </j.1:Goal>
+  <j.1:Goal rdf:about="http://sadl.org/GE-GSN-Pattern.sadl#sbvt-GP">
+    <gpc:pGoal>SBVT_Test</gpc:pGoal>
+    <j.0:description>Claim: SBVT Test has Passed</j.0:description>
+    <j.0:identifier>sbvt-GP</j.0:identifier>
+    <gpc:isPat rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</gpc:isPat>
+  </j.1:Goal>
+  <j.1:Strategy rdf:about="http://sadl.org/GE-GSN-Pattern.sadl#sbvt-passed-SP">
+    <gpc:pGoalSubGoalConnector>confirms</gpc:pGoalSubGoalConnector>
+    <gpc:pSubGoal>SBVT_Result</gpc:pSubGoal>
+    <gpc:pGoal>SBVT_Test</gpc:pGoal>
+    <j.0:description>Argument: Result is: Passed</j.0:description>
+    <j.0:identifier>sbvt-passed-SP</j.0:identifier>
+    <gpc:isPat rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</gpc:isPat>
+  </j.1:Strategy>
+</rdf:RDF>
