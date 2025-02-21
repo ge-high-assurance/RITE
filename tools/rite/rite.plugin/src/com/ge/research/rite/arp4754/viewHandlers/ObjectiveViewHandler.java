@@ -887,7 +887,7 @@ public class ObjectiveViewHandler {
                         // Open URL on browser
 
                         ViewUtils.openUrlInDefaultApp(
-                                "https://github.com/ge-high-assurance/RITE/blob/arp4754/examples/ingestion-packages/OEM-Ingestion-Package-v2/data_source/requirements.pdf");
+                        		"https://github.com/ge-high-assurance/RITE/blob/main/examples/ingestion-packages/rite_1.0.0_test_ingestion_package/data_source/requirements.pdf");
                     });
         }
     }
@@ -912,7 +912,7 @@ public class ObjectiveViewHandler {
                         // Open URL on browser
 
                         ViewUtils.openUrlInDefaultApp(
-                                "https://github.com/ge-high-assurance/RITE/blob/arp4754/examples/ingestion-packages/OEM-Ingestion-Package-v2/data_source/interfaces.pdf");
+                                "https://github.com/ge-high-assurance/RITE/blob/main/examples/ingestion-packages/rite_1.0.0_test_ingestion_package/data_source/interfaces.pdf");
                     });
         }
     }
@@ -937,7 +937,7 @@ public class ObjectiveViewHandler {
                         // Open URL on browser
 
                         ViewUtils.openUrlInDefaultApp(
-                                "https://github.com/ge-high-assurance/RITE/blob/arp4754/examples/ingestion-packages/OEM-Ingestion-Package-v2/data_source/systems.pdf");
+                                "https://github.com/ge-high-assurance/RITE/blob/main/examples/ingestion-packages/rite_1.0.0_test_ingestion_package/data_source/systems.pdf");
                     });
         }
     }
@@ -962,7 +962,7 @@ public class ObjectiveViewHandler {
                         // Open URL on browser
 
                         ViewUtils.openUrlInDefaultApp(
-                                "https://github.com/ge-high-assurance/RITE/blob/arp4754/examples/ingestion-packages/OEM-Ingestion-Package-v2/data_source/systems.pdf");
+                                "https://github.com/ge-high-assurance/RITE/blob/main/examples/ingestion-packages/rite_1.0.0_test_ingestion_package/data_source/systems.pdf");
                     });
         }
     }

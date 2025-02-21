@@ -1510,7 +1510,7 @@ public class ReportObjectiveViewHandlerNew {
                         // Open URL on browser
 
                         ReportViewUtils.openUrlInDefaultApp(
-                                "https://github.com/ge-high-assurance/RITE/blob/dasc23DO178C/examples/OEM/DummySource/RequirementData.pdf");
+                                "https://github.com/ge-high-assurance/RITE/blob/main/examples/ingestion-packages/rite_1.0.0_test_ingestion_package/data_source/RequirementData.pdf");
                     });
 
             // call the function to populate children
@@ -1576,7 +1576,7 @@ public class ReportObjectiveViewHandlerNew {
                         // Open URL on browser
 
                         ReportViewUtils.openUrlInDefaultApp(
-                                "https://github.com/ge-high-assurance/RITE/blob/dasc23DO178C/examples/OEM/DummySource/TestData.pdf");
+                                "https://github.com/ge-high-assurance/RITE/blob/main/examples/ingestion-packages/rite_1.0.0_test_ingestion_package/data_source/TestData.pdf");
                     });
 
             // call the function topopulate children
