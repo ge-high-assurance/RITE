@@ -50,6 +50,8 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class RiteHyperlinkDetector extends AbstractHyperlinkDetector implements IHyperlinkDetector {
 
@@ -100,17 +102,24 @@ public class RiteHyperlinkDetector extends AbstractHyperlinkDetector implements 
         if (index == -1) {
             index = candidate.indexOf(".csv");
         }
+        if(index == -1) {
+        	index = candidate.indexOf(".yaml");
+        }
+        if(index == -1) {
+        	index = candidate.indexOf(".json");
+        }
 
         if (index == -1) {
             return null;
         }
         // get the rightmost text
         String relativePathVanilla = getPath(candidate);
-        String relativePath = relativePathVanilla;
-        if (OS.PLATFORM.contains("win32")) {
-            relativePath = relativePath.replace("/", "\\");
+        Path directoryPath = Paths.get(directory);
+        Path resolvedPath = directoryPath.resolve(relativePathVanilla);
+        if(resolvedPath == null) {
+        	return null;
         }
-        File newFile = new File(directory + File.separator + relativePath);
+        File newFile = new File(resolvedPath.toString());
         if (newFile.exists()) {
             IRegion targetRegion =
                     new Region(
@@ -135,6 +144,7 @@ public class RiteHyperlinkDetector extends AbstractHyperlinkDetector implements 
                 return "";
             }
             path = line.substring(j);
+            return path.trim();
         }
 
         if (line.contains("data:")) {
@@ -147,6 +157,7 @@ public class RiteHyperlinkDetector extends AbstractHyperlinkDetector implements 
                 return "";
             }
             path = line.substring(j);
+            return path.trim();
         }
 
         if (line.contains("nodegroup:")) {
@@ -159,20 +170,10 @@ public class RiteHyperlinkDetector extends AbstractHyperlinkDetector implements 
                 return "";
             }
             path = line.substring(j);
+            return path.trim();
         }
 
-        if (line.contains(".owl")) {
-            path = line.trim();
-            int j = path.length() - 1;
-            while (j > 0 && path.charAt(j) != ' ') {
-                j--;
-            }
-            if (j == 0) {
-                return "";
-            }
-            path = path.substring(j);
-        }
-
+       
         if (line.contains(".csv")) {
 
             int j = line.indexOf(".csv");
@@ -192,6 +193,20 @@ public class RiteHyperlinkDetector extends AbstractHyperlinkDetector implements 
                 return "";
             }
             path = line.substring(i + 1, j + ".csv".length());
+            return path.trim();
+        }
+        
+        if (line.contains(".owl") || line.contains(".yaml") || line.contains(".json") || line.contains(".csv")) {
+            path = line.trim();
+            int j = path.length() - 1;
+            while (j > 0 && path.charAt(j) != ' ') {
+                j--;
+            }
+            if (j == 0) {
+                return "";
+            }
+            path = path.substring(j);
+            return path.trim();
         }
 
         return path.trim();
