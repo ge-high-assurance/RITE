@@ -56,9 +56,9 @@
             </commandParameter>
         </command>
 
-        <command categoryId="rite.commands"
+       <!-- <command categoryId="rite.commands"
             id="rite.commands.runWorkflow" name="Run Workflow">
-        </command>
+        </command> -->
 
 
         <!-- For reports -->
@@ -87,6 +87,7 @@
         <command id="rite.commands.refreshCommand"
             name="Refresh Ontologies and Nodegroups">
         </command>
+
 
     </extension>
 
@@ -208,7 +209,9 @@
         <handler class="com.ge.research.rite.RunWorkflowHandler"
             commandId="rite.commands.runWorkflow">
         </handler>
-
+       <!-- <handler class="com.ge.research.rite.InstallRACKCLIHandler"
+            commandId="rite.commands.installRACKCLI">
+        </handler> -->
     </extension>
     <extension point="org.eclipse.ui.bindings"></extension>
 
@@ -236,9 +239,12 @@
                 <command commandId="rite.commands.clearAll"
                     id="rite.menus.clearAll" label="Clear RACK" mnemonic="S">
                 </command>
-                <command commandId="rite.commands.runWorkflow"
+              <!--  <command commandId="rite.commands.runWorkflow"
                     id="rite.menus.runWorkflow" label="Run Workflow">
-                </command>
+                </command> -->
+             <!--   <command commandId="rite.commands.installRACKCLI"
+                    id="rite.menus.installRACKCLI" label="Install RACK CLI">
+                </command> -->
 
                 <separator name="separator2" visible="true">
                 </separator>
@@ -529,11 +535,16 @@
             value="./RITE-16.bmp,./RITE-32.bmp,./RITE-128.bmp,./RITE-256.bmp" />
 
     </extension>
-    
-   
-    <extension point="org.eclipse.ui.workbench.texteditor.hyperlinkDetectors"> 
-      <hyperlinkDetector id="com.ge.research.rite.hyperlinkdetector" name="RITE Hyperlink Detection" targetId="org.eclipse.ui.DefaultTextEditor"  class="com.ge.research.rite.RiteHyperlinkDetector">
-      </hyperlinkDetector>
+
+
+    <extension
+        point="org.eclipse.ui.workbench.texteditor.hyperlinkDetectors">
+        <hyperlinkDetector
+            id="com.ge.research.rite.hyperlinkdetector"
+            name="RITE Hyperlink Detection"
+            targetId="org.eclipse.ui.DefaultTextEditor"
+            class="com.ge.research.rite.RiteHyperlinkDetector">
+        </hyperlinkDetector>
     </extension>
-   
+
 </plugin>
