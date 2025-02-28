@@ -10,7 +10,7 @@ Besides supporting basic data modeling and curation features, RITE also provides
 
 ## Download the latest release [here](https://github.com/ge-high-assurance/RITE/releases) 
 
-## Latest Feature List ([RITE 0.7.0](https://github.com/ge-high-assurance/RITE/releases/tag/v0.7.0))
+## Latest Feature List ([RITE 0.7.0](https://github.com/ge-high-assurance/RITE/releases/tag/v1.0.0))
 
 1. [Creating Monolithic Ingestion Packages](https://github.com/ge-high-assurance/RITE/wiki/Monolithic-Ingestion-Packages)
 2. [Creating Modular Ingestion Packages](https://github.com/ge-high-assurance/RITE/wiki/Modular-Ingestion-Packages)
@@ -21,11 +21,12 @@ Besides supporting basic data modeling and curation features, RITE also provides
 7. [Generating Ingestion Nodegroups for the Ontology on RACK](https://github.com/ge-high-assurance/RITE/wiki/Generating-Ingestion-Nodegroups)
 8. [Selectively Clearing Ontology and/or Data Graphs on RACK](https://github.com/ge-high-assurance/RITE/wiki/Clear-RACK)
 9. [Automatically Generating GSN Assurance Cases using the Evidence on RACK](https://github.com/ge-high-assurance/RITE/wiki/GSN-Assurance-Case-Generation)
+10. [(Proof-of-Concept) Generate DO-178C and ARP4754A Compliance Summaries](https://github.com/ge-high-assurance/RITE/wiki/pdfs/reporting-tutorial.pdf)
 
 A detailed tutorial for using RITE with additional information can be found in the [RITE WIKI](https://github.com/ge-high-assurance/RITE/wiki). Contact the RITE Development Team for more details.
 
 <hr>
-Copyright (c) 2021-2023 General Electric Company, Galois, Inc.
+Copyright (c) 2021-2025 GE Aerospace, Galois, Inc.
 
 All Rights Reserved
 
