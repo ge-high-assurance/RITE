@@ -1,7 +1,7 @@
 /*
  * BSD 3-Clause License
  * 
- * Copyright (c) 2024, GE Aerospace and Galois, Inc.
+ * Copyright (c) 2025, GE Aerospace and Galois, Inc.
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
