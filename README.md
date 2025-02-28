@@ -10,7 +10,7 @@ Besides supporting basic data modeling and curation features, RITE also provides
 
 ## Download the latest release [here](https://github.com/ge-high-assurance/RITE/releases) 
 
-## Latest Feature List ([RITE 0.7.0](https://github.com/ge-high-assurance/RITE/releases/tag/v1.0.0))
+## Latest Feature List ([RITE v1.0.0](https://github.com/ge-high-assurance/RITE/releases/tag/v1.0.0))
 
 1. [Creating Monolithic Ingestion Packages](https://github.com/ge-high-assurance/RITE/wiki/Monolithic-Ingestion-Packages)
 2. [Creating Modular Ingestion Packages](https://github.com/ge-high-assurance/RITE/wiki/Modular-Ingestion-Packages)
