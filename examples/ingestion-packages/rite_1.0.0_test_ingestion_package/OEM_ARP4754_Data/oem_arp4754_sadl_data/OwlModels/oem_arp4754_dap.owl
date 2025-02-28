@@ -1,0 +1,69 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:p8core="http://sadl.org/PLAN-CORE-Process8.sadl#"
+    xmlns:p2core="http://sadl.org/PLAN-CORE-Process2.sadl#"
+    xmlns:builtinfunctions="http://sadl.org/builtinfunctions#"
+    xmlns:sadlimplicitmodel="http://sadl.org/sadlimplicitmodel#"
+    xmlns:p1core="http://sadl.org/PLAN-CORE-Process1.sadl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:sadlbasemodel="http://sadl.org/sadlbasemodel#"
+    xmlns:p5core="http://sadl.org/PLAN-CORE-Process5.sadl#"
+    xmlns:j.0="http://arcos.rack/PROV-S#"
+    xmlns:p6core="http://sadl.org/PLAN-CORE-Process6.sadl#"
+    xmlns:j.1="http://arcos.rack/SYSTEM#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:odap="http://sadl.org/oem_arp4754_dap.sadl#"
+    xmlns:p4core="http://sadl.org/PLAN-CORE-Process4.sadl#"
+    xmlns:p3core="http://sadl.org/PLAN-CORE-Process3.sadl#"
+    xmlns:p7core="http://sadl.org/PLAN-CORE-Process7.sadl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:j.2="http://sadl.org/PLAN-CORE.sadl#">
+  <owl:Ontology rdf:about="http://sadl.org/oem_arp4754_dap.sadl">
+    <owl:imports rdf:resource="http://sadl.org/PLAN-CORE-Process5.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlbasemodel"/>
+    <owl:imports rdf:resource="http://sadl.org/PLAN-CORE-Process4.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/PLAN-CORE-Process6.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/PLAN-CORE-Process3.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/PLAN-CORE-Process7.sadl"/>
+    <rdfs:comment xml:lang="en">This ontology was created from a SADL file 'oem_arp4754_dap.sadl' and should not be directly edited.</rdfs:comment>
+    <owl:imports rdf:resource="http://sadl.org/builtinfunctions"/>
+    <owl:imports rdf:resource="http://sadl.org/PLAN-CORE-Process8.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/PLAN-CORE-Process1.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/PLAN-CORE-Process2.sadl"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlimplicitmodel"/>
+  </owl:Ontology>
+  <j.2:Objective rdf:about="http://sadl.org/PLAN-CORE-Process2.sadl#Objective-2-4">
+    <j.2:query>Objective-2-4-query-count-all-Derived-System-Requirements</j.2:query>
+  </j.2:Objective>
+  <j.2:Objective rdf:about="http://sadl.org/PLAN-CORE-Process2.sadl#Objective-2-2">
+    <j.2:query>Objective-2-2-query-count-all-inputs-outputs-of-Interfaces</j.2:query>
+    <j.2:query>Objective-2-2-query-count-all-Interfaces-allocated-to-a-system</j.2:query>
+    <j.2:query>Objective-2-2-query-count-all-System-Requirements-allocated-to-a-system</j.2:query>
+    <j.2:query>Objective-2-2-query-count-all-System-Requirements</j.2:query>
+  </j.2:Objective>
+  <j.2:DevelopmentAssurancePlan rdf:about="http://sadl.org/oem_arp4754_dap.sadl#Adept-DAP">
+    <j.2:process rdf:resource="http://sadl.org/PLAN-CORE-Process1.sadl#Process-1"/>
+    <j.2:process rdf:resource="http://sadl.org/PLAN-CORE-Process2.sadl#Process-2"/>
+    <j.0:identifier>OEM-DAP</j.0:identifier>
+    <j.2:process rdf:resource="http://sadl.org/PLAN-CORE-Process5.sadl#Process-5"/>
+    <j.2:system>
+      <j.1:SYSTEM rdf:about="http://sadl.org/oem_arp4754_dap.sadl#OEMEngine">
+        <j.2:developmentAssuranceLevel rdf:resource="http://sadl.org/PLAN-CORE.sadl#LevelA"/>
+        <j.0:description>OEM Engine Use Case</j.0:description>
+        <j.0:identifier>OEMEngine</j.0:identifier>
+      </j.1:SYSTEM>
+    </j.2:system>
+    <j.2:process rdf:resource="http://sadl.org/PLAN-CORE-Process4.sadl#Process-4"/>
+    <j.2:process rdf:resource="http://sadl.org/PLAN-CORE-Process6.sadl#Process-6"/>
+    <j.2:process rdf:resource="http://sadl.org/PLAN-CORE-Process3.sadl#Process-3"/>
+    <j.2:process rdf:resource="http://sadl.org/PLAN-CORE-Process8.sadl#Process-8"/>
+    <j.0:description>Development Assurance Plan for the OEM Engine</j.0:description>
+    <j.2:process rdf:resource="http://sadl.org/PLAN-CORE-Process7.sadl#Process-7"/>
+  </j.2:DevelopmentAssurancePlan>
+  <j.2:Objective rdf:about="http://sadl.org/PLAN-CORE-Process2.sadl#Objective-2-6">
+    <j.2:query>Objective-2-6-query-count-all-Item-Requirements-allocated-to-ManufacturedParts</j.2:query>
+    <j.2:query>Objective-2-6-query-count-all-Item-Requirements-allocated-to-DesignedParts</j.2:query>
+    <j.2:query>Objective-2-6-query-count-all-Item-Requirements-traced-to-system-requirements</j.2:query>
+    <j.2:query>Objective-2-6-query-count-all-Item-Requirements</j.2:query>
+  </j.2:Objective>
+</rdf:RDF>

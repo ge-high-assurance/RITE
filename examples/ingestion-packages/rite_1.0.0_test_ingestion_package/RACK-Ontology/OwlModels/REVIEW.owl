@@ -1,0 +1,88 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:provs="http://arcos.rack/PROV-S#"
+    xmlns:builtinfunctions="http://sadl.org/builtinfunctions#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:sadlimplicitmodel="http://sadl.org/sadlimplicitmodel#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:Rv="http://arcos.rack/REVIEW#"
+    xmlns:D="http://arcos.rack/DOCUMENT#"
+    xmlns:sadlbasemodel="http://sadl.org/sadlbasemodel#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+  <owl:Ontology rdf:about="http://arcos.rack/REVIEW">
+    <owl:imports rdf:resource="http://arcos.rack/DOCUMENT"/>
+    <owl:imports rdf:resource="http://arcos.rack/PROV-S"/>
+    <owl:imports rdf:resource="http://sadl.org/builtinfunctions"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlimplicitmodel"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlbasemodel"/>
+    <rdfs:comment xml:lang="en">This ontology was created from a SADL file 'REVIEW.sadl' and should not be directly edited.</rdfs:comment>
+  </owl:Ontology>
+  <owl:Class rdf:about="http://arcos.rack/REVIEW#REVIEW_STATE">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:oneOf rdf:parseType="Collection">
+          <Rv:REVIEW_STATE rdf:about="http://arcos.rack/REVIEW#Passed">
+            <provs:identifier>Passed</provs:identifier>
+          </Rv:REVIEW_STATE>
+          <Rv:REVIEW_STATE rdf:about="http://arcos.rack/REVIEW#ReviseWithoutReview">
+            <provs:identifier>Revise Without Review</provs:identifier>
+          </Rv:REVIEW_STATE>
+          <Rv:REVIEW_STATE rdf:about="http://arcos.rack/REVIEW#ReviseWithReview">
+            <provs:identifier>Revise With Review</provs:identifier>
+          </Rv:REVIEW_STATE>
+        </owl:oneOf>
+      </owl:Class>
+    </owl:equivalentClass>
+    <rdfs:comment xml:lang="en">Life-cycle status of a review log</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#THING"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://arcos.rack/REVIEW#REVIEW">
+    <rdfs:comment xml:lang="en">Artifact review ACTIVITY</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#ACTIVITY"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://arcos.rack/REVIEW#REVIEW_LOG">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:resource="http://arcos.rack/REVIEW#REVIEW"/>
+        <owl:onProperty rdf:resource="http://arcos.rack/PROV-S#wasGeneratedBy"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">Outcome of a REVIEW ACTIVITY</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#ENTITY"/>
+  </owl:Class>
+  <owl:ObjectProperty rdf:about="http://arcos.rack/REVIEW#reviewer">
+    <rdfs:subPropertyOf rdf:resource="http://arcos.rack/PROV-S#wasAssociatedWith"/>
+    <rdfs:comment xml:lang="en">AGENT(s) performing the review</rdfs:comment>
+    <rdfs:range rdf:resource="http://arcos.rack/PROV-S#AGENT"/>
+    <rdfs:domain rdf:resource="http://arcos.rack/REVIEW#REVIEW"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://arcos.rack/REVIEW#reviewed">
+    <rdfs:subPropertyOf rdf:resource="http://arcos.rack/PROV-S#used"/>
+    <rdfs:comment xml:lang="en">ENTITY(s) being reviewed</rdfs:comment>
+    <rdfs:range rdf:resource="http://arcos.rack/PROV-S#ENTITY"/>
+    <rdfs:domain rdf:resource="http://arcos.rack/REVIEW#REVIEW"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://arcos.rack/REVIEW#governedBy">
+    <rdfs:subPropertyOf rdf:resource="http://arcos.rack/PROV-S#used"/>
+    <rdfs:comment xml:lang="en">ENTITY(s) (e.g. REQUIREMENT or SPECIFICATION) used for performing the review</rdfs:comment>
+    <rdfs:range rdf:resource="http://arcos.rack/PROV-S#ENTITY"/>
+    <rdfs:domain rdf:resource="http://arcos.rack/REVIEW#REVIEW"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://arcos.rack/REVIEW#reviewResult">
+    <rdfs:comment xml:lang="en">Review status descriptor</rdfs:comment>
+    <rdfs:range rdf:resource="http://arcos.rack/REVIEW#REVIEW_STATE"/>
+    <rdfs:domain rdf:resource="http://arcos.rack/REVIEW#REVIEW_LOG"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://arcos.rack/REVIEW#reviews">
+    <rdfs:subPropertyOf rdf:resource="http://arcos.rack/PROV-S#wasImpactedBy"/>
+    <rdfs:comment xml:lang="en">The subject being reviewed</rdfs:comment>
+    <rdfs:range rdf:resource="http://arcos.rack/PROV-S#ENTITY"/>
+    <rdfs:domain rdf:resource="http://arcos.rack/REVIEW#REVIEW_LOG"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://arcos.rack/REVIEW#author">
+    <rdfs:subPropertyOf rdf:resource="http://arcos.rack/PROV-S#wasAssociatedWith"/>
+    <rdfs:comment xml:lang="en">AGENT(s) putting items up for review</rdfs:comment>
+    <rdfs:range rdf:resource="http://arcos.rack/PROV-S#AGENT"/>
+    <rdfs:domain rdf:resource="http://arcos.rack/REVIEW#REVIEW"/>
+  </owl:ObjectProperty>
+</rdf:RDF>
