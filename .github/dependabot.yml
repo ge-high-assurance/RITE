@@ -16,6 +16,6 @@ updates:
   # Maintain dependencies for Maven
   - package-ecosystem: "maven"
     # Location of topmost pom.xml
-    directory: "/tools/rack/"
+    directory: "/tools/rite/"
     schedule:
       interval: "daily"
