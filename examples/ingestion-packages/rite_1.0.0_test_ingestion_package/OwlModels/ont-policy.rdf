@@ -3,434 +3,434 @@
     xmlns="http://jena.hpl.hp.com/schemas/2003/03/ont-manager#"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
   <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA8.sadl</sadlSourceURL>
-    <prefix>do178cPsacCorA8</prefix>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/RACK-Ontology/ontology/HARDWARE.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/HARDWARE.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
     <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/DO178C-PSAC-CORE-TableA8.owl"/>
-    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA8.sadl"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/GSN-Ontology/ontology/GSN-Pattern-core.sadl</sadlSourceURL>
-    <prefix>gpc</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/GSN-Pattern-core.owl"/>
-    <publicURI rdf:resource="http://sadl.org/GSN-Pattern-core.sadl"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/OEM-Ontology/ontology/OEM.sadl</sadlSourceURL>
-    <prefix>OemModel</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/OEM.owl"/>
-    <publicURI rdf:resource="http://arcos.rack/OEM"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/ARP4754-DAP-Ontology-v2/ontology/PLAN-CORE-Process5.sadl</sadlSourceURL>
-    <prefix>p5core</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/PLAN-CORE-Process5.owl"/>
-    <publicURI rdf:resource="http://sadl.org/PLAN-CORE-Process5.sadl"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/RACK-Ontology/ontology/PROV-S.sadl</sadlSourceURL>
-    <prefix>provs</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/PROV-S.owl"/>
-    <publicURI rdf:resource="http://arcos.rack/PROV-S"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA6.sadl</sadlSourceURL>
-    <prefix>do178cPsacCorA6</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/DO178C-PSAC-CORE-TableA6.owl"/>
-    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA6.sadl"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/RACK-Ontology/ontology/HAZARD.sadl</sadlSourceURL>
-    <prefix>H</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/HAZARD.owl"/>
-    <publicURI rdf:resource="http://arcos.rack/HAZARD"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/RACK-Ontology/ontology/ANALYSIS.sadl</sadlSourceURL>
-    <prefix>An</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/ANALYSIS.owl"/>
-    <publicURI rdf:resource="http://arcos.rack/ANALYSIS"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/RACK-Ontology/ontology/TESTING.sadl</sadlSourceURL>
-    <prefix>tst</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/TESTING.owl"/>
-    <publicURI rdf:resource="http://arcos.rack/TESTING"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/RACK-Ontology/ontology/REQUIREMENTS.sadl</sadlSourceURL>
-    <prefix>Rq</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/REQUIREMENTS.owl"/>
-    <publicURI rdf:resource="http://arcos.rack/REQUIREMENTS"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/RACK-Ontology/ontology/FILE.sadl</sadlSourceURL>
-    <prefix>file</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/FILE.owl"/>
-    <publicURI rdf:resource="http://arcos.rack/FILE"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/OEM_ARP4754_Data/oem_arp4754_sadl_data/ontology/oem-arp4754-config.sadl</sadlSourceURL>
-    <prefix>oemconfig</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/oem-arp4754-config.owl"/>
-    <publicURI rdf:resource="http://sadl.org/oem-arp4754-config.sadl"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/ARP4754-DAP-Ontology-v2/ontology/PLAN-CORE-Process8.sadl</sadlSourceURL>
-    <prefix>p8core</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/PLAN-CORE-Process8.owl"/>
-    <publicURI rdf:resource="http://sadl.org/PLAN-CORE-Process8.sadl"/>
-  </OntologySpec>
-  <DocumentManagerPolicy>
-    <cacheModels rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
-    >true</cacheModels>
-    <processImports rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
-    >true</processImports>
-  </DocumentManagerPolicy>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/RACK-Ontology/ontology/REVIEW.sadl</sadlSourceURL>
-    <prefix>Rv</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/REVIEW.owl"/>
-    <publicURI rdf:resource="http://arcos.rack/REVIEW"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA7.sadl</sadlSourceURL>
-    <prefix>do178cPsacCorA7</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/DO178C-PSAC-CORE-TableA7.owl"/>
-    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA5.sadl</sadlSourceURL>
-    <prefix>do178cPsacCorA5</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/DO178C-PSAC-CORE-TableA5.owl"/>
-    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/OEM_ARP4754_Data/oem_arp4754_sadl_data/ontology/oem-arp-synthetic-data.sadl</sadlSourceURL>
-    <prefix>oemarpsd</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/oem-arp-synthetic-data.owl"/>
-    <publicURI rdf:resource="http://sadl.org/oem-arp-synthetic-data.sadl"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/RACK-Ontology/ontology/RESOLUTIONS.sadl</sadlSourceURL>
-    <prefix>Rs</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/RESOLUTIONS.owl"/>
-    <publicURI rdf:resource="http://arcos.rack/RESOLUTIONS"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/RACK-Ontology/ontology/CONFIDENCE.sadl</sadlSourceURL>
-    <prefix>CONFIDENCE</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/CONFIDENCE.owl"/>
-    <publicURI rdf:resource="http://arcos.rack/CONFIDENCE"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/ARP4754-DAP-Ontology-v2/ontology/PLAN-CORE.sadl</sadlSourceURL>
-    <prefix>dapcore</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/PLAN-CORE.owl"/>
-    <publicURI rdf:resource="http://sadl.org/PLAN-CORE.sadl"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/ARP4754-DAP-Ontology-v2/ontology/PLAN-CORE-Process1.sadl</sadlSourceURL>
-    <prefix>p1core</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/PLAN-CORE-Process1.owl"/>
-    <publicURI rdf:resource="http://sadl.org/PLAN-CORE-Process1.sadl"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/RACK-Ontology/ontology/AGENTS.sadl</sadlSourceURL>
-    <prefix>Ag</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/AGENTS.owl"/>
-    <publicURI rdf:resource="http://arcos.rack/AGENTS"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/RACK-Ontology/ontology/BASELINE.sadl</sadlSourceURL>
-    <prefix>baseline</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/BASELINE.owl"/>
-    <publicURI rdf:resource="http://arcos.rack/BASELINE"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE.sadl</sadlSourceURL>
-    <prefix>do178cPsacCore</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/DO178C-PSAC-CORE.owl"/>
-    <publicURI rdf:resource="http://arcos.rack/DO178C-PSAC-CORE.sadl"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA10.sadl</sadlSourceURL>
-    <prefix>do178cPsacCorA10</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/DO178C-PSAC-CORE-TableA10.owl"/>
-    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA10.sadl"/>
-  </OntologySpec>
-  <OntologySpec>
-    <altURL rdf:resource="http://protege.stanford.edu/plugins/owl/dc/protege-dc.owl"/>
-    <publicURI rdf:resource="http://purl.org/dc/elements/1.1/"/>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <prefix>dc</prefix>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/ARP4754-DAP-Ontology-v2/ontology/PLAN-CORE-Process2.sadl</sadlSourceURL>
-    <prefix>p2core</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/PLAN-CORE-Process2.owl"/>
-    <publicURI rdf:resource="http://sadl.org/PLAN-CORE-Process2.sadl"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/RACK-Ontology/ontology/EntityResolution.sadl</sadlSourceURL>
-    <prefix>EntityResolution</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/EntityResolution.owl"/>
-    <publicURI rdf:resource="http://research.ge.com/semtk/EntityResolution"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/RACK-Ontology/ontology/HARDWARE.sadl</sadlSourceURL>
     <prefix>hw</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/HARDWARE.owl"/>
     <publicURI rdf:resource="http://arcos.rack/HARDWARE"/>
   </OntologySpec>
   <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA2.sadl</sadlSourceURL>
-    <prefix>do178cPsacCorA2</prefix>
-    <createdBy>SADL</createdBy>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/RACK-Ontology/ontology/EntityResolution.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/EntityResolution.owl"/>
     <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/DO178C-PSAC-CORE-TableA2.owl"/>
-    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA2.sadl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>EntityResolution</prefix>
+    <publicURI rdf:resource="http://research.ge.com/semtk/EntityResolution"/>
   </OntologySpec>
   <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/OEM-GSN-Pattern/ontology/oem-pattern.sadl</sadlSourceURL>
-    <prefix>oempat</prefix>
-    <createdBy>SADL</createdBy>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/RACK-Ontology/ontology/REVIEW.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/REVIEW.owl"/>
     <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/oem-pattern.owl"/>
-    <publicURI rdf:resource="http://sadl.org/GE-GSN-Pattern.sadl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>Rv</prefix>
+    <publicURI rdf:resource="http://arcos.rack/REVIEW"/>
   </OntologySpec>
   <OntologySpec>
-    <prefix>sadlbasemodel</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/SadlBaseModel.owl"/>
     <publicURI rdf:resource="http://sadl.org/sadlbasemodel"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/RACK-Ontology/ontology/SAFETY-SECURITY.sadl</sadlSourceURL>
-    <prefix>ss</prefix>
+    <altURL rdf:resource="file:///C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/SadlBaseModel.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
     <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/SAFETY-SECURITY.owl"/>
-    <publicURI rdf:resource="http://arcos.rack/SAFETY-SECURITY"/>
+    <prefix>sadlbasemodel</prefix>
   </OntologySpec>
   <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA1.sadl</sadlSourceURL>
-    <prefix>do178cPsacCorA1</prefix>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/RACK-Ontology/ontology/FILE.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/FILE.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
     <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/DO178C-PSAC-CORE-TableA1.owl"/>
-    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA1.sadl"/>
+    <prefix>file</prefix>
+    <publicURI rdf:resource="http://arcos.rack/FILE"/>
   </OntologySpec>
   <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA9.sadl</sadlSourceURL>
-    <prefix>do178cPsacCorA9</prefix>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/GSN-Ontology/ontology/GSN-core.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/GSN-core.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
     <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/DO178C-PSAC-CORE-TableA9.owl"/>
-    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA9.sadl"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/RACK-Ontology/ontology/PROCESS.sadl</sadlSourceURL>
-    <prefix>Pr</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/PROCESS.owl"/>
-    <publicURI rdf:resource="http://arcos.rack/PROCESS"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/OEM_DO178C_Data/oem_do178c_sadl_data/ontology/OEM-specific-PSAC.sadl</sadlSourceURL>
-    <prefix>bsppsac</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/OEM-specific-PSAC.owl"/>
-    <publicURI rdf:resource="http://arcos.rack/OEM-specific-PSAC.sadl"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/RACK-Ontology/ontology/GeneratePropInfoCSV.sadl</sadlSourceURL>
-    <prefix>genpropinfo</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/GeneratePropInfoCSV.owl"/>
-    <publicURI rdf:resource="http://arcos.rack/GeneratePropInfoCSV"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA4.sadl</sadlSourceURL>
-    <prefix>do178cPsacCorA4</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/DO178C-PSAC-CORE-TableA4.owl"/>
-    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl"/>
-  </OntologySpec>
-  <OntologySpec>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <publicURI rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <prefix>owl</prefix>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/ARP4754-DAP-Ontology-v2/ontology/PLAN-CORE-Process3.sadl</sadlSourceURL>
-    <prefix>p3core</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/PLAN-CORE-Process3.owl"/>
-    <publicURI rdf:resource="http://sadl.org/PLAN-CORE-Process3.sadl"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/GSN-Ontology/ontology/GSN-core.sadl</sadlSourceURL>
     <prefix>gc</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/GSN-core.owl"/>
     <publicURI rdf:resource="http://sadl.org/GSN-core.sadl"/>
   </OntologySpec>
   <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/OEM_DO178C_Data/oem_do178c_sadl_data/ontology/OEM-table1-instance-data.sadl</sadlSourceURL>
-    <prefix>tab1instance</prefix>
-    <createdBy>SADL</createdBy>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/ARP4754-DAP-Ontology-v2/ontology/PLAN-CORE-Process3.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/PLAN-CORE-Process3.owl"/>
     <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/OEM-table1-instance-data.owl"/>
-    <publicURI rdf:resource="http://sadl.org/OEM-table1-instance-data.sadl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>p3core</prefix>
+    <publicURI rdf:resource="http://sadl.org/PLAN-CORE-Process3.sadl"/>
+  </OntologySpec>
+  <DocumentManagerPolicy>
+    <processImports rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</processImports>
+    <cacheModels rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"
+    >true</cacheModels>
+  </DocumentManagerPolicy>
+  <OntologySpec>
+    <prefix>owl</prefix>
+    <publicURI rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
   </OntologySpec>
   <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/ARP4754-DAP-Ontology-v2/ontology/PLAN-CORE-Process6.sadl</sadlSourceURL>
-    <prefix>p6core</prefix>
-    <createdBy>SADL</createdBy>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/RACK-Ontology/ontology/RESOLUTIONS.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/RESOLUTIONS.owl"/>
     <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/PLAN-CORE-Process6.owl"/>
-    <publicURI rdf:resource="http://sadl.org/PLAN-CORE-Process6.sadl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>Rs</prefix>
+    <publicURI rdf:resource="http://arcos.rack/RESOLUTIONS"/>
   </OntologySpec>
   <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/ARP4754-DAP-Ontology-v2/ontology/PLAN-CORE-Process4.sadl</sadlSourceURL>
-    <prefix>p4core</prefix>
-    <createdBy>SADL</createdBy>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA8.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/DO178C-PSAC-CORE-TableA8.owl"/>
     <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/PLAN-CORE-Process4.owl"/>
-    <publicURI rdf:resource="http://sadl.org/PLAN-CORE-Process4.sadl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>do178cPsacCorA8</prefix>
+    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA8.sadl"/>
   </OntologySpec>
   <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/RACK-Ontology/ontology/MODEL.sadl</sadlSourceURL>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/ARP4754-DAP-Ontology-v2/ontology/PLAN-CORE-Process5.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/PLAN-CORE-Process5.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>p5core</prefix>
+    <publicURI rdf:resource="http://sadl.org/PLAN-CORE-Process5.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/ARP4754-DAP-Ontology-v2/ontology/PLAN-CORE-Process7.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/PLAN-CORE-Process7.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>p7core</prefix>
+    <publicURI rdf:resource="http://sadl.org/PLAN-CORE-Process7.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/RACK-Ontology/ontology/MODEL.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/MODEL.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
     <prefix>M</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/MODEL.owl"/>
     <publicURI rdf:resource="http://arcos.rack/MODEL"/>
   </OntologySpec>
   <OntologySpec>
-    <prefix>sadllistmodel</prefix>
-    <createdBy>SADL</createdBy>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/ARP4754-DAP-Ontology-v2/ontology/PLAN-CORE-Process6.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/PLAN-CORE-Process6.owl"/>
     <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/SadlListModel.owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>p6core</prefix>
+    <publicURI rdf:resource="http://sadl.org/PLAN-CORE-Process6.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/OEM-GSN-Pattern/ontology/oem-pattern.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/oem-pattern.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>oempat</prefix>
+    <publicURI rdf:resource="http://sadl.org/GE-GSN-Pattern.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/RACK-Ontology/ontology/ANALYSIS.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/ANALYSIS.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>An</prefix>
+    <publicURI rdf:resource="http://arcos.rack/ANALYSIS"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/OEM-Ontology/ontology/OEM.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/OEM.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>OemModel</prefix>
+    <publicURI rdf:resource="http://arcos.rack/OEM"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/OEM_DO178C_Data/oem_do178c_sadl_data/ontology/OEM-specific-PSAC.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/OEM-specific-PSAC.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>bsppsac</prefix>
+    <publicURI rdf:resource="http://arcos.rack/OEM-specific-PSAC.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <prefix>dc</prefix>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <publicURI rdf:resource="http://purl.org/dc/elements/1.1/"/>
+    <altURL rdf:resource="http://protege.stanford.edu/plugins/owl/dc/protege-dc.owl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA7.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/DO178C-PSAC-CORE-TableA7.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>do178cPsacCorA7</prefix>
+    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA7.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA2.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/DO178C-PSAC-CORE-TableA2.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>do178cPsacCorA2</prefix>
+    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA2.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/ARP4754-DAP-Ontology-v2/ontology/PLAN-CORE-Process2.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/PLAN-CORE-Process2.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>p2core</prefix>
+    <publicURI rdf:resource="http://sadl.org/PLAN-CORE-Process2.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
     <publicURI rdf:resource="http://sadl.org/sadllistmodel"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/RACK-Ontology/ontology/SOFTWARE.sadl</sadlSourceURL>
-    <prefix>sw</prefix>
-    <createdBy>SADL</createdBy>
+    <altURL rdf:resource="file:///C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/SadlListModel.owl"/>
     <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/SOFTWARE.owl"/>
-    <publicURI rdf:resource="http://arcos.rack/SOFTWARE"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/RACK-Ontology/ontology/CLAIM.sadl</sadlSourceURL>
-    <prefix>claim</prefix>
     <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/CLAIM.owl"/>
-    <publicURI rdf:resource="http://arcos.rack/CLAIM"/>
+    <prefix>sadllistmodel</prefix>
   </OntologySpec>
   <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/OEM_ARP4754_Data/oem_arp4754_sadl_data/ontology/oem_arp4754_dap.sadl</sadlSourceURL>
-    <prefix>odap</prefix>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/RACK-Ontology/ontology/SYSTEM.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/SYSTEM.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
     <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/oem_arp4754_dap.owl"/>
-    <publicURI rdf:resource="http://sadl.org/oem_arp4754_dap.sadl"/>
-  </OntologySpec>
-  <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/RACK-Ontology/ontology/SYSTEM.sadl</sadlSourceURL>
     <prefix>sys</prefix>
-    <createdBy>SADL</createdBy>
-    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/SYSTEM.owl"/>
     <publicURI rdf:resource="http://arcos.rack/SYSTEM"/>
   </OntologySpec>
   <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/RACK-Ontology/ontology/DOCUMENT.sadl</sadlSourceURL>
-    <prefix>D</prefix>
-    <createdBy>SADL</createdBy>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/RACK-Ontology/ontology/CLAIM.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/CLAIM.owl"/>
     <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/DOCUMENT.owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>claim</prefix>
+    <publicURI rdf:resource="http://arcos.rack/CLAIM"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/RACK-Ontology/ontology/PROCESS.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/PROCESS.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>Pr</prefix>
+    <publicURI rdf:resource="http://arcos.rack/PROCESS"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/OEM_ARP4754_Data/oem_arp4754_sadl_data/ontology/oem_arp4754_dap.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/oem_arp4754_dap.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>odap</prefix>
+    <publicURI rdf:resource="http://sadl.org/oem_arp4754_dap.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/ARP4754-DAP-Ontology-v2/ontology/PLAN-CORE-Process4.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/PLAN-CORE-Process4.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>p4core</prefix>
+    <publicURI rdf:resource="http://sadl.org/PLAN-CORE-Process4.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/GSN-Ontology/ontology/GSN-Pattern-core.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/GSN-Pattern-core.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>gpc</prefix>
+    <publicURI rdf:resource="http://sadl.org/GSN-Pattern-core.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/RACK-Ontology/ontology/REQUIREMENTS.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/REQUIREMENTS.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>Rq</prefix>
+    <publicURI rdf:resource="http://arcos.rack/REQUIREMENTS"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA5.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/DO178C-PSAC-CORE-TableA5.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>do178cPsacCorA5</prefix>
+    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA5.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/RACK-Ontology/ontology/HAZARD.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/HAZARD.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>H</prefix>
+    <publicURI rdf:resource="http://arcos.rack/HAZARD"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA9.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/DO178C-PSAC-CORE-TableA9.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>do178cPsacCorA9</prefix>
+    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA9.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/ARP4754-DAP-Ontology-v2/ontology/PLAN-CORE.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/PLAN-CORE.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>dapcore</prefix>
+    <publicURI rdf:resource="http://sadl.org/PLAN-CORE.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/OEM_ARP4754_Data/oem_arp4754_sadl_data/ontology/oem-arp-synthetic-data.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/oem-arp-synthetic-data.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>oemarpsd</prefix>
+    <publicURI rdf:resource="http://sadl.org/oem-arp-synthetic-data.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/RACK-Ontology/ontology/BASELINE.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/BASELINE.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>baseline</prefix>
+    <publicURI rdf:resource="http://arcos.rack/BASELINE"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/RACK-Ontology/ontology/CONFIDENCE.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/CONFIDENCE.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>CONFIDENCE</prefix>
+    <publicURI rdf:resource="http://arcos.rack/CONFIDENCE"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA4.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/DO178C-PSAC-CORE-TableA4.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>do178cPsacCorA4</prefix>
+    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA4.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/RACK-Ontology/ontology/SAFETY-SECURITY.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/SAFETY-SECURITY.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>ss</prefix>
+    <publicURI rdf:resource="http://arcos.rack/SAFETY-SECURITY"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/RACK-Ontology/ontology/DOCUMENT.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/DOCUMENT.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>D</prefix>
     <publicURI rdf:resource="http://arcos.rack/DOCUMENT"/>
   </OntologySpec>
   <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA3.sadl</sadlSourceURL>
-    <prefix>do178cPsacCorA3</prefix>
-    <createdBy>SADL</createdBy>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/RACK-Ontology/ontology/GeneratePropInfoCSV.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/GeneratePropInfoCSV.owl"/>
     <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/DO178C-PSAC-CORE-TableA3.owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>genpropinfo</prefix>
+    <publicURI rdf:resource="http://arcos.rack/GeneratePropInfoCSV"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/OEM_ARP4754_Data/oem_arp4754_sadl_data/ontology/oem-arp4754-config.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/oem-arp4754-config.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>oemconfig</prefix>
+    <publicURI rdf:resource="http://sadl.org/oem-arp4754-config.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/RACK-Ontology/ontology/SOFTWARE.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/SOFTWARE.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>sw</prefix>
+    <publicURI rdf:resource="http://arcos.rack/SOFTWARE"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/RACK-Ontology/ontology/PROV-S.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/PROV-S.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>provs</prefix>
+    <publicURI rdf:resource="http://arcos.rack/PROV-S"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/DO178C-PSAC-CORE.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>do178cPsacCore</prefix>
+    <publicURI rdf:resource="http://arcos.rack/DO178C-PSAC-CORE.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA6.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/DO178C-PSAC-CORE-TableA6.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>do178cPsacCorA6</prefix>
+    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA6.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/RACK-Ontology/ontology/TESTING.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/TESTING.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>tst</prefix>
+    <publicURI rdf:resource="http://arcos.rack/TESTING"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/OEM_DO178C_Data/oem_do178c_sadl_data/ontology/OEM-table1-instance-data.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/OEM-table1-instance-data.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>tab1instance</prefix>
+    <publicURI rdf:resource="http://sadl.org/OEM-table1-instance-data.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA1.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/DO178C-PSAC-CORE-TableA1.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>do178cPsacCorA1</prefix>
+    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA1.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/RACK-Ontology/ontology/AGENTS.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/AGENTS.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>Ag</prefix>
+    <publicURI rdf:resource="http://arcos.rack/AGENTS"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/ARP4754-DAP-Ontology-v2/ontology/PLAN-CORE-Process1.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/PLAN-CORE-Process1.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>p1core</prefix>
+    <publicURI rdf:resource="http://sadl.org/PLAN-CORE-Process1.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA3.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/DO178C-PSAC-CORE-TableA3.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>do178cPsacCorA3</prefix>
     <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA3.sadl"/>
   </OntologySpec>
   <OntologySpec>
-    <sadlSourceURL>platform:/resource/OEM-Ingestion-Package-v4/ARP4754-DAP-Ontology-v2/ontology/PLAN-CORE-Process7.sadl</sadlSourceURL>
-    <prefix>p7core</prefix>
-    <createdBy>SADL</createdBy>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/ARP4754-DAP-Ontology-v2/ontology/PLAN-CORE-Process8.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/PLAN-CORE-Process8.owl"/>
     <language rdf:resource="http://www.w3.org/2002/07/owl"/>
-    <altURL rdf:resource="file:/C:/Users/223057479/Ingestion%20packages/OEM-Ingestion-Package-v4/OwlModels/PLAN-CORE-Process7.owl"/>
-    <publicURI rdf:resource="http://sadl.org/PLAN-CORE-Process7.sadl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>p8core</prefix>
+    <publicURI rdf:resource="http://sadl.org/PLAN-CORE-Process8.sadl"/>
+  </OntologySpec>
+  <OntologySpec>
+    <sadlSourceURL>platform:/resource/rite_1.0.0_test_ingestion_package/DO178C-PSAC-Ontology/ontology/DO178C-PSAC-CORE-TableA10.sadl</sadlSourceURL>
+    <altURL rdf:resource="file:/C:/Users/223057479/Desktop/ingestion-packages/rite_1.0.0_test_ingestion_package/OwlModels/DO178C-PSAC-CORE-TableA10.owl"/>
+    <language rdf:resource="http://www.w3.org/2002/07/owl"/>
+    <createdBy>SADL</createdBy>
+    <prefix>do178cPsacCorA10</prefix>
+    <publicURI rdf:resource="http://sadl.org/DO178C-PSAC-CORE-TableA10.sadl"/>
   </OntologySpec>
 </rdf:RDF>

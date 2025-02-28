@@ -17,5 +17,5 @@ steps:
 - model: GSN-Ontology/OwlModels/import.yaml 
 - model: OEM-GSN-Pattern/OwlModels/import.yaml  
  
-- nodegroups: 02_nodegroups
 - data: OEM_DO178C_Data/data.yaml
+- nodegroups: 02_nodegroups
