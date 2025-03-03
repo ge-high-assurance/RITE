@@ -1,0 +1,39 @@
+identifier,dataInsertedBy_identifier,description,governs_identifier,title,satisfies_systemreq_identifier
+36,Cameo Ingestion,Battery System shall provide a usable storage power of X kW-Hrs.,BatterySystem,Usable Storage,
+37,Cameo Ingestion,Fuel System shall provide a usable fuel load of X lbs.,FuelSystem,Fuel Load,
+38,Cameo Ingestion,Gearbox shall have provide at least a combined 90% output efficiency as measured from the combined electric power input shaft and turbine power input shaft to propeller output shaft.,Gearbox,Efficiency,
+39,Cameo Ingestion,Motor shall provide X kW of power at the output shaft.,Motor,Shaft Power,
+40,Cameo Ingestion,Propeller shall have a maximum power efficiency of X%,Propeller,Efficiency,
+41,Cameo Ingestion,,PropulsionController,Takeoff Mode,31
+42,Cameo Ingestion,Turbine shall have a shaft power of X kW at Takeoff Setting.,GasTurbineEngine,Shaft Power,31
+CCC1,Cameo Ingestion,Pilot shall not exceed the taxi speed of 30 knots when mode of OPERATION is Taxi,CockpitControls,Taxi,
+CCC2,Cameo Ingestion,Pilot shall transition to Takeoff roll when lined up with runway takeoff zone and the centerline and upon ATC authorization,CockpitControls,Takeoff,31
+CCC4,Cameo Ingestion,Pilot shall transition to Climb when mode of OPERATION is Takeoff when Weight on Wheels is off and air speed is established as Vx or Vy.,CockpitControls,Climb,32
+CCC5,Cameo Ingestion,Pilot shall transition to Cruise when mode of OPERATION is Climb and altitude of aircraft reached  given cruise altitude,CockpitControls,Cruise,33
+47.1,Cameo Ingestion,Air speed of aircraft shall be set to optimal Cruising speed Vc when mode of OPERATION is Cruise,CockpitControls,Speed,
+47.2,Cameo Ingestion,Altitude of aircraft shall be Cruising altitude when mode of OPERATION is Cruise,CockpitControls,Altitude,
+CCC6,Cameo Ingestion,Pilot shall transition toDescent when mode of OPERATION is Cruise and descent authorization have been received,CockpitControls,Descent,
+CCC7,Cameo Ingestion,"Pilot shall transition to the Final Approach when mode of OPERATION is Descent, aircraft is established on the approach, and final approach authorization has been received",CockpitControls,Final Approach,
+CCC8,Cameo Ingestion,Pilot shall set landing gear of structures to deploy when mode of OPERATION is Final Approach,CockpitControls,Structures,
+50.1,Cameo Ingestion,Pilot shall set spoilers of structures to enable when mode of OPERATION is After landing roll,CockpitControls,Spoilers,
+CCC9,Cameo Ingestion,Pilot shall transition to After landing roll when mode of OPERATION is Touchdown and weight on Wheels parameter is on,CockpitControls,After landing roll,
+CCC3,Manual Cameo Ingestion,Pilot shall set flaps of Aerodynamics to Enable when (mode of OPERATION is Takeoff) or (mode of OPERATION is Final Approach),CockpitControls,lightControls,
+CCC14,Manual Cameo Ingestion,Pilot shall set Ignitor_status of PropulsionController to ON when EGT of Gas Turbine Engine> Start_EGT_limit.,CockpitControls,Ignitor ON,
+CCC12,Manual Cameo Ingestion,Pilot shall set Ignitor_status of PropulsionController to ON when N2_rotation of Gas Turbine Engine > X.,CockpitControls,Ignitor,
+CCC13,Manual Cameo Ingestion,Pilot shall set Fuel_Switch_status of PropulsionController to OFF when EGT of Gas Turbine Engine> Start_EGT_limit.,CockpitControls,Fuel Switch OFF,
+CCC11,Manual Cameo Ingestion,Pilot shall set Fuel_Switch_status of PropulsionController to ON when N2_rotation of Gas Turbine Engine > X.,CockpitControls,Fuel Switch ON,
+CCC10,Manual Cameo Ingestion,Pilot shall set Start_Valve_status of PropulsionController to OPEN when MODE of OPERATION is GroundIdle.,CockpitControls,Start Valve,
+DCACCtrR1,Cameo Ingestion,DCACcontroller shall set PWM_DCAC of DCACcontroller to Enable when (mode of OPERATION is Takeoff and Fault_DCAC of DCACcontroller is 0.0) or (mode of OPERATION is Climb and Fault_DCAC of DCACcontroller is 0.0),DCACController,,31
+DCACCtrR1,,,,,32
+DCACCtrR2,Cameo Ingestion,DCACcontroller shall set PWM_DCAC of DCACcontroller to Disable when (mode of OPERATION is Taxi) or (mode of OPERATION is Cruise) or (mode of OPERATION is Descent) or (mode of OPERATION is Final approach) or (mode of OPERATION is After landing roll) or (Fault_DCAC of DCACcontroller is 1.0),DCACController,,
+DCACCtrR3,Cameo Ingestion,DCACcontroller shall set Fault_DCAC of DCACcontroller to 1.0 when DC_voltage of DCACcontroller > Max_DC_voltage,DCACController,,
+DCACCtrR4,Cameo Ingestion,DCACcontroller shall set Fault_DCAC of DCACcontroller to 1.0 when Temp_DCAC of DCACcontroller > Max_temp_mod,DCACController,,
+DCACCtrR7,Cameo Ingestion,DCACcontroller shall set Fault_DCAC of DCACcontroller to 1.0 when (ACcurrent_A of DCACcontroller > threshold of ACcurrent_A of DCACcontroller) or (ACcurrent_B of DCACcontroller > threshold of ACcurrent_B of DCACcontroller) or (ACcurrent_C of DCACcontroller > threshold of ACcurrent_C of DCACcontroller),DCACController,,
+DCACCtrR8,Cameo Ingestion,DCACcontroller shall set Fault_DCAC of DCACcontroller to 1.0 when speed of Motor > max_speed,DCACController,,
+DCDCCtrR1,Cameo Ingestion,DCDCcontroller shall set PWM_DCDC of DCDCcontroller to Enable when (mode of OPERATION is Takeoff and Fault_DCDC of DCDCcontroller is 0.0) or (mode of OPERATION is Climb and Fault_DCDC of OPERATION is 0.0),DCDCController,,31
+DCDCCtrR1,,,,,32
+DCDCCtrR2,Cameo Ingestion,DCDCcontroller shall set PWM_DCDC of DCDCcontroller to Disable when (mode of OPERATION is Taxi) or (mode of OPERATION is Cruise) or (mode of OPERATION is Descent) or (mode of OPERATION is Final approach) or (mode of OPERATION is After landing roll) or (Fault_DCDC of DCDCcontroller is 1.0),DCDCController,,
+DCDCCtrR3,Cameo Ingestion,DCDCcontroller shall set PWM_DCDC of DCDCcontroller to Disable when (bat_voltage of Battery > Max_bat_voltage) or (bat_voltage of Battery < Min_bat_voltage),DCDCController,,
+DCDCCtrR4,Cameo Ingestion,DCDCcontroller shall set PWM_DCDC of DCDCcontroller to Disable when (bat_current of Battery > Max_bat_current) or (bat_current of Battery < Min_bat_current),DCDCController,,
+DCDCCtrR5,Cameo Ingestion,DCDCcontroller shall set Fault_DCDC of DCDCcontroller to 1.0 when Temp_bat of battery > max_temp_bat,DCDCController,,
+DCDCCtrR6,Cameo Ingestion,DCDCcontroller shall set Fault_DCDC of DCDCcontroller to 1.0 when Temp_DCDC of DCDCcontroller > Max_temp_mod,DCDCController,,

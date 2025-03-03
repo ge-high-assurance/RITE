@@ -1,0 +1,462 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:Ag="http://arcos.rack/AGENTS#"
+    xmlns:builtinfunctions="http://sadl.org/builtinfunctions#"
+    xmlns:CONFIDENCE="http://arcos.rack/CONFIDENCE#"
+    xmlns:Pr="http://arcos.rack/PROCESS#"
+    xmlns:sadlimplicitmodel="http://sadl.org/sadlimplicitmodel#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:Rv="http://arcos.rack/REVIEW#"
+    xmlns:D="http://arcos.rack/DOCUMENT#"
+    xmlns:sadlbasemodel="http://sadl.org/sadlbasemodel#"
+    xmlns:Rq="http://arcos.rack/REQUIREMENTS#"
+    xmlns:H="http://arcos.rack/HAZARD#"
+    xmlns:provs="http://arcos.rack/PROV-S#"
+    xmlns:sys="http://arcos.rack/SYSTEM#"
+    xmlns:An="http://arcos.rack/ANALYSIS#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:hw="http://arcos.rack/HARDWARE#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:tst="http://arcos.rack/TESTING#"
+    xmlns:dapcore="http://sadl.org/PLAN-CORE.sadl#">
+  <owl:Ontology rdf:about="http://sadl.org/PLAN-CORE.sadl">
+    <owl:imports rdf:resource="http://arcos.rack/PROV-S"/>
+    <owl:imports rdf:resource="http://arcos.rack/ANALYSIS"/>
+    <owl:imports rdf:resource="http://arcos.rack/HARDWARE"/>
+    <owl:imports rdf:resource="http://arcos.rack/HAZARD"/>
+    <owl:imports rdf:resource="http://arcos.rack/SYSTEM"/>
+    <owl:imports rdf:resource="http://arcos.rack/REVIEW"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlbasemodel"/>
+    <owl:imports rdf:resource="http://arcos.rack/PROCESS"/>
+    <owl:imports rdf:resource="http://sadl.org/builtinfunctions"/>
+    <rdfs:comment xml:lang="en">This ontology was created from a SADL file 'PLAN-CORE.sadl' and should not be directly edited.</rdfs:comment>
+    <owl:imports rdf:resource="http://arcos.rack/DOCUMENT"/>
+    <owl:imports rdf:resource="http://arcos.rack/CONFIDENCE"/>
+    <owl:imports rdf:resource="http://arcos.rack/REQUIREMENTS"/>
+    <owl:imports rdf:resource="http://arcos.rack/AGENTS"/>
+    <owl:imports rdf:resource="http://sadl.org/sadlimplicitmodel"/>
+    <owl:imports rdf:resource="http://arcos.rack/TESTING"/>
+  </owl:Ontology>
+  <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#ApplicabilityByDAL">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onClass>
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#Applicability"/>
+        </owl:onClass>
+        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+        >1</owl:qualifiedCardinality>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#levelE"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onClass>
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#Applicability"/>
+        </owl:onClass>
+        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+        >1</owl:qualifiedCardinality>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#levelD"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onClass>
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#Applicability"/>
+        </owl:onClass>
+        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+        >1</owl:qualifiedCardinality>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#levelC"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onClass>
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#Applicability"/>
+        </owl:onClass>
+        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+        >1</owl:qualifiedCardinality>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#levelB"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onClass>
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#Applicability"/>
+        </owl:onClass>
+        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+        >1</owl:qualifiedCardinality>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#levelA"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">Applicability and Independence by Development Assurance Level is a property of ARP4753 objectives</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#THING"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#Output">
+    <rdfs:comment xml:lang="en">Outouts of ARP4754 objectives</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#THING"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#Objective">
+    <rdfs:comment xml:lang="en">A generic class for ARP4754 objectives</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROCESS#OBJECTIVE"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#Process">
+    <rdfs:comment xml:lang="en">A generic class for ARP4754 processes</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/DOCUMENT#PLAN"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#SystemControlCategoryByLevel">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onClass>
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#SystemControlCategory"/>
+        </owl:onClass>
+        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+        >1</owl:qualifiedCardinality>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#levelE"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onClass>
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#SystemControlCategory"/>
+        </owl:onClass>
+        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+        >1</owl:qualifiedCardinality>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#levelD"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onClass>
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#SystemControlCategory"/>
+        </owl:onClass>
+        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+        >1</owl:qualifiedCardinality>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#levelC"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onClass>
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#SystemControlCategory"/>
+        </owl:onClass>
+        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+        >1</owl:qualifiedCardinality>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#levelB"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onClass>
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#SystemControlCategory"/>
+        </owl:onClass>
+        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+        >1</owl:qualifiedCardinality>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#levelA"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">System Control Category by Level is a property of ARP4754 objectives</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#THING"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#SystemControlCategory">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:oneOf rdf:parseType="Collection">
+          <dapcore:SystemControlCategory rdf:about="http://sadl.org/PLAN-CORE.sadl#Category1">
+            <rdfs:comment xml:lang="en">System Control category 1</rdfs:comment>
+          </dapcore:SystemControlCategory>
+          <dapcore:SystemControlCategory rdf:about="http://sadl.org/PLAN-CORE.sadl#Category2">
+            <rdfs:comment xml:lang="en">System  Control category 2</rdfs:comment>
+          </dapcore:SystemControlCategory>
+        </owl:oneOf>
+      </owl:Class>
+    </owl:equivalentClass>
+    <rdfs:comment xml:lang="en">The values that can be taken by the System Control category property of an ARP4754 objective</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#THING"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#DevelopmentAssuranceLevel">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:oneOf rdf:parseType="Collection">
+          <dapcore:DevelopmentAssuranceLevel rdf:about="http://sadl.org/PLAN-CORE.sadl#LevelA">
+            <rdfs:comment xml:lang="en">Level A - Catastrophic</rdfs:comment>
+          </dapcore:DevelopmentAssuranceLevel>
+          <dapcore:DevelopmentAssuranceLevel rdf:about="http://sadl.org/PLAN-CORE.sadl#LevelB">
+            <rdfs:comment xml:lang="en">Level B - Hazardous/Severe Major</rdfs:comment>
+          </dapcore:DevelopmentAssuranceLevel>
+          <dapcore:DevelopmentAssuranceLevel rdf:about="http://sadl.org/PLAN-CORE.sadl#LevelC">
+            <rdfs:comment xml:lang="en">Level C - Major</rdfs:comment>
+          </dapcore:DevelopmentAssuranceLevel>
+          <dapcore:DevelopmentAssuranceLevel rdf:about="http://sadl.org/PLAN-CORE.sadl#LevelD">
+            <rdfs:comment xml:lang="en">Level D - Minor </rdfs:comment>
+          </dapcore:DevelopmentAssuranceLevel>
+          <dapcore:DevelopmentAssuranceLevel rdf:about="http://sadl.org/PLAN-CORE.sadl#LevelE">
+            <rdfs:comment xml:lang="en">Level E - No Safety Effect</rdfs:comment>
+          </dapcore:DevelopmentAssuranceLevel>
+        </owl:oneOf>
+      </owl:Class>
+    </owl:equivalentClass>
+    <rdfs:comment xml:lang="en">The Development Assurance Level is a property of a Aircraft/System</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#THING"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#CONFIGURATION">
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#THING"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#DevelopmentAssurancePlan">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onClass>
+          <rdf:Description rdf:about="http://arcos.rack/SYSTEM#SYSTEM">
+            <rdfs:subClassOf>
+              <owl:Restriction>
+                <owl:onClass rdf:resource="http://sadl.org/PLAN-CORE.sadl#DevelopmentAssuranceLevel"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+                >1</owl:qualifiedCardinality>
+                <owl:onProperty>
+                  <owl:ObjectProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#developmentAssuranceLevel"/>
+                </owl:onProperty>
+              </owl:Restriction>
+            </rdfs:subClassOf>
+          </rdf:Description>
+        </owl:onClass>
+        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#long"
+        >1</owl:qualifiedCardinality>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#system"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:comment xml:lang="en">A class for ARP4754 Development Assurance Plans</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/DOCUMENT#PLAN"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#Applicability">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:oneOf rdf:parseType="Collection">
+          <dapcore:Applicability rdf:about="http://sadl.org/PLAN-CORE.sadl#RI">
+            <rdfs:comment xml:lang="en">Recommended for certification with process independence.</rdfs:comment>
+          </dapcore:Applicability>
+          <dapcore:Applicability rdf:about="http://sadl.org/PLAN-CORE.sadl#R">
+            <rdfs:comment xml:lang="en">Recommended for certification</rdfs:comment>
+          </dapcore:Applicability>
+          <dapcore:Applicability rdf:about="http://sadl.org/PLAN-CORE.sadl#AN">
+            <rdfs:comment xml:lang="en">As negotiated for certification</rdfs:comment>
+          </dapcore:Applicability>
+          <dapcore:Applicability rdf:about="http://sadl.org/PLAN-CORE.sadl#N">
+            <rdfs:comment xml:lang="en">Not required for certification</rdfs:comment>
+          </dapcore:Applicability>
+        </owl:oneOf>
+      </owl:Class>
+    </owl:equivalentClass>
+    <rdfs:comment xml:lang="en">The values that can be taken by applicability by software level property of objectives</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://arcos.rack/PROV-S#THING"/>
+  </owl:Class>
+  <owl:ObjectProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#objective">
+    <rdfs:domain rdf:resource="http://sadl.org/PLAN-CORE.sadl#Process"/>
+    <rdfs:comment xml:lang="en">The objectives associated with the process</rdfs:comment>
+    <rdfs:range rdf:resource="http://arcos.rack/PROCESS#OBJECTIVE"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#levelE">
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#ApplicabilityByDAL"/>
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#SystemControlCategoryByLevel"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdfs:comment xml:lang="en">The value for level E</rdfs:comment>
+    <rdfs:range>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#Applicability"/>
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#SystemControlCategory"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:range>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#levelD">
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#ApplicabilityByDAL"/>
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#SystemControlCategoryByLevel"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdfs:comment xml:lang="en">The value for level D</rdfs:comment>
+    <rdfs:range>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#Applicability"/>
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#SystemControlCategory"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:range>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#applicability">
+    <rdfs:domain rdf:resource="http://sadl.org/PLAN-CORE.sadl#Objective"/>
+    <rdfs:comment xml:lang="en">Values of the Applicability by Software Level columns</rdfs:comment>
+    <rdfs:range rdf:resource="http://sadl.org/PLAN-CORE.sadl#ApplicabilityByDAL"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#system">
+    <rdfs:domain rdf:resource="http://sadl.org/PLAN-CORE.sadl#DevelopmentAssurancePlan"/>
+    <rdfs:comment xml:lang="en">The aircraft/system being developed</rdfs:comment>
+    <rdfs:range rdf:resource="http://arcos.rack/SYSTEM#SYSTEM"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#output">
+    <rdfs:domain rdf:resource="http://sadl.org/PLAN-CORE.sadl#Objective"/>
+    <rdfs:comment xml:lang="en">Outputs of the objective</rdfs:comment>
+    <rdfs:range rdf:resource="http://sadl.org/PLAN-CORE.sadl#Output"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#levelA">
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#ApplicabilityByDAL"/>
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#SystemControlCategoryByLevel"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdfs:comment xml:lang="en">The value for level A</rdfs:comment>
+    <rdfs:range>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#Applicability"/>
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#SystemControlCategory"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:range>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#levelC">
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#ApplicabilityByDAL"/>
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#SystemControlCategoryByLevel"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdfs:comment xml:lang="en">The value for level C</rdfs:comment>
+    <rdfs:range>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#Applicability"/>
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#SystemControlCategory"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:range>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#process">
+    <rdfs:domain rdf:resource="http://sadl.org/PLAN-CORE.sadl#DevelopmentAssurancePlan"/>
+    <rdfs:comment xml:lang="en">The Processes in the DAP</rdfs:comment>
+    <rdfs:range rdf:resource="http://sadl.org/PLAN-CORE.sadl#Process"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#developmentAssuranceLevel">
+    <rdfs:range rdf:resource="http://sadl.org/PLAN-CORE.sadl#DevelopmentAssuranceLevel"/>
+    <rdfs:domain rdf:resource="http://arcos.rack/SYSTEM#SYSTEM"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#levelB">
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#ApplicabilityByDAL"/>
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#SystemControlCategoryByLevel"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdfs:comment xml:lang="en">The value for level B</rdfs:comment>
+    <rdfs:range>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#Applicability"/>
+          <owl:Class rdf:about="http://sadl.org/PLAN-CORE.sadl#SystemControlCategory"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:range>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#requirementCompleteCorrectReviewAlias">
+    <rdfs:domain rdf:resource="http://sadl.org/PLAN-CORE.sadl#CONFIGURATION"/>
+    <rdfs:comment xml:lang="en">Rviews for objective 4-1</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#systemRequirementAlias">
+    <rdfs:domain rdf:resource="http://sadl.org/PLAN-CORE.sadl#CONFIGURATION"/>
+    <rdfs:comment xml:lang="en">The class in project ontology for system requirements</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#itemAlias">
+    <rdfs:domain rdf:resource="http://sadl.org/PLAN-CORE.sadl#CONFIGURATION"/>
+    <rdfs:comment xml:lang="en">The class in project ontology for items</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#systemDesignDescriptionAlias">
+    <rdfs:domain rdf:resource="http://sadl.org/PLAN-CORE.sadl#CONFIGURATION"/>
+    <rdfs:comment xml:lang="en">The class in project ontology for systemDesignDescription</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#systemAlias">
+    <rdfs:domain rdf:resource="http://sadl.org/PLAN-CORE.sadl#CONFIGURATION"/>
+    <rdfs:comment xml:lang="en">The class in project ontology for systems</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#interfaceAlias">
+    <rdfs:domain rdf:resource="http://sadl.org/PLAN-CORE.sadl#CONFIGURATION"/>
+    <rdfs:comment xml:lang="en">The class in project ontology for interface requirements</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#interfaceInputAlias">
+    <rdfs:domain rdf:resource="http://sadl.org/PLAN-CORE.sadl#CONFIGURATION"/>
+    <rdfs:comment xml:lang="en">The class in project ontology for interface inputs</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#derivedsystemRequirementAlias">
+    <rdfs:domain rdf:resource="http://sadl.org/PLAN-CORE.sadl#CONFIGURATION"/>
+    <rdfs:comment xml:lang="en">The class in project ontology for derived system requirements</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#query">
+    <rdfs:domain rdf:resource="http://sadl.org/PLAN-CORE.sadl#Objective"/>
+    <rdfs:comment xml:lang="en">One or more query IDs that will be required to determine if this objective has passed or failed</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#interfaceOutputAlias">
+    <rdfs:domain rdf:resource="http://sadl.org/PLAN-CORE.sadl#CONFIGURATION"/>
+    <rdfs:comment xml:lang="en">The class in project ontology for interface outputs</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#itemRequirementAlias">
+    <rdfs:domain rdf:resource="http://sadl.org/PLAN-CORE.sadl#CONFIGURATION"/>
+    <rdfs:comment xml:lang="en">The class in project ontology for item requirements</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#requirementTraceableReviewAlias">
+    <rdfs:domain rdf:resource="http://sadl.org/PLAN-CORE.sadl#CONFIGURATION"/>
+    <rdfs:comment xml:lang="en">Rviews for objective 4-4</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="http://sadl.org/PLAN-CORE.sadl#derivedItemRequirementAlias">
+    <rdfs:domain rdf:resource="http://sadl.org/PLAN-CORE.sadl#CONFIGURATION"/>
+    <rdfs:comment xml:lang="en">The class in project ontology for derived item requirements</rdfs:comment>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+</rdf:RDF>
