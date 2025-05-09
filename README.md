@@ -9,6 +9,7 @@ RITE provides an interactive GUI that allows for easy ingestion of data into RAC
 Besides supporting basic data modeling and curation features, RITE also provides functionalities and GUI-support for easy generation of assurance artifacts and compliance reports to aid in system certification.   
 
 ## Download the latest release [here](https://github.com/ge-high-assurance/RITE/releases) 
+RITE is also available on the [ARCOS Tools Portal](https://arcos-tools.org/).
 
 ## Latest Feature List ([RITE v1.0.0](https://github.com/ge-high-assurance/RITE/releases/tag/v1.0.0))
 
